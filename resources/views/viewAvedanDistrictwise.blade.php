@@ -1,0 +1,91 @@
+@extends('master')
+@section('content')
+<div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+<h3 style="margin-top:10px;text-align: center;">{{$heading}} ( आवेदन : {{ $results->total() }})</h3>
+
+<form method="get" action="{{ url('avedan-districtwise') }}">
+	@csrf
+<div class="row">
+
+			<div class="form-group col-md-3">
+				  <label for="inputEmail4">सेलेक्ट जनपद </label>
+					<select class="form-control" name="district_id" id="district_id">
+						<option value="">सेलेक्ट जनपद</option>
+						@foreach($districts as $row)
+							<option value="{{$row->id}}" {{ $row->id==@$_GET['district_id'] ? 'selected' : '' }}>{{$row->name_hindi}}</option>
+						@endforeach
+					</select>
+			</div>
+			
+			<div class="form-group col-md-4">
+				<label for="inputEmail4">श्रेणी</label>
+				  <select class="form-control" name="category">
+					  <option value="">सेलेक्ट</option>
+					  <option value="जनरल" {{ @$_GET['category']=='जनरल' ? 'selected' : '' }}>सामान्य (general)</option>
+					  <option value="ओ बी सी" {{ @$_GET['category']=='ओ बी सी' ? 'selected' : '' }}>अन्य पिछड़ा वर्ग  (OBC)</option>
+					  <option value="एस सी" {{ @$_GET['category']=='एस सी' ? 'selected' : '' }}>अनुसूचित जाति (SC)</option>
+					  <option value="एस टी" {{ @$_GET['category']=='एस टी' ? 'selected' : '' }}>अनुसूचित जनजाति (ST)</option>
+				  </select>
+				</div>
+			
+			<div class="form-group col-md-3" style="padding-top: 5px;">
+				  <button type="submit" class="btn btn-primary" style="margin-top: 25px;width:100px;">देंखे</button>
+				  <a href="{{Request::url()}}" class="btn btn-secondary" style="margin-top: 25px;">रीसेट करें</a>
+			</div>
+		
+</div>
+</form>
+
+<div class="row">
+{{ $results->links() }}
+</div>
+
+
+<table id="myTable303" class="table">
+    <thead>
+        <tr>
+            <th>आवेदन  नंबर</th>
+            <th>आवेदक का नाम</th>
+            <th>श्रेणी</th>
+            <th>अभ्यर्थी का स्वत: मूल्यांकन अंक</th>
+            <th>दिनांक</th>
+            <th>देखें</th>
+            <th>स्थिति</th>
+        </tr>
+    </thead>
+    <tbody>
+		@if($results->count())
+		@foreach($results as $row)
+        <tr>
+            <td>{{$row->applicationNumber}}</td>
+            <td>{{$row->applicant_name}}</td>
+            <td>{{$row->category}}</td>
+            <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$row->topper_number}}</a></td>
+            <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y')}}</td>
+            <td>
+				<a href="{{url('view-Avedan-details')}}/{{$row->id}}" >विवरण देखें</a>
+				@if(auth()->user()->user_type=='Admin' AND (Request::segment(1)=='avedan' OR Request::segment(1)=='total-avedan'))
+				 | <a href="{{url('edit-avedan')}}/{{$row->id}}" >एडिट</a>
+				@endif
+			</td>
+            <td>
+			@if($row->is_approved==0)
+				<a href="javascript:void(0)" class="btn btn-secondary">लंबित</a>
+			@elseif($row->is_approved==1)
+				<a href="javascript:void(0)" class="btn btn-success">स्वीकृत</a>
+			@elseif($row->is_approved==3)
+				<a href="javascript:void(0)" class="btn btn-info active">प्रतीक्षा सूची</a>
+			@else
+				<a href="javascript:void(0)" class="btn btn-danger">अस्वीकार</a>
+			@endif
+			</td>
+        </tr>
+        @endforeach
+		@endif
+    </tbody>
+</table>
+<div class="row">
+{{ $results->links() }}
+</div>
+</div>
+@endsection 
