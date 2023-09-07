@@ -141,19 +141,6 @@
                     lng: 80.9462
                 };
 
-                /*
-                function initMap() {
-                    map = new google.maps.Map(document.getElementById("map"), {
-                        center: LUCKNOW,
-                        restriction: {
-                            latLngBounds: UTTAR_PRADESH_BOUNDS,
-                            strictBounds: false,
-                        },
-                        zoom: 7,
-                    });
-                }
-                */
-
 
                 function initMap() {
                     //add map, the type of map
@@ -280,6 +267,13 @@
                         lat: 26.8467,
                         lng: 80.9462
                     }; // Lucknow coordinates
+
+                    const ctaLayer = new google.maps.KmlLayer({
+                        url: "https://special-eureka-vp949v7g9qj2w9v7-4200.app.github.dev/assets/images/kml",
+                        map: map,
+                    });
+
+
                 }
                 google.maps.event.addDomListener(window, 'load', initMap);
             </script>
@@ -287,5 +281,6 @@
             <script defer type="text/javascript"
                 src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyABHXJPN6L8-6nqf4uUekwdoQBPeHLYe60') }}&callback=initMap">
             </script>
+
         </div>
     @endsection
