@@ -13,6 +13,6 @@ class MaitriAddressTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //php artisan make:seeder DistrictLatLongSeeder
     }
 }

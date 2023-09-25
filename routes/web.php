@@ -2,7 +2,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AvedanController;
 use App\Http\Controllers\GoogleController;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
