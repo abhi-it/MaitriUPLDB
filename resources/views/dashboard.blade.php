@@ -31,9 +31,9 @@
                         <h5 class="card-title">{{ $newApplication }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
                         @if (auth()->user()->user_type == 'Director')
-                            <a href="{{ url('avedan-districtwise') }}" class="btn btn-primary">View</a>
+                            <a href="{{ url('avedan-districtwise') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                         @else
-                            <a href="{{ url('avedan') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                            <a href="{{ url('avedan') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                         @endif
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $approvedApplication }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        <a href="{{ url('approved-avedan') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                        <a href="{{ url('approved-avedan') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $rejectedApplication }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        <a href="{{ url('rejected-avedan') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                        <a href="{{ url('rejected-avedan') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $generalList }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        <a href="{{ url('general-list') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                        <a href="{{ url('general-list') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $SClist }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        <a href="{{ url('sc-list') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                        <a href="{{ url('sc-list') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $STlist }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        <a href="{{ url('st-list') }}/?year={{ $sessionYear }}" class="btn btn-primary">View</a>
+                        <a href="{{ url('st-list') }}/{{$sessionYear}}" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $avedanYear . '-' . substr($avedanYear + 1, -2) }}</h5>
                             <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                            <a href="{{ url('/dashboard') }}/?year={{ $avedanYear }}" class="btn btn-primary">View</a>
+                            <a href="{{ url('/dashboard') }}/{{ $avedanYear }}" class="btn btn-primary">View</a>
                         </div>
                     </div>
                 </div>

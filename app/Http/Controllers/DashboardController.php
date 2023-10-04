@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use File;
 use App\Models\Avedan;
 use App\Models\Rejectcomment;
 use App\Models\Verificationcomment;
@@ -15,8 +14,10 @@ use App\Models\User;
 use App\Exports\AvedanExport;
 use App\Models\MaitriDistrictLatLong;
 use App\Models\MaitriDistrictsLatLong;
+use App\Models\MaitriPortal;
 use App\Models\UpLdbCenter;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
 {
@@ -37,7 +38,7 @@ class DashboardController extends Controller
 			// Validation failed, handle the error (e.g., return an error response)
 			return response()->json(['errors' => $validator->errors()], 400);
 		}
-		$this->sessionYear =  $request->year ? $request->year : date('Y');
+		$this->sessionYear =  date('Y');
 	}
 
 	public function export()
@@ -45,8 +46,9 @@ class DashboardController extends Controller
 		return \Excel::download(new AvedanExport, 'avedansNafees.xlsx');
 	}
 
-	public function index(Request $request)
+	public function index(Request $request, $year = null)
 	{
+		$this->sessionYear = $year ? $year : $this->sessionYear;
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -119,10 +121,10 @@ class DashboardController extends Controller
 			->toArray();
 
 
-			if($this->sessionYear != date('Y')) {
-				$currentYear = date('Y');
-				if (!in_array($currentYear, $avedanYears)) {
-					$avedanYears[] = $currentYear;
+		if ($this->sessionYear != date('Y')) {
+			$currentYear = date('Y');
+			if (!in_array($currentYear, $avedanYears)) {
+				$avedanYears[] = $currentYear;
 			}
 		}
 
@@ -203,8 +205,13 @@ class DashboardController extends Controller
 
 
 	/*-----Start Display only New Applications DistrictWise for Director--------------*/
-	public function avedanDistrictwise(Request $request)
+	public function avedanDistrictwise(Request $request, $year = null)
 	{
+
+		$this->sessionYear = $year ? $year : $this->sessionYear;
+		$filter = [];
+
+
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -220,7 +227,15 @@ class DashboardController extends Controller
 		$statusButtonApprovedRejectedShow = 0;
 
 
+		if (!empty($request->input('vikas_khand'))) {
+			$filter['vikas_khand'] = $request->input('vikas_khand');
+			$query->where(function ($q) use ($request) {
+				$q->where('vikas_khand', '=', $request->input('vikas_khand'));
+			});
+		}
+
 		if (!empty($request->input('district_id'))) {
+			$filter['district_id'] = $request->input('district_id');
 			$query->where(function ($q) use ($request) {
 
 				$q->where('district_id', '=', $request->input('district_id'));
@@ -228,6 +243,7 @@ class DashboardController extends Controller
 		}
 
 		if (!empty($request->input('category'))) {
+			$filter['category'] = $request->input('category');
 			$query->where(function ($q) use ($request) {
 
 				$q->where('category', '=', $request->input('category'));
@@ -239,8 +255,9 @@ class DashboardController extends Controller
 		//echo '<pre>';print_r($results);exit;
 
 		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+		$sessionYear = $this->sessionYear;
 
-		return view('viewAvedanDistrictwise', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts'));
+		return view('viewAvedanDistrictwise', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts',  'sessionYear', 'filter'));
 	}
 	/*-----End Display only New Applications--------------*/
 
@@ -325,8 +342,10 @@ class DashboardController extends Controller
 	}
 
 
-	public function approvedAvedan(Request $request)
+	public function approvedAvedan(Request $request, $year = null)
 	{
+		$this->sessionYear = $year ? $year : $this->sessionYear;
+		$filter = [];
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -363,13 +382,14 @@ class DashboardController extends Controller
 
 		$heading = 'स्वीकार आवेदन';
 
-		//echo '<pre>';print_r($results);exit;
 
 		return view('viewAvedan', compact('results', 'heading'));
 	}
 
-	public function rejectedAvedan(Request $request)
+	public function rejectedAvedan(Request $request , $year = null)
 	{
+
+		$this->sessionYear = $year ? $year : $this->sessionYear;
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -407,8 +427,9 @@ class DashboardController extends Controller
 		return view('viewRejectedAvedan', compact('results', 'heading'));
 	}
 
-	public function generalList(Request $request) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
+	public function generalList(Request $request, $year= null) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
 	{
+		$this->sessionYear = $year ? $year : $this->sessionYear;
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -461,8 +482,9 @@ class DashboardController extends Controller
 		return view('viewAvedan', compact('results', 'heading'));
 	}
 
-	public function scList(Request $request) // SC  List will display here
+	public function scList(Request $request, $year = null) // SC  List will display here
 	{
+		$this->sessionYear = $year ? $year : $this->sessionYear;
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -514,8 +536,9 @@ class DashboardController extends Controller
 	}
 
 
-	public function stList(Request $request) // ST List will display here
+	public function stList(Request $request, $year) // ST List will display here
 	{
+		$this->sessionYear = $year ? $year : $this->sessionYear;	
 		$user = auth()->user();
 		$user_type = $user->user_type;
 		$districtID = auth()->user()->district_id;
@@ -1136,5 +1159,12 @@ class DashboardController extends Controller
 		}
 
 		return redirect('/document-verification')->with('success', 'Date schedule send & save successfully!');
+	}
+
+	public function getVikaskhand(Request $request)
+	{
+
+		$vikasKhand = Avedan::where('district_id', $request->districtId)->distinct()->pluck('vikas_khand');
+		return response()->json(["data" => $vikasKhand]);
 	}
 }

@@ -336,18 +336,6 @@
 
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">ग्राम पंचायत का नाम</label> <span class="text-danger">*</span>
-                        <input type="text" class="form-control" name="gram_panchayat_name" id="gram_panchayat_name"
-                            placeholder="ग्राम पंचायत का नाम" autocomplete="off"
-                            value="{{ $result->gram_panchayat_name }}">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">विकास खण्ड </label> <span class="text-danger">*</span>
-                        <input type="text" class="form-control" name="vikas_khand" id="vikas_khand"
-                            placeholder="विकास खण्ड" autocomplete="off" value="{{ $result->vikas_khand }}">
-                    </div>
-                    <div class="form-group col-md-6">
                         <label for="inputPassword4">जनपद </label> <span class="text-danger">*</span>
                         <select class="form-control" name="janpad" id="janpad">
                             <option value="">जनपद चुनें </option>
@@ -358,6 +346,20 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">विकास खण्ड </label> <span class="text-danger">*</span>
+                        <input type="text" class="form-control" name="vikas_khand" id="vikas_khand"
+                            placeholder="विकास खण्ड" autocomplete="off" value="{{ $result->vikas_khand }}">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">ग्राम पंचायत का नाम</label> <span class="text-danger">*</span>
+                        <input type="text" class="form-control" name="gram_panchayat_name" id="gram_panchayat_name"
+                            placeholder="ग्राम पंचायत का नाम" autocomplete="off"
+                            value="{{ $result->gram_panchayat_name }}">
+                    </div>
+                    
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">पत्र - व्यवहार का पता </label> <span class="text-danger">*</span>
                         <input type="text" class="form-control" name="letter_address" id="letter_address"

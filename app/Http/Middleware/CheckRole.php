@@ -34,14 +34,15 @@ class CheckRole
             //echo 'currentRouteName=' . $currentRouteName.'<br>';
             //exit;
 
+            
+            // dd($this->userAccessRole()[$userRole], $userRole, $currentRouteName);
             if (in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
-				
                 return $next($request);
             } else {
                 abort(403, 'You are not allowed to access this page.');
             }
         } catch (\Throwable $th) {
-            abort(403, 'You are not allowed to access this page.');
+            abort(403, 'You are not allowed to access this page this.');
         }
 	}
 	
@@ -58,6 +59,7 @@ class CheckRole
                 'dashboard',
             ],
             'Admin' => [
+                'getVikaskhand',
                 'dashboard',
                 'grievance',
                 'grievanceDetails',
