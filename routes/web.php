@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("allocation-list", [App\Http\Controllers\InstituteController::class, 'allocationList'])->name('allocationList');
     Route::get("candidate-not-joined", [App\Http\Controllers\DashboardController::class, 'candidateNotJoined'])->name('candidateNotJoined');
     Route::get("dashboard/{year?}", [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::get("avedan", [App\Http\Controllers\DashboardController::class, 'avedan'])->name('avedan');
+    Route::get("avedan/{year?}", [App\Http\Controllers\DashboardController::class, 'avedan'])->name('avedan');
     Route::get("avedan-districtwise/{year?}", [App\Http\Controllers\DashboardController::class, 'avedanDistrictwise'])->name('avedanDistrictwise');
     Route::get("get-vikaskhand", [App\Http\Controllers\DashboardController::class, 'getVikaskhand'])->name('getVikaskhand');
     Route::get("total-avedan", [App\Http\Controllers\DashboardController::class, 'totalAvedan'])->name('totalAvedan');

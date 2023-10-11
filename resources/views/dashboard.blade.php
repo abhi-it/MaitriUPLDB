@@ -122,6 +122,6 @@
 
 
 
-            @include('map')
+            {{-- @include('map') --}}
         </div>
     @endsection
