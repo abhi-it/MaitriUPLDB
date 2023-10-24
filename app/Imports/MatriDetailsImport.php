@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Imports;
+
+use App\Models\Maitridetail;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+
+class MatriDetailsImport implements ToModel, WithStartRow
+{
+    /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    public function model(array $row)
+    {
+		
+		$user = auth()->user();
+		$user_type = $user->user_type;
+		$districtID = auth()->user()->district_id;
+		
+		
+		
+        return new Maitridetail([
+        
+        
+        
+            
+            'district_id'  		=> $districtID,
+            'tehseel'       	=> $row[1],
+            'vikas_khand'     	=> $row[2],
+            'animal_hospitals'  => $row[3],
+            'gram_panchayat'    => $row[4],
+            'maitri_workfield'  => $row[5],
+            'maitri_name'       => $row[6],
+            'father'           	=> $row[7],
+            'address'           => $row[8],
+            'mobile'           	=> $row[9],
+            'training_name'     => $row[10],
+            'institute'         => $row[11],
+            'training_period'   => $row[12],
+			
+        ]);
+    }
+    
+    public function startRow(): int
+    {
+        return 6;
+    }
+    public function rules(): array
+{
+    return [
+        '0' => '',
+        '1' => '',
+    ];
+}
+}

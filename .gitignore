@@ -1,0 +1,9 @@
+/node_modules
+/public/storage
+/public/upload_documents
+/storage/*.key
+/vendor
+/public/
+/ExlLibrary/*
+maitriNew.zip
+.env
