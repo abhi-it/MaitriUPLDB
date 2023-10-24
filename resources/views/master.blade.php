@@ -23,6 +23,7 @@
     <script type="text/javascript"
         src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyABHXJPN6L8-6nqf4uUekwdoQBPeHLYe60') }}&callback=initMap">
     </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
         integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -34,6 +35,7 @@
 
     <link href="{{ asset('') }}css/jquery-ui.css" rel="stylesheet" type="text/css">
     <script src="{{ asset('') }}js/jquery-ui.js" type="text/javascript"></script>
+    
 
     <script>
         $(document).ready(function() {
@@ -210,19 +212,35 @@
 
 
 
+            // $.validator.addMethod("checkDOB", function(value, element) {
+
+            //     var userinput = document.getElementById("dob").value;
+            //     var dob = new Date(userinput);
+            //     var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
+            //     var age_dt = new Date(month_diff);
+            //     var year = age_dt.getUTCFullYear();
+            //     var age = Math.abs(year - 1970);
+
+            //     if (age < 18) {
+            //         return false
+            //         ;
+            //     }
+            //     return true;
+            // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+
+            // new
+
+        
             $.validator.addMethod("checkDOB", function(value, element) {
-
                 var userinput = document.getElementById("dob").value;
-                var dob = new Date(userinput);
-                var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
-                var age_dt = new Date(month_diff);
-                var year = age_dt.getUTCFullYear();
-                var age = Math.abs(year - 1970);
-
-                if (age < 18) {
+                var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+                if (age >= 18) {
                     return true;
+                } else {
+                    return false;
                 }
-                return false;
+                return true;
             }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
 
 
