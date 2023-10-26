@@ -18,14 +18,9 @@ use App\Models\MaitriDetail;
 */
 
 Artisan::command('inspire', function () {
-    $maitriDetails = MaitriDetail::with('district')->get();
-
-    // Access the district data for each MaitriDetail
-    foreach ($maitriDetails as $maitriDetail) {
-        $districtName = $maitriDetail->district->name_hindi; // Replace 'name' with the actual column name in the District table
-        // Do something with the district data
-        return false;
-
-    }
-    $this->comment(($districtName));
+    
+    // $data = DB::table('avedans')->latest()->first();
+    $data = "Hello";
+    
+    $this->comment(($data));
 })->purpose('Display an inspiring quote');
