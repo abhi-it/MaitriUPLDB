@@ -58,7 +58,7 @@ class DashboardController extends Controller
 
 
             if ($this->sessionYear == date('Y')) {
-                $newApplication = Avedan::whereYear('created_at', $this->sessionYear)->count();
+                $newApplication = Avedan::where('is_approved', '=', 0)->whereYear('created_at', $this->sessionYear)->count();
 
             }else {
                 $newApplication = Avedan::where('is_approved', '=', 0)->whereYear('created_at', $this->sessionYear)->count();
