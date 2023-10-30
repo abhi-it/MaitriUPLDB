@@ -15,16 +15,17 @@ use Illuminate\Http\Response;
 |
 */
 
-// Route::get('tempRecord', function () {
-//     $data = \App\Models\Avedan::where('is_approved', '!=', 0)
-//     ->whereYear('created_at', 2023)
-//     ->get();
-// // dd($data);
+Route::get('tempRecord', function () {
+    $data = \App\Models\Avedan::where('is_approved', '=', 1)
+    ->where('district_id', '=', 13)
+    ->whereYear('created_at', 2023)
+    ->get();
+dd($data);
 // foreach ($data as $record) {
 //     $record->is_approved = 0;
 //     $record->save();
 // }
-// });
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

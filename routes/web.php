@@ -132,7 +132,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("document-verification/{export?}", [App\Http\Controllers\DashboardController::class, 'documentVerification'])->name('documentVerification');
     Route::post("saveDocumnetVerification", [App\Http\Controllers\DashboardController::class, 'saveDocumnetVerification'])->name('saveDocumnetVerification');
     Route::resource('setting', App\Http\Controllers\SettingController::class);
-    Route::get("upload-documents/{export?}", [App\Http\Controllers\DashboardController::class, 'uploadDocuments'])->name('uploadDocuments');
+    Route::get("upload-documents/{year?}/{export?}", [App\Http\Controllers\DashboardController::class, 'uploadDocuments'])->name('uploadDocuments');
     Route::get("editUploadAvedan/{id}", [App\Http\Controllers\DashboardController::class, 'editUploadAvedan'])->name('editUploadAvedan');
     Route::post("avedanUpdatedDocuments/{id}", [App\Http\Controllers\DashboardController::class, 'avedanUpdatedDocuments'])->name('avedanUpdatedDocuments');
     Route::get("upload-health-document", [App\Http\Controllers\DashboardController::class, 'uploadHealthDocument'])->name('uploadHealthDocument');

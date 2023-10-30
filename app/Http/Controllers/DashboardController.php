@@ -40,6 +40,9 @@ class DashboardController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
         $this->sessionYear =  date('Y');
+        // if($request->year){
+        //     dd("Hello");
+        // } 
     }
 
     public function export()
@@ -406,7 +409,7 @@ class DashboardController extends Controller
             $query = Avedan::where('is_approved', '=', 1);
         } else { //CVO
 
-            $query = Avedan::where('is_approved', '=', 1);
+            $query = Avedan::where('is_approved', '=', 1)->where('district_id', '=', $districtID);
         }
 
 
@@ -947,8 +950,9 @@ class DashboardController extends Controller
         return redirect('/view-Avedan-details/' . $application_id)->with('success', 'status updated successfully!');
     }
 
-    public function uploadDocuments($export = null)
+    public function uploadDocuments($export = null, $year = null)
     {
+        $this->sessionYear = $year ? $year : $this->sessionYear;
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
@@ -957,6 +961,7 @@ class DashboardController extends Controller
 
             $results = Avedan::where('is_approved', '=', 1)
                 ->where('district_id', '=', $districtID)
+                ->whereYear('created_at', $this->sessionYear)
                 //->whereNotIn('id', DB::table('verificationcomments')->pluck('application_id'))
                 ->orderBy('topper_number', 'DESC')
                 ->get();
@@ -1297,17 +1302,19 @@ class DashboardController extends Controller
         }
     }
 
-    public function documentVerification($export = null)
+    public function documentVerification($year = null,$export = null)
     {
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
+        $this->sessionYear = $year ? $year : $this->sessionYear;
 
         if ($user_type == 'District Officer') { //CVO only
 
             $results = Avedan::where('is_approved', '=', 1)
                 ->where('district_id', '=', $districtID)
                 ->whereNotIn('id', DB::table('verificationcomments')->pluck('application_id'))
+                ->whereYear('created_at', $this->sessionYear)
                 ->orderBy('topper_number', 'DESC')
                 ->get();
         } else {
