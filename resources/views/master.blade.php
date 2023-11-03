@@ -1068,6 +1068,7 @@
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                     key="SCHEME">चयनित अभ्यर्थियों की सूची</a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                                    <a class="dropdown-item" href="{{ url('all-list') }}">सभी</a>
                                                     <a class="dropdown-item" href="{{ url('general-list') }}">सामान्य /
                                                         अन्य पिछड़ा वर्ग</a>
                                                     <a class="dropdown-item" href="{{ url('sc-list') }}">अनुसूचित

@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("downloadFiles/{id}", [App\Http\Controllers\DashboardController::class, 'downloadFiles'])->name('downloadFiles');
     Route::get("avedanStatus/{id}/{status}", [App\Http\Controllers\DashboardController::class, 'avedanStatus'])->name('avedanStatus');
     Route::post("rejectApplication", [App\Http\Controllers\DashboardController::class, 'rejectApplication'])->name('rejectApplication');
+    Route::get("all-list/{year?}", [App\Http\Controllers\DashboardController::class, 'allList'])->name('allList');
     Route::get("general-list/{year?}", [App\Http\Controllers\DashboardController::class, 'generalList'])->name('generalList');
     Route::get("sc-list/{year?}", [App\Http\Controllers\DashboardController::class, 'scList'])->name('scList');
     Route::get("st-list/{year?}", [App\Http\Controllers\DashboardController::class, 'stList'])->name('stList');

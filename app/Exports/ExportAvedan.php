@@ -85,6 +85,7 @@ class ExportAvedan implements FromCollection, WithHeadings
         'हाई स्कूल प्रतिशत',
         'इण्टर प्रतिशत',
 		'श्रेणी',
+        'ज़िला',
         'स्थायी पता',
         // 'जन्म तिथि',
 		// 'पोस्ट ऑफिस',
