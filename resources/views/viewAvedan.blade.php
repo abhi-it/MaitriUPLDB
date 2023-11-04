@@ -8,20 +8,24 @@
             @csrf
             <div class="row">
 
+                @if (auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
+
+
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">सेलेक्ट जनपद </label>
                     <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
-                        @change="onChangeDistrict">
-                        <option value="" disabled selected>सेलेक्ट जनपद</option>
-                        <template x-for="option in districts" :key="option">
-                            <option x-bind:value="option.id" x-text="option.name_hindi"
-                                x-bind:selected="queryParams.district_id == option.id ? true : false"></option>
-                        </template>
+                    @change="onChangeDistrict">
+                    <option value="" disabled selected>सेलेक्ट जनपद</option>
+                    <template x-for="option in districts" :key="option">
+                        <option x-bind:value="option.id" x-text="option.name_hindi"
+                        x-bind:selected="queryParams.district_id == option.id ? true : false"></option>
+                    </template>
 
-                    </select>
-                </div>
+                </select>
+            </div>
 
-                <div class="form-group col-md-1">अथवा</div>
+            <div class="form-group col-md-1">अथवा</div>
+            @endif
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">आवेदन नंबर</label>
                     <input type="text" value="{{ @$_GET['applicationNumber'] }}" class="form-control"

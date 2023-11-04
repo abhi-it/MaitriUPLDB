@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $this->sessionYear =  date('Y');
         // if($request->year){
         //     dd("Hello");
-        // } 
+        // }
     }
 
     public function export()
@@ -216,6 +216,7 @@ class DashboardController extends Controller
             });
         }
 
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
         $heading = 'नये आवेदन';
         $statusButtonApprovedRejectedShow = 0;
@@ -225,7 +226,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow'))->with('route', 'avedan')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts'))->with('route', 'avedan')->with('year', $this->sessionYear);
         }
     }
     /*-----End Display only New Applications--------------*/
@@ -327,6 +328,14 @@ class DashboardController extends Controller
             });
         }
 
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
         $heading = 'कुल आवेदन';
         $statusButtonApprovedRejectedShow = 0;
@@ -336,7 +345,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'total-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow'))->with('route', 'totalAvedan')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts'))->with('route', 'totalAvedan')->with('year', $this->sessionYear);
         }
     }
     /*-----End Display only for Director and Super Admin--------------*/
@@ -382,6 +391,7 @@ class DashboardController extends Controller
                 $q->where('mobile', '=', $request->input('mobile'));
             });
         }
+
 
 
 
@@ -432,6 +442,14 @@ class DashboardController extends Controller
             });
         }
 
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
 
         $heading = 'स्वीकार आवेदन';
@@ -447,7 +465,7 @@ class DashboardController extends Controller
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->paginate(50);
             //echo '<pre>';print_r($results);exit;
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'approvedAvedan')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'approvedAvedan')->with('year', $this->sessionYear);
         }
     }
 
