@@ -504,6 +504,7 @@ class DashboardController extends Controller
 
     public function allList(Request $request, $year = null) // General + OBC +SC_ST List will display here for status 4 (FInal Selected list after documents verify)
     {
+
         $this->sessionYear = $year ? $year : $this->sessionYear;
         $user = auth()->user();
         $user_type = $user->user_type;
@@ -550,8 +551,17 @@ class DashboardController extends Controller
             });
         }
 
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
 
-        $heading = 'सामान्य/अन्य पिछड़ा वर्ग चयनित अभ्यर्थियों की सूची';
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
+
+        $heading = 'सभी वर्गो के चयनित अभ्यर्थियों की सूची';
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
@@ -563,7 +573,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'allList')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
         }
     }
     public function generalList(Request $request, $year = null) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
@@ -614,6 +624,8 @@ class DashboardController extends Controller
             });
         }
 
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
 
         $heading = 'सामान्य/अन्य पिछड़ा वर्ग चयनित अभ्यर्थियों की सूची';
 
@@ -627,7 +639,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'generalList')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'generalList')->with('year', $this->sessionYear);
         }
     }
 
@@ -677,6 +689,8 @@ class DashboardController extends Controller
             });
         }
 
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
 
         $heading = 'चयनित अनुसूचित जाति चयनित अभ्यर्थियों की सूची';
 
@@ -690,7 +704,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'sc-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'scList')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'scList')->with('year', $this->sessionYear);
         }
     }
 
@@ -740,6 +754,8 @@ class DashboardController extends Controller
             });
         }
 
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
 
         $heading = 'चयनित अनुसूचित जनजाति चयनित अभ्यर्थियों की सूची';
 
@@ -753,7 +769,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'st-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'stList')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'stList')->with('year', $this->sessionYear);
         }
     }
 
