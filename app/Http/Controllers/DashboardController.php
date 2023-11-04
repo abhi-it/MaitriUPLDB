@@ -624,6 +624,13 @@ class DashboardController extends Controller
             });
         }
 
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
 
@@ -689,6 +696,13 @@ class DashboardController extends Controller
             });
         }
 
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
 
@@ -751,6 +765,13 @@ class DashboardController extends Controller
             $query->where(function ($q) use ($request) {
 
                 $q->where('mobile', '=', $request->input('mobile'));
+            });
+        }
+
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
             });
         }
 
