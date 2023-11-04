@@ -563,7 +563,7 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading'))->with('route', 'generalList')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading'))->with('route', 'allList')->with('year', $this->sessionYear);
         }
     }
     public function generalList(Request $request, $year = null) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
