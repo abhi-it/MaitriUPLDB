@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-    <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+    <div x-data="viewAvedan" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
         <h3 style="margin-top:10px;text-align: center;">{{ $heading }} ( आवेदन : {{ $results->total() }})</h3>
 
 
@@ -8,7 +8,20 @@
             @csrf
             <div class="row">
 
+                <div class="form-group col-md-3">
+                    <label for="inputEmail4">सेलेक्ट जनपद </label>
+                    <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
+                        @change="onChangeDistrict">
+                        <option value="" disabled selected>सेलेक्ट जनपद</option>
+                        <template x-for="option in districts" :key="option">
+                            <option x-bind:value="option.id" x-text="option.name_hindi"
+                                x-bind:selected="queryParams.district_id == option.id ? true : false"></option>
+                        </template>
 
+                    </select>
+                </div>
+
+                <div class="form-group col-md-1">अथवा</div>
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">आवेदन नंबर</label>
                     <input type="text" value="{{ @$_GET['applicationNumber'] }}" class="form-control"
@@ -95,4 +108,5 @@
             {{ $results->links() }}
         </div>
     </div>
+    @include('bladeJS.viewAvedanJs')
 @endsection
