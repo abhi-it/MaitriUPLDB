@@ -6,7 +6,7 @@
 
     @if ($sessionYear == date('Y'))
         @php
-            $show = true;
+            $show = false;
         @endphp
     @endif
 
@@ -56,8 +56,8 @@
                     <div class="card-header">स्वीकृत आवेदन</div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        
-                        
+
+
                         @if ($show)
                         <h5 class="card-title">0</h5>
                         <a href="#" class="btn btn-primary">View</a>
@@ -75,7 +75,7 @@
                     <div class="card-header">अस्वीकार आवेदन</div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        
+
                         @if ($show)
                         <h5 class="card-title">0</h5>
                         <a href="#" class="btn btn-primary">View</a>
@@ -93,7 +93,7 @@
                     <div class="card-header">चयनित सामान्य/अन्य पिछड़ा वर्ग अभ्यर्थी</div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        
+
                         @if ($show)
                         <h5 class="card-title">0</h5>
                         <a href="#" class="btn btn-primary">View</a>
@@ -111,8 +111,8 @@
                     <div class="card-header">चयनित अनुसूचित जाति अभ्यर्थी</div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                        
-                        
+
+
                         @if ($show)
                         <h5 class="card-title">0</h5>
                         <a href="#" class="btn btn-primary">View</a>
@@ -129,7 +129,7 @@
                 <div class="card text-center">
                     <div class="card-header">चयनित अनुसूचित जनजाति अभ्यर्थी</div>
                     <div class="card-body">
-                      
+
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
                         @if ($show)
@@ -167,7 +167,7 @@
             @foreach ($avedanYears as $avedanYear)
                 <div class="col-sm-3">
                     <div class="card text-center">
-                        <div class="card-header">Session</div>
+                        <div class="card-header">सत्र</div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $avedanYear . '-' . substr($avedanYear + 1, -2) }}</h5>
                             <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->

@@ -377,18 +377,19 @@ use App\Models\Districts;
 			@endif
 				</div>
 		</div>
-		  @if(auth()->user()->user_type=='District Officer' AND $result->is_approved==0) <!-----Then Display these buttons-->
+		@if(auth()->user()->user_type=='District Officer' AND $result->is_approved==0) <!-----Then Display these buttons-->
 
 				@if($waitingButtonShow==1) <!-----Then Display these buttons-->
 
 				<div class="row">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
-					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
+					<a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
 				</div>
 				@else
 				<div class="row">
+					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/3" class="btn btn-warning">प्रतीक्षा सूची बनायें</a>
-					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
+					<a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
 				</div>
 				@endif
 			@endif

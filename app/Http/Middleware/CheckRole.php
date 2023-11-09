@@ -26,7 +26,7 @@ class CheckRole
      * @return mixed
      */
     public function handle(Request $request, Closure $next) {
-		
+
 		try {
             $userRole = auth()->user()->role;
             $currentRouteName = Route::currentRouteName();
@@ -34,7 +34,7 @@ class CheckRole
             //echo 'currentRouteName=' . $currentRouteName.'<br>';
             //exit;
 
-            
+
             // dd($this->userAccessRole()[$userRole], $userRole, $currentRouteName);
             if (in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
                 return $next($request);
@@ -45,13 +45,13 @@ class CheckRole
             abort(403, 'You are not allowed to access this page this.');
         }
 	}
-	
+
 	/**
      * The list of accessible resources for a specific user.
      *
      * @return void
      */
-	
+
 	private function userAccessRole()
     {
         return [
@@ -59,6 +59,7 @@ class CheckRole
                 'dashboard',
             ],
             'Admin' => [
+                'waitingAvedanFullDetails',
                 'getVikaskhand',
                 'dashboard',
                 'grievance',
@@ -112,7 +113,7 @@ class CheckRole
                 'avedanDistrictwise',
                 'export',
             ],
-            
+
             'Superadmin' => [
 				'institute.create',
                 'institute.store',
@@ -121,14 +122,14 @@ class CheckRole
                 'institute.index',
                 'institute.destroy',
                 'avedanFullDetails',
-                
+
                 'setting.create',
                 'setting.store',
                 'setting.edit',
                 'setting.update',
                 'setting.index',
                 'setting.destroy',
-                
+
                 'dashboard',
                 'grievance',
                 'grievanceDetails',
@@ -168,9 +169,9 @@ class CheckRole
                 'stList',
                 'avedanStatus',
                 'export',
-                
+
             ],
-            
+
             /*
             'Superadmin' => [
                 'admin',
@@ -235,16 +236,16 @@ class CheckRole
                 'NodalOfficer.index',
                 'NodalOfficer.destroy',
                 'showContents',
-                
+
             ],*/
         ];
     }
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
      * The default user access role.
      *

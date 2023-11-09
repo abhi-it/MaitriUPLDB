@@ -62,8 +62,7 @@ class DashboardController extends Controller
 
             if ($this->sessionYear == date('Y')) {
                 $newApplication = Avedan::where('is_approved', '=', 0)->whereYear('created_at', $this->sessionYear)->count();
-
-            }else {
+            } else {
                 $newApplication = Avedan::where('is_approved', '=', 0)->whereYear('created_at', $this->sessionYear)->count();
             }
 
@@ -292,11 +291,11 @@ class DashboardController extends Controller
         $sessionYear = $this->sessionYear;
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->orderBy('category', 'DESC')->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-    ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-    ->whereYear('avedans.created_at', $this->sessionYear)
-    ->orderBy('avedans.category', 'DESC')
-    ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'districtwise-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('category', 'DESC')->paginate(50);
@@ -325,13 +324,6 @@ class DashboardController extends Controller
             $query->where(function ($q) use ($request) {
 
                 $q->where('mobile', '=', $request->input('mobile'));
-            });
-        }
-
-        if (!empty($request->input('district_id'))) {
-            $query->where(function ($q) use ($request) {
-
-                $q->where('district_id', '=', $request->input('district_id'));
             });
         }
 
@@ -456,11 +448,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'approved-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->paginate(50);
@@ -508,11 +500,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -583,11 +575,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -656,11 +648,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -728,11 +720,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'sc-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -800,11 +792,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category','districts.name_hindi as district_name', 'avedans.letter_address')
-            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
-            ->orderBy('avedans.category', 'DESC')
-            ->get();
+            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
+                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
             return \Excel::download(new ExportAvedan($data), 'st-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -876,8 +868,59 @@ class DashboardController extends Controller
     public function avedanFullDetails($id)
     {
         $result = Avedan::find($id);
+        $this->sessionYear = $result->created_at->year;
+
+
+        $user = auth()->user();
+        $user_type = $user->user_type;
+        $districtID = $result->district_id;
+
+        $result = Avedan::find($id);
+
+        $target = Districts::find($districtID);
+
+        $totalSelectedCandidates = 0;
+        $targetCandidates = 0;
+        /*------Start Getting total General and OBC selected candidates-----------------*/
+        if ($result->category == 'जनरल' or $result->category == 'ओ बी सी') {
+
+            $selectedCandidates = Avedan::where('is_approved', '=', 1)
+                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->where('district_id', '=', $districtID)
+                ->whereYear('created_at', $this->sessionYear)
+                ->get();
+            $totalSelectedCandidates = $selectedCandidates->count();
+            $targetCandidates = $target->general_target;
+        }
+        /*------End Getting total General and OBC selected candidates-----------------*/
+
+        /*------Start Getting total SC and ST selected candidates-----------------*/ else if ($result->category == 'एस सी' or $result->category == 'एस टी') {
+
+            $selectedCandidates = Avedan::where('is_approved', '=', 1)
+                ->whereNotIn('category', ["जनरल", "ओ बी सी"])
+                ->where('district_id', '=', $districtID)
+                ->whereYear('created_at', $this->sessionYear)
+                ->get();
+            $totalSelectedCandidates = $selectedCandidates->count();
+            $targetCandidates = $target->sc_st_target;
+        }
+        /*------End Getting total SC and ST selected candidates-----------------*/
+
+        //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
+
+        if ($totalSelectedCandidates >= $targetCandidates) {
+
+            $waitingButtonShow = false;
+        } else {
+
+            $waitingButtonShow = true;
+        }
+
+
+
+
         //echo '<pre>';print_r($result);exit;
-        return view('viewAvedanDetails', compact('result'));
+        return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
     }
 
     public function waitingAvedanFullDetails($id)
@@ -1451,7 +1494,7 @@ class DashboardController extends Controller
         }
     }
 
-    public function documentVerification($year = null,$export = null)
+    public function documentVerification($year = null, $export = null)
     {
         $user = auth()->user();
         $user_type = $user->user_type;
