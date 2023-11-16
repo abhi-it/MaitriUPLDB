@@ -5,12 +5,25 @@
             Alpine.data('viewAvedanDistrictwise', () => ({
                 init() {
                     this.parseQueryParams();
+
+
+
+                    const currentPath = window.location.pathname;
+
+                    // Extract the path variable
+                    const pathParts = currentPath.split('/');
+                    const yourPathVariable = pathParts[
+                        2]; // Adjust the index based on your URL structure
+
+                    const currentYear = new Date().getFullYear();
+                    this.sessionYear = `${yourPathVariable}` ? parseInt(yourPathVariable) :  currentYear;
                     if (this.queryParams['district_id']) {
                         this.selectedDistrict = this.queryParams['district_id'];
                         this.onChangeDistrict();
                     }
-                    $('#district_id').select2();
+
                 },
+                sessionYear: '',
                 selectedDistrict: '',
                 selectedBlock: '',
                 selectedCategory: '',
@@ -33,6 +46,7 @@
                 onChangeDistrict() {
                     const queryParams = {
                         districtId: this.selectedDistrict ? this.selectedDistrict : null,
+                        sessionYear: this.sessionYear
                     };
                     axios.get('{{ route('getVikaskhand') }}', {
                             params: queryParams

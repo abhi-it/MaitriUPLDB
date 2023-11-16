@@ -1563,8 +1563,8 @@ class DashboardController extends Controller
 
     public function getVikaskhand(Request $request)
     {
-
-        $vikasKhand = Avedan::where('district_id', $request->districtId)->distinct()->pluck('vikas_khand');
+        $this->sessionYear = $request->sessionYear;
+        $vikasKhand = Avedan::where('district_id', $request->districtId)->whereYear('created_at', $this->sessionYear)->distinct()->pluck('vikas_khand');
         return response()->json(["data" => $vikasKhand]);
     }
 }

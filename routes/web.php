@@ -147,15 +147,15 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 });
 
 
-Route::get('test', function () {
+// Route::get('test', function () {
 
-    $data = DB::table('settings')
-    ->where('id', 2) // Assuming you want to update the record with id 2
-    ->update([
-        'start_date' => date('Y-m-d', strtotime('10-10-2023')),
-        'end_date' => date('Y-m-d', strtotime('25-10-2023')),
-    ]);
+//     $data = DB::table('settings')
+//     ->where('id', 2) // Assuming you want to update the record with id 2
+//     ->update([
+//         'start_date' => date('Y-m-d', strtotime('10-10-2023')),
+//         'end_date' => date('Y-m-d', strtotime('25-10-2023')),
+//     ]);
 
 
-    dd($data);
-});
+//     dd($data);
+// });
