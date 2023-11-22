@@ -326,6 +326,12 @@ class DashboardController extends Controller
                 $q->where('mobile', '=', $request->input('mobile'));
             });
         }
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
 
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
@@ -1198,8 +1204,66 @@ class DashboardController extends Controller
 
     public function avedanUpdatedDocuments(Request $request, $id)
     {
+
+        $user = auth()->user();
+        $user_type = $user->user_type;
+        $districtID = auth()->user()->district_id;
+
+        $result = Avedan::find($id);
+        $target = Districts::find($districtID);
+
+        switch ($result->category) {
+            case 'जनरल':
+                $selectedCandidates = Avedan::where('is_approved', '=', 4)
+                    ->whereIn('category', ["जनरल", "ओ बी सी"])
+                    ->where('district_id', '=', $districtID)
+                    ->whereYear('created_at', $this->sessionYear)
+                    ->get();
+                $totalSelectedCandidates = $selectedCandidates->count();
+                $targetCandidates = $target->general_target;
+                break;
+            case 'ओ बी सी':
+                $selectedCandidates = Avedan::where('is_approved', '=', 4)
+                    ->whereIn('category', ["जनरल", "ओ बी सी"])
+                    ->where('district_id', '=', $districtID)
+                    ->whereYear('created_at', $this->sessionYear)
+                    ->get();
+                $totalSelectedCandidates = $selectedCandidates->count();
+                $targetCandidates = $target->general_target;
+                break;
+            case 'एस सी':
+                $selectedCandidates = Avedan::where('is_approved', '=', 4)
+                    ->whereIn('category', ["एस सी"])
+                    ->where('district_id', '=', $districtID)
+                    ->whereYear('created_at', $this->sessionYear)
+                    ->get();
+                $totalSelectedCandidates = $selectedCandidates->count();
+                $targetCandidates = $target->sc_target;
+                break;
+            case 'एस टी':
+                $selectedCandidates = Avedan::where('is_approved', '=', 4)
+                    ->whereIn('category', ["एस टी"])
+                    ->where('district_id', '=', $districtID)
+                    ->whereYear('created_at', $this->sessionYear)
+                    ->get();
+                $totalSelectedCandidates = $selectedCandidates->count();
+                $targetCandidates = $target->st_target;
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        if ($totalSelectedCandidates >= $targetCandidates) {
+
+            return back()->withErrors(['status' => 'सीटें पहले ही भर चुकी हैं']);
+        }
         $autoID = $id;
-        $data = Avedan::find($id);
+
+
+        $autoID = $id;
+        $data =  $result;
 
         $health_certificate =  '';
         if ($request->hasfile('health_certificate')) {

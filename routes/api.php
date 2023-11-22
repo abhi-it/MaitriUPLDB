@@ -19,12 +19,12 @@ use App\Models\Districts;
 
 // Route::get('tempRecord', function () {
 //     $data = \App\Models\Avedan::
-//     where('is_approved', '=', 1)
+//     where('is_approved', '=', 4)
 //     ->
-//     where('district_id', '=', 66)
+//     where('district_id', '=', 32)
 //     ->whereYear('created_at', 2023)
 //     ->get();
-// // dd($data);
+// dd($data);
 // foreach ($data as $record) {
 //     $record->is_approved = 0;
 //     $record->save();

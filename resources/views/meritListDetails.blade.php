@@ -383,13 +383,13 @@ use App\Models\Districts;
 
 				<div class="row">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
-					<a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
 				@else
 				<div class="row">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/3" class="btn btn-warning">प्रतीक्षा सूची बनायें</a>
-					<a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
 				@endif
 			@endif

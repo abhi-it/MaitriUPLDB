@@ -9,7 +9,6 @@
                         this.selectedDistrict = this.queryParams['district_id'];
                         this.onChangeDistrict();
                     }
-                    $('#district_id').select2();
                 },
                 selectedDistrict: '',
                 selectedBlock: '',
