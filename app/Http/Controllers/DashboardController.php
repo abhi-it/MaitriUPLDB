@@ -1132,7 +1132,12 @@ class DashboardController extends Controller
 
     public function rejectApplication(Request $request)
     {
-        //Rejectcomment
+
+        if(auth()->user()->user_type == 'District Officer'){
+            return redirect()->back()->with('success', 'status not updated!');
+        }
+
+
         $application_id = $request->get('application_id');
         $result = Avedan::find($request->get('application_id'));
         //echo '<pre>';print_r($result);exit;
@@ -1447,7 +1452,7 @@ class DashboardController extends Controller
             $data->permanent_address_proof = $permanent_address_proof;
         }
         $data->gram_panchayat_name = $request->get('gram_panchayat_name');
-        $data->niyay_panchayat_name = $request->get('niyay_panchayat_name');
+        // $data->niyay_panchayat_name = $request->get('niyay_panchayat_name');
         $data->vikas_khand = $request->get('vikas_khand');
         $data->district_id = $request->get('janpad');
         $data->letter_address = $request->get('letter_address');
