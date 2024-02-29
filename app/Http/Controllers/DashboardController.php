@@ -39,7 +39,7 @@ class DashboardController extends Controller
             // Validation failed, handle the error (e.g., return an error response)
             return response()->json(['errors' => $validator->errors()], 400);
         }
-        $this->sessionYear =  date('Y');
+        $this->sessionYear =  optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
         // if($request->year){
         //     dd("Hello");
         // }
@@ -130,14 +130,6 @@ class DashboardController extends Controller
             ->whereYear('created_at', '!=', $this->sessionYear) // Exclude the year 2022
             ->pluck('year')
             ->toArray();
-
-
-        if ($this->sessionYear != date('Y')) {
-            $currentYear = date('Y');
-            if (!in_array($currentYear, $avedanYears)) {
-                $avedanYears[] = $currentYear;
-            }
-        }
 
         $sessionYear = $this->sessionYear;
         $setting = DB::table('settings')->get();

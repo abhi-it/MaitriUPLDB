@@ -161,3 +161,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 //     dd($data);
 // });
+
+Route::get('/latest-record-year', function(){
+    $year = optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
+dd($year);
+});
