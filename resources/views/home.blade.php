@@ -2,7 +2,7 @@
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
-	 
+
  <div class="row">
  <div class="col-md-9">
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -31,23 +31,23 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-</div> 
+</div>
 <div class="col-md-3" id="block-honblechiefminister-2_blk">
  <div id="block-honblechiefminister-2" class="block block-block-content block-block-content13eccce4-0c3d-44b9-b70b-0fb0731ff869" >
-  
-    
+
+
       <div class="content" tabindex="0">
-      
+
             <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
 			<div id="block-honblechiefminister-2" class="block block-block-content block-block-content13eccce4-0c3d-44b9-b70b-0fb0731ff869">
-  
-    
+
+
       <div class="content" tabindex="0">
-      
+
             <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div class="minister-sec">
 <div class="chief-minister">
-	
-	<img alt="Yogi Aditya Nath" data-entity-type="file" data-entity-uuid="fcae4737-3c56-411a-b8ec-a3d3c3eaff50" src="{{ asset('assets/adityanathyogi_0.jpg')}}" class="align-center" style="width: 100px;">
+
+	<img alt="Yogi Aditya Nath" data-entity-type="file" data-entity-uuid="fcae4737-3c56-411a-b8ec-a3d3c3eaff50" src="{{ asset('assets/noimage1.png')}}" class="align-center" style="width: 100px;">
 <div class="content-minister">
 <p><strong><span style="font-size: 15px;">श्री योगी आदित्यनाथ </span></strong></p>
 <p style="margin-top: -14px;">मा० मुख्य मंत्री , उ०प्र०</p>
@@ -55,7 +55,7 @@
 </div>
 
 <div class="chief-minister">
-	<img alt="Dharmpal Singh" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/dharam-pal.jpeg')}}" class="align-center">
+	<img alt="Dharmpal Singh" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/noimage1.png')}}" class="align-center">
 <div class="content-minister">
 <p><strong><span style="font-size: 15px;">श्री धर्मपाल सिंह</span></strong></p>
 
@@ -63,38 +63,38 @@
 </div>
 </div>
 <div class="chief-minister">
-	<img alt="Dharmpal Singh" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/rajneeshdubey.jpg')}}" class="align-center">
+	<img alt="Ravinder" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/ravinder.jpeg')}}" class="align-center" style="width:100px">
 <div class="content-minister">
-<p><strong><span style="font-size: 15px;">डा० रजनीश दुबे</span></strong></p>
+<p><strong><span style="font-size: 15px;">श्री रविंदर</span></strong></p>
 
-<p style="margin-top: -14px;">अपर मुख्य सचिव ,पशुधन / <br> अध्यक्ष उ०प्र० पशुधन विकास परिषद्</p>
+<p style="margin-top: -14px;"> प्रमुख सचिव / पशुधन </p>
 </div>
 </div>
 </div>
 </div>
-      
+
     </div>
   </div>
 
-      
+
     </div>
-	
+
 </div>
-  </div> 
+  </div>
 </div>
-</div>  
+</div>
 <!--First row Closed-->
 <div class="row" style="margin-top:10px;margin-bottom:10px;">
   <div class="col-md-9 about-us-block">
-  
+
  <h3 class="uppercase about_head"><b><span class="board" key="about_gallery">राष्ट्रीय गोकुल मिशन अन्तर्गत मैत्री के बारे में</span></b></h3>
-        
+
             <div class="abt_txt">
-               
-			   पशुपालकों के द्वार पर गुणवत्तायुक्त पशु प्रजनन सुविधाये समयबद्ध रूप से  उपलब्ध कराने में मैत्री की अहम् भूमिका है, भारत सरकार के राष्ट्रीय गोकुल मिशन योजनान्तर्गत उत्तर प्रदेश में जनपद स्तर से मैत्री का चयन कर पशुओं में कृत्रिम गर्भाधान आच्छादन को बढाया जाना है| 
-			   
-			   
-			  
+
+			   पशुपालकों के द्वार पर गुणवत्तायुक्त पशु प्रजनन सुविधाये समयबद्ध रूप से  उपलब्ध कराने में मैत्री की अहम् भूमिका है, भारत सरकार के राष्ट्रीय गोकुल मिशन योजनान्तर्गत उत्तर प्रदेश में जनपद स्तर से मैत्री का चयन कर पशुओं में कृत्रिम गर्भाधान आच्छादन को बढाया जाना है|
+
+
+
 			   <div class="" style="margin-top: 40px;">
 				<div class="row">
 					<div class="col-md-4" style="margin-left: 30px;">
@@ -107,27 +107,27 @@
 					</div>
 				</div>
 	</div>
-			   
-			   
+
+
 			   </div>
 			   </div>
-			  
+
 
 <div class="col-md-3 right_box">
     <h3 class="uppercase right_mqu"><b><span class="new" key="new">नयी जानकारियाँ </span></b></h3>
-     <marquee class="marqu1" onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="250"> 
+     <marquee class="marqu1" onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="250">
       <ul>
-        <li> <a href="downloadFile/NiyamSarte.pdf" target="_blank"> नियम  एवं शर्ते </a> </li> 
-        <li> <a href="downloadFile/Shapath-patra.pdf" target="_blank">शपथ-पत्र</a>   </li>            
+        <li> <a href="downloadFile/NiyamSarte.pdf" target="_blank"> नियम  एवं शर्ते </a> </li>
+        <li> <a href="downloadFile/Shapath-patra.pdf" target="_blank">शपथ-पत्र</a>   </li>
       </ul>
        </marquee>
 </div> </div>
 <!---footer slider start -->
 <div class="row" style="margin-top:10px;margin-bottom:10px;">
   <div class="col-md-9 about-us-block">
-  
+
  <h3 class="uppercase about_head"><b><span class="board" key="about_gallery">फोटो गैलरी</span></b></h3>
-        
+
             <div class="abt_txt">
                <center>
 				 <div class="row">
@@ -165,4 +165,4 @@
 </div>
 <!--second row closed-->
   </div>
- @endsection 
+ @endsection
