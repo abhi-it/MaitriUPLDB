@@ -18,9 +18,9 @@
     <div class="carousel-item">
       <img class="d-block w-100" src="{{ asset('assets/banners/banner2.jpg')}}" alt="Second slide">
     </div>
-    <div class="carousel-item">
+    {{-- <div class="carousel-item">
       <img class="d-block w-100" src="{{ asset('assets/banners/banner3.jpg')}}" alt="Third slide">
-    </div>
+    </div> --}}
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -45,23 +45,23 @@
       <div class="content" tabindex="0">
 
             <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div class="minister-sec">
-<div class="chief-minister">
+{{-- <div class="chief-minister">
 
 	<img alt="Yogi Aditya Nath" data-entity-type="file" data-entity-uuid="fcae4737-3c56-411a-b8ec-a3d3c3eaff50" src="{{ asset('assets/noimage1.png')}}" class="align-center" style="width: 100px;">
 <div class="content-minister">
 <p><strong><span style="font-size: 15px;">श्री योगी आदित्यनाथ </span></strong></p>
 <p style="margin-top: -14px;">मा० मुख्य मंत्री , उ०प्र०</p>
 </div>
-</div>
+</div> --}}
 
-<div class="chief-minister">
+{{-- <div class="chief-minister">
 	<img alt="Dharmpal Singh" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/noimage1.png')}}" class="align-center">
 <div class="content-minister">
 <p><strong><span style="font-size: 15px;">श्री धर्मपाल सिंह</span></strong></p>
 
 <p style="margin-top: -14px;">मा० पशुधन मंत्री</p>
 </div>
-</div>
+</div> --}}
 <div class="chief-minister">
 	<img alt="Ravinder" data-entity-type="file" data-entity-uuid="1c364872-daa5-48fb-b8a4-f027e3c87b29" src="{{ asset('assets/ravinder.jpeg')}}" class="align-center" style="width:100px">
 <div class="content-minister">
