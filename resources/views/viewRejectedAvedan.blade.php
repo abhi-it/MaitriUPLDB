@@ -39,7 +39,7 @@
 		  </div>
 </form>
 <div class="row">
-{{ $results->links() }}
+{{ $results->appends(request()->query())->links() }}
 </div>
 <table id="myTable303" class="table">
     <thead>
@@ -87,7 +87,7 @@
     </tbody>
 </table>
 <div class="row">
-{{ $results->links() }}
+{{ $results->appends(request()->query())->links() }}
 </div>
 </div>
 @endsection

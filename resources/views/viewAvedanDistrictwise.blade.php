@@ -114,7 +114,7 @@
             </tbody>
         </table>
         <div class="row">
-            {{ $results->links() }}
+            {{ $results->appends(request()->query())->links() }}
         </div>
     </div>
     @include('bladeJS.viewAvedanDistrictwiseJs')
