@@ -119,9 +119,26 @@ button:hover {
 	@csrf
         <!-- Circles which indicates the steps of the form: -->
         <div style="text-align:center;margin-top:40px;">
-            <span class="step">1 </span><h3 style="display:inline;font-size: 18px;">आवेदक का विवरण</h3>
+				<span class="step">1 </span>
+                <h3 style="display:inline;font-size: 18px;">
+                <span data-hi="आवेदक का विवरण" data-en="Applicant details"></span>    
+                </h3>
+                <span class="step">2 </span>
+                <h3 style="display:inline;font-size: 18px;">
+                <span data-hi="शैक्षिक योग्यता व अन्य विवरण" data-en="Educational Qualification and other details"></span>        
+                </h3>
+                <span class="step">3 </span>
+                <h3 style="display:inline;font-size: 18px;">
+                <span data-hi="आवेदक का बैंक विवरण" data-en="Applicant Bank Details"></span>        
+                </h3>
+                <span class="step">4 </span>
+                <h3 style="display:inline;font-size: 18px;">  <span data-hi="सारांश" data-en="Summary"></span>    
+                </h3>
+
+
+            <!-- <span class="step">1 </span><h3 style="display:inline;font-size: 18px;">आवेदक का विवरण</h3>
             <span class="step">2 </span><h3 style="display:inline;font-size: 18px;">शैक्षिक योग्यता व अन्य विवरण </h3>
-            <span class="step">3 </span><h3 style="display:inline;font-size: 18px;">सारांश</h3>
+            <span class="step">3 </span><h3 style="display:inline;font-size: 18px;">सारांश</h3> -->
         </div>
         <hr>
         
@@ -130,27 +147,36 @@ button:hover {
 			<div class="row">
 				
 				<div class="form-group col-md-6">
-				  <label for="inputEmail4">आवेदक का नाम </label>
+				  <label for="inputEmail4"><span data-hi="आवेदक का नाम" data-en="Name of applicant"> </span>  </label>
 				  <input type="text" class="form-control" value="{{$result->applicant_name}}" name="applicant_name" id="applicant_name" placeholder="आवेदक का नाम">
 				</div>
 				
 				<div class="form-group col-md-6">
-				  <label for="inputPassword4">पिता  / पति का नाम </label>
+				  <label for="inputPassword4"><span data-hi="पिता / पति का नाम" data-en="Father/Husband's Name"> </label>
 				  <input type="text" class="form-control" value="{{$result->fname}}" id="fname" name="fname" placeholder="पिता  / पति का नाम">
 				</div>
 				
 				<div class="form-group col-md-6">
-				  <label for="inputEmail4">जन्म तिथि (हाई स्कूल प्रमाण पत्र के अनुसार)</label>
+				  <label for="inputEmail4">
+				  <span data-hi="जन्म तिथि (हाई स्कूल प्रमाण-पत्र के अनुसार)" data-en="Date of Birth (As per High School Certificate)"> </span>
+				  </label>
 				  <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($result->dob)->format('d-m-Y')}}" name="dob" id="dob" placeholder="जन्म तिथि" readonly>
 				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputEmail4"><span data-hi="पिछला आवेदन नंबर" data-en="Previous Avedan Number"> </span> </label>
+					<input type="text" class="form-control" name="previous_avedan_number" id="previous_avedan_number"
+						placeholder="पिछला आवेदन नंबर" autocomplete="off" value="{{ $result->previous_avedan_number }}">
+				</div>
+
 				
 				<div class="form-group col-md-6">
-				  <label for="inputEmail4">दूरभाष  / मोबाइल नंबर</label>
+				  <label for="inputEmail4"><span data-hi="दूरभाष / मोबाइल नंबर" data-en="Telephone / Mobile Number"> </span></label>
 				  <input type="text" class="form-control" value="{{$result->mobile}}" name="mobile" id="mobile" placeholder="दूरभाष  / मोबाइल नंबर">
 				</div>
 				
 				<div class="form-group col-md-6">
-				  <label for="inputEmail4"></label>
+				  <label for="inputEmail4"><span data-hi="श्रेणी" data-en="Category"> </span></label>
 				  <select class="form-control" name="category" id="category">
 					  <option value="">सेलेक्ट</option>
 					  <option value="जनरल" {{ $result->category=='जनरल' ? 'selected' : '' }}>सामान्य</option>
@@ -161,12 +187,13 @@ button:hover {
 				</div>
 				
 				<div class="form-group col-md-6">
-				  <label for="inputPassword4">स्थायी पता </label>
+				  <label for="inputPassword4"><span data-hi="स्थायी पता" data-en="Permanent Address"> </span></label>
 				  <input type="text" class="form-control" value="{{$result->permanent_address}}" name="permanent_address" id="permanent_address" placeholder="स्थायी पता">
 				</div>
 				
 				<div class="form-group col-md-6">
-				  <label for="inputPassword4">स्थायी पता का प्रमाण - पत्र </label>
+				  <label for="inputPassword4">
+					<span data-hi="स्थायी पते के प्रमाण-पत्र का प्रकार" data-en="Type of Permanent Address Certificate"> </span>  </label>
 				  @if($result->permanent_address_proof!='')
 							<a href="{{ url('downloadFile', $result->permanent_address_proof) }}">Download</a>
 				  @else
@@ -174,15 +201,10 @@ button:hover {
 				  @endif
 				  <input type="file" class="form-control" name="permanent_address_proof" id="permanent_address_proof">
 				</div>
-				
 				<div class="form-group col-md-6">
-				  <label for="inputEmail4">ग्राम पंचायत का नाम</label>
-				  <input type="text" class="form-control" value="{{$result->gram_panchayat_name}}" name="gram_panchayat_name" id="gram_panchayat_name" placeholder="ग्राम पंचायत का नाम">
-				</div>
-				
-				<div class="form-group col-md-6">
-				  <label for="inputPassword4">न्याय पंचायत का नाम </label>
-				  <input type="text" class="form-control" value="{{$result->niyay_panchayat_name}}" name="niyay_panchayat_name" id="niyay_panchayat_name" placeholder="न्याय पंचायत का नाम">
+					<label for="inputPassword4"><span data-hi="स्थायी पता के प्रमाण-पत्र संख्या " data-en="Permanent Address Certificate Number"> </span>  </label> <span class="text-danger">*</span>
+					<input type="text" class="form-control" name="address_number" id="address_number"
+						placeholder="स्थायी पता के प्रमाण-पत्र संख्या" autocomplete="off" value="{{ $result->address_number }}">
 				</div>
 				
 				<div class="form-group col-md-6">
@@ -199,16 +221,32 @@ button:hover {
 				  <label for="inputEmail4">विकास खण्ड </label>
 				  <input type="text" class="form-control" value="{{$result->vikas_khand}}" name="vikas_khand" id="vikas_khand" placeholder="विकास खण्ड">
 				</div>
+				<div class="form-group col-md-6">
+				  <label for="inputEmail4">तहसील का नाम</label>
+				  <input type="text" class="form-control" value="{{$result->tehsil}}" name="tehsil" id="tehsil" placeholder="तहसील का नाम">
+				</div>
+				
+				<div class="form-group col-md-6">
+				  <label for="inputPassword4">न्याय पंचायत का नाम </label>
+				  <input type="text" class="form-control" value="{{$result->niyay_panchayat_name}}" name="niyay_panchayat_name" id="niyay_panchayat_name" placeholder="न्याय पंचायत का नाम">
+				</div>
 				
 				<div class="form-group col-md-6">
 				  <label for="inputEmail4">पत्र  - व्यवहार का पता </label>
 				  <input type="text" class="form-control" value="{{$result->letter_address}}" name="letter_address" id="letter_address" placeholder="पत्र  - व्यव्हार का पता">
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputPassword4"><span data-hi="एआई सेंटर (पशु चिकित्सा अस्पताल / एलईओ सेंटर)" data-en="AI Centre (Veterinary Hospital / LEO Center)"> </span></label>
+					<input type="text" class="form-control" value="{{$result->ai_center}}" name="ai_center" id="ai_center" placeholder="एआई सेंटर ">
 				</div>
 				
 				<div class="form-group col-md-6">
 				  <label for="inputPassword4">ई  - मेल  </label>
 				  <input type="text" class="form-control" value="{{$result->email}}" readonly name="email" id="email" placeholder="ई  - मेल">
 				</div>
+
+
 				
 				<div class="form-group col-md-6">
 				  <label for="inputPassword4">आवेदक की फोटो </label>
@@ -323,6 +361,15 @@ button:hover {
 					<?php } ?>
 				  </select>
 				</div>
+
+
+				<div class="form-group col-md-6">
+					<label for="inputEmail4">
+					<span data-hi="भारत पशुधन आईडी" data-en="Bharat Pashudhan ID"> </span></label>
+					<input type="text" class="form-control" value="{{ $result->bharat_pshudhan_id }}" placeholder="भारत पशुधन आईडी"
+						name="bharat_pshudhan_id" id="bharat_pshudhan_id">
+				</div>
+
 				
 				<div class="form-group col-md-12">
 				  <label for="inputEmail4">वोटर आई डी कार्ड  / आधार कार्ड / पैन कार्ड का प्रमाण - पत्र 
@@ -366,6 +413,47 @@ button:hover {
 		</div>
 		  
         </div>
+		<div class="tab">
+			<h3> <span data-hi="आवेदक का बैंक विवरण" data-en="Applicant Bank Detailss"></span></h3>
+			<div class="row">
+
+				<div class="form-group col-md-6">
+					<label for="inputEmail4">
+					<span data-hi="बैंक का नाम " data-en="Bank Name"></span>      
+						</label> 
+					<select name="bank_name" id="bank_name" class="form-control">
+						<option value="">-कोई भी एक चुनें-</option>
+						@if(count($banks)>0)
+						@foreach($banks as $val)
+						<option value="{{$val->id}}">{{$val->name_hi}}</option>
+						@endforeach
+						@endif
+					</select>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputPassword4">
+					<span data-hi="खाता संख्या" data-en="Account Number"></span>      
+					</label> 
+					<input type="text" class="form-control" id="account_number" name="account_number"
+						placeholder="खाता संख्या" autocomplete="off" value="{{ $result->account_number }}">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="inputPassword4">
+					<span data-hi="आईएफएससी कोड" data-en="IFSC Code"></span>     
+					</label> 
+					<input type="text" class="form-control" id="ifsc_code" name="ifsc_code"
+						placeholder="आईएफएससी कोड" autocomplete="off" value="{{ $result->ifsc_code }}">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="inputPassword4">
+					<span data-hi="पीएफएमएस " data-en="PFMS"></span>    
+					</label> 
+					<input type="text" class="form-control" id="pfms" name="pfms"
+						placeholder="पीएफएमएस" autocomplete="off" value="{{ $result->pfms }}">
+				</div>
+			</div>
+		</div>
         
         
         <!------Summary Page Start---------------->
@@ -452,7 +540,7 @@ button:hover {
 			</div>
 		
 		
-		<hr>
+			<hr>
 		<div class="row">
 			
 			<h3>शैक्षिक योग्यता व अन्य विवरण </h3>

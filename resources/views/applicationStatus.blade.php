@@ -1,9 +1,11 @@
 @extends('master')
 @section('content')
-<div class="container main-div" style="background-color:white; height:380px;">
+<div class="container main-div py-5" style="background-color:white;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">आवेदन की स्थिति जानिए</h1>
+ <h1 style="margin-top:10px;text-align: center;">
+	<span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of the application"></span>	
+ </h1>
 @if(session()->get('success'))
   <div class="alert alert-danger">
       {{ session()->get('success') }}  
@@ -20,44 +22,51 @@
 @endif
 
         <!------Summary Page Start---------------->
-			<form method="post" action="{{ url('view-application-status') }}" id="applicationStatus">
+		<form method="post" action="{{ url('view-application-status') }}" id="applicationStatus" class="form-comman">
 		@csrf
-		
-		<div class="row">
-				
-				<div class="form-group col-md-4">
-				  <label for="inputEmail4">आवेदन संख्या</label>
-				  <input type="text" class="form-control" name="applicationNumber" id="applicationNumber" placeholder="आवेदन संख्या">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<label for="inputEmail4">
+						<span data-hi="आवेदन संख्या" data-en="Application Number"></span>	
+					</label>
+					<input type="text" class="form-control" name="applicationNumber" id="applicationNumber" data-placeholder-hi="आवेदन संख्या"
+					data-placeholder-en="Application Number">
 				</div>
-		</div>
-		
-		<div class="row">
 				
-				<div class="form-group col-md-1">
-				  <label for="inputEmail4">मोबाइल नंबर</label>
-				  <input type="text" maxlength="10" style="width: 95px;" class="form-control" name="mobile" id="mobile" placeholder="मोबाइल नंबर">
+				
+
+				<div class="col-md-3">
+					<label for="inputEmail4">
+						<span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span>	
+					</label>
+				  <input type="text" maxlength="10" class="form-control" name="mobile" id="mobile" data-placeholder-hi="मोबाइल नंबर" data-placeholder-en="Mobile Number">
+
+				</div>
+				<div class="col-md-1 fw-semibold my-auto text-center">
+					<span data-hi="अथवा" data-en="OR"></span>
 				  
 				</div>
-				
-				<div class="form-group col-md-1">
-				  <label for="inputEmail4"></label>
-				  <input type="text" style="width: 64px;margin-left: 15px;margin-top: 6px;border: white;font-weight:bold;" class="form-control" value="अथवा">
-				  
+				<div class="col-md-3">
+					<label for="inputEmail4">
+					<span data-hi="जन्म तिथि" data-en="Date of Birth"></span>	
+					</label>
+				  <input type="text" class="form-control"  name="dob" id="dob" data-placeholder-hi="जन्म तिथि" data-placeholder-en="Date of Birth" readonly>
 				</div>
-				
-				<div class="form-group col-md-4">
-				  <label for="inputEmail4">जन्म तिथि</label>
-				  <input type="text" class="form-control" style="width: 95px;" name="dob" id="dob" placeholder="जन्म तिथि" readonly>
-				</div>
-		</div>
-				
-		<div class="row">		
-				<div class="form-group col-md-12">
-					<button type="submit" class="btn btn-primary communicationAddress2">सबमिट</button>
+			</div>
+			<div class="row text-center">		
+				<div class="form-group col-md-12 mt-4">
+					<button type="submit" class="btn btn-primary communicationAddress2">
+						<span data-hi="सबमिट" data-en="Submit"></span>
+					</button>
 					<span class="spinner-border spinner-border-sm loader saveLoader" role="status" aria-hidden="true" style="display:none;"></span>
 					<span class="saveCommunicationAddress"></span>
 				</div>
-    </div>
+			</div>
+
+		</div>
+		
         <!------Summary Page End---------------->
      
         

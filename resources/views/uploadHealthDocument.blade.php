@@ -18,7 +18,7 @@ a@extends('master')
         @csrf
         <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
             <h3 style="margin-top:10px;text-align: center;">{{ $heading }}</h3>
-            <table id="myTable" class="table">
+            <table id="myTable" class="table table-striped  table-responsive table-bordered">
                 <thead>
                     <tr>
                         <th>आवेदन नंबर</th>

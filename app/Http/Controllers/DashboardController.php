@@ -19,6 +19,8 @@ use App\Models\MaitriPortal;
 use App\Models\UpLdbCenter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use App\Models\Banks;
+use App\Models\MaitriSessionRecord;
 
 class DashboardController extends Controller
 {
@@ -125,15 +127,21 @@ class DashboardController extends Controller
         // $maitriDistricts = MaitriDistrictLatLong::with('maitriPortal')->get();
         // $upldbCenters = UpLdbCenter::all();
 
+        $sessionYear = $this->sessionYear; 
+        if (!$sessionYear || !is_numeric($sessionYear)) {
+            throw new \Exception('Session year is not set or invalid');
+        }
+
         $avedanYears = Avedan::selectRaw('YEAR(created_at) as year')
-            ->distinct()
-            ->whereYear('created_at', '!=', $this->sessionYear) // Exclude the year 2022
-            ->pluck('year')
-            ->toArray();
+                ->distinct()
+                // ->whereRaw('YEAR(created_at) != ?', [$sessionYear])
+                ->pluck('year')
+                ->toArray();
 
         $sessionYear = $this->sessionYear;
         $setting = DB::table('settings')->get();
         $lastDate = $setting[1]->end_date;
+        $totalsession = MaitriSessionRecord::count();
 
 
         // $approvedApplication = 0;
@@ -144,11 +152,9 @@ class DashboardController extends Controller
         // $waitingList = 0;
 
 
-
-
         /*----------------End for Institute User dashboard data-----------------------------*/
 
-        return view($template, compact('results', 'newApplication', 'approvedApplication', 'rejectedApplication', 'generalList', 'SClist', 'STlist', 'waitingList', 'avedanYears', 'sessionYear', 'lastDate'));
+        return view($template, compact('results', 'newApplication', 'approvedApplication', 'rejectedApplication', 'generalList', 'SClist', 'STlist', 'waitingList', 'avedanYears', 'sessionYear', 'lastDate','totalsession'));
     }
 
 
@@ -185,11 +191,11 @@ class DashboardController extends Controller
         //echo '<pre>';print_r($user);exit;
 
         if ($user_type == 'Director') { //Director
-            $query = Avedan::where('is_approved', '=', 0)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 0)->with('district')->orderBy('id', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
-            $query = Avedan::where('is_approved', '=', 0)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 0)->with('district')->orderBy('id', 'DESC');
         } else { //CVO
-            $query = Avedan::where('is_approved', '=', 0)->where('district_id', '=', $districtID)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 0)->with('district')->where('district_id', '=', $districtID)->orderBy('id', 'DESC');
         }
 
 
@@ -206,6 +212,12 @@ class DashboardController extends Controller
                 $q->where('mobile', '=', $request->input('mobile'));
             });
         }
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
 
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
@@ -213,7 +225,35 @@ class DashboardController extends Controller
         $statusButtonApprovedRejectedShow = 0;
 
         if ($export !== null) {
-            $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
+            $datas = $query->whereYear('created_at', $this->sessionYear)->with('district')->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
+            // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'category','tehsil','post_office','gram_panchayat_name','vikas_khand','letter_address','high_marks','high_total_marks','high_percentage', 'inter_marks','inter_total_marks', 'inter_percentage','topper_number')->whereYear('created_at', $this->sessionYear)->get();
+
             return \Excel::download(new ExportAvedan($data), 'avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -282,12 +322,36 @@ class DashboardController extends Controller
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
         $sessionYear = $this->sessionYear;
         if (!empty($request->input('export'))) {
-            // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->orderBy('category', 'DESC')->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            $datas = $query->with('district')->whereYear('avedans.created_at', $this->sessionYear)
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
+             
             return \Excel::download(new ExportAvedan($data), 'districtwise-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('category', 'DESC')->paginate(50);
@@ -331,7 +395,33 @@ class DashboardController extends Controller
         $statusButtonApprovedRejectedShow = 0;
 
         if ($export !== null) {
-            $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
+            $datas = $query->with('district')->whereYear('created_at', $this->sessionYear)->get();
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
+
             return \Excel::download(new ExportAvedan($data), 'total-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -388,7 +478,32 @@ class DashboardController extends Controller
         $statusButtonApprovedRejectedShow = 1;
 
         if ($export !== null) {
-            $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->orderBy('topper_number', 'DESC')->get();
+            $datas = $query->whereYear('created_at', $this->sessionYear)->orderBy('topper_number', 'DESC')->get();
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'merit-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('topper_number', 'DESC')->paginate(50);
@@ -445,12 +560,38 @@ class DashboardController extends Controller
         $heading = 'स्वीकार आवेदन';
 
         if (!empty($request->input('export'))) {
-            // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+           
+            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
+
             return \Excel::download(new ExportAvedan($data), 'approved-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->paginate(50);
@@ -498,11 +639,36 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
+            $datas = $queryjoin('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)->with('district')
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+                });
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -573,11 +739,36 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -646,11 +837,35 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -718,11 +933,36 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'sc-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -790,11 +1030,35 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'districts.name_hindi as district_name', 'avedans.letter_address')
-                ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'st-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
@@ -831,7 +1095,7 @@ class DashboardController extends Controller
             $heading = 'अनुसूचित जाति अभ्यर्थियों की प्रतीक्षा सूची';
         } else { //ST Waiting List
 
-            $results = Avedan::where('is_approved', '=', 3)
+            $results = Avedan::where('is_approved', '=', 3)->with('district')
                 ->whereIn('category', ["एस टी"])
                 ->where('district_id', '=', $districtID)
                 ->whereYear('created_at', $this->sessionYear)
@@ -851,10 +1115,20 @@ class DashboardController extends Controller
                     'gender' => $item->gender,
                     'mobile' => $item->mobile,
                     'email' => $item->email,
-                    'high_percentage' => $item->high_percentage,
-                    'inter_percentage' => $item->inter_percentage,
                     'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
                     'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'waiting-list.xlsx');
@@ -888,7 +1162,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->general_target;
+            $targetCandidates = ($target)?$target->general_target:'';
         }
         /*------End Getting total General and OBC selected candidates-----------------*/
 
@@ -900,7 +1174,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->sc_st_target;
+            $targetCandidates = ($target)?$target->sc_st_target:'';
         }
         /*------End Getting total SC and ST selected candidates-----------------*/
 
@@ -913,9 +1187,6 @@ class DashboardController extends Controller
 
             $waitingButtonShow = true;
         }
-
-
-
 
         //echo '<pre>';print_r($result);exit;
         return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
@@ -941,7 +1212,7 @@ class DashboardController extends Controller
                 ->where('district_id', '=', $districtID)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->general_target;
+            $targetCandidates = ($target)?$target->general_target:'';
         }
         /*------End Getting total General and OBC selected candidates-----------------*/
 
@@ -952,7 +1223,7 @@ class DashboardController extends Controller
                 ->where('district_id', '=', $districtID)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->sc_st_target;
+            $targetCandidates = ($target)?$target->sc_st_target:'';
         }
         /*------End Getting total SC and ST selected candidates-----------------*/
 
@@ -1052,7 +1323,6 @@ class DashboardController extends Controller
         $targetCandidates = 0;
 
 
-
         /*------Start Getting total General and OBC selected candidates-----------------*/
         if ($result->category == 'जनरल' or $result->category == 'ओ बी सी') {
 
@@ -1062,7 +1332,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->general_target;
+            $targetCandidates = ($target)? $target->general_target:'';
         }
         /*------End Getting total General and OBC selected candidates-----------------*/
 
@@ -1074,7 +1344,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->sc_target;
+            $targetCandidates = ($target)? $target->sc_target:''; 
         }
         /*------End Getting total SC selected candidates-----------------*/
 
@@ -1086,7 +1356,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = $target->st_target;
+            $targetCandidates = ($target)? $target->st_target:''; 
         }
         /*------End Getting total ST selected candidates-----------------*/
 
@@ -1154,7 +1424,7 @@ class DashboardController extends Controller
 
         if ($user_type == 'District Officer') { //CVO only
 
-            $results = Avedan::where('is_approved', '=', 1)
+            $results = Avedan::where('is_approved', '=', 1)->with('district')
                 ->where('district_id', '=', $districtID)
                 ->whereYear('created_at', $this->sessionYear)
                 //->whereNotIn('id', DB::table('verificationcomments')->pluck('application_id'))
@@ -1169,20 +1439,30 @@ class DashboardController extends Controller
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
-                return [
-                    'applicationNumber' => $item->applicationNumber,
-                    'applicant_name' => $item->applicant_name,
-                    'fname' => $item->fname,
-                    'mother' => $item->mother,
-                    'gender' => $item->gender,
-                    'mobile' => $item->mobile,
-                    'email' => $item->email,
-                    'high_percentage' => $item->high_percentage,
-                    'inter_percentage' => $item->inter_percentage,
-                    'category' => $item->category,
-                    'letter_address' => $item->letter_address,
-                ];
-            });
+                    return [
+                        'applicationNumber' => $item->applicationNumber,
+                        'applicant_name' => $item->applicant_name,
+                        'fname' => $item->fname,
+                        'mother' => $item->mother,
+                        'gender' => $item->gender,
+                        'mobile' => $item->mobile,
+                        'email' => $item->email,
+                        'category' => $item->category,
+                        'districts' => $item->district->name_hindi,
+                        'tehsil' => $item->tehsil,
+                        'post_office' => $item->post_office,
+                        'gram_panchayat_name' => $item->gram_panchayat_name,
+                        'vikas_khand' => $item->vikas_khand,
+                        'letter_address' => $item->letter_address,
+                        'high_marks' => $item->high_marks,
+                        'high_total_marks' => $item->high_total_marks,
+                        'high_percentage' => $item->high_percentage,
+                        'inter_marks' => $item->inter_marks,
+                        'inter_total_marks' => $item->inter_total_marks,
+                        'inter_percentage' => $item->inter_percentage,
+                        'topper_number' => $item->topper_number,
+                    ];
+                });
             return \Excel::download(new ExportAvedan($data), 'upload-documents-list.xlsx');
         } else {
             return view('uploadDocuments', compact('results', 'heading'))->with('routeName', 'uploadDocuments');
@@ -1301,12 +1581,13 @@ class DashboardController extends Controller
 
     public function editAvedan($id)
     {
+        $banks      =  Banks::get();
         $result = Avedan::find($id);
         if (empty($result)) {
             return redirect('/avedan/')->with('success', 'अनअथॉरिज़ एक्शन');
         }
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
-        return view('avedanEdit', compact('districts', 'result'));
+        return view('avedanEdit', compact('districts', 'result','banks'));
     }
 
     public function avedanUpdated(Request $request, $id)
@@ -1547,7 +1828,32 @@ class DashboardController extends Controller
         $heading = 'अभ्यार्थी जिन्होंने संस्थान को अभी तक जॉइन नहीं किया है';
 
         if ($export !== null) {
-            $data = $query->select('avedans.applicationNumber', 'avedans.applicant_name', 'avedans.fname', 'avedans.mother', 'avedans.gender', 'avedans.mobile', 'avedans.email', 'avedans.high_percentage', 'avedans.inter_percentage', 'avedans.category', 'avedans.letter_address')->orderBy('avedans.id', 'DESC')->get();
+            $datas = $query->with('district')->orderBy('avedans.id', 'DESC')->get();
+            $data = $datas->map(function ($item) {
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $item->topper_number,
+                ];
+            });
             return \Excel::download(new ExportAvedan($data), 'candidate-not-joined-list.xlsx');
         } else {
             $results = $query->whereYear('avedans.created_at', $this->sessionYear)->orderBy('id', 'DESC')->get(['avedans.*', 'allocations.application_id', 'institutes.name AS Intitute_name']);
@@ -1564,7 +1870,7 @@ class DashboardController extends Controller
 
         if ($user_type == 'District Officer') { //CVO only
 
-            $results = Avedan::where('is_approved', '=', 1)
+            $results = Avedan::where('is_approved', '=', 1)->with('district')
                 ->where('district_id', '=', $districtID)
                 ->whereNotIn('id', DB::table('verificationcomments')->pluck('application_id'))
                 ->whereYear('created_at', $this->sessionYear)
@@ -1579,20 +1885,30 @@ class DashboardController extends Controller
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
-                return [
-                    'applicationNumber' => $item->applicationNumber,
-                    'applicant_name' => $item->applicant_name,
-                    'fname' => $item->fname,
-                    'mother' => $item->mother,
-                    'gender' => $item->gender,
-                    'mobile' => $item->mobile,
-                    'email' => $item->email,
-                    'high_percentage' => $item->high_percentage,
-                    'inter_percentage' => $item->inter_percentage,
-                    'category' => $item->category,
-                    'letter_address' => $item->letter_address,
-                ];
-            });
+                    return [
+                        'applicationNumber' => $item->applicationNumber,
+                        'applicant_name' => $item->applicant_name,
+                        'fname' => $item->fname,
+                        'mother' => $item->mother,
+                        'gender' => $item->gender,
+                        'mobile' => $item->mobile,
+                        'email' => $item->email,
+                        'category' => $item->category,
+                        'districts' => $item->district->name_hindi,
+                        'tehsil' => $item->tehsil,
+                        'post_office' => $item->post_office,
+                        'gram_panchayat_name' => $item->gram_panchayat_name,
+                        'vikas_khand' => $item->vikas_khand,
+                        'letter_address' => $item->letter_address,
+                        'high_marks' => $item->high_marks,
+                        'high_total_marks' => $item->high_total_marks,
+                        'high_percentage' => $item->high_percentage,
+                        'inter_marks' => $item->inter_marks,
+                        'inter_total_marks' => $item->inter_total_marks,
+                        'inter_percentage' => $item->inter_percentage,
+                        'topper_number' => $item->topper_number,
+                    ];
+                });
             return \Excel::download(new ExportAvedan($data), 'document-verification.xlsx');
         } else {
             return view('verification', compact('results', 'heading'))->with('routeName', 'documentVerification');
@@ -1624,8 +1940,14 @@ class DashboardController extends Controller
 
     public function getVikaskhand(Request $request)
     {
-        $this->sessionYear = $request->sessionYear;
-        $vikasKhand = Avedan::where('district_id', $request->districtId)->whereYear('created_at', $this->sessionYear)->distinct()->pluck('vikas_khand');
+        $this->sessionYear = ($request->sessionYear)?$request->sessionYear: date('Y');
+        $vikasKhand = Avedan::where('district_id', $request->districtId)->distinct()->pluck('vikas_khand');
         return response()->json(["data" => $vikasKhand]);
+    }
+
+
+    public function totalsessionlist(Request $request){
+        $results =  MaitriSessionRecord::orderBy('id','DESC')->paginate(50);
+        return view('session-records', compact('results'));
     }
 }

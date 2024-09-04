@@ -1,18 +1,19 @@
 @extends('master')
 @section('content')
-    <div x-data="viewAvedan" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+
+    <div x-data="viewAvedan" class="container main-div">
         <h3 style="margin-top:10px;text-align: center;">{{ $heading }} ( आवेदन : {{ $results->total() }})</h3>
 
 
         <form method="get" action="{{ Request::url() }}">
             @csrf
-            <div class="row">
+            <div class="row form-comman">
 
                 @if (auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
 
                 <div class="form-group col-md-3">
-                    <label for="inputEmail4">सेलेक्ट जनपद </label>
+                    <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
                     <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
                     @change="onChangeDistrict">
                     <option value="" disabled selected>सेलेक्ट जनपद</option>
@@ -24,23 +25,23 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-1">अथवा</div>
+            <div class="form-group col-md-1 fw-semibold my-auto text-center">अथवा</div>
             @endif
                 <div class="form-group col-md-3">
-                    <label for="inputEmail4">आवेदन नंबर</label>
+                    <label for="inputEmail4"  class="fw-bold">आवेदन नंबर</label>
                     <input type="text" value="{{ @$_GET['applicationNumber'] }}" class="form-control"
                         name="applicationNumber" id="applicationNumber" placeholder="आवेदन  नंबर">
                 </div>
 
-                <div class="form-group col-md-1">अथवा</div>
+                <div class="form-group col-md-1 fw-semibold my-auto text-center">अथवा</div>
 
                 <div class="form-group col-md-3">
-                    <label for="inputEmail4">मोबाइल नंबर</label>
+                    <label for="inputEmail4"  class="fw-bold">मोबाइल नंबर</label>
                     <input type="text" value="{{ @$_GET['mobile'] }}" class="form-control" name="mobile" id="mobile"
                         placeholder="मोबाइल नंबर">
                 </div>
 
-                <div class="form-group col-md-3" style="margin-top: 29px;width:100px;">
+                <div class="form-group col-md-3">
                     <button type="submit" class="btn btn-primary">सर्च करें</button>
                     <a href="{{ Request::url() }}" class="btn btn-secondary">रीसेट करें</a>
                     @if (isset($route, $year))
@@ -59,9 +60,11 @@
             </div>
         </form>
         <div class="row">
-            {{ $results->appends(request()->query())->links() }}
+           <div class="col-md-12">
+           {{ $results->appends(request()->query())->links() }}
+           </div>
         </div>
-        <table id="myTable202" class="table">
+        <table id="myTable202" class="table table-striped  table-responsive table-bordered">
             <thead>
                 <tr>
                     <th>आवेदन नंबर</th>
@@ -75,11 +78,19 @@
             <tbody>
                 @if ($results->count())
                     @foreach ($results as $row)
+                        @php 
+                        $high_percentage = $row->high_percentage;
+                        $high_school_calculation = round(($high_percentage*8)/10);
+                        $inter_percentage = $row->inter_percentage;
+                        $inter_calculation = round(($inter_percentage*2)/10);
+                        $topper_number = $high_school_calculation + $inter_calculation;
+                        @endphp
+
                         <tr>
                             <td>{{ $row->applicationNumber }}</td>
                             <td>{{ $row->applicant_name }}</td>
                             <td><a href="javascript:void(0)"
-                                    onClick="viewCalculation({{ $row->id }});">{{ $row->topper_number }}</a></td>
+                                    onClick="viewCalculation({{ $row->id }});">{{ $topper_number }}</a></td>
                             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y') }}</td>
                             <td>
                                 <a href="{{ url('view-Avedan-details') }}/{{ $row->id }}">विवरण देखें</a>
@@ -109,7 +120,9 @@
             </tbody>
         </table>
         <div class="row">
+           <div class="col-md-12">
             {{ $results->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
     @include('bladeJS.viewAvedanJs')

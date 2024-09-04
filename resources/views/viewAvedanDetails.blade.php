@@ -18,6 +18,15 @@
             </div>
         @endif
         <style>
+            .formone{
+                background: #fafafa;
+                border-radius: 8px;
+                padding: 30px;
+            }
+             .formone label {
+                width: 50%;
+                font-weight: 700;
+            }
             .form-control-span {
                 display: inline;
                 width: 100%;
@@ -40,35 +49,42 @@
 
         <!------Summary Page Start---------------->
         <div class="tab1">
-            <h3>आवेदक का विवरण </h3>
-            <div class="row">
+            <h3 class="mb-3 fw-bold">आवेदक का विवरण </h3>
+            <div class="row formone">
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">आवेदक का नाम </label> : {{ $result->applicant_name }}
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">पिता / पति का नाम </label> : {{ $result->fname }}
                     <span class="form-control-span" id="fname1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">माता का नाम </label> : {{ $result->mother }}
                     <span class="form-control-span" id="fname1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">जन्म तिथि (हाई स्कूल प्रमाण पत्र के अनुसार)</label> :
                     {{ \Carbon\Carbon::parse($result->dob)->format('d-m-Y') }}
                     <span class="form-control-span" id="dob1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4"><span data-hi="पिछला आवेदन नंबर" data-en="Previous Avedan Number"> </span></label> : {{ $result->previous_avedan_number }}
+                    <span class="form-control-span" id="previous_avedan_number"></span>
+                </div>
+
+
+
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">दूरभाष / मोबाइल नंबर</label> : {{ $result->mobile }}
                     <span class="form-control-span" id="mobile1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <?php $category = [
                         'जनरल' => 'सामान्य (general)',
                         'ओ बी सी' => 'अन्य पिछड़ा वर्ग  (OBC)',
@@ -80,17 +96,17 @@
                     <span class="form-control-span" id="category1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">स्थायी पते के प्रमाण का प्रकार </label> : {{ $result->address_type }}
                     <span class="form-control-span" id="address_type1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">स्थायी पता </label> : {{ $result->permanent_address }}
                     <span class="form-control-span" id="permanent_address1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">स्थायी पता का प्रमाण - पत्र</label> :
                     @if ($result->permanent_address_proof != '')
                         <div class="form-control-span" id="signature1">
@@ -108,48 +124,48 @@
                     <span class="form-control-span" id="permanent_address_proof1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">पोस्ट ऑफिस </label> : {{ $result->post_office }}
                     <span class="form-control-span" id="post_office1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">पिनकोड </label> : {{ $result->pincode }}
                     <span class="form-control-span" id="pincode1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">ग्राम पंचायत का नाम</label> : {{ $result->gram_panchayat_name }}
                     <span class="form-control-span" id="gram_panchayat_name1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">लिंग</label> : {{ $result->gender }}
                     <span class="form-control-span" id="gender1"></span>
                 </div>
 
-                <div class="form-group col-md-4">@php $district = Districts::find($result->district_id)@endphp
+                <div class="form-group col-md-6">@php $district = Districts::find($result->district_id)@endphp
                     <label for="inputPassword4">जनपद </label> : {{ $district->name_hindi }}
                     <span class="form-control-span" id="janpad1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">विकास खण्ड </label> : {{ $result->vikas_khand }}
                     <span class="form-control-span" id="vikas_khand1"></span>
                 </div>
 
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4">पत्र - व्यवहार का पता </label> : {{ $result->letter_address }}
                     <span class="form-control-span" id="letter_address1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">ई - मेल </label> : {{ $result->email }}
                     <span class="form-control-span" id="email1"></span>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">आवेदक की फोटो </label> :
                     @if ($result->applicant_photo != '')
                         <div class="form-control-span" id="applicant_photo1">
@@ -165,7 +181,7 @@
                     @endif
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="inputPassword4">अभ्यर्थी का हस्ताक्षर </label> :
                     @if ($result->signature != '')
                         <div class="form-control-span" id="signature1">
@@ -184,14 +200,11 @@
 
             </div>
 
-
-            <hr>
             <div class="row">
-
-                <h3>शैक्षिक योग्यता व अन्य विवरण </h3>
-                <br>
-                <div class="row table-responsive">
-                    <table class="table">
+                <h3 class="mb-3 fw-bold">शैक्षिक योग्यता व अन्य विवरण </h3>
+              
+                <div class="row">
+                    <table class="table table-responsive">
                         <tr>
                             <td style="width: 12%;">उत्तीर्ण परीक्षा का नाम</td>
                             <td>बोर्ड का नाम</td>
@@ -322,9 +335,9 @@
 			</div> */
                 ?>
 
-                <div class="row">
+                <div class="row formone">
                     @if ($result->training_adopted != 'नहीं')
-                        <div class="form-group col-md-9">
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">राज्य / केंद्र सरकार द्वारा मान्यता प्राप्त संस्थान से यदि पूर्व में
                                 कृत्रिम गर्भाधान के प्रशिक्षण का प्रमाण पत्र प्राप्त किया हो </label> :
                             <span class="form-control-span" id="training_certificate1">
@@ -339,13 +352,13 @@
                             </span>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">माह</label> :
                             <span class="form-control-span"
                                 id="high_percentage1">{{ $result->training_certificate_period_in_month }}</span>
                         </div>
 
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">दिन</label> :
                             <span class="form-control-span"
                                 id="high_percentage1">{{ $result->training_certificate_period_in_days }}</span>
@@ -364,7 +377,7 @@
                         </div>
                     @endif
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <label for="inputEmail4">वोटर आई डी कार्ड / आधार कार्ड / पैन कार्ड का प्रमाण पत्र</label> :
                         <span class="form-control-span" id="id_upload1">
                             @if ($result->id_upload != '')
@@ -378,7 +391,7 @@
                         </span>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <label for="inputEmail4">जाति (एस सी / एस टी श्रेणी हेतु न्याय अधिकारी द्वारा जारी प्रमाण
                             पत्र</label> :
                         <span class="form-control-span" id="caste_certificate1">
@@ -393,7 +406,7 @@
                         </span>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <label for="inputEmail4">राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण - पत्र</label> :
                         <span class="form-control-span" id="health_certificate1">
                             @if ($result->health_certificate != '')
@@ -407,11 +420,11 @@
                         </span>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }}
                     </div>
 
-                    <div class="form-group col-md-12" style="text-align:center;">
+                    <div class="form-group col-md-6">
                         <label for="inputEmail4">स्टेटस </label>
                         @if ($result->is_approved == 0)
                             <a href="javascript:void(0)" class="btn btn-secondary">लंबित</a>
@@ -431,28 +444,45 @@
                 <!-----Then Display these buttons-->
                 @if ($waitingButtonShow != 1)
                     <!-----Then Display these buttons-->
-
-                    <div class="row">
-						@if ($result->is_approved != 1 && $result->is_approved != 4)
-						<a href="{{ url('avedanStatus') }}/{{ $result->id }}/1" class="btn btn-primary">स्वीकार</a>
+                    @if(auth()->user()->user_type != 'District Officer')
+                    <div class="row mb-5 mt-4">
+						@if ($result->is_approved == 0 || $result->is_approved == 2 ||  $result->is_approved == 3)
+                        <div class="col-md-4">
+						<a href="{{ url('avedanStatus') }}/{{ $result->id }}/1" class="btn btn-primary w-100"> स्वीकार </a>
+                        </div>
 						@endif
-                        <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning">प्रतीक्षा सूची
+                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
+                        <div class="col-md-4">
+                        <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">प्रतीक्षा सूची
                             बनायें</a>
-                        @if ($result->is_approved != 2 and auth()->user()->user_type != 'District Officer')
-                            <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;"
-                                data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+                        </div>   
+                        @endif
+                        
+                        @if ($result->is_approved == 0 || $result->is_approved ==3 )
+                        <div class="col-md-4">
+                        <a href="javascript:void(0)" class="btn btn-danger  text-white w-100"
+                            data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार </a>
+                        </div>    
                         @endif
                     </div>
+                    @endif
                 @else
-                    <div class="row">
-                        <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning">प्रतीक्षा सूची
-                            बनायें</a>
-
-                        @if ($result->is_approved != 2 and auth()->user()->user_type != 'District Officer')
-                            <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;"
-                                data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+                    @if(auth()->user()->user_type != 'District Officer')
+                    <div class="row mb-5 mt-4">
+                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
+                        <div class="col-md-4">
+                        <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">प्रतीक्षा सूची
+                            बनायें </a>
+                        </div>   
+                        @endif
+                        @if ($result->is_approved == 0 || $result->is_approved ==3)
+                        <div class="col-md-4">
+                        <a href="javascript:void(0)" class="btn btn-danger text-white w-100" 
+                            data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार </a>
+                        </div>  
                         @endif
                     </div>
+                    @endif
                 @endif
 
             </div>
@@ -528,9 +558,11 @@
             <!--------Comment Start here------------>
             @php $coments = Rejectcomment::where('application_id', '=', $result->id)->first()@endphp
             @if (!empty($coments))
-                <div class="alert alert-danger" style="width: 100%;">
-                    {{ $coments->comments }}
-                </div>
+                @if($result->is_approved != 2)
+                    <div class="alert alert-danger" style="width: 100%;">
+                        {{ $coments->comments }}
+                    </div>
+                @endif
             @endif
             <!--------Comment End here------------>
 

@@ -57,12 +57,15 @@ class LoginController extends Controller
         $credentials['password'] = $_POST['password'];
         $passwordIs = strstr($credentials['password'], $UserKey, true);
         $credentials['password'] = base64_decode($passwordIs);
-        
         if (Auth::attempt($credentials)) {
-  
-            return redirect("dashboard");
+            if(Auth::user()->role_id==4){
+                return redirect("farmer-dashboard");
+            }else if(Auth::user()->role_id==3){
+                return redirect("maitri-dashboard");
+            }else{
+                return redirect("dashboard");
+            }
         }
-    
         return redirect("login")->withSuccess('You have entered invalid credentials');
     }
     

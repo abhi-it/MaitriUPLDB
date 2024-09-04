@@ -3,7 +3,7 @@
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">हमारे बारे में</h1>
+ <h1 class="text-center m-4 fw-bold">  <span data-hi="हमारे बारे में" data-en="About Us"></span> </h1>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  

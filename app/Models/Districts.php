@@ -11,7 +11,7 @@ class Districts extends Model
     protected $fillable = [
         'name_eng',
         'name_hindi',
-        'stamp_duty_in_percenatge',      
+        'stamp_duty_in_percenatge', 'latt','long'
     ];
 
     protected $table = 'districts';

@@ -6,10 +6,10 @@
         <form method="get" action="{{ url('avedan-districtwise') }}/{{ $sessionYear }}">
             @csrf
             <input type="hidden" name="year" value="{{ $sessionYear }}">
-            <div class="row">
+            <div class="row form-comman">
 
-                <div class="form-group col-md-3">
-                    <label for="inputEmail4">सेलेक्ट जनपद </label>
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
                     <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
                         @change="onChangeDistrict">
                         <option value="" disabled selected>सेलेक्ट जनपद</option>
@@ -21,8 +21,8 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label for="inputEmail4">सेलेक्ट विकासखण्ड </label>
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4" class="fw-bold">सेलेक्ट विकासखण्ड </label>
                     <select class="form-control" x-model="selectedBlock" name="vikas_khand" id="vikas_khand">
                         <option value="" disabled selected>सेलेक्ट विकासखण्ड </option>
                         <template x-for="option in vikasKhand" :key="option">
@@ -35,7 +35,7 @@
 
                 <div class="form-group
                                 col-md-4">
-                    <label for="inputEmail4">श्रेणी</label>
+                    <label for="inputEmail4" class="fw-bold">श्रेणी</label>
                     <select class="form-control" x-model="selectedCategory" name="category">
                         <option value="" disabled selected>सेलेक्ट</option>
                         <template x-for="option in categories" :key="option">
@@ -45,9 +45,9 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-3" style="padding-top: 5px;">
-                    <button type="submit" class="btn btn-primary" style="margin-top: 25px;width:100px;">देंखे</button>
-                    <a href="{{ Request::url() }}" class="btn btn-secondary" style="margin-top: 25px;">रीसेट करें</a>
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary">देंखे</button>
+                    <a href="{{ Request::url() }}" class="btn btn-secondary">रीसेट करें</a>
                     @if (isset($year))
                         @php
                             $queryParameters = request()->query();
@@ -57,7 +57,7 @@
                         @endphp
 
                         <a class="btn btn-secondary btn-export" href="{{ route('avedanDistrictwise', $queryParameters) }}"
-                            style="margin-top: 25px;">Export</a>
+                            >Export</a>
                     @endif
                 </div>
 
@@ -69,7 +69,7 @@
         </div>
 
 
-        <table id="myTable303" class="table">
+        <table id="myTable303" class="table table-striped  table-responsive table-bordered">
             <thead>
                 <tr>
                     <th>आवेदन नंबर</th>
@@ -84,12 +84,19 @@
             <tbody>
                 @if ($results->count())
                     @foreach ($results as $row)
+                    @php 
+                        $high_percentage = $row->high_percentage;
+                        $high_school_calculation = round(($high_percentage*8)/10);
+                        $inter_percentage = $row->inter_percentage;
+                        $inter_calculation = round(($inter_percentage*2)/10);
+                        $topper_number = $high_school_calculation + $inter_calculation;
+                    @endphp
                         <tr>
                             <td>{{ $row->applicationNumber }}</td>
                             <td>{{ $row->applicant_name }}</td>
                             <td>{{ $row->category }}</td>
                             <td><a href="javascript:void(0)"
-                                    onClick="viewCalculation({{ $row->id }});">{{ $row->topper_number }}</a></td>
+                                    onClick="viewCalculation({{ $row->id }});">{{ $topper_number  }}</a></td>
                             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y') }}</td>
                             <td>
                                 <a href="{{ url('view-Avedan-details') }}/{{ $row->id }}">विवरण देखें</a>

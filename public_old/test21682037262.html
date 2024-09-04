@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="csrf-token">
+<title>राष्ट्रीय गोकुल मिशन</title>
+<!-- Fonts -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<link rel="shortcut icon" href="http://localhost/maitri/public/assets/favicon.ico"> 
+<link href="http://localhost/maitri/public/css/custom.css" rel="stylesheet" type="text/css">
+<link href="http://localhost/maitri/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://localhost/maitri/public/css/navbar.css" rel="stylesheet" type="text/css">
+<link href="http://localhost/maitri/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">        
+<script type="text/javascript" src="http://localhost/maitri/public/js/jquery-3.6.min.js"></script>
+<script src="http://localhost/maitri/public/js/font-size.js" type="text/javascript"></script>
+<script src="http://localhost/maitri/public/js/bgcolor.js" type="text/javascript"></script>
+<script src="http://localhost/maitri/public/js/account.js" type="text/javascript"></script>
+<script src="http://localhost/maitri/public/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://localhost/maitri/public/js/additional-methods.min.js?ver=1.0" type="text/javascript"></script>
+    
+    <!--Data Table---->
+<link href="http://localhost/maitri/public/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="http://localhost/maitri/public/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<link href="http://localhost/maitri/public/css/jquery-ui.css" rel="stylesheet" type="text/css">
+<script src="http://localhost/maitri/public/js/jquery-ui.js" type="text/javascript"></script>
+  
+  <script>
+ $(document).ready( function () {
+    
+    
+    $( "#dob" ).datepicker({
+    dateFormat: 'dd-mm-yy',
+    yearRange: "-40:+0",
+    changeMonth: true,
+    changeYear: true,
+    //yearRange: "c-40:c+0"
+});
+
+$( "#date" ).datepicker({
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true
+});
+
+$( "#start_date" ).datepicker({
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "-0:+1",
+});
+
+$( "#end_date" ).datepicker({
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "+0:+1",
+});
+      
+} ); 
+  </script>
+  
+  
+<script type="text/javascript">
+$(document).ready(function(){
+        $.validator.addMethod('date', function(value, element, param) {
+            return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
+        }, 'Please enter a valid date!');
+        $.validator.addMethod('month', function(value, element, param) {
+            return (value != 0) && (value <= 12) && (value == parseInt(value, 10));
+        }, 'Please enter a valid month!');
+        $.validator.addMethod('year', function(value, element, param) {
+            return (value != 0) && (value >= 1900) && (value == parseInt(value, 10));
+        }, 'Please enter a valid year not less than 1900!');
+        $.validator.addMethod('username', function(value, element, param) {
+            var nameRegex = /^[a-zA-Z0-9]+$/;
+            return value.match(nameRegex);
+        }, 'Only a-z, A-Z, 0-9 characters are allowed');
+        
+        $.validator.addMethod("checkFileSize", function(value, element, param) {
+			
+		if(value!=''){
+
+		   FileSize = element.files[0].size;
+		   
+				if(FileSize>param)
+				 return false;
+				 return true;
+		}else{
+			return true;
+		}
+	}, "File size must be less than or equal to 100 KB.");
+	
+	$.validator.addMethod("checkFileSize20KB", function(value, element, param) {
+			
+		if(value!=''){
+		   FileSize = element.files[0].size;
+		   
+				if(FileSize>param)
+				 return false;
+				 return true;
+		}else{
+			return true;
+		}
+	}, "File size must be less than or equal to 20 KB.");
+	
+	$.validator.addMethod("uploadTrainingCertificate", function(value, element) {
+    	
+		var month 	= $("#training_certificate_period_in_month")[0].selectedIndex;
+		var day 	= $("#training_certificate_period_in_days")[0].selectedIndex;
+		var name 	= $('#training_certificate').val().split('\\').pop();
+		training_certificate_name = name.split('.')[0];
+		
+		
+		if(training_certificate_name=='' && (month>=1 || day>=1))
+		{
+			return false;
+		}
+		
+        return true;
+      
+    }, "Please upload training certificate");
+    
+    $.validator.addMethod("selectMonthORday", function(value, element) {
+    	
+		var month 	= $("#training_certificate_period_in_month")[0].selectedIndex;
+		var day 	= $("#training_certificate_period_in_days")[0].selectedIndex;
+		var name 	= $('#training_certificate').val().split('\\').pop();
+		training_certificate_name = name.split('.')[0];
+
+		if(training_certificate_name!='' && (month<1 && day<1))
+		{
+			return false;
+		}
+		
+        return true;
+      
+    }, "Please select month or day");
+    
+    $.validator.addMethod("verifyHighSchoolMarks", function(value, element) {
+    	
+		var high_marks 	= $("#high_marks").val();
+		var high_total_marks 	= $("#high_total_marks").val();
+
+		if(high_marks!='' && high_total_marks!='')
+		{
+		if(parseInt(high_marks)>parseInt(high_total_marks))
+		{
+			return false;
+		}
+	}
+		
+        return true;
+      
+    }, "Enter valid marks");
+    
+    
+    $.validator.addMethod("verifyInterMarks", function(value, element) {
+    	
+		var inter_marks 	= $("#inter_marks").val();
+		var inter_total_marks 	= $("#inter_total_marks").val();
+		
+		if(inter_marks!='' && inter_total_marks!='')
+		{
+		if(parseInt(inter_marks)>parseInt(inter_total_marks))
+		{
+			return false;
+		}
+	}
+		
+        return true;
+      
+    }, "Enter valid marks");
+    
+    
+    $.validator.addMethod("checkCategory", function(value, element) {
+    	
+		var category = $("#category")[0].selectedIndex;
+		var day 	= $("#training_certificate_period_in_days")[0].selectedIndex;
+		var name 	= $('#caste_certificate').val().split('\\').pop();
+		caste_certificate_name = name.split('.')[0];
+
+		if(caste_certificate_name=='' && (category==3 || category==4))
+		{
+			
+			return false;
+			
+		}else{
+			
+			return true;
+			
+		}
+      
+    }, "Please upload caste certificate");
+    
+    
+    
+    $.validator.addMethod("checkDOB", function (value, element) {
+         
+	var userinput = document.getElementById("dob").value;
+    var dob = new Date(userinput);
+    var month_diff = new Date('') - dob.getTime();
+    var age_dt = new Date(month_diff); 
+    var year = age_dt.getUTCFullYear();
+    var age = Math.abs(year - 1970);
+
+        if(age < 18) {  
+            return false;  
+        }else if(age > 40) {  
+            return false;  
+        }   
+        return true;  
+    }, "You are not eligible! Age should be between 18 to 40 years");
+    
+
+    
+    
+		
+		/*---------Add Avedan From Validations Start-----------------------------*/
+        var val = {
+            // Specify validation rules
+            rules: {
+				"training_certificate_period_in_month": {
+								uploadTrainingCertificate: true,
+								selectMonthORday: true,
+				},
+				"dob": {
+								required:true,
+								checkDOB: true,
+				},
+				applicant_name: "required",
+				yojna_name_for_training: "required",
+				AIkit: "required",
+				coption: "required",
+				tc: "required",
+                category: "required",
+                fname: "required",
+                mother: "required",
+                mobile: {
+                    required:true,
+                    number:true,
+                    minlength:10,
+                    maxlength:10,
+                    
+                },
+				address_type: "required",
+				post_office: "required",
+				pincode: "required",
+				gender: "required",
+                permanent_address: "required",
+                gram_panchayat_name: "required",
+                vikas_khand: "required",
+                janpad: "required",
+                letter_address: "required",
+                high_board_name: "required",
+                high_passing_year: "required",
+                "high_marks": {
+					required:true,
+					verifyHighSchoolMarks: true,
+			    },
+                high_total_marks: "required",
+                high_percentage: "required",
+                "permanent_address_proof": {
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                "applicant_photo": {
+					required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize20KB: 20000,
+			    },
+                "signature": {
+					required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize20KB: 20000,
+			    },
+			    "high_marksheet": {
+					required:true,
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "high_certificate": {
+					required:true,
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    
+			    "inter_marksheet": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "inter_certificate": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    
+			    "graduation_marksheet": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "graduation_certificate": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    
+			    "postgraduation_marksheet": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "postgraduation_certificate": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    
+                "training_certificate": {
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                "id_upload": {
+					required:true,
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                "caste_certificate": {
+					checkCategory: true,
+					extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                nationality: "required",
+				declaration: "required",
+            },
+  
+        }
+        $("#myForm").multiStepForm(
+        {
+            // defaultStep:0,
+            beforeSubmit : function(form, submit){
+                console.log("called before submiting the form");
+                console.log(form);
+                console.log(submit);
+            },
+            validations:val,
+        }
+        ).navigateTo(0);
+       /*---------Add Avedan From Validations End-------------------------------*/
+       
+       
+       
+       /*---------Edit Avedan From Validations Start-----------------------------*/
+        var valAvedanEdit = {
+            // Specify validation rules
+            rules: {
+                applicant_name: "required",
+                category: "required",
+                fname: "required",
+                /*email: {
+                    required: true,
+                    email: true
+                },*/
+                mobile: {
+                    required:true,
+                    number:true,
+                    minlength:10,
+                    maxlength:10,
+                    
+                },
+                dob: "required",
+                address_type: "required",
+				post_office: "required",
+				pincode: "required",
+				gender: "required",
+                permanent_address: "required",
+                "permanent_address_proof": {
+					//required:true,
+					//extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					//checkFileSize: 100000,
+			    },
+                gram_panchayat_name: "required",
+                vikas_khand: "required",
+                janpad: "required",
+                letter_address: "required",
+                "applicant_photo": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize20KB: 20000,
+			    },
+                "signature": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize20KB: 20000,
+			    },
+                high_board_name: "required",
+                high_passing_year: "required",
+                high_marks: "required",
+                high_total_marks: "required",
+                high_percentage: "required",
+                //inter_board_name: "required",
+                //inter_passing_year: "required",
+                //inter_marks: "required",
+                //inter_total_marks: "required",
+                //inter_percentage: "required",
+                "training_certificate": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                "id_upload": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+                "caste_certificate": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "high_marksheet": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "high_certificate": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "inter_marksheet": {
+					//required:true,
+					extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					checkFileSize: 100000,
+			    },
+			    "inter_certificate": {
+					//required:true,
+					//extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+					//checkFileSize: 100000,
+			    },
+                nationality: "required",
+                is_approved: "required",
+                //training_certificate_period_in_month: "required",
+                //training_certificate_period_in_days: "required",
+            },
+             
+        }
+        $("#avedanEdit").multiStepForm(
+        {
+            // defaultStep:0,
+            beforeSubmit : function(form, submit){
+                console.log("called before submiting the form");
+                console.log(form);
+                console.log(submit);
+            },
+            validations:valAvedanEdit,
+        }
+        ).navigateTo(0);
+       /*---------Edit Avedan From Validations End-------------------------------*/
+       
+    
+    
+    });
+    
+(function ( $ ) {
+    $.fn.multiStepForm = function(args) {
+        if(args === null || typeof args !== 'object' || $.isArray(args))
+            throw  " : Called with Invalid argument";
+            var form = this;
+            var tabs = form.find('.tab');
+            var steps = form.find('.step');
+            steps.each(function(i, e){
+                $(e).on('click', function(ev){
+                });
+            });
+            form.navigateTo = function (i) {/*index*/
+            /*Mark the current section with the class 'current'*/
+            tabs.removeClass('current').eq(i).addClass('current');
+            // Show only the navigation buttons that make sense for the current section:
+            form.find('.previous').toggle(i > 0);
+            atTheEnd = i >= tabs.length - 1;
+            form.find('.next').toggle(!atTheEnd);
+            // console.log('atTheEnd='+atTheEnd);
+            form.find('.submit').toggle(atTheEnd);
+            fixStepIndicator(curIndex());
+            return form;
+        }
+        function curIndex() {
+            /*Return the current index by looking at which section has the class 'current'*/
+            return tabs.index(tabs.filter('.current'));
+        }
+        function fixStepIndicator(n) {
+            steps.each(function(i, e){
+                i == n ? $(e).addClass('active') : $(e).removeClass('active');
+            });
+        }
+        /* Previous button is easy, just go back */
+        form.find('.previous').click(function() {
+            form.navigateTo(curIndex() - 1);
+        });
+
+        /* Next button goes forward iff current block validates */
+        form.find('.next').click(function() {
+			
+            if('validations' in args && typeof args.validations === 'object' && !$.isArray(args.validations)){
+                if(!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args.noValidate)){
+                    form.validate(args.validations);
+                    if(form.valid() == true){
+                        form.navigateTo(curIndex() + 1);
+						
+						
+/*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
+		//var form_data = $(this).parents('form').serialize();
+		var form_data = new FormData($(this).closest('#myForm').get(0));
+		//alert(form_data);
+        //var colage = $('[name="colage"]').val();
+        //var spichelest = $('[name="spichelest"]').val();
+        //alert($('[name="yojna_name_for_training"]').val());
+        $.ajax({
+            url: 'getTempData',
+            method: "POST",
+            data: form_data,
+            success: function (data) {
+                //console.log(data);
+            }, cache: false,
+            contentType: false,
+            processData: false
+        });
+/*-------------------End Call Ajax Here to Save Data on each next button-------------*/	
+/*Start Getting Declaration Data------------------------*/
+$('#applicant_named').html($('#applicant_name').val());
+$('#fnamed').html($('#fname').val());
+$('#janpad_gram').html($('#janpad').find('option:selected').text());
+$('#gram_panchayat_named').html($('#gram_panchayat_name').val());
+$('#vikas_khandd').html($('#vikas_khand').val());
+$('#janpadd').html($('#janpad').find('option:selected').text());
+$('#janpaddD').html($('#janpad').find('option:selected').text());
+/*Start Getting Declaration Data------------------------*/						
+						
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            form.navigateTo(curIndex() + 1);
+        });
+        form.find('.submit').on('click', function(e){
+            if(typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
+                args.beforeSubmit(form, this);
+                /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/        
+            if(typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args.submit)){
+				$('#finalSubmit').hide();
+				$('#loader').show();
+                form.submit();
+            }
+            return form;
+        });
+        /*By default navigate to the tab 0, if it is being set using defaultStep property*/
+        typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
+        form.noValidate = function() {
+    
+        }
+        return form;
+    };
+}( jQuery ));    
+
+</script>
+
+<script type="text/javascript">
+$(document).ready( function () {
+	
+	
+$('#district_id, #caste').change(function() 
+{ 
+	var district_id = $("#district_id").val();
+	var category = $("#caste").val();
+	var institute_id = $("#instituteID").val();
+	
+	
+if(district_id!='' && category!='')
+ {
+	$("#responseID").html('');
+	$(".loader").show();
+	
+	$.ajax({    //create an ajax request to display.php
+        type: "GET",
+        url: "http://localhost/maitri/public/getAvedanData?district_id=" + district_id + '&category=' + category + '&institute_id=' + institute_id,
+        //dataType: "text",  
+        success: function(response){
+			                    
+            $("#responseID").html(response);
+            $(".loader").hide();
+            //alert(response);
+        }
+
+    });
+ }
+	
+	
+});	
+	
+	
+    $('#myTable').DataTable({
+	"pageLength": 25,
+    "ordering": false,
+    "oLanguage": {
+      "sInfo": "कुल आवेदन :  _TOTAL_",
+      "sLengthMenu": "देखें  _MENU_ आवेदन",
+      "sSearch": "आवेदन को खोजें :",
+      "infoEmpty": "कोई आवेदन नहीं है",
+      
+    },
+    "language": {
+      "emptyTable": "कोई आवेदन नहीं है"
+    }
+});
+
+
+$('#instituteTable').DataTable({
+	"pageLength": 25,
+    "ordering": false,
+    "oLanguage": {
+      "sInfo": "कुल संस्थान :  _TOTAL_",
+      "sLengthMenu": "देखें  _MENU_ संस्थान",
+      "sSearch": "संस्थान को खोजें :",
+      "infoEmpty": "कोई संस्थान नहीं है",
+      
+    },
+    "language": {
+      "emptyTable": "कोई संस्थान नहीं है"
+    }
+});
+
+} );
+
+
+function viewCalculation(id)
+{ 
+	//$("#responseID").html('');
+	//$(".loader").show();
+	$('#myModel').modal('show');
+	
+	$.ajax({    //create an ajax request to display.php
+        type: "GET",
+        url: "http://localhost/maitri/public/viewCalculation/" + id,
+        //dataType: "text",  
+        success: function(response){
+			                    
+            $("#responseID").html(response);
+            //$('#myModel').modal('hide')
+            //console.log(response);
+        }
+    });
+	
+}
+
+function changeStatus(id, join_status)
+{ 
+		$("#responseID"+id).html('');
+		$(".loader").show();
+		
+		$.ajax({
+			type: "GET",
+			url: "http://localhost/maitri/public/changeStatus/" + id + '/' + join_status,  
+			success: function(response){
+				$("#responseID"+id).html(response);
+				console.log(response);
+				$(".loader").hide();
+			}
+		});	
+}
+
+</script>
+
+         
+
+
+         <style type="text/css">
+			 .btn {cursor:pointer;}
+			 .error{color:#FF0000;}
+         body{
+           font-size: 16px !important;
+         }
+         a{
+           font-size: 16px !important;
+         }
+         
+          .navbar-inverse .navbar-nav .nav-link {
+               font-size: 16px !important;
+              color: #FFF;
+              display: block;
+              font-family: 'Play',Arial,sans-serif;
+              letter-spacing: 0;
+              margin: 0;
+              padding: 10px 10px 9px;
+              text-decoration: none;
+              text-transform: none;
+          }
+          a .dropdown-item {
+            font-family: 'Play',Arial,sans-serif;
+            font-size: 8px !important;
+          }
+          
+          
+
+          .red {
+            position:relative;
+            float:right;
+            margin-right:10px;
+           /* margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:red;
+          /*  z-index:4;*/
+          }
+          .pink {
+            position:relative;
+            float:right;
+            margin-right:10px;
+           /* margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:#ff336be8;
+          /*  z-index:4;*/
+          }
+
+          .blue {
+            position:relative;
+            float:right;
+            margin-right:10px;
+           /* margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:#02486d;
+          /*  z-index:4;*/
+          }
+
+          .green {
+            position:relative;
+            float:right;
+            margin-right:10px;
+           /* margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:green;
+          /*  z-index:4;*/
+          }
+
+
+          .brown {
+            position:relative;
+            float:right;
+            margin-right:10px;
+            /*margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:brown;
+          /*  z-index:4;*/
+          }
+          .orange {
+            position:relative;
+            float:right;
+            margin-right:10px;
+            /*margin-top:10px;*/
+            width:21px;
+            height:19px;
+            background-color:#ff9933;
+          /*  z-index:4;*/
+          }
+
+          .basicColor{
+            font-size:16px !important;
+            color:white;
+            border: none;
+            background-image: linear-gradient(to bottom,#FF9933 0,#5f3308 100%);
+          }
+          img {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+          }
+
+          img:hover {
+            border-color: brown 1px solid;
+          }
+          
+</style>
+        <style>
+        
+        .content_mb_60{
+         margin-bottom: 60px;
+        }
+        .content_wrapper{
+            
+            overflow: hidden;
+            width: 100%;
+        }
+        .col_4{
+          float: left;
+            margin: 0 20px 0 0;
+        }
+        #templatemo_main {
+            clear: both;
+            margin: 0;
+           /* padding: 30px 40px;*/
+            background: #ffffff;
+        }
+        ul.list_bullet li a{
+            color: #fff;
+            font-weight: normal;
+            text-decoration: none;
+            cursor: pointer;
+           
+        }
+        ul.list_bullet li a:hover{
+          color: yellow;
+        }
+        
+
+</style>
+
+        
+    </head>
+  <body>
+        <div class="container">
+           
+      <div class="header">
+         <div class="row" style="padding-top:0px;" >
+    
+      <div class="col-md-12 first_strip" style="background-color:#eee;">
+		 <div class="time_txt" style="float:left;">
+				
+                        <noscript>
+                            Javascript Required
+                        </noscript>
+                        <script type="text/javascript">
+                            var d = new Date()
+                            var weekday = new Array("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
+                            var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+                            document.write(weekday[d.getDay()] + ", ")
+                            document.write(d.getDate() + " ")
+                            document.write(monthname[d.getMonth()] + ", ")
+                            document.write(d.getFullYear())
+                        </script>
+                        <span id="clockDisplay">
+                            <script type="text/javascript" language="javascript">
+                                function renderTime() {
+                                    var currentTime = new Date();
+                                    var diem = "AM";
+                                    var h = currentTime.getHours();
+                                    var m = currentTime.getMinutes();
+                                    var s = currentTime.getSeconds();
+                                    setTimeout('renderTime()', 1000);
+                                    if (h == 0) {
+                                        h = 12;
+                                    } else if (h > 12) {
+                                        h = h - 12;
+                                        diem = "PM";
+                                    }
+                                    if (h < 10) {
+                                        h = "0" + h;
+                                    }
+                                    if (m < 10) {
+                                        m = "0" + m;
+                                    }
+                                    if (s < 10) {
+                                        s = "0" + s;
+                                    }
+                                    var myClock = document.getElementById('clockDisplay');
+                                    myClock.textContent = h + ":" + m + ":" + s + " " + diem;
+                                    myClock.innerText = h + ":" + m + ":" + s + " " + diem;
+                                }
+                                renderTime();
+                            </script>
+                        </span>
+               
+                    
+			   </div>
+
+	 <div class="tp-right" style="float: right;">
+
+   
+                              <span>
+								Welcome,&nbsp;Director | 
+					<a href="http://localhost/maitri/public/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout &nbsp;</a> 
+					<form id="logout-form" action="http://localhost/maitri/public/logout" method="POST" class="d-none">
+						<input type="hidden" name="_token" value="wRMKqV6ify5oPhzD4a7keoNyX778oiS0cbG58Qcs">					</form>
+				           </span>
+                       
+                  
+                 </div></div>       
+    </div>
+    
+        <div class="row">
+          <!-- <div class="col-md-12"> -->
+         
+          <div class="col-md-12 col-sm-12">
+       <div class="row" style="padding-top: 20px;background-color: white;">
+        
+              <div class="col-md-2" align="center" style="vertical-align: middle;align-content: center;">
+                  <a href="http://localhost/maitri/public">  <img src="http://localhost/maitri/public//images/logo.jpg" height="125"></a>
+              </div>
+              <div class="col-md-8 col-sm-12" style="margin-top: 30px;">
+                     <center><h4 class="uttp" key="UTTP" style="color:black;font-weight: bold;"><span style="color:Blue; font-size:28px; padding:1px;"> राष्ट्रीय गोकुल मिशन</span><br /><span style="color:Black; font-size:18px; padding:1px;"> स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया)  हेतु <br /> ऑनलाइन  आवेदन</span></h4> </center>
+              </div>
+              <div class="col-md-2" style="vertical-align: middle;align-content: center; margin-bottom: 7px;" align="center">
+               <a href="http://localhost/maitri/public" > <img src="http://localhost/maitri/public//images/upldb.jpg"></a>
+              </div>
+      
+      </div>
+    </div> 
+        </div>
+      </div>
+    </div>
+ <div class="container" style="background-color:white;margin-top: -5px;">
+        <div class="row">
+         
+        <div class="col-md-12 col-sm-12 main_mnu">
+    <nav class="navbar navbar-inverse  navbar-toggleable-md" style="background-color:#ea7327; font-color:blue;" id="mainbackground">
+      <div class="container col-sm-12">
+        <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleContainer" aria-controls="navbarsExampleContainer" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       
+
+        <div class="collapse navbar-collapse" id="navbarsExampleContainer" style="font-color:blue;">
+          <ul class="navbar-nav mr-auto">
+			                      <li class="nav-item active" >
+              <a class="nav-link" href="http://localhost/maitri/public/dashboard">डैशबोर्ड</a>
+            </li>
+            			
+			
+			
+								<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="SCHEME">नये आवेदन</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown02">
+						<a class="dropdown-item" href="http://localhost/maitri/public/avedan">नये आवेदन</a>
+						<a class="dropdown-item" href="http://localhost/maitri/public/avedan-districtwise">नये आवेदन जनपद वार</a>               
+					</div>
+				</li>
+							
+			
+			
+            
+            
+									<li class="nav-item active">
+					  <a class="nav-link" href="http://localhost/maitri/public/total-avedan">कुल आवेदन</a>
+					</li>
+								
+								
+				
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="SCHEME">आवेदन</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown02">
+							<a class="dropdown-item" href="http://localhost/maitri/public/approved-avedan">स्वीकृत आवेदन</a>
+							<a class="dropdown-item" href="http://localhost/maitri/public/rejected-avedan">अस्वीकृत आवेदन</a>             
+						</div>
+					</li>
+				
+				
+								<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="SCHEME">चयनित अभ्यर्थियों की सूची</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown02">
+							<a class="dropdown-item" href="http://localhost/maitri/public/general-list">सामान्य / अन्य  पिछड़ा वर्ग</a> 
+							<a class="dropdown-item" href="http://localhost/maitri/public/sc-list" >अनुसूचित जाति</a> 
+							<a class="dropdown-item" href="http://localhost/maitri/public/st-list" >अनुसूचित जनजाति</a>
+														<a class="dropdown-item" href="http://localhost/maitri/public/total-selected-list" >सभी</a><!--Olny for Director and Admin)--> 
+							              
+						</div>
+				</li>
+				
+								
+				
+				
+				
+									<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="SCHEME">संस्थान आवंटन</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown02">
+							<a class="dropdown-item" href="http://localhost/maitri/public/allocation" >अभ्यर्थी आवंटन </a>
+							<a class="dropdown-item" href="http://localhost/maitri/public/allocation-list" >अभ्यर्थी आवंटन सूची</a>                 
+						</div>
+				</li>
+								
+				<li class="nav-item active">
+					  <a class="nav-link" href="http://localhost/maitri/public/candidate-not-joined">संस्थान ज्वाइन नहीं किया है</a>
+				</li>
+				
+								
+				
+				
+					<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="SCHEME">अन्य</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown02">
+							
+														
+															<a class="dropdown-item" href="http://localhost/maitri/public/maitri-list-districtwise" >मैत्री विवरण देखें </a>
+								<a class="dropdown-item" href="http://localhost/maitri/public/report" >रिपोर्ट  </a>
+								<a class="dropdown-item" href="http://localhost/maitri/public/reportDivisionWise" > रिपोर्ट मण्डलवार </a>
+								<a class="dropdown-item" href="http://localhost/maitri/public/newReportDivisionWise" > न्यू  रिपोर्ट मण्डलवार </a>
+														<a class="dropdown-item" href="http://localhost/maitri/public/changePassword">चेंज पासवर्ड</a>
+							               
+						</div>
+					</li>
+				
+				
+				
+			                              </ul>
+        </div>
+      </div>
+    </nav></div>
+   
+</div>
+</div>
+
+  <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+<h3 style="margin-top:10px;text-align: center;">न्यू रिपोर्ट मण्डलवार </h3>
+<div class="row" style="margin: 10px;">
+    <a href="http://localhost/maitri/public/newReportDivisionWiseDownloadToExl" class="btn btn-primary">Download Excel</a>
+</div>
+<table class="table" border="1">
+        <thead>
+          <tr class="row1" style="background-color: #eca946;">
+            <th >S No.</th>
+            <th >District Name</th>
+            <th >Total</th>
+            <th >Pending</th>
+            <th >Accepted</th>
+            <th >Rejected</th>
+            <th >Approved</th>
+            <th >Waiting</th>
+          </tr>
+      </thead>
+      <tbody>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>1.</td>
+            <td >आगरा</td>
+            <td >1885</td>
+            <td >1865</td>
+            <td >0</td>
+            <td >18</td>
+            <td >2</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>2.</td>
+            <td >फिरोजाबाद</td>
+            <td >1153</td>
+            <td >1138</td>
+            <td >5</td>
+            <td >10</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>3.</td>
+            <td >मैनपुरी</td>
+            <td >1065</td>
+            <td >1053</td>
+            <td >0</td>
+            <td >12</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>4.</td>
+            <td >मथुरा</td>
+            <td >1436</td>
+            <td >1428</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>5.</td>
+            <td >अलीगढ</td>
+            <td >1305</td>
+            <td >534</td>
+            <td >0</td>
+            <td >771</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>6.</td>
+            <td >एटा</td>
+            <td >1014</td>
+            <td >1004</td>
+            <td >0</td>
+            <td >10</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>7.</td>
+            <td >हाथरस</td>
+            <td >881</td>
+            <td >216</td>
+            <td >0</td>
+            <td >665</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>8.</td>
+            <td >कासगंज</td>
+            <td >628</td>
+            <td >621</td>
+            <td >0</td>
+            <td >7</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>9.</td>
+            <td >आजमगढ़</td>
+            <td >2434</td>
+            <td >2419</td>
+            <td >0</td>
+            <td >15</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>10.</td>
+            <td >बलिया</td>
+            <td >2342</td>
+            <td >2321</td>
+            <td >0</td>
+            <td >21</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>11.</td>
+            <td >मऊ</td>
+            <td >1389</td>
+            <td >1376</td>
+            <td >0</td>
+            <td >13</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>12.</td>
+            <td >बदायू</td>
+            <td >1594</td>
+            <td >1569</td>
+            <td >0</td>
+            <td >25</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>13.</td>
+            <td >बरेली</td>
+            <td >2132</td>
+            <td >2116</td>
+            <td >0</td>
+            <td >16</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>14.</td>
+            <td >पीलीभीत</td>
+            <td >1339</td>
+            <td >1332</td>
+            <td >2</td>
+            <td >5</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>15.</td>
+            <td >शाहजहांपुर</td>
+            <td >1864</td>
+            <td >1788</td>
+            <td >3</td>
+            <td >73</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>16.</td>
+            <td >बस्ती</td>
+            <td >1301</td>
+            <td >1232</td>
+            <td >6</td>
+            <td >60</td>
+            <td >0</td>
+            <td >3</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>17.</td>
+            <td >संत कबीर नगर</td>
+            <td >649</td>
+            <td >645</td>
+            <td >0</td>
+            <td >4</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>18.</td>
+            <td >सिद्धार्थनगर</td>
+            <td >659</td>
+            <td >656</td>
+            <td >0</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>19.</td>
+            <td >बाँदा</td>
+            <td >679</td>
+            <td >294</td>
+            <td >1</td>
+            <td >384</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>20.</td>
+            <td >चित्रकूट</td>
+            <td >458</td>
+            <td >454</td>
+            <td >0</td>
+            <td >4</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>21.</td>
+            <td >हमीरपुर</td>
+            <td >523</td>
+            <td >519</td>
+            <td >0</td>
+            <td >4</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>22.</td>
+            <td >महोबा</td>
+            <td >405</td>
+            <td >399</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>23.</td>
+            <td >बहराइच</td>
+            <td >940</td>
+            <td >935</td>
+            <td >0</td>
+            <td >5</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>24.</td>
+            <td >बलरामपुर</td>
+            <td >515</td>
+            <td >512</td>
+            <td >0</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>25.</td>
+            <td >गोंडा</td>
+            <td >1336</td>
+            <td >1330</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>26.</td>
+            <td >श्रावस्ती</td>
+            <td >427</td>
+            <td >424</td>
+            <td >0</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>27.</td>
+            <td >अम्बेडकर नगर</td>
+            <td >1200</td>
+            <td >1194</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>28.</td>
+            <td >अमेठी</td>
+            <td >643</td>
+            <td >634</td>
+            <td >0</td>
+            <td >9</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>29.</td>
+            <td >अयोध्या</td>
+            <td >1192</td>
+            <td >1088</td>
+            <td >14</td>
+            <td >83</td>
+            <td >0</td>
+            <td >7</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>30.</td>
+            <td >बाराबंकी</td>
+            <td >1640</td>
+            <td >1627</td>
+            <td >0</td>
+            <td >13</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>31.</td>
+            <td >सुल्तानपुर</td>
+            <td >1213</td>
+            <td >1166</td>
+            <td >5</td>
+            <td >19</td>
+            <td >23</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>32.</td>
+            <td >देवरिया</td>
+            <td >1338</td>
+            <td >1338</td>
+            <td >0</td>
+            <td >0</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>33.</td>
+            <td >गोरखपुर</td>
+            <td >1502</td>
+            <td >1495</td>
+            <td >0</td>
+            <td >7</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>34.</td>
+            <td >कुशीनगर</td>
+            <td >1071</td>
+            <td >180</td>
+            <td >0</td>
+            <td >881</td>
+            <td >9</td>
+            <td >1</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>35.</td>
+            <td >महाराजगंज</td>
+            <td >926</td>
+            <td >920</td>
+            <td >1</td>
+            <td >2</td>
+            <td >3</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>36.</td>
+            <td >जालौन</td>
+            <td >771</td>
+            <td >0</td>
+            <td >19</td>
+            <td >481</td>
+            <td >0</td>
+            <td >271</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>37.</td>
+            <td >झाँसी</td>
+            <td >953</td>
+            <td >0</td>
+            <td >23</td>
+            <td >664</td>
+            <td >0</td>
+            <td >266</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>38.</td>
+            <td >ललितपुर</td>
+            <td >831</td>
+            <td >824</td>
+            <td >0</td>
+            <td >7</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>39.</td>
+            <td >औरैया</td>
+            <td >767</td>
+            <td >734</td>
+            <td >14</td>
+            <td >19</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>40.</td>
+            <td >इटावा</td>
+            <td >829</td>
+            <td >821</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>41.</td>
+            <td >फरुक्खाबाद</td>
+            <td >824</td>
+            <td >818</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>42.</td>
+            <td >कन्नौज</td>
+            <td >801</td>
+            <td >786</td>
+            <td >0</td>
+            <td >15</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>43.</td>
+            <td >कानपूर देहात</td>
+            <td >861</td>
+            <td >795</td>
+            <td >1</td>
+            <td >65</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>44.</td>
+            <td >कानपूर नगर</td>
+            <td >1155</td>
+            <td >132</td>
+            <td >23</td>
+            <td >999</td>
+            <td >0</td>
+            <td >1</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>45.</td>
+            <td >हरदोई</td>
+            <td >1723</td>
+            <td >1718</td>
+            <td >0</td>
+            <td >5</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>46.</td>
+            <td >लखीमपुर खीरी</td>
+            <td >2349</td>
+            <td >2326</td>
+            <td >0</td>
+            <td >17</td>
+            <td >6</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>47.</td>
+            <td >लखनऊ</td>
+            <td >1182</td>
+            <td >1103</td>
+            <td >7</td>
+            <td >68</td>
+            <td >0</td>
+            <td >4</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>48.</td>
+            <td >रायबरेली</td>
+            <td >1034</td>
+            <td >1028</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>49.</td>
+            <td >सीतापुर</td>
+            <td >2173</td>
+            <td >2165</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>50.</td>
+            <td >उन्नाव</td>
+            <td >827</td>
+            <td >821</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>51.</td>
+            <td >बागपत</td>
+            <td >489</td>
+            <td >485</td>
+            <td >0</td>
+            <td >4</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>52.</td>
+            <td >बुलंदशहर</td>
+            <td >1240</td>
+            <td >1234</td>
+            <td >0</td>
+            <td >6</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>53.</td>
+            <td >गौतम बुद्ध नगर</td>
+            <td >293</td>
+            <td >292</td>
+            <td >0</td>
+            <td >1</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>54.</td>
+            <td >गाज़ियाबाद</td>
+            <td >615</td>
+            <td >612</td>
+            <td >0</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>55.</td>
+            <td >हापुर</td>
+            <td >394</td>
+            <td >386</td>
+            <td >5</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>56.</td>
+            <td >मेरठ</td>
+            <td >1008</td>
+            <td >993</td>
+            <td >0</td>
+            <td >15</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>57.</td>
+            <td >मिर्ज़ापुर</td>
+            <td >1283</td>
+            <td >1271</td>
+            <td >0</td>
+            <td >12</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>58.</td>
+            <td >संत रविदास नगर</td>
+            <td >618</td>
+            <td >613</td>
+            <td >0</td>
+            <td >5</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>59.</td>
+            <td >सोनभद्र</td>
+            <td >745</td>
+            <td >743</td>
+            <td >0</td>
+            <td >2</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>60.</td>
+            <td >अमरोहा</td>
+            <td >1154</td>
+            <td >1128</td>
+            <td >0</td>
+            <td >26</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>61.</td>
+            <td >बिजनोर</td>
+            <td >2162</td>
+            <td >2134</td>
+            <td >0</td>
+            <td >28</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>62.</td>
+            <td >मुरादाबाद</td>
+            <td >1454</td>
+            <td >1445</td>
+            <td >0</td>
+            <td >9</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>63.</td>
+            <td >रामपुर</td>
+            <td >944</td>
+            <td >936</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>64.</td>
+            <td >संभल</td>
+            <td >896</td>
+            <td >874</td>
+            <td >0</td>
+            <td >22</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>65.</td>
+            <td >फतेहपुर</td>
+            <td >989</td>
+            <td >984</td>
+            <td >0</td>
+            <td >5</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>66.</td>
+            <td >कौशाम्बी</td>
+            <td >559</td>
+            <td >556</td>
+            <td >0</td>
+            <td >3</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>67.</td>
+            <td >प्रतापगढ़</td>
+            <td >1435</td>
+            <td >1421</td>
+            <td >0</td>
+            <td >14</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>68.</td>
+            <td >प्रयागराज</td>
+            <td >2462</td>
+            <td >2450</td>
+            <td >0</td>
+            <td >12</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>69.</td>
+            <td >मुज़फ्फरनगर</td>
+            <td >1277</td>
+            <td >1268</td>
+            <td >0</td>
+            <td >9</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>70.</td>
+            <td >सहारनपुर</td>
+            <td >1304</td>
+            <td >1296</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>71.</td>
+            <td >शामली</td>
+            <td >525</td>
+            <td >521</td>
+            <td >0</td>
+            <td >4</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+    
+
+
+    
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>72.</td>
+            <td >चंदौली</td>
+            <td >924</td>
+            <td >901</td>
+            <td >2</td>
+            <td >21</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>73.</td>
+            <td >गाजीपुर</td>
+            <td >2026</td>
+            <td >2013</td>
+            <td >0</td>
+            <td >13</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fbf8f8;">
+            <td>74.</td>
+            <td >जौनपुर</td>
+            <td >2042</td>
+            <td >2032</td>
+            <td >0</td>
+            <td >10</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+
+
+          <tr class="row2" style="background-color: #fff;">
+            <td>75.</td>
+            <td >वाराणसी</td>
+            <td >1336</td>
+            <td >1328</td>
+            <td >0</td>
+            <td >8</td>
+            <td >0</td>
+            <td >0</td>
+          </tr>
+<tr class="row2" style="background-color: #c5e4c5">
+    <td></td>
+    <td >Total</td>
+    <td >86332</td>
+    <td >79809</td>
+    <td >131</td>
+    <td >5796</td>
+    <td >43</td>
+    <td >553</td>
+</tr>
+</tbody>
+</table>
+    <div class="row" style="margin: 10px;">
+        <a href="http://localhost/maitri/public/newReportDivisionWiseDownloadToExl" class="btn btn-primary">Download Excel</a>
+    </div>
+</div>
+  <div style="margin-top:20px;"></div>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script type="text/javascript" src="http://localhost/maitri/public//js/abootstrap.min.js"></script>
+  <div class="container-fluid ftr_div" style="background-color: white;">
+<div id="footer">
+<div class="container-fluid ftr_links" align="center">
+  <div class="row" style="font-size: 16px; line-height: 20px;">
+	  
+	  								
+				      
+    
+</div>  
+</div>
+
+<!-- slider -->
+<div class="copyright-txt">
+			<center>2023-2024 © Rashtriya Gokul Mission  All rights reserved</center>
+			
+		  </div>
+</div></div>
+<script>
+function loadlang()
+  {
+  var lng = document.getElementById("langselector").value;
+  var cnt = document.getElementById("contents");
+  switch (lng)
+    {
+    case "en":
+      cnt.src = "https://jsfiddle.net/q2nw8o35/";
+    break;
+    case "hi":
+      cnt.src = "https://jsfiddle.net/jmn8c9tj/";
+    break;
+    }
+  }
+</script>
+
+<style type="text/css">
+        .loader {
+    /* position: fixed; */
+    z-index: 999;
+    height: 20px;
+    width: 20px;
+    top: 0;
+    left: 0;
+    /* background-color: Black; */
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+    -moz-opacity: 0.8;
+}
+        .center
+        {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 10px 10px 10px 10px;
+            width: 60px;
+            height:60px;
+            background-color: White;
+            border-radius: 10px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+        }
+        .center img
+        {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+
+<div class="loader" style="display: none">
+	<div class="center">
+		<span class="fa fa-spinner fa-spin fa-3x" style="margin-top: 10px;"></span>
+	</div>
+</div>
+
+<!-- Modal -->
+<style>
+.modal-dialog {
+    max-width: 900px;
+</style>
+<div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">अभ्यर्थी का स्वत: मूल्यांकन</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span id="responseID">
+			<div class="spinner-border"></div>
+        </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+    
+

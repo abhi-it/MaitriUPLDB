@@ -63,4 +63,8 @@ class Avedan extends Model
         'AIkit',      
     ];*/
     protected $guarded = [];
+
+    public function district(){
+        return $this->belongsTo(Districts::class,'district_id','id');
+    }
 }

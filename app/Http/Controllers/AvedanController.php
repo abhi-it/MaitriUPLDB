@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Rejectcomment;
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\Block;
+use App\Models\Grampanchayat;
+use App\Models\Postoffice;
+use App\Models\Banks;
 
 class AvedanController extends Controller
 {
@@ -22,7 +26,7 @@ class AvedanController extends Controller
     public function index()
     {
 		/*-----------Start Check Start Avedan----------------------*/
-
+        
 		date_default_timezone_set("Asia/Kolkata");
 		$result = Setting::find(2);
 		$start_date = \Carbon\Carbon::parse($result->start_date)->format('Y-m-d');
@@ -38,7 +42,7 @@ class AvedanController extends Controller
 			
 		}else{
 			
-			return redirect('/avedan-karein');
+			// return redirect('/avedan-karein');
 		}
 		
 		/*-----------End Check Start Avedan----------------------*/
@@ -65,7 +69,8 @@ class AvedanController extends Controller
 		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
 		//echo '<pre>';print_r($setting->start_date);exit;
 		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
-        return view('avedan', compact('districts', 'result', 'ageCalcultedFrom'));
+        $banks      =  Banks::get();
+        return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
     }
 
     /**
@@ -119,12 +124,12 @@ class AvedanController extends Controller
 	   
 	   /*--------------------Start Calculation for High School---------------*/
 	   $high_percentage = $request->get('high_percentage');
-	   $high_school_calculation = round(($high_percentage*5)/10);
+	   $high_school_calculation = round(($high_percentage*8)/10);
 	   /*--------------------End Calculation for High School-----------------*/
 	   
 	   /*--------------------Start Calculation for Inter---------------*/
 	   $inter_percentage = $request->get('inter_percentage');
-	   $inter_calculation = round(($inter_percentage*3)/10);
+	   $inter_calculation = round(($inter_percentage*2)/10);
 	   /*--------------------End Calculation for Inter-----------------*/
 	   
 	   /*--------------------Start Calculation for certification (Getting month and Days)-------------*/
@@ -263,15 +268,12 @@ class AvedanController extends Controller
             'mobile' => 'required',
 			'gender' => 'required',
 			'address_type' => 'required',
-			'post_office' => 'required',
 			'pincode' => 'required',
             'category' => 'required',
             'permanent_address' => 'required',
             'permanent_address_proof' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            'gram_panchayat_name' => 'required',
             'vikas_khand' => 'required',
             'janpad' => 'required',
-            'letter_address' => 'required',
             //'email' => 'required',
             'applicant_photo' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:20000',
             'signature' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:20000',
@@ -314,11 +316,8 @@ class AvedanController extends Controller
                 'category.required' => 'श्रेणी सेलेक्ट कीजिए',
                 'permanent_address.required' => 'स्थायी पता डालिये',
                 'address_type.required' => 'स्थायी पते के प्रमाण-पत्र का प्रकार सेलेक्ट कीजिए',
-                'gram_panchayat_name.required' => 'ग्राम पंचायत का नाम डालिये',
                 'vikas_khand.required' => 'विकास खण्ड डालिये',
                 'janpad.required' => 'जनपद सेलेक्ट कीजिए',
-                'letter_address.required' => 'पत्र - व्यवहार का पता डालिये',
-                'post_office.required' => 'पोस्ट ऑफिस डालिये',
                 'pincode.required' => 'पिनकोड डालिये',
                 'applicant_photo.required' => 'आवेदक की फोटो अपलोड कीजिए',
                 'signature.required' => 'आवेदक का हस्ताक्षर अपलोड कीजिए',
@@ -465,12 +464,12 @@ class AvedanController extends Controller
 	   
 	   /*--------------------Start Calculation for High School---------------*/
 	   $high_percentage = $request->get('high_percentage');
-	   $high_school_calculation = round(($high_percentage*5)/10);
+	   $high_school_calculation = round(($high_percentage*8)/10);
 	   /*--------------------End Calculation for High School-----------------*/
 	   
 	   /*--------------------Start Calculation for Inter---------------*/
 	   $inter_percentage = $request->get('inter_percentage');
-	   $inter_calculation = round(($inter_percentage*3)/10);
+	   $inter_calculation = round(($inter_percentage*2)/10);
 	   /*--------------------End Calculation for Inter-----------------*/
 	   
 	   /*--------------------Start Calculation for certification (Getting month and Days)-------------*/
@@ -537,6 +536,7 @@ class AvedanController extends Controller
 			'post_office' => $request->get('post_office'),
 			'pincode' => $request->get('pincode'),
             'category' => $request->get('category'),
+            'address_number' => $request->get('address_number'),
             'permanent_address' => $request->get('permanent_address'),
             'permanent_address_proof' => $permanent_address_proof,
             'gram_panchayat_name' => $request->get('gram_panchayat_name'),
@@ -590,6 +590,14 @@ class AvedanController extends Controller
             'health_certificate' => $health_certificate,
             'is_approved' => $is_approved,
             'training_adopted' => $request->get('training_adopted'),
+            'tehsil' => $request->get('tehsil'),
+            'ai_center' => $request->get('ai_center'),
+            'bank_name' => $request->get('bank_name'),
+            'account_number' => $request->get('account_number'),
+            'ifsc_code' => $request->get('ifsc_code'),
+            'pfms' => $request->get('pfms'),
+            'bharat_pshudhan_id' => $request->get('bharat_pshudhan_id'),
+            'previous_avedan_number' => $request->get('previous_avedan_number'),
         ]);
         $data->save();
         
@@ -669,5 +677,22 @@ class AvedanController extends Controller
     public function destroy(Avedan $avedan)
     {
         //
+    }
+    
+    public function getAllBlocks(Request $request){
+        $id = $request->id;
+        $text = $request->text;
+        $data['blocks']   =  Block::where(['dis_id'=>$id])->get();
+        $data['postoffice'] = Postoffice::where(['dis_id'=>$id])->get();
+        $data['ai_center']  = DB::table('clinic_location')->where(['district'=>$text])->get();
+        $data['tehsil']  = DB::table('tehsil')->where(['dis_id'=>$id])->get();
+        return $data;
+    }
+
+    public function getAllGramPanchayat(Request $request){
+        $id    = Block::where(['block_name'=>$request->id])->select('id')->pluck('id')->first();
+        $data  = Grampanchayat::where(['block_id'=>$id])->get();
+        return $data;
+
     }
 }

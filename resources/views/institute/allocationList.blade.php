@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">संस्थान आवंटन सूची
+<h3 class="text-center m-4 fw-bold">संस्थान आवंटन सूची
 <!--div class=" pull-right">
 			<a href="javascript:history.back();" class="btn btn-info">Back</a>
 		</div-->
@@ -13,11 +13,11 @@
 @endif
 			<form method="get" action="{{ url('allocation-list') }}" id="viewAllocationList">
 	@csrf
-			<div class="row">
+			<div class="row form-comman">
 
 
 				<div class="form-group col-md-3">
-				  <label for="inputEmail4">संस्थान का नाम </label>
+				  <label for="inputEmail4" class="fw-bold">संस्थान का नाम </label>
 					<select class="form-control" name="institute_id" id="institute_id">
 						<option value="">सेलेक्ट संस्थान</option>
 						@foreach($institute as $row)
@@ -27,7 +27,7 @@
 				</div>
 
 				<div class="form-group col-md-3">
-				  <label for="inputEmail4">सेलेक्ट जनपद </label>
+				  <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
 					<select class="form-control" name="district_id">
 						<option value="">सेलेक्ट जनपद</option>
 						@foreach($districts as $row)
@@ -37,7 +37,7 @@
 				</div>
 
 				<div class="form-group col-md-3">
-				<label for="inputEmail4">कैटेगरी</label>
+				<label for="inputEmail4" class="fw-bold">कैटेगरी</label>
 				  <select class="form-control" name="category">
 					  <option value="">सेलेक्ट</option>
 					  <option value="1" {{ @$_GET['category']==1 ? 'selected' : '' }}>सामान्य / अन्य  पिछड़ा वर्ग</option>
@@ -56,7 +56,7 @@
 		  </div>
 		</form>
 
-		<table class="table">
+		<table class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
             <th>क्रं  सं </th>

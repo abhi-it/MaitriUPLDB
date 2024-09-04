@@ -1,14 +1,17 @@
 <?php
-
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AvedanController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\MaitriController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\DemandRequestController;
+use App\Http\Controllers\CVOOfficerController;
+use App\Http\Controllers\LangController;
+use App\Http\Controllers\ZoneStockController;
 
+use App\Http\Controllers\UpdateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +74,7 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('changeLang', [LangController::class, 'change'])->name('changeLang');
 // Route::get("/get-vikaskhand", function () {
 
 //     dd("Hello");
@@ -90,8 +94,17 @@ Route::get('/lakshya', [App\Http\Controllers\HomeController::class, 'lakshya'])-
 Route::get('/yojna', [App\Http\Controllers\HomeController::class, 'yojna'])->name('yojna');
 Route::get('/term-condition', [App\Http\Controllers\HomeController::class, 'termCondition'])->name('termCondition');
 Route::get('/avedan-karein', [App\Http\Controllers\HomeController::class, 'avedanKarein'])->name('avedanKarein');
+
+
+Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'eventDetails'])->name('eventdetails');
+
+
 Route::resource('application-form', AvedanController::class);
 Route::post("getTempData", [AvedanController::class, 'getTempData']);
+
+Route::get('/getAllBlocks', [AvedanController::class, 'getAllBlocks'])->name('getAllBlocks');
+Route::get('/getAllGramPanchayat', [AvedanController::class, 'getAllGramPanchayat'])->name('getAllGramPanchayat');
+
 Route::get('/success', [App\Http\Controllers\SuccessController::class, 'index'])->name('index');
 Route::get('/application-status', [App\Http\Controllers\HomeController::class, 'applicationStatus'])->name('applicationStatus');
 Route::post('/view-application-status', [App\Http\Controllers\HomeController::class, 'viewApplicationStatus'])->name('viewApplicationStatus');
@@ -102,6 +115,10 @@ Route::get("changeStatus/{id}/{join_status}", [App\Http\Controllers\HomeControll
 
 Route::get('/downloads', [App\Http\Controllers\HomeController::class, 'downloads'])->name('downloads');
 
+Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addSemanForm'])->name('addSemanForm');
+Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
+Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
+   
 Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
@@ -143,10 +160,116 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("changePassword", [App\Http\Controllers\ChangePasswordController::class, 'index'])->name('changePasswordIndex');
     Route::post("changePassword", [App\Http\Controllers\ChangePasswordController::class, 'changePassword'])->name('changePasswordPost');
     Route::get("export", [App\Http\Controllers\DashboardController::class, 'export'])->name('export');
+
+    Route::get("export", [App\Http\Controllers\DashboardController::class, 'export'])->name('export');
+
+
+    Route::resource('maitri', MaitriController::class);
+    Route::get("maitri-home", [MaitriController::class, 'maitri_home'])->name('maitri-home');
+    Route::get("maitri-form", [MaitriController::class, 'maitri_form'])->name('maitri-form');
+    Route::get("maitri-import", [MaitriController::class, 'maitri_import'])->name('maitri-import');
+    Route::get("maitri-map", [MaitriController::class, 'maitri_map'])->name('maitri-map');
+
+    Route::post("addUpdateMaitri", [MaitriController::class, 'addUpdateMaitri'])->name('addUpdateMaitri');
+    Route::post("importMaitries", [MaitriController::class, 'importMaitries'])->name('importMaitries');
+
+    
+    Route::get("getJanpadUnique", [MaitriController::class, 'getJanpadUnique'])->name('getJanpadUnique');
+    Route::get("allMaitriesData", [MaitriController::class, 'allMaitriesData'])->name('allMaitriesData');
+
+
+    Route::get("cvo-officer", [CVOOfficerController::class, 'index'])->name('cvo-officer');
+    Route::get("officers-import", [CVOOfficerController::class, 'officerImportForm'])->name('officers-import');
+    Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
+
+    Route::get("demand-requests-list", [DemandRequestController::class, 'demandRequestsListing'])->name('demand-requests-list');
+    Route::post("deleteRequests", [DemandRequestController::class, 'deleteDemandRequests'])->name('deleteRequests');
+    
+    Route::get("maitri-listing", [MaitriController::class, 'maitriListing'])->name('maitri-listing');
+    Route::get("getallmaitrifilterlist", [MaitriController::class, 'maitriListing'])->name('getallmaitrifilterlist');
+
+    
+    Route::get("getallofficers", [CVOOfficerController::class, 'getAllOfficers'])->name('getallofficers');
+
+    Route::get("exportselectedmaitries", [MaitriController::class, 'exportMaitri'])->name('exportselectedmaitries');
+
+    Route::get("getallAIcenters", [MaitriController::class, 'getAllAICenters'])->name('getallAIcenters');
+    Route::get("getalldistrictdata", [MaitriController::class, 'getAllDistrictData'])->name('getalldistrictdata');
+    Route::get("exportselectedAIcenters", [MaitriController::class, 'exportAICenters'])->name('exportselectedAIcenters');
+    Route::get("exportselectedLocation", [MaitriController::class, 'exportLocations'])->name('exportselectedLocation');
+
+    Route::get("latest-updates", [UpdateController::class, 'getAllLatestUpdated'])->name('latest-updates');
+    Route::get("add-latest-update", [UpdateController::class, 'AddLatestUpdated'])->name('add-latest-update');
+    Route::get("edit-latest-updated/{id}", [UpdateController::class, 'editLatestUpdated'])->name('edit-latest-updated');
+    Route::post("addUpdateLatestNews", [UpdateController::class, 'addUpdateLatestNews'])->name('addUpdateLatestNews');
+    Route::post("changeStatusUpdates", [UpdateController::class, 'changeStatusUpdates'])->name('changeStatusUpdates');
+    Route::post("delete-updates", [UpdateController::class, 'deleteLatestUpdates'])->name('delete-updates');
+
+
+    //maitri dashbaord
+    Route::get("maitri-dashboard", [App\Http\Controllers\maitri\MaitriController::class, 'index'])->name('maitri-dashboard');
+    Route::post("maitri-dashdata", [App\Http\Controllers\maitri\MaitriController::class, 'maitriDashbaordData'])->name('maitri-dashdata');
+    Route::get("request-list", [App\Http\Controllers\maitri\MaitriController::class, 'getAllServiceRequest'])->name('request-list');
+    Route::post("updateServiceRequest", [App\Http\Controllers\maitri\MaitriController::class, 'updateServiceRequest'])->name('updateServiceRequest');
+    Route::get("monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'monthlyProgressReport'])->name('monthly-report');
+    Route::post("filtered-monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'filteredMonthlyReport'])->name('filtered-monthly-report');
+
+
+    //farmer dashbaord
+    Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');
+    Route::get("service-request", [App\Http\Controllers\farmer\FarmerController::class, 'getServiceFrom'])->name('service-request');
+    Route::post("get-all-maitri", [App\Http\Controllers\farmer\FarmerController::class, 'getAllMaitries'])->name('get-all-maitri');
+    Route::post("farmer-request", [App\Http\Controllers\farmer\FarmerController::class, 'addFarmerRequests'])->name('farmer-request');
+    Route::get("farmer-requests", [App\Http\Controllers\farmer\FarmerController::class, 'getAllServiceRequest'])->name('farmer-requests');
+    Route::post('delete-request', [App\Http\Controllers\farmer\FarmerController::class, 'deleteRequest'])->name('delete-request');
+    Route::post("farmer-dashdata", [App\Http\Controllers\farmer\FarmerController::class, 'farmerDashRequest'])->name('farmer-dashdata');
+
+    Route::get("high-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'highYieldingAnimal'])->name('high-yielding-animal');
+    Route::get("add-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'addAnimaldetailsform'])->name('add-yielding-animal');
+    Route::post("addUpdateAnimalDetails", [App\Http\Controllers\farmer\FarmerController::class, 'addUpdateAnimalDetails'])->name('addUpdateAnimalDetails');
+    
+
+    Route::get('shapathPatraList', [App\Http\Controllers\HomeController::class, 'shapathPatraList'])->name('shapathPatraList');
+    Route::get('upload-shapatpatra', [App\Http\Controllers\HomeController::class, 'uplaodShapatpatra'])->name('upload-shapatpatra');
+    Route::post('uploadScannedFile', [App\Http\Controllers\HomeController::class, 'uploadScannedFile'])->name('uploadScannedFile');
+
+
+    Route::get("totalsessionlist", [App\Http\Controllers\DashboardController::class, 'totalsessionlist'])->name('totalsessionlist');
+
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/
 
     // google map routes
 });
+
+Route::get("farmer-register", [App\Http\Controllers\UsersController::class, 'index'])->name('farmer-register');
+Route::post("farmer-add", [App\Http\Controllers\UsersController::class, 'farmerRegister'])->name('farmer-add');
+Route::post("get-district", [App\Http\Controllers\UsersController::class, 'getAllDistrict'])->name('get-district');
+Route::post("get-village-grampanchayat", [App\Http\Controllers\UsersController::class, 'getAllVillage'])->name('get-village-grampanchayat');
+Route::post("get-block", [App\Http\Controllers\UsersController::class, 'getAllBlockById'])->name('get-block');
+Route::post("get-village", [App\Http\Controllers\UsersController::class, 'getAllVillageById'])->name('get-village');
+
+
+// Route::get("maitri-register", [App\Http\Controllers\UsersController::class, 'maitriform'])->name('maitri-register');
+Route::post("maitri-add", [App\Http\Controllers\UsersController::class, 'maitriRegister'])->name('maitri-add');
+
+
+Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
+Route::get("getAllrequestedBlocks", [DemandRequestController::class, 'getAllrequestedBlocks'])->name('getAllrequestedBlocks');
+Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');
+Route::get("exportDemandRequest", [DemandRequestController::class, 'exportDemandRequest'])->name('exportDemandRequest');
+Route::get("view-request-details/{id}", [DemandRequestController::class, 'viewRequestDetails'])->name('view-request-details');
+
+
+Route::get("exportCVOList", [CVOOfficerController::class, 'exportCVOList'])->name('exportCVOList');
+Route::get("view-officer-details/{id}", [CVOOfficerController::class, 'viewOfficersDetails'])->name('view-officer-details');
+
+// Route::post('uploadScannedFile', [App\Http\Controllers\HomeController::class, 'uploadScannedFile'])->name('uploadScannedFile');
+
+// Route::get("refresher-training", [App\Http\Controllers\UsersController::class, 'refresherTraining'])->name('refresher-training');
+Route::post("training-requests", [App\Http\Controllers\UsersController::class, 'addRefreshTraining'])->name('training-requests');
+
+Route::get("zonestockform", [ZoneStockController::class, 'index'])->name('zonestockform');
+Route::post("zonestoreadd", [ZoneStockController::class, 'zoneStoreData'])->name('zonestoreadd');
 
 
 // Route::get('test', function () {

@@ -567,8 +567,8 @@ button:hover {
 			
 			<h3>शौक्षिक योग्यता व अन्य विवरण </h3>
 			<br>
-			<div class="row table-responsive">
-				<table class="table">
+			<div class="row">
+				<table class="table table-striped  table-responsive table-bordered">
 				<tr>
 				<td style="width: 12%;">उत्तीर्ण परीक्षा का नाम</td>
 				<td>बोर्ड का नाम</td>

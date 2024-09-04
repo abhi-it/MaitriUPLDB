@@ -32,11 +32,13 @@
         }
     </style>
     <div class="container main-div">
-
+        <h3 class="text-center fw-bold m-4 current_session"> {{ $sessionYear . '-' . substr($sessionYear + 1, -2) }}</h3>
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">नये आवेदन</div>
+                    <div class="card-header">
+                        <span data-hi="नये आवेदन" data-en="New Applications"></span>    
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $newApplication }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
@@ -51,9 +53,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">स्वीकृत आवेदन</div>
+                    <div class="card-header">
+                        <span data-hi=" स्वीकृत आवेदन" data-en="Approved Applications"></span>      
+                    </div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
@@ -70,9 +74,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">अस्वीकार आवेदन</div>
+                    <div class="card-header">
+                        <span data-hi="अस्वीकार आवेदन" data-en="Rejected Applications"></span>         
+                    </div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
@@ -88,9 +94,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">चयनित सामान्य/अन्य पिछड़ा वर्ग अभ्यर्थी</div>
+                    <div class="card-header">
+                        <span data-hi="चयनित सामान्य/अन्य पिछड़ा वर्ग अभ्यर्थी" data-en="Selected General/OBC Candidates"></span>   
+                    </div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
@@ -106,9 +114,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">चयनित अनुसूचित जाति अभ्यर्थी</div>
+                    <div class="card-header">
+                        <span data-hi="चयनित अनुसूचित जाति अभ्यर्थी" data-en="Selected SC Candidates"></span>   
+                    </div>
                     <div class="card-body">
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
@@ -125,9 +135,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">चयनित अनुसूचित जनजाति अभ्यर्थी</div>
+                    <div class="card-header">
+                        <span data-hi="चयनित अनुसूचित जनजाति अभ्यर्थी" data-en="Selected ST Candidates"></span>   
+                    </div>
                     <div class="card-body">
 
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
@@ -145,9 +157,11 @@
             </div>
 
             @if (auth()->user()->user_type == 'District Officer')
-                <div class="col-sm-3">
+                <div class="col-sm-3 mt-5 mb-5">
                     <div class="card text-center">
-                        <div class="card-header">प्रतीक्षा सूची</div>
+                        <div class="card-header">
+                            <span data-hi="प्रतीक्षा सूची" data-en="Waiting list"></span>      
+                        </div>
                         <div class="card-body">
                             <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
@@ -162,16 +176,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-3 mt-5 mb-5">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <span data-hi="सत्र मैत्री रिकॉर्ड्स सूची" data-en="Session Maitri Records List"></span>   
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $totalsession }}</h5>
+                            <a href="{{ url('totalsessionlist') }}" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
             @endif
 
             @foreach ($avedanYears as $avedanYear)
-                <div class="col-sm-3">
+                <div class="col-sm-3 mt-5 mb-5">
                     <div class="card text-center">
-                        <div class="card-header">सत्र</div>
+                        <div class="card-header" > <span data-hi="सत्र " data-en="Session "></span>     {{ $avedanYear . '-' . substr($avedanYear + 1, -2) }}</div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $avedanYear . '-' . substr($avedanYear + 1, -2) }}</h5>
                             <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
-                            <a href="{{ url('/dashboard') }}/{{ $avedanYear }}" class="btn btn-primary">View</a>
+                            <a href="{{ url('/dashboard') }}/{{ $avedanYear }}" class="btn btn-primary" >View</a>
                         </div>
                     </div>
                 </div>
@@ -181,4 +206,6 @@
 
             {{-- @include('map') --}}
         </div>
+
+  
     @endsection

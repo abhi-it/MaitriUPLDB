@@ -1,13 +1,13 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">
+<h3 class="text-center m-4 fw-bold">
     {{$heading}}
     @if (isset($routeName, $year))
     <a class="btn btn-secondary btn-export float-right" href="{{ route($routeName,[$year,true]) }}">Export</a>
     @endif
 </h3>
-<table id="myTable" class="table">
+<table id="myTable" class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
             <th>आवेदन  नंबर</th>

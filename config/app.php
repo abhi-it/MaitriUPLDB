@@ -188,7 +188,10 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
+    // 'aliases' =>  Facade::defaultAliases()->merge([
+    //     // 'Example' => App\Facades\Example::class,
+    //     'GoogleTranslate' => Stichoza\GoogleTranslate\GoogleTranslate::class
+    // ])->toArray(),
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
@@ -231,7 +234,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'GoogleTranslate' => Stichoza\GoogleTranslate\GoogleTranslate::class
     ],
 
 ];

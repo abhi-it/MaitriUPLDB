@@ -58,7 +58,7 @@
 @if($results){{ $results->withQueryString(); }}@endif
 </div>
 
-<table class="table">
+<table class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
 			<th>तहसील</th>

@@ -54,25 +54,25 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>हाई स्कूल (जीव विज्ञान)</th>
-            <th>प्राप्तांक ({{$results->high_marks}})</th>
-            <th>पूर्णांक ({{$results->high_total_marks}})</th>
-            <th>प्रतिशत ({{$results->high_percentage}})</th>
-            <th>फार्मूला<br>प्रतिशत * 8/10</th>
-            <th style="text-align:right;">स्वतः मूल्यांकन अंक<br>
+            <td>हाई स्कूल (जीव विज्ञान)</td>
+            <td>प्राप्तांक ({{$results->high_marks}})</td>
+            <td>पूर्णांक ({{$results->high_total_marks}})</td>
+            <td>प्रतिशत ({{$results->high_percentage}})</td>
+            <td>फार्मूला<br>प्रतिशत * 8/10</td>
+            <td style="text-align:right;">स्वतः मूल्यांकन अंक<br>
             <?php echo round(($results->high_percentage*8)/10);?>
-            </th>
+            </td>
         </tr>
 
         <tr>
-            <th>इण्टर (जीव विज्ञान)</th>
-            <th>प्राप्तांक ({{$results->inter_marks}})</th>
-            <th>पूर्णांक ({{$results->inter_total_marks}})</th>
-            <th>प्रतिशत ({{$results->inter_percentage}})</th>
-            <th>फार्मूला<br>प्रतिशत * 2/10</th>
-            <th style="text-align:right;">स्वतः मूल्यांकन अंक<br>
+            <td>इण्टर (जीव विज्ञान)</td>
+            <td>प्राप्तांक ({{$results->inter_marks}})</td>
+            <td>पूर्णांक ({{$results->inter_total_marks}})</td>
+            <td>प्रतिशत ({{$results->inter_percentage}})</td>
+            <td>फार्मूला<br>प्रतिशत * 2/10</td>
+            <td style="text-align:right;">स्वतः मूल्यांकन अंक<br>
             <?php echo round(($results->inter_percentage*2)/10);?>
-            </th>
+            </td>
         </tr>
 
         {{-- <tr>
@@ -85,9 +85,9 @@
         </tr> --}}
 
         <tr>
-            <th colspan="5" style="text-align:right;">कुल स्वतः मूल्यांकन अंक</th>
-            <th style="text-align:right;"><?php echo $topper_number;?>
-            </th>
+            <td colspan="5" style="text-align:right;">कुल स्वतः मूल्यांकन अंक</>
+            <td style="text-align:right;"><?php echo $topper_number;?>
+            </td>
         </tr>
 
 

@@ -20,7 +20,7 @@
 					<input type="text" value="{{@$_GET['mobile']}}" class="form-control" name="mobile" id="mobile" placeholder="मोबाइल नंबर">
 				</div>
 
-				<div class="form-group col-md-3" style="margin-top: 29px;width:100px;">
+				<div class="form-group col-md-3" style="margin-top: 29px">
 				<button type="submit" class="btn btn-primary" >सर्च करें</button>
 				<a href="{{Request::url()}}" class="btn btn-secondary">रीसेट करें</a>
                 @if (isset($year))
@@ -41,7 +41,7 @@
 <div class="row">
 {{ $results->appends(request()->query())->links() }}
 </div>
-<table id="myTable303" class="table">
+<table id="myTable303" class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
             <th>आवेदन  नंबर</th>
@@ -56,10 +56,17 @@
     <tbody>
 		@if($results->count())
 		@foreach($results as $row)
+        @php 
+			$high_percentage = $row->high_percentage;
+			$high_school_calculation = round(($high_percentage*8)/10);
+			$inter_percentage = $row->inter_percentage;
+			$inter_calculation = round(($inter_percentage*2)/10);
+			$topper_number = $high_school_calculation + $inter_calculation;
+		@endphp
         <tr>
             <td>{{$row->applicationNumber}}</td>
             <td>{{$row->applicant_name}}</td>
-            <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$row->topper_number}}</a></td>
+            <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$topper_number}}</a></td>
             <td>{{$row->AIkit}}</td>
             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y')}}</td>
             <td>

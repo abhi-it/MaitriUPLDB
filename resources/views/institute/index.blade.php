@@ -1,15 +1,15 @@
 @extends('master')
 @section('content')
-<div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">संस्थान सूची 
-<div class=" pull-right">
+<div class="container main-div" >
+<h3 class="text-center m-4 fw-bold">संस्थान सूची 
+<div class="pull-right mb-4">
 			<a href="{{ route('institute.create')}}" class="btn btn-info">नया संस्थान जोड़े</a>
 		</div>
 </h3>
-<table id="instituteTable" class="table">
+<table id="instituteTable" class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
-            <th>नाम</th>
+            <th>नाम </th>
             <th>मोबाइल</th>
             <th>ईमेल </th>
             <th>पता</th>

@@ -1,25 +1,65 @@
 @extends('master')
 @section('content')
-<div class="container main-div" style="background-color:white; height: 388px;">
-
-         <h1 style="margin-top:10px;text-align: center;margin-bottom:20px;">दस्तावेज़ डाउनलोड करें </h1>
-<div class="row">
-	<div class="form-group col-md-12">
-					<table class="table table-bordered">
-						<tr style="background-color:#d3d3d3;">
-						<th style="font-size:15px">क्रं सं </th>
-						<th style="font-size:15px">दस्तावेज़ का शीर्षक</th>
-						<th style="font-size:15px">डाउनलोड</th>
-						</tr>
-						<tr>
-						<tr>
-						<td>01</td>
-						<td>शपथ - पत्र </td>
-						<td style="width:05%"><center><a href="{{url('downloadFile', 'Shapath-patra.pdf')}}"><img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;"></a></center></td>
-						</tr>
-					</table>
-			</div>
-</div>
+<style>
+	.scanned_file{
+		text-align: left;
+		/* width: 50%; */
+		/* margin: auto !important; */
+		font-size: 16px;
+    	font-weight: 700;
+		background: #efefef;
+		padding: 20px;
+		border-radius: 6px;
+		margin-top: 10px;
+	}
+</style>
+<div class="container main-div py-5" style="background-color:white;">
+	<h1 style="margin-top:10px;text-align: center;margin-bottom:20px;">
+		<span  data-hi="दस्तावेज़ डाउनलोड करें " data-en="Download Documents." ></span>	
+	</h1>
+	<div class="row">
+		@if (session('error'))
+		<div class="alert alert-danger">
+			{{ session('error') }}
+		</div>
+		@endif
+		@if (session('success'))
+		<div class="alert alert-success">
+			{{ session('success') }}
+		</div>
+		@endif
+		<div class="form-group col-md-12">
+			<table class="table table-bordered">
+				<tr style="background-color:#d3d3d3;">
+					<th style="font-size:15px"><span data-hi="क्रं सं" data-en="S. No."></span>  </th>
+					<th style="font-size:15px"><span data-hi="दस्तावेज़ का शीर्षक" data-en="Title of Documents"></span></th>
+					<th style="font-size:15px"> <span data-hi="डाउनलोड" data-en="Download"></span>  </th>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td> <span data-hi="शपथ - पत्र" data-en="Affidavit"></span>  </td>
+					<td style="width:05%">
+						<center>
+						<a href="{{url('downloadFile', 'Shapath Patra 2024-25.pdf')}}" target="_blank">
+							<img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;">
+						</a>
+						</center>
+					</td>
+				</tr>
+				<tr>
+					<td>02</td>
+					<td> <span data-hi="नियम शर्त शपथ पत्र" data-en="Terms and Conditions Affidavit"></span>  </td>
+					<td style="width:05%">
+						<center>
+						<a href="{{url('downloadFile', 'niyam_sharte_file.pdf')}}" target="_blank">
+							<img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;">
+						</a>
+						</center>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 
 </div>
 
