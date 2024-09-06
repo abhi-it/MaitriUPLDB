@@ -64,6 +64,10 @@
             <option value="1">मैत्री (पशु मित्र)  ({{count($maitricount)}})</option>
             <option value="2">एआई सेंटर/एलईओ सेंटर/पशु चिकित्सा अस्पताल  ({{count($aicount)}})</option>
             <option value="3">जिलों  ({{count($disticcount)}})</option>
+            <option value="lc_agency">सीमेन बैंक / क्षेत्रीय केंद्र (Semen Bank / Zonal Centers) ( {{$agency}} )</option>
+            <option value="semen_station">सीमेन डी.एफ.एस. स्टेशन (Semen D F S Station ) ({{$station}})</option>
+            <option value="ett_ivf">ईटीटी / आईवीएफ सुविधा केंद्र (ETT /  IVF Facility Center) ({{$ivf}})</option>
+            <option value="bull_mother">बुल मदर फार्म्स (बीएमएफ) (Bull Mother Farms ) ({{$bull}})</option>
           </select>
         </div>
       </div>
@@ -251,6 +255,31 @@ $('#type').change(function() {
   if(val=='0'){
     $('#map-up').show();
     initMapDefault();
+  }
+
+
+  if(val=='lc_agency' || val=='semen_station' || val=='ett_ivf' || val=='bull_mother'){
+    $.ajax({
+        type: "GET",
+        url: "getallLiveStockData",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            "_token": "{{ csrf_token() }}",
+            "id": val
+        },
+        cache: false,
+        success: function(data) {
+          console.log('data' ,data)
+            if(data){
+              $('#map').show();
+              $('#AIExport').show();
+              initLiveStockMap(null, data);
+            }
+        }
+    });
+
   }
 });
 // AIcenter function start here 
@@ -599,19 +628,68 @@ async function initMap(code,locations) {
 // end maitri function from here 
 
 
-// function getAddressFromPlaceId(location) {
-//   const geocoder = new google.maps.Geocoder();
-//   // const location = document.getElementById("location-input").value;
-//   geocoder.geocode({ address: location }, (results, status) => {
+async function initLiveStockMap(code,locations) {
+    var lat  = (code)?code.latt:27.5706;
+    var long  = (code)?code.long:80.0982;
+    const zoom = ((locations.length)>20)? 10 : 7;
+    var latlng = new google.maps.LatLng( lat,long);
+    var map = new google.maps.Map(document.getElementById('map'), {
+          center: latlng,
+          zoom,
+          mapId: "a3efe1c035bad51b", 
+          zoomControl: false,
+    });
+    var markers = [];
+    if(locations.length>0){
+      var marker, i ,labels;
+      var markers=[];
+      for (let i = 0; i < locations.length; i++) {
+        if (locations[i]['longitude'] !== "" && locations[i]['lattitute'] !== "") {
+          const contentString =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    "</div>" +
+                    '<div id="bodyContent">' +
+                    "<p>  नाम : <b>"+locations[i]['address']+"</b>,</br> " +
+                    "</p></div>" +
+                    "</div>";
+          const infowindow = new google.maps.InfoWindow({
+            disableAutoPan: false,
+            content: contentString,
+          });
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i]['lattitute'], locations[i]['longitude']),
+            map: map, 
+            // icon: lc_img,
+          });
+            var currentInfowindow = null;
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                if (currentInfowindow) {
+                  currentInfowindow.close();
+                }
+                infowindow.open(map, marker);
+                currentInfowindow = infowindow;
+              }
+            })(marker, i));
+            markers.push(marker);
+            google.maps.event.addListener(infowindow, 'closeclick', function() {
+              currentInfowindow = null;
+            });
+        }
+      }
+    }
+    var placeId   = (code)?code.place_id: place_id
+    featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
+    featureLayer.style = (options) => {
+      if (options.feature.placeId == placeId) {
+        return featureStyleOptions;
+      }
+    };
+   
+}
 
-//     if (status === google.maps.GeocoderStatus.OK) {
-//       const placeId = results[0].place_id;
 
-//     } else {
-      
-//     }
-//   });
-// }
 initMapDefault();
 async function initMapDefault() {
   $('.page-loader').fadeOut('slow');
@@ -662,42 +740,6 @@ async function initMapDefault() {
     });
 
 }
-
-
-
-// async function initMapDefault() {
-//   var placeids = <?php echo json_encode($placeid); ?>;
-
-//     var lat  = 27.5706;
-//     var long  = 80.0982;
-//     const zoom = 7;
-//     var latlng = new google.maps.LatLng( lat,long);
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//           center: latlng,
-//           zoom,
-//           mapId: "a3efe1c035bad51b", 
-//           zoomControl: false,
-//     });
-//     var marker = new google.maps.Marker({
-//           position: latlng,
-//           map: map,
-//           draggable: true
-//     });
-//     google.maps.event.addListener(marker, 'dragend', function(a) {
-//         var div = document.createElement('div');
-//         div.innerHTML = a.latLng.lat().toFixed(4) + ', ' + a.latLng.lng().toFixed(4);
-//         document.getElementsByTagName('body')[0].appendChild(div);
-//     });
-//     featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
-//     featureLayer.style = (options) => {
-//       var index = $.inArray(options.feature.placeId, placeids);
-//       if (index !== -1) {
-//           return featureStyleOptions;
-//       }
-//     };
-    
-// }
-
 
 
 </script>

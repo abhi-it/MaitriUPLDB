@@ -177,7 +177,6 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getJanpadUnique", [MaitriController::class, 'getJanpadUnique'])->name('getJanpadUnique');
     Route::get("allMaitriesData", [MaitriController::class, 'allMaitriesData'])->name('allMaitriesData');
 
-
     Route::get("cvo-officer", [CVOOfficerController::class, 'index'])->name('cvo-officer');
     Route::get("officers-import", [CVOOfficerController::class, 'officerImportForm'])->name('officers-import');
     Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
@@ -235,6 +234,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 
     Route::get("totalsessionlist", [App\Http\Controllers\DashboardController::class, 'totalsessionlist'])->name('totalsessionlist');
+
+
+    Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
+
+    
 
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/
 

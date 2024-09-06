@@ -40,7 +40,10 @@ class MaitriController extends Controller
         ->distinct('name')    
         ->get()                
         ->pluck('place_id');   
-
+        $agency  = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
+        $station  = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
+        $ivf  = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
+        $bull  = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
         $maitricount  = Maitri::get();
         $aicount  = Cliniclocation::get();
         $disticcount =  Districts::get();
@@ -52,6 +55,10 @@ class MaitriController extends Controller
             'maitricount'=>$maitricount,
             'aicount'=>$aicount,
             'disticcount'=>$disticcount,
+            'agency' =>$agency,
+            'station' =>$station,
+            'ivf'=>$ivf,
+            'bull'=>$bull,
         ]);
     }
 
@@ -173,6 +180,12 @@ class MaitriController extends Controller
         $id         = $divId['id'];
         $data       = $query->select('name_hindi','general_target','sc_target','st_target','status','latt','long')->where('division_id', 'like', "%{$id}%")->get();
         return \Excel::download(new LocationExport($data), 'district-list.xlsx');
+    }
+
+    public function getallLiveStockData(Request $request){
+        $data  =  DB::table('livestock_agencies')->where(['type'=>$request->id])->get();
+        return $data;
+      
     }
 }
 

@@ -3,33 +3,173 @@
 namespace App\Imports;
 use App\Models\CVOOfficers;
 use App\Models\Institute;
+use App\Models\Tehsil;
+use App\Models\Blockslist;
+use App\Models\Hospitals;
+use App\Models\AIcenters;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Helpers\TranslateTextHelper;
 class ImportOfficers implements ToModel
 {
     public function model(array $row)
     {
-        $checkdata = '';
         set_time_limit(300);
-        if (isset($row[4])){
-            $checkdata =  CVOOfficers::where(['mobile_no'=>$row[4]])->first();
+
+        $lasttehsil = '';
+        $last_block = '';
+        $dis_id = '';
+
+    if (is_numeric($row[0])) {
+        
+        $tehsil = isset($row[2]) && trim($row[2]) !== '' ? $this->engtohindi($row[2]) : $lasttehsil;
+        $tehsil_eng = isset($row[2]) && trim($row[2]) !== '' ? $row[2] : $this->hinditoenglish($tehsil); 
+
+        
+        $dis = isset($row[1]) && trim($row[1]) !== '' ? $this->engtohindi($row[1]) : $dis_id;
+        $dis_id = $dis;
+
+        
+        if (!Tehsil::where(['name_hindi' => $tehsil, 'distric' => $dis])->exists()) {
+            $tehsilModel = new Tehsil();
+            $tehsilModel->distric = $dis;
+            $tehsilModel->name_hindi = $tehsil;
+            $tehsilModel->name_eng = $tehsil_eng;
+            $tehsilModel->save();
         }
-        if(empty($checkdata)){
-            if(is_numeric($row[0])){
-                // echo "<pre>"; print_r($this->engtohindi($row[1])); echo "</pre>"; exit;
-                $officer=new CVOOfficers();
-                $officer->mandal_name='औरैया';
-                $officer->janpad_name=$this->changeText($row[1]);
-                $officer->login_id='';//$row[6];
-                $officer->officer_name=$this->changeText($row[2]);
-                $officer->designation=$this->changeText($row[3]);
-                $officer->animal_care_center=$this->changeText($row[4]);
-                $officer->mobile_no='';//$row[4];
-                $officer->longitute =isset($row[5])?str_replace('-','.',$row[5]):'';
-                $officer->lattitute =isset($row[6])?str_replace('-','.',$row[6]):'';
-                $officer->save(); 
-            }
-         }
+
+        
+        $block = isset($row[3]) && trim($row[3]) !== '' ? $this->engtohindi($row[3]) : $last_block;
+        $block_eng = isset($row[3]) && trim($row[3]) !== '' ? $row[3] : $this->hinditoenglish($block); // Use last known value if empty
+        $last_block = $block;
+
+        
+        if (!Blockslist::where(['name_hindi' => $block, 'distric' => $dis])->exists()) {
+            $blockModel = new Blockslist();
+            $blockModel->distric = $dis;
+            $blockModel->name_hindi = $block;
+            $blockModel->name_eng = $block_eng;
+            $blockModel->save();
+        }
+
+       
+        
+        $hos = $this->engtohindi($row[4]);
+        $hos_eng = $row[4];
+        if (!Hospitals::where(['name_hindi' => $hos, 'distric' => $dis, 'tehsil' => $tehsil, 'block' => $block])->exists()) {
+            $hospitalModel = new Hospitals();
+            $hospitalModel->distric = $dis;
+            $hospitalModel->tehsil = $tehsil;
+            $hospitalModel->block = $block;
+            $hospitalModel->name_hindi = $hos;
+            $hospitalModel->name_eng = $hos_eng;
+            $hospitalModel->save();
+        }
+
+        
+        $AI = $this->engtohindi($row[5]);
+        $AI_eng = $row[5];
+        if (!AIcenters::where(['name_hindi' => $AI, 'distric' => $dis, 'tehsil' => $tehsil, 'block' => $block])->exists()) {
+            $aiModel = new AIcenters();
+            $aiModel->distric = $dis;
+            $aiModel->tehsil = $tehsil;
+            $aiModel->block = $block;
+            $aiModel->name_hindi = $AI;
+            $aiModel->name_eng = $AI_eng;
+            $aiModel->save();
+        }
+    }
+
+
+
+
+
+
+
+
+        
+        // if (is_numeric($row[0])) {
+        //     $tehsil = ($row[2]) ? $this->engtohindi($row[2]) : $lasttehsil;
+        //     $tehsil_eng = $row[2];//$this->hinditoenglish($row[2]);
+        //     $dis = ($row[1]) ? $this->engtohindi($row[1]) : $dis_id;
+        //     $dis_id = $dis;
+        //     $lasttehsil = $tehsil;
+        
+         
+        //     $checktehsil = Tehsil::where(['name_hindi' => $tehsil, 'distric' => $dis])->first();
+        //     if (empty($checktehsil)) {
+        //         $officer = new Tehsil();
+        //         $officer->distric = $dis;
+        //         $officer->name_hindi = $tehsil;
+        //         $officer->name_eng = $tehsil_eng;
+        //         $officer->save();
+        //     }
+        
+            
+        //     $block = ($row[3]) ? $this->engtohindi($row[3]) : $last_block;
+        //     $block_eng = $row[3];//$this->hinditoenglish($row[3]);
+        //     $last_block = $block;
+        
+          
+        //     $checkblock = Blockslist::where(['name_hindi' => $block, 'distric' => $dis])->first();
+        //     if (empty($checkblock)) {
+        //         $officer = new Blockslist();
+        //         $officer->distric = $dis;
+        //         $officer->name_hindi = $block;
+        //         $officer->name_eng = $block_eng;
+        //         $officer->save();
+        //     }
+        
+          
+        //     $hos = $this->engtohindi($row[4]);
+        //     $hos_eng = $row[4];//$this->hinditoenglish($row[4]);
+        //     $checkhospital = Hospitals::where(['name_hindi' => $hos, 'distric' => $dis, 'tehsil' => $tehsil, 'block' => $block])->first();
+        //     if (empty($checkhospital)) {
+        //         $officer = new Hospitals();
+        //         $officer->distric = $dis;
+        //         $officer->tehsil = $tehsil;
+        //         $officer->block = $block;
+        //         $officer->name_hindi = $hos;
+        //         $officer->name_eng = $hos_eng;
+        //         $officer->save();
+        //     }
+        
+          
+        //     $AI = $this->engtohindi($row[5]);
+        //     $AI_eng = $row[5];//$this->hinditoenglish($row[5]);
+        //     $checkai = AIcenters::where(['name_hindi' => $AI, 'distric' => $dis, 'tehsil' => $tehsil, 'block' => $block])->first();
+        //     if (empty($checkai)) {
+        //         $officer = new AIcenters();
+        //         $officer->distric = $dis;
+        //         $officer->tehsil = $tehsil;
+        //         $officer->block = $block;
+        //         $officer->name_hindi = $AI;
+        //         $officer->name_eng = $AI_eng;
+        //         $officer->save();
+        //     }
+        // }
+        
+        //  }
+
+
+        // if (isset($row[4])){
+        //     $checkdata =  CVOOfficers::where(['mobile_no'=>$row[4]])->first();
+        // }
+        // if(empty($checkdata)){
+        //     if(is_numeric($row[0])){
+        //         // echo "<pre>"; print_r($this->engtohindi($row[1])); echo "</pre>"; exit;
+        //         $officer=new CVOOfficers();
+        //         $officer->mandal_name='औरैया';
+        //         $officer->janpad_name=$this->changeText($row[1]);
+        //         $officer->login_id='';//$row[6];
+        //         $officer->officer_name=$this->changeText($row[2]);
+        //         $officer->designation=$this->changeText($row[3]);
+        //         $officer->animal_care_center=$this->changeText($row[4]);
+        //         $officer->mobile_no='';//$row[4];
+        //         $officer->longitute =isset($row[5])?str_replace('-','.',$row[5]):'';
+        //         $officer->lattitute =isset($row[6])?str_replace('-','.',$row[6]):'';
+        //         $officer->save(); 
+        //     }
+        //  }
     }
 
     function changeText($val){
@@ -70,6 +210,15 @@ class ImportOfficers implements ToModel
 
     function engtohindi($val){
         TranslateTextHelper::setSource('en')->setTarget('hi');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
+    }
+    function hinditoenglish($val){
+        TranslateTextHelper::setSource('hi')->setTarget('en');
         if($val!=null){
             $translatedText = TranslateTextHelper::translate($val);
         }else{

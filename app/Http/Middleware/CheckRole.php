@@ -151,6 +151,7 @@ class CheckRole
                 'upload-shapatpatra',
                 'uploadScannedFile',
                 'totalsessionlist',
+                'getallLiveStockData',
             ],
 
             'Superadmin' => [
@@ -237,6 +238,7 @@ class CheckRole
                 'edit-latest-updated',
                 'delete-updates',
                 'shapathPatraList',
+                'getallLiveStockData',
             ],
             'Maitri' => [
                 'maitri-dashboard',

@@ -17,7 +17,7 @@ use App\Models\Postoffice;
 use App\Models\Banks;
 
 class AvedanController extends Controller
-{   
+{
     /**
      * Display a listing of the resource.
      *
