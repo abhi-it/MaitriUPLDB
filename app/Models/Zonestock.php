@@ -18,6 +18,8 @@ class Zonestock extends Model
         'ai_kit'  ,
         'container' ,
         'scheme' ,
+        'bull_ids',
+        'container_capacity',
     ];
     protected $table = 'zone_stock_details';
 }

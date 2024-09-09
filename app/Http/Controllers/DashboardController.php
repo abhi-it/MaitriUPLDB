@@ -638,37 +638,7 @@ class DashboardController extends Controller
         $heading = 'अस्वीकार आवेदन';
 
         if (!empty($request->input('export'))) {
-            // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $queryjoin('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)->with('district')
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
-
-            $data = $datas->map(function ($item) {
-                return [
-                    'applicationNumber' => $item->applicationNumber,
-                    'applicant_name' => $item->applicant_name,
-                    'fname' => $item->fname,
-                    'mother' => $item->mother,
-                    'gender' => $item->gender,
-                    'mobile' => $item->mobile,
-                    'email' => $item->email,
-                    'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
-                    'tehsil' => $item->tehsil,
-                    'post_office' => $item->post_office,
-                    'gram_panchayat_name' => $item->gram_panchayat_name,
-                    'vikas_khand' => $item->vikas_khand,
-                    'letter_address' => $item->letter_address,
-                    'high_marks' => $item->high_marks,
-                    'high_total_marks' => $item->high_total_marks,
-                    'high_percentage' => $item->high_percentage,
-                    'inter_marks' => $item->inter_marks,
-                    'inter_total_marks' => $item->inter_total_marks,
-                    'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
-                ];
-                });
+            $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);

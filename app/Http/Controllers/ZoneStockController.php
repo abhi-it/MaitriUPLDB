@@ -15,7 +15,6 @@ class ZoneStockController extends Controller{
     }
 
     public function zoneStoreData(Request $request){
-        // dd($request->all());
         $validator = Validator::make($request->all(),[
             'demand_section'  => [ 'required'],
             'semen' => [ 'required'],
@@ -27,6 +26,7 @@ class ZoneStockController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
+            $bullIds = implode(',',$request->bull_ids);
             $request  = new Zonestock([
                 'demand_section'=> $request->demand_section,
                 'semen'       => $request->semen,
@@ -36,6 +36,8 @@ class ZoneStockController extends Controller{
                 'standee'     => $request->standee,
                 'pamphlet'    => $request->pamphlet,
                 'ai_kit'      => $request->ai_kit,
+                'bull_ids'    => $bullIds,
+                'container_capacity' =>$request->container_capacity,
                 'container'   => $request->container,
                 'scheme'      => $request->scheme,
             ]);

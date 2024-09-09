@@ -44,6 +44,17 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="inputEmail4">  <span data-hi="बुल आई.डी. विवरण" data-en="Bull ID Details"></span> </label> 
+                    <div class="row after-add-more">
+                        <div class="form-group col-md-9">
+                            <input type="text" name="bull_ids[]" id="bull_ids" class="form-control" data-placeholder-hi="बुल आई.डी. विवरण" data-placeholder-en="Bull ID Details" >
+                        </div>
+                        <div class="form-group col-md-3 change">
+                            <a class="btn btn-primary add-more">Add More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span> 
                     </label> 
@@ -81,6 +92,23 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
+                        <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> 
+                    </label> 
+                    <select name="container_capacity" id="container_capacity"  class="form-control"  autofocus>
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
+                        <option value="BA-0.5" data-en="BA-0.5" data-hi="बीए-0.5" ></option>
+                        <option value="BA-1.5" data-en="BA-1.5" data-hi="बीए-1.5" ></option>
+                        <option value="BA-3" data-en="BA-3" data-hi="बीए-3" ></option>
+
+                        <option value="BA-20" data-en="BA-20" data-hi="बीए-20" ></option>
+                        <option value="BA-35" data-en="BA-35" data-hi="बीए-35" ></option>
+                        <option value="J-12" data-en="J-12" data-hi="जे-12" ></option>
+                        <option value="J-47" data-en="J-47" data-hi="जे-47" ></option>
+                        <option value="TA-55" data-en="TA-55" data-hi="टीए-55" ></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4"> 
                         <span data-hi="योजना" data-en="Scheme"></span> 
                     </label> 
                     <select name="scheme" id="scheme"  class="form-control"  autofocus>
@@ -101,4 +129,18 @@
                 </div>
             </div>
 </div>
+<script>
+    $(document).ready(function() {
+    $("body").on("click",".add-more",function(){ 
+        console.log('hello user')
+        var html = $(".after-add-more").first().clone();
+          $(html).find(".change").html("<a class='btn btn-danger remove text-white'> Remove</a>");
+        $(".after-add-more").last().after(html);
+    });
+    $("body").on("click",".remove",function(){ 
+        $(this).parents(".after-add-more").remove();
+    });
+});
+</script>
+
 @endsection 

@@ -42,7 +42,7 @@ class AvedanController extends Controller
 			
 		}else{
 			
-			// return redirect('/avedan-karein');
+			return redirect('/avedan-karein');
 		}
 		
 		/*-----------End Check Start Avedan----------------------*/

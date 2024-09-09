@@ -336,14 +336,13 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <span data-hi="माननीय पशुपालन मंत्री, उत्तर प्रदेश का संदेश" data-en="Message from Hon`ble Minister, Animal Husbandry, U.P."></span>
             </h3>
             <p><i>
-            <span data-hi="बोर्ड का उद्देश्य उत्तराखंड राज्य के पूरे क्षेत्र में पशुधन (गाय और भैंस) के प्रजनन और प्रबंधन में सुधार के लिए व्यवहार्य गतिविधियों को प्रोत्साहित करना, बढ़ावा देना और कार्यान्वित करना होगा, ताकि उनके उत्पादन और उत्पादकता में वृद्धि हो सके। राष्ट्रीय और अंतर्राष्ट्रीय अनुसंधान सेटअप के साथ संबंध स्थापित करना और पशुधन के लिए एक अनुसंधान सहायता कार्यक्रम का आयोजन करना, जिससे दक्षता में सुधार हो और लागत में कमी आए। पशुधन उत्पादन, उत्पादकता और पशुधन उत्पादों के सभी पहलुओं पर अध्ययन और सर्वेक्षण करना; भारतीय पशुधन उद्योग के बढ़ते वैश्वीकरण के लिए उन्नत सूचना प्रौद्योगिकी द्वारा एक गतिशील डेटाबेस और प्रबंधन सूचना प्रणाली के लिए सूचना और डेटा उत्पन्न करना।" data-en="“The board's objective shall be to encourage, promote, and carry out viable, activities to improve the
-                breeding and management of livestock (cattle and buffaloes) to enhance their production and productivity
+            <span data-hi="बोर्ड का उद्देश्य उत्तराखंड राज्य के पूरे क्षेत्र में पशुधन (गाय और भैंस) के प्रजनन और प्रबंधन में सुधार के लिए व्यवहार्य गतिविधियों को प्रोत्साहित करना, बढ़ावा देना और कार्यान्वित करना होगा, ताकि उनके उत्पादन और उत्पादकता में वृद्धि हो सके। राष्ट्रीय और अंतर्राष्ट्रीय अनुसंधान सेटअप के साथ संबंध स्थापित करना और पशुधन के लिए एक अनुसंधान सहायता कार्यक्रम का आयोजन करना, जिससे दक्षता में सुधार हो और लागत में कमी आए। पशुधन उत्पादन, उत्पादकता और पशुधन उत्पादों के सभी पहलुओं पर अध्ययन और सर्वेक्षण करना; भारतीय पशुधन उद्योग के बढ़ते वैश्वीकरण के लिए उन्नत सूचना प्रौद्योगिकी द्वारा एक गतिशील डेटाबेस और प्रबंधन सूचना प्रणाली के लिए सूचना और डेटा उत्पन्न करना।" data-en="“The board's objective shall be to encourage, promote, and carry out viable, activities to improve the breeding and management of livestock (cattle and buffaloes) to enhance their production and productivity
                 throughout the territory of the State of Uttarakhand. Establish linkage with national and international
                 research setup, and orchestrate a research support program for livestock leading to improved efficiency
                 and cost reduction. Conduct studies and surveys on all aspects of livestock production, productivity,
                 and livestock products; generate information and data leading to a dynamic database and management
                 information system by advanced information technology for the growing globalization of the Indian
-                livestock industry."”></span>
+                livestock industry."></span>
               
             </i></p>
           </div>
@@ -689,36 +688,36 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
       <h2 class="fw-bold"> <span data-hi="मैत्री जनसंख्या उत्तर प्रदेश" data-en="Maitri Population Uttar Pradesh"></span>  </h2>
     </div>
     <div class="row g-3">
-      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+      <div class="col-lg-4 p-2">
         <div class="text-center">
-          <h2 class="fw-bold logo-title">2020</h2>
-          <p class="text-center text-white fs-4 cattle counter">{{$m20}}</p>
+          <h2 class="fw-bold logo-title">2021 - 2022</h2>
+          <p class="text-center text-white fs-4 cattle counter">1182</p>
         </div>
       </div>
-      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+      <div class="col-lg-4 p-2">
         <div class="text-center">
-          <h2 class="fw-bold logo-title">2021</h2>
-          <p class="text-center text-white fs-4 counter">{{$m21}}</p>
+          <h2 class="fw-bold logo-title">2022 - 2023</h2>
+          <p class="text-center text-white fs-4 counter">1755</p>
         </div>
       </div>
-      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+      <div class="col-lg-4 p-2">
         <div class="text-center">
-          <h2 class="fw-bold logo-title">2022</h2>
-          <p class="text-center text-white fs-4 counter">{{$m22}}</p>
+          <h2 class="fw-bold logo-title">2023 - 2024</h2>
+          <p class="text-center text-white fs-4 counter">1897</p>
         </div>
       </div>
-      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+      <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
         <div class="text-center">
           <h2 class="fw-bold logo-title">2023</h2>
           <p class="text-center text-white fs-4 counter">{{$m23}}</p>
         </div>
-      </div>
-      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+      </div> -->
+      <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
         <div class="text-center">
           <h2 class="fw-bold logo-title">2024</h2>
           <p class="text-center text-white fs-4 counter">{{$m24}}</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
@@ -741,7 +740,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/zone/vanansi-zone.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                  <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                  <p> <span data-hi="वाराणसी जोन" data-en="Varanasi Zone"></span>  </p>
                   <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -752,7 +751,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/zone/jhansi-zone.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="झांसी जोन" data-en="Jhanshi Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -770,7 +769,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/zone/kanpur-zone.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="कानपुर जोन" data-en="Kanpur Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -779,7 +778,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/zone/agra-zone.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="आगरा जोन" data-en="Agra Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -801,7 +800,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/shemen-prod/lucknow-station.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="लखनऊ स्टेशन" data-en="Lucknow Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -812,7 +811,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/shemen-prod/babugharh-station.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="बाबूगढ़ स्टेशन" data-en="Babugharh Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -821,7 +820,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/zone/gorakhpur%20-zone.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="गोरखपुर स्टेशन" data-en="Gorakhpur Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -842,7 +841,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/bmf/arazilines-varanasi-bmf.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="आराजीलाइन्स वाराणसी बीएमएफ" data-en="Arazilines Varanasi BMF"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -853,7 +852,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/bmf/arazilines-varanasi-bmf.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="आराजीलाइन्स वाराणसी बीएमएफ" data-en="Arazilines Varanasi BMF"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -876,7 +875,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/baif-pratapgharh.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="प्रतापगढ़ जोन" data-en="Pratapgharh Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -896,7 +895,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/meerut.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="मेरठ जोन" data-en="Meerut Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -905,7 +904,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/agra.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="आगरा जोन" data-en="Agra Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -914,7 +913,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
               <div class="page_sliderDiv">
                 <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/barelly.jpeg" width="100%" alt="">
                 <div class="position-absolute">
-                <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
+                <p> <span data-hi="बरेली जोन" data-en="Barelly Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
                 </div>
               </div>
@@ -961,26 +960,22 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
           </div>
           <div class="swiper-slide">
             <div class="logo-box">
-            <a href="https://epashuhaat.gov.in/" target="_blank"><img
-            src="{{ asset('images/footer-logos/epashulogo.jpg')}}" /></a>
+            <a href="https://epashuhaat.gov.in/" target="_blank"><img src="{{ asset('images/footer-logos/epashulogo.jpg')}}" /></a>
             </div>
           </div>
           <div class="swiper-slide">
             <div class="logo-box">
-            <a href="http://digitalindia.gov.in/" target="_blank"><img
-        src="{{ asset('images/footer-logos/indiagov-logo.jpg')}}" /></a>
+            <a href="http://digitalindia.gov.in/" target="_blank"><img src="{{ asset('images/footer-logos/indiagov-logo.jpg')}}" /></a>
             </div>
           </div>
           <div class="swiper-slide">
             <div class="logo-box">
-            <a href="http://meity.gov.in/" target="_blank"><img
-            src="{{ asset('images/footer-logos/Meity_logo.png')}}" /></a>
+            <a href="http://meity.gov.in/" target="_blank"><img src="{{ asset('images/footer-logos/Meity_logo.png')}}" /></a>
             </div>
           </div>
           <div class="swiper-slide">
             <div class="logo-box">
-            <a href="https://www.nddb.coop/" target="_blank"><img
-            src="{{ asset('images/footer-logos/nddb-logo1.jpg')}}" /></a>
+            <a href="https://www.nddb.coop/" target="_blank"><img src="{{ asset('images/footer-logos/nddb-logo1.jpg')}}" /></a>
             </div>
           </div>
         </div>

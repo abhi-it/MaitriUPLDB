@@ -444,7 +444,7 @@
                 <!-----Then Display these buttons-->
                 @if ($waitingButtonShow != 1)
                     <!-----Then Display these buttons-->
-                    @if(auth()->user()->user_type != 'District Officer')
+                    @if(auth()->user()->user_type != 'District Officer' || auth()->user()->user_type != 'Admin')
                     <div class="row mb-5 mt-4">
 						@if ($result->is_approved == 0 || $result->is_approved == 2 ||  $result->is_approved == 3)
                         <div class="col-md-4">
@@ -467,7 +467,7 @@
                     </div>
                     @endif
                 @else
-                    @if(auth()->user()->user_type != 'District Officer')
+                    @if(auth()->user()->user_type != 'District Officer' || auth()->user()->user_type != 'Admin')
                     <div class="row mb-5 mt-4">
                         @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
                         <div class="col-md-4">
