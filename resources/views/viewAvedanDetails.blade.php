@@ -421,7 +421,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }} {{$waitingButtonShow}}
+                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }} 
                     </div>
 
                     <div class="form-group col-md-6">

@@ -1152,13 +1152,13 @@ class DashboardController extends Controller
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates < $targetCandidates) {
+        // if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
-        } else {
+        // } else {
 
-            $waitingButtonShow = true;
-        }
+        //     $waitingButtonShow = true;
+        // }
         
         //echo '<pre>';print_r($result);exit;
         return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
