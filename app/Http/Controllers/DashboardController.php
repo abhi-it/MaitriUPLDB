@@ -1121,6 +1121,7 @@ class DashboardController extends Controller
 
         $target = Districts::find($districtID);
 
+
         $totalSelectedCandidates = 0;
         $targetCandidates = 0;
         /*------Start Getting total General and OBC selected candidates-----------------*/
@@ -1139,25 +1140,26 @@ class DashboardController extends Controller
         /*------Start Getting total SC and ST selected candidates-----------------*/ else if ($result->category == 'एस सी' or $result->category == 'एस टी') {
 
             $selectedCandidates = Avedan::where('is_approved', '=', 1)
-                ->whereNotIn('category', ["जनरल", "ओ बी सी"])
+                ->whereNotIn('category', ["एस सी", "एस टी"])
                 ->where('district_id', '=', $districtID)
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
             $targetCandidates = ($target)?$target->sc_st_target:'';
         }
+        // dd($totalSelectedCandidates,$targetCandidates);
         /*------End Getting total SC and ST selected candidates-----------------*/
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates >= $targetCandidates) {
+        if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
         } else {
 
             $waitingButtonShow = true;
         }
-
+        
         //echo '<pre>';print_r($result);exit;
         return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
     }
@@ -1189,17 +1191,18 @@ class DashboardController extends Controller
         /*------Start Getting total SC and ST selected candidates-----------------*/ else if ($result->category == 'एस सी' or $result->category == 'एस टी') {
 
             $selectedCandidates = Avedan::where('is_approved', '=', 1)
-                ->whereNotIn('category', ["जनरल", "ओ बी सी"])
+                ->whereNotIn('category', ["एस सी", "एस टी"])
                 ->where('district_id', '=', $districtID)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
             $targetCandidates = ($target)?$target->sc_st_target:'';
         }
+       
         /*------End Getting total SC and ST selected candidates-----------------*/
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates >= $targetCandidates) {
+        if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
         } else {
@@ -1334,7 +1337,7 @@ class DashboardController extends Controller
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates >= $targetCandidates) {
+        if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
         } else {
