@@ -425,14 +425,14 @@
                         <div class="row">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1"
                                 class="btn btn-primary">स्वीकार</a>
-                            <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;"
+                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter" style="margin-left:20px;"
                                 data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
                         </div>
                     @else
                         <div class="row">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1"
                                 class="btn btn-primary">स्वीकार</a>
-                            <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;"
+                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter" style="margin-left:20px;"
                                 data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
                         </div>
                     @endif
@@ -502,6 +502,9 @@
                         },
                     });
                     /*----------------Comments form validate End----------------*/
+                });
+                $('.exampleModalCenter').click(function(){
+                    $('#exampleModalCenter').modal('show');
                 });
             </script>
 

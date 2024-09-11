@@ -3,6 +3,7 @@
     @php
         use App\Models\Districts;
         use App\Models\Rejectcomment;
+        $coments = Rejectcomment::where('application_id', '=', $result->id)->first();
     @endphp
     <div class="container main-div" style="background-color:white; height: 100%;">
         <!--First row Start -->
@@ -421,7 +422,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }} 
+                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }}  
                     </div>
 
                     <div class="form-group col-md-6">
@@ -456,14 +457,15 @@
                     @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
                         @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
                         <div class="col-md-4">
-                            <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">प्रतीक्षा सूची बनायें
+                            <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">
+                                प्रतीक्षा सूची बनायें 
                             </a>
                         </div>   
                         @endif
                         @if ($result->is_approved == 0 || $result->is_approved ==3 )
                         <div class="col-md-4">
-                        <a href="javascript:void(0)" class="btn btn-danger  text-white w-100"
-                            data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार </a>
+                        <a href="javascript:void(0)" class="btn btn-danger  text-white w-100 exampleModalCenter"
+                            data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार  </a>
                         </div>    
                         @endif
                     @endif
@@ -480,15 +482,22 @@
                         @endif
                         @if ($result->is_approved == 0 || $result->is_approved ==3)
                         <div class="col-md-4">
-                            <a href="javascript:void(0)" class="btn btn-danger text-white w-100" 
-                            data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार </a>
+                            <a href="javascript:void(0)" class="btn btn-danger text-white w-100 exampleModalCenter" 
+                            data-toggle="modal" data-target="#exampleModalCenter"> अस्वीकार   </a>
                         </div>  
                         @endif
                     </div>
                     @endif
                 @endif
+                @if(!empty($coments))
+                <div class="alert alert-danger btn btn-danger" >
+                     {{ $coments->comments }}
+                </div>
+                @endif
 
             </div>
+            
+          
 
 
             <!-- Modal -->
@@ -556,17 +565,16 @@
                     });
                     /*----------------Comments form validate End----------------*/
                 });
+
+                $('.exampleModalCenter').click(function(){
+                    $('#exampleModalCenter').modal('show');
+                });
             </script>
 
             <!--------Comment Start here------------>
-            @php $coments = Rejectcomment::where('application_id', '=', $result->id)->first()@endphp
-            @if (!empty($coments))
-                @if($result->is_approved != 2)
-                    <div class="alert alert-danger" style="width: 100%;">
-                        {{ $coments->comments }}
-                    </div>
-                @endif
-            @endif
+           
+            <!-- @php $coments = Rejectcomment::where('application_id', '=', $result->id)->first()@endphp -->
+         
             <!--------Comment End here------------>
 
         </div>

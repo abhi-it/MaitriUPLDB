@@ -7,6 +7,7 @@ use App\Models\Tehsil;
 use App\Models\Blockslist;
 use App\Models\Hospitals;
 use App\Models\AIcenters;
+use App\Models\Maitri;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Helpers\TranslateTextHelper;
 class ImportOfficers implements ToModel
@@ -18,10 +19,37 @@ class ImportOfficers implements ToModel
         $lasttehsil = '';
         $last_block = '';
         $dis_id = '';
+    //     if (is_numeric($row[0])){
+    //     $checkdata = Maitri::where(['maitri_mobile_no'=>$row[4]])->first();
+    //     echo "<pre>"; print_r($this->changeText($row[3])); echo "</pre>";exit;
+    //     if(empty($checkdata)){
+    //         $maitri=new Maitri();
+    //         $maitri->mandal_name    =   'आगरा';//$this->changeText($row[1]);
+    //         $maitri->janpad_name    =   'आगरा';//$this->changeText($row[2]);
+    //         $maitri->maitri_name    =   $this->changeText($row[3]);
+    //         $maitri->maitri_mobile_no   =   $this->changeText($row[4]);
+    //         $maitri->gram_panchayat =   $row[5];
+    //         $maitri->post_office    =   $this->changeText($row[6]);
+    //         $maitri->block  =   $this->changeText($row[7]);
+    //         $maitri->tehsil =   $this->changeText($row[8]);
+    //         $maitri->adhaar_card    =   $row[9];
+    //         $maitri->father_name    =   $this->changeText($row[10]);
+    //         $maitri->father_mobile_no   = $row[11];
+    //         $maitri->certificate_no =   $row[12];
+    //         $maitri->center_name    =   $this->changeText($row[13]);
+    //         $maitri->pass_date  =   $row[14];
+    //         $maitri->expiry_date    =  $row[15];
+    //         $maitri->any_bharat_id  =   $row[16];
+    //         $maitri->equipment_received =  $this->changeText($row[17]);
+    //         $maitri->longitude  =   str_replace('-','.',$row[18]);
+    //         $maitri->latitude   =   str_replace('-','.',$row[19]);
+    //         $maitri->save(); 
+    //     }
+    // }
 
     if (is_numeric($row[0])) {
         
-        $tehsil = isset($row[2]) && trim($row[2]) !== '' ? $this->engtohindi($row[2]) : $lasttehsil;
+        $tehsil = isset($row[2]) && trim($row[2]) !== '' ? $this->changeText($row[2]) : $lasttehsil;
         $tehsil_eng = isset($row[2]) && trim($row[2]) !== '' ? $row[2] : $this->hinditoenglish($tehsil); 
 
         
@@ -110,7 +138,7 @@ class ImportOfficers implements ToModel
             'format'    => 'json',
             'to_font'   => 'mangal'
         );
-
+        
         if($val!=null){
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -128,8 +156,10 @@ class ImportOfficers implements ToModel
             ),
             ));
             $response = curl_exec($curl);
+            dd($response);
             curl_close($curl);
             $response=json_decode($response,true);
+          
             if(isset($response['data'])){
                 return $response['data']['output_text'];
             } else {
@@ -138,6 +168,17 @@ class ImportOfficers implements ToModel
         } else {
             return '';
         }
+    }
+
+
+    function kratitohindi($val){
+        TranslateTextHelper::setSource('')->setTarget('hi');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
     }
 
     function engtohindi($val){

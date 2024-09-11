@@ -195,10 +195,28 @@ var code ={
 };
 var place_id='ChIJa7EyH5n9mzkR54uXCYm6zJM';
 var icon = {
-    url: "{{ asset('') }}images/maitri.svg",
+    url: "{{ asset('') }}images/icon-1.png",
     size: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0, 0),
 };
+var icon4 = {
+    url: "{{ asset('') }}images/icon-4.png",
+    size: new google.maps.Size(50, 50),
+    origin: new google.maps.Point(0, 0),
+};
+var icon5  ={
+    url: "{{ asset('') }}images/icon-5.png",
+    size: new google.maps.Size(50, 50),
+    origin: new google.maps.Point(0, 0),
+};
+
+var icon2  ={
+    url: "{{ asset('') }}images/icon-7.png",
+    size: new google.maps.Size(50, 50),
+    origin: new google.maps.Point(0, 0),
+};
+
+console.log('url',icon)
 
 var aiimg = {
     url: "{{ asset('') }}images/i1.svg",
@@ -274,7 +292,6 @@ $('#type').change(function() {
           console.log('data' ,data)
             if(data){
               $('#map').show();
-              $('#AIExport').show();
               initLiveStockMap(null, data);
             }
         }
@@ -543,6 +560,7 @@ $('#janpad').change(function() {
     }
 });
 
+
 async function initMap(code,locations) {
     var lat  = (code)?code.latt:27.5706;
     var long  = (code)?code.long:80.0982;
@@ -644,6 +662,19 @@ async function initLiveStockMap(code,locations) {
       var marker, i ,labels;
       var markers=[];
       for (let i = 0; i < locations.length; i++) {
+        var imgcustom  = icon4;
+        if(locations[i]['type']=='ett_ivf'){
+          var imgcustom  = icon4;
+        }
+        if(locations[i]['type']=='semen_station'){
+          var imgcustom  = icon5;
+        }
+        if(locations[i]['type']=='lc_agency'){
+          var imgcustom  = icon2;
+        }
+       
+        
+        console.log('locations',locations)
         if (locations[i]['longitude'] !== "" && locations[i]['lattitute'] !== "") {
           const contentString =
                     '<div id="content">' +
@@ -660,7 +691,7 @@ async function initLiveStockMap(code,locations) {
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i]['lattitute'], locations[i]['longitude']),
             map: map, 
-            // icon: lc_img,
+            icon: imgcustom,
           });
             var currentInfowindow = null;
             google.maps.event.addListener(marker, 'click', (function(marker, i) {

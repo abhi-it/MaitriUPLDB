@@ -55,6 +55,7 @@ class UpdateController extends Controller
                         'title'         =>  $request->title,
                         'url'           =>  $request->url,
                         'description'   =>  $request->description,
+                        'status'        =>  ($request->status)?$request->status:1,
                         'created_at'    =>   date('Y-m-d h:m:s'),
                 ]);
                 return redirect('latest-updates')->with('success','Record added successfully!');
