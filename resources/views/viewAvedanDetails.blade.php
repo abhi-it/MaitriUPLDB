@@ -569,6 +569,9 @@
                 $('.exampleModalCenter').click(function(){
                     $('#exampleModalCenter').modal('show');
                 });
+                $('.close').click(function(){
+                    $('#exampleModalCenter').modal('hide');
+                });
             </script>
 
             <!--------Comment Start here------------>
