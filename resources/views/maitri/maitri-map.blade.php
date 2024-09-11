@@ -195,23 +195,23 @@ var code ={
 };
 var place_id='ChIJa7EyH5n9mzkR54uXCYm6zJM';
 var icon = {
-    url: "{{ asset('') }}images/icon-1.png",
+    url: "{{ asset('') }}mapicon/icon-1.png",
     size: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0, 0),
 };
 var icon4 = {
-    url: "{{ asset('') }}images/icon-4.png",
+    url: "{{ asset('') }}mapicon/icon-4.png",
     size: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0, 0),
 };
 var icon5  ={
-    url: "{{ asset('') }}images/icon-5.png",
+    url: "{{ asset('') }}mapicon/icon-5.png",
     size: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0, 0),
 };
 
 var icon2  ={
-    url: "{{ asset('') }}images/icon-7.png",
+    url: "{{ asset('') }}mapicon/icon-7.png",
     size: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0, 0),
 };
