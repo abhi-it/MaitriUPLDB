@@ -61,6 +61,8 @@
         <div class="col-md-2 mb-4">
           <select name="type" id="type" class="form-control">
             <option value="0">कोई भी चुनें</option>
+            <option value="pd_lab">गर्भावस्था निदान प्रयोगशाला (Pregnancy Diagnosis Laboratory) ({{count($pdlab)}})</option>
+            <option value="cryo_vessel_blocks">क्रायो-वेसल ब्लॉक (Cryo-Vessel Blocks) ({{count($cvblocks)}})</option>
             <option value="1">मैत्री (पशु मित्र)  ({{count($maitricount)}})</option>
             <option value="2">एआई सेंटर/एलईओ सेंटर/पशु चिकित्सा अस्पताल  ({{count($aicount)}})</option>
             <option value="3">जिलों  ({{count($disticcount)}})</option>
@@ -173,77 +175,91 @@
    var totalmaitri  =  <?php echo json_encode($maitricount); ?>;
    var aicount      =  <?php echo json_encode($aicount); ?>; 
    var division      =  <?php echo json_encode($disticcount); ?>; 
+   var pdlab        =  <?php echo json_encode($pdlab);?>;
+   var cvblocks     =   <?php echo json_encode($cvblocks);?>; 
 
-$('#map').hide();
-$('#maitri').hide();
-$('#aicenter').hide();
-$('#location').hide();
-$('#janpad_count').hide()
-let featureLayer;
-const featureStyleOptions = {
-      strokeColor: "#EA7324",
-      strokeOpacity: 1.0,
-      strokeWeight: 3.0,
-      fillColor: "#EA7324",
-      fillOpacity: 0.5,
+  $('#map').hide();
+  $('#maitri').hide();
+  $('#aicenter').hide();
+  $('#location').hide();
+  $('#janpad_count').hide()
+  let featureLayer;
+  const featureStyleOptions = {
+        strokeColor: "#EA7324",
+        strokeOpacity: 1.0,
+        strokeWeight: 3.0,
+        fillColor: "#EA7324",
+        fillOpacity: 0.5,
+    };
+  var locations =[];
+  var currWindow =false; 
+  var code ={
+    latt: 27.886641697838808,
+    long:79.87913668769336
   };
-var locations =[];
-var currWindow =false; 
-var code ={
-  latt: 27.886641697838808,
-  long:79.87913668769336
-};
-var place_id='ChIJa7EyH5n9mzkR54uXCYm6zJM';
-var icon = {
-    url: "{{ asset('') }}mapicon/icon-1.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
-var icon4 = {
-    url: "{{ asset('') }}mapicon/icon-4.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
-var icon5  ={
-    url: "{{ asset('') }}mapicon/icon-5.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
+  var place_id='ChIJa7EyH5n9mzkR54uXCYm6zJM';
+  var icon = {
+      url: "{{ asset('') }}mapicon/icon-1.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon4 = {
+      url: "{{ asset('') }}mapicon/icon-4.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon5  ={
+      url: "{{ asset('') }}mapicon/icon-5.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon2  ={
+      url: "{{ asset('') }}mapicon/icon-2.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon3  ={
+      url: "{{ asset('') }}mapicon/icon-3.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon7  ={
+      url: "{{ asset('') }}mapicon/icon-7.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon8  ={
+      url: "{{ asset('') }}mapicon/icon-8.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var icon9  ={
+      url: "{{ asset('') }}mapicon/icon-9.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  // console.log('url',icon)
+  var aiimg = {
+      url: "{{ asset('') }}images/i1.svg",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  }
+  var vhimg ={
+      url: "{{ asset('') }}images/h1.svg",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  }
+  var img =  {
+      url: "{{ asset('') }}images/ai.png",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
+  var lc_img =  {
+      url: "{{ asset('') }}images/l1.svg",
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+  };
 
-var icon2  ={
-    url: "{{ asset('') }}mapicon/icon-7.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
-
-console.log('url',icon)
-
-var aiimg = {
-    url: "{{ asset('') }}images/i1.svg",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-}
-var vhimg ={
-    url: "{{ asset('') }}images/h1.svg",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-}
-
-var img =  {
-    url: "{{ asset('') }}images/ai.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
-var lc_img =  {
-    url: "{{ asset('') }}images/l1.svg",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
-var img1 =  {
-    url: "{{ asset('') }}images/hs.png",
-    size: new google.maps.Size(50, 50),
-    origin: new google.maps.Point(0, 0),
-};
 $('#type').change(function() {
   $('#maitri').hide();
   $('#aicenter').hide();
@@ -289,7 +305,7 @@ $('#type').change(function() {
         },
         cache: false,
         success: function(data) {
-          console.log('data' ,data)
+          // console.log('data' ,data)
             if(data){
               $('#map').show();
               initLiveStockMap(null, data);
@@ -298,6 +314,18 @@ $('#type').change(function() {
     });
 
   }
+
+  if(val=='pd_lab'){
+    $('#map').show();
+    iniPDlabMap(null,pdlab);
+  }
+
+  if(val=='cryo_vessel_blocks'){
+    $('#map').show();
+    iniSryoVesselMap(null,cvblocks);
+  }
+
+
 });
 // AIcenter function start here 
 $('#address').change(function() {
@@ -396,7 +424,6 @@ async function initAIMap(code,locations) {
 }
 // end AI center function here 
 
-
 //location function start here
 $('#division').change(function() {
     $('#locationExport').hide();
@@ -492,157 +519,156 @@ async function initLocationMap(code,locations) {
 //  location function end here
 
 //  start maitri function from here
-$('#janpad').hide();
-$('#maitriExport').hide();
-$('#janpad_count').hide()
-$('#district').change(function() {
-    $('#id').val();
-    $('#maitriExport').hide();
-    $('#janpad').hide();
-    $('#janpad_count').hide();
-    var val = $("#district option:selected").val();
-    if (val) {
-        $.ajax({
-            type: "GET",
-            url: "getJanpadUnique",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id": val
-            },
-            cache: false,
-            success: function(data) {
-                $('#janpad').show();
-                $('#janpad').empty();
-                $('#janpad').append($("<option>-Select one-</option>"));
-                $.each(data.data.results, function(i, index) {
-                  $('#janpad').append($("<option value="+index.janpad_name+">"+index.janpad_name+" ( "+index.count+"  )</option>"));
-                });
-                var maitricount = data.data.maitri;
-                var janpad       = data.data.janapad;
-                if(maitricount.length>0){
-                  initMap(janpad, maitricount);
-                }
-            }
-        });
-    }
-});
-
-$('#janpad').change(function() {
-    $('#maitriExport').hide();
-    var val = $("#janpad option:selected").val();
-    $('#id').val(val);
-    if (val) {
-        $.ajax({
-            type: "GET",
-            url: "allMaitriesData",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id": val
-            },
-            cache: false,
-            success: function(data) {
-              $('#janpad_count').empty()
-                if(data.code){
-                  $('#janpad_count').show()
-                  $('#map').show();
-                  $('#janpad_count').append($("<label for='count' class='btn btn-primary'>Total Maitri : "+data.maitri.length+"</label>"));
-                  $('#maitriExport').show();
-                  initMap(data.code, data.maitri);
-                }
-            }
-        });
-    }
-});
-
-
-async function initMap(code,locations) {
-    var lat  = (code)?code.latt:27.5706;
-    var long  = (code)?code.long:80.0982;
-    const zoom = ((locations.length)>20)? 10 : 7;
-    var latlng = new google.maps.LatLng( lat,long);
-    var map = new google.maps.Map(document.getElementById('map'), {
-          center: latlng,
-          zoom,
-          // minZoom: zoom - 3,
-          // maxZoom: zoom + 3,
-          mapId: "a3efe1c035bad51b", 
-          zoomControl: false,
-    });
-    var markers = [];
-    if(locations.length>0){
-      var marker, i ,labels;
-      var markers=[];
-      for (let i = 0; i < locations.length; i++) {
-        if (locations[i]['longitude'] !== "" && locations[i]['latitude'] !== "") {
-          const contentString =
-                    '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    "</div>" +
-                    '<div id="bodyContent">' +
-                    "<p> नाम : <strong><b>"+locations[i]['maitri_name']+"</b></strong>,</br>" +
-                    " मोबाइल नंबर : <b>"+locations[i]['maitri_mobile_no']+"</b>,</br>" +
-                    " मंडल नाम/ज़िला : <b>"+locations[i]['mandal_name']+"</b>,</br> " +
-                    " जनपद का नाम : <b>"+locations[i]['janpad_name']+"</b>,</br> " +
-                    " ग्राम पंचायत : <b>"+locations[i]['gram_panchayat']+"</b>,</br> " +
-                    " पोस्ट ऑफ़िस : <b>"+locations[i]['post_office']+"</b>,</br> " +
-                    " तहसील : <b>"+locations[i]['tehsil']+"</b>,</br> " +
-                    " प्रशिक्षण केंद्र का नाम : <b>"+locations[i]['center_name']+"</b>,</br> " +
-                    " भारत पशुधन एआई आईडी : <b>"+locations[i]['any_bharat_id']+"</b>,</br> " +
-                    " प्रशिक्षण का वर्ष : <b>"+locations[i]['pass_date']+"</b>,</br> " +
-                    "</p></div>" +
-                    "</div>";
-          const infowindow = new google.maps.InfoWindow({
-            disableAutoPan: false,
-            content: contentString,
-          });
-          marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
-            map: map,
-            icon: icon,
-          });
-            var currentInfowindow = null;
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function() {
-                if (currentInfowindow) {
-                  currentInfowindow.close();
-                }
-                infowindow.open(map, marker);
-                currentInfowindow = infowindow;
+  $('#janpad').hide();
+  $('#maitriExport').hide();
+  $('#janpad_count').hide()
+  $('#district').change(function() {
+      $('#id').val();
+      $('#maitriExport').hide();
+      $('#janpad').hide();
+      $('#janpad_count').hide();
+      var val = $("#district option:selected").val();
+      if (val) {
+          $.ajax({
+              type: "GET",
+              url: "getJanpadUnique",
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              data: {
+                  "_token": "{{ csrf_token() }}",
+                  "id": val
+              },
+              cache: false,
+              success: function(data) {
+                  $('#janpad').show();
+                  $('#janpad').empty();
+                  $('#janpad').append($("<option>-Select one-</option>"));
+                  $.each(data.data.results, function(i, index) {
+                    $('#janpad').append($("<option value="+index.janpad_name+">"+index.janpad_name+" ( "+index.count+"  )</option>"));
+                  });
+                  var maitricount = data.data.maitri;
+                  var janpad       = data.data.janapad;
+                  if(maitricount.length>0){
+                    initMap(janpad, maitricount);
+                  }
               }
-            })(marker, i));
-            markers.push(marker);
-            google.maps.event.addListener(infowindow, 'closeclick', function() {
-              currentInfowindow = null;
-            });
-        }
-        // const markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
+          });
       }
-    }else{
-      var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            draggable: true
+  });
+
+  $('#janpad').change(function() {
+      $('#maitriExport').hide();
+      var val = $("#janpad option:selected").val();
+      $('#id').val(val);
+      if (val) {
+          $.ajax({
+              type: "GET",
+              url: "allMaitriesData",
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              data: {
+                  "_token": "{{ csrf_token() }}",
+                  "id": val
+              },
+              cache: false,
+              success: function(data) {
+                $('#janpad_count').empty()
+                  if(data.code){
+                    $('#janpad_count').show()
+                    $('#map').show();
+                    $('#janpad_count').append($("<label for='count' class='btn btn-primary'>Total Maitri : "+data.maitri.length+"</label>"));
+                    $('#maitriExport').show();
+                    initMap(data.code, data.maitri);
+                  }
+              }
+          });
+      }
+  });
+
+  async function initMap(code,locations) {
+      var lat  = (code)?code.latt:27.5706;
+      var long  = (code)?code.long:80.0982;
+      const zoom = ((locations.length)>20)? 10 : 7;
+      var latlng = new google.maps.LatLng( lat,long);
+      var map = new google.maps.Map(document.getElementById('map'), {
+            center: latlng,
+            zoom,
+            // minZoom: zoom - 3,
+            // maxZoom: zoom + 3,
+            mapId: "a3efe1c035bad51b", 
+            zoomControl: false,
       });
-      google.maps.event.addListener(marker, 'dragend', function(a) {
-          var div = document.createElement('div');
-          div.innerHTML = a.latLng.lat().toFixed(4) + ', ' + a.latLng.lng().toFixed(4);
-          document.getElementsByTagName('body')[0].appendChild(div);
-      });
-     }
-     var placeId   = (code)?code.place_id: place_id
-      featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
-      featureLayer.style = (options) => {
-        if (options.feature.placeId == placeId) {
-          return featureStyleOptions;
+      var markers = [];
+      if(locations.length>0){
+        var marker, i ,labels;
+        var markers=[];
+        for (let i = 0; i < locations.length; i++) {
+          if (locations[i]['longitude'] !== "" && locations[i]['latitude'] !== "") {
+            const contentString =
+                      '<div id="content">' +
+                      '<div id="siteNotice">' +
+                      "</div>" +
+                      '<div id="bodyContent">' +
+                      "<p> नाम : <strong><b>"+locations[i]['maitri_name']+"</b></strong>,</br>" +
+                      " मोबाइल नंबर : <b>"+locations[i]['maitri_mobile_no']+"</b>,</br>" +
+                      " मंडल नाम/ज़िला : <b>"+locations[i]['mandal_name']+"</b>,</br> " +
+                      " जनपद का नाम : <b>"+locations[i]['janpad_name']+"</b>,</br> " +
+                      " ग्राम पंचायत : <b>"+locations[i]['gram_panchayat']+"</b>,</br> " +
+                      " पोस्ट ऑफ़िस : <b>"+locations[i]['post_office']+"</b>,</br> " +
+                      " तहसील : <b>"+locations[i]['tehsil']+"</b>,</br> " +
+                      " प्रशिक्षण केंद्र का नाम : <b>"+locations[i]['center_name']+"</b>,</br> " +
+                      " भारत पशुधन एआई आईडी : <b>"+locations[i]['any_bharat_id']+"</b>,</br> " +
+                      " प्रशिक्षण का वर्ष : <b>"+locations[i]['pass_date']+"</b>,</br> " +
+                      "</p></div>" +
+                      "</div>";
+            const infowindow = new google.maps.InfoWindow({
+              disableAutoPan: false,
+              content: contentString,
+            });
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+              map: map,
+              icon: icon,
+            });
+              var currentInfowindow = null;
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                  if (currentInfowindow) {
+                    currentInfowindow.close();
+                  }
+                  infowindow.open(map, marker);
+                  currentInfowindow = infowindow;
+                }
+              })(marker, i));
+              markers.push(marker);
+              google.maps.event.addListener(infowindow, 'closeclick', function() {
+                currentInfowindow = null;
+              });
+          }
+          // const markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
         }
-      };
-}
+      }else{
+        var marker = new google.maps.Marker({
+              position: latlng,
+              map: map,
+              draggable: true
+        });
+        google.maps.event.addListener(marker, 'dragend', function(a) {
+            var div = document.createElement('div');
+            div.innerHTML = a.latLng.lat().toFixed(4) + ', ' + a.latLng.lng().toFixed(4);
+            document.getElementsByTagName('body')[0].appendChild(div);
+        });
+      }
+      var placeId   = (code)?code.place_id: place_id
+        featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
+        featureLayer.style = (options) => {
+          if (options.feature.placeId == placeId) {
+            return featureStyleOptions;
+          }
+        };
+  }
 // end maitri function from here 
 
 
@@ -662,19 +688,30 @@ async function initLiveStockMap(code,locations) {
       var marker, i ,labels;
       var markers=[];
       for (let i = 0; i < locations.length; i++) {
-        var imgcustom  = icon4;
         if(locations[i]['type']=='ett_ivf'){
           var imgcustom  = icon4;
         }
-        if(locations[i]['type']=='semen_station'){
+        if(locations[i]['type']=='semen_station' ){
           var imgcustom  = icon5;
         }
         if(locations[i]['type']=='lc_agency'){
           var imgcustom  = icon2;
         }
-       
-        
-        console.log('locations',locations)
+        if(locations[i]['type']=='bull_mother' ){
+          if(locations[i]['district']=='हापुड़' || locations[i]['district']=='ललितपुर' || locations[i]['district']=='बाराबंकी'){
+            var imgcustom  = icon3;
+          }
+          if(locations[i]['district']=='वाराणसी' || locations[i]['district']=='मेरठ' || locations[i]['district']=='सीतापुर'){
+            var imgcustom  = icon8;
+          }
+          if(locations[i]['district']=='इटावा'){
+            var imgcustom  = icon9;
+          }
+          if(locations[i]['district']=='खेरी'){
+            var imgcustom  = icon5;
+          }
+        }
+        // console.log('imgcustom',imgcustom)
         if (locations[i]['longitude'] !== "" && locations[i]['lattitute'] !== "") {
           const contentString =
                     '<div id="content">' +
@@ -720,6 +757,132 @@ async function initLiveStockMap(code,locations) {
    
 }
 
+
+async function iniPDlabMap(code,locations) {
+    var lat    = (code)?code.latt:27.5706;
+    var long   = (code)?code.long:80.0982;
+    const zoom = ((locations.length)>20)? 10 : 7;
+    var latlng =  new google.maps.LatLng( lat,long);
+    var map    =  new google.maps.Map(document.getElementById('map'), {
+          center: latlng,
+          zoom,
+          mapId: "a3efe1c035bad51b", 
+          zoomControl: false,
+    });
+    var markers = [];
+    if(locations.length>0){
+      var marker, i ,labels;
+      var markers=[];
+      for (let i = 0; i < locations.length; i++) {
+        if (locations[i]['longitutde'] !== "" && locations[i]['lattitude'] !== "") {
+          const contentString =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    "</div>" +
+                    '<div id="bodyContent">' +
+                    "<p>  नाम : <b>"+locations[i]['name_hindi']+"</b>,</br> " +
+                    "<p>  जोन : <b>"+locations[i]['distric']+"</b>,</br> " +
+                    "</p></div>" +
+                    "</div>";
+          const infowindow = new google.maps.InfoWindow({
+            disableAutoPan: false,
+            content: contentString,
+          });
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i]['lattitude'], locations[i]['longitutde']),
+            map: map, 
+            // icon: icon2,
+          });
+            var currentInfowindow = null;
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                if (currentInfowindow) {
+                  currentInfowindow.close();
+                }
+                infowindow.open(map, marker);
+                currentInfowindow = infowindow;
+              }
+            })(marker, i));
+            markers.push(marker);
+            google.maps.event.addListener(infowindow, 'closeclick', function() {
+              currentInfowindow = null;
+            });
+        }
+      }
+    }
+    var placeId   = (code)?code.place_id: place_id
+    featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
+    featureLayer.style = (options) => {
+      if (options.feature.placeId == placeId) {
+        return featureStyleOptions;
+      }
+    };
+   
+}
+
+
+async function iniSryoVesselMap(code,locations) {
+    var lat    = (code)?code.latt:27.5706;
+    var long   = (code)?code.long:80.0982;
+    const zoom = ((locations.length)>20)? 10 : 7;
+    var latlng =  new google.maps.LatLng( lat,long);
+    var map    =  new google.maps.Map(document.getElementById('map'), {
+          center: latlng,
+          zoom,
+          mapId: "a3efe1c035bad51b", 
+          zoomControl: false,
+    });
+    var markers = [];
+    if(locations.length>0){
+      var marker, i ,labels;
+      var markers=[];
+      for (let i = 0; i < locations.length; i++) {
+        if (locations[i]['longitude'] !== "" && locations[i]['lattitude'] !== "") {
+          const contentString =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    "</div>" +
+                    '<div id="bodyContent">' +
+                    "<p>  नाम : <b>"+locations[i]['name_hindi']+"</b>,</br> " +
+                    "<p>  जनपद : <b>"+locations[i]['janpad']+"</b>,</br> " +
+                    "<p>  तहसील : <b>"+locations[i]['tehsil']+"</b>,</br> " +
+                    "</p></div>" +
+                    "</div>";
+          const infowindow = new google.maps.InfoWindow({
+            disableAutoPan: false,
+            content: contentString,
+          });
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i]['lattitude'], locations[i]['longitude']),
+            map: map, 
+            icon: icon2,
+          });
+            var currentInfowindow = null;
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                if (currentInfowindow) {
+                  currentInfowindow.close();
+                }
+                infowindow.open(map, marker);
+                currentInfowindow = infowindow;
+              }
+            })(marker, i));
+            markers.push(marker);
+            google.maps.event.addListener(infowindow, 'closeclick', function() {
+              currentInfowindow = null;
+            });
+        }
+      }
+    }
+    var placeId   = (code)?code.place_id: place_id
+    featureLayer = map.getFeatureLayer("ADMINISTRATIVE_AREA_LEVEL_2");
+    featureLayer.style = (options) => {
+      if (options.feature.placeId == placeId) {
+        return featureStyleOptions;
+      }
+    };
+   
+}
 
 initMapDefault();
 async function initMapDefault() {

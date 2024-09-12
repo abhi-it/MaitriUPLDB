@@ -33,32 +33,37 @@ class MaitriController extends Controller
     }
 
    public function maitri_map() {
-        $dist =  Maitri::all()->unique('mandal_name')->toArray();
-        $aicenter = Cliniclocation::all()->unique('district')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
-        $division  = Divisions::all()->unique('name_hindi')->toArray();
-        $placeid   =Janpad::select('place_id') 
+        $dist       =  Maitri::all()->unique('mandal_name')->toArray();
+        $aicenter   = Cliniclocation::all()->unique('district')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
+        $division   = Divisions::all()->unique('name_hindi')->toArray();
+        $placeid    =Janpad::select('place_id') 
         ->distinct('name')    
         ->get()                
         ->pluck('place_id');   
-        $agency  = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
-        $station  = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
-        $ivf  = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
-        $bull  = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
-        $maitricount  = Maitri::get();
-        $aicount  = Cliniclocation::get();
+        $agency     = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
+        $station    = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
+        $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
+        $bull       = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
+        $maitricount = Maitri::get();
+        $aicount    = Cliniclocation::get();
         $disticcount =  Districts::get();
+        $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get(); 
+        $cvblocks    =  DB::table('cryo_vessel_blocks')->orderBy('id','ASC')->get();
+       
         return view('maitri.maitri-map',[
-            'data'=>$dist,
-            'aicenter'=>$aicenter,
-            'division'=>$division,
-            'placeid' =>$placeid,
-            'maitricount'=>$maitricount,
-            'aicount'=>$aicount,
-            'disticcount'=>$disticcount,
-            'agency' =>$agency,
-            'station' =>$station,
-            'ivf'=>$ivf,
-            'bull'=>$bull,
+            'data'      =>  $dist,
+            'aicenter'  =>  $aicenter,
+            'division'  =>  $division,
+            'placeid'   =>  $placeid,
+            'maitricount'=> $maitricount,
+            'aicount'   =>  $aicount,
+            'disticcount'=> $disticcount,
+            'agency'    =>  $agency,
+            'station'   =>  $station,
+            'ivf'       =>  $ivf,
+            'bull'      =>  $bull,
+            'pdlab'     =>  $pdlab,
+            'cvblocks'  =>  $cvblocks,
         ]);
     }
 
