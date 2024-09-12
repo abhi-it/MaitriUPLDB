@@ -1142,6 +1142,10 @@
                                 <a class="nav-link" href="{{ url('upload-shapatpatra') }}">
                                     <span data-hi="शपथ पत्र अपलोड करें" data-en="Upload Affidavit"></span></a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('totalsessionlist') }}">
+                                    <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
+                            </li>
                             @endif
                         @endif
                         @else
