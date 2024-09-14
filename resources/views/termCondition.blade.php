@@ -3,7 +3,7 @@
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">नियम एवं शर्तें</h1>
+    <h3 class="text-center fw-bold m-4">नियम एवं शर्तें</h3>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  

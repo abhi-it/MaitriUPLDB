@@ -1,11 +1,11 @@
 @extends('master')
 @section('content')
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-3" style="font-weight:600;">
+        <h3 class="text-center m-4 fw-bold">
             <span data-hi="जनपद कुल चयनित आवेदक का विवरण एवं सुची" data-en="Details and list of total selected applicants of the district"></span>
         </h3>
         <div class="row">
-            <form  action="{{ Request::url() }}" method="get">
+            <form  action="{{ Request::url() }}" method="get" class="form-comman">
                 @csrf
                 <div class="col-md-4 mt-4 mb-4">
                     <select name="id" id="id" class="form-control">
@@ -22,7 +22,7 @@
                      <a href="{{ Request::url() }}" class="btn btn-secondary">रीसेट करें</a>
                 </div>
             </form>
-            <form method="get" action="{{ route('exportCVOList') }}"> 
+            <form method="get" action="{{ route('exportCVOList') }}" > 
                 @csrf
                 <div class="col-md-2 m-2">
                     <input type="hidden" id="dis_id" name="dis_id">

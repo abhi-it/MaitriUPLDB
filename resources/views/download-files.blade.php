@@ -1,13 +1,13 @@
 @extends('master')
 @section('content')
-<div class="container main-div" style="background-color:white;">
-    <h1 style="margin-top:10px;text-align: center;margin-bottom:20px;">
+<div class="container main-div">
+     <h3 class="text-center fw-bold m-4">
         <span data-hi="स्कैन किए गए शपथ पत्रों की सूची"  data-en="List of Scanned Affidavits"></span>
-    </h1>
+    </h3>
     <div class="row">
         <div class="form-group col-md-12">
-            <table class="table table-bordered">
-                <tr style="background-color:#d3d3d3;">
+            <table class="table table-striped table-responsive table-bordered">
+                <tr>
                     <th > <span data-hi="क्रं सं" data-en="S.No."></span>  </th>
                     <th ><span data-hi="दस्तावेज़ का शीर्षक" data-en="Document Title"></span> </th>
                     <th ><span data-hi="लक्ष्य के प्रति अधिक मैत्री की मांग" data-en="Seeking more maitri towards the target"></span> </th>

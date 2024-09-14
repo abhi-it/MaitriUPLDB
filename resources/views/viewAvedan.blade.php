@@ -2,17 +2,17 @@
 @section('content')
 
     <div x-data="viewAvedan" class="container main-div">
-        <h3 style="margin-top:10px;text-align: center;">{{ $heading }} ( आवेदन : {{ $results->total() }})</h3>
+        <h3 class="text-center fw-bold m-4">{{ $heading }} ( आवेदन : {{ $results->total() }})</h3>
 
 
-        <form method="get" action="{{ Request::url() }}">
+        <form method="get" action="{{ Request::url() }}" class="form-comman">
             @csrf
-            <div class="row form-comman">
+            <div class="row">
 
                 @if (auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-5 col-xl-3">
                     <label for="inputEmail4" class="fw-bold"> <span data-hi="सेलेक्ट जनपद" data-en="Select Janpad"></span></label>
                     <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
                     @change="onChangeDistrict">
@@ -25,23 +25,23 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-1 fw-semibold my-auto text-center"> <span data-hi="अथवा" data-en="Or" ></span> </div>
+            <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"> <span data-hi="अथवा" data-en="Or" ></span> </div>
             @endif
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-5 col-xl-3">
                     <label for="inputEmail4"  class="fw-bold" data-hi="आवेदन नंबर" data-en="Application Number"></label>
                     <input type="text" value="{{ @$_GET['applicationNumber'] }}" class="form-control"
                         name="applicationNumber" id="applicationNumber" data-placeholder-hi="आवेदन  नंबर"  data-placeholder-en="Application Number">
                 </div>
 
-                <div class="form-group col-md-1 fw-semibold my-auto text-center"><span data-hi="अथवा" data-en="Or" ></span></div>
+                <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"><span data-hi="अथवा" data-en="Or" ></span></div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-5 col-xl-3">
                     <label for="inputEmail4"  class="fw-bold" data-hi="मोबाइल नंबर" data-en="Mobile Number" ></label>
                     <input type="text" value="{{ @$_GET['mobile'] }}" class="form-control" name="mobile" id="mobile"
                     data-placeholder-hi="मोबाइल नंबर" data-placeholder-en="Mobile Number">
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-xl-3 mt-4 col-md-12">
                     <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search"> </span></button>
                     <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें" data-en="Reset"></span></a>
                     @if (isset($route, $year))

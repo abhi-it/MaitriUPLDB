@@ -142,7 +142,7 @@ button:hover {
 
 <div class="container main-div" style="background-color:white; height: 100%;">
     
- <h4 style="margin-top:10px;text-align: center;">राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण
+<h4 class="text-center fw-bold m-4">राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण
  <div class=" pull-right">
 			<a href="{{ url('avedan') }}" class="btn btn-info">Back</a>
 		</div>

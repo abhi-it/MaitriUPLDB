@@ -6,9 +6,9 @@
     <span data-hi="नवीनतम अपडेट अपडेट करें" data-en="Update Latest Updates"></span>
     </h1>
     @else
-    <h1 style="margin-top:10px;text-align: center;">
+    <h3 class="text-center fw-bold m-4">
     <span data-hi="नवीनतम अपडेट जोड़ें" data-en="Add Latest Updates"></span>
-    </h1>
+    </h3>
     @endif
     @if (session('error'))
     <div class="alert alert-danger">

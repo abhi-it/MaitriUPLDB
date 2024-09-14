@@ -144,7 +144,7 @@ button:hover {
 	<!--div class="scroll-left"><p>अभ्यर्थी का जनपद निवासी होना अनिवार्य है</p>
 	</div-->
 	<marquee width="100%" direction="left" height="25px" style="font-size : 18px;font-weight: bold;">अभ्यर्थी  को प्रदेश का  एवं प्रदेश के उस जनपद का निवासी होना अनिवार्य है , जिस जनपद के लिए आवेदन किया जा रहा है ।</marquee>
- <h1 style="margin-top:10px;text-align: center;">आवेदन  - पत्र </h1>
+	<h3 class="text-center fw-bold m-4">आवेदन  - पत्र </h3>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  

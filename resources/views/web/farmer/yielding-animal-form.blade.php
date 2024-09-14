@@ -35,7 +35,7 @@
 <div class="container main-div">
     <div class="row mb-5">
         <a href="{{route('add-yielding-animal')}}" class="btn btn-primary">Add New Animal</a>
-        <h3 style="text-align: center;margin: auto;">High Yielding Animal</h3>
+        <h3 class="text-center fw-bold m-4">High Yielding Animal</h3>
     </div>
        
         @if(session()->has('success'))

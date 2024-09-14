@@ -48,8 +48,10 @@ use App\Models\Districts;
                         </select>
                     </td>
                     <td>
+                    <div class="d-flex gap-2">
                         <a href="{{url('edit-latest-updated')}}/{{$row->id}}" class="btn btn-secondary" ><i class="fa fa-edit" aria-hidden="true"></i></a>
                         <button class="btn btn-danger deleteRecords" data-id="{{$row->id}}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    </div>
                     </td>
                 </tr>
                 @endforeach

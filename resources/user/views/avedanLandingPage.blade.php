@@ -13,8 +13,8 @@
         <!------Summary Page Start---------------->
         
         
-        <div class="col-12 p-4">
-    <div class="row" style="margin-top:10px;text-align: center;">
+        <div class="col-12 p-4 text-center">
+    <div class="row">
         <div class="col-12 col-md-12">
            <label for="inputPassword4" style="font-weight:bold;">आवेदन करने की प्रारंभ तिथि : </label>   {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
         </div>

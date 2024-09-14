@@ -13,10 +13,10 @@
 		margin-top: 10px;
 	}
 </style>
-<div class="container main-div py-5" style="background-color:white;">
-	<h1 style="margin-top:10px;text-align: center;margin-bottom:20px;">
+<div class="container main-div py-5">
+     <h3 class="text-center fw-bold m-4">
 		<span  data-hi="दस्तावेज़ डाउनलोड करें " data-en="Download Documents." ></span>	
-	</h1>
+	</h3>
 	<div class="row">
 		@if (session('error'))
 		<div class="alert alert-danger">
@@ -29,8 +29,8 @@
 		</div>
 		@endif
 		<div class="form-group col-md-12">
-			<table class="table table-bordered">
-				<tr style="background-color:#d3d3d3;">
+			<table class="table table-striped table-responsive table-bordered">
+				<tr>
 					<th style="font-size:15px"><span data-hi="क्रं सं" data-en="S. No."></span>  </th>
 					<th style="font-size:15px"><span data-hi="दस्तावेज़ का शीर्षक" data-en="Title of Documents"></span></th>
 					<th style="font-size:15px"> <span data-hi="डाउनलोड" data-en="Download"></span>  </th>

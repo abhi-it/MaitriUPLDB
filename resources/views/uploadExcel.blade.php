@@ -3,7 +3,7 @@
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 	 
- <h1 style="margin-top: 10px;padding-bottom: 30px;text-align: center;font-size: 30px;">क्रियाशील प्राईवेट कृत्रिम गर्भाधान कार्यकर्ता/पशुमित्र/मैत्री का विवरण अपलोड करें</h1>
+	<h3 class="text-center fw-bold m-4">क्रियाशील प्राईवेट कृत्रिम गर्भाधान कार्यकर्ता/पशुमित्र/मैत्री का विवरण अपलोड करें</h3>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  

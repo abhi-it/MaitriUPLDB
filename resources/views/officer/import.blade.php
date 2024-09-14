@@ -3,7 +3,7 @@
 <div class="container main-div" style="background-color:white; height: 100%; min-height:380px;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">इम्पोर्ट अधिकारी</h1>
+	<h3 class="text-center fw-bold m-4">इम्पोर्ट अधिकारी</h3>
 @if (session('error'))
 <div class="alert alert-danger">
 	{{ session('error') }}

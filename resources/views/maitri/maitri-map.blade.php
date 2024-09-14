@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <div class="container main-div" style="background-color:white; height: 100%; min-height:380px;">
     <!--First row Start -->
- <h1 style="margin-top:10px;text-align: center;">Map</h1>
+    <h3 class="text-center fw-bold m-4">Map</h3>
 @if (session('error'))
 <div class="alert alert-danger">
 	{{ session('error') }}

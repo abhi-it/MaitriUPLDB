@@ -11,7 +11,7 @@
             {{ session()->get('error') }}
         </div>
         @endif
-        <h3 style="margin-top:10px;text-align: center;">
+        <h3 class="text-center fw-bold m-4">
             <span data-hi="पशुपालक पंजीकरण  फॉर्म" data-en="Animal Husbandry Registration Form"></span>
         </h3>
         <hr>

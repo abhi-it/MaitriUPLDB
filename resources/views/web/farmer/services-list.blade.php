@@ -1,7 +1,7 @@
 @extends('submaster')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">Service's Request List</h3>
+<h3 class="text-center fw-bold m-4">Service's Request List</h3>
 
 <table class="table">
     <thead>

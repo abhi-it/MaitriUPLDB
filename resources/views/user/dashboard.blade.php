@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">संस्थान आवंटन सूची
+<h3 class="text-center fw-bold m-4">संस्थान आवंटन सूची
 <!--div class=" pull-right">
 			<a href="javascript:history.back();" class="btn btn-info">Back</a>
 		</div-->

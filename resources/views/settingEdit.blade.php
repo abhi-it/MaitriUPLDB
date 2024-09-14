@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">सेटिंग्स</h3>
+<h3 class="text-center fw-bold m-4">सेटिंग्स</h3>
 <form method="post" action="{{ route('setting.update', $data->id) }}">
             @method('PATCH') 
             @csrf

@@ -12,12 +12,12 @@
         <h3 class="text-center m-4 fw-bold">  <span data-hi="मासिक मांग अनुरोध सूची" data-en="Monthly Demand Request List"></span> </h3>
         <div class="row">
             <div class="col-md-12"> 
-            <form method="get" action="{{ Request::url() }}">
+            <form method="get" action="{{ Request::url() }}" class="form-comman">
             @csrf
 
             <div class="row">
             <div class="form-group col-md-4">
-                <label for="inputEmail4">सेलेक्ट जनपद </label>
+                <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
                 <select class="form-control" name="id" id="id">
                     <option value=""></option>
                     @if(count($district)>0)

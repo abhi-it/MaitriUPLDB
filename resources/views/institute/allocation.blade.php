@@ -18,9 +18,9 @@
         </ul>
       </div><br />
     @endif
-			<form method="post" action="{{ url('saveAllocation') }}" id="saveAllocation"  enctype="multipart/form-data">
+			<form method="post" action="{{ url('saveAllocation') }}" id="saveAllocation"  enctype="multipart/form-data" class="form-comman">
 	@csrf
-			<div class="row form-comman">
+			<div class="row ">
 				
 				
 				<div class="form-group col-md-4">

@@ -3,7 +3,7 @@
 <div class="container main-div" style="background-color:white; height: 100%; min-height:380px;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">मैत्री (पशु मित्र)</h1>
+    <h3 class="text-center fw-bold m-4">मैत्री (पशु मित्र)</h3>
 @if (session('error'))
 <div class="alert alert-danger">
 	{{ session('error') }}

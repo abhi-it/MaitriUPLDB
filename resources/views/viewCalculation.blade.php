@@ -51,7 +51,7 @@
 
 
 <div class="container main-div" style="background-color:white; height: 100%;">
-<table class="table table-bordered">
+<table class="table table-striped  table-responsive table-bordered">
     <thead>
         <tr>
             <td>हाई स्कूल (जीव विज्ञान)</td>

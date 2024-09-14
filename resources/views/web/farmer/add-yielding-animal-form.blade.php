@@ -33,7 +33,7 @@
     }
 </style>
 <div class="container main-div">
-    <h3 style="margin-top:10px;text-align: center;">High Yielding Animal Details Form</h3>
+ <h3 class="text-center fw-bold m-4">High Yielding Animal Details Form</h3>
         @if(session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}

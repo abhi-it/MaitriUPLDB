@@ -6,7 +6,7 @@ use App\Models\Districts;
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 	 
- <h4 style="margin-top:10px;text-align: center;">{{$heading}}
+	<h4 class="text-center fw-bold m-4">{{$heading}}
 		<div class=" pull-right">
 			<a href="javascript:history.back()" class="btn btn-info">Back</a>
 		</div>

@@ -38,6 +38,7 @@
 
         <!------Summary Page Start---------------->
         <div class="tab1">
+        <div class="formone">
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">
@@ -94,6 +95,7 @@
 
                
             </div>
+          </div>  
         </div>
     </div>
     </div>

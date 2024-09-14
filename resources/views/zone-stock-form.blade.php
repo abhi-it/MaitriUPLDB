@@ -11,7 +11,7 @@
             {{ session()->get('error') }}
         </div>
         @endif
-        <h3 style="margin-top:10px;text-align: center;">
+        <h3 class="text-center fw-bold m-4">
         <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zones Stock Form"></span>
          </h3>
         <form method="post" action="{{ route('zonestoreadd') }}" class="form-comman">

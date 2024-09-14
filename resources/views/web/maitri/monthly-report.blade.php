@@ -7,7 +7,7 @@
     }
 </style>
 <div class="container main-div">
-<h3 style="margin-top:10px;text-align: center;">मासिक प्रगति रिपोर्ट (एमपीआर) </h3>
+<h3 class="text-center fw-bold m-4">मासिक प्रगति रिपोर्ट (एमपीआर) </h3>
 
     <form action="{{url('filtered-monthly-report')}}" method="post">
             @csrf

@@ -1,10 +1,11 @@
 @extends('master')
 @section('content')
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 style="margin-top:10px;text-align: center;">मैत्री सूची</h3>
+    <h3 class="text-center fw-bold m-4">मैत्री सूची</h3>
         <div class="container text-center">
-            <div class="row">
-                <form  action="{{ Request::url() }}" method="get" class="d-flex">
+          
+                <form  action="{{ Request::url() }}" method="get" class="form-comman">
+                <div class="row">
                     <div class="col-md-4 mt-4 mb-4">
                         <select name="id" id="id" class="form-control">
                             <option>-select one-</option>
@@ -21,9 +22,9 @@
                     <div class="col-md-1 mt-4 mb-4">
                         <a href="{{ Request::url() }}" class="btn btn-danger text-white">रीसेट करें</a>
                     </div>
+                    </div>    
                 </form>
-               
-            </div>
+            
             <div class="row">
             <form method="get" action="{{ route('exportselectedmaitries') }}"> 
                     <div class="col-md-1 mb-4">

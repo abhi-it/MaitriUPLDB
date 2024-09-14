@@ -11,9 +11,9 @@
       {{ session()->get('success') }}
   </div>
 @endif
-			<form method="get" action="{{ url('allocation-list') }}" id="viewAllocationList">
+			<form method="get" action="{{ url('allocation-list') }}" id="viewAllocationList" class="form-comman">
 	@csrf
-			<div class="row form-comman">
+			<div class="row ">
 
 
 				<div class="form-group col-md-3">

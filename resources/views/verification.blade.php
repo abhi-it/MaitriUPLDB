@@ -26,7 +26,7 @@
     <form method="post" action="{{ url('saveDocumnetVerification') }}" id="verification" enctype="multipart/form-data">
         @csrf
         <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-            <h3 style="margin-top:10px;text-align: center;">
+        <h3 class="text-center fw-bold m-4">
                 {{ $heading }}
                 @if (isset($routeName))
                 <a class="btn btn-secondary btn-export float-right" href="{{ route($routeName,[true]) }}">Export</a>

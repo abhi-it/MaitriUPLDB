@@ -105,11 +105,11 @@ button:hover {
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">आवेदन  - पत्र - अपडेट  
+	<h3 class="text-center fw-bold m-4">आवेदन  - पत्र - अपडेट   
  <div class=" pull-right">
 			<a href="{{ url('avedan') }}" class="btn btn-info">Back</a>
 		</div>
- </h1>
+ </h3>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  

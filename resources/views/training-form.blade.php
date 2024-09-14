@@ -40,7 +40,7 @@
             {{ session()->get('error') }}
         </div>
         @endif
-        <h3 style="margin-top:10px;text-align: center;">
+        <h3 class="text-center fw-bold m-4">
             <span data-hi="रिफ्रेशर प्रशिक्षण फॉर्म" data-en="Refresher Training Form"></span>
         </h3>
         <hr>

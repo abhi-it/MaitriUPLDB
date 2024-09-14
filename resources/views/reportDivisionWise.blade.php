@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">रिपोर्ट मण्डलवार </h3>
+<h3 class="text-center fw-bold m-4">रिपोर्ट मण्डलवार </h3>
 <div class="row" style="margin: 10px;">
     <a href="{{url('reportDivisionWiseDownloadToExl')}}" class="btn btn-primary">Download Excel</a>
 </div>

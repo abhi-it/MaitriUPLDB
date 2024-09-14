@@ -10,7 +10,7 @@
 	}
 </style>
 <div class="container main-div" style="background-color:white;">
-         <h1 style="margin-top:10px;text-align: center;margin-bottom:20px;">
+<h3 class="text-center fw-bold m-4">
 			
 		 <span data-hi="दस्तावेज़ डाउनलोड करें" data-en="Please download the document."></span>
 		 </h1>

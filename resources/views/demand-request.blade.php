@@ -3,8 +3,9 @@
 <div class="container main-div py-5" style="background-color:white; height: 100%; min-height:380px;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">
- <span data-hi="मासिक मांग अनुरोध पत्र" data-en="Monthly Demand Request Form"></span>   </h1>
+    <h3 class="text-center fw-bold m-4">
+ <span data-hi="मासिक मांग अनुरोध पत्र" data-en="Monthly Demand Request Form"></span>   
+</h3>
 @if (session('error'))
 <div class="alert alert-danger">
 	{{ session('error') }}
@@ -20,7 +21,7 @@
 	<div class="alert alert-danger">{{ $error }}</div>
 	@endforeach
 @endif
-	<form method="POST" action="{{ route('addDemandRequests') }}" id="loginForm" name="loginForm" enctype="multipart/form-data">
+	<form method="POST" action="{{ route('addDemandRequests') }}" id="loginForm" name="loginForm" enctype="multipart/form-data" class="form-comman">
         <p class="text-danger text-center ml-2 fs-6 fw-bold"> 
             <span data-hi="कृपया यह फॉर्म केवल एक बार भरें" data-en="Please fill up this form only once"></span> 
         </p>

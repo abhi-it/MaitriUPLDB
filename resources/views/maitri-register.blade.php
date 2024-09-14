@@ -11,7 +11,7 @@
             {{ session()->get('error') }}
         </div>
         @endif
-        <h3 style="margin-top:10px;text-align: center;">
+        <h3 class="text-center fw-bold m-4">
         <span data-hi="मैत्री (पशु मित्र) पंजीकरण फॉर्म" data-en="Maitri Registration Form"></span>
          </h3>
         <form method="post" action="{{ route('maitri-add') }}" class="form-comman">

@@ -6,7 +6,7 @@ use App\Models\Districts;
 <div class="container main-div" style="background-color:white; height: 100%;">
     <!--First row Start -->
 
- <h1 style="margin-top:10px;text-align: center;">आवेदन  - पत्र
+ <h3 class="text-center fw-bold m-4">आवेदन  - पत्र
 		<div class=" pull-right">
 			@if($result->category=='जनरल' OR $result->category=='ओ बी सी')
 			<a href="{{ url('merit-list') }}/1" class="btn btn-info">Back</a>
@@ -16,36 +16,19 @@ use App\Models\Districts;
 			<a href="{{ url('merit-list') }}/3" class="btn btn-info">Back</a>
 			@endif
 		</div>
- </h1>
+ </h3>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}
   </div>
 @endif
-<style>
-.form-control-span {
-    display: inline;
-    width: 100%;
-    font-size: 12px;
-    line-height: 1.25;
-    color: #060ded;
-    background-color: #fff;
-    background-image: none;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    /*border: 1px solid rgba(0,0,0,.15);*/
-    border-radius: 0.25rem;
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-}
-</style>
+
 
         <!------Summary Page Start---------------->
         <div class="tab1">
 			<h3>आवेदक का विवरण </h3>
+
+          <div class="formone">
 			<div class="row">
 
 				<div class="form-group col-md-4">
@@ -180,15 +163,18 @@ use App\Models\Districts;
 				</div>
 
 			</div>
-
+		</div>
 
 		<hr>
 		<div class="row">
-
+			<div>
 			<h3>शौक्षिक योग्यता व अन्य विवरण </h3>
-			<br>
-			<div class="row table-responsive">
-				<table class="table">
+			</div>
+		</div>
+
+		<div class="formone">
+			<div class="row ">
+				<table class="table table-responsive">
  				<tr>
 				<td style="width: 12%;">उत्तीर्ण परीक्षा का नाम</td>
 				<td>बोर्ड का नाम</td>
@@ -290,14 +276,18 @@ use App\Models\Districts;
 
 				</table>
 			</div>
+			</div>
 
+			<div class="formone">
 		  <div class="row">
 				<div class="form-group col-md-12">
 				  <label for="inputEmail4">प्रशिक्षण का प्रमाण किस संस्थान से लिया गया है</label> :
 				  <span class="form-control-span" id="training_adopted1">{{$result->training_adopted}}</span>
 				</div>
 			</div>
+			</div>
 
+			<div class="formone">
 		  <div class="row">
 				@if($result->training_adopted!='नहीं')
 				<div class="form-group col-md-9">
@@ -377,23 +367,31 @@ use App\Models\Districts;
 			@endif
 				</div>
 		</div>
+		</div>
+		
 		@if(auth()->user()->user_type=='District Officer' AND $result->is_approved==0) <!-----Then Display these buttons-->
 
 				@if($waitingButtonShow==1) <!-----Then Display these buttons-->
 
 				<div class="row">
+					<div class="col-md-4">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
+					</div>
 					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
 				@else
 				<div class="row">
+				<div class="col-md-4">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
+					</div>
+					<div class="col-md-4">
 					<a href="{{url('avedanStatus')}}/{{$result->id}}/3" class="btn btn-warning">प्रतीक्षा सूची बनायें</a>
+					</div>
 					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
 				@endif
 			@endif
-		</div>
+		
 
 
 <!-- Modal -->

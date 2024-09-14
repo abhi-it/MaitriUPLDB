@@ -3,9 +3,9 @@
 <div class="container main-div py-5" style="background-color:white;">
     <!--First row Start -->
 	 
- <h1 style="margin-top:10px;text-align: center;">
+	<h3 class="text-center fw-bold m-4">
 	<span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of the application"></span>	
- </h1>
+ </h3>
 @if(session()->get('success'))
   <div class="alert alert-danger">
       {{ session()->get('success') }}  

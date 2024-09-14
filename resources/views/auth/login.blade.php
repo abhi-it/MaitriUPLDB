@@ -8,7 +8,7 @@
     <div class="container main-div" style="background-color:white; ">
         <!--First row Start -->
 
-        <h1 style="margin-top:10px;text-align: center;">Login </h1>
+        <h3 class="text-center fw-bold m-4">Login </h3>
         @if (session()->get('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}

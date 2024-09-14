@@ -147,7 +147,7 @@
         <span data-hi=" अभ्यर्थी को उत्तर प्रदेश के उस जनपद का निवासी होना अनिवार्य है , जिस जनपद के लिए आवेदन किया जा रहा है ।" data-en="It is mandatory for the candidate to be a resident of the district of Uttar Pradesh for which the application is being made."></span>
         
        </marquee>
-        <h1 style="margin-top:10px;text-align: center;"> <span data-hi="आवेदन - पत्र" data-en="Application Form"></span>  </h1>
+       <h3 class="text-center fw-bold m-4"> <span data-hi="आवेदन - पत्र" data-en="Application Form"></span> </h3>
         @if (session()->get('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}

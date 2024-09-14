@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">
+<h3 class="text-center fw-bold m-4">
 <span data-hi="किसान आवश्यकता प्रपत्र" data-en="Farmer Requirement Form"></span>
 
 <div class=" pull-right">

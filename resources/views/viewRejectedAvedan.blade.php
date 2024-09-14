@@ -1,26 +1,26 @@
 @extends('master')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 style="margin-top:10px;text-align: center;">{{$heading}} ( आवेदन : {{ $results->total() }})</h3>
+<h3 class="text-center fw-bold m-4">{{$heading}} ( आवेदन : {{ $results->total() }})</h3>
 
-<form method="get" action="{{Request::url()}}">
+<form method="get" action="{{Request::url()}}" class="form-comman">
 	@csrf
 			<div class="row">
 
 
-				<div class="form-group col-md-3">
-				  <label for="inputEmail4">आवेदन  नंबर</label>
+				<div class="form-group col-md-5 col-xl-3">
+				  <label for="inputEmail4" class="fw-bold">आवेदन  नंबर</label>
 					<input type="text" value="{{@$_GET['applicationNumber']}}" class="form-control" name="applicationNumber" id="applicationNumber" placeholder="आवेदन  नंबर">
 				</div>
 
-				<div class="form-group col-md-1">अथवा</div>
+				<div class="form-group col-md-1 fw-semibold my-auto text-center">अथवा</div>
 
-				<div class="form-group col-md-3">
-				  <label for="inputEmail4">मोबाइल नंबर</label>
+				<div class="form-group col-md-5 col-xl-3">
+				  <label for="inputEmail4" class="fw-bold">मोबाइल नंबर</label>
 					<input type="text" value="{{@$_GET['mobile']}}" class="form-control" name="mobile" id="mobile" placeholder="मोबाइल नंबर">
 				</div>
 
-				<div class="form-group col-md-3" style="margin-top: 29px">
+				<div class="form-group col-md-5 col-xl-3" style="margin-top: 29px">
 				<button type="submit" class="btn btn-primary" >सर्च करें</button>
 				<a href="{{Request::url()}}" class="btn btn-secondary">रीसेट करें</a>
                 @if (isset($year))

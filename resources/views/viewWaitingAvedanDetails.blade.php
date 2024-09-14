@@ -7,7 +7,7 @@
     <div class="container main-div" style="background-color:white; height: 100%;">
         <!--First row Start -->
 
-        <h1 style="margin-top:10px;text-align: center;">आवेदन - पत्र
+        <h3 class="text-center fw-bold m-4">आवेदन - पत्र
             <div class=" pull-right">
                 <a href="javascript:history.back()" class="btn btn-info">Back</a>
             </div>
