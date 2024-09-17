@@ -1202,13 +1202,13 @@ class DashboardController extends Controller
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates < $targetCandidates) {
+        // if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
-        } else {
+        // } else {
 
-            $waitingButtonShow = true;
-        }
+        //     $waitingButtonShow = true;
+        // }
 
         //echo $waitingButtonShow;exit;
 
@@ -1337,13 +1337,13 @@ class DashboardController extends Controller
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
 
-        if ($totalSelectedCandidates < $targetCandidates) {
+        // if ($totalSelectedCandidates < $targetCandidates) {
 
             $waitingButtonShow = false;
-        } else {
+        // } else {
 
-            $waitingButtonShow = true;
-        }
+        //     $waitingButtonShow = true;
+        // }
 
         //echo $waitingButtonShow;exit;
 
@@ -1465,7 +1465,7 @@ class DashboardController extends Controller
         switch ($result->category) {
             case 'जनरल':
                 $selectedCandidates = Avedan::where('is_approved', '=', 4)
-                    ->whereIn('category', ["जनरल", "ओ बी सी"])
+                    ->whereIn('category', ["जनरल"])
                     ->where('district_id', '=', $districtID)
                     ->whereYear('created_at', $this->sessionYear)
                     ->get();
@@ -1474,7 +1474,7 @@ class DashboardController extends Controller
                 break;
             case 'ओ बी सी':
                 $selectedCandidates = Avedan::where('is_approved', '=', 4)
-                    ->whereIn('category', ["जनरल", "ओ बी सी"])
+                    ->whereIn('category', [ "ओ बी सी"])
                     ->where('district_id', '=', $districtID)
                     ->whereYear('created_at', $this->sessionYear)
                     ->get();

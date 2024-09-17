@@ -637,25 +637,25 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
   <div class="container">
     <div class="row g-3">
       <div class="col-lg-12">
-        <h5 class="site--heading"><span data-hi="फोटो गैलरी" data-en="Photo Gallery"></span> </h5>
+        <h5 class="site--heading"> <a href="{{route('gallery-page')}}"> <span data-hi="फोटो गैलरी" data-en="Photo Gallery"></span> </a> </h5>
         <div class="row m-0">
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('assets/images/gallery1.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery1.jpeg')}}" />
           </div>
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('assets/images/gallery2.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery2.jpeg')}}" />
           </div>
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('assets/images/gallery3.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery3.jpeg')}}" />
           </div>
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('assets/images/gallery4.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery4.jpeg')}}" />
           </div>
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('assets/images/gallery5.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery5.jpeg')}}" />
           </div>
           <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-            <img class="ftr-img" src="{{ asset('images/small-images/img2.jpg')}}" />
+            <img class="ftr-img" src="{{ asset('gallery/gallery6.jpeg')}}" />
           </div>
         </div>
       </div>
@@ -738,7 +738,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/vanansi-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/vanansi-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                   <p> <span data-hi="वाराणसी जोन" data-en="Varanasi Zone"></span>  </p>
                   <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -749,7 +749,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/jhansi-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/jhansi-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="झांसी जोन" data-en="Jhanshi Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -758,7 +758,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/gorakhpur%20-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/gorakhpur%20-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -767,7 +767,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/kanpur-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/kanpur-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="कानपुर जोन" data-en="Kanpur Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -776,7 +776,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/agra-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/agra-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="आगरा जोन" data-en="Agra Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -798,7 +798,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/shemen-prod/lucknow-station.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/lucknow-station.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="लखनऊ स्टेशन" data-en="Lucknow Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -809,7 +809,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/shemen-prod/babugharh-station.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/babugharh-station.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="बाबूगढ़ स्टेशन" data-en="Babugharh Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -818,7 +818,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/zone/gorakhpur%20-zone.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/gorakhpur%20-zone.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="गोरखपुर स्टेशन" data-en="Gorakhpur Station"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -839,7 +839,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/bmf/arazilines-varanasi-bmf.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/arazilines-varanasi-bmf.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="आराजीलाइन्स वाराणसी बीएमएफ" data-en="Arazilines Varanasi BMF"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -850,7 +850,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/bmf/arazilines-varanasi-bmf.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/arazilines-varanasi-bmf.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="आराजीलाइन्स वाराणसी बीएमएफ" data-en="Arazilines Varanasi BMF"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -873,7 +873,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/baif-pratapgharh.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/baif-pratapgharh.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="प्रतापगढ़ जोन" data-en="Pratapgharh Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -884,7 +884,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/gourakhpur.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/gourakhpur.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="गोरखपुर जोन" data-en="Gorakhpur Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -893,7 +893,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/meerut.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/meerut.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="मेरठ जोन" data-en="Meerut Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -902,7 +902,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/agra.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/agra.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="आगरा जोन" data-en="Agra Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -911,7 +911,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
             </div>
             <div class="swiper-slide">
               <div class="page_sliderDiv">
-                <img src="https://upldb.vercel.app/assets/images/artfi-traning-center/barelly.jpeg" width="100%" alt="">
+                <img src="{{ asset('zone/barelly.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute">
                 <p> <span data-hi="बरेली जोन" data-en="Barelly Zone"></span>  </p>
                 <a href="#"> <span data-hi="और जानें" data-en="Know More"></span>  </a>
@@ -988,43 +988,43 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
 
 <section class="py-4">
   <div class="container">
-  <h2 class="fs-3 fw-bold text-center mb-3"> <span data-hi="गैलरी" data-en="Gallery"></span>  </h2>
+  <h2 class="fs-3 fw-bold text-center mb-3"> <a href="{{route('gallery-page')}}">  <span data-hi="गैलरी" data-en="Gallery"></span> </a> </h2>
     <div class="row">
         <div class="col-md-3 col-lg-3 col-xl-2">
-           <img src="https://maitriupldb.in/assets/images/m1.jpg" alt="..." class="gallery-item">
+           <img src="{{ asset('gallery/gallery7.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m2.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery8.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m3.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery9.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m4.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery10.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m5.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery11.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m6.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery12.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m7.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery13.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m8.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery14.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-           <img src="https://maitriupldb.in/assets/images/m9.jpg" alt="..." class="gallery-item">
+           <img src="{{ asset('gallery/gallery15.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m10.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery16.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/m11.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery17.jpeg')}}" alt="..." class="gallery-item">
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2">
-            <img src="https://maitriupldb.in/assets/images/banner2.jpg" alt="..." class="gallery-item">
+            <img src="{{ asset('gallery/gallery18.jpeg')}}" alt="..." class="gallery-item">
         </div>
 
         </div>

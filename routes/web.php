@@ -226,19 +226,14 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("high-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'highYieldingAnimal'])->name('high-yielding-animal');
     Route::get("add-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'addAnimaldetailsform'])->name('add-yielding-animal');
     Route::post("addUpdateAnimalDetails", [App\Http\Controllers\farmer\FarmerController::class, 'addUpdateAnimalDetails'])->name('addUpdateAnimalDetails');
-    
 
     Route::get('shapathPatraList', [App\Http\Controllers\HomeController::class, 'shapathPatraList'])->name('shapathPatraList');
     Route::get('upload-shapatpatra', [App\Http\Controllers\HomeController::class, 'uplaodShapatpatra'])->name('upload-shapatpatra');
     Route::post('uploadScannedFile', [App\Http\Controllers\HomeController::class, 'uploadScannedFile'])->name('uploadScannedFile');
-
-
     Route::get("totalsessionlist", [App\Http\Controllers\DashboardController::class, 'totalsessionlist'])->name('totalsessionlist');
-
 
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
 
-    
 
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/
 
@@ -275,6 +270,8 @@ Route::post("training-requests", [App\Http\Controllers\UsersController::class, '
 Route::get("zonestockform", [ZoneStockController::class, 'index'])->name('zonestockform');
 Route::post("zonestoreadd", [ZoneStockController::class, 'zoneStoreData'])->name('zonestoreadd');
 
+
+Route::get('gallery-page', [CVOOfficerController::class, 'gallery'])->name('gallery-page');
 
 // Route::get('test', function () {
 

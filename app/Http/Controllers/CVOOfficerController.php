@@ -73,6 +73,7 @@ class CVOOfficerController extends Controller{
         $data = CVOOfficers::where(['id'=>$request->id])->first();
         return view('officer.viewOfficerDetails',['data'=>$data]);
     }
-
-
+    public function gallery(Request $request){
+		return view('gallery');
+	}
 }
