@@ -156,38 +156,38 @@
                 </div>
             </div>
 
-            @if (auth()->user()->user_type == 'District Officer')
-                <div class="col-sm-3 mt-5 mb-5">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            <span data-hi="प्रतीक्षा सूची" data-en="Waiting list"></span>      
-                        </div>
-                        <div class="card-body">
-                            <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
+            
+            <div class="col-sm-3 mt-5 mb-5">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <span data-hi="प्रतीक्षा सूची" data-en="Waiting list"></span>      
+                    </div>
+                    <div class="card-body">
+                        <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
 
-                            @if ($show)
-                                <h5 class="card-title">0</h5>
-                                <a href="#" class="btn btn-primary">View</a>
-                            @else
-                                <h5 class="card-title">{{ $waitingList }}</h5>
-                                <a href="{{ url('waiting-list') }}/1" class="btn btn-primary">View</a>
-                            @endif
+                        @if ($show)
+                            <h5 class="card-title">0</h5>
+                            <a href="#" class="btn btn-primary">View</a>
+                        @else
+                            <h5 class="card-title">{{ $waitingList }}</h5>
+                            <a href="{{ url('waiting-list') }}/1" class="btn btn-primary">View</a>
+                        @endif
 
-                        </div>
                     </div>
                 </div>
-                <div class="col-sm-3 mt-5 mb-5">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            <span data-hi="सत्र मैत्री रिकॉर्ड्स सूची" data-en="Session Maitri Records List"></span>   
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $totalsession }}</h5>
-                            <a href="{{ url('totalsessionlist') }}" class="btn btn-primary">View</a>
-                        </div>
+            </div>
+            <div class="col-sm-3 mt-5 mb-5">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <span data-hi="सत्र मैत्री रिकॉर्ड्स सूची" data-en="Session Maitri Records List"></span>   
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $totalsession }}</h5>
+                        <a href="{{ url('totalsessionlist') }}" class="btn btn-primary">View</a>
                     </div>
                 </div>
-            @endif
+            </div>
+           
 
             @foreach ($avedanYears as $avedanYear)
                 <div class="col-sm-3 mt-5 mb-5">

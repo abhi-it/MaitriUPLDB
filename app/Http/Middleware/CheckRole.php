@@ -238,6 +238,7 @@ class CheckRole
                 'edit-latest-updated',
                 'delete-updates',
                 'shapathPatraList',
+                'totalsessionlist',
                 'getallLiveStockData',
             ],
             'Maitri' => [
