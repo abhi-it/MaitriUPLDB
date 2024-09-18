@@ -448,21 +448,21 @@
                     <!-- @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'District Officer') -->
                     <div class="row mb-5 mt-4">
                     @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'District Officer')
-                        @if ($result->is_approved == 0 || $result->is_approved == 2 ||  $result->is_approved == 3)
+                        @if ($result->is_approved == 0 || $result->is_approved == 2 ||  $result->is_approved == 3 || $result->is_approved == 4)
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1" class="btn btn-primary w-100"> स्वीकार </a>
                         </div>
                         @endif
-                    @endif
-                    @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
-                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
+                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2 || $result->is_approved == 4)
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">
                                 प्रतीक्षा सूची बनायें 
                             </a>
                         </div>   
                         @endif
-                        @if ($result->is_approved == 0 || $result->is_approved ==3 )
+                    @endif
+                    @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
+                        @if ($result->is_approved == 0 || $result->is_approved ==3 || $result->is_approved == 4)
                         <div class="col-md-4">
                         <a href="javascript:void(0)" class="btn btn-danger  text-white w-100 exampleModalCenter"
                             data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार  </a>
@@ -474,13 +474,13 @@
                 @else
                     @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
                     <div class="row mb-5 mt-4">
-                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2)
+                        @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2 || $result->is_approved == 4)
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">प्रतीक्षा सूची
                             बनायें </a>
                         </div>   
                         @endif
-                        @if ($result->is_approved == 0 || $result->is_approved ==3)
+                        @if ($result->is_approved == 0 || $result->is_approved ==3 || $result->is_approved == 4))
                         <div class="col-md-4">
                             <a href="javascript:void(0)" class="btn btn-danger text-white w-100 exampleModalCenter" 
                             data-toggle="modal" data-target="#exampleModalCenter"> अस्वीकार   </a>

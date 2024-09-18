@@ -228,6 +228,11 @@ class DashboardController extends Controller
             $datas = $query->whereYear('created_at', $this->sessionYear)->with('district')->get();
 
             $data = $datas->map(function ($item) {
+                $high_percentage = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage = $item->inter_percentage;
+                $inter_calculation = round(($inter_percentage*2)/10);
+                $topper_number = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -249,7 +254,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'category','tehsil','post_office','gram_panchayat_name','vikas_khand','letter_address','high_marks','high_total_marks','high_percentage', 'inter_marks','inter_total_marks', 'inter_percentage','topper_number')->whereYear('created_at', $this->sessionYear)->get();
@@ -327,6 +332,11 @@ class DashboardController extends Controller
                     ->get();
 
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -348,7 +358,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
              
@@ -397,6 +407,11 @@ class DashboardController extends Controller
         if ($export !== null) {
             $datas = $query->with('district')->whereYear('created_at', $this->sessionYear)->get();
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -418,7 +433,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
 
@@ -480,6 +495,12 @@ class DashboardController extends Controller
         if ($export !== null) {
             $datas = $query->whereYear('created_at', $this->sessionYear)->orderBy('topper_number', 'DESC')->get();
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -501,7 +522,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'merit-list.xlsx');
@@ -567,6 +588,12 @@ class DashboardController extends Controller
                 ->get();
 
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -588,7 +615,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
 
@@ -715,6 +742,12 @@ class DashboardController extends Controller
                 ->get();
 
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -736,7 +769,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
@@ -812,6 +845,12 @@ class DashboardController extends Controller
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -833,7 +872,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
@@ -909,6 +948,12 @@ class DashboardController extends Controller
                 ->get();
 
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -930,7 +975,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'sc-list.xlsx');
@@ -1005,6 +1050,12 @@ class DashboardController extends Controller
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -1026,7 +1077,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'st-list.xlsx');
@@ -1077,6 +1128,12 @@ class DashboardController extends Controller
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -1098,7 +1155,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'waiting-list.xlsx');
@@ -1360,6 +1417,7 @@ class DashboardController extends Controller
     {
 
         $result = Avedan::find($id);
+        $comment  =  Rejectcomment::where(['application_id'=>$id])->delete();
         $result->is_approved = $status;
         $result->save();
         return redirect('/merit-Avedan-details/' . $id)->with('success', 'status updated successfully!');
@@ -1412,6 +1470,12 @@ class DashboardController extends Controller
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                     return [
                         'applicationNumber' => $item->applicationNumber,
                         'applicant_name' => $item->applicant_name,
@@ -1433,7 +1497,7 @@ class DashboardController extends Controller
                         'inter_marks' => $item->inter_marks,
                         'inter_total_marks' => $item->inter_total_marks,
                         'inter_percentage' => $item->inter_percentage,
-                        'topper_number' => $item->topper_number,
+                        'topper_number' => $topper_number,
                     ];
                 });
             return \Excel::download(new ExportAvedan($data), 'upload-documents-list.xlsx');
@@ -1681,12 +1745,12 @@ class DashboardController extends Controller
 
         /*--------------------Start Calculation for High School---------------*/
         $high_percentage = $request->get('high_percentage');
-        $high_school_calculation = round(($high_percentage * 5) / 10);
+        $high_school_calculation = round(($high_percentage * 8) / 10);
         /*--------------------End Calculation for High School-----------------*/
 
         /*--------------------Start Calculation for Inter---------------*/
         $inter_percentage = $request->get('inter_percentage');
-        $inter_calculation = round(($inter_percentage * 3) / 10);
+        $inter_calculation = round(($inter_percentage * 2) / 10);
         /*--------------------End Calculation for Inter-----------------*/
 
         /*--------------------Start Calculation for certification (Getting month and Days)-------------*/
@@ -1841,6 +1905,12 @@ class DashboardController extends Controller
         if ($export !== null) {
             $datas = $query->with('district')->orderBy('avedans.id', 'DESC')->get();
             $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                 return [
                     'applicationNumber' => $item->applicationNumber,
                     'applicant_name' => $item->applicant_name,
@@ -1862,7 +1932,7 @@ class DashboardController extends Controller
                     'inter_marks' => $item->inter_marks,
                     'inter_total_marks' => $item->inter_total_marks,
                     'inter_percentage' => $item->inter_percentage,
-                    'topper_number' => $item->topper_number,
+                    'topper_number' => $topper_number,
                 ];
             });
             return \Excel::download(new ExportAvedan($data), 'candidate-not-joined-list.xlsx');
@@ -1896,6 +1966,12 @@ class DashboardController extends Controller
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
                     return [
                         'applicationNumber' => $item->applicationNumber,
                         'applicant_name' => $item->applicant_name,
@@ -1917,7 +1993,7 @@ class DashboardController extends Controller
                         'inter_marks' => $item->inter_marks,
                         'inter_total_marks' => $item->inter_total_marks,
                         'inter_percentage' => $item->inter_percentage,
-                        'topper_number' => $item->topper_number,
+                        'topper_number' => $topper_number,
                     ];
                 });
             return \Excel::download(new ExportAvedan($data), 'document-verification.xlsx');
