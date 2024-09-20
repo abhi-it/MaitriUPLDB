@@ -1142,9 +1142,13 @@
                             </li>
                             @endif
                             @if(auth()->user()->user_type == 'District Officer')
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('upload-shapatpatra') }}">
                                     <span data-hi="शपथ पत्र अपलोड करें" data-en="Upload Affidavit"></span></a>
+                            </li> -->
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('upload-selectedcandidate') }}">
+                                    <span data-hi="सीवीओ द्वारा चयनित मैत्रियो की सुची अपलोड करे" data-en="Upload the list of candidates selected by CVO"></span></a>
                             </li>
                             @endif
                         @endif

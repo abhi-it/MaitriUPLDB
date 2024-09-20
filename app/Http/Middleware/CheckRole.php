@@ -148,7 +148,7 @@ class CheckRole
                 'edit-latest-updated',
                 'delete-updates',
                 'shapathPatraList',
-                'upload-shapatpatra',
+                'upload-selectedcandidate',
                 'uploadScannedFile',
                 'totalsessionlist',
                 'getallLiveStockData',

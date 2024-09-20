@@ -37,13 +37,13 @@
 					</tr>
 					<tr>
 						<td>01</td>
-						<td><span data-hi="शपथ - पत्र"  data-en="Affidavit"></span></td>
-						<td style="width:05%"><center><a href="{{url('downloadFile', 'Shapath-patra.pdf')}}"><img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;"></a></center></td>
+						<td><span data-hi="मैत्री विवरण प्ररूप"  data-en="Maitri Statement Format"></span></td>
+						<td style="width:05%"><center><a href="{{url('downloadFile', 'maitriprarup.xlsx')}}"><img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;"></a></center></td>
 					</tr>
 				</table>
 			</div>
 			<div class="fs-6  m-3">
-				<span><b>Step 2</b>:-  <span data-hi="कृपया डाउनलोड की गई एक्सेल शीट भरें और इसे सीवीओ/वीओ से हस्ताक्षरित करवाएं।" data-en="Please fill up the downloaded Excel sheet and get it signed by CVO / VO."></span> </br>
+				<span><b>Step 2</b>:-  <span data-hi="कृपया डाउनलोड की गई एक्सेल शीट भरें और इसे समिति से हस्ताक्षरित करवाएं।" data-en="Please fill up the downloaded Excel sheet and get it signed by Committee."></span> </br>
 				<span><b>Step 3</b>:- <span data-hi="कृपया निम्नलिखित विकल्प का उपयोग करके स्कैन और हस्ताक्षरित पीडीएफ अपलोड करें।" data-en="Please upload the scanned and signed PDF by using the following option."></span> </br>
 			</div>
 			<div class="scanned_file m-4">

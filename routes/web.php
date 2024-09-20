@@ -228,7 +228,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("addUpdateAnimalDetails", [App\Http\Controllers\farmer\FarmerController::class, 'addUpdateAnimalDetails'])->name('addUpdateAnimalDetails');
 
     Route::get('shapathPatraList', [App\Http\Controllers\HomeController::class, 'shapathPatraList'])->name('shapathPatraList');
-    Route::get('upload-shapatpatra', [App\Http\Controllers\HomeController::class, 'uplaodShapatpatra'])->name('upload-shapatpatra');
+    Route::get('upload-selectedcandidate', [App\Http\Controllers\HomeController::class, 'uplaodShapatpatra'])->name('upload-selectedcandidate');
     Route::post('uploadScannedFile', [App\Http\Controllers\HomeController::class, 'uploadScannedFile'])->name('uploadScannedFile');
     Route::get("totalsessionlist", [App\Http\Controllers\DashboardController::class, 'totalsessionlist'])->name('totalsessionlist');
 
