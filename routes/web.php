@@ -10,7 +10,7 @@ use App\Http\Controllers\DemandRequestController;
 use App\Http\Controllers\CVOOfficerController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ZoneStockController;
-
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UpdateController;
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +86,9 @@ Auth::routes([
     'reset' => false, // Password Reset Routes...
     'verify' => false, // Email Verification Routes...
 ]);
+
+Route::get('verifyotp/{id}', [LoginController::class, 'verifyotp'])->name('verifyotp');
+Route::post('otpverification', [LoginController::class, 'otpverification'])->name('otpverification');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/about-us', [App\Http\Controllers\HomeController::class, 'aboutUs'])->name('aboutUs');

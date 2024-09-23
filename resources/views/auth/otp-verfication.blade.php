@@ -10,15 +10,20 @@
                 {{ session()->get('success') }}
             </div>
         @endif
+        @if (session()->get('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
         <form method="POST" action="{{ route('otpverification') }}" id="loginForm" name="loginForm">
             @csrf
 
             <div class="row mb-3">
                 <label for="otp" class="col-md-4 col-form-label text-md-right">{{ __('ओटीपी') }}</label>
-
                 <div class="col-md-6">
                     <input id="otp" type="number" class="form-control @error('number') is-invalid @enderror"
                         name="otp" min="6" onKeyPress="if(this.value.length==6) return false">
+                        <input type="hidden" name="mobile" id="mobile" value="{{$mobile}}">
                 </div>
             </div>
             <div class="row mb-4 mt-4">

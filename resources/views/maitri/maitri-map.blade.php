@@ -111,9 +111,9 @@
                 @foreach($aicenter as $val)
                 @if($val!='' ||$val != null)
                   @php
-                    $distcount   = App\Models\Cliniclocation::where(['district'=>$val['district']])->count();
+                    $distcount   = App\Models\Cliniclocation::where(['mandal_name'=>$val['mandal_name']])->count();
                   @endphp
-                  <option value="{{$val['district']}}">{{$val['district']}}   ({{$distcount }})</option>
+                  <option value="{{$val['mandal_name']}}">{{$val['mandal_name']}}   ({{$distcount }})</option>
                 @endif
                 @endforeach
               </select>
@@ -380,7 +380,7 @@ async function initAIMap(code,locations) {
                     "</div>" +
                     '<div id="bodyContent">' +
                     "<p> प्रशिक्षण केंद्र का नाम : <b>"+locations[i]['name']+"</b>,</br> " +
-                    " पता : <b>"+locations[i]['district']+"</b>,</br>"  + 
+                    " पता : <b>"+locations[i]['janpad_name']+","+locations[i]['mandal_name']+"   </b>,</br>"  + 
                     " केंद्र / संस्थान : <b>"+locations[i]['type']+"</b>,</br> " +
                     "</p></div>" +
                     "</div>";
@@ -393,7 +393,7 @@ async function initAIMap(code,locations) {
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i]['lattitute'], locations[i]['longitute']),
             map: map, 
-            icon:icons,
+            // icon:icons,
           });
             var currentInfowindow = null;
             google.maps.event.addListener(marker, 'click', (function(marker, i) {

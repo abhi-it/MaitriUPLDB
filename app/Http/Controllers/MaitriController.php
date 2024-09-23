@@ -34,7 +34,7 @@ class MaitriController extends Controller
 
    public function maitri_map() {
         $dist       =  Maitri::all()->unique('mandal_name')->toArray();
-        $aicenter   = Cliniclocation::all()->unique('district')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
+        $aicenter   = Cliniclocation::all()->unique('mandal_name')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
         $division   = Divisions::all()->unique('name_hindi')->toArray();
         $placeid    =Janpad::select('place_id') 
         ->distinct('name')    
@@ -45,7 +45,7 @@ class MaitriController extends Controller
         $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
         $bull       = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
         $maitricount = Maitri::get();
-        $aicount    = Cliniclocation::get();
+        $aicount      = Cliniclocation::get();
         $disticcount =  Districts::get();
         $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get(); 
         $cvblocks    =  DB::table('cryo_vessel_blocks')->orderBy('id','ASC')->get();
@@ -158,7 +158,7 @@ class MaitriController extends Controller
         $data               = [];
         $id                 = $request->id;
         $data['code']       = Janpad::where(['name'=>$id])->first();
-        $data['maitri']     = Cliniclocation::where('district', 'like', "%{$id}%")->get();
+        $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->get();
         return $data;
     }
    
