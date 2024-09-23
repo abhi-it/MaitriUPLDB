@@ -393,7 +393,7 @@ async function initAIMap(code,locations) {
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i]['lattitute'], locations[i]['longitute']),
             map: map, 
-            // icon:icons,
+            icon:icons,
           });
             var currentInfowindow = null;
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
