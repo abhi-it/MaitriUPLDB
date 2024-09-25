@@ -917,20 +917,20 @@
               <ul class="navbar-nav justify-content-center flex-grow-1">
                 @if (Route::has('login'))
                     @auth
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('/dashboard') }}">
                                <span data-hi="डैशबोर्ड" data-en="Dashboard"></span> 
                             </a>
                         </li>
                         @if (auth()->user()->user_type == 'User')
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
                                 <span data-hi="संस्थान आवंटन सूची" data-en="Institute Allotment List"></span> 
                                     </a>
                             </li>
                         @else
                             @if (auth()->user()->user_type == 'Director')
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ (request()->is('avedan') || request()->is('avedan-districtwise')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">
                                         <span data-hi="नये आवेदन" data-en="New Applications"></span> 
@@ -946,14 +946,14 @@
                                     </div>
                                 </li>
                             @else
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('avedan') }}">
                                         <span data-hi="नये आवेदन" data-en="New Applications"></span> 
                                     </a>
                                 </li>
                             @endif
                             @if (auth()->user()->user_type != 'District Officer')
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('total-avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('total-avedan') }}">
                                     <span data-hi="कुल आवेदन" data-en="Total Applications"></span> 
                                         
@@ -962,7 +962,7 @@
                             @endif
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ (request()->is('merit-list') || request()->is('merit-list/*')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">
                                         <span data-hi="मेरिट सूची (स्क्रीनिंग)" data-en="Merit List (Screening)"></span> 
@@ -995,9 +995,7 @@
                                     </div>
                                 </li> -->
                             @endif
-
-
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown {{(request()->is('approved-avedan') || request()->is('rejected-avedan')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
                                     <span data-hi="आवेदन" data-en="Application"></span> 
                                 </a>
@@ -1013,18 +1011,18 @@
 
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('document-verification') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('document-verification') }}">
                                         <span data-hi="अभिलेख  सत्यापन" data-en="Record Verification"></span> 
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('upload-documents') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('upload-documents') }}">
                                         <span data-hi="दस्तावेज़ सत्यापन / अपलोड करें" data-en="Document Verification/Upload"></span> 
                                     </a>
                                 </li>
                             @endif
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ (request()->is('all-list') || request()->is('general-list') || request()->is('sc-list') || request()->is('st-list')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
                                         <span data-hi="चयनित अभ्यर्थियों की सूची" data-en="List of Selected Candidates"></span> 
                                     </a>
@@ -1045,7 +1043,7 @@
                                 </li>
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ request()->is('waiting-list') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" key="SCHEME">
                                         <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span> 
                                     </a>
@@ -1068,7 +1066,7 @@
 
 
                             @if (auth()->user()->user_type == 'Admin')
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('institute') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('institute') }}">
                                     <span data-hi="संस्थान प्रबंधन" data-en="Institute Management"></span> 
                                     </a>
@@ -1077,7 +1075,7 @@
 
 
                             @if (auth()->user()->user_type == 'Director')
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{ (request()->is('allocation') || request()->is('allocation-list') )? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
                                         <span data-hi="संस्थान प्रबंधन" data-en="Institute Allotment"></span> 
                                     </a>
@@ -1092,51 +1090,51 @@
                                 </li>
                             @endif
 
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('candidate-not-joined') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('candidate-not-joined') }}">
                                     <span data-hi="संस्थान ज्वाइन नहीं किया है" data-en="Have not joined the institute"></span> 
                                 </a>
                             </li>
 
                             @if (auth()->user()->user_type == 'Admin')
-                                <li class="nav-item ">
+                                <li class="nav-item {{ request()->is('setting') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('setting') }}">
                                         <span data-hi="सेटिंग्स" data-en="Setting"></span> 
                                     </a>
                                 </li>
                             @endif
 
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('changePassword') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('changePassword') }}">
                                     <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('maitri-home') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('maitri-home') }}">
                                     <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span> 
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
                                     <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span> 
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('demand-requests-list') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('demand-requests-list') }}">
                                     <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span> 
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('latest-updates') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('latest-updates') }}">
                                     <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span> 
                                 </a>
                             </li>
                             @if (auth()->user()->user_type == 'Admin'|| auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'District Officer')
-                            <li class="nav-item ">
+                            <li class="nav-item {{ request()->is('shapathPatraList') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('shapathPatraList') }}">
                                     <span data-hi="शपथ - पत्र" data-en="Affidavit"></span></a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item  {{ request()->is('totalsessionlist') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('totalsessionlist') }}">
                                     <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
                             </li>
@@ -1146,41 +1144,41 @@
                                 <a class="nav-link" href="{{ url('upload-shapatpatra') }}">
                                     <span data-hi="शपथ पत्र अपलोड करें" data-en="Upload Affidavit"></span></a>
                             </li> -->
-                            <li class="nav-item ">
+                            <li class="nav-item  {{ request()->is('upload-selectedcandidate') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('upload-selectedcandidate') }}">
                                     <span data-hi="सीवीओ द्वारा चयनित मैत्रियो की सुची अपलोड करे" data-en="Upload the list of candidates selected by CVO"></span></a>
                             </li>
                             @endif
                         @endif
                         @else
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('/') }}" key="HOME">
                                 <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span> 
                             <span class="sr-only">(current)</span></a>
                         </li>
 
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('avedan-karein') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('avedan-karein') }}">
                                 <span data-hi="आवेदन" data-en="Applications"></span> 
                             </a>
                         </li>
 
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('lakshya') }}">
                                 <span data-hi="स्वरोजगारी मैत्री की संख्या" data-en="Number of self-employed maitri"></span> 
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('application-status') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('application-status') }}">
                                 <span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of your application"></span> 
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('downloads') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('downloads') }}">
                                 <span data-hi="डाउनलोड" data-en="Downlaod"></span> 
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                             <a class="nav-link" href="{{ url('demandRequests') }}">
                                 <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span> 
                             </a>
@@ -1190,7 +1188,7 @@
                                 <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri (Animal Friend) Registration"></span>
                             </a>
                         </li> -->
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('farmer-register') }}">
                                 <span data-hi="पशुपालक पंजीकरण" data-en="Livestock  Registration"></span>
                             </a>
@@ -1200,7 +1198,7 @@
                                 <span data-hi="रिफ्रेशर प्रशिक्षण फॉर्म" data-en="Refresher Training Form"></span>
                             </a>
                         </li> -->
-                        <li class="nav-item ">
+                        <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('zonestockform') }}">
                                 <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zone Stock Form"></span>
                             </a>

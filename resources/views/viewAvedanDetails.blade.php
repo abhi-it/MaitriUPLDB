@@ -462,7 +462,7 @@
                         @endif
                     @endif
                     @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
-                        @if ($result->is_approved == 0 || $result->is_approved ==3 || $result->is_approved == 4)
+                        @if ($result->is_approved == 0 || $result->is_approved ==3 || $result->is_approved == 4 || $result->is_approved == 1)
                         <div class="col-md-4">
                         <a href="javascript:void(0)" class="btn btn-danger  text-white w-100 exampleModalCenter"
                             data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार  </a>
