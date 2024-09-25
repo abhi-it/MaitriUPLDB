@@ -421,19 +421,26 @@
 
                     @if ($waitingButtonShow == 1)
                         <!-----Then Display these buttons-->
-
-                        <div class="row">
+                        <div class="row mb-5 mt-4">
+                            <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1"
-                                class="btn btn-primary">स्वीकार</a>
-                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter" style="margin-left:20px;"
+                                class="btn btn-primary w-100">स्वीकार</a>
+                            </div>    
+                            <div class="col-md-4">
+                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter w-100"
                                 data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+                            </div>   
                         </div>
                     @else
-                        <div class="row">
+                        <div class="row mb-5 mt-4">
+                            <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1"
-                                class="btn btn-primary">स्वीकार</a>
-                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter" style="margin-left:20px;"
+                                class="btn btn-primary w-100">स्वीकार</a>
+                             </div>    
+                             <div class="col-md-4">
+                            <a href="javascript:void(0)" class="btn btn-danger exampleModalCenter w-100"
                                 data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a>
+                             </div>
                         </div>
                     @endif
                 @endif

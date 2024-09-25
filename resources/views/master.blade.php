@@ -113,6 +113,12 @@
 .footer-counter a {
     pointer-events: none;
 }
+.dropdown-toggle {
+    white-space: normal;
+  }
+header .navbar li.nav-item.active a.nav-link {
+    color: #292b2c !important
+}
 
 </style>
 

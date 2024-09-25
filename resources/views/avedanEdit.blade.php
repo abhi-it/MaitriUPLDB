@@ -59,6 +59,9 @@ button:hover {
 .error {
     color: #f00;
 }
+.edit_page{
+	padding-right: 10px;
+}
     </style>
     
 <script src="{{ asset('')}}js/google_Jsapi.js" type="text/javascript"></script>
@@ -286,18 +289,40 @@ button:hover {
 				</tr>
 				<tr>
 				<td>हाई स्कूल (जीव विज्ञान)</td>
-				<td><input type="text" value="{{$result->high_board_name}}" class="form-control" name="high_board_name" id="high_board_name" placeholder="बोर्ड का नाम"></td>
-				<td><input type="text" value="{{$result->high_passing_year}}" class="form-control" name="high_passing_year" id="high_passing_year" placeholder="उत्तीर्ण वर्ष"></td>
-				<td><input type="text" value="{{$result->high_marks}}" class="form-control" name="high_marks" id="high_marks" placeholder="प्राप्तांक"></td>
-				<td><input type="text" value="{{$result->high_total_marks}}" class="form-control" name="high_total_marks" id="high_total_marks" placeholder="पूर्णांक"></td>
-				<td><input type="text" value="{{$result->high_percentage}}" class="form-control" readonly name="high_percentage" id="high_percentage" placeholder="प्रतिशत"></td>
 				<td>
-					<input type="file" class="form-control" name="high_marksheet" id="high_marksheet"> 
-				  @if($result->high_marksheet!='')
-							<a href="{{ url('downloadFile', $result->high_marksheet) }}">हाई स्कूल की अंकतालिका</a>
-				  @else
-							No documents
-				  @endif
+					<div class="edit_page" >
+						<input type="text" value="{{$result->high_board_name}}" class="form-control" name="high_board_name" id="high_board_name" placeholder="बोर्ड का नाम">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+						<input type="text" value="{{$result->high_passing_year}}" class="form-control" name="high_passing_year" id="high_passing_year" placeholder="उत्तीर्ण वर्ष">
+					</div>	
+				</td>
+				<td>
+					<div class="edit_page">
+						<input type="text" value="{{$result->high_marks}}" class="form-control" name="high_marks" id="high_marks" placeholder="प्राप्तांक">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+						<input type="text" value="{{$result->high_total_marks}}" class="form-control" name="high_total_marks" id="high_total_marks" placeholder="पूर्णांक">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+						<input type="text" value="{{$result->high_percentage}}" class="form-control" readonly name="high_percentage" id="high_percentage" placeholder="प्रतिशत">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+							<input type="file" class="form-control" name="high_marksheet" id="high_marksheet"> 
+						@if($result->high_marksheet!='')
+									<a href="{{ url('downloadFile', $result->high_marksheet) }}">हाई स्कूल की अंकतालिका</a>
+						@else
+									No documents
+						@endif
+					</div>
 				</td>
 				</tr>
 				</table>
@@ -306,17 +331,40 @@ button:hover {
 				<table>
 				<tr>
 				<td width="10%">इण्टर (जीव विज्ञान)</td>
-				<td><input type="text" value="{{$result->inter_board_name}}" class="form-control" name="inter_board_name" id="inter_board_name" placeholder="बोर्ड का नाम"></td>
-				<td><input type="text" value="{{$result->inter_passing_year}}" class="form-control" name="inter_passing_year" id="inter_passing_year" placeholder="उत्तीर्ण वर्ष"></td>
-				<td><input type="text" value="{{$result->inter_marks}}" class="form-control" name="inter_marks" id="inter_marks" placeholder="प्राप्तांक"></td>
-				<td><input type="text" value="{{$result->inter_total_marks}}" class="form-control" name="inter_total_marks" id="inter_total_marks" placeholder="पूर्णांक"></td>
-				<td><input type="text" value="{{$result->inter_percentage}}" class="form-control" readonly name="inter_percentage" id="inter_percentage" placeholder="प्रतिशत"></td>
-				<td><input type="file" class="form-control" name="inter_marksheet" id="inter_marksheet">
-				@if($result->inter_marksheet!='')
-							<a href="{{ url('downloadFile', $result->inter_marksheet) }}">इण्टर का अंकतालिका</a>
-				  @else
-							No documents
-				  @endif
+				<td>
+					<div class="edit_page">
+					<input type="text" value="{{$result->inter_board_name}}" class="form-control" name="inter_board_name" id="inter_board_name" placeholder="बोर्ड का नाम">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+					<input type="text" value="{{$result->inter_passing_year}}" class="form-control" name="inter_passing_year" id="inter_passing_year" placeholder="उत्तीर्ण वर्ष">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+					<input type="text" value="{{$result->inter_marks}}" class="form-control" name="inter_marks" id="inter_marks" placeholder="प्राप्तांक">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+					<input type="text" value="{{$result->inter_total_marks}}" class="form-control" name="inter_total_marks" id="inter_total_marks" placeholder="पूर्णांक">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page"> 
+					<input type="text" value="{{$result->inter_percentage}}" class="form-control" readonly name="inter_percentage" id="inter_percentage" placeholder="प्रतिशत">
+					</div>
+				</td>
+				<td>
+					<div class="edit_page">
+					<input type="file" class="form-control" name="inter_marksheet" id="inter_marksheet">
+						@if($result->inter_marksheet!='')
+									<a href="{{ url('downloadFile', $result->inter_marksheet) }}">इण्टर का अंकतालिका</a>
+						@else
+									No documents
+						@endif
+					</div>
 				</td>
 				
 				</tr>
