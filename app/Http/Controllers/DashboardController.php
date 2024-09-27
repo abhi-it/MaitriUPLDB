@@ -797,17 +797,17 @@ class DashboardController extends Controller
         if ($user_type == 'Director') { //Director
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->whereIn('category', ["जनरल"])
                 ->orderBy('topper_number', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->whereIn('category', ["जनरल"])
                 ->orderBy('topper_number', 'DESC');
         } else { //CVO
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->whereIn('category', ["जनरल"])
                 ->where('district_id', '=', $districtID)
                 ->orderBy('topper_number', 'DESC');
         }
@@ -836,7 +836,7 @@ class DashboardController extends Controller
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
 
-        $heading = 'सामान्य/अन्य पिछड़ा वर्ग चयनित अभ्यर्थियों की सूची';
+        $heading = 'सामान्य वर्ग चयनित अभ्यर्थियों की सूची';
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
@@ -881,6 +881,116 @@ class DashboardController extends Controller
             return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'generalList')->with('year', $this->sessionYear);
         }
     }
+
+
+    public function obcList(Request $request, $year = null) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
+    {
+        $this->sessionYear = $year ? $year : $this->sessionYear;
+        $user = auth()->user();
+        $user_type = $user->user_type;
+        $districtID = auth()->user()->district_id;
+
+
+        $query = Avedan::orderBy('id', 'DESC');
+        if (!empty($request->input('search'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('applicationNumber', '=', $request->input('search'));
+            });
+        }
+
+        if ($user_type == 'Director') { //Director
+
+            $query = Avedan::where('is_approved', '=', 4)
+                ->whereIn('category', ["ओ बी सी"])
+               // ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->orderBy('topper_number', 'DESC');
+        } else if ($user_type == 'Admin') { //Super Admin
+
+            $query = Avedan::where('is_approved', '=', 4)
+            ->whereIn('category', ["ओ बी सी"])
+              //  ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->orderBy('topper_number', 'DESC');
+        } else { //CVO
+
+            $query = Avedan::where('is_approved', '=', 4)
+                ->whereIn('category', ["ओ बी सी"])
+               // ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->where('district_id', '=', $districtID)
+                ->orderBy('topper_number', 'DESC');
+        }
+
+        if (!empty($request->input('applicationNumber'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('applicationNumber', '=', $request->input('applicationNumber'));
+            });
+        }
+
+        if (!empty($request->input('mobile'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('mobile', '=', $request->input('mobile'));
+            });
+        }
+
+        if (!empty($request->input('district_id'))) {
+            $query->where(function ($q) use ($request) {
+
+                $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
+        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
+
+        $heading = 'अन्य पिछड़ा वर्ग चयनित अभ्यर्थियों की सूची';
+
+        if (!empty($request->input('export'))) {
+            // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
+            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+                ->whereYear('avedans.created_at', $this->sessionYear)
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
+            $data = $datas->map(function ($item) {
+                $high_percentage    = $item->high_percentage;
+                $high_school_calculation = round(($high_percentage*8)/10);
+                $inter_percentage   = $item->inter_percentage;
+                $inter_calculation  = round(($inter_percentage*2)/10);
+                $topper_number      = $high_school_calculation + $inter_calculation;
+
+                return [
+                    'applicationNumber' => $item->applicationNumber,
+                    'applicant_name' => $item->applicant_name,
+                    'fname' => $item->fname,
+                    'mother' => $item->mother,
+                    'gender' => $item->gender,
+                    'mobile' => $item->mobile,
+                    'email' => $item->email,
+                    'category' => $item->category,
+                    'districts' => $item->district->name_hindi,
+                    'tehsil' => $item->tehsil,
+                    'post_office' => $item->post_office,
+                    'gram_panchayat_name' => $item->gram_panchayat_name,
+                    'vikas_khand' => $item->vikas_khand,
+                    'letter_address' => $item->letter_address,
+                    'high_marks' => $item->high_marks,
+                    'high_total_marks' => $item->high_total_marks,
+                    'high_percentage' => $item->high_percentage,
+                    'inter_marks' => $item->inter_marks,
+                    'inter_total_marks' => $item->inter_total_marks,
+                    'inter_percentage' => $item->inter_percentage,
+                    'topper_number' => $topper_number,
+                ];
+            });
+            return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
+        } else {
+            $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
+            return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'obcList')->with('year', $this->sessionYear);
+        }
+    }
+
+
 
     public function scList(Request $request, $year = null, $export = null) // SC  List will display here
     {
@@ -1097,14 +1207,27 @@ class DashboardController extends Controller
         if ($id == 1) { //General + OBC Waiting List
 
             $results = Avedan::where('is_approved', '=', 3)
-                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->whereIn('category', ["जनरल"])
                 ->where('district_id', '=', $districtID)
                 ->whereYear('created_at', $this->sessionYear)
                 ->orderBy('topper_number', 'DESC')
                 ->get();
 
-            $heading = 'सामान्य/अन्य पिछड़ा वर्ग अभ्यर्थियों की प्रतीक्षा सूची';
-        } else if ($id == 2) { //SC Waiting List
+            $heading = 'सामान्य वर्ग अभ्यर्थियों की प्रतीक्षा सूची';
+        } else if ($id == 2) { //General + OBC Waiting List
+
+            $results = Avedan::where('is_approved', '=', 3)
+                ->whereIn('category', ["ओ बी सी"])
+                ->where('district_id', '=', $districtID)
+                ->whereYear('created_at', $this->sessionYear)
+                ->orderBy('topper_number', 'DESC')
+                ->get();
+
+            $heading = 'अन्य पिछड़ा वर्ग अभ्यर्थियों की प्रतीक्षा सूची';
+        } 
+        
+        
+        else if ($id == 3) { //SC Waiting List
 
             $results = Avedan::where('is_approved', '=', 3)
                 ->whereIn('category', ["एस सी"])

@@ -17,6 +17,7 @@ class DemandRequest extends Model
         'bharat_pashudhan_id' ,
         'smart_mobile_no'  ,
         'district' ,
+        'mandal',
         'block'  ,
         'vh_ai_center' ,
         'villages_coevring' ,

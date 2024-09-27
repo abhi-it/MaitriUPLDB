@@ -965,7 +965,10 @@
                                        </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('merit-list') }}/1">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General/OBC"></span> 
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('merit-list') }}/1">
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('merit-list') }}/2">
@@ -1030,6 +1033,9 @@
                                         </a>
                                         <a class="dropdown-item" href="{{ url('general-list') }}">
                                             <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('obc-list') }}">
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item" href="{{ url('sc-list') }}">
                                             <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 

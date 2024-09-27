@@ -682,9 +682,10 @@ class AvedanController extends Controller
     public function getAllBlocks(Request $request){
         $id = $request->id;
         $text = $request->text;
+        $data['mandal']   =  Districts::where(['division_id'=>$id])->get();
         $data['blocks']   =  Block::where(['dis_id'=>$id])->get();
         $data['postoffice'] = Postoffice::where(['dis_id'=>$id])->get();
-        $data['ai_center']  = DB::table('clinic_location')->where(['district'=>$text])->get();
+        $data['ai_center']  = DB::table('clinic_location')->where(['mandal_name'=>$text])->get();
         $data['tehsil']  = DB::table('tehsil')->where(['dis_id'=>$id])->get();
         return $data;
     }

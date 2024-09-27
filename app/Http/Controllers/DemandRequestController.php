@@ -49,6 +49,7 @@ class DemandRequestController extends Controller{
                 'bharat_pashudhan_id'     => $request->bharat_pashudhan_id,
                 'smart_mobile_no'     => $request->smart_mobile_no,
                 'district'     => $request->district,
+                'mandal'     => $request->mandal,
                 'block'     => $request->block,
                 'vh_ai_center'     => $request->vh_ai_center,
                 'villages_coevring'     => $request->villages_coevring,

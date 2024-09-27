@@ -88,12 +88,25 @@
                 @endif
             </select>
         </div>
+
+       
+
         <div class="form-group col-md-6">
             <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label> 
             <select name="vikas_khand" id="vikas_khand" class="form-control"  placeholder="विकास खण्ड"  autofocus>
                     
             </select>
         </div>
+
+        <div class="form-group col-md-6">
+            <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label> 
+            <select name="mandal" id="mandal" class="form-control"  autofocus>
+              
+            </select>
+        </div>
+
+
+
         <div class="form-group col-md-6">
             <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label> 
             <select name="post_office" id="post_office" class="form-control"  placeholder="पोस्ट ऑफिस"  autofocus>
@@ -285,10 +298,14 @@ $('#district').change(function() {
             cache: false,
             success: function(data) {
                 console.log('data',data)
+                var mandal = data.mandal;
                 var blocks = data.blocks;
                 var postoffice = data.postoffice;
                 var ai_center  =data.ai_center;
                 var tehsil    =  data.tehsil;
+
+                $('#mandal').prop('disabled', false);
+                $('#mandal').empty();
                 $('#vikas_khand').prop('disabled', false);
                 $('#vikas_khand').empty();
                 $('#post_office').prop('disabled', false);
@@ -297,6 +314,19 @@ $('#district').change(function() {
                 $('#ai_center').empty();
                 $('#tehsil').prop('disabled', false);
                 $('#tehsil').empty();
+
+                if(mandal.length>0){
+                    $('#mandal').append($("<option>-मंडल चुनें-</option>"));
+                    mandal.forEach(item => {
+                        $('#mandal').append('<option value="'+item.name_hindi+'">' + item.name_hindi + '</option>')
+                    });
+                }else{
+                    $('#mandal').append($("<option value=''>-Data not found.-</option>"));
+                }
+
+
+
+
                 if(blocks.length>0){
                     $('#vikas_khand').append($("<option>-विकास खण्ड चुनें-</option>"));
                     blocks.forEach(item => {

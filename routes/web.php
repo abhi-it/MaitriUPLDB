@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("rejectApplication", [App\Http\Controllers\DashboardController::class, 'rejectApplication'])->name('rejectApplication');
     Route::get("all-list/{year?}", [App\Http\Controllers\DashboardController::class, 'allList'])->name('allList');
     Route::get("general-list/{year?}", [App\Http\Controllers\DashboardController::class, 'generalList'])->name('generalList');
+    Route::get("obc-list/{year?}", [App\Http\Controllers\DashboardController::class, 'obcList'])->name('obcList');
     Route::get("sc-list/{year?}", [App\Http\Controllers\DashboardController::class, 'scList'])->name('scList');
     Route::get("st-list/{year?}", [App\Http\Controllers\DashboardController::class, 'stList'])->name('stList');
     Route::get("waiting-list/{id}/{export?}", [App\Http\Controllers\DashboardController::class, 'waitingList'])->name('waitingList');

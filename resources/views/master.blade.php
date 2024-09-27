@@ -975,7 +975,10 @@ header .navbar li.nav-item.active a.nav-link {
                                        </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('merit-list') }}/1">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('merit-list') }}/1">
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('merit-list') }}/2">
@@ -1028,7 +1031,7 @@ header .navbar li.nav-item.active a.nav-link {
                                     </a>
                                 </li>
                             @endif
-                                <li class="nav-item dropdown {{ (request()->is('all-list') || request()->is('general-list') || request()->is('sc-list') || request()->is('st-list')) ? 'active' : '' }}">
+                                <li class="nav-item dropdown {{ (request()->is('all-list') || request()->is('general-list') || request()->is('obc-list') || request()->is('sc-list') || request()->is('st-list')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
                                         <span data-hi="चयनित अभ्यर्थियों की सूची" data-en="List of Selected Candidates"></span> 
                                     </a>
@@ -1037,7 +1040,10 @@ header .navbar li.nav-item.active a.nav-link {
                                             <span data-hi="सभी" data-en="All"></span> 
                                         </a>
                                         <a class="dropdown-item" href="{{ url('general-list') }}">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('obc-list') }}">
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item" href="{{ url('sc-list') }}">
                                             <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
@@ -1056,14 +1062,18 @@ header .navbar li.nav-item.active a.nav-link {
                                     <div class="dropdown-menu" >
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/1">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/2">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/3">
+                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ url('waiting-list') }}/4">
                                             <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
                                         </a>
                                     </div>

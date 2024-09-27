@@ -68,6 +68,7 @@
                 <input name="smart_mobile_no" id="smart_mobile_no" type="text" class="form-control"  autofocus>
             </div>
         </div>
+
         <div class="row mb-3">
             <label for="email" class="col-md-4 col-form-label text-md-right">ज़िला </label>
             <div class="col-md-6">
@@ -81,6 +82,7 @@
                 </select>
             </div>
         </div>
+
         <div class="row mb-3">
             <label for="email" class="col-md-4 col-form-label text-md-right">ब्लॉक  </label>
             <div class="col-md-6">
@@ -89,6 +91,23 @@
                 </select>
             </div>
         </div>
+
+        <div class="row mb-3">
+            <label for="email" class="col-md-4 col-form-label text-md-right">मंडल </label>
+            <div class="col-md-6">
+                <select name="district" id="district" class="form-control"  autofocus>
+                    <option>-select one-</option>
+                    @if(count($district)>0)
+                    @foreach($district as $key=>$val)
+                    <option value="{{$val->id}}">{{$val->name_hindi}}</option>
+                    @endforeach
+                    @endif
+                </select>
+            </div>
+        </div>
+
+
+
         <div class="row mb-3">
             <label for="email" class="col-md-4 col-form-label text-md-right">वीएच/ एआई सेंटर</label>
 
