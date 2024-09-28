@@ -53,7 +53,7 @@
             <select name="training_center_id" id="training_center_id"  class="form-control"  autofocus>
                     <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                     @foreach($institute as $val)
-                        <option  value="{{$val->name}}" data-hi="{{$val->name}}" data-en="{{$val->name_en}}"></option>
+                        <option  value="{{$val->name}}" data-hi="{{$val->name}}" data-en="{{$val->name}}"></option>
                     @endforeach
                     <option  value="other" data-hi="अन्य" data-en="Other"></option>
             </select>
@@ -78,7 +78,7 @@
             <input name="smart_mobile_no" id="smart_mobile_no" type="text" class="form-control" data-placeholder-en="WhatsApp Mobile Number" data-placeholder-hi="व्हाट्सएप मोबाइल नंबर"  autofocus>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label> 
+            <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label> 
             <select name="district" id="district" class="form-control"  autofocus>
                 <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                 @if(count($district)>0)
@@ -99,7 +99,7 @@
         </div>
 
         <div class="form-group col-md-6">
-            <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label> 
+            <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label> 
             <select name="mandal" id="mandal" class="form-control"  autofocus>
               
             </select>

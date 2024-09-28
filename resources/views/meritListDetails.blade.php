@@ -373,19 +373,19 @@ use App\Models\Districts;
 
 				@if($waitingButtonShow==1) <!-----Then Display these buttons-->
 
-				<div class="row">
+				<div class="row w-100">
 					<div class="col-md-4">
-					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
+					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary my-3">स्वीकार</a>
 					</div>
 					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
 				@else
-				<div class="row">
+				<div class="row  my-3">
 				<div class="col-md-4">
-					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary">स्वीकार</a>
+					<a href="{{url('avedanStatus')}}/{{$result->id}}/1" class="btn btn-primary w-100">स्वीकार</a>
 					</div>
 					<div class="col-md-4">
-					<a href="{{url('avedanStatus')}}/{{$result->id}}/3" class="btn btn-warning">प्रतीक्षा सूची बनायें</a>
+					<a href="{{url('avedanStatus')}}/{{$result->id}}/3" class="btn btn-warning w-100">प्रतीक्षा सूची बनायें</a>
 					</div>
 					{{-- <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार</a> --}}
 				</div>
