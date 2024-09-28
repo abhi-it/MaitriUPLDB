@@ -455,11 +455,17 @@ class DashboardController extends Controller
 
         if ($category == 1) {
             //die('2222222222222');
-            $heading = 'सामान्य/अन्य पिछड़ा वर्ग मेरिट सूची (स्क्रीनिंग)';
+            $heading = 'सामान्य वर्ग मेरिट सूची (स्क्रीनिंग)';
             $query = Avedan::where('is_approved', '=', 0)
-                ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->whereIn('category', ["जनरल"])
                 ->where('district_id', '=', $districtID);
         } else if ($category == 2) {
+            //die('2222222222222');
+            $heading = 'अन्य पिछड़ा वर्ग मेरिट सूची (स्क्रीनिंग)';
+            $query = Avedan::where('is_approved', '=', 0)
+                ->whereIn('category', [ "ओ बी सी"])
+                ->where('district_id', '=', $districtID);
+        }   else if ($category == 3) {
 
             $heading = 'अनुसूचित जाति मेरिट सूची (स्क्रीनिंग)';
             $query = Avedan::where('is_approved', '=', 0)

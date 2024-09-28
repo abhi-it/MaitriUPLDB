@@ -977,15 +977,15 @@ header .navbar li.nav-item.active a.nav-link {
                                         <a class="dropdown-item" href="{{ url('merit-list') }}/1">
                                             <span data-hi="सामान्य वर्ग" data-en="General"></span> 
                                         </a>
-                                        <a class="dropdown-item" href="{{ url('merit-list') }}/1">
+                                        <a class="dropdown-item" href="{{ url('merit-list') }}/2">
                                             <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
                                         </a>
                                         <a class="dropdown-item"
-                                            href="{{ url('merit-list') }}/2">
+                                            href="{{ url('merit-list') }}/3">
                                             <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
                                             </a>
                                         <a class="dropdown-item"
-                                            href="{{ url('merit-list') }}/3">
+                                            href="{{ url('merit-list') }}/4">
                                             <span data-hi=" अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
                                         </a>
                                     </div>
