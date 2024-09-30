@@ -80,7 +80,7 @@
         <div class="form-group col-md-6">
             <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label> 
             <select name="district" id="district" class="form-control"  autofocus>
-                <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                 @if(count($district)>0)
                     @foreach($district as $key=>$val)
                     <option value="{{$val->id}}" data-hi="{{$val->name_hindi}}" data-en="{{$val->name_eng}}"></option>
@@ -316,7 +316,7 @@ $('#district').change(function() {
                 $('#tehsil').empty();
 
                 if(mandal.length>0){
-                    $('#mandal').append($("<option>-मंडल चुनें-</option>"));
+                    $('#mandal').append($("<option>-ज़िला चुनें-</option>"));
                     mandal.forEach(item => {
                         $('#mandal').append('<option value="'+item.name_hindi+'">' + item.name_hindi + '</option>')
                     });
