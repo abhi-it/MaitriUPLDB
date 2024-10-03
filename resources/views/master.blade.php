@@ -126,7 +126,7 @@ header .navbar li.nav-item.active a.nav-link {
         $(document).ready(function() {
             var currentDate = new Date();
             var currentYear = currentDate.getFullYear();
-            var currentMonth = currentDate.getMonth() + 1; 
+            var currentMonth = currentDate.getMonth() + 1;
             var previousDate = new Date(currentYear, 8, 30);
 
             var previousDateFormatted = ("0" + previousDate.getDate()).slice(-2) + "-" + ("0" + (previousDate
@@ -139,7 +139,7 @@ header .navbar li.nav-item.active a.nav-link {
                 // minDate: '19-10-2016', // Use 'dd-mm-yy' format
                 maxDate: '01-09-2006' ,// Use 'dd-mm-yy' format
                 onSelect: function() {
-                    $(this).valid(); 
+                    $(this).valid();
                 }
             });
 
@@ -310,7 +310,7 @@ header .navbar li.nav-item.active a.nav-link {
 
             // new
 
-        
+
             // $.validator.addMethod("checkDOB", function(value, element) {
             //     var userinput = document.getElementById("dob").value;
             //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
@@ -328,7 +328,7 @@ header .navbar li.nav-item.active a.nav-link {
                 return age >= 18;
             }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
 
-            
+
 
             /*---------Add Avedan From Validations Start-----------------------------*/
             var val = {
@@ -857,7 +857,7 @@ header .navbar li.nav-item.active a.nav-link {
                         Welcome,&nbsp;{{ Auth::user()->name }} |
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <span data-hi="लॉग आउट" data-en="Logout"></span> 
+                            <span data-hi="लॉग आउट" data-en="Logout"></span>
                             &nbsp;</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
@@ -882,7 +882,7 @@ header .navbar li.nav-item.active a.nav-link {
                            </div>
                            <span class="middle-line">|</span>
                            <div class="text-center">
-                            <a href="{{ url('/') }}"> 
+                            <a href="{{ url('/') }}">
                               <img src="{{ asset('assets/images/upldb-logo.png')}}" height="100" />
                             </a>
                         </div>
@@ -925,13 +925,13 @@ header .navbar li.nav-item.active a.nav-link {
                     @auth
                         <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('/dashboard') }}">
-                               <span data-hi="डैशबोर्ड" data-en="Dashboard"></span> 
+                               <span data-hi="डैशबोर्ड" data-en="Dashboard"></span>
                             </a>
                         </li>
                         @if (auth()->user()->user_type == 'User')
                             <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
-                                <span data-hi="संस्थान आवंटन सूची" data-en="Institute Allotment List"></span> 
+                                <span data-hi="संस्थान आवंटन सूची" data-en="Institute Allotment List"></span>
                                     </a>
                             </li>
                         @else
@@ -939,30 +939,30 @@ header .navbar li.nav-item.active a.nav-link {
                                 <li class="nav-item dropdown {{ (request()->is('avedan') || request()->is('avedan-districtwise')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन" data-en="New Applications"></span>
                                         </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन" data-en="New Applications"></span>
                                            </a>
                                         <a class="dropdown-item"
                                             href="{{ url('avedan-districtwise') }}">
-                                            <span data-hi="नये आवेदन जनपद वार" data-en="New Applications District Wise"></span> 
+                                            <span data-hi="नये आवेदन जनपद वार" data-en="New Applications District Wise"></span>
                                         </a>
                                     </div>
                                 </li>
                             @else
                                 <li class="nav-item {{ request()->is('avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन" data-en="New Applications"></span>
                                     </a>
                                 </li>
                             @endif
                             @if (auth()->user()->user_type != 'District Officer')
                                 <li class="nav-item {{ request()->is('total-avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('total-avedan') }}">
-                                    <span data-hi="कुल आवेदन" data-en="Total Applications"></span> 
-                                        
+                                    <span data-hi="कुल आवेदन" data-en="Total Applications"></span>
+
                                     </a>
                                 </li>
                             @endif
@@ -971,22 +971,22 @@ header .navbar li.nav-item.active a.nav-link {
                                 <li class="nav-item dropdown {{ (request()->is('merit-list') || request()->is('merit-list/*')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">
-                                        <span data-hi="मेरिट सूची (स्क्रीनिंग)" data-en="Merit List (Screening)"></span> 
+                                        <span data-hi="मेरिट सूची (स्क्रीनिंग)" data-en="Merit List (Screening)"></span>
                                        </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('merit-list') }}/1">
-                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('merit-list') }}/2">
-                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('merit-list') }}/3">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
+                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                             </a>
                                         <a class="dropdown-item"
                                             href="{{ url('merit-list') }}/4">
-                                            <span data-hi=" अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
+                                            <span data-hi=" अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                         </a>
                                     </div>
                                 </li>
@@ -1006,14 +1006,14 @@ header .navbar li.nav-item.active a.nav-link {
                             @endif
                             <li class="nav-item dropdown {{(request()->is('approved-avedan') || request()->is('rejected-avedan')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                    <span data-hi="आवेदन" data-en="Application"></span> 
+                                    <span data-hi="आवेदन" data-en="Application"></span>
                                 </a>
                                 <div class="dropdown-menu" >
-                                    <a class="dropdown-item" href="{{ url('approved-avedan') }}"> 
-                                        <span data-hi="स्वीकृत आवेदन" data-en="Accepted Applications"></span> 
+                                    <a class="dropdown-item" href="{{ url('approved-avedan') }}">
+                                        <span data-hi="स्वीकृत आवेदन" data-en="Accepted Applications"></span>
                                    </a>
                                     <a class="dropdown-item" href="{{ url('rejected-avedan') }}">
-                                    <span data-hi="अस्वीकृत आवेदन" data-en="Rejected Applications"></span> 
+                                    <span data-hi="अस्वीकृत आवेदन" data-en="Rejected Applications"></span>
                                         </a>
                                 </div>
                             </li>
@@ -1022,34 +1022,34 @@ header .navbar li.nav-item.active a.nav-link {
                             @if (auth()->user()->user_type == 'District Officer')
                                 <li class="nav-item {{ request()->is('document-verification') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('document-verification') }}">
-                                        <span data-hi="अभिलेख  सत्यापन" data-en="Record Verification"></span> 
+                                        <span data-hi="अभिलेख  सत्यापन" data-en="Record Verification"></span>
                                     </a>
                                 </li>
                                 <li class="nav-item {{ request()->is('upload-documents') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('upload-documents') }}">
-                                        <span data-hi="दस्तावेज़ सत्यापन / अपलोड करें" data-en="Document Verification/Upload"></span> 
+                                        <span data-hi="दस्तावेज़ सत्यापन / अपलोड करें" data-en="Document Verification/Upload"></span>
                                     </a>
                                 </li>
                             @endif
                                 <li class="nav-item dropdown {{ (request()->is('all-list') || request()->is('general-list') || request()->is('obc-list') || request()->is('sc-list') || request()->is('st-list')) ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                        <span data-hi="चयनित अभ्यर्थियों की सूची" data-en="List of Selected Candidates"></span> 
+                                        <span data-hi="चयनित अभ्यर्थियों की सूची" data-en="List of Selected Candidates"></span>
                                     </a>
                                     <div class="dropdown-menu" >
                                         <a class="dropdown-item" href="{{ url('all-list') }}">
-                                            <span data-hi="सभी" data-en="All"></span> 
+                                            <span data-hi="सभी" data-en="All"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('general-list') }}">
-                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('obc-list') }}">
-                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('sc-list') }}">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
+                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('st-list') }}">
-                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
+                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                         </a>
                                     </div>
                                 </li>
@@ -1057,24 +1057,24 @@ header .navbar li.nav-item.active a.nav-link {
                             @if (auth()->user()->user_type == 'District Officer')
                                 <li class="nav-item dropdown {{ request()->is('waiting-list') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" key="SCHEME">
-                                        <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span> 
+                                        <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span>
                                     </a>
                                     <div class="dropdown-menu" >
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/1">
-                                            <span data-hi="सामान्य वर्ग" data-en="General"></span> 
+                                            <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/2">
-                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
+                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/3">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
+                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ url('waiting-list') }}/4">
-                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
+                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                         </a>
                                     </div>
                                 </li>
@@ -1084,7 +1084,7 @@ header .navbar li.nav-item.active a.nav-link {
                             @if (auth()->user()->user_type == 'Admin')
                                 <li class="nav-item {{ request()->is('institute') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('institute') }}">
-                                    <span data-hi="संस्थान प्रबंधन" data-en="Institute Management"></span> 
+                                    <span data-hi="संस्थान प्रबंधन" data-en="Institute Management"></span>
                                     </a>
                                 </li>
                             @endif
@@ -1093,14 +1093,14 @@ header .navbar li.nav-item.active a.nav-link {
                             @if (auth()->user()->user_type == 'Director')
                                 <li class="nav-item dropdown {{ (request()->is('allocation') || request()->is('allocation-list') )? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                        <span data-hi="संस्थान प्रबंधन" data-en="Institute Allotment"></span> 
+                                        <span data-hi="संस्थान प्रबंधन" data-en="Institute Allotment"></span>
                                     </a>
                                     <div class="dropdown-menu" >
                                         <a class="dropdown-item" href="{{ url('allocation') }}">
-                                            <span data-hi="अभ्यर्थी आवंटन" data-en="Candidate Allocation"></span> 
+                                            <span data-hi="अभ्यर्थी आवंटन" data-en="Candidate Allocation"></span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url('allocation-list') }}">
-                                            <span data-hi="अभ्यर्थी आवंटन सूची" data-en="Candidate Allotment List"></span> 
+                                            <span data-hi="अभ्यर्थी आवंटन सूची" data-en="Candidate Allotment List"></span>
                                        </a>
                                     </div>
                                 </li>
@@ -1108,41 +1108,41 @@ header .navbar li.nav-item.active a.nav-link {
 
                             <li class="nav-item {{ request()->is('candidate-not-joined') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('candidate-not-joined') }}">
-                                    <span data-hi="संस्थान ज्वाइन नहीं किया है" data-en="Have not joined the institute"></span> 
+                                    <span data-hi="संस्थान ज्वाइन नहीं किया है" data-en="Have not joined the institute"></span>
                                 </a>
                             </li>
 
                             @if (auth()->user()->user_type == 'Admin')
                                 <li class="nav-item {{ request()->is('setting') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('setting') }}">
-                                        <span data-hi="सेटिंग्स" data-en="Setting"></span> 
+                                        <span data-hi="सेटिंग्स" data-en="Setting"></span>
                                     </a>
                                 </li>
                             @endif
 
                             <li class="nav-item {{ request()->is('changePassword') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('changePassword') }}">
-                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
+                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('maitri-home') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('maitri-home') }}">
-                                    <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span> 
+                                    <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
-                                    <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span> 
+                                    <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('demand-requests-list') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('demand-requests-list') }}">
-                                    <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span> 
+                                    <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('latest-updates') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('latest-updates') }}">
-                                    <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span> 
+                                    <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span>
                                 </a>
                             </li>
                             @if (auth()->user()->user_type == 'Admin'|| auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'District Officer')
@@ -1153,6 +1153,10 @@ header .navbar li.nav-item.active a.nav-link {
                             <li class="nav-item  {{ request()->is('totalsessionlist') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('totalsessionlist') }}">
                                     <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('inventory') }}">
+                                    <span data-hi="इनवेंटरी" data-en="Inventory"></span></a>
                             </li>
                             @endif
                             @if(auth()->user()->user_type == 'District Officer')
@@ -1169,34 +1173,34 @@ header .navbar li.nav-item.active a.nav-link {
                         @else
                         <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('/') }}" key="HOME">
-                                <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span> 
+                                <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span>
                             <span class="sr-only">(current)</span></a>
                         </li>
 
                         <li class="nav-item {{ request()->is('avedan-karein') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('avedan-karein') }}">
-                                <span data-hi="आवेदन" data-en="Applications"></span> 
+                                <span data-hi="आवेदन" data-en="Applications"></span>
                             </a>
                         </li>
 
                         <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('lakshya') }}">
-                                <span data-hi="स्वरोजगारी मैत्री की संख्या" data-en="Number of self-employed maitri"></span> 
+                                <span data-hi="स्वरोजगारी मैत्री की संख्या" data-en="Number of self-employed maitri"></span>
                             </a>
                         </li>
                         <li class="nav-item {{ request()->is('application-status') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('application-status') }}">
-                                <span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of your application"></span> 
+                                <span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of your application"></span>
                             </a>
                         </li>
                         <li class="nav-item {{ request()->is('downloads') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('downloads') }}">
-                                <span data-hi="डाउनलोड" data-en="Downlaod"></span> 
+                                <span data-hi="डाउनलोड" data-en="Downlaod"></span>
                             </a>
                         </li>
                         <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                             <a class="nav-link" href="{{ url('demandRequests') }}">
-                                <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span> 
+                                <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                             </a>
                         </li>
                         <!-- <li class="nav-item ">
@@ -1227,7 +1231,7 @@ header .navbar li.nav-item.active a.nav-link {
         </div>
       </nav>
     </header>
-  
+
      <div>
      @yield('content')
      </div>
@@ -1243,7 +1247,7 @@ header .navbar li.nav-item.active a.nav-link {
                 <img src="{{ asset('assets/images/logo.png') }}" height="100" class="mb-3" />
                 <h4 class="logo-title"><b>
                 <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="National Gokul Mission"></span>
-                
+
                 </b></h4>
                 <small >
                 <span data-hi="स्वरोजगारी मैत्री (पशु मित्र)" data-en="Self-employment friendship (animal friend)"></span>
@@ -1286,11 +1290,11 @@ header .navbar li.nav-item.active a.nav-link {
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('demandRequests') }}"> 
+                    <a href="{{ url('demandRequests') }}">
                         <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                     </a>
                 </li>
-                
+
               </ul>
             </div>
             <div class="col-lg-3">
@@ -1308,7 +1312,7 @@ header .navbar li.nav-item.active a.nav-link {
                         <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
                     </a>
                 </li>
-              
+
               </ul>
             </div>
             <div class="col-lg-3">
@@ -1320,7 +1324,7 @@ header .navbar li.nav-item.active a.nav-link {
         </div>
       </div> -->
       @endauth
-      @endif                 
+      @endif
       <!-- <div class="copy-right py-2 text-center copyright-text">
         <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> © Rashtriya Gokul Mission All rights reserved</p>
       </div> -->
@@ -1332,49 +1336,49 @@ header .navbar li.nav-item.active a.nav-link {
         <div class="footer_parent">
         <div class="row g-3 footer_top_footer__u_0LC">
             <div class="col-lg-4">
-                <h5><i class="fa fa-map-marker"></i> 
-                    <span data-hi="हेड ऑफिस" data-en="Head Office"></span> 
+                <h5><i class="fa fa-map-marker"></i>
+                    <span data-hi="हेड ऑफिस" data-en="Head Office"></span>
                 </h5>
                 <p>
-                    <span data-hi="गोकरन नाथ रोड, बादशाहबाग, लखनऊ 226007" data-en="Gokaran Nath Road, Badshahbagh, Lucknow 226007"></span> 
+                    <span data-hi="गोकरन नाथ रोड, बादशाहबाग, लखनऊ 226007" data-en="Gokaran Nath Road, Badshahbagh, Lucknow 226007"></span>
                </p>
-                <h5><i class="fa fa-envelope"></i> 
-                    <span data-hi="ईमेल करें" data-en="Email Us"></span> 
+                <h5><i class="fa fa-envelope"></i>
+                    <span data-hi="ईमेल करें" data-en="Email Us"></span>
                 </h5>
                 <p class="mb-0">
-                <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span> 
+                <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span>
                 - upldbte@gmail.com</p>
                 <p class="mb-0">
-                <span data-hi="शिकायत सेल" data-en="Grievance Cell"></span>     
+                <span data-hi="शिकायत सेल" data-en="Grievance Cell"></span>
                 - upldbmaitri@gmail.com</p>
                 <p class="mb-0">
-                <span data-hi="बीमा" data-en="Insurance"></span>         
+                <span data-hi="बीमा" data-en="Insurance"></span>
                  - pashubeemaupldb@gmail.com</p>
                 <p class="mb-0">
-                <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>        
+                <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>
                  - upldbss@gmail.com</p>
             </div>
             <div class="col-lg-4">
-                <h5><i class="fa fa-phone"></i> 
-                    <span data-hi="कॉल करें" data-en="Call Us"></span>       
+                <h5><i class="fa fa-phone"></i>
+                    <span data-hi="कॉल करें" data-en="Call Us"></span>
                 </h5>
                 <p class="mb-0">
-                    <span data-hi="लैंडलाइन नंबर" data-en="Landline Number"></span>           
+                    <span data-hi="लैंडलाइन नंबर" data-en="Landline Number"></span>
                  - +91-522-2977709</p>
-                <p class="mb-0"> 
-                    <span data-hi="बीमा" data-en="Insurance"></span>        
+                <p class="mb-0">
+                    <span data-hi="बीमा" data-en="Insurance"></span>
                 - +91 - 9335116448</p>
                 <p class="mb-0">
-                    <span data-hi="मैत्री" data-en="MAITRI"></span>      
+                    <span data-hi="मैत्री" data-en="MAITRI"></span>
                      - +91 - 9125904205</p>
                 <p class="mb-0 mt-2 fw-semibold">
-                    <span data-hi="उत्तर प्रदेश पशुधन विकास बोर्ड" data-en="Uttar Pradesh Livestock Development Board"></span>   
+                    <span data-hi="उत्तर प्रदेश पशुधन विकास बोर्ड" data-en="Uttar Pradesh Livestock Development Board"></span>
                 </p>
             </div>
             <div class="col-lg-4">
                 <div class="d-flex flex-column justiry-content-center align-items-center w-100">
                     <h5>
-                    <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>  
+                    <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>
                     </h5>
                     <a href="#"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png" width="120px" alt=""></a>
                 </div>
@@ -1384,8 +1388,8 @@ header .navbar li.nav-item.active a.nav-link {
             <div class="col-lg-3 align-items-top text-center">
                 <img src="https://maitriupldb.in/assets/images/upldb-logo.png" alt="" width="150">
                 <span style="line-height:25px;display:block" class="mb-0 mt-3 text-white">
-                <span data-hi="उन्नत संतति हेतु संकल्पबद्ध" data-en="Committed to a better future"></span>  
-                
+                <span data-hi="उन्नत संतति हेतु संकल्पबद्ध" data-en="Committed to a better future"></span>
+
                 </span>
                 <div class="social-links d-flex justify-content-center gap-3 mt-lg-3  mt-md-4 mt-3 ">
 
@@ -1395,7 +1399,7 @@ header .navbar li.nav-item.active a.nav-link {
                     <a target="_blank" href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/" >
                         <span> <i  class="ri-facebook-circle-line ri-lg"></i></span>
                     </a>
-                
+
                     <a  href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board" target="_blank">
                         <span><i class="ri-linkedin-line ri-lg"></i></span>
                     </a>
@@ -1407,9 +1411,9 @@ header .navbar li.nav-item.active a.nav-link {
                 </div>
             </div>
             <div class="col-lg-2">
-                <h5 class="footer--heading"> 
+                <h5 class="footer--heading">
                 <span data-hi="महत्वपूर्ण लिंक" data-en="Important Links"></span>
-                </h5> 
+                </h5>
                 <ul class="footer--list">
                     <li>
                         <a href="{{ url('/') }}" key="HOME">
@@ -1437,11 +1441,11 @@ header .navbar li.nav-item.active a.nav-link {
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('demandRequests') }}"> 
+                        <a href="{{ url('demandRequests') }}">
                             <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                         </a>
                     </li>
-                </ul>        
+                </ul>
 
 
 
@@ -1461,7 +1465,7 @@ header .navbar li.nav-item.active a.nav-link {
                             <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
                         </a>
                     </li>
-                
+
                 </ul>
             </div>
             <div class="col-lg-2">
@@ -1477,13 +1481,13 @@ header .navbar li.nav-item.active a.nav-link {
         </div>
         </div>
     @endauth
-    @endif      
+    @endif
     <div class="copy-right py-2 text-center copyright-text footer-counter">
-        <a href='https://www.free-counters.org/'>www.free-Counter.org</a> 
+        <a href='https://www.free-counters.org/'>www.free-Counter.org</a>
         <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
         <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5"></script>
 
-        <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> © 
+        <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> ©
             <span data-hi="राष्ट्रीय गोकुल मिशन सर्वाधिकार सुरक्षित" data-en="Rashtriya Gokul Mission All rights reserved"></span>
         </p>
     </div>
@@ -1546,7 +1550,7 @@ header .navbar li.nav-item.active a.nav-link {
         localStorage.setItem("selectedProject", lang);
         switchLang(lang)
     });
-        
+
     function loadlang() {
         var lng = document.getElementById("langselector").value;
         var cnt = document.getElementById("contents");

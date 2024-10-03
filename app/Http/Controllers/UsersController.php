@@ -53,7 +53,7 @@ class UsersController extends Controller{
                     'division_id'=> $request->division_id,
                     'role_id'   => '4',
                     'breeds'    => $request->breeds,
-                    'cattale_no'=> implode(',',$request->cattale_no),    
+                    'cattale_no'=> implode(',',$request->cattale_no),
                     'gram_panchayat'=> $request->gram_panchayat,
                     'post_office'=> $request->post_office,
                     'block'=> $request->block,
@@ -83,7 +83,7 @@ class UsersController extends Controller{
             'aicenter'=>$aicenter]);
     }
 
-    
+
     public function maitriRegister(Request $request){
          $validator = Validator::make($request->all(),[
             'first_name'  => ['bail', 'required', 'string', 'max:255'],
@@ -109,12 +109,12 @@ class UsersController extends Controller{
                     'password'   => Hash::make($request->password),
                     'district_id'=> $request->district_id,
                     'division_id'=> $request->division_id,
-                    'role_id'   => '3',    
+                    'role_id'   => '3',
                     'role'      => 'Maitri',
                     'user_type' => 'Maitri',
                 ]);
                 $user->save();
-                if($user){ 
+                if($user){
                     $subuser = new Usermeta([
                         'user_id'      => $user->id,
                         'gram_panchayat'=> $request->gram_panchayat,
@@ -161,7 +161,7 @@ class UsersController extends Controller{
     }
 
     public function addRefreshTraining(Request $request){
-        
+
         $validator = Validator::make($request->all(),[
             'from_date'  => [ 'required', 'string'],
             'to_date'  => [ 'required', 'string'],
@@ -177,7 +177,7 @@ class UsersController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
-           
+
             $user  = new Traininglist([
                 'from_date' => $request->from_date,
                 'to_date'   => $request->to_date,
@@ -186,7 +186,7 @@ class UsersController extends Controller{
                 'institute'=> $request->institute,
                 'district'=> $request->district,
                 'ai_center'=> $request->ai_center,
-                'hospital'    => $request->hospital,  
+                'hospital'    => $request->hospital,
                 'ai'=> $request->ai,
                 'pd'=> $request->pd,
                 'calving'=> $request->calving,
@@ -196,6 +196,6 @@ class UsersController extends Controller{
             return redirect()->back()->with('success','Refresher training request submitted successfully!');
 
         }
-     
+
     }
 }

@@ -121,7 +121,7 @@ Route::get('/downloads', [App\Http\Controllers\HomeController::class, 'downloads
 Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addSemanForm'])->name('addSemanForm');
 Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
 Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
-   
+
 Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
@@ -177,7 +177,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("addUpdateMaitri", [MaitriController::class, 'addUpdateMaitri'])->name('addUpdateMaitri');
     Route::post("importMaitries", [MaitriController::class, 'importMaitries'])->name('importMaitries');
 
-    
+
     Route::get("getJanpadUnique", [MaitriController::class, 'getJanpadUnique'])->name('getJanpadUnique');
     Route::get("allMaitriesData", [MaitriController::class, 'allMaitriesData'])->name('allMaitriesData');
 
@@ -187,11 +187,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     Route::get("demand-requests-list", [DemandRequestController::class, 'demandRequestsListing'])->name('demand-requests-list');
     Route::post("deleteRequests", [DemandRequestController::class, 'deleteDemandRequests'])->name('deleteRequests');
-    
+
     Route::get("maitri-listing", [MaitriController::class, 'maitriListing'])->name('maitri-listing');
     Route::get("getallmaitrifilterlist", [MaitriController::class, 'maitriListing'])->name('getallmaitrifilterlist');
 
-    
+
     Route::get("getallofficers", [CVOOfficerController::class, 'getAllOfficers'])->name('getallofficers');
 
     Route::get("exportselectedmaitries", [MaitriController::class, 'exportMaitri'])->name('exportselectedmaitries');
@@ -237,6 +237,14 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("totalsessionlist", [App\Http\Controllers\DashboardController::class, 'totalsessionlist'])->name('totalsessionlist');
 
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
+
+
+    // inventory
+    Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
+    Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
+    Route::post("deo-user-store-step1", [App\Http\Controllers\DeoUserController::class, 'createStep1'])->name('deo-user-store-step1');
+    Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');
+    Route::post("deo-user-store-step2", [App\Http\Controllers\DeoUserController::class, 'createStoreStep2'])->name('deo-user-store-step2');
 
 
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/

@@ -7,5 +7,5 @@ class AIcenters extends Model
 {
     use HasFactory;
     protected $table = 'AI_Centers';
-   
+
 }

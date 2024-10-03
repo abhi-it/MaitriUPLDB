@@ -153,6 +153,11 @@ class CheckRole
                 'uploadScannedFile',
                 'totalsessionlist',
                 'getallLiveStockData',
+                'inventory',
+                'deo-user-step1',
+                'deo-user-store-step1',
+                'deo-user-step2',
+                'deo-user-store-step2',
             ],
 
             'Superadmin' => [
@@ -242,6 +247,11 @@ class CheckRole
                 'shapathPatraList',
                 'totalsessionlist',
                 'getallLiveStockData',
+                'inventory',
+                'deo-user-step1',
+                'deo-user-store-step1',
+                'deo-user-step2',
+                'deo-user-store-step2',
             ],
             'Maitri' => [
                 'maitri-dashboard',
