@@ -246,6 +246,12 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');
     Route::post("deo-user-store-step2", [App\Http\Controllers\DeoUserController::class, 'createStoreStep2'])->name('deo-user-store-step2');
 
+    Route::get("get-divisions", [App\Http\Controllers\DeoUserController::class, 'getDivisions'])->name('get-divisions');
+    Route::get("get-districts", [App\Http\Controllers\DeoUserController::class, 'getDistricts'])->name('get-districts');
+    Route::get("get-blocks", [App\Http\Controllers\DeoUserController::class, 'getBlocks'])->name('get-blocks');
+
+
+
 
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/
 

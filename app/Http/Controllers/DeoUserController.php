@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\AIcenters;
 use App\Models\API\Role;
+use App\Models\Block;
 use App\Models\Blockslist;
+use App\Models\Cliniclocation;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions as ModelsDivisions;
@@ -19,14 +21,27 @@ class DeoUserController extends Controller
     public function create()
     {
         $zones = Zone::all();
-        $divisions = ModelsDivisions::all();
-        $districts = Districts::all();
-        $blocks = Blockslist::all();
-        $aicenters = AIcenters::all();
-
         session()->forget('form_step1');
 
-        return view('deo_users.createStep1', compact('zones', 'divisions', 'districts', 'aicenters', 'blocks'));
+        return view('deo_users.createStep1', compact('zones'));
+    }
+
+    public function getDivisions(Request $request)
+    {
+        $divisions = ModelsDivisions::where('zone_id', $request->zone_id)->get();
+        return response()->json(['divisions' => $divisions]);
+    }
+
+    public function getDistricts(Request $request)
+    {
+        $districts = Districts::where('division_id', $request->division_id)->get();
+        return response()->json(['districts' => $districts]);
+    }
+
+    public function getBlocks(Request $request)
+    {
+        $blocks = Block::where('dis_id', $request->district_id)->get();
+        return response()->json(['blocks' => $blocks]);
     }
 
     public function createStep1(Request $request)

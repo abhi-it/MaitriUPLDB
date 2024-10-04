@@ -161,7 +161,7 @@
                                                 :data-en="district.name_eng"
                                                 x-text="localStorage.getItem('selectedProject') === 'en' ? district.name_eng : district.name_hindi"></span>
                                             <input type="radio" name="district" :id="'district' + district.id"
-                                                :value="district.id" x-on:click="getBlocks(district.name_hindi)">
+                                                :value="district.id" x-on:click="getBlocks(district.id)">
                                             <span class="checkmarkradio"></span>
                                         </label>
                                     </div>
@@ -176,11 +176,11 @@
                                 <template x-for="(block, index) in selectedBlocks" :key="index">
                                     <div class="custom-radio">
                                         <label class="radio-button-container">
-                                            <span :for="'block' + block.id" :data-hi="block.name_hindi"
-                                                :data-en="block.name_eng"
-                                                x-text="localStorage.getItem('selectedProject') === 'en' ? block.name_eng : block.name_hindi"></span>
+                                            <span :for="'block' + block.id" :data-hi="block.block_name"
+                                                :data-en="block.block_name"
+                                                x-text="localStorage.getItem('selectedProject') === 'en' ? block.block_name : block.block_name"></span>
                                             <input type="radio" name="block" :id="'block' + block.id"
-                                                :value="block.id" x-on:click="getAicenters(block.name_hindi)">
+                                                :value="block.id" x-on:click="getAicenters(block.block_name)">
                                             <span class="checkmarkradio"></span>
                                         </label>
                                     </div>
@@ -239,10 +239,7 @@
                     }, 5000);
                 },
                 zones: @json($zones),
-                divisions: @json($divisions),
-                districts: @json($districts),
-                aicenters: @json($aicenters),
-                blocks: @json($blocks),
+
                 selectedDivisions: [],
                 selectedDistricts: [],
                 selectedBlocks: [],
@@ -250,52 +247,84 @@
                 errorMessage: '',
                 objectErrorMessage: {},
                 getDivisions(zoneId) {
-                    let divisions = this.divisions.filter(division => division.zone_id === zoneId);
-                    this.selectedDivisions = divisions;
-                    this.selectedDistricts = [];
-                    this.selectedAicenters = [];
-                    this.selectedBlocks = [];
-                    setTimeout(() => {
-                        this.selectedDivisions.forEach(division => {
-                            let radio = document.getElementById('division' + division.id);
-                            if (radio) {
-                                radio.checked = false;
+
+                    console.log(zoneId, 'zoneId');
+
+                    axios.get('{{ route('get-divisions') }}', {
+                            params: {
+                                zone_id: zoneId
                             }
+                        })
+                        .then(response => {
+                            this.selectedDivisions = response.data.divisions;
+                            this.selectedDistricts = [];
+                            this.selectedAicenters = [];
+                            this.selectedBlocks = [];
+                            setTimeout(() => {
+                                this.selectedDivisions.forEach(division => {
+                                    console.log(division, 'division');
+                                    let radio = document.getElementById('division' + division.id);
+                                    if (radio) {
+                                        radio.checked = false;
+                                    }
+                                });
+                            }, 100);
+                        })
+                        .catch(error => {
+                            console.error('There was an error fetching the divisions!', error);
                         });
-                    }, 100);
                 },
                 getDistricts(divisionId) {
-                    let districts = this.districts.filter(district => district.division_id === divisionId);
-                    this.selectedDistricts = districts;
-                    this.selectedAicenters = [];
-                    this.selectedBlocks = [];
-                    setTimeout(() => {
-                        this.selectedDistricts.forEach(district => {
-                            let radio = document.getElementById('district' + district.id);
-                            if (radio) {
-                                radio.checked = false;
+
+                    axios.get('{{ route('get-districts') }}', {
+                            params: {
+                                division_id: divisionId
                             }
+                        })
+                        .then(response => {
+                            this.selectedDistricts = response.data.districts;
+                            this.selectedAicenters = [];
+                            this.selectedBlocks = [];
+
+                            setTimeout(() => {
+                                this.selectedDistricts.forEach(district => {
+                                    let radio = document.getElementById('district' + district.id);
+                                    if (radio) {
+                                        radio.checked = false;
+                                    }
+                                });
+                            }, 100);
+                        })
+                        .catch(error => {
+                            console.error('There was an error fetching the districts!', error);
                         });
-                        let allSelectAicenters = document.getElementById('allSelectAicenters');
-                        if (allSelectAicenters) {
-                            allSelectAicenters.checked = false;
-                        }
-                    }, 100);
 
                 },
-                getBlocks(districtname) {
-                    let blocks = this.blocks.filter(block => block.distric === districtname);
-                    console.log(blocks, 'blocks');
-                    this.selectedBlocks = blocks;
+                getBlocks(districtId) {
 
-                    setTimeout(() => {
-                        this.selectedBlocks.forEach(block => {
-                            let radio = document.getElementById('block' + block.id);
-                            if (radio) {
-                                radio.checked = false;
+                    axios.get('{{ route('get-blocks') }}', {
+                            params: {
+                                district_id: districtId
                             }
+                        })
+                        .then(response => {
+                            this.selectedBlocks = response.data.blocks;
+                            // console.log(response.data.blocks);
+                            this.selectedAicenters = [];
+
+                            setTimeout(() => {
+                                this.selectedBlocks.forEach(block => {
+                                    let radio = document.getElementById('block' + block.id);
+                                    if (radio) {
+                                        radio.checked = false;
+                                    }
+                                });
+                            }, 100);
+
+                        })
+                        .catch(error => {
+                            console.error('There was an error fetching the blocks!', error);
                         });
-                    }, 100);
                 },
                 getAicenters(blockname) {
                     let aicenters = this.aicenters.filter(aicenter => aicenter.block === blockname);
@@ -358,7 +387,8 @@
                     //     return;
                     // }
 
-                    const selectedAicenters = Array.from(document.querySelectorAll('input[name="aicenter"]:checked'))
+                    const selectedAicenters = Array.from(document.querySelectorAll(
+                            'input[name="aicenter"]:checked'))
                         .map(aicenter => aicenter.value);
                     // if (selectedAicenters.length === 0) {
                     //     this.errorMessage = 'Please select at least one aicenter';
@@ -366,29 +396,29 @@
                     // }
 
                     axios.post('{{ route('deo-user-store-step1') }}', {
-                        zone: selectedZoneValue,
-                        division: selectedDivisionValue,
-                        district: selectedDistrictValue,
-                        block: selectedBlockValue,
-                        aicenters: selectedAicenters
-                    })
-                    .then(response => {
-                        // handle success
-                        console.log(response.data);
-                        window.location.href = '{{ route('deo-user-step2') }}';
-                        if(response.status === 200){
+                            zone: selectedZoneValue,
+                            division: selectedDivisionValue,
+                            district: selectedDistrictValue,
+                            block: selectedBlockValue,
+                            aicenters: selectedAicenters
+                        })
+                        .then(response => {
+                            // handle success
+                            console.log(response.data);
                             window.location.href = '{{ route('deo-user-step2') }}';
-                        }
-                        // You can redirect or show a success message here
-                    })
-                    .catch(error => {
-                        console.log(error.response.data.errors, 'error');
-                        this.objectErrorMessage = error.response.data.errors;
+                            if (response.status === 200) {
+                                window.location.href = '{{ route('deo-user-step2') }}';
+                            }
+                            // You can redirect or show a success message here
+                        })
+                        .catch(error => {
+                            console.log(error.response.data.errors, 'error');
+                            this.objectErrorMessage = error.response.data.errors;
 
-                        // handle error
-                        // console.error(error);
-                        // this.errorMessage = 'An error occurred while creating the DEO user. Please try again.';
-                    });
+                            // handle error
+                            // console.error(error);
+                            // this.errorMessage = 'An error occurred while creating the DEO user. Please try again.';
+                        });
 
                 },
                 getSelectedValue(name) {

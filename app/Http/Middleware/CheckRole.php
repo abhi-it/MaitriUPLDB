@@ -158,6 +158,9 @@ class CheckRole
                 'deo-user-store-step1',
                 'deo-user-step2',
                 'deo-user-store-step2',
+                'get-divisions',
+                'get-districts',
+                'get-blocks'
             ],
 
             'Superadmin' => [
@@ -252,6 +255,9 @@ class CheckRole
                 'deo-user-store-step1',
                 'deo-user-step2',
                 'deo-user-store-step2',
+                'get-divisions',
+                'get-districts',
+                'get-blocks'
             ],
             'Maitri' => [
                 'maitri-dashboard',
