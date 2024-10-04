@@ -3,7 +3,6 @@
     @php
         use App\Models\Districts;
         use App\Models\Rejectcomment;
-        use App\Models\Verificationcomment;
     @endphp
     <div class="container main-div" style="background-color:white; height: 100%;">
         <!--First row Start -->
@@ -548,18 +547,6 @@
 
             <!--------Comment Start here------------>
             @php $coments = Rejectcomment::where('application_id', '=', $result->id)->first()@endphp
-            @if (!empty($coments))
-                @if($result->is_approved != 2)
-                    <div class="alert alert-danger" style="width: 100%;">
-                        {{ $coments->comments }}
-                    </div>
-                @endif
-            @endif
-            <!--------Comment End here------------>
-
-
-              <!--------Comment Start here------------>
-              @php $coments = Verificationcomment::where('application_id', '=', $result->id)->first()@endphp
             @if (!empty($coments))
                 @if($result->is_approved != 2)
                     <div class="alert alert-danger" style="width: 100%;">
