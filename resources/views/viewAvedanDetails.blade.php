@@ -3,7 +3,9 @@
     @php
         use App\Models\Districts;
         use App\Models\Rejectcomment;
+        use App\Models\Verificationcomment;
         $coments = Rejectcomment::where('application_id', '=', $result->id)->first();
+        $verificationcoments = Verificationcomment::where('application_id', '=', $result->id)->first();
     @endphp
     <div class="container main-div" style="background-color:white; height: 100%;">
         <!--First row Start -->
@@ -492,6 +494,12 @@
                 @if(!empty($coments))
                 <div class="alert alert-danger btn btn-danger" >
                      {{ $coments->comments }}
+                </div>
+                @endif
+
+                @if(!empty($verificationcoments))
+                <div class="alert  btn btn-info" >
+                     {{ $verificationcoments->comments }}
                 </div>
                 @endif
 
