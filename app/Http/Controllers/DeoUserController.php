@@ -26,10 +26,22 @@ class DeoUserController extends Controller
         return view('deo_users.createStep1', compact('zones'));
     }
 
+    public function districtsDeoCreate(){
+        $zones = Zone::all();
+        session()->forget('form_step1');
+        return view('deo_users.createDistrictDeo', compact('zones'));
+    }
+
     public function getDivisions(Request $request)
     {
         $divisions = ModelsDivisions::where('zone_id', $request->zone_id)->get();
         return response()->json(['divisions' => $divisions]);
+    }
+
+    public function getAicenter(Request $request)
+    {
+        $aicenter = Cliniclocation::where('block', $request->blockname)->get();
+        return response()->json(['aicenter' => $aicenter]);
     }
 
     public function getDistricts(Request $request)
@@ -67,14 +79,43 @@ class DeoUserController extends Controller
         return response()->json(['status' => 200]);
     }
 
+    public function createDisctrictStep2(Request $request)
+    {
+
+        $validator = \Validator::make($request->all(), [
+            'zone' => 'required|integer',
+            'division' => 'required|integer',
+            'district' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $validatedData = $validator->validated();
+
+        session(['form_step1' => $validatedData]);
+
+        return response()->json(['status' => 200]);
+    }
+
     public function createStep2(Request $request)
     {
         if (!session()->has('form_step1') || empty(session('form_step1'))) {
             return redirect()->route('deo-user-step1');
         }
-
         return view('deo_users.createStep2');
     }
+
+
+    public function createDistrictStep2(Request $request)
+    {
+        if (!session()->has('form_step1') || empty(session('form_step1'))) {
+            return redirect()->route('district-deo-user-step1');
+        }
+        return view('deo_users.createDistrictStep2');
+    }
+
 
     public function createStoreStep2(Request $request)
     {
@@ -97,7 +138,6 @@ class DeoUserController extends Controller
         $role = Role::where('name', 'deo')->first();
         $role_id = $role ? $role->id : null;
 
-
         $user = User::create([
             'name'        => $validatedData['username'],
             'FirstName'   => $validatedData['username'],
@@ -111,17 +151,64 @@ class DeoUserController extends Controller
             'user_type'   => 'DEO',
         ]);
 
+      
+
+
         $deoUser = DeoUser::create([
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
             'division_id' => $form_step1['division'],
             'district_id' => $form_step1['district'],
             'block_id' => $form_step1['block'],
-            'aicenters_id' => json_encode($form_step1['aicenters']),
+            'aicenters_id' => implode(',',$form_step1['aicenters'])
         ]);
 
         session()->forget('form_step1');
 
+        return response()->json(['status' => 200]);
+
+    }
+
+    public function createDistrictStoreStep2(Request $request){
+
+        $validator = \Validator::make($request->all(), [
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $validatedData = $validator->validated();
+
+        $form_step1 = session('form_step1');
+
+        $role = Role::where('name', 'district-deo')->first();
+        $role_id = $role ? $role->id : null;
+     
+
+        $user = User::create([
+            'name'        => $validatedData['username'],
+            'FirstName'   => $validatedData['username'],
+            'LastName'    => $validatedData['username'],
+            'email'       => $validatedData['email'],
+            'password'    => Hash::make($validatedData['password']),
+            'division_id' => $form_step1['division'],
+            'role_id'     => $role_id,
+            'role'        => 'District Operator',
+            'user_type'   => 'District DEO',
+        ]);
+
+        $deoUser = DeoUser::create([
+            'user_id' => $user->id,
+            'zone_id' => $form_step1['zone'],
+            'division_id' => $form_step1['division'],
+            'district_id' => implode(',',$form_step1['district']),
+        ]);
+        session()->forget('form_step1');
         return response()->json(['status' => 200]);
 
     }

@@ -160,7 +160,11 @@ class CheckRole
                 'deo-user-store-step2',
                 'get-divisions',
                 'get-districts',
-                'get-blocks'
+                'get-blocks',
+                'district-deo-user-step1',
+                'district-Operator-store-step1',
+                'deo-district-user-step2',
+                'deo-district-store-step2',
             ],
 
             'Superadmin' => [
@@ -250,14 +254,25 @@ class CheckRole
                 'shapathPatraList',
                 'totalsessionlist',
                 'getallLiveStockData',
+
                 'inventory',
                 'deo-user-step1',
                 'deo-user-store-step1',
                 'deo-user-step2',
                 'deo-user-store-step2',
+                'deo-operator-store-step2',
+
+          
+                'district-deo-user-step1',
+                'district-Operator-store-step1',
+                'deo-district-user-step2',
+                'deo-district-store-step2',
+                
+
                 'get-divisions',
                 'get-districts',
-                'get-blocks'
+                'get-blocks',
+                'get-aicenter'
             ],
             'Maitri' => [
                 'maitri-dashboard',

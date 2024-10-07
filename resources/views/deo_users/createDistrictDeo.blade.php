@@ -154,69 +154,28 @@
                             <div x-show="selectedDistricts.length > 0">
                                 <h5 class="m-4 fw-bold"> <span data-hi="डिस्ट्रिक्ट चुनें" data-en="Select District"></span>
                                 </h5>
+                                <div class="custom-radio">
+                                    <label class="radio-button-container"><span data-hi="सभी चुनें" data-en="Select All"></span>
+                                        <input type="checkbox" id="allSelectDistrict" name="allSelectDistrict"
+                                            x-on:click="selectAllDistrict">
+                                        <span class="checkmarkradio"></span>
+                                    </label>
+
+                                </div>
                                 <template x-for="(district, index) in selectedDistricts" :key="index">
                                     <div class="custom-radio">
                                         <label class="radio-button-container">
                                             <span :for="'district' + district.id" :data-hi="district.name_hindi"
                                                 :data-en="district.name_eng"
                                                 x-text="localStorage.getItem('selectedProject') === 'en' ? district.name_eng : district.name_hindi"></span>
-                                            <input type="radio" name="district" :id="'district' + district.id"
-                                                :value="district.id" x-on:click="getBlocks(district.id)">
+                                            <input type="checkbox" name="district" :id="'district' + district.id"
+                                                :value="district.id">
                                             <span class="checkmarkradio"></span>
                                         </label>
                                     </div>
                                 </template>
                             </div>
-
                         </div>
-
-                        <div class="col-md-3">
-                            <div x-show="selectedBlocks.length > 0">
-                                <h5 class="m-4 fw-bold"> <span data-hi="ब्लॉक चुनें" data-en="Select Block"></span> </h5>
-                                <template x-for="(block, index) in selectedBlocks" :key="index">
-                                    <div class="custom-radio">
-                                        <label class="radio-button-container">
-                                            <span :for="'block' + block.id" :data-hi="block.block_hindi"
-                                                :data-en="block.block_name"
-                                                x-text="localStorage.getItem('selectedProject') === 'en' ? block.block_name : block.block_hindi"></span>
-                                            <input type="radio" name="block" :id="'block' + block.id"
-                                                :value="block.id" x-on:click="getAicenters(block.block_hindi)" >
-                                            <span class="checkmarkradio"></span>
-                                        </label>
-                                    </div>
-                                </template>
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-md-3 ai_center" >
-                            <p x-show="aiCenterNullMess == 0 && selectedAicenters.length == 0">No AI Centers available</p>
-                            <div x-show="selectedAicenters.length > 0">
-                                <h5 class="m-4 fw-bold"> <span data-hi="सेंटर चुनें" data-en="Select Aicenters"></span> </h5>
-                                <div class="custom-radio">
-                                    <label class="radio-button-container"><span data-hi="सभी चुनें" data-en="Select All"></span>
-                                        <input type="checkbox" id="allSelectAicenters" name="allSelectAicenters"
-                                            x-on:click="selectAllAicenters">
-                                        <span class="checkmarkradio"></span>
-                                    </label>
-
-                                </div>
-                                <template x-for="(aicenter, index) in selectedAicenters" :key="index">
-                                <div class="custom-radio">
-                                    <label class="radio-button-container">
-                                        <span :for="'aicenter' + aicenter.id" :data-hi="aicenter.name"
-                                            :data-en="aicenter.name_eng"
-                                            x-text="localStorage.getItem('selectedProject') === 'en' ? aicenter.name_eng : aicenter.name"></span>
-                                        <input type="checkbox" name="aicenter" :id="'aicenter' + aicenter.id"
-                                            :value="aicenter.id">
-                                        <span class="checkmarkradio"></span>
-                                    </label>
-                                </div>
-                            </template>
-                            </div>
-                        </div>
-
                     </div>
 
 
@@ -243,10 +202,6 @@
 
                 selectedDivisions: [],
                 selectedDistricts: [],
-                selectedBlocks: [],
-                selectedAicenters: [],
-
-                aiCenterNullMess: true,
                 
                 errorMessage: '',
                 objectErrorMessage: {},
@@ -262,8 +217,6 @@
                         .then(response => {
                             this.selectedDivisions = response.data.divisions;
                             this.selectedDistricts = [];
-                            this.selectedAicenters = [];
-                            this.selectedBlocks = [];
                             setTimeout(() => {
                                 this.selectedDivisions.forEach(division => {
                                     console.log(division, 'division');
@@ -287,9 +240,6 @@
                         })
                         .then(response => {
                             this.selectedDistricts = response.data.districts;
-                            this.selectedAicenters = [];
-                            this.selectedBlocks = [];
-
                             setTimeout(() => {
                                 this.selectedDistricts.forEach(district => {
                                     let radio = document.getElementById('district' + district.id);
@@ -304,86 +254,17 @@
                         });
 
                 },
-                getBlocks(districtId) {
+                selectAllDistrict() {
 
-                    axios.get('{{ route('get-blocks') }}', {
-                            params: {
-                                district_id: districtId
-                            }
-                        })
-                        .then(response => {
-                            this.selectedBlocks = response.data.blocks;
-                            console.log(response.data.blocks);
-                            this.selectedAicenters = [];
-
-                            setTimeout(() => {
-                                this.selectedBlocks.forEach(block => {
-                                    let radio = document.getElementById('block' + block.id);
-                                    if (radio) {
-                                        radio.checked = false;
-                                    }
-                                });
-                            }, 100);
-
-                        })
-                        .catch(error => {
-                            console.error('There was an error fetching the blocks!', error);
-                        });
-                },
-                getAicenters(blockname) {
-
-                    if (!blockname) {
-                        this.aiCenterNullMess = []; // Show the null message if no blockname is given
-                        this.selectedAicenters = []; // Clear selected AICenters if blockname is not provided
-                        return false; // Exit the function
-                    }
-
-                    axios.get('{{ route('get-aicenter') }}', {
-                            params: {
-                                blockname: blockname
-                            }
-                        })
-                        .then(response => {
-
-                            console.log(response);
-
-                            this.aicenters = response.data.aicenter;
-                           
-                            let aicenters = this.aicenters.filter(aicenter => aicenter.block === blockname);
-                            console.log(aicenters,'= aicenters');
-                            this.selectedAicenters = aicenters;
-
-                            setTimeout(() => {
-                                this.selectedAicenters.forEach(aicenter => {
-                                    let checkbox = document.getElementById('aicenter' + aicenter.id);
-                                    if (checkbox) {
-                                        checkbox.checked = false;
-                                    }
-                                });
-
-                                let allSelectAicenters = document.getElementById('allSelectAicenters');
-                                if (allSelectAicenters) {
-                                    allSelectAicenters.checked = false;
-                                }
-                            }, 100);
-
-                        })
-                        .catch(error => {
-                            console.error('There was an error fetching the blocks!', error);
-                        });
-
-                },
-                selectAllAicenters() {
-
-                    let allSelectAicenters = document.getElementById('allSelectAicenters');
-                    if (allSelectAicenters && !allSelectAicenters.checked) {
-                        this.selectedAicenters.forEach(aicenter => {
-                            let checkbox = document.getElementById('aicenter' + aicenter.id);
+                    let selectAllDistrict1 = document.getElementById('allSelectDistrict');
+                    if (selectAllDistrict1 && !selectAllDistrict1.checked) {
+                        this.selectedDistricts.forEach(district => {
+                            let checkbox = document.getElementById('district' + district.id);
                             checkbox.checked = false;
                         });
                     } else {
-                        this.selectedAicenters.forEach(aicenter => {
-                            let checkbox = document.getElementById('aicenter' + aicenter.id);
+                        this.selectedDistricts.forEach(district => {
+                            let checkbox = document.getElementById('district' + district.id);
                             checkbox.checked = true;
                         });
                     }
@@ -391,51 +272,38 @@
                 createDEOUser() {
 
                     const selectedZoneValue = this.getSelectedValue('zone');
-                    // if (!selectedZoneValue) {
-                    //     this.errorMessage = 'Please select a zone';
-                    //     return;
-                    // }
+                    if (!selectedZoneValue) {
+                        this.errorMessage = 'Please select a zone';
+                        return;
+                    }
 
                     const selectedDivisionValue = this.getSelectedValue('division');
-                    // if (!selectedDivisionValue) {
-                    //     this.errorMessage = 'Please select a division';
-                    //     return;
-                    // }
+                    if (!selectedDivisionValue) {
+                        this.errorMessage = 'Please select a division';
+                        return;
+                    }
 
-                    const selectedDistrictValue = this.getSelectedValue('district');
-                    // if (!selectedDistrictValue) {
-                    //     this.errorMessage = 'Please select a district';
-                    //     return;
-                    // }
+                    const selectedDistrictValue = Array.from(document.querySelectorAll(
+                            'input[name="district"]:checked'))
+                        .map(district => district.value);
+                    if (selectedDistrictValue.length === 0) {
+                        this.errorMessage = 'Please select at least one aicenter';
+                        return;
+                    }
 
-                    const selectedBlockValue = this.getSelectedValue('block');
-                    // if (!selectedBlockValue) {
-                    //     this.errorMessage = 'Please select a block';
-                    //     return;
-                    // }
                    
 
-                    const selectedAicenters = Array.from(document.querySelectorAll(
-                            'input[name="aicenter"]:checked'))
-                        .map(aicenter => aicenter.value);
-                    // if (selectedAicenters.length === 0) {
-                    //     this.errorMessage = 'Please select at least one aicenter';
-                    //     return;
-                    // }
-
-                    axios.post('{{ route('deo-user-store-step1') }}', {
+                    axios.post('{{ route('district-Operator-store-step1') }}', {
                             zone: selectedZoneValue,
                             division: selectedDivisionValue,
                             district: selectedDistrictValue,
-                            block: selectedBlockValue,
-                            aicenters: selectedAicenters
                         })
                         .then(response => {
                             // handle success
                             console.log(response.data);
-                            window.location.href = '{{ route('deo-user-step2') }}';
+                            window.location.href = '{{ route('deo-district-user-step2') }}';
                             if (response.status === 200) {
-                                window.location.href = '{{ route('deo-user-step2') }}';
+                                window.location.href = '{{ route('deo-district-user-step2') }}';
                             }
                             // You can redirect or show a success message here
                         })

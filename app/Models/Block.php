@@ -10,6 +10,7 @@ class Block extends Model
     protected $fillable = [
         'dis_id',
         'block_name',
+        'block_hindi',
         'village_name',    
     ];
 

@@ -242,12 +242,23 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     // inventory
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
-    Route::post("deo-user-store-step1", [App\Http\Controllers\DeoUserController::class, 'createStep1'])->name('deo-user-store-step1');
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');
+    Route::post("deo-user-store-step1", [App\Http\Controllers\DeoUserController::class, 'createStep1'])->name('deo-user-store-step1');
     Route::post("deo-user-store-step2", [App\Http\Controllers\DeoUserController::class, 'createStoreStep2'])->name('deo-user-store-step2');
+    
+
+    Route::get("district-deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'districtsDeoCreate'])->name('district-deo-user-step1');
+    Route::get("deo-district-user-step2", [App\Http\Controllers\DeoUserController::class, 'createDistrictStep2'])->name('deo-district-user-step2');
+    Route::post("district-Operator-store-step1", [App\Http\Controllers\DeoUserController::class, 'createDisctrictStep2'])->name('district-Operator-store-step1');
+    Route::post("deo-district-store-step2", [App\Http\Controllers\DeoUserController::class, 'createDistrictStoreStep2'])->name('deo-district-store-step2');
+
 
     Route::get("get-divisions", [App\Http\Controllers\DeoUserController::class, 'getDivisions'])->name('get-divisions');
     Route::get("get-districts", [App\Http\Controllers\DeoUserController::class, 'getDistricts'])->name('get-districts');
+    Route::get("get-aicenter", [App\Http\Controllers\DeoUserController::class, 'getAicenter'])->name('get-aicenter');
+
+
+
     Route::get("get-blocks", [App\Http\Controllers\DeoUserController::class, 'getBlocks'])->name('get-blocks');
 
 

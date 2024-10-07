@@ -32,16 +32,16 @@ class DeoUser extends Model
 
     public function district()
     {
-        return $this->belongsTo(Districts::class);
+        return $this->belongsTo(Districts::class, 'id', 'name_eng', 'name_hindi');
     }
 
     public function block()
     {
-        return $this->belongsTo(Blockslist::class);
+        return $this->belongsTo(Block::class);
     }
 
     public function aicenter()
     {
-        return $this->belongsTo(AIcenters::class, 'aicenters_id', 'id');
+        return $this->belongsTo(Cliniclocation::class, 'aicenters_id', 'id');
     }
 }
