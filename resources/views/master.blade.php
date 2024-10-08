@@ -1156,7 +1156,7 @@ header .navbar li.nav-item.active a.nav-link {
                             </li>
                             <li class="nav-item  {{ request()->is('inventory') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('inventory') }}">
-                                    <span data-hi="इनवेंटरी" data-en="Inventory"></span></a>
+                                    <span data-hi="वस्तुसूची" data-en="Inventory"></span></a>
                             </li>
                             @endif
                             @if(auth()->user()->user_type == 'District Officer')

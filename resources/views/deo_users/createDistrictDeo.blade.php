@@ -95,7 +95,7 @@
     </style>
 
     <div x-data="deoUser()" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-4 fw-bold"> <span data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"></span> </h3>
+        <h3 class="text-center m-4 fw-bold"> <span data-hi="ज़िला ऑपरेटर आईडी बनाएं" data-en="Create District Operator ID"></span> </h3>
         <div class="custom-radio-container">
             <div class="row">
                 <div class="col-md-12">
@@ -154,21 +154,13 @@
                             <div x-show="selectedDistricts.length > 0">
                                 <h5 class="m-4 fw-bold"> <span data-hi="डिस्ट्रिक्ट चुनें" data-en="Select District"></span>
                                 </h5>
-                                <div class="custom-radio">
-                                    <label class="radio-button-container"><span data-hi="सभी चुनें" data-en="Select All"></span>
-                                        <input type="checkbox" id="allSelectDistrict" name="allSelectDistrict"
-                                            x-on:click="selectAllDistrict">
-                                        <span class="checkmarkradio"></span>
-                                    </label>
-
-                                </div>
                                 <template x-for="(district, index) in selectedDistricts" :key="index">
                                     <div class="custom-radio">
                                         <label class="radio-button-container">
                                             <span :for="'district' + district.id" :data-hi="district.name_hindi"
                                                 :data-en="district.name_eng"
                                                 x-text="localStorage.getItem('selectedProject') === 'en' ? district.name_eng : district.name_hindi"></span>
-                                            <input type="checkbox" name="district" :id="'district' + district.id"
+                                            <input type="radio" name="district" :id="'district' + district.id"
                                                 :value="district.id">
                                             <span class="checkmarkradio"></span>
                                         </label>
@@ -254,21 +246,7 @@
                         });
 
                 },
-                selectAllDistrict() {
-
-                    let selectAllDistrict1 = document.getElementById('allSelectDistrict');
-                    if (selectAllDistrict1 && !selectAllDistrict1.checked) {
-                        this.selectedDistricts.forEach(district => {
-                            let checkbox = document.getElementById('district' + district.id);
-                            checkbox.checked = false;
-                        });
-                    } else {
-                        this.selectedDistricts.forEach(district => {
-                            let checkbox = document.getElementById('district' + district.id);
-                            checkbox.checked = true;
-                        });
-                    }
-                },
+                
                 createDEOUser() {
 
                     const selectedZoneValue = this.getSelectedValue('zone');
@@ -283,13 +261,11 @@
                         return;
                     }
 
-                    const selectedDistrictValue = Array.from(document.querySelectorAll(
-                            'input[name="district"]:checked'))
-                        .map(district => district.value);
-                    if (selectedDistrictValue.length === 0) {
-                        this.errorMessage = 'Please select at least one aicenter';
-                        return;
-                    }
+                    const selectedDistrictValue = this.getSelectedValue('district');
+                    // if (selectedDistrictValue) {
+                    //     this.errorMessage = 'Please select a district';
+                    //     return;
+                    // }
 
                    
 

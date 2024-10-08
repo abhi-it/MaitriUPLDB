@@ -151,9 +151,6 @@ class DeoUserController extends Controller
             'user_type'   => 'DEO',
         ]);
 
-      
-
-
         $deoUser = DeoUser::create([
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
@@ -188,7 +185,6 @@ class DeoUserController extends Controller
 
         $role = Role::where('name', 'district-deo')->first();
         $role_id = $role ? $role->id : null;
-     
 
         $user = User::create([
             'name'        => $validatedData['username'],
@@ -197,6 +193,7 @@ class DeoUserController extends Controller
             'email'       => $validatedData['email'],
             'password'    => Hash::make($validatedData['password']),
             'division_id' => $form_step1['division'],
+            'district_id' => $form_step1['district'][0],
             'role_id'     => $role_id,
             'role'        => 'District Operator',
             'user_type'   => 'District DEO',
@@ -206,7 +203,7 @@ class DeoUserController extends Controller
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
             'division_id' => $form_step1['division'],
-            'district_id' => implode(',',$form_step1['district']),
+            'district_id' => $form_step1['district'][0],
         ]);
         session()->forget('form_step1');
         return response()->json(['status' => 200]);
