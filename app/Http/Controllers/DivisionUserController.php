@@ -90,8 +90,8 @@ class DivisionUserController extends Controller{
             'division_id' => $form_step1['division'],
             'district_id' => $form_step1['district'],
             'role_id'     => $role_id,
-            'role'        => 'division',
-            'user_type'   => 'Division',
+            'role'        => 'district',
+            'user_type'   => 'District',
         ]);
 
         $deoUser = DeoUser::create([
