@@ -36,14 +36,8 @@ class ZoneDashBoardController extends Controller{
             'getDeoUser.aicenter'
         ])->get();
 
-        
-        $districtName = [];
-        foreach ($deoUsers as $user) {
-            $districtIds = explode(',', $user['getDeoUser']['district_id']); // Get district IDs
-            $districtNames = Districts::whereIn('id', $districtIds)->get();
-            $districtName[$user->id] = $districtNames; // Use user ID as the key
-        }
-        return view('zones.zoneInventory', compact('deoUsers','districtName'));
+    
+        return view('zones.zoneInventory', compact('deoUsers'));
     }
 
     public function createDivisionUser(){
