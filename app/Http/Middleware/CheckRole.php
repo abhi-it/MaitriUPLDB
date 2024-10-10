@@ -78,7 +78,7 @@ class CheckRole
                 'division-store-data-step2',
                 'district-user-data-store',
                 'get-districts',
-            ],
+            ],    
             'zone' => [
                 'zone-dashboard',
                 'zone-inventory',
