@@ -102,7 +102,7 @@
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
-                                window.location.href = "{{ route('inventory') }}"
+                                window.location.href = "{{ route('operator-id') }}"
                             });
                         }
                     }).catch(error => {
