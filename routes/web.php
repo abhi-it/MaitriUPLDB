@@ -12,6 +12,14 @@ use App\Http\Controllers\LangController;
 use App\Http\Controllers\ZoneStockController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UpdateController;
+use App\Http\Controllers\CreateZoneController;
+use App\Http\Controllers\ZoneDashBoardController;
+use App\Http\Controllers\DivisionUserController;
+use App\Http\Controllers\DistrictUserController;
+use App\Http\Controllers\BlockUserController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -218,6 +226,35 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("filtered-monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'filteredMonthlyReport'])->name('filtered-monthly-report');
 
 
+    // zone dashboard
+    Route::get("zone-dashboard", [ZoneDashBoardController::class, 'dashboard'])->name('zone-dashboard');
+    Route::get("zone-inventory", [ZoneDashBoardController::class, 'zoneInventory'])->name('zone-inventory');
+    Route::get("create-division-user", [ZoneDashBoardController::class, 'createDivisionUser'])->name('create-division-user');
+    Route::get("division-user-step2", [ZoneDashBoardController::class, 'divisionUserStep2'])->name('division-user-step2');
+    Route::post("division-store-data", [ZoneDashBoardController::class, 'divisionStoreData'])->name('division-store-data');
+    Route::post("store-division-user-data", [ZoneDashBoardController::class, 'storeDivisionData'])->name('store-division-user-data');
+
+    // division dashboard  
+    Route::get("division-inventory", [DivisionUserController::class, 'divisionInventory'])->name('division-inventory');
+    Route::get("create-disctrict-user-form", [DivisionUserController::class, 'createDistrictUser'])->name('create-disctrict-user-form');
+    Route::get("division-store-data-step2", [DivisionUserController::class, 'divisionUserStep2'])->name('division-store-data-step2');
+    Route::post("district-store-data", [DivisionUserController::class, 'districtStoreData'])->name('district-store-data');
+    Route::post("district-user-data-store", [DivisionUserController::class, 'districtUserStoreData'])->name('district-user-data-store');
+
+    // district dashboard
+    Route::get("district-inventory", [DistrictUserController::class, 'districtInventory'])->name('district-inventory');
+    Route::get("create-block-user-form", [DistrictUserController::class, 'createBlocktUser'])->name('create-block-user-form');
+    Route::get("district-store-data-step2", [DistrictUserController::class, 'districtStoreStep2'])->name('district-store-data-step2');
+    Route::post("store-district-user-data", [DistrictUserController::class, 'storeDistrictData'])->name('store-district-user-data');
+    Route::post("district-store-user-data", [DistrictUserController::class, 'userDataDistrictStore'])->name('district-store-user-data');
+
+    // block dashboard
+    Route::get("block-inventory", [BlockUserController::class, 'blockInventory'])->name('block-inventory');
+    Route::get("create-deo-user-form", [BlockUserController::class, 'createDeoUser'])->name('create-deo-user-form');
+    Route::get("deo-store-data-step2", [BlockUserController::class, 'deoStoreDataStep2'])->name('deo-store-data-step2');
+    Route::post("store-deo-user-data", [BlockUserController::class, 'storeDeoUserData'])->name('store-deo-user-data');
+    Route::post("deo-store-user-data", [BlockUserController::class, 'deoUserDataStore'])->name('deo-store-user-data');
+    
     //farmer dashbaord
     Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');
     Route::get("service-request", [App\Http\Controllers\farmer\FarmerController::class, 'getServiceFrom'])->name('service-request');
@@ -241,16 +278,28 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     // inventory
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
+    Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
+    
+    
+    Route::get("operator-id", [App\Http\Controllers\OperatorIdController::class, 'index'])->name('operator-id');
+    
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');
     Route::post("deo-user-store-step1", [App\Http\Controllers\DeoUserController::class, 'createStep1'])->name('deo-user-store-step1');
     Route::post("deo-user-store-step2", [App\Http\Controllers\DeoUserController::class, 'createStoreStep2'])->name('deo-user-store-step2');
     
-
+    // District Operator
     Route::get("district-deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'districtsDeoCreate'])->name('district-deo-user-step1');
     Route::get("deo-district-user-step2", [App\Http\Controllers\DeoUserController::class, 'createDistrictStep2'])->name('deo-district-user-step2');
     Route::post("district-Operator-store-step1", [App\Http\Controllers\DeoUserController::class, 'createDisctrictStep2'])->name('district-Operator-store-step1');
     Route::post("deo-district-store-step2", [App\Http\Controllers\DeoUserController::class, 'createDistrictStoreStep2'])->name('deo-district-store-step2');
+
+
+    // Create Zone
+    Route::get("create-zone", [CreateZoneController::class, 'index'])->name('create-zone');
+    Route::post("zone-store-data", [CreateZoneController::class, 'zoneStoreData'])->name('zone-store-data');
+    Route::get("zone-user-create-form", [CreateZoneController::class, 'zoneUserCreateForm'])->name('zone-user-create-form');
+    Route::post("zone-user-store-data", [CreateZoneController::class, 'zoneUserCreateData'])->name('zone-user-store-data');
 
 
     Route::get("get-divisions", [App\Http\Controllers\DeoUserController::class, 'getDivisions'])->name('get-divisions');

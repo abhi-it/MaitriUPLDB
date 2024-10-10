@@ -30,9 +30,9 @@ class CheckRole
 		try {
             $userRole = auth()->user()->role;
             $currentRouteName = Route::currentRouteName();
-            //echo 'userRole=' . $userRole.'<br>';
-            //echo 'currentRouteName=' . $currentRouteName.'<br>';
-            //exit;
+            // echo 'userRole=' . $userRole.'<br>';
+            // echo 'currentRouteName=' . $currentRouteName.'<br>';
+            // exit;
 
 
             // dd($this->userAccessRole()[$userRole], $userRole, $currentRouteName);
@@ -55,6 +55,39 @@ class CheckRole
 	private function userAccessRole()
     {
         return [
+            'block' => [
+                'block-inventory',
+                'create-deo-user-form',
+                'store-deo-user-data',
+                'deo-store-data-step2',
+                'deo-store-user-data',
+                'get-aicenter'
+            ],
+            'district' => [
+                'district-inventory',
+                'create-block-user-form',
+                'store-district-user-data',
+                'district-store-data-step2',
+                'district-store-user-data',
+                'get-blocks',
+            ],
+            'division' => [
+                'division-inventory',
+                'create-disctrict-user-form',
+                'district-store-data',
+                'division-store-data-step2',
+                'district-user-data-store',
+                'get-districts',
+            ],
+            'Zone' => [
+                'zone-dashboard',
+                'zone-inventory',
+                'division-store-data',
+                'create-division-user',
+                'division-user-step2',
+                'store-division-user-data',
+                'get-divisions',
+            ],
             'User' => [
                 'dashboard',
                 'changeLang',
@@ -154,6 +187,9 @@ class CheckRole
                 'totalsessionlist',
                 'getallLiveStockData',
                 'inventory',
+                'saveInentorrData',
+                'operator-id',
+                
                 'deo-user-step1',
                 'deo-user-store-step1',
                 'deo-user-step2',
@@ -256,6 +292,9 @@ class CheckRole
                 'getallLiveStockData',
 
                 'inventory',
+                'saveInentorrData',
+
+                'operator-id',
                 'deo-user-step1',
                 'deo-user-store-step1',
                 'deo-user-step2',
@@ -267,6 +306,11 @@ class CheckRole
                 'district-Operator-store-step1',
                 'deo-district-user-step2',
                 'deo-district-store-step2',
+
+                'create-zone',
+                'zone-store-data',
+                'zone-user-create-form',
+                'zone-user-store-data',
                 
 
                 'get-divisions',

@@ -1,0 +1,33 @@
+@extends('zonesMenu')
+@section('content')
+    @php
+        $show = false;
+    @endphp
+
+
+    <style>
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: 0.25rem;
+        }
+
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+    </style>
+    
+        
+
+  
+    @endsection

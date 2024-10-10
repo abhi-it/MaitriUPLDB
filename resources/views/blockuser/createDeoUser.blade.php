@@ -1,0 +1,300 @@
+@extends('zonesMenu')
+@section('content')
+    <style>
+        .search__button {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        /* label container */
+        .radio-button-container {
+            color: rgba(0, 0, 0, 0.75);
+            display: block;
+            position: relative;
+            padding-left: 55px !important;
+            line-height: 25px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            /* margin-left: 30px; */
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio button */
+        .radio-button-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .checkmarkradio {
+            position: absolute;
+            top: 0;
+            left: 15px;
+            margin: auto;
+            bottom: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 2px solid #EA7327;
+            transition: all 0.3s;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .radio-button-container:hover input~.checkmarkradio {
+            border-color: #EA7327;
+        }
+
+        /* When the radio button is checked */
+        .radio-button-container input:checked~.checkmarkradio {
+            background-color: #EA7327;
+            border-color: #EA7327;
+        }
+
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmarkradio:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radio-button-container input:checked~.checkmarkradio:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .radio-button-container .checkmarkradio:after {
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 6px;
+            height: 13px;
+            border: solid #ffffff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .custom-radio-container {
+            max-width: 1100px;
+            margin: auto;
+        }
+    </style>
+
+    <div x-data="deoUser()" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+        <h3 class="text-center m-4 fw-bold"> <span data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"></span> </h3>
+        <div class="custom-radio-container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h5 class="m-4 fw-bold"> <span data-hi="आपका ब्जिला" data-en="Your Block"></span> </h5>
+
+                    <div x-show="errorMessage" class="alert alert-danger" role="alert" style="display: none;">
+                        <span x-text="errorMessage"></span>
+                    </div>
+                    <template x-for="(error, index) in objectErrorMessage" :key="index">
+                        <div class="alert alert-danger" role="alert">
+                            <span x-text="error"></span>
+                        </div>
+                    </template>
+
+                    <div class="row">
+                        <input type="hidden" value="{{ $zone_id }}" id="zone_id"/>
+                        <input type="hidden" value="{{ $division_id }}" id="division_id"/>
+                        <input type="hidden" value="{{ $district_id }}" id="district_id"/>
+                        <template x-for="(block, index) in blocks" :key="index">
+                            <div class="col-md-4">
+                                <div class="custom-radio">
+                                    <label class="radio-button-container">
+                                        <span :for="'block' + block.id" :data-hi="block.block_hindi" :data-en="block.block_name"
+                                            x-text="localStorage.getItem('selectedProject') === 'en' ? block.block_name : block.block_hindi"></span>
+                                        <input type="radio" class="block" name="block" :id="'block' + block.id"
+                                            :value="block.id" x-on:click="getAicenters(block.block_hindi)">
+                                        <span class="checkmarkradio"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-3 ai_center" >
+                            <p x-show="aiCenterNullMess == 0 && selectedAicenters.length == 0">No AI Centers available</p>
+                            <div x-show="selectedAicenters.length > 0">
+                                <h5 class="m-4 fw-bold"> <span data-hi="सेंटर चुनें" data-en="Select Aicenters"></span> </h5>
+                                <div class="custom-radio">
+                                    <label class="radio-button-container"><span data-hi="सभी चुनें" data-en="Select All"></span>
+                                        <input type="checkbox" id="allSelectAicenters" name="allSelectAicenters"
+                                            x-on:click="selectAllAicenters">
+                                        <span class="checkmarkradio"></span>
+                                    </label>
+
+                                </div>
+                                <template x-for="(aicenter, index) in selectedAicenters" :key="index">
+                                    <div class="custom-radio">
+                                        <label class="radio-button-container">
+                                            <span :for="'aicenter' + aicenter.id" :data-hi="aicenter.name"
+                                                :data-en="aicenter.name_eng"
+                                                x-text="localStorage.getItem('selectedProject') === 'en' ? aicenter.name_eng : aicenter.name"></span>
+                                            <input type="checkbox" name="aicenter" :id="'aicenter' + aicenter.id"
+                                                :value="aicenter.id">
+                                            <span class="checkmarkradio"></span>
+                                        </label>
+                                    </div>
+                                </template>
+                            </div>
+                            <button class="btn btn-primary mb-4" x-on:click="createDEOUser()">Create</button>
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        function deoUser() {
+            return {
+                init() {
+                    console.log(this.districts, 'this.districts');
+
+                    setInterval(() => {
+                        this.errorMessage = '';
+                        this.objectErrorMessage = {};
+                    }, 5000);
+                },
+                blocks: @json($blocks), 
+                selectedAicenters: [],
+                
+                errorMessage: '',
+                objectErrorMessage: {},
+                getAicenters(blockname) {
+                    if (!blockname) {
+                        this.aiCenterNullMess = []; // Show the null message if no blockname is given
+                        this.selectedAicenters = []; // Clear selected AICenters if blockname is not provided
+                        return false; // Exit the function
+                    }
+
+                    axios.get('{{ route('get-aicenter') }}', {
+                            params: {
+                                blockname: blockname
+                            }
+                        })
+                        .then(response => {
+
+                            console.log(response);
+
+                            this.aicenters = response.data.aicenter;
+                        
+                            let aicenters = this.aicenters.filter(aicenter => aicenter.block === blockname);
+                            console.log(aicenters,'= aicenters');
+                            this.selectedAicenters = aicenters;
+
+                            setTimeout(() => {
+                                this.selectedAicenters.forEach(aicenter => {
+                                    let checkbox = document.getElementById('aicenter' + aicenter.id);
+                                    if (checkbox) {
+                                        checkbox.checked = false;
+                                    }
+                                });
+
+                                let allSelectAicenters = document.getElementById('allSelectAicenters');
+                                if (allSelectAicenters) {
+                                    allSelectAicenters.checked = false;
+                                }
+                            }, 100);
+
+                        })
+                        .catch(error => {
+                            console.error('There was an error fetching the blocks!', error);
+                        });
+
+                    },
+                selectAllAicenters() {
+
+                    let allSelectAicenters = document.getElementById('allSelectAicenters');
+                    if (allSelectAicenters && !allSelectAicenters.checked) {
+                        this.selectedAicenters.forEach(aicenter => {
+                            let checkbox = document.getElementById('aicenter' + aicenter.id);
+                            checkbox.checked = false;
+                        });
+                    } else {
+                        this.selectedAicenters.forEach(aicenter => {
+                            let checkbox = document.getElementById('aicenter' + aicenter.id);
+                            checkbox.checked = true;
+                        });
+                    }
+                },
+                createDEOUser() {
+
+                    const zone_id = document.getElementById('zone_id').value;
+                    const division_id = document.getElementById('division_id').value;
+                    const district_id = document.getElementById('district_id').value;
+
+                    const selectedBlockValue = this.getSelectedValue('block');
+                    if (!selectedBlockValue) {
+                        this.errorMessage = 'Please select a block';
+                        return;
+                    }
+
+                    const selectedAicenters = Array.from(document.querySelectorAll(
+                            'input[name="aicenter"]:checked'))
+                        .map(aicenter => aicenter.value);
+                    // if (selectedAicenters.length === 0) {
+                    //     this.errorMessage = 'Please select at least one aicenter';
+                    //     return;
+                    // }
+
+                    
+                    axios.post('{{ route('store-deo-user-data') }}', {
+                            zone: zone_id,
+                            division: division_id,
+                            district: district_id,
+                            block: selectedBlockValue,
+                            aicenters: selectedAicenters
+                        })
+                        .then(response => {
+                            console.log(response.data);
+                            window.location.href = '{{ route('deo-store-data-step2') }}';
+                            if (response.status === 200) {
+                                window.location.href = '{{ route('deo-store-data-step2') }}';
+                            }
+                            // You can redirect or show a success message here
+                        })
+                        .catch(error => {
+                            console.log(error.response.data.errors, 'error');
+                            this.objectErrorMessage = error.response.data.errors;
+
+                            // handle error
+                            // console.error(error);
+                            // this.errorMessage = 'An error occurred while creating the DEO user. Please try again.';
+                        });
+
+                },
+                getSelectedValue(name) {
+                    const selectedRadio = document.querySelector(`input[name="${name}"]:checked`);
+                    return selectedRadio ? selectedRadio.value : null;
+                }
+
+            }
+        }
+    </script>
+@endsection

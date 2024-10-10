@@ -58,7 +58,15 @@ class LoginController extends Controller
         $passwordIs = strstr($credentials['password'], $UserKey, true);
         $credentials['password'] = base64_decode($passwordIs);
         if (Auth::attempt($credentials)) {
-            if(Auth::user()->role_id==4){
+            if(Auth::user()->role_id==9){
+                return redirect("block-inventory");
+            }else if(Auth::user()->role_id==10){
+                return redirect("district-inventory");
+            }else if(Auth::user()->role_id==8){
+                return redirect("division-inventory");
+            }else if(Auth::user()->role_id==7){
+                return redirect("zone-inventory");
+            }else if(Auth::user()->role_id==4){
                 return redirect("farmer-dashboard");
             }else if(Auth::user()->role_id==3){
                 return redirect("maitri-dashboard");
