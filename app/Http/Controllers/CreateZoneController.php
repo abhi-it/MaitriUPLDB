@@ -28,7 +28,6 @@ class CreateZoneController extends Controller
     public function zoneStoreData(Request $request){
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
-            'division' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);

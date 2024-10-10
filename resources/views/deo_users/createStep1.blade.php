@@ -391,28 +391,28 @@
                 createDEOUser() {
 
                     const selectedZoneValue = this.getSelectedValue('zone');
-                    // if (!selectedZoneValue) {
-                    //     this.errorMessage = 'Please select a zone';
-                    //     return;
-                    // }
+                    if (!selectedZoneValue) {
+                        this.errorMessage = 'Please select a zone';
+                        return;
+                    }
 
                     const selectedDivisionValue = this.getSelectedValue('division');
-                    // if (!selectedDivisionValue) {
-                    //     this.errorMessage = 'Please select a division';
-                    //     return;
-                    // }
+                    if (!selectedDivisionValue) {
+                        this.errorMessage = 'Please select a division';
+                        return;
+                    }
 
                     const selectedDistrictValue = this.getSelectedValue('district');
-                    // if (!selectedDistrictValue) {
-                    //     this.errorMessage = 'Please select a district';
-                    //     return;
-                    // }
+                    if (!selectedDistrictValue) {
+                        this.errorMessage = 'Please select a district';
+                        return;
+                    }
 
                     const selectedBlockValue = this.getSelectedValue('block');
-                    // if (!selectedBlockValue) {
-                    //     this.errorMessage = 'Please select a block';
-                    //     return;
-                    // }
+                    if (!selectedBlockValue) {
+                        this.errorMessage = 'Please select a block';
+                        return;
+                    }
                    
 
                     const selectedAicenters = Array.from(document.querySelectorAll(

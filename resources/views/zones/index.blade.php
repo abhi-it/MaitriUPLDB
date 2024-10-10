@@ -119,12 +119,17 @@
                                         <span :for="'zone' + zone.id" :data-hi="zone.name_hi" :data-en="zone.name_en"
                                             x-text="localStorage.getItem('selectedProject') === 'en' ? zone.name_en : zone.name_hi"></span>
                                         <input type="radio" class="zone_radios" name="zone" :id="'zone' + zone.id"
-                                            :value="zone.id" x-on:click="getDivisions(zone.id)">
+                                            :value="zone.id">
                                         <span class="checkmarkradio"></span>
                                     </label>
                                 </div>
                             </div>
                         </template>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary mb-4" x-on:click="createDEOUser()">Create</button>
+                        </div>
                     </div>
                 </div>
             </div>
