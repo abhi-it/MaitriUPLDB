@@ -33,7 +33,7 @@ class InventoryController extends Controller
             foreach($errors->all() as $key => $value){
                  return redirect()->back()->with('error',ucfirst($value));
             }
-        }else{
+        }else{ 
 
             $zone_id = $request->select_zone;
             $type = ( $zone_id != '' ) ? 'Zone' : '';
