@@ -52,11 +52,11 @@ class ZoneStockDetailsController extends Controller
                     ->where('aicenters_id', 0)
                     ->get();
 
+        $divisionName = '';
         foreach($divisions as $division){
             $divisionName = Divisions::where('id', $division['division_id'])->get();
+            
         }
-
-        
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
 
