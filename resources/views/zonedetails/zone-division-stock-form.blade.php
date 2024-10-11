@@ -20,6 +20,8 @@
             
             <?php 
             echo '<pre>';print_r($divisionName);
+
+            exit;
             ?>
             
             <div class="row">
