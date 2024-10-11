@@ -11,6 +11,7 @@ use App\Models\Districts;
 use Illuminate\Http\Request;
 use App\Models\Zonestock;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -21,6 +22,7 @@ class InventoryController extends Controller
     }
 
     public function zoneStoreData(Request $request){
+        $assign_user_id = Auth::user()->id;
         $validator = Validator::make($request->all(),[
             'demand_section'  => [ 'required'],
             'semen' => [ 'required'],
@@ -35,7 +37,7 @@ class InventoryController extends Controller
 
             $zone_id = $request->select_zone;
             $type = ( $zone_id != '' ) ? 'Zone' : '';
-            if($type != ''){
+            if($zone_id != ''){
 
                 $results = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->get();                
 
@@ -63,6 +65,7 @@ class InventoryController extends Controller
                     $inventory->save();
 
                     InventoryMap::create([
+                        'assign_user_id' => $assign_user_id,
                         'user_id' => $user_id,
                         'zone_id' => $zone_id,
                         'inventory_id' => $inventory->id,
