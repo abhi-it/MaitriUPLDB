@@ -27,10 +27,13 @@ class ZoneStockDetailsController extends Controller
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->get();
         
+        $zoneStock = [];
         foreach($inventoryIds as $inventoryId){
-            $zoneStock = Zonestock::where('id', $inventoryId['inventory_id'])->get();
+            $zoneStock[] = Zonestock::where('id', $inventoryId['inventory_id'])->get();
         }
-        return view('zonedetails.zonedetails', compact('zoneStock'));
+        if($zoneStock){
+            return view('zonedetails.zonedetails', compact('zoneStock'));
+        }
     }
 
     public function zoneDivisionStockForm(){
