@@ -41,6 +41,7 @@ class InventoryController extends Controller
 
                 $results = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->get();                
 
+                echo '<pre>';print_r($results);exit;
 
                 foreach($results as $result){
 
@@ -73,9 +74,12 @@ class InventoryController extends Controller
                     ]);
 
                 }
+                return redirect()->back()->with('success','Stock data submitted successfully!');
+            }else{
+                return redirect()->back()->with('success','Stock data Not Submit!');
             }
           
-            return redirect()->back()->with('success','Stock data submitted successfully!');
+            
         }
     }
 
