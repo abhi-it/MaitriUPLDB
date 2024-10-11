@@ -73,13 +73,12 @@ class ZoneStockDetailsController extends Controller
             foreach($results as $result){
                 $division_id = $result->division_id;
                 $user_id = $result->user_id;
-                $divisonData = Divisions::where('id', $division_id)->get();
-                $userData = User::where('id', $user_id)->get();
+                $divisonData = Divisions::where('id', $division_id)->first();
+                $userData = User::where('id', $user_id)->first();
                 if ($divisonData) {
-                    
-                    $result->user_name = $userData[0]['FirstName'] . ' ' . $userData[0]['LastName'];
-                    $result->division_name_eng = $divisonData[0]['name_eng'];
-                    $result->division_name_hindi = $divisonData[0]['name_hindi'];
+                    $result->user_name = $userData['FirstName'] . ' ' . $userData['LastName'];
+                    $result->division_name_eng = $divisonData['name_eng'];
+                    $result->division_name_hindi = $divisonData['name_hindi'];
                     $zoneStock[] = $result;
                 }
             }
@@ -106,9 +105,9 @@ class ZoneStockDetailsController extends Controller
             $type = ( $division_id != '' ) ? 'Division' : '';
             if($type != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->get();
-                $deoTableId = $result[0]['id'];
-                $user_id = $result[0]['user_id'];
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->first();
+                $deoTableId = $result['id'];
+                $user_id = $result['user_id'];
             }
          
             $bullIds = implode(',',$request->bull_ids);
