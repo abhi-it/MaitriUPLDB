@@ -40,21 +40,16 @@ class ZoneStockDetailsController extends Controller
 
     public function zoneDivisionStockForm(){
         $user_id = Auth::user()->id;
-        $getDatas = InventoryMap::where('user_id', $user_id)->get();
-        foreach($getDatas as $getData){
-            $zone_id = $getData['zone_id'];
-        }
-        
-        $divisions = DeoUser::where('zone_id', $zone_id)
+        $getDatas = InventoryMap::where('user_id', $user_id)->first();
+        $zone_id = $getData['zone_id'];
+        $division = DeoUser::where('zone_id', $zone_id)
                     ->where('division_id', '>', 0)
                     ->where('district_id', 0)
                     ->where('block_id', 0)
                     ->where('aicenters_id', 0)
-                    ->get();
-        $divisionName = '';
-        foreach($divisions as $division){
-            $divisionName = Divisions::where('id', $division['division_id'])->get();
-        }
+                    ->first();
+
+        $divisionName = Divisions::where('id', $division['division_id'])->get();
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
 

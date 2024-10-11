@@ -18,12 +18,6 @@
             @csrf
             <hr>
             
-            <?php 
-            echo '<pre>';print_r($divisionName);
-
-            exit;
-            ?>
-            
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
@@ -32,12 +26,10 @@
                     <input type="hidden" value="{{ $zone_id }}" name="zone_id">
                     <select name="select_division" id="select_division" class="form-control">
                         <option value="" data-hi="डिवीजन का चयन करें" data-en="Select Division"></option>
-                        <?php 
-                            foreach($divisionName as $division){
-                        ?>
-                                <option value="{{ $division['id'] }}" data-hi="{{ $division['name_hindi'] }}" data-en="{{ $division['name_eng'] }}"></option>
-                        <?php } ?>
                         
+                        @foreach ($divisionName as $division)
+                            <option value="{{ $division['id'] }}" data-hi="{{ $division['name_hindi'] }}" data-en="{{ $division['name_eng'] }}"></option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-6">
