@@ -40,9 +40,6 @@ class InventoryController extends Controller
             if($zone_id != ''){
 
                 $results = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->get();                
-
-                echo '<pre>';print_r($results);exit;
-
                 foreach($results as $result){
 
                     $deoTableId = $result['id'];
