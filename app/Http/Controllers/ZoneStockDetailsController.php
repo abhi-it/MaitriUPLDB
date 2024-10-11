@@ -51,13 +51,10 @@ class ZoneStockDetailsController extends Controller
                     ->where('block_id', 0)
                     ->where('aicenters_id', 0)
                     ->get();
-
+        $divisionName = '';
         foreach($divisions as $division){
             $divisionName = Divisions::where('id', $division['division_id'])->get();
         }
-
-        echo '<pre>';print_r($divisionName);exit;
-        
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
 
