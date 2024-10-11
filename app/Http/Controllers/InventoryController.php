@@ -39,7 +39,7 @@ class InventoryController extends Controller
             $type = ( $zone_id != '' ) ? 'Zone' : '';
             if($type != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => 0, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->first();                
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->first();                
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }
