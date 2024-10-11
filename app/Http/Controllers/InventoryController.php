@@ -37,39 +37,41 @@ class InventoryController extends Controller
             $type = ( $zone_id != '' ) ? 'Zone' : '';
             if($type != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => 0, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->get();                
-                // $deoTableId = $result[0]['id'];
-                // $user_id = $result[0]['user_id'];
+                $results = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->get();                
 
-                echo '<pre>';print_r($result);
+
+                foreach($results as $result){
+
+                    $deoTableId = $result['id'];
+                    $user_id = $result['user_id'];
+
+                    $bullIds = implode(',',$request->bull_ids);
+                    $inventory  = new Zonestock([
+                        'demand_section'        => $request->demand_section,
+                        'semen'                 => $request->semen,
+                        'semen_type'            => $request->semen_type,
+                        'banner'                => $request->banner,
+                        'dangler'               => $request->dangler,
+                        'standee'               => $request->standee,
+                        'pamphlet'              => $request->pamphlet,
+                        'ai_kit'                => $request->ai_kit,
+                        'bull_ids'              => $bullIds,
+                        'container_capacity'    =>$request->container_capacity,
+                        'container'             => $request->container,
+                        'scheme'                => $request->scheme,
+                    ]);
+                    $inventory->save();
+
+                    InventoryMap::create([
+                        'user_id' => $user_id,
+                        'zone_id' => $zone_id,
+                        'inventory_id' => $inventory->id,
+                        'deo_id' => $deoTableId
+                    ]);
+
+                }
             }
-
-            exit;
-         
-            $bullIds = implode(',',$request->bull_ids);
-            $inventory  = new Zonestock([
-                'demand_section'        => $request->demand_section,
-                'semen'                 => $request->semen,
-                'semen_type'            => $request->semen_type,
-                'banner'                => $request->banner,
-                'dangler'               => $request->dangler,
-                'standee'               => $request->standee,
-                'pamphlet'              => $request->pamphlet,
-                'ai_kit'                => $request->ai_kit,
-                'bull_ids'              => $bullIds,
-                'container_capacity'    =>$request->container_capacity,
-                'container'             => $request->container,
-                'scheme'                => $request->scheme,
-            ]);
-            $inventory->save();
-
-            InventoryMap::create([
-                'user_id' => $user_id,
-                'zone_id' => $zone_id,
-                'inventory_id' => $inventory->id,
-                'deo_id' => $deoTableId
-            ]);
-
+          
             return redirect()->back()->with('success','Stock data submitted successfully!');
         }
     }
