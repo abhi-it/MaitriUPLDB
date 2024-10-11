@@ -40,7 +40,7 @@ class ZoneStockDetailsController extends Controller
 
     public function zoneDivisionStockForm(){
         $user_id = Auth::user()->id;
-        $getDatas = InventoryMap::where('user_id', $user_id)->first();
+        $getData = InventoryMap::where('user_id', $user_id)->first();
         $zone_id = $getData['zone_id'];
         $division = DeoUser::where('zone_id', $zone_id)
                     ->where('division_id', '>', 0)
