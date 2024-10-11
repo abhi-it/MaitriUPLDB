@@ -31,12 +31,6 @@
             </thead>
             <tbody>
 
-                @if ($zoneStock->isEmpty())
-                    <tr>
-                        <td colspan="6" class="text-center">No data found</td>
-                    </tr>
-                @endif
-
                 @php $i = 1; @endphp
                 @foreach ($zoneStock as $key => $stockZone)
                     <tr>
