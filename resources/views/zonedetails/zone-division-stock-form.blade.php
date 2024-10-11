@@ -27,9 +27,9 @@
                     <select name="select_division" id="select_division" class="form-control">
                         <option value="" data-hi="डिवीजन का चयन करें" data-en="Select Division"></option>
                         
-                        @foreach ($divisionName as $division)
-                            <option value="{{ $division['id'] }}" data-hi="{{ $division['name_hindi'] }}" data-en="{{ $division['name_eng'] }}"></option>
-                        @endforeach
+                      
+                        <option value="{{ $divisionName['id'] }}" data-hi="{{ $divisionName['name_hindi'] }}" data-en="{{ $divisionName['name_eng'] }}"></option>
+                       
                     </select>
                 </div>
                 <div class="form-group col-md-6">
