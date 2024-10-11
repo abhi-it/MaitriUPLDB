@@ -45,14 +45,19 @@ class ZoneStockDetailsController extends Controller
             $zone_id = $getData['zone_id'];
         }
         
-        $division = DeoUser::where('zone_id', $zone_id)
+        $divisions = DeoUser::where('zone_id', $zone_id)
                     ->where('division_id', '>', 0)
                     ->where('district_id', 0)
                     ->where('block_id', 0)
                     ->where('aicenters_id', 0)
                     ->get();
 
-        $divisionName = Divisions::where('id', $division[0]['division_id'])->get();
+        foreach($divisions as $division){
+            $divisionName = Divisions::where('id', $division['division_id'])->get();
+        }
+
+        echo '<pre>';print_r($divisionName);exit;
+        
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
 
