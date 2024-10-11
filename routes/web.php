@@ -13,6 +13,7 @@ use App\Http\Controllers\ZoneStockController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\CreateZoneController;
+use App\Http\Controllers\ZoneStockDetailsController;
 use App\Http\Controllers\ZoneDashBoardController;
 use App\Http\Controllers\DivisionUserController;
 use App\Http\Controllers\DistrictUserController;
@@ -297,6 +298,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     // Create Zone
     Route::get("create-zone", [CreateZoneController::class, 'index'])->name('create-zone');
+    Route::get("zone-stock-details", [ZoneStockDetailsController::class, 'zoneStockDetails'])->name('zone-stock-details');
+    Route::get("division-stock-form", [ZoneStockDetailsController::class, 'zoneDivisionStockForm'])->name('division-stock-form');
+    Route::get("show-zone-stock-record", [ZoneStockDetailsController::class, 'zoneShowStockRecord'])->name('show-zone-stock-record');
+    Route::post("save-division-stock-data", [ZoneStockDetailsController::class, 'saveZoneDivisionStockForm'])->name('save-division-stock-data');
+    
     Route::post("zone-store-data", [CreateZoneController::class, 'zoneStoreData'])->name('zone-store-data');
     Route::get("zone-user-create-form", [CreateZoneController::class, 'zoneUserCreateForm'])->name('zone-user-create-form');
     Route::post("zone-user-store-data", [CreateZoneController::class, 'zoneUserCreateData'])->name('zone-user-store-data');

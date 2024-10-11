@@ -928,12 +928,45 @@ header .navbar li.nav-item.active a.nav-link {
                             <a class="nav-link" href="{{ url('zone-inventory') }}">
                                 <span data-hi="क्षेत्र वस्तुसूची" data-en="Zone Inventory"></span></a>
                         </li>
+                        <li class="nav-item  {{ request()->is('zone-stock-details') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('zone-stock-details') }}">
+                                <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('division-stock-form') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('division-stock-form') }}">
+                                <span data-hi="डिवीजन स्टॉक फॉर्म" data-en="Division Stock Form"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('show-zone-stock-record') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('show-zone-stock-record') }}">
+                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
+                        </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'Division')
                         <li class="nav-item  {{ request()->is('division-inventory') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('division-inventory') }}">
                                 <span data-hi="विभाजन वस्तुसूची" data-en="Division Inventory"></span></a>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->user_type == 'District')
+                        <li class="nav-item  {{ request()->is('district-inventory') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('district-inventory') }}">
+                                <span data-hi="जिला सूची" data-en="District Inventory"></span></a>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->user_type == 'Block')
+                        <li class="nav-item  {{ request()->is('block-inventory') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('block-inventory') }}">
+                                <span data-hi="ब्लॉक इन्वेंटरी" data-en="Block Inventory"></span></a>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->user_type == 'Deo')
+                        <li class="nav-item  {{ request()->is('deo-inventory') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('deo-inventory') }}">
+                                <span data-hi="डीओ वस्तुसूची" data-en="Deo Inventory"></span></a>
                         </li>
                         @endif
                     @endauth

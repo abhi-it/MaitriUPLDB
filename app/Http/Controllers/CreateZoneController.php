@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateZoneController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         $zones = Zone::all();
         session()->forget('form_step1');
         return view('zones.index', compact('zones'));
@@ -55,14 +54,10 @@ class CreateZoneController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
         $validatedData = $validator->validated();
-
         $form_step1 = session('form_step1');
-
         $role = Role::where('name', 'zone')->first();
         $role_id = $role ? $role->id : null;
-
         $user = User::create([
             'name'        => $validatedData['username'],
             'FirstName'   => $validatedData['username'],
@@ -73,17 +68,11 @@ class CreateZoneController extends Controller
             'role'        => 'zone',
             'user_type'   => 'Zone',
         ]);
-
         $deoUser = DeoUser::create([
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
         ]);
-
         session()->forget('form_step1');
-
         return response()->json(['status' => 200]);
     }
-
-
-
 }

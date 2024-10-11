@@ -80,6 +80,11 @@ class CheckRole
                 'get-districts',
             ],    
             'zone' => [
+                'show-zone-stock-record',
+                'save-division-stock-data',
+                'division-stock-form',
+                'zone-stock-details',
+
                 'zone-dashboard',
                 'zone-inventory',
                 'division-store-data',

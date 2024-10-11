@@ -22,4 +22,9 @@ class Zonestock extends Model
         'container_capacity',
     ];
     protected $table = 'zone_stock_details';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
