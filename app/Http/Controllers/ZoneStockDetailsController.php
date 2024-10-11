@@ -49,7 +49,7 @@ class ZoneStockDetailsController extends Controller
                     ->where('aicenters_id', 0)
                     ->first();
 
-        $divisionName = Divisions::where('id', $division['division_id'])->get();
+        $divisionName = Divisions::where('id', $division['division_id'])->first();
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
 
