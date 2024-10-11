@@ -17,6 +17,7 @@
         <form method="post" action="{{ route('save-division-stock-data') }}" class="form-comman">
             @csrf
             <hr>
+            
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
@@ -25,9 +26,12 @@
                     <input type="hidden" value="{{ $zone_id }}" name="zone_id">
                     <select name="select_division" id="select_division" class="form-control">
                         <option value="" data-hi="डिवीजन का चयन करें" data-en="Select Division"></option>
-                        @foreach ($divisionName as $division)
-                            <option value="{{ $division['id'] }}" data-hi="{{ $division['name_hindi'] }}" data-en="{{ $division['name_eng'] }}"></option>
-                        @endforeach
+                        <?php 
+                            foreach($divisionName as $division){
+                        ?>
+                                <option value="{{ $division['id'] }}" data-hi="{{ $division['name_hindi'] }}" data-en="{{ $division['name_eng'] }}"></option>
+                        <?php } ?>
+                        
                     </select>
                 </div>
                 <div class="form-group col-md-6">
