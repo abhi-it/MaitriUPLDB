@@ -37,46 +37,39 @@ class InventoryController extends Controller
 
             $zone_id = $request->select_zone;
             $type = ( $zone_id != '' ) ? 'Zone' : '';
-            if($zone_id != ''){
+            if($type != ''){
 
-                $results = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->get();                
-                foreach($results as $result){
-
-                    $deoTableId = $result['id'];
-                    $user_id = $result['user_id'];
-
-                    $bullIds = implode(',',$request->bull_ids);
-                    $inventory  = new Zonestock([
-                        'demand_section'        => $request->demand_section,
-                        'semen'                 => $request->semen,
-                        'semen_type'            => $request->semen_type,
-                        'banner'                => $request->banner,
-                        'dangler'               => $request->dangler,
-                        'standee'               => $request->standee,
-                        'pamphlet'              => $request->pamphlet,
-                        'ai_kit'                => $request->ai_kit,
-                        'bull_ids'              => $bullIds,
-                        'container_capacity'    =>$request->container_capacity,
-                        'container'             => $request->container,
-                        'scheme'                => $request->scheme,
-                    ]);
-                    $inventory->save();
-
-                    InventoryMap::create([
-                        'assign_user_id' => $assign_user_id,
-                        'user_id' => $user_id,
-                        'zone_id' => $zone_id,
-                        'inventory_id' => $inventory->id,
-                        'deo_id' => $deoTableId
-                    ]);
-
-                }
-                return redirect()->back()->with('success','Stock data submitted successfully!');
-            }else{
-                return redirect()->back()->with('success','Stock data Not Submit!');
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => 0, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->first();                
+                $deoTableId = $result['id'];
+                $user_id = $result['user_id'];
             }
-          
-            
+
+            $bullIds = implode(',',$request->bull_ids);
+            $inventory  = new Zonestock([
+                'demand_section'        => $request->demand_section,
+                'semen'                 => $request->semen,
+                'semen_type'            => $request->semen_type,
+                'banner'                => $request->banner,
+                'dangler'               => $request->dangler,
+                'standee'               => $request->standee,
+                'pamphlet'              => $request->pamphlet,
+                'ai_kit'                => $request->ai_kit,
+                'bull_ids'              => $bullIds,
+                'container_capacity'    =>$request->container_capacity,
+                'container'             => $request->container,
+                'scheme'                => $request->scheme,
+            ]);
+            $inventory->save();
+
+            InventoryMap::create([
+                'assign_user_user_id' => $assign_user_id,
+                'user_id' => $user_id,
+                'zone_id' => $zone_id,
+                'inventory_id' => $inventory->id,
+                'deo_id' => $deoTableId
+            ]);
+
+            return redirect()->back()->with('success','Stock data submitted successfully!');
         }
     }
 
