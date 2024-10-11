@@ -25,8 +25,11 @@ class ZoneStockDetailsController extends Controller
 {
     public function zoneStockDetails(){
         $user_id = Auth::user()->id;
-        $inventoryId = InventoryMap::where('user_id', $user_id)->get();
-        $zoneStock = Zonestock::where('id', $inventoryId[0]['inventory_id'])->get();
+        $inventoryIds = InventoryMap::where('user_id', $user_id)->get();
+        
+        foreach($inventoryIds as $inventoryId){
+            $zoneStock = Zonestock::where('id', $inventoryId['inventory_id'])->get();
+        }
         return view('zonedetails.zonedetails', compact('zoneStock'));
     }
 
