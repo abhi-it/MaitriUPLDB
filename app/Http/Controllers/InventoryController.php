@@ -38,8 +38,8 @@ class InventoryController extends Controller
             if($type != ''){
 
                 $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => 0, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->get();                
-                $deoTableId = $result[0]['id'];
-                $user_id = $result[0]['user_id'];
+                // $deoTableId = $result[0]['id'];
+                // $user_id = $result[0]['user_id'];
 
                 echo '<pre>';print_r($result);
             }
