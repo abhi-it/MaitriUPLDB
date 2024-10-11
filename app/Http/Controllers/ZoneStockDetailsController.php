@@ -38,9 +38,10 @@ class ZoneStockDetailsController extends Controller
         }
     }
 
-    public function zoneDivisionStockForm(){
+    public function zoneDivisionStockForm(){ 
         $user_id = Auth::user()->id;
         $getDatas = InventoryMap::where('user_id', $user_id)->get();
+        $zone_id = '';
         foreach($getDatas as $getData){
             $zone_id = $getData['zone_id'];
         }
@@ -55,7 +56,6 @@ class ZoneStockDetailsController extends Controller
         $divisionName = '';
         foreach($divisions as $division){
             $divisionName = Divisions::where('id', $division['division_id'])->get();
-            
         }
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
