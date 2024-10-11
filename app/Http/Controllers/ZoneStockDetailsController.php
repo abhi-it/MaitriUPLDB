@@ -29,9 +29,11 @@ class ZoneStockDetailsController extends Controller
         
         $zoneStock = [];
         foreach($inventoryIds as $inventoryId){
-            $zoneStock[] = Zonestock::where('id', $inventoryId['inventory_id'])->get();
+            $zoneStock = Zonestock::where('id', $inventoryId['inventory_id'])->get();
         }
         if($zoneStock){
+            return view('zonedetails.zonedetails', compact('zoneStock'));
+        }else{
             return view('zonedetails.zonedetails', compact('zoneStock'));
         }
     }
