@@ -21,6 +21,10 @@ class InventoryController extends Controller
         return view('inventory.zone-stock-form', compact('zones'));
     }
 
+    public function checkZoneUser(Request $request){
+        echo 'Hello';exit;
+    }
+
     public function zoneStoreData(Request $request){
         
         $validator = Validator::make($request->all(),[

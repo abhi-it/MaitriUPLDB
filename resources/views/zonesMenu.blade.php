@@ -947,6 +947,18 @@ header .navbar li.nav-item.active a.nav-link {
                             <a class="nav-link" href="{{ url('division-inventory') }}">
                                 <span data-hi="विभाजन वस्तुसूची" data-en="Division Inventory"></span></a>
                         </li>
+                        <li class="nav-item  {{ request()->is('division-stock-details') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('division-stock-details') }}">
+                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('show-division-stock-form') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('show-division-stock-form') }}">
+                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('divison-show-stock-record') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('divison-show-stock-record') }}">
+                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
+                        </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'District')
@@ -954,12 +966,36 @@ header .navbar li.nav-item.active a.nav-link {
                             <a class="nav-link" href="{{ url('district-inventory') }}">
                                 <span data-hi="जिला सूची" data-en="District Inventory"></span></a>
                         </li>
+                        <li class="nav-item  {{ request()->is('district-stock-details') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('district-stock-details') }}">
+                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('show-district-stock-form') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('show-district-stock-form') }}">
+                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('district-show-stock-record') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('district-show-stock-record') }}">
+                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
+                        </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'Block')
                         <li class="nav-item  {{ request()->is('block-inventory') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('block-inventory') }}">
                                 <span data-hi="ब्लॉक इन्वेंटरी" data-en="Block Inventory"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('block-stock-details') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('block-stock-details') }}">
+                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('show-block-stock-form') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('show-block-stock-form') }}">
+                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                        </li>
+                        <li class="nav-item  {{ request()->is('block-show-stock-record') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('block-show-stock-record') }}">
+                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
                         </li>
                         @endif
 

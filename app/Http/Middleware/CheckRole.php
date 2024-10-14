@@ -56,6 +56,13 @@ class CheckRole
     {
         return [
             'block' => [
+
+                'show-block-stock-form',
+                'block-save-stock-data',
+                'block-show-stock-record',
+                'block-stock-details',
+
+
                 'block-inventory',
                 'create-deo-user-form',
                 'store-deo-user-data',
@@ -64,6 +71,12 @@ class CheckRole
                 'get-aicenter'
             ],
             'district' => [
+
+                'district-stock-details',
+                'show-district-stock-form',
+                'district-save-stock-data',
+                'district-show-stock-record',
+
                 'district-inventory',
                 'create-block-user-form',
                 'store-district-user-data',
@@ -72,6 +85,12 @@ class CheckRole
                 'get-blocks',
             ],
             'division' => [
+
+                'show-division-stock-form',
+                'division-save-stock-data',
+                'divison-show-stock-record',
+                'division-stock-details',
+
                 'division-inventory',
                 'create-disctrict-user-form',
                 'district-store-data',
@@ -194,6 +213,8 @@ class CheckRole
                 'inventory',
                 'saveInentorrData',
                 'operator-id',
+
+                'check-zone-user',
                 
                 'deo-user-step1',
                 'deo-user-store-step1',
@@ -317,6 +338,7 @@ class CheckRole
                 'zone-user-create-form',
                 'zone-user-store-data',
                 
+                'check-zone-user',
 
                 'get-divisions',
                 'get-districts',

@@ -1,0 +1,68 @@
+@extends('zonesMenu')
+@section('content')
+
+<style>
+    .search__button{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    }
+</style>
+    <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+        <h3 class="text-center m-4 fw-bold">  <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span> </h3>
+
+        <table  id="myTable" class="table table-striped  table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th><span data-hi="S.No" data-en="S.No"></span></th>
+                    <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
+                    <th><span data-hi="वीर्य" data-en="Semen"></span></th>
+                    <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
+                    <th><span data-hi="बैनर" data-en="Banner"></span></th>
+                    <th> <span data-hi="कामचोर" data-en="Dangler"></span></th>
+                    <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
+                    <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
+                    <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
+                    <th> <span data-hi="पात्र" data-en="Container"></span> </th>
+                    <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
+                    <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
+                    <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @php $i = 1; @endphp
+                @foreach ($divisionStock as $key => $stockDivision)
+                    <tr>
+                        <td>{{ $i }}</td>
+                        <td>{{ $stockDivision['demand_section'] }}</td>
+                        <td>{{ $stockDivision['semen'] }}</td>
+                        <td>{{ $stockDivision['semen_type'] }}</td>
+                        <td>{{ $stockDivision['banner'] }}</td>
+                        <td>{{ $stockDivision['dangler'] }}</td>
+                        <td>{{ $stockDivision['standee'] }}</td>
+                        <td>{{ $stockDivision['pamphlet'] }}</td>
+                        <td>{{ $stockDivision['ai_kit'] }}</td>
+                        <td>{{ $stockDivision['container'] }}</td>
+                        <td>{{ $stockDivision['container_capacity'] }}</td>
+                        <td>{{ $stockDivision['scheme'] }}</td>
+                        <td>{{ $stockDivision['bull_ids'] }}</td>
+                    </tr>
+                    @php $i++ @endphp
+                @endforeach
+
+
+            </tbody>
+        </table>
+
+        <div class="row">
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script>
+
+</script>
+
+@endsection
+

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('zonesMenu')
 @section('content')
 <div class="container main-div py-5" style="background-color:white;">
         @if(session()->has('success'))
@@ -12,21 +12,23 @@
         </div>
         @endif
         <h3 class="text-center fw-bold m-4">
-        <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zones Stock Form"></span>
+        <span data-hi="ज़िला स्टॉक फॉर्म" data-en="District Stock Form"></span>
          </h3>
-        <form method="post" action="{{ route('saveInentorrData') }}" class="form-comman">
+        <form method="post" action="{{ route('district-save-stock-data') }}" class="form-comman">
             @csrf
             <hr>
+            
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
-                        <span data-hi="क्षेत्र चुनें" data-en="Select Zone"></span> 
+                        <span data-hi="जिला चुनें" data-en="Select District"></span> 
                     </label> 
-                    <select name="select_zone" id="select_zone" class="form-control">
-                        <option value="" data-hi="क्षेत्र चुनें" data-en="Select Zone"></option>
-                        @foreach ($zones as $zone)
-                            <option value="{{ $zone['id'] }}" data-hi="{{ $zone['name_hi'] }}" data-en="{{ $zone['name_en'] }}"></option>
-                        @endforeach
+                    <input type="hidden" value="{{ $zone_id }}" name="zone_id">
+                    <input type="hidden" value="{{ $division_id }}" name="division_id">
+                    <input type="hidden" value="{{ $district_id }}" name="district_id">
+                    <select name="select_block" id="select_block" class="form-control">
+                        <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
+                        <option value="{{ $blockName['id'] }}" data-hi="{{ $blockName['block_hindi'] }}" data-en="{{ $blockName['block_name'] }}"></option>  
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -142,25 +144,6 @@
 </div>
 <script>
     $(document).ready(function() {
-
-    /*$('#select_zone').on('change', function() {
-        var zone_id = $(this).val();
-        $.ajax({
-            url: '/check-zone-user',
-            method: 'GET',
-            data: {
-                zone_id: zone_id,
-            },
-            success: function(response) {
-            
-                console.log(response);
-            },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-            }
-        });
-    })*/
-
     $("body").on("click",".add-more",function(){ 
         console.log('hello user')
         var html = $(".after-add-more").first().clone();
