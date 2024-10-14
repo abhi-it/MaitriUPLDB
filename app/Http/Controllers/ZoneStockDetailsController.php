@@ -36,9 +36,7 @@ class ZoneStockDetailsController extends Controller
         $getData = DeoUser::where('user_id', $user_id)->first();
 
         $zone_id = $getData['zone_id'];
-        $division = DeoUser::where('zone_id', $zone_id)
-                    ->where('division_id', '>', 0)
-                    ->first();
+        $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
         $divisionName = Divisions::where('id', $division['division_id'])->first();
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }

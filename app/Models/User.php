@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password','user_type','role','gram_panchayat','post_office','block','tehsil',
-        'role_id','FirstName','LastName','MobileNumber','district_id','division_id','bharat_id','breeds','cattale_no'
+        'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no'
     ];
 
     /**

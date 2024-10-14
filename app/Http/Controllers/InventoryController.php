@@ -34,14 +34,13 @@ class InventoryController extends Controller
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{ 
-            $assign_user_id = Auth::user()->id;
+            
             $zone_id = $request->select_zone;
-            $type = ( $zone_id != '' ) ? 'Zone' : '';
             if($zone_id != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id])->first();  
-                $deoTableId = $result['id'];
-                $user_id = $result['user_id'];
+                $result = User::where(['zone_id' => $zone_id])->first();  
+                $deoTableId = DeoUser::where(['user_id' => $result['id']])->first();
+                $user_id = $result['id'];
             }
 
             $bullIds = implode(',',$request->bull_ids);
@@ -61,12 +60,13 @@ class InventoryController extends Controller
             ]);
             $inventory->save();
 
+            $assign_user_id = Auth::user()->id;
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,
                 'zone_id' => $zone_id,
                 'inventory_id' => $inventory->id,
-                'deo_id' => $deoTableId
+                'deo_id' => $deoTableId['id']
             ]);
 
             return redirect()->back()->with('success','Stock data submitted successfully!');

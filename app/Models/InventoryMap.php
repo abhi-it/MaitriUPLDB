@@ -8,6 +8,7 @@ class InventoryMap extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'assign_user_id',
         'user_id',
         'zone_id',
         'inventory_id',

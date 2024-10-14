@@ -67,6 +67,7 @@ class CreateZoneController extends Controller
             'role_id'     => $role_id,
             'role'        => 'zone',
             'user_type'   => 'Zone',
+            'zone_id'     => $form_step1['zone'],
         ]);
         $deoUser = DeoUser::create([
             'user_id' => $user->id,
