@@ -25,30 +25,21 @@ class ZoneStockDetailsController extends Controller
 {
     public function zoneStockDetails(){
         $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('user_id', $user_id)->get();
-        
-        $zoneStock = [];
-        foreach($inventoryIds as $inventoryId){
-            $zoneStock = Zonestock::where('id', $inventoryId['inventory_id'])->get();
-        }
-        if($zoneStock){
-            return view('zonedetails.zonedetails', compact('zoneStock'));
-        }else{
-            return view('zonedetails.zonedetails', compact('zoneStock'));
-        }
+        $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
+
+        $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        return view('zonedetails.zonedetails', compact('zoneStock'));
+  
     }
 
     public function zoneDivisionStockForm(){
         $user_id = Auth::user()->id;
-        $getData = InventoryMap::where('user_id', $user_id)->first();
+        $getData = DeoUser::where('user_id', $user_id)->first();
+
         $zone_id = $getData['zone_id'];
         $division = DeoUser::where('zone_id', $zone_id)
                     ->where('division_id', '>', 0)
-                    ->where('district_id', 0)
-                    ->where('block_id', 0)
-                    ->where('aicenters_id', 0)
                     ->first();
-
         $divisionName = Divisions::where('id', $division['division_id'])->first();
         return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
     }
@@ -99,13 +90,13 @@ class ZoneStockDetailsController extends Controller
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
-
+            $assign_user_id = Auth::user()->id;
             $zone_id = $request->zone_id;
             $division_id = $request->select_division;
             $type = ( $division_id != '' ) ? 'Division' : '';
             if($type != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => 0, 'block_id' => 0, 'aicenters_id' => 0])->first();
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id])->first();
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }
@@ -128,6 +119,7 @@ class ZoneStockDetailsController extends Controller
             $inventory->save();
 
             InventoryMap::create([
+                'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,
                 'inventory_id' => $inventory->id,
                 'deo_id' => $deoTableId

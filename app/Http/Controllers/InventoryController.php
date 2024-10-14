@@ -22,7 +22,7 @@ class InventoryController extends Controller
     }
 
     public function zoneStoreData(Request $request){
-        $assign_user_id = Auth::user()->id;
+        
         $validator = Validator::make($request->all(),[
             'demand_section'  => [ 'required'],
             'semen' => [ 'required'],
@@ -34,12 +34,15 @@ class InventoryController extends Controller
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{ 
-
+            $assign_user_id = Auth::user()->id;
             $zone_id = $request->select_zone;
             $type = ( $zone_id != '' ) ? 'Zone' : '';
-            if($type != ''){
+            if($zone_id != ''){
 
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => '', 'district_id' => '', 'block_id' => '', 'aicenters_id' => ''])->first();                
+                $result = DeoUser::where(['zone_id' => $zone_id])->first();       
+                
+                echo '<pre>';print_r($result);exit;
+                
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }
@@ -62,7 +65,7 @@ class InventoryController extends Controller
             $inventory->save();
 
             InventoryMap::create([
-                'assign_user_user_id' => $assign_user_id,
+                'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,
                 'zone_id' => $zone_id,
                 'inventory_id' => $inventory->id,
