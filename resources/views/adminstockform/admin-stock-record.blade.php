@@ -9,7 +9,7 @@
     }
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-4 fw-bold">  <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Admin Inventory Record"></span> </h3>
+        <h3 class="text-center m-4 fw-bold">  <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड"    data-en="Admin Inventory Record"></span> </h3>
 
         <table  id="myTable" class="table table-striped  table-responsive table-bordered">
             <thead>
@@ -53,7 +53,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" style="color:red;">No record found..</td>
+                        <td colspan="12" class="text-center" style="color:red;">No record found..</td>
                     </tr>
                 @endif
 
