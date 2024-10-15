@@ -1,4 +1,4 @@
-@extends('master')
+@extends('zonesMenu')
 @section('content')
 <div class="container main-div py-5" style="background-color:white;">
         @if(session()->has('success'))
@@ -12,71 +12,20 @@
         </div>
         @endif
         <h3 class="text-center fw-bold m-4">
-        <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zones Stock Form"></span>
+        <span data-hi="ब्लॉक स्टॉक फॉर्म" data-en="Block Stock Form"></span>
          </h3>
-
-         <table class="table table-striped  table-responsive table-bordered">
-            <thead>
-                <tr>
-                    <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                    <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                    <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                    <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                    <th> <span data-hi="कामचोर" data-en="Dangler"></span></th>
-                    <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                    <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                    <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                    <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                    <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                    <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                    <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @if(count($adminInventory)>0)
-                    @php
-                        $totalDemandSection = 0;
-                    @endphp
-                    @foreach ($adminInventory as $key => $stockAdmin)
-                        <tr>
-                            <td>{{ $stockAdmin->demand_section; }}</td>
-                            <td>{{ $stockAdmin->semen }}</td>
-                            <td>{{ $stockAdmin->semen_type }}</td>
-                            <td>{{ $stockAdmin->banner }}</td>
-                            <td>{{ $stockAdmin->dangler }}</td>
-                            <td>{{ $stockAdmin->standee }}</td>
-                            <td>{{ $stockAdmin->pamphlet }}</td>
-                            <td>{{ $stockAdmin->ai_kit }}</td>
-                            <td>{{ $stockAdmin->container }}</td>
-                            <td>{{ $stockAdmin->container_capacity }}</td>
-                            <td>{{ $stockAdmin->scheme }}</td>
-                            <td>{{ $stockAdmin->bull_ids }}</td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="6" style="color:red;">No record found..</td>
-                    </tr>
-                @endif
-
-            </tbody>
-        </table>
-
-
-        <form method="post" action="{{ route('saveInentorrData') }}" class="form-comman">
+        <form method="post" action="{{ route('block-request-save-form-data') }}" class="form-comman">
             @csrf
             <hr>
+            
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
-                        <span data-hi="क्षेत्र चुनें" data-en="Select Zone"></span> 
+                        <span data-hi="जिला चुनें" data-en="Select District"></span> 
                     </label> 
-                    <select name="select_zone" id="select_zone" class="form-control">
-                        <option value="" data-hi="क्षेत्र चुनें" data-en="Select Zone"></option>
-                        @foreach ($zones as $zone)
-                            <option value="{{ $zone['id'] }}" data-hi="{{ $zone['name_hi'] }}" data-en="{{ $zone['name_en'] }}"></option>
-                        @endforeach
+                    <select name="select_district" id="select_district" class="form-control">
+                        <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
+                        <option value="{{ $districtName['id'] }}" data-hi="{{ $districtName['name_hindi'] }}" data-en="{{ $districtName['name_eng'] }}"></option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -192,25 +141,6 @@
 </div>
 <script>
     $(document).ready(function() {
-
-    /*$('#select_zone').on('change', function() {
-        var zone_id = $(this).val();
-        $.ajax({
-            url: '/check-zone-user',
-            method: 'GET',
-            data: {
-                zone_id: zone_id,
-            },
-            success: function(response) {
-            
-                console.log(response);
-            },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-            }
-        });
-    })*/
-
     $("body").on("click",".add-more",function(){ 
         console.log('hello user')
         var html = $(".after-add-more").first().clone();

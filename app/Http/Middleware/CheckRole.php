@@ -55,14 +55,25 @@ class CheckRole
 	private function userAccessRole()
     {
         return [
+            'deo' => [
+                'deo-inventory',
+                'deo-stock-form',
+                'deo-save-stock-data',
+                'deo-stock-details',
+                'deo-show-stock-record',
+                'deo-request-data',
+                'deo-request-save-form-data',
+                'deo-request-record-data',
+            ],
             'block' => [
+                'block-request-data',
+                'block-request-save-form-data',
+                'block-request-record-data',
 
                 'show-block-stock-form',
                 'block-save-stock-data',
                 'block-show-stock-record',
                 'block-stock-details',
-
-
                 'block-inventory',
                 'create-deo-user-form',
                 'store-deo-user-data',
@@ -227,6 +238,10 @@ class CheckRole
                 'district-Operator-store-step1',
                 'deo-district-user-step2',
                 'deo-district-store-step2',
+
+                'admin-stock-form',
+                'admin-inventory-record',
+                'admin-stock-save-data',
             ],
 
             'Superadmin' => [
@@ -343,7 +358,10 @@ class CheckRole
                 'get-divisions',
                 'get-districts',
                 'get-blocks',
-                'get-aicenter'
+                'get-aicenter',
+                'admin-stock-form',
+                'admin-inventory-record',
+                'admin-stock-save-data',
             ],
             'Maitri' => [
                 'maitri-dashboard',

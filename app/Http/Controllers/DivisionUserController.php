@@ -100,6 +100,14 @@ class DivisionUserController extends Controller{
         return view('divisionstock.divisiondetails', compact('divisionStock'));
     }
 
+    public function districtRequestForm(){
+        $user_id = Auth::user()->id;
+        $getData = DeoUser::where('user_id', $user_id)->first();
+        $block_id = $getData['block_id'];
+        $blockName = Block::where('id', $block_id)->first();
+        return view('deostock.deo-request-form', compact('blockName'));
+    }
+
     public function divisionStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();

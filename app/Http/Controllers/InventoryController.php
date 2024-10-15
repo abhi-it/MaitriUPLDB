@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\API\Role;
 use App\Models\User;
 use App\Models\Zone;
-use App\Models\InventoryMap;
+use App\Models\InventoryMap; 
+use App\Models\RemainingStock;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use Illuminate\Http\Request;
@@ -15,15 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $zones = Zone::all();
-        return view('inventory.zone-stock-form', compact('zones'));
+        $user_id = Auth::user()->id;
+        $adminInventory = RemainingStock::where('user_id', $user_id)->get();
+        return view('inventory.zone-stock-form', compact('zones', 'adminInventory'));
     }
 
-    public function checkZoneUser(Request $request){
-        echo 'Hello';exit;
-    }
 
     public function zoneStoreData(Request $request){
         

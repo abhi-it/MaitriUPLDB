@@ -1157,6 +1157,18 @@ header .navbar li.nav-item.active a.nav-link {
                                 <a class="nav-link" href="{{ url('totalsessionlist') }}">
                                     <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
                             </li>
+
+                            <!-- Admin Stock Form Menu Start -->
+                            <li class="nav-item  {{ request()->is('admin-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-stock-form') }}">
+                                    <span data-hi="एडमिन स्टॉक फॉर्म" data-en="Admin Stock Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('admin-inventory-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-inventory-record') }}">
+                                    <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Admin Inventory Record"></span></a>
+                            </li>
+                            <!-- Admin Stock Form Menu End -->
+
                             <li class="nav-item  {{ request()->is('inventory') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('inventory') }}">
                                     <span data-hi="वस्तुसूची" data-en="Inventory"></span></a>

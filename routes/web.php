@@ -18,6 +18,7 @@ use App\Http\Controllers\ZoneDashBoardController;
 use App\Http\Controllers\DivisionUserController;
 use App\Http\Controllers\DistrictUserController;
 use App\Http\Controllers\BlockUserController;
+use App\Http\Controllers\DeoStockUserController;
 
 
 
@@ -248,6 +249,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("district-user-data-store", [DivisionUserController::class, 'districtUserStoreData'])->name('district-user-data-store');
 
     // district dashboard
+    Route::get("district-request-data", [DistrictUserController::class, 'districtRequestForm'])->name('district-request-data');
     Route::get("district-show-stock-record", [DistrictUserController::class, 'districtShowRecord'])->name('district-show-stock-record');
     Route::get("district-inventory", [DistrictUserController::class, 'districtInventory'])->name('district-inventory');
     Route::get("district-stock-details", [DistrictUserController::class, 'districtStockDetails'])->name('district-stock-details');
@@ -259,17 +261,33 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("store-district-user-data", [DistrictUserController::class, 'storeDistrictData'])->name('store-district-user-data');
     Route::post("district-store-user-data", [DistrictUserController::class, 'userDataDistrictStore'])->name('district-store-user-data');
 
-    // block dashboard 
-    Route::post("block-save-stock-data", [BlockUserController::class, 'blockStockSaveData'])->name('block-save-stock-data');
+    // block dashboard  
+    Route::get("block-request-data", [BlockUserController::class, 'blockRequestData'])->name('block-request-data');
+    Route::get("block-request-record-data", [BlockUserController::class, 'blockRequestRecord'])->name('block-request-record-data');
+    Route::post("block-request-save-form-data", [BlockUserController::class, 'blockRequestDataSave'])->name('block-request-save-form-data');
     Route::get("block-stock-details", [BlockUserController::class, 'blockStockDetails'])->name('block-stock-details');
     Route::get("show-block-stock-form", [BlockUserController::class, 'blockStockForm'])->name('show-block-stock-form');
     Route::get("block-show-stock-record", [BlockUserController::class, 'showBlockStockData'])->name('block-show-stock-record');
     Route::get("block-inventory", [BlockUserController::class, 'blockInventory'])->name('block-inventory');
     Route::get("create-deo-user-form", [BlockUserController::class, 'createDeoUser'])->name('create-deo-user-form');
     Route::get("deo-store-data-step2", [BlockUserController::class, 'deoStoreDataStep2'])->name('deo-store-data-step2');
+    Route::post("block-save-stock-data", [BlockUserController::class, 'blockStockSaveData'])->name('block-save-stock-data');
     Route::post("store-deo-user-data", [BlockUserController::class, 'storeDeoUserData'])->name('store-deo-user-data');
     Route::post("deo-store-user-data", [BlockUserController::class, 'deoUserDataStore'])->name('deo-store-user-data');
     
+    // deo dashboard
+    Route::get("deo-inventory", [DeoStockUserController::class, 'deoInventory'])->name('deo-inventory');
+    Route::get("deo-show-stock-record", [DeoStockUserController::class, 'deoStockRecord'])->name('deo-show-stock-record');
+    Route::get("deo-stock-details", [DeoStockUserController::class, 'deoStockDetaikls'])->name('deo-stock-details');
+    Route::get("deo-stock-form", [DeoStockUserController::class, 'deoStockForm'])->name('deo-stock-form');
+    Route::get("deo-request-data", [DeoStockUserController::class, 'deoRequestDataForm'])->name('deo-request-data');
+    Route::get("deo-request-record-data", [DeoStockUserController::class, 'deoRequestRecord'])->name('deo-request-record-data');
+    Route::post("deo-save-stock-data", [DeoStockUserController::class, 'deoSaveStockData'])->name('deo-save-stock-data');
+    Route::post("deo-request-save-form-data", [DeoStockUserController::class, 'deoRequestSaveData'])->name('deo-request-save-form-data');
+
+    
+    
+
     //farmer dashbaord
     Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');
     Route::get("service-request", [App\Http\Controllers\farmer\FarmerController::class, 'getServiceFrom'])->name('service-request');
@@ -292,6 +310,10 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 
     // inventory
+    Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
+    Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
+    Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
+    
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
     Route::get("check-zone-user", [App\Http\Controllers\InventoryController::class, 'checkZoneUser'])->name('check-zone-user');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');

@@ -10,6 +10,7 @@ use App\Models\Cliniclocation;
 use App\Models\Divisions;
 use App\Models\DeoUser;
 use App\Models\Districts;
+use App\Models\RequestData;
 use App\Models\Block;
 use App\Models\API\Role;
 use App\Models\Zone;
@@ -117,6 +118,77 @@ class BlockUserController extends Controller{
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
         $blockStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
         return view('blockstock.blockdetails', compact('blockStock'));
+    }
+
+    public function blockRequestData(){
+        $user_id = Auth::user()->id;
+        $getData = DeoUser::where('user_id', $user_id)->first();
+        $district_id = $getData['district_id'];
+        $districtName = Districts::where('id', $district_id)->first();
+        return view('blockstock.block-request-form', compact('districtName'));
+    }
+
+    public function blockRequestRecord(){
+        $user_id = Auth::user()->id;
+        $requestDatas= RequestData::where('request_user_id', $user_id)->get();
+        $getRecordData = [];
+        foreach($requestDatas as $requestData){
+            $inventoryData = Zonestock::where('id', $requestData['inventory_id'])->first();
+            $districtName = Districts::where('id', $requestData['request_id'])->first();
+            $userData = User::where('id', $user_id)->first();
+            $inventoryData->user_name = $userData['FirstName'];
+            $inventoryData->block_name = $districtName['name_eng'];
+            $inventoryData->block_hindi = $districtName['name_hindi'];
+            $inventoryData->status = ($requestData['status'] == 0) ? 'Pending' : 'Approved';
+            $getRecordData[] = $inventoryData;
+        }
+
+        return view('blockstock.block-request-record', compact('getRecordData'));
+    }
+
+    public function blockRequestDataSave(Request $request){
+        $validator = Validator::make($request->all(),[
+            'demand_section'  => [ 'required'],
+            'semen' => [ 'required'],
+            'semen_type' => [ 'required'],
+        ]);
+        if($validator->fails()){
+            $errors = $validator->errors();
+            foreach($errors->all() as $key => $value){
+                 return redirect()->back()->with('error',ucfirst($value));
+            }
+        }else{
+
+            $bullIds = implode(',',$request->bull_ids);
+            $inventory  = new Zonestock([
+                'demand_section'        => $request->demand_section,
+                'semen'                 => $request->semen,
+                'semen_type'            => $request->semen_type,
+                'banner'                => $request->banner,
+                'dangler'               => $request->dangler,
+                'standee'               => $request->standee,
+                'pamphlet'              => $request->pamphlet,
+                'ai_kit'                => $request->ai_kit,
+                'bull_ids'              => $bullIds,
+                'container_capacity'    =>$request->container_capacity,
+                'container'             => $request->container,
+                'scheme'                => $request->scheme,
+            ]);
+
+            $inventory->save();
+            $assign_user_id = Auth::user()->id;
+
+            $select_district = $request->select_district;
+            $user_id = Auth::user()->id;
+
+            RequestData::create([
+                'request_user_id'   => $user_id,
+                'request_id'        => $select_district,
+                'inventory_id'      => $inventory->id,
+                'status'            => 0
+            ]);
+            return redirect()->back()->with('success','Stock data submitted successfully!');
+        }
     }
 
     public function blockStockForm(){
