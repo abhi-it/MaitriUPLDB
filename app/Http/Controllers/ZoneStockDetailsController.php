@@ -8,6 +8,7 @@ use App\Models\Block;
 use App\Models\Blockslist;
 use App\Models\Cliniclocation;
 use App\Models\InventoryMap;
+use App\Models\RemainingStock;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions;
@@ -26,7 +27,8 @@ class ZoneStockDetailsController extends Controller
     public function zoneStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        // $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        $zoneStock = RemainingStock::where('user_id', $user_id)->get();
         return view('zonedetails.zonedetails', compact('zoneStock'));
   
     }
@@ -37,9 +39,22 @@ class ZoneStockDetailsController extends Controller
 
         $zone_id = $getData['zone_id'];
         $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
-        $divisionName = Divisions::where('id', $division['division_id'])->first();
-        return view('zonedetails.zone-division-stock-form', compact('divisionName','zone_id'));
+        // $divisionName = Divisions::where('id', $division['division_id'])->first();
+        $division_id = $division['division_id'];
+        $districtName = Districts::where('division_id', $division['division_id'])->get();
+        $zoneInventory = RemainingStock::where('user_id', $user_id)->get();
+        return view('zonedetails.zone-division-stock-form', compact('districtName','division_id','zone_id', 'zoneInventory', 'user_id'));
     }
+
+    public function getZoneDistrict(Request $request){
+        $zone_id = $request->zone_id;
+        $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
+        // $divisionName = Divisions::where('id', $division['division_id'])->first();
+        $division_id = $division['division_id'];
+        $districtName = Districts::where('division_id', $division['division_id'])->get();
+        return response()->json(['district' => $districtName]);
+    }
+
 
     public function zoneShowStockRecord(){
         $user_id = Auth::user()->id;
@@ -89,11 +104,11 @@ class ZoneStockDetailsController extends Controller
         }else{
             $assign_user_id = Auth::user()->id;
             $zone_id = $request->zone_id;
-            $division_id = $request->select_division;
-            $type = ( $division_id != '' ) ? 'Division' : '';
-            if($type != ''){
-
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id])->first();
+            $division_id = $request->division_id;
+            $select_district = $request->select_district;
+         
+            if($select_district != ''){
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $select_district])->first();
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }
@@ -114,6 +129,35 @@ class ZoneStockDetailsController extends Controller
                 'scheme'                => $request->scheme,
             ]);
             $inventory->save();
+
+            $remainingStock = RemainingStock::where('user_id', $assign_user_id)->first();
+            if ($remainingStock) {
+                $remainingStock->demand_section = intval($remainingStock->demand_section) - intval($request->demand_section);
+                $remainingStock->banner = intval($remainingStock->banner) - intval($request->banner);
+                $remainingStock->dangler = intval($remainingStock->dangler) - intval($request->dangler);
+                $remainingStock->standee = intval($remainingStock->standee) - intval($request->standee);
+                $remainingStock->pamphlet = intval($remainingStock->pamphlet) - intval($request->pamphlet);
+                $remainingStock->ai_kit = intval($remainingStock->ai_kit) - intval($request->ai_kit);
+                $remainingStock->container = intval($remainingStock->container) - intval($request->container);
+                $remainingStock->save();
+            }
+
+            $data = [
+                'user_id'            => $user_id,
+                'demand_section'     => $request->demand_section,
+                'semen'              => $request->semen,
+                'semen_type'         => $request->semen_type,
+                'banner'             => $request->banner,
+                'dangler'            => $request->dangler,
+                'standee'            => $request->standee,
+                'pamphlet'           => $request->pamphlet,
+                'ai_kit'             => $request->ai_kit,
+                'bull_ids'           => $bullIds,
+                'container_capacity' => $request->container_capacity,
+                'container'          => $request->container,
+                'scheme'             => $request->scheme,
+            ];
+            RemainingStock::create($data);
 
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,

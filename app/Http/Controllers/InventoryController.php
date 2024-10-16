@@ -20,7 +20,58 @@ class InventoryController extends Controller
         $zones = Zone::all();
         $user_id = Auth::user()->id;
         $adminInventory = RemainingStock::where('user_id', $user_id)->get();
-        return view('inventory.zone-stock-form', compact('zones', 'adminInventory'));
+        return view('inventory.zone-stock-form', compact('zones', 'adminInventory','user_id'));
+    }
+
+    public function checkStockLimit(){
+        $user_id = $_REQUEST['user_id'];
+        $type = $_REQUEST['type'];
+        $value = $_REQUEST['value'];
+        $remainingStock = RemainingStock::where('user_id', $user_id)->first();
+
+        if ($value !== null && $remainingStock && $type == 'demand_section') {
+            $msg = ($remainingStock['demand_section'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['demand' => $msg]);
+            return;
+        }
+
+        if ($value !== null && $remainingStock && $type == 'banner') {
+            $msg = ($remainingStock['banner'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['banner' => $msg]);
+            return;
+        }
+
+        if ($value !== null && $remainingStock && $type == 'dangler') {
+            $msg = ($remainingStock['dangler'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['dangler' => $msg]);
+            return;
+        }
+        
+        if ($value !== null && $remainingStock && $type == 'standee') {
+            $msg = ($remainingStock['standee'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['standee' => $msg]);
+            return;
+        }
+
+        if ($value !== null && $remainingStock && $type == 'pamphlet') {
+            $msg = ($remainingStock['pamphlet'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['pamphlet' => $msg]);
+            return;
+        }
+
+        if ($value !== null && $remainingStock && $type == 'ai_kit') {
+            $msg = ($remainingStock['ai_kit'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['ai_kit' => $msg]);
+            return;
+        }
+
+        if ($value !== null && $remainingStock && $type == 'container') {
+            $msg = ($remainingStock['container'] >= $value) ? '' : 'Your number is high Out of range';
+            echo json_encode(['container' => $msg]);
+            return;
+        }
+        
+
     }
 
 
@@ -40,8 +91,7 @@ class InventoryController extends Controller
             
             $zone_id = $request->select_zone;
             if($zone_id != ''){
-
-                $result = User::where(['zone_id' => $zone_id])->first();  
+                $result = User::where(['zone_id' => $zone_id])->first(); 
                 $deoTableId = DeoUser::where(['user_id' => $result['id']])->first();
                 $user_id = $result['id'];
             }
@@ -57,13 +107,42 @@ class InventoryController extends Controller
                 'pamphlet'              => $request->pamphlet,
                 'ai_kit'                => $request->ai_kit,
                 'bull_ids'              => $bullIds,
-                'container_capacity'    =>$request->container_capacity,
+                'container_capacity'    => $request->container_capacity,
                 'container'             => $request->container,
                 'scheme'                => $request->scheme,
             ]);
             $inventory->save();
 
             $assign_user_id = Auth::user()->id;
+            $remainingStock = RemainingStock::where('user_id', $assign_user_id)->first();
+            if ($remainingStock) {
+                $remainingStock->demand_section = intval($remainingStock->demand_section) - intval($request->demand_section);
+                $remainingStock->banner = intval($remainingStock->banner) - intval($request->banner);
+                $remainingStock->dangler = intval($remainingStock->dangler) - intval($request->dangler);
+                $remainingStock->standee = intval($remainingStock->standee) - intval($request->standee);
+                $remainingStock->pamphlet = intval($remainingStock->pamphlet) - intval($request->pamphlet);
+                $remainingStock->ai_kit = intval($remainingStock->ai_kit) - intval($request->ai_kit);
+                $remainingStock->container = intval($remainingStock->container) - intval($request->container);
+                $remainingStock->save();
+            }
+
+            $data = [
+                'user_id'            => $user_id,
+                'demand_section'     => $request->demand_section,
+                'semen'              => $request->semen,
+                'semen_type'         => $request->semen_type,
+                'banner'             => $request->banner,
+                'dangler'            => $request->dangler,
+                'standee'            => $request->standee,
+                'pamphlet'           => $request->pamphlet,
+                'ai_kit'             => $request->ai_kit,
+                'bull_ids'           => $bullIds,
+                'container_capacity' => $request->container_capacity,
+                'container'          => $request->container,
+                'scheme'             => $request->scheme,
+            ];
+            RemainingStock::create($data);
+            
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,

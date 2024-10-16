@@ -8,6 +8,7 @@ use App\Models\InventoryMap;
 use App\Models\Zonestock;
 use App\Models\Block;
 use App\Models\Divisions;
+use App\Models\Cliniclocation;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\API\Role;
@@ -16,6 +17,7 @@ use App\Models\API\Servicerequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\RemainingStock;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use DB;
@@ -26,21 +28,39 @@ class DistrictUserController extends Controller{
         return view('districtuser.index');
     }
 
+    public function aiCenterGet(Request $request){
+        $user_id = Auth::user()->id;
+        $zone_id = $request->zone_id;
+        $division_id = $request->division_id;
+        $district_id = $request->district_id;
+        $district = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
+        
+        $block_id = $district['block_id'];
+        $blockName = Block::where('id', $district['block_id'])->first();
+        $aiCenters = Cliniclocation::where('block', $blockName['block_hindi'])->get();
+
+        return response()->json(['aicenter' => $aiCenters]);
+    }
+
     public function createBlocktUser(){
         $user_id = Auth::user()->id;
         $data = DeoUser::where('user_id', $user_id)->first();
         $zone_id = $data['zone_id'];
         $division_id = $data['division_id'];
+        $district_id = $data['district_id'];
+        $getBlock = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
+        $block_id = $getBlock['block'];
         $districts =  Districts::where('id', $data['district_id'])->get();
         session()->forget('form_step1');
 
-        return view('districtuser.createBlockUser', compact('districts', 'zone_id', 'division_id'));
+        return view('districtuser.createBlockUser', compact('districts', 'zone_id', 'division_id', 'block_id'));
     }
 
     public function districtStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        // $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        $divisionStock = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.districtdetails', compact('divisionStock'));
     }
 
@@ -82,8 +102,12 @@ class DistrictUserController extends Controller{
         $division_id = $getData['division_id'];
         $district_id = $getData['district_id'];
         $district = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
+        $block_id = $district['block_id'];
         $blockName = Block::where('id', $district['block_id'])->first();
-        return view('districtstock.district-stock-form', compact('blockName', 'zone_id', 'division_id', 'district_id'));
+        $aiCenters = Cliniclocation::where('block', $blockName['block_hindi'])->get();
+        
+        $districtInventory = RemainingStock::where('user_id', $user_id)->get();
+        return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'block_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
     }
 
     public function districtSaveStockData(Request $request){
@@ -102,10 +126,12 @@ class DistrictUserController extends Controller{
             $zone_id = $request->zone_id;
             $division_id = $request->division_id;
             $district_id = $request->district_id;
-            $select_block = $request->select_block;
+            $district_id = $request->district_id;
+            $block_id = $request->block_id;
+            $select_aiCenter = $request->select_aiCenter;
             // $type = ( $division_id != '' ) ? 'Division' : '';
-            if($select_block != ''){
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $select_block])->first();
+            if($select_aiCenter != ''){
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id])->first();
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }
@@ -128,6 +154,37 @@ class DistrictUserController extends Controller{
 
             $inventory->save();
             $assign_user_id = Auth::user()->id;
+
+            $remainingStock = RemainingStock::where('user_id', $assign_user_id)->first();
+            if ($remainingStock) {
+                $remainingStock->demand_section = intval($remainingStock->demand_section) - intval($request->demand_section);
+                $remainingStock->banner = intval($remainingStock->banner) - intval($request->banner);
+                $remainingStock->dangler = intval($remainingStock->dangler) - intval($request->dangler);
+                $remainingStock->standee = intval($remainingStock->standee) - intval($request->standee);
+                $remainingStock->pamphlet = intval($remainingStock->pamphlet) - intval($request->pamphlet);
+                $remainingStock->ai_kit = intval($remainingStock->ai_kit) - intval($request->ai_kit);
+                $remainingStock->container = intval($remainingStock->container) - intval($request->container);
+                $remainingStock->save();
+            }
+
+            $data = [
+                'user_id'            => $user_id,
+                'demand_section'     => $request->demand_section,
+                'semen'              => $request->semen,
+                'semen_type'         => $request->semen_type,
+                'banner'             => $request->banner,
+                'dangler'            => $request->dangler,
+                'standee'            => $request->standee,
+                'pamphlet'           => $request->pamphlet,
+                'ai_kit'             => $request->ai_kit,
+                'bull_ids'           => $bullIds,
+                'container_capacity' => $request->container_capacity,
+                'container'          => $request->container,
+                'scheme'             => $request->scheme,
+            ];
+            RemainingStock::create($data);
+
+
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,
@@ -144,7 +201,8 @@ class DistrictUserController extends Controller{
             'zone' => 'required|integer',
             'division' => 'required|integer',
             'district' => 'required|integer',
-            'block' => 'required|integer',
+            'block' => 'required',
+            'aicenters' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -178,7 +236,7 @@ class DistrictUserController extends Controller{
 
         $form_step1 = session('form_step1');
 
-        $role = Role::where('name', 'block')->first();
+        $role = Role::where('name', 'deo')->first();
         $role_id = $role ? $role->id : null;
 
         $user = User::create([
@@ -190,8 +248,8 @@ class DistrictUserController extends Controller{
             'division_id' => $form_step1['division'],
             'district_id' => $form_step1['district'],
             'role_id'     => $role_id,
-            'role'        => 'block',
-            'user_type'   => 'Block',
+            'role'        => 'deo',
+            'user_type'   => 'Deo',
         ]);
 
         $deoUser = DeoUser::create([
@@ -199,6 +257,7 @@ class DistrictUserController extends Controller{
             'zone_id'       => $form_step1['zone'],
             'division_id'   => $form_step1['division'],
             'district_id' => $form_step1['district'],
+            'block_id' => $form_step1['block'],
             'block_id' => $form_step1['block'],
         ]);
         session()->forget('form_step1');

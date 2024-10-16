@@ -1,5 +1,12 @@
 @extends('master')
 @section('content')
+
+<style>
+    .errorclass{
+        font-size: 8px;
+        color: red;
+    }
+</style>
 <div class="container main-div py-5" style="background-color:white;">
         @if(session()->has('success'))
         <div class="alert alert-success">
@@ -35,9 +42,6 @@
             <tbody>
 
                 @if(count($adminInventory)>0)
-                    @php
-                        $totalDemandSection = 0;
-                    @endphp
                     @foreach ($adminInventory as $key => $stockAdmin)
                         <tr>
                             <td>{{ $stockAdmin->demand_section; }}</td>
@@ -63,7 +67,7 @@
             </tbody>
         </table>
 
-
+        <input type="hidden" name="getUserId" id="getUser_id" value="{{ $user_id }}"/>
         <form method="post" action="{{ route('saveInentorrData') }}" class="form-comman">
             @csrf
             <hr>
@@ -71,7 +75,7 @@
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
                         <span data-hi="क्षेत्र चुनें" data-en="Select Zone"></span> 
-                    </label> 
+                    </label>
                     <select name="select_zone" id="select_zone" class="form-control">
                         <option value="" data-hi="क्षेत्र चुनें" data-en="Select Zone"></option>
                         @foreach ($zones as $zone)
@@ -82,8 +86,9 @@
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span> 
+                        <span id="errorDemand" class="errorclass"></span> 
                     </label> 
-                    <input name="demand_section" id="demand_section" type="text" class="form-control"  data-placeholder-hi="तरल नाइट्रोजन (लीटर में)" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
+                    <input name="demand_section" id="demand_section" data-filed_type="demand_section" type="text" class="form-control"  data-placeholder-hi="तरल नाइट्रोजन (लीटर में)" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
@@ -118,38 +123,44 @@
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span> 
+                        <span id="errorBanner" class="errorclass"></span> 
                     </label> 
-                    <input name="banner" id="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
+                    <input name="banner" id="banner" data-filed_type="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span> 
+                        <span id="errorDangler" class="errorclass"></span>
                     </label> 
-                    <input name="dangler" id="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
+                    <input name="dangler" id="dangler" data-filed_type="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span> 
+                        <span id="errorStandee" class="errorclass"></span>
                     </label> 
-                    <input name="standee" id="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
+                    <input name="standee" id="standee" data-filed_type="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span> 
+                        <span id="errorPamphlet" class="errorclass"></span>
                     </label> 
-                    <input name="pamphlet" id="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                    <input name="pamphlet" id="pamphlet" data-filed_type="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
-                        <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span> 
+                        <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
+                        <span id="errorAiKit" class="errorclass"></span> 
                     </label> 
-                    <input name="ai_kit" id="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
+                    <input name="ai_kit" id="ai_kit" data-filed_type="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span> 
+                        <span id="errorContainer" class="errorclass"></span> 
                     </label> 
-                    <input name="container" id="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
+                    <input name="container" id="container" data-filed_type="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
@@ -190,37 +201,21 @@
                 </div>
             </div>
 </div>
+
+<script src="{{ asset('assets/js/checkRemaninngStock.js') }}"></script>
 <script>
     $(document).ready(function() {
 
-    /*$('#select_zone').on('change', function() {
-        var zone_id = $(this).val();
-        $.ajax({
-            url: '/check-zone-user',
-            method: 'GET',
-            data: {
-                zone_id: zone_id,
-            },
-            success: function(response) {
-            
-                console.log(response);
-            },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-            }
+        $("body").on("click",".add-more",function(){ 
+            console.log('hello user')
+            var html = $(".after-add-more").first().clone();
+            $(html).find(".change").html("<a class='btn btn-danger remove text-white'> Remove</a>");
+            $(".after-add-more").last().after(html);
         });
-    })*/
-
-    $("body").on("click",".add-more",function(){ 
-        console.log('hello user')
-        var html = $(".after-add-more").first().clone();
-          $(html).find(".change").html("<a class='btn btn-danger remove text-white'> Remove</a>");
-        $(".after-add-more").last().after(html);
+        $("body").on("click",".remove",function(){ 
+            $(this).parents(".after-add-more").remove();
+        });
     });
-    $("body").on("click",".remove",function(){ 
-        $(this).parents(".after-add-more").remove();
-    });
-});
 </script>
 
 @endsection 

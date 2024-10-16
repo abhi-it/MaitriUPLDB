@@ -82,7 +82,8 @@ class CheckRole
                 'get-aicenter'
             ],
             'district' => [
-
+                'ai-center-get',
+                'check-stock-limit',
                 'district-stock-details',
                 'show-district-stock-form',
                 'district-save-stock-data',
@@ -110,6 +111,8 @@ class CheckRole
                 'get-districts',
             ],    
             'zone' => [
+                'get-zone-district',
+                'check-stock-limit',
                 'show-zone-stock-record',
                 'save-division-stock-data',
                 'division-stock-form',
@@ -242,6 +245,7 @@ class CheckRole
                 'admin-stock-form',
                 'admin-inventory-record',
                 'admin-stock-save-data',
+                'check-stock-limit',
             ],
 
             'Superadmin' => [
@@ -362,6 +366,7 @@ class CheckRole
                 'admin-stock-form',
                 'admin-inventory-record',
                 'admin-stock-save-data',
+                'check-stock-limit',
             ],
             'Maitri' => [
                 'maitri-dashboard',

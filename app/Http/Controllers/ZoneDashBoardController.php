@@ -42,16 +42,19 @@ class ZoneDashBoardController extends Controller{
 
     public function createDivisionUser(){
         $user_id = Auth::user()->id;
-        $zone_id = DeoUser::where('user_id', $user_id)->get();
-        $zones =    Zone::where('id', $zone_id[0]['zone_id'])->get();
+        $zone_id = DeoUser::where('user_id', $user_id)->first();
+        $zones =    Zone::where('id', $zone_id['zone_id'])->get();
+        $division = DeoUser::where('zone_id', $zone_id['zone_id'])->where('division_id', '>', 0)->first();
+        $division_id = $division['division_id'];
         session()->forget('form_step1');
-        return view('zones.createDivisionUser', compact('zones'));
+        return view('zones.createDivisionUser', compact('zones', 'division_id'));
     }
 
     public function divisionStoreData(Request $request){
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
             'division' => 'required|integer',
+            'district' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -85,7 +88,7 @@ class ZoneDashBoardController extends Controller{
 
         $form_step1 = session('form_step1');
 
-        $role = Role::where('name', 'division')->first();
+        $role = Role::where('name', 'district')->first();
         $role_id = $role ? $role->id : null;
 
         $user = User::create([
@@ -96,15 +99,28 @@ class ZoneDashBoardController extends Controller{
             'password'    => Hash::make($validatedData['password']),
             'division_id' => $form_step1['division'],
             'role_id'     => $role_id,
-            'role'        => 'division',
-            'user_type'   => 'Division',
+            'role'        => 'district',
+            'user_type'   => 'District',
         ]);
 
-        $deoUser = DeoUser::create([
-            'user_id'       => $user->id,
-            'zone_id'       => $form_step1['zone'],
-            'division_id'   => $form_step1['division'],
-        ]);
+        // $deoUser = DeoUser::create([
+        //     'user_id'       => $user->id,
+        //     'zone_id'       => $form_step1['zone'],
+        //     'division_id'   => $form_step1['division'],
+        //     'district_id'   => $form_step1['district'],
+        // ]);
+
+        foreach($form_step1['aicenters'] as $aiCenterId){
+            $deoUser = DeoUser::create([
+                'user_id'       => $user->id,
+                'zone_id'       => $form_step1['zone'],
+                'division_id'   => $form_step1['division'],
+                'district_id' => $form_step1['district'],
+                'block_id' => $form_step1['block'],
+                'aicenters_id' => $aiCenterId,
+            ]);
+        }
+
         session()->forget('form_step1');
         return response()->json(['status' => 200]);
     }

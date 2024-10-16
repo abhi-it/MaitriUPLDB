@@ -110,7 +110,7 @@
                             <span x-text="error"></span>
                         </div>
                     </template>
-
+                    <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
                     <div class="row">
                         <template x-for="(zone, index) in zones" :key="index">
                             <div class="col-md-4">
@@ -119,7 +119,7 @@
                                         <span :for="'zone' + zone.id" :data-hi="zone.name_hi" :data-en="zone.name_en"
                                             x-text="localStorage.getItem('selectedProject') === 'en' ? zone.name_en : zone.name_hi"></span>
                                         <input type="radio" class="zone_radios" name="zone" :id="'zone' + zone.id"
-                                            :value="zone.id" x-on:click="getDivisions(zone.id)">
+                                            :value="zone.id" x-on:click="getDistrict(zone.id)">
                                         <span class="checkmarkradio"></span>
                                     </label>
                                 </div>
@@ -130,16 +130,16 @@
                     <div class="row mt-5">
 
                         <div class="col-md-3">
-                            <div x-show="selectedDivisions.length > 0">
+                            <div x-show="selectedDistrict.length > 0">
                                 <h5 class="m-4 fw-bold"> <span data-hi="डिवीशन चुनें" data-en="Select Division"></span>
                                 </h5>
-                                <template x-for="(division, index) in selectedDivisions" :key="index">
+                                <template x-for="(division, index) in selectedDistrict" :key="index">
                                     <div class="custom-radio">
                                         <label class="radio-button-container">
                                             <span :for="'division' + division.id" :data-hi="division.name_hindi"
                                                 :data-en="division.name_eng"
                                                 x-text="localStorage.getItem('selectedProject') === 'en' ? division.name_eng : division.name_hindi"></span>
-                                            <input type="radio" name="division" :id="'division' + division.id"
+                                            <input type="radio" name="district" :id="'district' + division.id"
                                                 :value="division.id">
                                             <span class="checkmarkradio"></span>
                                         </label>
@@ -173,26 +173,26 @@
                     }, 5000);
                 },
                 zones: @json($zones),
-                selectedDivisions: [],
+                selectedDistrict: [],
                 
                 
                 errorMessage: '',
                 objectErrorMessage: {},
-                getDivisions(zoneId) {
+                getDistrict(zoneId) {
 
                     console.log(zoneId, 'zoneId');
 
-                    axios.get('{{ route('get-divisions') }}', {
+                    axios.get('{{ route('get-zone-district') }}', {
                             params: {
                                 zone_id: zoneId
                             }
                         })
                         .then(response => {
-                            this.selectedDivisions = response.data.divisions;
+                            this.selectedDistrict = response.data.district;
                             setTimeout(() => {
-                                this.selectedDivisions.forEach(division => {
-                                    console.log(division, 'division');
-                                    let radio = document.getElementById('division' + division.id);
+                                this.selectedDistrict.forEach(district => {
+                                    console.log(district, 'district');
+                                    let radio = document.getElementById('district' + district.id);
                                     if (radio) {
                                         radio.checked = false;
                                     }
@@ -205,23 +205,25 @@
                 },
               
                 createDEOUser() {
-
+                    
+                    const division_id = document.getElementById('division_id').value;
                     const selectedZoneValue = this.getSelectedValue('zone');
                     if (!selectedZoneValue) {
                         this.errorMessage = 'Please select a zone';
                         return;
                     }
 
-                    const selectedDivisionValue = this.getSelectedValue('division');
+                    const selectedDivisionValue = this.getSelectedValue('district');
                     if (!selectedDivisionValue) {
-                        this.errorMessage = 'Please select a division';
+                        this.errorMessage = 'Please select a district';
                         return;
                     }
 
                     
                     axios.post('{{ route('division-store-data') }}', {
                             zone: selectedZoneValue,
-                            division: selectedDivisionValue,
+                            division: division_id,
+                            district: selectedDivisionValue,
                         })
                         .then(response => {
                             console.log(response.data);

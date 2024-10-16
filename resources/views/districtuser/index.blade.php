@@ -12,7 +12,7 @@
         <h3 class="text-center m-4 fw-bold">  <span data-hi="जिला वस्तुसूची" data-en="District Inventory"></span> </h3>
         <div class="row mb-4">
             <div class="col-md-12">
-                <a href="{{ route('create-block-user-form') }}" data-hi="ब्लॉक उपयोगकर्ता आईडी बनाएं" data-en="Create Block User ID"  class="btn btn-primary"></a>
+                <a href="{{ route('create-block-user-form') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"  class="btn btn-primary"></a>
             </div>
         </div>
 

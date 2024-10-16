@@ -203,7 +203,7 @@ class DeoUserController extends Controller
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
             'division_id' => $form_step1['division'],
-            'district_id' => $form_step1['district'][0],
+            'district_id' => $form_step1['district'],
         ]);
         session()->forget('form_step1');
         return response()->json(['status' => 200]);

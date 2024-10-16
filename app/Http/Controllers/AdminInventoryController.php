@@ -77,24 +77,36 @@ class AdminInventoryController extends Controller
             $assign_user_id = Auth::user()->id;
             $user_id = Auth::user()->id;
 
-            if($user_id){
-                $remainingData = [
-                    'user_id'               => $user_id,
-                    'demand_section'        => $request->demand_section,
-                    'semen'                 => $request->semen,
-                    'semen_type'            => $request->semen_type,
-                    'banner'                => $request->banner,
-                    'dangler'               => $request->dangler,
-                    'standee'               => $request->standee,
-                    'pamphlet'              => $request->pamphlet,
-                    'ai_kit'                => $request->ai_kit,
-                    'bull_ids'              => $bullIds,
-                    'container_capacity'    =>$request->container_capacity,
-                    'container'             => $request->container,
-                    'scheme'                => $request->scheme,
+            if ($user_id) {
+                $data = [
+                    'user_id'            => $user_id,
+                    'demand_section'     => $request->demand_section,
+                    'semen'              => $request->semen,
+                    'semen_type'         => $request->semen_type,
+                    'banner'             => $request->banner,
+                    'dangler'            => $request->dangler,
+                    'standee'            => $request->standee,
+                    'pamphlet'           => $request->pamphlet,
+                    'ai_kit'             => $request->ai_kit,
+                    'bull_ids'           => $bullIds,
+                    'container_capacity' => $request->container_capacity,
+                    'container'          => $request->container,
+                    'scheme'             => $request->scheme,
                 ];
-                $remainingStock = New RemainingStock($remainingData);
-                $remainingStock->save();
+                $remainingStock = RemainingStock::where('user_id', $user_id)->first();
+                if ($remainingStock) {
+                    $remainingStock->demand_section = intval($remainingStock->demand_section) + intval($data['demand_section']);
+                    $remainingStock->banner = intval($remainingStock->banner) + intval($data['banner']);
+                    $remainingStock->dangler = intval($remainingStock->dangler) + intval($data['dangler']);
+                    $remainingStock->standee = intval($remainingStock->standee) + intval($data['standee']);
+                    $remainingStock->pamphlet = intval($remainingStock->pamphlet) + intval($data['pamphlet']);
+                    $remainingStock->ai_kit = intval($remainingStock->ai_kit) + intval($data['ai_kit']);
+                    $remainingStock->container = intval($remainingStock->container) + intval($data['container']);
+                    $remainingStock->save();
+                } else {
+                    $remainingStock = new RemainingStock(array_merge(['user_id' => $user_id], $data));
+                    $remainingStock->save();
+                }
             }
 
             InventoryMap::create([

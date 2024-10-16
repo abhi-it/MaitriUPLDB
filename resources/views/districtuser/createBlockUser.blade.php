@@ -114,6 +114,7 @@
                     <div class="row">
                         <input type="hidden" value="{{ $zone_id }}" id="zone_id"/>
                         <input type="hidden" value="{{ $division_id }}" id="division_id"/>
+                        <input type="hidden" value="{{ $block_id }}" id="block_id"/>
                         <template x-for="(district, index) in districts" :key="index">
                             <div class="col-md-4">
                                 <div class="custom-radio">
@@ -121,7 +122,7 @@
                                         <span :for="'district' + district.id" :data-hi="district.name_hindi" :data-en="district.name_eng"
                                             x-text="localStorage.getItem('selectedProject') === 'en' ? district.name_eng : district.name_hindi"></span>
                                         <input type="radio" class="district" name="district" :id="'district' + district.id"
-                                            :value="district.id" x-on:click="getBlocks(district.id)">
+                                            :value="district.id" x-on:click="getAICenter(district.id,)">
                                         <span class="checkmarkradio"></span>
                                     </label>
                                 </div>
@@ -130,26 +131,33 @@
                     </div>
 
                     <div class="row mt-5">
-                        <div class="col-md-3">
-                            <div x-show="selectedBlocks.length > 0">
-                                <h5 class="m-4 fw-bold"> <span data-hi="ब्लॉक चुनें" data-en="Select Block"></span> </h5>
-                                <template x-for="(block, index) in selectedBlocks" :key="index">
+                        <div class="col-md-3 ai_center" >
+                            <p x-show="aiCenterNullMess == 0 && selectedAicenters.length == 0">No AI Centers available</p>
+                            <div x-show="selectedAicenters.length > 0">
+                                <h5 class="m-4 fw-bold"> <span data-hi="सेंटर चुनें" data-en="Select Aicenters"></span> </h5>
+                                <div class="custom-radio">
+                                    <label class="radio-button-container"><span data-hi="सभी चुनें" data-en="Select All"></span>
+                                        <input type="checkbox" id="allSelectAicenters" name="allSelectAicenters"
+                                            x-on:click="selectAllAicenters">
+                                        <span class="checkmarkradio"></span>
+                                    </label>
+
+                                </div>
+                                <template x-for="(aicenter, index) in selectedAicenters" :key="index">
                                     <div class="custom-radio">
                                         <label class="radio-button-container">
-                                            <span :for="'block' + block.id" :data-hi="block.block_hindi"
-                                                :data-en="block.block_name"
-                                                x-text="localStorage.getItem('selectedProject') === 'en' ? block.block_name : block.block_hindi"></span>
-                                            <input type="radio" name="block" :id="'block' + block.id"
-                                                :value="block.id" >
+                                            <span :for="'aicenter' + aicenter.id" :data-hi="aicenter.name"
+                                                :data-en="aicenter.name_eng"
+                                                x-text="localStorage.getItem('selectedProject') === 'en' ? aicenter.name_eng : aicenter.name"></span>
+                                            <input type="checkbox" name="aicenter" :id="'aicenter' + aicenter.id"
+                                                :value="aicenter.id">
                                             <span class="checkmarkradio"></span>
                                         </label>
                                     </div>
                                 </template>
                             </div>
-
                             <button class="btn btn-primary mb-4" x-on:click="createDEOUser()">Create</button>
                         </div>
-
                     </div>
 
 
@@ -173,41 +181,66 @@
                     }, 5000);
                 },
                 districts: @json($districts),
-                selectedBlocks: [],
-                
+                selectedAicenters: [],
+                aiCenterNullMess: true,
                 
                 errorMessage: '',
                 objectErrorMessage: {},
-                getBlocks(districtId) {
+                getAICenter(districtId) {
 
-                    axios.get('{{ route('get-blocks') }}', {
+                    var zone_id = document.getElementById('zone_id').value;
+                    var division_id = document.getElementById('division_id').value;
+                    axios.get('{{ route('ai-center-get') }}', {
                             params: {
-                                district_id: districtId
+                                zone_id: zone_id,
+                                district_id: districtId,
+                                division_id: division_id
                             }
                         })
                         .then(response => {
-                            this.selectedBlocks = response.data.blocks;
-                            console.log(response.data.blocks);
-                            this.selectedAicenters = [];
+                            this.aicenters = response.data.aicenter;
+
+                            let aicenters = this.aicenters.filter(aicenter => aicenter.block);
+                            this.selectedAicenters = aicenters;
 
                             setTimeout(() => {
-                                this.selectedBlocks.forEach(block => {
-                                    let radio = document.getElementById('block' + block.id);
-                                    if (radio) {
-                                        radio.checked = false;
+                                this.selectedAicenters.forEach(aicenter => {
+                                    let checkbox = document.getElementById('aicenter' + aicenter.id);
+                                    if (checkbox) {
+                                        checkbox.checked = false;
                                     }
                                 });
+
+                                let allSelectAicenters = document.getElementById('allSelectAicenters');
+                                if (allSelectAicenters) {
+                                    allSelectAicenters.checked = false;
+                                }
                             }, 100);
 
-                        })
+                            })
                         .catch(error => {
                             console.error('There was an error fetching the blocks!', error);
                         });
+                    },
+                    selectAllAicenters() {
+                        let allSelectAicenters = document.getElementById('allSelectAicenters');
+                        if (allSelectAicenters && !allSelectAicenters.checked) {
+                            this.selectedAicenters.forEach(aicenter => {
+                                let checkbox = document.getElementById('aicenter' + aicenter.id);
+                                checkbox.checked = false;
+                            });
+                        } else {
+                            this.selectedAicenters.forEach(aicenter => {
+                                let checkbox = document.getElementById('aicenter' + aicenter.id);
+                                checkbox.checked = true;
+                            });
+                        }
                     },
                 createDEOUser() {
 
                     const zone_id = document.getElementById('zone_id').value;
                     const division_id = document.getElementById('division_id').value;
+                    const block_id = document.getElementById('block_id').value;
                     
 
                     const selectedDistrictValue = this.getSelectedValue('district');
@@ -216,18 +249,18 @@
                         return;
                     }
 
-                    const selectedBlockValue = this.getSelectedValue('block');
-                    if (!selectedBlockValue) {
-                        this.errorMessage = 'Please select a block';
-                        return;
-                    }
+                    const selectedAicenters = Array.from(document.querySelectorAll(
+                            'input[name="aicenter"]:checked'))
+                        .map(aicenter => aicenter.value);
 
                     
                     axios.post('{{ route('store-district-user-data') }}', {
                             zone: zone_id,
                             division: division_id,
                             district: selectedDistrictValue,
-                            block: selectedBlockValue,
+                            block: block_id,
+                            aicenters: selectedAicenters,
+                            
                         })
                         .then(response => {
                             console.log(response.data);
@@ -235,7 +268,6 @@
                             if (response.status === 200) {
                                 window.location.href = '{{ route('district-store-data-step2') }}';
                             }
-                            // You can redirect or show a success message here
                         })
                         .catch(error => {
                             console.log(error.response.data.errors, 'error');

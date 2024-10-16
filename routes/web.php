@@ -248,7 +248,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("district-store-data", [DivisionUserController::class, 'districtStoreData'])->name('district-store-data');
     Route::post("district-user-data-store", [DivisionUserController::class, 'districtUserStoreData'])->name('district-user-data-store');
 
-    // district dashboard
+    // district dashboard 
+    Route::get("ai-center-get", [DistrictUserController::class, 'aiCenterGet'])->name('ai-center-get');
     Route::get("district-request-data", [DistrictUserController::class, 'districtRequestForm'])->name('district-request-data');
     Route::get("district-show-stock-record", [DistrictUserController::class, 'districtShowRecord'])->name('district-show-stock-record');
     Route::get("district-inventory", [DistrictUserController::class, 'districtInventory'])->name('district-inventory');
@@ -315,7 +316,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
     
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
-    Route::get("check-zone-user", [App\Http\Controllers\InventoryController::class, 'checkZoneUser'])->name('check-zone-user');
+    Route::get("check-stock-limit", [App\Http\Controllers\InventoryController::class, 'checkStockLimit'])->name('check-stock-limit');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
     
     
@@ -334,7 +335,9 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 
     // Create Zone
+
     Route::get("create-zone", [CreateZoneController::class, 'index'])->name('create-zone');
+    Route::get("get-zone-district", [ZoneStockDetailsController::class, 'getZoneDistrict'])->name('get-zone-district');
     Route::get("zone-stock-details", [ZoneStockDetailsController::class, 'zoneStockDetails'])->name('zone-stock-details');
     Route::get("division-stock-form", [ZoneStockDetailsController::class, 'zoneDivisionStockForm'])->name('division-stock-form');
     Route::get("show-zone-stock-record", [ZoneStockDetailsController::class, 'zoneShowStockRecord'])->name('show-zone-stock-record');
