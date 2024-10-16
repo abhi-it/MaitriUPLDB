@@ -11,6 +11,7 @@ use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\RequestData;
+use App\Models\RemainingStock;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -46,13 +47,14 @@ class DeoStockUserController extends Controller
                 'block_id' => $getData['block_id'],
             ];
         }
-        return view('deostock.deo-stock-form', compact('ai_centerName'));
+        $deoStock = RemainingStock::where('user_id', $user_id)->get();
+        return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock'));
     }
 
     public function deoStockDetaikls(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $deoStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        $deoStock = RemainingStock::where('user_id', $user_id)->get();
         return view('deostock.deodetails', compact('deoStock'));
     }
 

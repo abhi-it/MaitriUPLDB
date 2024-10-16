@@ -131,7 +131,7 @@ class DistrictUserController extends Controller{
             $select_aiCenter = $request->select_aiCenter;
             // $type = ( $division_id != '' ) ? 'Division' : '';
             if($select_aiCenter != ''){
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id])->first();
+                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id, 'aicenters_id' => $select_aiCenter])->first();
                 $deoTableId = $result['id'];
                 $user_id = $result['user_id'];
             }

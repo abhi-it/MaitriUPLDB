@@ -11,6 +11,57 @@
             {{ session()->get('error') }}
         </div>
         @endif
+
+
+        <h3 class="text-center fw-bold m-4">
+            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Avaiable Inventroy"></span>
+        </h3>
+
+         <table class="table table-striped  table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
+                    <th><span data-hi="वीर्य" data-en="Semen"></span></th>
+                    <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
+                    <th><span data-hi="बैनर" data-en="Banner"></span></th>
+                    <th> <span data-hi="कामचोर" data-en="Dangler"></span></th>
+                    <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
+                    <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
+                    <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
+                    <th> <span data-hi="पात्र" data-en="Container"></span> </th>
+                    <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
+                    <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
+                    <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if(count($deoStock)>0)
+                    @foreach ($deoStock as $key => $stockDeo)
+                        <tr>
+                            <td>{{ $stockDeo->demand_section; }}</td>
+                            <td>{{ $stockDeo->semen }}</td>
+                            <td>{{ $stockDeo->semen_type }}</td>
+                            <td>{{ $stockDeo->banner }}</td>
+                            <td>{{ $stockDeo->dangler }}</td>
+                            <td>{{ $stockDeo->standee }}</td>
+                            <td>{{ $stockDeo->pamphlet }}</td>
+                            <td>{{ $stockDeo->ai_kit }}</td>
+                            <td>{{ $stockDeo->container }}</td>
+                            <td>{{ $stockDeo->container_capacity }}</td>
+                            <td>{{ $stockDeo->scheme }}</td>
+                            <td>{{ $stockDeo->bull_ids }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="12" class="text-center" style="color:red;">No record found..</td>
+                    </tr>
+                @endif
+
+            </tbody>
+        </table>
+
         <h3 class="text-center fw-bold m-4">
         <span data-hi="ज़िला स्टॉक फॉर्म" data-en="Deo Stock Form"></span>
          </h3>
