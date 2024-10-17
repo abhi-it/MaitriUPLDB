@@ -79,11 +79,11 @@
                     <label for="inputEmail4"> 
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
-                    <input type="hidden" value="{{ $zone_id }}" name="zone_id">
+                    <input type="hidden" value="{{ $zone_id }}" name="zone_id" id="zone_id">
                     <input type="hidden" value="{{ $division_id }}" name="division_id">
                     <input type="hidden" value="{{ $district_id }}" name="district_id">
                     <input type="hidden" value="{{ $block_id }}" name="block_id">
-                    <select name="select_aiCenter" id="select_aiCenter" class="form-control" required>
+                    <select name="select_aiCenter" id="select_aiCenter" data-type="ai_center" class="form-control" required>
                         
                         @if(count($aiCenters)>0)
                             <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>

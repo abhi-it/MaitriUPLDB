@@ -83,6 +83,7 @@ class CheckRole
                 'get-aicenter'
             ],
             'district' => [
+                'check-zone-user',
                 'ai-center-get',
                 'check-stock-limit',
                 'district-stock-details',

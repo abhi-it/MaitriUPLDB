@@ -59,7 +59,16 @@ class AdminInventoryController extends Controller
             }else{
                 return response()->json(['type' => 'district', 'errormsg' => '']);
             }
-        }   
+        }else if($request->user_id != '' && $request->zdd_id != '' && $request->type == 'ai_center'){
+            $user_id = $request->user_id;
+            $aiCenter_id = $request->zdd_id;
+            $checkUser = DeoUser::where(['zone_id' => $user_id, 'aicenters_id' => $aiCenter_id ])->first();
+            if($checkUser == ''){
+                return response()->json(['type' => 'aiCenter', 'errormsg' => 'Please Create DEO User ID & Assign AI Center']);
+            }else{
+                return response()->json(['type' => 'aiCenter', 'errormsg' => '']);
+            }
+        } 
         
     }
 
