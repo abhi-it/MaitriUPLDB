@@ -61,7 +61,7 @@ class ZoneStockDetailsController extends Controller
         DB::enableQueryLog();
         $zoneStock = [];
         foreach($inventoryIds as $inventory){
-            $division_User_id = $inventory['user_id'];
+            $district_User_id = $inventory['user_id'];
             $inventory_id = $inventory['inventory_id'];
 
 
@@ -69,18 +69,18 @@ class ZoneStockDetailsController extends Controller
                         ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
                         ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
                         ->select('zone_stock_details.*', 'deo_users.*')
-                        ->where('inventory_map_user.user_id', $division_User_id)
+                        ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
                         ->get();
 
             foreach($results as $result){
-                $division_id = $result->division_id;
+                $district_id = $result->district_id;
                 $user_id = $result->user_id;
-                $divisonData = Divisions::where('id', $division_id)->first();
+                $districtData = Districts::where('id', $district_id)->first();
                 $userData = User::where('id', $user_id)->first();
-                if ($divisonData) {
-                    $result->user_name = $userData['FirstName'] . ' ' . $userData['LastName'];
-                    $result->division_name_eng = $divisonData['name_eng'];
-                    $result->division_name_hindi = $divisonData['name_hindi'];
+                if ($districtData) {
+                    $result->user_name = $userData['FirstName'];
+                    $result->division_name_eng = $districtData['name_eng'];
+                    $result->division_name_hindi = $districtData['name_hindi'];
                     $zoneStock[] = $result;
                 }
             }

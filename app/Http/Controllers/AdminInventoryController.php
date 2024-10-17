@@ -41,6 +41,60 @@ class AdminInventoryController extends Controller
         return view('adminstockform.admin-stock-record', compact('adminInventory'));
     }
 
+    public function checkZoneUser(Request $request){
+        if($request->user_id != '' && $request->zdd_id != '' && $request->type == 'zone'){
+            $zone_id = $request->zdd_id;
+            $checkUser = User::where('zone_id', $zone_id)->first();
+            if($checkUser == ''){
+                return response()->json(['type' => 'zone', 'errormsg' => 'Please Create Zone User ID First']);
+            }else{
+                return response()->json(['type' => 'zone', 'errormsg' => '']);
+            }
+        }else if($request->user_id != '' && $request->zdd_id != '' && $request->type == 'district'){
+            $user_id = $request->user_id;
+            $district_id = $request->zdd_id;
+            $checkUser = DeoUser::where(['zone_id' => $user_id, 'district_id' => $district_id ])->first();
+            if($checkUser == ''){
+                return response()->json(['type' => 'district', 'errormsg' => 'Please Create District User ID First']);
+            }else{
+                return response()->json(['type' => 'district', 'errormsg' => '']);
+            }
+        }   
+        
+    }
+
+    public function adminDkistributedRecord(){
+        $user_id = Auth::user()->id;
+        $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
+        $zoneStock = [];
+        foreach($inventoryIds as $inventory){
+            $district_User_id = $inventory['user_id'];
+            $inventory_id = $inventory['inventory_id'];
+
+
+            $results = DB::table('inventory_map_user')
+                        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+                        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                        ->select('zone_stock_details.*', 'deo_users.*')
+                        ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
+                        ->get();
+
+            foreach($results as $result){
+                $zone_id = $result->zone_id;
+                $user_id = $result->user_id;
+                $zoneData = Zone::where('id', $zone_id)->first();
+                $userData = User::where('id', $user_id)->first();
+                if ($zoneData) {
+                    $result->user_name = $userData['FirstName'];
+                    $result->division_name_eng = $zoneData['name_en'];
+                    $result->division_name_hindi = $zoneData['name_hi'];
+                    $zoneStock[] = $result;
+                }
+            }
+        }
+        return view('adminstockform.admin-distributed-record', compact('zoneStock'));
+    }
+
 
     public function adminStockDataSave(Request $request){
         $validator = Validator::make($request->all(),[
@@ -109,11 +163,11 @@ class AdminInventoryController extends Controller
                 }
             }
 
-            InventoryMap::create([
-                'assign_user_id' => $assign_user_id,
-                'user_id' => $user_id,
-                'inventory_id' => $inventory->id
-            ]);
+            // InventoryMap::create([
+            //     'assign_user_id' => $assign_user_id,
+            //     'user_id' => $user_id,
+            //     'inventory_id' => $inventory->id
+            // ]);
             return redirect()->back()->with('success','Stock data submitted successfully!');
         }
     }

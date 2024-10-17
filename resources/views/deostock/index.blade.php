@@ -9,7 +9,7 @@
     }
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-4 fw-bold">  <span data-hi="डीओ इन्वेंटरी" data-en="Deo Inventory"></span> </h3>
+        <h3 class="text-center m-4 fw-bold">  <span data-hi="डीईओ बनाएं" data-en="Create DEO"></span> </h3>
         <div class="row mb-4">
             <div class="col-md-12">
                 <a href="{{ route('create-deo-user-form') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"  class="btn btn-primary"></a>

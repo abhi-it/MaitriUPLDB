@@ -56,6 +56,7 @@ class CheckRole
     {
         return [
             'deo' => [
+                'create-deo-user-form',
                 'deo-inventory',
                 'deo-stock-form',
                 'deo-save-stock-data',
@@ -111,6 +112,7 @@ class CheckRole
                 'get-districts',
             ],    
             'zone' => [
+                'check-zone-user',
                 'get-zone-district',
                 'check-stock-limit',
                 'show-zone-stock-record',
@@ -229,6 +231,7 @@ class CheckRole
                 'operator-id',
 
                 'check-zone-user',
+                'admin-distributed-record',
                 
                 'deo-user-step1',
                 'deo-user-store-step1',
@@ -358,6 +361,7 @@ class CheckRole
                 'zone-user-store-data',
                 
                 'check-zone-user',
+                'admin-distributed-record',
 
                 'get-divisions',
                 'get-districts',

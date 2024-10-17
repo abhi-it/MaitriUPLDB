@@ -9,7 +9,7 @@
     }
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-4 fw-bold">  <span data-hi="क्षेत्र वस्तुसूची" data-en="Zone Inventory"></span> </h3>
+        <h3 class="text-center m-4 fw-bold">  <span data-hi="जिला बनाएं" data-en="District Create"></span> </h3>
         <div class="row mb-4">
             <div class="col-md-12">
                 <a href="{{ route('create-division-user') }}" data-hi="जिला आईडी बनाएं" data-en="Create District ID"  class="btn btn-primary"></a>

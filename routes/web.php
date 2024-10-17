@@ -310,7 +310,9 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
 
 
-    // inventory
+    // inventory 
+    Route::get("check-zone-user", [App\Http\Controllers\AdminInventoryController::class, 'checkZoneUser'])->name('check-zone-user');
+    Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
     Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
     Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');

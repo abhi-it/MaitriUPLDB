@@ -19,7 +19,7 @@
         </div>
         @endif
         <h3 class="text-center fw-bold m-4">
-            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Avaiable Inventroy"></span>
+            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventroy"></span>
         </h3>
 
          <table class="table table-striped  table-responsive table-bordered">
@@ -81,8 +81,8 @@
                     <label for="inputEmail4"> 
                         <span data-hi="जिला चुनें" data-en="Select District"></span> 
                     </label> 
-                    <input type="hidden" value="{{ $zone_id }}" name="zone_id">
-                    <select name="select_district" id="select_district" class="form-control">
+                    <input type="hidden" value="{{ $zone_id }}" id="zone_id" name="zone_id">
+                    <select name="select_district" id="select_district" data-type="district" class="form-control">
                         <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
                         @foreach($districtName as $district)
                         <option value="{{ $district['id'] }}" data-hi="{{ $district['name_hindi'] }}" data-en="{{ $district['name_eng'] }}"></option>
@@ -207,6 +207,7 @@
                 </div>
             </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('assets/js/checkRemaninngStock.js') }}"></script>
 <script>
     $(document).ready(function() {

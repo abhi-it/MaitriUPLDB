@@ -19,7 +19,7 @@
         </div>
         @endif
         <h3 class="text-center fw-bold m-4">
-        <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zones Stock Form"></span>
+            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventroy"></span>
          </h3>
 
          <table class="table table-striped  table-responsive table-bordered">
@@ -66,6 +66,9 @@
 
             </tbody>
         </table>
+        <h3 class="text-center fw-bold m-4">
+            <span data-hi="वितरण प्रपत्र" data-en="Distribution form"></span>
+         </h3>
 
         <input type="hidden" name="getUserId" id="getUser_id" value="{{ $user_id }}"/>
         <form method="post" action="{{ route('saveInentorrData') }}" class="form-comman">
@@ -76,7 +79,7 @@
                     <label for="inputEmail4"> 
                         <span data-hi="क्षेत्र चुनें" data-en="Select Zone"></span> 
                     </label>
-                    <select name="select_zone" id="select_zone" class="form-control">
+                    <select name="select_zone" id="select_zone" data-type="zone" class="form-control">
                         <option value="" data-hi="क्षेत्र चुनें" data-en="Select Zone"></option>
                         @foreach ($zones as $zone)
                             <option value="{{ $zone['id'] }}" data-hi="{{ $zone['name_hi'] }}" data-en="{{ $zone['name_en'] }}"></option>
@@ -202,6 +205,7 @@
             </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('assets/js/checkRemaninngStock.js') }}"></script>
 <script>
     $(document).ready(function() {

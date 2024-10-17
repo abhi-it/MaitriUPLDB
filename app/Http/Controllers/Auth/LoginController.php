@@ -59,7 +59,7 @@ class LoginController extends Controller
         $credentials['password'] = base64_decode($passwordIs);
         if (Auth::attempt($credentials)) {
             if(Auth::user()->role_id == 5){
-                return redirect("deo-inventory");
+                return redirect("deo-stock-details");
             }else if(Auth::user()->role_id==9){
                 return redirect("block-inventory");
             }else if(Auth::user()->role_id==10){

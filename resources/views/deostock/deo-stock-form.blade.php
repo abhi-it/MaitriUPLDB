@@ -14,7 +14,7 @@
 
 
         <h3 class="text-center fw-bold m-4">
-            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Avaiable Inventroy"></span>
+            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventroy"></span>
         </h3>
 
          <table class="table table-striped  table-responsive table-bordered">
@@ -63,7 +63,7 @@
         </table>
 
         <h3 class="text-center fw-bold m-4">
-        <span data-hi="ज़िला स्टॉक फॉर्म" data-en="Deo Stock Form"></span>
+        <span data-hi="वितरण प्रपत्र" data-en="Distribution form"></span>
          </h3>
         <form method="post" action="{{ route('deo-save-stock-data') }}" class="form-comman">
             @csrf
@@ -75,7 +75,7 @@
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
                     
-                    <select name="select_aicenter" id="select_aicenter" class="form-control">
+                    <select name="select_aicenter" id="select_aicenter" class="form-control" required>
                         <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
                         @foreach($ai_centerName as $aiCenterName)
                             <option value="{{ $aiCenterName['id'] }}" data-hi="{{ $aiCenterName['name_hindi'] }}" data-en="{{ $aiCenterName['name_eng'] }}"></option>

@@ -924,123 +924,123 @@ header .navbar li.nav-item.active a.nav-link {
                 @if (Route::has('login'))
                     @auth
                         @if (auth()->user()->user_type == 'Zone')
-                        <li class="nav-item  {{ request()->is('zone-inventory') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('zone-inventory') }}">
-                                <span data-hi="क्षेत्र वस्तुसूची" data-en="Zone Inventory"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('zone-stock-details') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('zone-stock-details') }}">
-                                <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('division-stock-form') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('division-stock-form') }}">
-                                <span data-hi="डिवीजन स्टॉक फॉर्म" data-en="Division Stock Form"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('show-zone-stock-record') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('show-zone-stock-record') }}">
-                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
-                        </li>
+                            <li class="nav-item  {{ request()->is('zone-inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('zone-inventory') }}">
+                                    <span data-hi="जिला बनाएं" data-en="District Create"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('zone-stock-details') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('zone-stock-details') }}">
+                                    <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('division-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('division-stock-form') }}">
+                                    <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('show-zone-stock-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('show-zone-stock-record') }}">
+                                    <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
+                            </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'Division')
-                        <li class="nav-item  {{ request()->is('division-inventory') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('division-inventory') }}">
-                                <span data-hi="विभाजन वस्तुसूची" data-en="Division Inventory"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('division-stock-details') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('division-stock-details') }}">
-                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('show-division-stock-form') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('show-division-stock-form') }}">
-                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('divison-show-stock-record') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('divison-show-stock-record') }}">
-                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
-                        </li>
+                            <li class="nav-item  {{ request()->is('division-inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('division-inventory') }}">
+                                    <span data-hi="विभाजन वस्तुसूची" data-en="Division Inventory"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('division-stock-details') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('division-stock-details') }}">
+                                    <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('show-division-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('show-division-stock-form') }}">
+                                    <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('divison-show-stock-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('divison-show-stock-record') }}">
+                                    <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
+                            </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'District')
-                        <li class="nav-item  {{ request()->is('district-inventory') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('district-inventory') }}">
-                                <span data-hi="जिला सूची" data-en="District Inventory"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('district-stock-details') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('district-stock-details') }}">
-                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('show-district-stock-form') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('show-district-stock-form') }}">
-                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('district-show-stock-record') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('district-show-stock-record') }}">
-                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
-                        </li>
+                            <li class="nav-item  {{ request()->is('district-inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('district-inventory') }}">
+                                    <span data-hi="जिला सूची" data-en="District Inventory"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('district-stock-details') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('district-stock-details') }}">
+                                    <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('show-district-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('show-district-stock-form') }}">
+                                    <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('district-show-stock-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('district-show-stock-record') }}">
+                                    <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
+                            </li>
 
-                        <!-- <li class="nav-item  {{ request()->is('district-request-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('district-request-data') }}">
-                                <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('district-request-record-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('district-request-record-data') }}">
-                                <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
-                        </li> -->
+                            <!-- <li class="nav-item  {{ request()->is('district-request-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('district-request-data') }}">
+                                    <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('district-request-record-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('district-request-record-data') }}">
+                                    <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
+                            </li> -->
                         @endif
 
                         @if (auth()->user()->user_type == 'Block')
-                        <li class="nav-item  {{ request()->is('block-inventory') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('block-inventory') }}">
-                                <span data-hi="ब्लॉक इन्वेंटरी" data-en="Block Inventory"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('block-stock-details') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('block-stock-details') }}">
-                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('show-block-stock-form') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('show-block-stock-form') }}">
-                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('block-show-stock-record') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('block-show-stock-record') }}">
-                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
-                        </li>
-                        <!-- <li class="nav-item  {{ request()->is('block-request-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('block-request-data') }}">
-                                <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('block-request-record-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('block-request-record-data') }}">
-                                <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
-                        </li> -->
+                            <li class="nav-item  {{ request()->is('block-inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('block-inventory') }}">
+                                    <span data-hi="ब्लॉक इन्वेंटरी" data-en="Block Inventory"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('block-stock-details') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('block-stock-details') }}">
+                                    <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('show-block-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('show-block-stock-form') }}">
+                                    <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('block-show-stock-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('block-show-stock-record') }}">
+                                    <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
+                            </li>
+                            <!-- <li class="nav-item  {{ request()->is('block-request-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('block-request-data') }}">
+                                    <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('block-request-record-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('block-request-record-data') }}">
+                                    <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
+                            </li> -->
                         @endif
 
                         @if (auth()->user()->user_type == 'Deo')
-                        <li class="nav-item  {{ request()->is('deo-inventory') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-inventory') }}">
-                                <span data-hi="डीओ वस्तुसूची" data-en="Deo Inventory"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('deo-stock-details') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-stock-details') }}">
-                                <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('deo-stock-form') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-stock-form') }}">
-                                <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('deo-show-stock-record') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-show-stock-record') }}">
-                                <span data-hi="स्टॉक रिकॉर्ड" data-en="Stock Record"></span></a>
-                        </li>
-                        <!-- <li class="nav-item  {{ request()->is('deo-request-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-request-data') }}">
-                                <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
-                        </li>
-                        <li class="nav-item  {{ request()->is('deo-request-record-data') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ url('deo-request-record-data') }}">
-                                <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
-                        </li> -->
+                            <!-- <li class="nav-item  {{ request()->is('deo-inventory') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-inventory') }}">
+                                    <span data-hi="डीईओ बनाएं" data-en="Create DEO"></span></a>
+                            </li> -->
+                            <li class="nav-item  {{ request()->is('deo-stock-details') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-stock-details') }}">
+                                    <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('deo-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-stock-form') }}">
+                                    <span data-hi="वितरण प्रपत्र" data-en="Distribution Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('deo-show-stock-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-show-stock-record') }}">
+                                    <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
+                            </li>
+                            <!-- <li class="nav-item  {{ request()->is('deo-request-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-request-data') }}">
+                                    <span data-hi="डेटा का अनुरोध करें" data-en="Request Data"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('deo-request-record-data') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('deo-request-record-data') }}">
+                                    <span data-hi="अनुरोध अभिलेख" data-en="Request Record"></span></a>
+                            </li> -->
                         @endif
                     @endauth
                 @endif

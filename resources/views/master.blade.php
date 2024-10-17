@@ -1167,6 +1167,10 @@ header .navbar li.nav-item.active a.nav-link {
                                 <a class="nav-link" href="{{ url('admin-inventory-record') }}">
                                     <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Admin Inventory Record"></span></a>
                             </li>
+                            <li class="nav-item  {{ request()->is('admin-distributed-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-distributed-record') }}">
+                                    <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Distributed Record"></span></a>
+                            </li>
                             <!-- Admin Stock Form Menu End -->
 
                             <li class="nav-item  {{ request()->is('inventory') ? 'active' : '' }}">

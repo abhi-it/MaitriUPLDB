@@ -1,4 +1,4 @@
-@extends('zonesMenu')
+@extends('master')
 @section('content')
 
 <style>
@@ -16,7 +16,7 @@
                 <tr>
                     <th><span data-hi="S.No" data-en="S.No"></span></th>
                     <th><span data-hi="उपयोगकर्ता नाम" data-en="UserName"></span></th>
-                    <th><span data-hi="ज़िला" data-en="District"></span></th>
+                    <th><span data-hi="क्षेत्र" data-en="Zone"></span></th>
                     <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
                     <th><span data-hi="वीर्य" data-en="Semen"></span></th>
                     <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
