@@ -131,7 +131,7 @@
 
                         <div class="col-md-3">
                             <div x-show="selectedDistrict.length > 0">
-                                <h5 class="m-4 fw-bold"> <span data-hi="डिवीशन चुनें" data-en="Select Division"></span>
+                                <h5 class="m-4 fw-bold"> <span data-hi="ज़िला चुनें" data-en="Select District"></span>
                                 </h5>
                                 <template x-for="(division, index) in selectedDistrict" :key="index">
                                     <div class="custom-radio">
