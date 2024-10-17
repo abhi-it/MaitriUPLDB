@@ -84,8 +84,11 @@
                     <input type="hidden" value="{{ $zone_id }}" id="zone_id" name="zone_id">
                     <select name="select_district" id="select_district" data-type="district" class="form-control">
                         <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
-                        @foreach($districtName as $district)
-                        <option value="{{ $district['id'] }}" data-hi="{{ $district['name_hindi'] }}" data-en="{{ $district['name_eng'] }}"></option>
+                        @foreach($districtName as $districts)
+                            @foreach($districts as $district)
+                                <option value="{{ $district['id'] }}" data-hi="{{ $district['name_hindi'] }}" data-en="{{ $district['name_eng'] }}"></option>
+                        
+                            @endforeach
                         @endforeach
                     </select>
                 </div>

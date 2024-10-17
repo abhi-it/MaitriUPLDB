@@ -40,7 +40,15 @@ class ZoneStockDetailsController extends Controller
         $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
         // $divisionName = Divisions::where('id', $division['division_id'])->first();
         $division_id = $division['division_id'];
-        $districtName = Districts::where('division_id', $division['division_id'])->get();
+
+        $getDivisionIds = Divisions::where('zone_id',  $zone_id)->get();
+        $districtName =[];
+        foreach($getDivisionIds as $getDivisionId){
+            $division_id = $getDivisionId['id'];
+            $district = Districts::where('division_id', $division_id)->get();
+            $districtName[]=$district;
+        }
+        // $districtName = Districts::where('division_id', $division['division_id'])->get();
         $zoneInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('zonedetails.zone-division-stock-form', compact('districtName','division_id','zone_id', 'zoneInventory', 'user_id'));
     }
