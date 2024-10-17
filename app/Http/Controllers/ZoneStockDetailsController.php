@@ -39,9 +39,10 @@ class ZoneStockDetailsController extends Controller
 
         echo '<pre>';print_r($getData);
 
-        $zone_id = $getData['zone_id'];
+        // $zone_id = $getData['zone_id'];
 
-        echo '<pre>';print_r('Zone Id = '.$zone_id);exit;
+        // echo '<pre>';print_r('Zone Id = '.$zone_id);
+        exit;
 
         $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
         // $divisionName = Divisions::where('id', $division['division_id'])->first();
