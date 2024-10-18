@@ -30,30 +30,38 @@ class DistrictUserController extends Controller{
 
     public function aiCenterGet(Request $request){
         $user_id = Auth::user()->id;
-        $zone_id = $request->zone_id;
-        $division_id = $request->division_id;
-        $district_id = $request->district_id;
-        $district = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
+        $getData = User::where('id', $user_id)->first();
+        $division_id = $getData['division_id'];
+        $district_id = $getData['district_id'];
+        $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
+        $zone_id = $deoUser['zone_id'];
         
-        $block_id = $district['block_id'];
-        $blockName = Block::where('id', $district['block_id'])->first();
-        $aiCenters = Cliniclocation::where('block', $blockName['block_hindi'])->get();
+        $districtName = Districts::where('id', $district_id)->first();
+        $zoneName = Zone::where('id', $zone_id)->first();
+        
+        
+        $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hindi'])
+                        ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
+                        ->get();
 
         return response()->json(['aicenter' => $aiCenters]);
     }
 
     public function createBlocktUser(){
         $user_id = Auth::user()->id;
-        $data = DeoUser::where('user_id', $user_id)->first();
-        $zone_id = $data['zone_id'];
+        $data = User::where('id', $user_id)->first();
         $division_id = $data['division_id'];
         $district_id = $data['district_id'];
+
+        $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
+        $zone_id = $deoUser['zone_id'];
+
         $getBlock = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
-        $block_id = $getBlock['block'];
-        $districts =  Districts::where('id', $data['district_id'])->get();
+        
+        $districts =  Districts::where('id', $district_id)->get();
         session()->forget('form_step1');
 
-        return view('districtuser.createBlockUser', compact('districts', 'zone_id', 'division_id', 'block_id'));
+        return view('districtuser.createBlockUser', compact('districts', 'zone_id', 'division_id'));
     }
 
     public function districtStockDetails(){

@@ -114,7 +114,6 @@
                     <div class="row">
                         <input type="hidden" value="{{ $zone_id }}" id="zone_id"/>
                         <input type="hidden" value="{{ $division_id }}" id="division_id"/>
-                        <input type="hidden" value="{{ $block_id }}" id="block_id"/>
                         <template x-for="(district, index) in districts" :key="index">
                             <div class="col-md-4">
                                 <div class="custom-radio">
