@@ -12,8 +12,8 @@
         <h3 class="text-center m-4 fw-bold">  <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span> </h3>
         <div class="row mb-4">
             <div class="col-md-12">
-                <a href="{{ route('district-deo-user-step1') }}" data-hi="ज़िला ऑपरेटर आईडी बनाएं" data-en="Create District Operator ID"  class="btn btn-primary"></a>
-                <a href="{{ route('deo-user-step1') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID" class="btn btn-primary"></a>
+                <!-- <a href="{{ route('district-deo-user-step1') }}" data-hi="ज़िला ऑपरेटर आईडी बनाएं" data-en="Create District Operator ID"  class="btn btn-primary"></a>
+                <a href="{{ route('deo-user-step1') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID" class="btn btn-primary"></a> -->
                 <a href="{{ route('create-zone') }}" class="btn btn-primary" data-hi="क्षेत्र बनाएं" data-en="Create Zone"></a>
             </div>
         </div>
@@ -24,50 +24,27 @@
                     <th><span data-hi="नाम" data-en="Name "></span></th>
                     <th><span data-hi="ईमेल" data-en="Email"></span></th>
                     <th><span data-hi="क्षेत्र" data-en="Zone"></span></th>
-                    <th><span data-hi="मंडल" data-en="Mandal"></span></th>
-                    <th> <span data-hi="जिले" data-en=" Districts"></span></th>
-                    <th><span data-hi="ब्लॉक" data-en="Block"></span></th>
-                    {{-- <th><span data-hi="केंद्र" data-en="AICenter"></span></th> --}}
+                   
 
                     {{-- <th> <span data-hi="कार्रवाई" data-en="Action"></span> </th> --}}
                 </tr>
             </thead>
             <tbody>
 
-                @if ($deoUsers->isEmpty())
+                @if ($zoneUsers->isEmpty())
                     <tr>
                         <td colspan="6" class="text-center">No data found</td>
                     </tr>
                 @endif
 
                
-                @foreach ($deoUsers as $deoUser)
+                @foreach ($zoneUsers as $zoneUser)
                     <tr>
-                        <td>{{ $deoUser->name }}</td>
-                        <td>{{ $deoUser->email }}</td>
+                        <td>{{ $zoneUser->name }}</td>
+                        <td>{{ $zoneUser->email }}</td>
                         <td> 
-                            <span data-hi="{{ $deoUser->getDeoUser->zone->name_hi ?? 'N/A' }}" data-en="{{ $deoUser->getDeoUser->zone->name_en ?? 'N/A' }}"></span>
+                            <span data-hi="{{ $zoneUser->getDeoUser->zone->name_hi ?? 'N/A' }}" data-en="{{ $zoneUser->getDeoUser->zone->name_en ?? 'N/A' }}"></span>
                         </td>
-                        <td> 
-                            <span data-hi="{{ $deoUser->getDeoUser->division->name_hindi ?? 'N/A' }}" data-en="{{ $deoUser->getDeoUser->division->name_eng ?? 'N/A' }}"></span>
-                        </td>
-
-                        <td>
-                            @if(isset($districtName[$deoUser->id]))
-                                @foreach($districtName[$deoUser->id] as $district)
-                                    <span data-hi="{{ $district['name_hindi'] ?? 'N/A' }}" data-en="{{ $district['name_eng'] ?? 'N/A' }}"></span>
-                                @endforeach
-                            @else
-                                <span>N/A</span>
-                            @endif
-                        </td>
-
-                        
-                        <td> 
-                            <span data-hi="{{ $deoUser->getDeoUser->block->name_hindi ?? 'N/A' }}" data-en="{{ $deoUser->getDeoUser->block->name_eng ?? 'N/A' }}"></span>
-                        </td>
-
-                        {{-- <td> <span data-hi="{{ $deoUser->getDeoUser->aicenter->aicenter_name }}" data-en="{{ $deoUser->getDeoUser->aicenter->aicenter_name }}"></span></td> --}}
                     </tr>
                 @endforeach
 

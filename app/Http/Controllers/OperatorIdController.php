@@ -11,18 +11,12 @@ class OperatorIdController extends Controller
 {
 
     public function index(){
-        $roles = Role::whereIn('name', ['deo', 'district-deo'])->pluck('id');
-        $deoUsers = User::whereIn('role_id', $roles)
-        ->with([
-            'getDeoUser.zone',
-            'getDeoUser.division',
-            'getDeoUser.district',
-            'getDeoUser.block',
-            'getDeoUser.aicenter'
-        ])->get();
+        $roles = Role::whereIn('name', ['zone'])->pluck('id');
+        $zoneUsers = User::whereIn('role_id', $roles)->with(['getDeoUser.zone'])->get();
 
+        // echo '<pre>';print_r($zoneUsers);exit;
         
-        return view('operatorId.index', compact('deoUsers'));
+        return view('operatorId.index', compact('zoneUsers'));
     }
 
     public function createDEO()

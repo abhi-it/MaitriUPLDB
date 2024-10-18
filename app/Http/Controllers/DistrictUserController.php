@@ -252,14 +252,26 @@ class DistrictUserController extends Controller{
             'user_type'   => 'Deo',
         ]);
 
-        $deoUser = DeoUser::create([
-            'user_id'       => $user->id,
-            'zone_id'       => $form_step1['zone'],
-            'division_id'   => $form_step1['division'],
-            'district_id' => $form_step1['district'],
-            'block_id' => $form_step1['block'],
-            'block_id' => $form_step1['block'],
-        ]);
+        // $deoUser = DeoUser::create([
+        //     'user_id'       => $user->id,
+        //     'zone_id'       => $form_step1['zone'],
+        //     'division_id'   => $form_step1['division'],
+        //     'district_id' => $form_step1['district'],
+        //     'block_id' => $form_step1['block'],
+        //     'block_id' => $form_step1['block'],
+        // ]);
+
+        foreach($form_step1['aicenters'] as $aiCenterId){
+            $deoUser = DeoUser::create([
+                'user_id'       => $user->id,
+                'zone_id'       => $form_step1['zone'],
+                'division_id'   => $form_step1['division'],
+                'district_id' => $form_step1['district'],
+                'block_id' => $form_step1['block'],
+                'aicenters_id' => $aiCenterId,
+            ]);
+        }
+
         session()->forget('form_step1');
         return response()->json(['status' => 200]);
     }

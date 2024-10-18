@@ -19,25 +19,32 @@ use DB;
 
 class ZoneDashBoardController extends Controller{
 
-    public function dashboard(){
-        $user_id = Auth::user()->id;
-        return view('zones.dashboard');
-    }
-
     public function zoneInventory(){    
+        $user_id = Auth::user()->id;
+        $zoneUsers = User::where('id', $user_id)->first();
+        $zone_id = $zoneUsers['zone_id'];
+        $districtUsers =  DeoUser::where('zone_id', 4)
+                    ->where('district_id', '>', 0)
+                    ->whereNull('block_id')
+                    ->whereNull('aicenters_id')
+                    ->get();
 
-        $roles = Role::whereIn('name', ['deo', 'district-deo'])->pluck('id');
-        $deoUsers = User::whereIn('role_id', $roles)
-        ->with([
-            'getDeoUser.zone',
-            'getDeoUser.division',
-            'getDeoUser.district',
-            'getDeoUser.block',
-            'getDeoUser.aicenter'
-        ])->get();
+        $districtUserData = [];
+        foreach($districtUsers as $districtUser){
+            $districtUserId = $districtUser['user_id'];
+            $district_id = $districtUser['district_id'];
+            
+            $districtUser = User::where('id', $districtUserId)->first();
+            $districtName = Districts::where('id', $district_id)->first();
 
-    
-        return view('zones.zoneInventory', compact('deoUsers'));
+            $districtUserData[] = [
+                'district_hindi' => $districtName->name_hindi ?? 'N/A',
+                'district_eng' => $districtName->name_eng ?? 'N/A',
+                'name' => $districtUser->FirstName ?? 'N/A',
+                'email' => $districtUser->email ?? 'N/A',
+            ];
+        }
+        return view('zones.zoneInventory', compact('districtUserData'));
     }
 
     public function createDivisionUser(){
@@ -103,23 +110,23 @@ class ZoneDashBoardController extends Controller{
             'user_type'   => 'District',
         ]);
 
-        // $deoUser = DeoUser::create([
-        //     'user_id'       => $user->id,
-        //     'zone_id'       => $form_step1['zone'],
-        //     'division_id'   => $form_step1['division'],
-        //     'district_id'   => $form_step1['district'],
-        // ]);
+        $deoUser = DeoUser::create([
+            'user_id'       => $user->id,
+            'zone_id'       => $form_step1['zone'],
+            'division_id'   => $form_step1['division'],
+            'district_id'   => $form_step1['district'],
+        ]);
 
-        foreach($form_step1['aicenters'] as $aiCenterId){
-            $deoUser = DeoUser::create([
-                'user_id'       => $user->id,
-                'zone_id'       => $form_step1['zone'],
-                'division_id'   => $form_step1['division'],
-                'district_id' => $form_step1['district'],
-                'block_id' => $form_step1['block'],
-                'aicenters_id' => $aiCenterId,
-            ]);
-        }
+        // foreach($form_step1['aicenters'] as $aiCenterId){
+        //     $deoUser = DeoUser::create([
+        //         'user_id'       => $user->id,
+        //         'zone_id'       => $form_step1['zone'],
+        //         'division_id'   => $form_step1['division'],
+        //         'district_id' => $form_step1['district'],
+        //         'block_id' => $form_step1['block'],
+        //         'aicenters_id' => $aiCenterId,
+        //     ]);
+        // }
 
         session()->forget('form_step1');
         return response()->json(['status' => 200]);
