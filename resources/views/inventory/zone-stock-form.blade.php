@@ -19,7 +19,7 @@
         </div>
         @endif
         <h3 class="text-center fw-bold m-4">
-            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventroy"></span>
+            <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventory"></span>
          </h3>
 
          <table class="table table-striped  table-responsive table-bordered">

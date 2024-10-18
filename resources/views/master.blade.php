@@ -1009,14 +1009,14 @@ header .navbar li.nav-item.active a.nav-link {
                             @endif
                             <li class="nav-item dropdown {{(request()->is('approved-avedan') || request()->is('rejected-avedan')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                    <span data-hi="आवेदन" data-en="Application"></span>
+                                    <span data-hi="आवेदन मैत्री" data-en="Application Maitri"></span>
                                 </a>
                                 <div class="dropdown-menu" >
                                     <a class="dropdown-item" href="{{ url('approved-avedan') }}">
-                                        <span data-hi="स्वीकृत आवेदन" data-en="Accepted Applications"></span>
+                                        <span data-hi="स्वीकृत आवेदन मैत्री" data-en="Accepted Maitri Applications"></span>
                                    </a>
                                     <a class="dropdown-item" href="{{ url('rejected-avedan') }}">
-                                    <span data-hi="अस्वीकृत आवेदन" data-en="Rejected Applications"></span>
+                                    <span data-hi="अस्वीकृत आवेदन मैत्री" data-en="Rejected Maitri Applications"></span>
                                         </a>
                                 </div>
                             </li>

@@ -32,7 +32,7 @@
         }
     </style>
     <div class="container main-div">
-        <h3 class="text-center fw-bold m-4 current_session"> {{ $sessionYear . '-' . substr($sessionYear + 1, -2) }}</h3>
+        <h3 class="text-center fw-bold m-4 current_session"> <span data-hi="मैत्री विवरण" data-en="Maitri Details"></span> {{ $sessionYear . '-' . substr($sessionYear + 1, -2) }}</h3>
         <div class="row">
             <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">

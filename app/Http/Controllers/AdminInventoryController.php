@@ -31,13 +31,14 @@ class AdminInventoryController extends Controller
 
     public function adminStockRecord(){
         $user_id = Auth::user()->id;
-        $adminInventory = RemainingStock::where('user_id', $user_id)->get();
+        $inventoryIds = InventoryMap::where(['assign_user_id' => $user_id, 'user_id' => $user_id])->get();
+        // $adminInventory = RemainingStock::where('user_id', $user_id)->get();
 
-        // $adminInventory = [];
-        // foreach($inventoryIds as $inventoryId){
-        //    $getData = Zonestock::where('id', $inventoryId['inventory_id'])->first();
-        //    $adminInventory[] = $getData;
-        // }
+        $adminInventory = [];
+        foreach($inventoryIds as $inventoryId){
+           $getData = Zonestock::where('id', $inventoryId['inventory_id'])->first();
+           $adminInventory[] = $getData;
+        }
         return view('adminstockform.admin-stock-record', compact('adminInventory'));
     }
 
@@ -163,11 +164,11 @@ class AdminInventoryController extends Controller
                 }
             }
 
-            // InventoryMap::create([
-            //     'assign_user_id' => $assign_user_id,
-            //     'user_id' => $user_id,
-            //     'inventory_id' => $inventory->id
-            // ]);
+            InventoryMap::create([
+                'assign_user_id' => $assign_user_id,
+                'user_id' => $user_id,
+                'inventory_id' => $inventory->id
+            ]);
             return redirect()->back()->with('success','Stock data submitted successfully!');
         }
     }
