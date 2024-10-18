@@ -110,7 +110,7 @@
                             <span x-text="error"></span>
                         </div>
                     </template>
-                    <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
+                   
                     <div class="row">
                         <template x-for="(zone, index) in zones" :key="index">
                             <div class="col-md-4">
@@ -188,6 +188,8 @@
                             }
                         })
                         .then(response => {
+
+                            
                             this.selectedDistrict = response.data.district;
                             setTimeout(() => {
                                 this.selectedDistrict.forEach(district => {
@@ -205,8 +207,8 @@
                 },
               
                 createDEOUser() {
-                    
-                    const division_id = document.getElementById('division_id').value;
+                
+                   
                     const selectedZoneValue = this.getSelectedValue('zone');
                     if (!selectedZoneValue) {
                         this.errorMessage = 'Please select a zone';
@@ -222,7 +224,7 @@
                     
                     axios.post('{{ route('division-store-data') }}', {
                             zone: selectedZoneValue,
-                            division: division_id,
+                            // division: division_id,
                             district: selectedDivisionValue,
                         })
                         .then(response => {

@@ -97,7 +97,7 @@
 
                             Swal.fire({
                                 title: 'Success!',
-                                text: 'Division User created successfully!',
+                                text: 'District User created successfully!',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {

@@ -23,7 +23,7 @@ class ZoneDashBoardController extends Controller{
         $user_id = Auth::user()->id;
         $zoneUsers = User::where('id', $user_id)->first();
         $zone_id = $zoneUsers['zone_id'];
-        $districtUsers =  DeoUser::where('zone_id', 4)
+        $districtUsers =  DeoUser::where('zone_id', $zone_id)
                     ->where('district_id', '>', 0)
                     ->whereNull('block_id')
                     ->whereNull('aicenters_id')
@@ -51,16 +51,16 @@ class ZoneDashBoardController extends Controller{
         $user_id = Auth::user()->id;
         $zone_id = DeoUser::where('user_id', $user_id)->first();
         $zones =    Zone::where('id', $zone_id['zone_id'])->get();
-        $division = DeoUser::where('zone_id', $zone_id['zone_id'])->where('division_id', '>', 0)->first();
-        $division_id = $division['division_id'];
+        // $division = DeoUser::where('zone_id', $zone_id['zone_id'])->where('division_id', '>', 0)->first();
+        // $division_id = $division['division_id'];
         session()->forget('form_step1');
-        return view('zones.createDivisionUser', compact('zones', 'division_id'));
+        return view('zones.createDivisionUser', compact('zones'));
     }
 
     public function divisionStoreData(Request $request){
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
-            'division' => 'required|integer',
+            // 'division' => 'required|integer',
             'district' => 'required|integer',
         ]);
 
@@ -98,13 +98,18 @@ class ZoneDashBoardController extends Controller{
         $role = Role::where('name', 'district')->first();
         $role_id = $role ? $role->id : null;
 
+        $district_id = $form_step1['district'];
+        $division_id = Districts::where('id', $district_id)->first();
+
+
         $user = User::create([
             'name'        => $validatedData['username'],
             'FirstName'   => $validatedData['username'],
             'LastName'    => $validatedData['username'],
             'email'       => $validatedData['email'],
             'password'    => Hash::make($validatedData['password']),
-            'division_id' => $form_step1['division'],
+            'district_id' => $division_id['division_id'],
+            'division_id' => $division_id['division_id'],
             'role_id'     => $role_id,
             'role'        => 'district',
             'user_type'   => 'District',
@@ -113,7 +118,7 @@ class ZoneDashBoardController extends Controller{
         $deoUser = DeoUser::create([
             'user_id'       => $user->id,
             'zone_id'       => $form_step1['zone'],
-            'division_id'   => $form_step1['division'],
+            'division_id'   => $division_id['division_id'],
             'district_id'   => $form_step1['district'],
         ]);
 

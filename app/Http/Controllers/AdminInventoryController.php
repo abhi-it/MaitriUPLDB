@@ -84,22 +84,13 @@ class AdminInventoryController extends Controller
             $results = DB::table('inventory_map_user')
                         ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
                         ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->select('zone_stock_details.*', 'deo_users.*')
+                        ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
+                        ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+                        ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
                         ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
                         ->get();
 
-            foreach($results as $result){
-                $zone_id = $result->zone_id;
-                $user_id = $result->user_id;
-                $zoneData = Zone::where('id', $zone_id)->first();
-                $userData = User::where('id', $user_id)->first();
-                if ($zoneData) {
-                    $result->user_name = $userData['FirstName'];
-                    $result->division_name_eng = $zoneData['name_en'];
-                    $result->division_name_hindi = $zoneData['name_hi'];
-                    $zoneStock[] = $result;
-                }
-            }
+            $zoneStock[] = $results;
         }
         return view('adminstockform.admin-distributed-record', compact('zoneStock'));
     }

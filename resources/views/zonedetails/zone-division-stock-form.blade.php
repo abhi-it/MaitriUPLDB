@@ -75,7 +75,6 @@
         <form method="post" action="{{ route('save-division-stock-data') }}" class="form-comman">
             @csrf
             <hr>
-            <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}"/>
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="inputEmail4"> 
@@ -85,10 +84,7 @@
                     <select name="select_district" id="select_district" data-type="district" class="form-control">
                         <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
                         @foreach($districtName as $districts)
-                            @foreach($districts as $district)
-                                <option value="{{ $district['id'] }}" data-hi="{{ $district['name_hindi'] }}" data-en="{{ $district['name_eng'] }}"></option>
-                        
-                            @endforeach
+                                <option value="{{ $districts['id'] }}" data-hi="{{ $districts['name_hindi'] }}" data-en="{{ $districts['name_eng'] }}"></option>
                         @endforeach
                     </select>
                 </div>
@@ -134,42 +130,42 @@
                         <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span> 
                         <span id="errorBanner" class="errorclass"></span> 
                     </label> 
-                    <input name="banner" id="banner" data-filed_type="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
+                    <input name="banner" min="1" id="banner" data-filed_type="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span> 
                         <span id="errorDangler" class="errorclass"></span>
                     </label> 
-                    <input name="dangler" id="dangler" data-filed_type="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
+                    <input name="dangler" min="1" id="dangler" data-filed_type="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span> 
                         <span id="errorStandee" class="errorclass"></span>
                     </label> 
-                    <input name="standee" id="standee" data-filed_type="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
+                    <input name="standee" min="1" id="standee" data-filed_type="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span> 
                         <span id="errorPamphlet" class="errorclass"></span>
                     </label> 
-                    <input name="pamphlet" id="pamphlet" data-filed_type="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                    <input name="pamphlet" min="1" id="pamphlet" data-filed_type="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
                         <span id="errorAiKit" class="errorclass"></span> 
                     </label> 
-                    <input name="ai_kit" id="ai_kit" data-filed_type="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
+                    <input name="ai_kit" min="1" id="ai_kit" data-filed_type="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span> 
                         <span id="errorContainer" class="errorclass"></span> 
                     </label> 
-                    <input name="container" id="container" data-filed_type="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
+                    <input name="container" min="1" id="container" data-filed_type="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 

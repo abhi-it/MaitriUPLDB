@@ -97,17 +97,22 @@ class DistrictUserController extends Controller{
 
     public function districtStockForm(){
         $user_id = Auth::user()->id;
-        $getData = DeoUser::where('user_id', $user_id)->first();
-        $zone_id = $getData['zone_id'];
+        $getData = User::where('id', $user_id)->first();
         $division_id = $getData['division_id'];
         $district_id = $getData['district_id'];
-        $district = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->where('block_id', '>', 0)->first();
-        $block_id = $district['block_id'];
-        $blockName = Block::where('id', $district['block_id'])->first();
-        $aiCenters = Cliniclocation::where('block', $blockName['block_hindi'])->get();
+        $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
+        $zone_id = $deoUser['zone_id'];
+        
+        $districtName = Districts::where('id', $district_id)->first();
+        $zoneName = Zone::where('id', $zone_id)->first();
+        
+        
+        $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hindi'])
+                        ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
+                        ->get();
         
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
-        return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'block_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
+        return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
     }
 
     public function districtSaveStockData(Request $request){

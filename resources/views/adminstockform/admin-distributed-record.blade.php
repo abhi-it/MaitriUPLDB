@@ -33,29 +33,35 @@
             </thead>
             <tbody>
 
-               
-                @php $i = 1; @endphp
-                @foreach ($zoneStock as $key => $stockZone)
+                @if(count($zoneStock) > 0)
+                    @php $i = 1; @endphp
+                    @foreach ($zoneStock as $stockZone)
+                        @foreach($stockZone as $zoneUser)
+                            <tr>
+                            <td>{{ $i }}</td>
+                            <td>{{ $zoneUser->FirstName }}</td>
+                            <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
+                            <td>{{ $zoneUser->demand_section }}</td>
+                            <td>{{ $zoneUser->semen }}</td>
+                            <td>{{ $zoneUser->semen_type }}</td>
+                            <td>{{ $zoneUser->banner }}</td>
+                            <td>{{ $zoneUser->dangler }}</td>
+                            <td>{{ $zoneUser->standee }}</td>
+                            <td>{{ $zoneUser->pamphlet }}</td>
+                            <td>{{ $zoneUser->ai_kit }}</td>
+                            <td>{{ $zoneUser->container }}</td>
+                            <td>{{ $zoneUser->container_capacity }}</td>
+                            <td>{{ $zoneUser->scheme }}</td>
+                            <td>{{ $zoneUser->bull_ids }}</td>
+                            </tr>
+                        @endforeach
+                        @php $i++ @endphp
+                    @endforeach
+                @else
                     <tr>
-                    <td>{{ $i }}</td>
-                    <td>{{ $stockZone->user_name }}</td>
-                    <td><span data-hi="{{ $stockZone->division_name_hindi }}" data-en="{{ $stockZone->division_name_eng }}"></span></td>
-                    <td>{{ $stockZone->demand_section }}</td>
-                    <td>{{ $stockZone->semen }}</td>
-                    <td>{{ $stockZone->semen_type }}</td>
-                    <td>{{ $stockZone->banner }}</td>
-                    <td>{{ $stockZone->dangler }}</td>
-                    <td>{{ $stockZone->standee }}</td>
-                    <td>{{ $stockZone->pamphlet }}</td>
-                    <td>{{ $stockZone->ai_kit }}</td>
-                    <td>{{ $stockZone->container }}</td>
-                    <td>{{ $stockZone->container_capacity }}</td>
-                    <td>{{ $stockZone->scheme }}</td>
-                    <td>{{ $stockZone->bull_ids }}</td>
+                        <td colspan="12" class="text-center" style="color:red;">No record found..</td>
                     </tr>
-                    @php $i++ @endphp
-                @endforeach
-
+                @endif
 
             </tbody>
         </table>

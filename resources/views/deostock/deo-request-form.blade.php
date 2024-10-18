@@ -32,7 +32,7 @@
                     <label for="inputEmail4"> 
                         <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span> 
                     </label> 
-                    <input name="demand_section" id="demand_section" type="text" class="form-control"  data-placeholder-hi="तरल नाइट्रोजन (लीटर में)" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
+                    <input name="demand_section"  id="demand_section" type="text" class="form-control"  data-placeholder-hi="तरल नाइट्रोजन (लीटर में)" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
@@ -68,37 +68,37 @@
                     <label for="inputEmail4"> 
                         <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span> 
                     </label> 
-                    <input name="banner" id="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
+                    <input name="banner" min="1" id="banner" type="number" class="form-control"  data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span> 
                     </label> 
-                    <input name="dangler" id="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
+                    <input name="dangler" min="1" id="dangler" type="number" class="form-control" data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span> 
                     </label> 
-                    <input name="standee" id="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
+                    <input name="standee" min="1" id="standee" type="number" class="form-control"  data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span> 
                     </label> 
-                    <input name="pamphlet" id="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                    <input name="pamphlet" min="1" id="pamphlet" type="number" class="form-control"  data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span> 
                     </label> 
-                    <input name="ai_kit" id="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
+                    <input name="ai_kit" min="1" id="ai_kit" type="number" class="form-control" data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span> 
                     </label> 
-                    <input name="container" id="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
+                    <input name="container" min="1" id="container" type="number" class="form-control"  data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 

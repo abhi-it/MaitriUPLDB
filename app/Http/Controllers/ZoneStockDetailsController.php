@@ -35,31 +35,37 @@ class ZoneStockDetailsController extends Controller
 
     public function zoneDivisionStockForm(){
         $user_id = Auth::user()->id;
-        $getData = DeoUser::where('user_id', $user_id)->first();
+        $getData = User::where('id', $user_id)->first();
         $zone_id = $getData['zone_id'];
-        $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
-        // $divisionName = Divisions::where('id', $division['division_id'])->first();
-        $division_id = $division['division_id'];
+        $divisionIds = Divisions::where('zone_id', $getData['zone_id'])->get();
 
-        $getDivisionIds = Divisions::where('zone_id',  $zone_id)->get();
-        $districtName =[];
-        foreach($getDivisionIds as $getDivisionId){
-            $division_id = $getDivisionId['id'];
-            $district = Districts::where('division_id', $division_id)->get();
-            $districtName[]=$district;
+        $districtName = [];
+        foreach($divisionIds as $divisionId){
+            $districts = Districts::where('division_id', $divisionId->id)->get();
+            foreach($districts as $district){
+                $districtName[] = $district;
+            }
         }
-        // $districtName = Districts::where('division_id', $division['division_id'])->get();
+
+
         $zoneInventory = RemainingStock::where('user_id', $user_id)->get();
-        return view('zonedetails.zone-division-stock-form', compact('districtName','division_id','zone_id', 'zoneInventory', 'user_id'));
+        return view('zonedetails.zone-division-stock-form', compact('districtName','zone_id', 'zoneInventory', 'user_id'));
     }
 
     public function getZoneDistrict(Request $request){
         $zone_id = $request->zone_id;
-        $division = DeoUser::where('zone_id', $zone_id)->where('division_id', '>', 0)->first();
-        // $divisionName = Divisions::where('id', $division['division_id'])->first();
-        $division_id = $division['division_id'];
-        $districtName = Districts::where('division_id', $division['division_id'])->get();
-        return response()->json(['district' => $districtName]);
+        $divisionIds = Divisions::where('zone_id', $zone_id)->get();
+
+        $district = [];
+        foreach($divisionIds as $divisionId){
+            $districtNames = Districts::where('division_id', $divisionId->id)->get();
+            foreach($districtNames as $districtName){
+                $district[] = $districtName;
+            }
+            
+        }
+     
+        return response()->json(['district' => $district]);
     }
 
 
@@ -111,8 +117,10 @@ class ZoneStockDetailsController extends Controller
         }else{
             $assign_user_id = Auth::user()->id;
             $zone_id = $request->zone_id;
-            $division_id = $request->division_id;
             $select_district = $request->select_district;
+            $division = Districts::where('id', $select_district)->first();
+            $division_id = $division['division_id'];
+            
          
             if($select_district != ''){
                 $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $select_district])->first();
