@@ -197,24 +197,34 @@
                             }
                         })
                         .then(response => {
-                            this.aicenters = response.data.aicenter;
+                            this.selectedAicenters = response.data.aicenter;
 
-                            let aicenters = this.aicenters.filter(aicenter => aicenter.block);
-                            this.selectedAicenters = aicenters;
+                            console.log(this.aicenters);
 
+                            
                             setTimeout(() => {
-                                this.selectedAicenters.forEach(aicenter => {
-                                    let checkbox = document.getElementById('aicenter' + aicenter.id);
+                                this.selectedAicenters.forEach(district => {
+                                    console.log(district, 'district');
+                                    let checkbox = document.getElementById('aicenter' + district.id);
                                     if (checkbox) {
                                         checkbox.checked = false;
                                     }
                                 });
-
-                                let allSelectAicenters = document.getElementById('allSelectAicenters');
-                                if (allSelectAicenters) {
-                                    allSelectAicenters.checked = false;
-                                }
                             }, 100);
+
+                            // setTimeout(() => {
+                            //     this.selectedAicenters.forEach(aicenter => {
+                            //         let checkbox = document.getElementById('aicenter' + aicenter.id);
+                            //         if (checkbox) {
+                            //             checkbox.checked = false;
+                            //         }
+                            //     });
+
+                            //     let allSelectAicenters = document.getElementById('allSelectAicenters');
+                            //     if (allSelectAicenters) {
+                            //         allSelectAicenters.checked = false;
+                            //     }
+                            // }, 100);
 
                             })
                         .catch(error => {
