@@ -214,7 +214,6 @@ class DistrictUserController extends Controller{
             'zone' => 'required|integer',
             'division' => 'required|integer',
             'district' => 'required|integer',
-            'block' => 'required',
             'aicenters' => 'required',
         ]);
 
@@ -280,7 +279,7 @@ class DistrictUserController extends Controller{
                 'zone_id'       => $form_step1['zone'],
                 'division_id'   => $form_step1['division'],
                 'district_id' => $form_step1['district'],
-                'block_id' => $form_step1['block'],
+                // 'block_id' => $form_step1['block'],
                 'aicenters_id' => $aiCenterId,
             ]);
         }

@@ -249,7 +249,6 @@
 
                     const zone_id = document.getElementById('zone_id').value;
                     const division_id = document.getElementById('division_id').value;
-                    const block_id = document.getElementById('block_id').value;
                     
 
                     const selectedDistrictValue = this.getSelectedValue('district');
@@ -267,7 +266,6 @@
                             zone: zone_id,
                             division: division_id,
                             district: selectedDistrictValue,
-                            block: block_id,
                             aicenters: selectedAicenters,
                             
                         })
