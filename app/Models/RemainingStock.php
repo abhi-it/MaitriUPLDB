@@ -9,6 +9,8 @@ class RemainingStock extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'breed',
+        'breed_type',
         'demand_section',
         'semen' ,
         'semen_type' ,

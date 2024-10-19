@@ -10,12 +10,6 @@
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
         <h3 class="text-center m-4 fw-bold">  <span data-hi="जिला वस्तुसूची" data-en="District Inventory"></span> </h3>
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <a href="{{ route('create-block-user-form') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"  class="btn btn-primary"></a>
-            </div>
-        </div>
-
         <table  id="myTable" class="table table-striped  table-responsive table-bordered">
             <thead>
                 <tr>

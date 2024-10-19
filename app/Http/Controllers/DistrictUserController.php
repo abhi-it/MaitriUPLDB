@@ -150,8 +150,44 @@ class DistrictUserController extends Controller{
             }
          
             $bullIds = implode(',',$request->bull_ids);
+
+            $breedType = null;
+            if( $request->semen == 'catle'){
+                switch ($request->breed) {
+                    case 'swadeshi':
+                        $request->validate([
+                            'breedType1' => 'required|string',
+                        ]);
+                        $breedType = $request->breedType1;
+                        break;
+
+                    case 'hybrids-crossbred':
+                        $request->validate([
+                            'breedType2' => 'required|string',
+                        ]);
+                        $breedType = $request->breedType2;
+                        break;
+
+                    case 'videshi':
+                        $request->validate([
+                            'breedType3' => 'required|string',
+                        ]);
+                        $breedType = $request->breedType3;
+                        break;
+
+                    default:
+                        return back()->withErrors(['breed' => 'Invalid breed selection.']);
+                }
+            }else if($request->semen == 'buffalo'){
+                $breedType = $request->breedType4;
+            }else if($request->semen == 'goat'){
+                $breedType = $request->breedType5;
+            }
+            
             $inventory  = new Zonestock([
                 'demand_section'        => $request->demand_section,
+                'breed'                 => $request->breed,
+                'breed_type'            => $breedType,
                 'semen'                 => $request->semen,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
@@ -183,6 +219,8 @@ class DistrictUserController extends Controller{
             $data = [
                 'user_id'            => $user_id,
                 'demand_section'     => $request->demand_section,
+                'breed'              => $request->breed,
+                'breed_type'         => $breedType,
                 'semen'              => $request->semen,
                 'semen_type'         => $request->semen_type,
                 'banner'             => $request->banner,

@@ -250,9 +250,13 @@ class CheckRole
                 'admin-inventory-record',
                 'admin-stock-save-data',
                 'check-stock-limit',
+                'daily-dashboard',
+                'save-daily-dashboard',
             ],
 
             'Superadmin' => [
+                'save-daily-dashboard',
+                'daily-dashboard',
 				'institute.create',
                 'institute.store',
                 'institute.edit',

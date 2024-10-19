@@ -28,6 +28,14 @@ class DemandRequestController extends Controller{
         return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$blocks],200);
     }
 
+    public function hierarchyChart(){
+		return view('hierarchyChart');
+	}
+
+    public function cattleBuffalo(){
+        return view('cattleBuffaloPage');
+    }
+
     public function addDemandRequests(Request $request){
         $validator = Validator::make($request->all(),[
             'name'  => [ 'required'],

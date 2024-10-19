@@ -310,9 +310,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
 
 
-    // inventory 
+    // inventory   
     Route::get("check-zone-user", [App\Http\Controllers\AdminInventoryController::class, 'checkZoneUser'])->name('check-zone-user');
     Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
+    Route::get("daily-dashboard", [App\Http\Controllers\AdminInventoryController::class, 'adminDailyDashboard'])->name('daily-dashboard');
+    Route::post("save-daily-dashboard", [App\Http\Controllers\AdminInventoryController::class, 'saveDaliDashboard'])->name('save-daily-dashboard');
     Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
     Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
@@ -377,7 +379,8 @@ Route::post("get-village", [App\Http\Controllers\UsersController::class, 'getAll
 // Route::get("maitri-register", [App\Http\Controllers\UsersController::class, 'maitriform'])->name('maitri-register');
 Route::post("maitri-add", [App\Http\Controllers\UsersController::class, 'maitriRegister'])->name('maitri-add');
 
-
+Route::get("cattle-buffalo", [App\Http\Controllers\DemandRequestController::class, 'cattleBuffalo'])->name('cattle-buffalo');
+Route::get("hierarchy-chart", [App\Http\Controllers\DemandRequestController::class, 'hierarchyChart'])->name('hierarchy-chart');
 Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
 Route::get("getAllrequestedBlocks", [DemandRequestController::class, 'getAllrequestedBlocks'])->name('getAllrequestedBlocks');
 Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');

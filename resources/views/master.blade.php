@@ -1143,6 +1143,7 @@ header .navbar li.nav-item.active a.nav-link {
                                     <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span>
                                 </a>
                             </li>
+                            
                             <li class="nav-item {{ request()->is('latest-updates') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('latest-updates') }}">
                                     <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span>
@@ -1159,6 +1160,10 @@ header .navbar li.nav-item.active a.nav-link {
                             </li>
 
                             <!-- Admin Stock Form Menu Start -->
+                            <li class="nav-item  {{ request()->is('daily-dashboard') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('daily-dashboard') }}">
+                                    <span data-hi="दैनिक डैशबोर्ड" data-en="Daily Dashboard"></span></a>
+                            </li>
                             <li class="nav-item  {{ request()->is('admin-stock-form') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('admin-stock-form') }}">
                                     <span data-hi="एडमिन स्टॉक फॉर्म" data-en="Admin Stock Form"></span></a>
@@ -1224,6 +1229,16 @@ header .navbar li.nav-item.active a.nav-link {
                         <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                             <a class="nav-link" href="{{ url('demandRequests') }}">
                                 <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ request()->is('cattle-buffalo') ? 'active' : '' }} ">
+                            <a class="nav-link" href="{{ url('cattle-buffalo') }}">
+                                <span data-hi="गाय और भैंस" data-en="Cattle & Buffalo"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ request()->is('hierarchy-chart') ? 'active' : '' }} ">
+                            <a class="nav-link" href="{{ url('hierarchy-chart') }}">
+                                <span data-hi="पदानुक्रम चार्ट" data-en="Hierarchy Chart"></span>
                             </a>
                         </li>
                         <!-- <li class="nav-item ">
