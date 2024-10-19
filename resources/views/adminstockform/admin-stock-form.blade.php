@@ -1,5 +1,10 @@
 @extends('master')
 @section('content')
+<style>
+    .d-none {
+        display: none;
+    }
+</style>
 <div class="container main-div py-5" style="background-color:white;">
         @if(session()->has('success'))
         <div class="alert alert-success">
@@ -27,15 +32,117 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
+                        <span data-hi="सीमेन डी.एफ.एस. स्टेशन" data-en="Semen DFS Station"></span>
+                    </label> 
+                    <select name="dsf_station" id="dsf_station" class="form-control" autofocus="">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="DFS Babugarh, Hapur" data-hi="डीएफएस बाबूगढ़, हापुड़" data-en="DFS Babugarh, Hapur"></option>
+                        <option value="DFS Rehmankheda, Lucknow" data-hi="डीएफएस रहमानखेड़ा, लखनऊ" data-en="DFS Rehmankheda, Lucknow"></option>
+                        <option value="DFS Majra Lakhimpur Kheri" data-hi="डीएफएस माजरा लखीमपुर खीरी" data-en="DFS Majra Lakhimpur Kheri"></option>
+                        <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>
+                        <option value="Amul" data-hi="अमूल" data-en="Amul"></option>
+                        <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
+                        <option value="Hissar" data-hi="हिसार" data-en="Hissar"></option>
+                        <option value="Morna Bio-Technology" data-hi="मोर्ना बायो-टेक्नोलॉजी" data-en="Morna Bio-Technology"></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4"> 
                         <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
                     </label> 
                     <select name="semen" id="semen" class="form-control" autofocus="">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                        <option value="catle" data-hi="मवेशी" data-en="Cattle"></option>
+                        <option value="catle" data-hi="गाय" data-en="Cow"></option>
                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                         <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                     </select>
                 </div>
+
+                <!-- New Dropdown Add -->
+                    
+                <div class="form-group col-md-6 catle-options d-none">
+                    <label for="breed">
+                        <span data-hi="नस्ल" data-en="Breed"></span>
+                    </label>
+                    <select name="breed" id="breed" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="swadeshi" data-hi="सहिवाल" data-en="Swadeshi"></option>
+                        <option value="hybrids-crossbred" data-hi="संकर" data-en="Hybrids - Crossbred"></option>
+                        <option value="videshi" data-hi="विदेशी" data-en="Videshi"></option>
+                    </select>
+                </div>
+
+                <!-- Breed Types 1 (for Swadeshi) -->
+                <div class="form-group col-md-6 d-none" id="breedType1-options">
+                    <label for="breedType1">
+                        <span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span>
+                    </label>
+                    <select name="breedType1" id="breedType1" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="gangatiri" data-hi="गंगातिरी" data-en="Gangatiri"></option>
+                        <option value="gir" data-hi="गिर" data-en="Gir"></option>
+                        <option value="tharparkar" data-hi="थारपारकर" data-en="Tharparkar"></option>
+                        <option value="haryana" data-hi="हरयाणा" data-en="Haryana"></option>
+                    </select>
+                </div>
+                
+
+                <!-- Breed Types 2 (for Hybrids - Crossbred) -->
+                <div class="form-group col-md-6 d-none" id="breedType2-options">
+                    <label for="breedType2">
+                        <span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span>
+                    </label>
+                    <select name="breedType2" id="breedType2" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="jersey-cross" data-hi="जर्सी क्रॉस" data-en="Jersey Cross"></option>
+                        <option value="holstein-friesian-cross" data-hi="होल्स्टीन फ़्रीज़ियन क्रॉस" data-en="Holstein Friesian Cross"></option>
+                    </select>
+                </div>
+                
+
+                <!-- Breed Types 3 (for Videshi) -->
+                <div class="form-group col-md-6 d-none" id="breedType3-options">
+                    <label for="breedType3">
+                        <span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span>
+                    </label>
+                    <select name="breedType3" id="breedType3" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="imported-jersey" data-hi="आयातित जर्सी" data-en="Imported Jersey"></option>
+                        <option value="imported-holstein-friesian" data-hi="होल्स्टीन फ़्रीज़ियन क्रॉस" data-en="Imported Holstein Friesian"></option>
+                        <option value="Jersey" data-hi="जर्सी" data-en="Jersey"></option>
+                        <option value="holstein-friesian" data-hi="होल्स्टीन फ़्रीज़ियन" data-en="Holstein Friesian"></option>
+                    </select>
+                </div>
+               
+                
+                <div class="form-group col-md-6 d-none" id="buffalo-options">
+                    <label for="breedType4">
+                        <span data-hi="नस्ल" data-en="Breed"></span>
+                    </label>
+                    <select name="breedType4" id="breedType4" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="murrah" data-hi="मुर्रा" data-en="Murrah"></option>
+                        <option value="bhadawari" data-hi="भदावारी" data-en="Bhadawari"></option>
+                    </select>
+                </div>  
+               
+                <div class="form-group col-md-6 d-none" id="goat-options">
+                    <label for="breedType5">
+                        <span data-hi="नस्ल" data-en="Breed"></span>
+                    </label>
+                    <select name="breedType5" id="breedType5" class="form-control">
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="jamunapari" data-hi="जमुनापारी" data-en="Jamunapari"></option>
+                        <option value="barbari" data-hi="बारबरी" data-en="Barbari"></option>
+                        <option value="Sirohi" data-hi="सिरोही" data-en="Sirohi"></option>
+                        <option value="black-bengal" data-hi="ब्लैक बंगाल" data-en="Black Bengal"></option>
+                        <option value="jakhrana" data-hi="ब्लैक बंगाल" data-en="Jakhrana"></option>
+                        <option value="saanen" data-hi="बसानेन" data-en="Saanen"></option>
+                    </select>
+                </div>
+                
+                <!-- New Dropdown End -->
+
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">  <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label> 
                     <select name="semen_type" id="semen_type" class="form-control" autofocus="">
@@ -132,6 +239,45 @@
 </div>
 <script>
     $(document).ready(function() {
+
+    $('#semen').change(function() {
+        var selectedValue = $(this).val();
+        
+        // Hide all dropdown groups initially
+        $('.catle-options').addClass('d-none');
+        $('#buffalo-options').addClass('d-none');
+        $('#goat-options').addClass('d-none');
+        
+        // Show relevant dropdowns based on the selection
+        if (selectedValue === 'catle') {
+            $('.catle-options').removeClass('d-none');
+        } else if (selectedValue === 'buffalo') {
+            $('#buffalo-options').removeClass('d-none');
+        } else if (selectedValue === 'goat') {
+            $('#goat-options').removeClass('d-none');
+        }
+
+        $('#breedType1-options, #breedType2-options, #breedType3-options').addClass('d-none');
+    });
+
+    $('#breed').change(function() {
+        var selectedBreed = $(this).val();
+        
+        // Hide all breed type dropdowns initially
+        $('#breedType1-options').addClass('d-none');
+        $('#breedType2-options').addClass('d-none');
+        $('#breedType3-options').addClass('d-none');
+        
+        // Show relevant breed type dropdowns based on Breed selection
+        if (selectedBreed === 'swadeshi') {
+            $('#breedType1-options').removeClass('d-none');
+        } else if (selectedBreed === 'hybrids-crossbred') {
+            $('#breedType2-options').removeClass('d-none');
+        } else if (selectedBreed === 'videshi') {
+            $('#breedType3-options').removeClass('d-none');
+        }
+    });
+
     $("body").on("click",".add-more",function(){ 
         console.log('hello user')
         var html = $(".after-add-more").first().clone();

@@ -9,6 +9,9 @@ class Zonestock extends Model
     use HasFactory;
     protected $fillable = [
         'demand_section',
+        'dsf_station',
+        'breed',
+        'breed_type',
         'semen' ,
         'semen_type' ,
         'banner' ,

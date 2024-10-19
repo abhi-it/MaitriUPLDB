@@ -419,9 +419,9 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
 <section class="py-5 my-3 counter-section">
   <div class="container">
     <div class="d-flex mb-5 flex-column align-items-center justify-content-center text-white text-center">
-      <small><span data-hi="आंकड़े" data-en="STATISTICS"></span>  2023</small>
+      
       <h2 class="fw-bold">
-        <span data-hi="पशुधन जनसंख्या उत्तर प्रदेश" data-en="Livestock Population Uttar Pradesh"></span>
+        <span data-hi="पशुधन संख्या उत्तर प्रदेश" data-en="Livestock Population Uttar Pradesh"></span>
       </h2>
     </div>
     <div class="row g-3">
