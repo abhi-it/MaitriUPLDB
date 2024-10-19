@@ -52,6 +52,7 @@ class DemandRequestController extends Controller{
                 'mandal'     => $request->district,
                 'block'     => $request->block,
                 'vh_ai_center'     => $request->vh_ai_center,
+                'pincode'     => $request->pincode,
                 'villages_coevring'     => $request->villages_coevring,
                 'demand_section'     => $request->demand_section,
                 'semen'     => $request->semen,

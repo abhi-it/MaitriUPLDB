@@ -20,6 +20,7 @@ class DemandRequest extends Model
         'mandal',
         'block'  ,
         'vh_ai_center' ,
+        'pincode' ,
         'villages_coevring' ,
         'demand_section',
         'semen' ,

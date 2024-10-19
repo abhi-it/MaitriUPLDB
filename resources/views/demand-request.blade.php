@@ -126,6 +126,12 @@
             </select>
         </div>
         <div class="form-group col-md-6">
+            <label for="inputEmail4"><span data-hi="पिनकोड" data-en="Pincode"></span></label> 
+            <span id="error-message" style="color: red; display:none; font-size:10px; ">(Pincode must be a 6-digit number.)</span>
+            <input type="text" name="pincode" maxlength="6"  id="pincode" class="form-control" data-placeholder-en="Enter Pincode Here" data-placeholder-hi="यहां पिनकोड दर्ज करें" autofocus>
+        </div>
+        
+        <div class="form-group col-md-6">
             <label for="inputEmail4"> 
             <span data-hi="आपके भारत पशुधन आईडी पर कितने गांव मैप किए गए हैं" data-en="How many Villages are mapped on your Bharat Pashudhan ID"></span>    </label> 
             <input name="villages_coevring" id="villages_coevring" type="text" class="form-control" data-placeholder-en="How many Villages are mapped on your Bharat Pashudhan ID" data-placeholder-hi="आपके भारत पशुधन आईडी पर कितने गांव मैप किए गए हैं"  autofocus>
@@ -277,7 +283,31 @@
     </form>
 <!--First row Closed-->
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>	
+
+$(document).ready(function () {
+    // loginForm
+    $('#loginForm').on('submit', function(event) {
+       
+        let pincode = $('#pincode').val();
+        let isValid = /^[0-9]{6}$/.test(pincode);
+        
+        if (!isValid) {
+            event.preventDefault();
+            $('#error-message').show();
+            $('#pincode')[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            $('#pincode').focus();
+        } else {
+            $('#error-message').hide();
+        }
+    });
+    
+    $('#pincode').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+});
+
 $('.added_vh_ai_center').hide();
 $('.semen_source_added').hide();
 $('#district').change(function() {
