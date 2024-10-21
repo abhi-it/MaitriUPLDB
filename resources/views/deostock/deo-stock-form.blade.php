@@ -301,7 +301,7 @@
                     $('#select_maitri').empty();
 
                     // Check if data is returned successfully
-                    if (result.success && result.type === 'maitri' && != '') {
+                    if (result.success && result.type === 'maitri' && result.success != '') {
                         // Populate select_maitri with new options
                         $.each(result.success, function(index, maitri) {
                             // Add new options with the required value and text
