@@ -30,6 +30,7 @@
             $endYear = date('Y'); // Current year
             $selectedYear = 2026; // The selected start year (2026-2027)
         @endphp
+        <input type="hidden" name="id" id="record_id" value="">
 
         <div class="row">
             <div class="number_of_ai">
@@ -185,7 +186,7 @@
                     <td>{{ $daliData['heading_of_insurance'] }}</td>
                     <td>{{ $daliData['number_of_insurance'] }}</td>
                     <td>{{ $daliData['created_at'] }}</td>
-                    <td><button class="btn btn-danger">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger edit-btn" data-record="{{ json_encode($daliData) }}">Edit</button></td>
                 </tr>
                 @php $i++ @endphp
             @endforeach
@@ -196,5 +197,31 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('assets/js/checkRemaninngStock.js') }}"></script>
+<script>
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const record = JSON.parse(this.getAttribute('data-record'));
+            
+            // Populate form fields with data
+            document.getElementById('record_id').value = record.id;
+            document.getElementById('num_of_ai_year').value = record.num_of_ai_year;
+            document.querySelector('input[name="heading_of_ai"]').value = record.heading_of_ai;
+            document.querySelector('input[name="num_of_ai"]').value = record.num_of_ai;
+            document.getElementById('num_of_pd_year').value = record.num_of_pd_year;
+            document.querySelector('input[name="heading_of_pd"]').value = record.heading_of_pd;
+            document.querySelector('input[name="num_of_pd"]').value = record.num_of_pd;
+            document.getElementById('num_of_calving_year').value = record.num_of_calving_year;
+            document.querySelector('input[name="heading_of_calving"]').value = record.heading_of_calving;
+            document.querySelector('input[name="num_of_calving"]').value = record.num_of_calving;
+            document.getElementById('number_of_insurance_year').value = record.number_of_insurance_year;
+            document.querySelector('input[name="heading_of_insurance"]').value = record.heading_of_insurance;
+            document.querySelector('input[name="number_of_insurance"]').value = record.number_of_insurance;
+            
+            // Scroll to form or bring it into focus
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+</script>
 
 @endsection 
