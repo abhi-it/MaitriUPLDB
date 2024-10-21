@@ -61,13 +61,13 @@ class LoginController extends Controller
             if(Auth::user()->role_id == 5){
                 return redirect("deo-stock-details");
             }else if(Auth::user()->role_id==9){
-                return redirect("block-inventory");
+                return redirect("block-stock-details");
             }else if(Auth::user()->role_id==10){
-                return redirect("district-inventory");
+                return redirect("district-stock-details");
             }else if(Auth::user()->role_id==8){
-                return redirect("division-inventory");
+                return redirect("division-stock-details");
             }else if(Auth::user()->role_id==7){
-                return redirect("zone-inventory");
+                return redirect("zone-stock-details");
             }else if(Auth::user()->role_id==4){
                 return redirect("farmer-dashboard");
             }else if(Auth::user()->role_id==3){
