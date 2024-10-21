@@ -29,6 +29,7 @@
                     <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
                     <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
                     <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
+                    <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +59,7 @@
                     <td>{{ $stockDistrict->container_capacity }}</td>
                     <td>{{ $stockDistrict->scheme }}</td>
                     <td>{{ $stockDistrict->bull_ids }}</td>
+                    <td>{{ $stockDistrict->created_at }}</td>
                     </tr>
                     @php $i++ @endphp
                 @endforeach

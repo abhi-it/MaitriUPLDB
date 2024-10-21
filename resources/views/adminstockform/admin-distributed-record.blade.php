@@ -29,6 +29,7 @@
                     <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
                     <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
                     <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
+                    <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,7 @@
                             <td>{{ $zoneUser->container_capacity }}</td>
                             <td>{{ $zoneUser->scheme }}</td>
                             <td>{{ $zoneUser->bull_ids }}</td>
+                            <td>{{ $zoneUser->created_at }}</td>
                             </tr>
                         @endforeach
                         @php $i++ @endphp
