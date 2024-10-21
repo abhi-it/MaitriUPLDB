@@ -41,7 +41,12 @@ class DeoStockUserController extends Controller
                     ->where('janpad_name', 'LIKE', $aiJanpad)
                     ->where('block', 'LIKE', $aiBlock)
                     ->get();
-        return response()->json(['type' => 'maitri', 'success' => $getMaitris]);
+        if($getMaitris){
+            return response()->json(['type' => 'maitri', 'success' => $getMaitris]);
+        }else{
+            return response()->json(['type' => 'nomaitri',]);
+        }
+        
     }
 
     public function deoStockForm(){
