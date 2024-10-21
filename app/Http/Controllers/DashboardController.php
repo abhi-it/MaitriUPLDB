@@ -401,7 +401,7 @@ class DashboardController extends Controller
 
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
-        $heading = 'कुल आवेदन';
+        $heading = 'कुल आवेदन मैत्री';
         $statusButtonApprovedRejectedShow = 0;
 
         if ($export !== null) {

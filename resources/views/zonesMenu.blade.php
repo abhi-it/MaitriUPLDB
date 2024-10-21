@@ -711,7 +711,7 @@ header .navbar li.nav-item.active a.nav-link {
                 "pageLength": 25,
                 "ordering": false,
                 "oLanguage": {
-                    "sInfo": "कुल आवेदन :  _TOTAL_",
+                    "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
                     "sLengthMenu": "देखें  _MENU_ आवेदन",
                     "sSearch": "आवेदन को खोजें :",
                     "infoEmpty": "कोई आवेदन नहीं है",

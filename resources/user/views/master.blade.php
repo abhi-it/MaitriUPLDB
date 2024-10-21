@@ -705,7 +705,7 @@
                 "pageLength": 25,
                 "ordering": false,
                 "oLanguage": {
-                    "sInfo": "कुल आवेदन :  _TOTAL_",
+                    "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
                     "sLengthMenu": "देखें  _MENU_ आवेदन",
                     "sSearch": "आवेदन को खोजें :",
                     "infoEmpty": "कोई आवेदन नहीं है",
@@ -951,7 +951,7 @@
                             @if (auth()->user()->user_type != 'District Officer')
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{ url('total-avedan') }}">
-                                    <span data-hi="कुल आवेदन" data-en="Total Applications"></span> 
+                                    <span data-hi="कुल आवेदन मैत्री" data-en="Total Applications"></span> 
                                         
                                     </a>
                                 </li>
