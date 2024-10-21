@@ -30,50 +30,50 @@
                 <div class="row g-4">
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/1.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/1.avi') }}" alt="...">
                             <p><span data-hi="स्वदेशी" data-en="Sahiwal"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/2.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/2.avif') }}" alt="...">
                             <p><span data-hi="गंगातिरी" data-en="Gangatiri"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/3.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/3.avif') }}" alt="...">
                             <p><span data-hi="गिर" data-en="Gir"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/4.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/4.avif') }}" alt="...">
+                            <p><span data-hi="गिर" data-en="Gir"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-3">
+                        <div class="animal-section">
+                            <img src="{{ asset('cattleBuffalo/5.avif') }}" alt="...">
                             <p><span data-hi="केनकाथा" data-en="Kenkatha"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/5.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/6.avif') }}" alt="...">
                             <p><span data-hi="केरीगढ़" data-en="Kerigarh"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/6.avif')}}" alt="...">
-                            <p><span data-hi="मेवाती" data-en="Mewati"></span></p>
+                            <img src="{{ asset('cattleBuffalo/7.avif') }}" alt="...">
+                            <p><span data-hi="मेवाती " data-en="Mewati"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/7.avif')}}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/8.avif') }}" alt="...">
                             <p><span data-hi="पोंवार" data-en="Ponwar"></span></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-lg-4 col-xl-3">
-                        <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/8.avif')}}" alt="...">
-                            <p><span data-hi="मुर्राह" data-en="Murrah"></span></p>
                         </div>
                     </div>
                 </div>
