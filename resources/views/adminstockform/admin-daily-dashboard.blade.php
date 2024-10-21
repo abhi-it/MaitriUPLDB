@@ -38,21 +38,10 @@
                     <span data-hi="AI पूर्ण की गई संख्या" data-en="Number of AI"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <select name="num_of_ai_year" id="num_of_ai_year" class="form-control" required autofocus="">
-                            <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
-                            @for ($year = $startYear; $year <= $endYear; $year++)
-                                <option value="{{ $year }}-{{ $year + 1 }}" 
-                                    {{ $year == $selectedYear ? 'selected' : '' }}>
-                                    {{ $year }}-{{ $year + 1 }}
-                                </option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="heading_of_ai" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="num_of_ai" class="form-control" required data-placeholder-hi="AI की संख्या दर्ज करें" data-placeholder-en="Enter Number of AI" autofocus/>
                     </div>
                 </div>
@@ -62,21 +51,10 @@
                     <span data-hi="पूर्ण किये गए पी.डी. की संख्या" data-en="Number of PD"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <select name="num_of_pd_year" id="num_of_pd_year" required class="form-control" autofocus="">
-                            <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
-                            @for ($year = $startYear; $year <= $endYear; $year++)
-                                <option value="{{ $year }}-{{ $year + 1 }}" 
-                                    {{ $year == $selectedYear ? 'selected' : '' }}>
-                                    {{ $year }}-{{ $year + 1 }}
-                                </option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="heading_of_pd" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="num_of_pd" class="form-control" required data-placeholder-hi="पीडी की संख्या दर्ज करें" data-placeholder-en="Number of PD" autofocus/>
                     </div>
                 </div>
@@ -86,21 +64,10 @@
                     <span data-hi="बछड़ों की संख्या" data-en="Number of Calving"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <select name="num_of_calving_year" id="num_of_calving_year" required class="form-control" autofocus="">
-                            <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
-                            @for ($year = $startYear; $year <= $endYear; $year++)
-                                <option value="{{ $year }}-{{ $year + 1 }}" 
-                                    {{ $year == $selectedYear ? 'selected' : '' }}>
-                                    {{ $year }}-{{ $year + 1 }}
-                                </option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="heading_of_calving" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="num_of_calving" class="form-control" required data-placeholder-hi="बछड़ों की संख्या दर्ज करें" data-placeholder-en="Enter Number of Calving" autofocus/>
                     </div>
                 </div>
@@ -110,21 +77,10 @@
                     <span data-hi="बीमा की संख्या" data-en="Number of Insurance"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <select name="number_of_insurance_year" id="number_of_insurance_year" required class="form-control" autofocus="">
-                            <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
-                            @for ($year = $startYear; $year <= $endYear; $year++)
-                                <option value="{{ $year }}-{{ $year + 1 }}" 
-                                    {{ $year == $selectedYear ? 'selected' : '' }}>
-                                    {{ $year }}-{{ $year + 1 }}
-                                </option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="heading_of_insurance" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" name="number_of_insurance" class="form-control" required data-placeholder-hi="बीमा की संख्या दर्ज करें" data-placeholder-en="Enter Number of Insurance" autofocus/>
                     </div>
                 </div>
@@ -148,16 +104,12 @@
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
                 <th><span data-hi="AI पूर्ण की गई संख्या" data-en="Number of AI"></span></th>
                 <th><span data-hi="एआई शीर्षक" data-en="AI Heading"></span></th>
-                <th><span data-hi="एआई वर्ष" data-en="AI Year"></span></th>
                 <th><span data-hi="पीडी की संख्या" data-en="Number of PD"></span></th>
                 <th><span data-hi="पीडी शीर्षक" data-en="PD Heading"></span></th>
-                <th><span data-hi="पीडी वर्ष की संख्या" data-en="Number of PD Year"></span></th>
                 <th> <span data-hi="बछड़े का जन्म शीर्षक" data-en="Calving Heading"></span></th>
                 <th> <span data-hi="बछड़ों की संख्या" data-en="Number of Calving"></span></th>
-                <th><span data-hi="बछड़े के जन्म का वर्ष" data-en="Calving Year"></span></th>
                 <th><span data-hi="बीमा शीर्षक" data-en="Insurance Heading"></span></th>
                 <th><span data-hi="बीमा की संख्या" data-en="Number of Insurance"></span></th>
-                <th> <span data-hi="बीमा वर्ष" data-en="Insurance Year"></span> </th>
                 <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
                 <th> <span data-hi="अद्यतन" data-en="Update"></span> </th>
             </tr>
@@ -173,16 +125,12 @@
             @foreach($dailyDashboard as $daliData)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $daliData['num_of_ai_year'] }}</td>
                     <td>{{ $daliData['heading_of_ai'] }}</td>
                     <td>{{ $daliData['num_of_ai'] }}</td>
-                    <td>{{ $daliData['num_of_pd_year'] }}</td>
                     <td>{{ $daliData['heading_of_pd'] }}</td>
                     <td>{{ $daliData['num_of_pd'] }}</td>
-                    <td>{{ $daliData['num_of_calving_year'] }}</td>
                     <td>{{ $daliData['heading_of_calving'] }}</td>
                     <td>{{ $daliData['num_of_calving'] }}</td>
-                    <td>{{ $daliData['number_of_insurance_year'] }}</td>
                     <td>{{ $daliData['heading_of_insurance'] }}</td>
                     <td>{{ $daliData['number_of_insurance'] }}</td>
                     <td>{{ $daliData['created_at'] }}</td>
@@ -204,16 +152,12 @@
             
             // Populate form fields with data
             document.getElementById('record_id').value = record.id;
-            document.getElementById('num_of_ai_year').value = record.num_of_ai_year;
             document.querySelector('input[name="heading_of_ai"]').value = record.heading_of_ai;
             document.querySelector('input[name="num_of_ai"]').value = record.num_of_ai;
-            document.getElementById('num_of_pd_year').value = record.num_of_pd_year;
             document.querySelector('input[name="heading_of_pd"]').value = record.heading_of_pd;
             document.querySelector('input[name="num_of_pd"]').value = record.num_of_pd;
-            document.getElementById('num_of_calving_year').value = record.num_of_calving_year;
             document.querySelector('input[name="heading_of_calving"]').value = record.heading_of_calving;
             document.querySelector('input[name="num_of_calving"]').value = record.num_of_calving;
-            document.getElementById('number_of_insurance_year').value = record.number_of_insurance_year;
             document.querySelector('input[name="heading_of_insurance"]').value = record.heading_of_insurance;
             document.querySelector('input[name="number_of_insurance"]').value = record.number_of_insurance;
             

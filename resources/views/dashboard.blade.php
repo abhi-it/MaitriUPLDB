@@ -37,7 +37,7 @@
             <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
                     <div class="card-header">
-                        <span data-hi="नये आवेदन" data-en="New Applications"></span>    
+                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span>    
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $newApplication }}</h5>

@@ -633,6 +633,45 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
     </div>
   </div>
   </section>
+  <section class="py-5 my-3 counter-section">
+  <div class="container">
+    <div class="d-flex mb-5 flex-column align-items-center justify-content-center text-white text-center">
+      <h2 class="fw-bold"> <span data-hi="मैत्री जनसंख्या उत्तर प्रदेश" data-en="Maitri Population Uttar Pradesh"></span>  </h2>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-4 p-2">
+        <div class="text-center">
+          <h2 class="fw-bold logo-title">2021 - 2022</h2>
+          <p class="text-center text-white fs-4 cattle counter">1182</p>
+        </div>
+      </div>
+      <div class="col-lg-4 p-2">
+        <div class="text-center">
+          <h2 class="fw-bold logo-title">2022 - 2023</h2>
+          <p class="text-center text-white fs-4 counter">1755</p>
+        </div>
+      </div>
+      <div class="col-lg-4 p-2">
+        <div class="text-center">
+          <h2 class="fw-bold logo-title">2023 - 2024</h2>
+          <p class="text-center text-white fs-4 counter">1897</p>
+        </div>
+      </div>
+      <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+        <div class="text-center">
+          <h2 class="fw-bold logo-title">2023</h2>
+          <p class="text-center text-white fs-4 counter">{{$m23}}</p>
+        </div>
+      </div> -->
+      <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
+        <div class="text-center">
+          <h2 class="fw-bold logo-title">2024</h2>
+          <p class="text-center text-white fs-4 counter">{{$m24}}</p>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>
 
 
 <section class="py-4">
@@ -686,35 +725,30 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
 <section class="py-5 my-3 counter-section">
   <div class="container">
     <div class="d-flex mb-5 flex-column align-items-center justify-content-center text-white text-center">
-      <small><span data-hi="आंकड़े" data-en="STATISTICS"></span>  2020-2024</small>
       <h2 class="fw-bold"> <span data-hi="मैत्री जनसंख्या उत्तर प्रदेश" data-en="Maitri Population Uttar Pradesh"></span>  </h2>
     </div>
     <div class="row g-3">
         <div class="col-lg-3 p-2">
             <div class="text-center">
-              <h5 class="fw-bold text-white"><span data-hi="{{ $dailyDashboard['heading_of_ai'] ?? 'Number of AI Done' }}" data-en="{{ $dailyDashboard['heading_of_ai'] ?? 'Number of AI Done' }}"></span> </h5>
-              <h2 class="fw-bold logo-title">{{ $dailyDashboard['num_of_ai_year'] ?? '2021 - 2022' }}</h2>
+              <h5 class="fw-bold logo-title"><span data-hi="{{ $dailyDashboard['heading_of_ai'] ?? 'Number of AI Done' }}" data-en="{{ $dailyDashboard['heading_of_ai'] ?? 'Number of AI Done' }}"></span> </h5>
               <p class="text-center text-white fs-4 cattle counter">{{ $dailyDashboard['num_of_ai'] ?? '1182' }}</p>
             </div>
           </div>
         <div class="col-lg-3 p-2">
           <div class="text-center">
-            <h5 class="fw-bold text-white"><span data-hi="{{ $dailyDashboard['heading_of_pd'] ?? 'Number of PD Done' }}" data-en="{{ $dailyDashboard['heading_of_pd'] ?? 'Number of PD Done' }}"></span></h5>
-            <h2 class="fw-bold logo-title">{{ $dailyDashboard['num_of_pd_year'] ?? '2022 - 2023' }}</h2>
+            <h5 class="fw-bold logo-title"><span data-hi="{{ $dailyDashboard['heading_of_pd'] ?? 'Number of PD Done' }}" data-en="{{ $dailyDashboard['heading_of_pd'] ?? 'Number of PD Done' }}"></span></h5>
             <p class="text-center text-white fs-4 counter">{{ $dailyDashboard['num_of_pd'] ?? '1755' }}</p>
           </div>
         </div>
         <div class="col-lg-3 p-2">
           <div class="text-center">
-            <h5 class="fw-bold text-white"><span data-hi="{{ $dailyDashboard['heading_of_calving'] ?? 'Number of Calving Done' }}" data-en="{{ $dailyDashboard['heading_of_calving'] ?? 'Number of Calving Done' }}"></span></h5>
-            <h2 class="fw-bold logo-title">{{ $dailyDashboard['num_of_calving_year'] ?? '2023 - 2024' }}</h2>
+            <h5 class="fw-bold logo-title"><span data-hi="{{ $dailyDashboard['heading_of_calving'] ?? 'Number of Calving Done' }}" data-en="{{ $dailyDashboard['heading_of_calving'] ?? 'Number of Calving Done' }}"></span></h5>
             <p class="text-center text-white fs-4 counter">{{ $dailyDashboard['num_of_calving'] ?? '1897' }}</p>
           </div>
         </div>
         <div class="col-lg-3 p-2">
           <div class="text-center">
-            <h5 class="fw-bold text-white"><span data-hi="{{ $dailyDashboard['heading_of_insurance'] ?? 'Number of Insurance Done' }}" data-en="{{ $dailyDashboard['heading_of_insurance'] ?? 'Number of Insurance Done' }}"></span></h5>
-            <h2 class="fw-bold logo-title">{{ $dailyDashboard['number_of_insurance_year'] ?? '2024 - 2025' }}</h2>
+            <h5 class="fw-bold logo-title"><span data-hi="{{ $dailyDashboard['heading_of_insurance'] ?? 'Number of Insurance Done' }}" data-en="{{ $dailyDashboard['heading_of_insurance'] ?? 'Number of Insurance Done' }}"></span></h5>
             <p class="text-center text-white fs-4 counter">{{ $dailyDashboard['number_of_insurance'] ?? '1900' }}</p>
           </div>
         </div>

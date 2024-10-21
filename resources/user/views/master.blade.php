@@ -929,22 +929,22 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span> 
                                         </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span> 
                                            </a>
                                         <a class="dropdown-item"
                                             href="{{ url('avedan-districtwise') }}">
-                                            <span data-hi="नये आवेदन जनपद वार" data-en="New Applications District Wise"></span> 
+                                            <span data-hi="नये आवेदन मैत्री जनपद वार" data-en="New Applications District Wise"></span> 
                                         </a>
                                     </div>
                                 </li>
                             @else
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन" data-en="New Applications"></span> 
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span> 
                                     </a>
                                 </li>
                             @endif

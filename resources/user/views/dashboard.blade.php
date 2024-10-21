@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-sm-3 mt-5 mb-5">
                 <div class="card text-center">
-                    <div class="card-header">नये आवेदन</div>
+                    <div class="card-header">नये आवेदन मैत्री</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $newApplication }}</h5>
                         <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->

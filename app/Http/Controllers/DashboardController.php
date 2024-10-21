@@ -221,7 +221,7 @@ class DashboardController extends Controller
 
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
 
-        $heading = 'नये आवेदन';
+        $heading = 'नये आवेदन मैत्री';
         $statusButtonApprovedRejectedShow = 0;
 
         if ($export !== null) {
@@ -293,7 +293,7 @@ class DashboardController extends Controller
             $results = array();
         }
 
-        $heading = 'नये आवेदन जनपद वार ';
+        $heading = 'नये आवेदन मैत्री जनपद वार ';
         $statusButtonApprovedRejectedShow = 0;
 
 
