@@ -37,8 +37,8 @@
                     <span data-hi="AI पूर्ण की गई संख्या" data-en="Number of AI"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <select name="num_of_ai_year" id="num_of_ai_year" class="form-control" autofocus="">
+                    <div class="form-group col-md-4">
+                        <select name="num_of_ai_year" id="num_of_ai_year" class="form-control" required autofocus="">
                             <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
                             @for ($year = $startYear; $year <= $endYear; $year++)
                                 <option value="{{ $year }}-{{ $year + 1 }}" 
@@ -48,8 +48,11 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" name="num_of_ai" class="form-control" data-placeholder-hi="AI की संख्या दर्ज करें" data-placeholder-en="Enter Number of AI" autofocus/>
+                    <div class="col-md-4">
+                        <input type="text" name="heading_of_ai" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="num_of_ai" class="form-control" required data-placeholder-hi="AI की संख्या दर्ज करें" data-placeholder-en="Enter Number of AI" autofocus/>
                     </div>
                 </div>
             </div>
@@ -58,8 +61,8 @@
                     <span data-hi="पूर्ण किये गए पी.डी. की संख्या" data-en="Number of PD"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <select name="num_of_pd_year" id="num_of_pd_year" class="form-control" autofocus="">
+                    <div class="form-group col-md-4">
+                        <select name="num_of_pd_year" id="num_of_pd_year" required class="form-control" autofocus="">
                             <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
                             @for ($year = $startYear; $year <= $endYear; $year++)
                                 <option value="{{ $year }}-{{ $year + 1 }}" 
@@ -69,8 +72,11 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" name="num_of_pd" class="form-control" data-placeholder-hi="पीडी की संख्या दर्ज करें" data-placeholder-en="Number of PD" autofocus/>
+                    <div class="col-md-4">
+                        <input type="text" name="heading_of_pd" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="num_of_pd" class="form-control" required data-placeholder-hi="पीडी की संख्या दर्ज करें" data-placeholder-en="Number of PD" autofocus/>
                     </div>
                 </div>
             </div>
@@ -79,8 +85,8 @@
                     <span data-hi="बछड़ों की संख्या" data-en="Number of Calving"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <select name="num_of_calving_year" id="num_of_calving_year" class="form-control" autofocus="">
+                    <div class="form-group col-md-4">
+                        <select name="num_of_calving_year" id="num_of_calving_year" required class="form-control" autofocus="">
                             <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
                             @for ($year = $startYear; $year <= $endYear; $year++)
                                 <option value="{{ $year }}-{{ $year + 1 }}" 
@@ -90,8 +96,11 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" name="num_of_calving" class="form-control" data-placeholder-hi="बछड़ों की संख्या दर्ज करें" data-placeholder-en="Enter Number of Calving" autofocus/>
+                    <div class="col-md-4">
+                        <input type="text" name="heading_of_calving" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="num_of_calving" class="form-control" required data-placeholder-hi="बछड़ों की संख्या दर्ज करें" data-placeholder-en="Enter Number of Calving" autofocus/>
                     </div>
                 </div>
             </div>
@@ -100,8 +109,8 @@
                     <span data-hi="बीमा की संख्या" data-en="Number of Insurance"></span>
                 </label> 
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <select name="number_of_insurance_year" id="number_of_insurance_year" class="form-control" autofocus="">
+                    <div class="form-group col-md-4">
+                        <select name="number_of_insurance_year" id="number_of_insurance_year" required class="form-control" autofocus="">
                             <option value="" data-hi="वर्ष चुनें" data-en="select Year"></option>
                             @for ($year = $startYear; $year <= $endYear; $year++)
                                 <option value="{{ $year }}-{{ $year + 1 }}" 
@@ -111,8 +120,11 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" name="number_of_insurance" class="form-control" data-placeholder-hi="बीमा की संख्या दर्ज करें" data-placeholder-en="Enter Number of Insurance" autofocus/>
+                    <div class="col-md-4">
+                        <input type="text" name="heading_of_insurance" class="form-control" required data-placeholder-hi="लेबल दर्ज करें" data-placeholder-en="Enter a Label" autofocus/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="number_of_insurance" class="form-control" required data-placeholder-hi="बीमा की संख्या दर्ज करें" data-placeholder-en="Enter Number of Insurance" autofocus/>
                     </div>
                 </div>
             </div>
@@ -132,19 +144,51 @@
         <table class="table table-striped  table-responsive table-bordered">
         <thead>
             <tr>
+                <th><span data-hi="S.No" data-en="S.No"></span></th>
                 <th><span data-hi="AI पूर्ण की गई संख्या" data-en="Number of AI"></span></th>
-                <th><span data-hi="वीर्य" data-en="Number of AI Year"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Number of PD"></span></th>
-                <th><span data-hi="बैनर" data-en="Number of PD Year"></span></th>
-                <th> <span data-hi="कामचोर" data-en="Number of Calving"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Number of Calving Year"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Number of Insurance"></span></th>
-                <th> <span data-hi="एआई किट" data-en="Number of Insurance Year"></span> </th>
+                <th><span data-hi="एआई शीर्षक" data-en="AI Heading"></span></th>
+                <th><span data-hi="एआई वर्ष" data-en="AI Year"></span></th>
+                <th><span data-hi="पीडी की संख्या" data-en="Number of PD"></span></th>
+                <th><span data-hi="पीडी शीर्षक" data-en="PD Heading"></span></th>
+                <th><span data-hi="पीडी वर्ष की संख्या" data-en="Number of PD Year"></span></th>
+                <th> <span data-hi="बछड़े का जन्म शीर्षक" data-en="Calving Heading"></span></th>
+                <th> <span data-hi="बछड़ों की संख्या" data-en="Number of Calving"></span></th>
+                <th><span data-hi="बछड़े के जन्म का वर्ष" data-en="Calving Year"></span></th>
+                <th><span data-hi="बीमा शीर्षक" data-en="Insurance Heading"></span></th>
+                <th><span data-hi="बीमा की संख्या" data-en="Number of Insurance"></span></th>
+                <th> <span data-hi="बीमा वर्ष" data-en="Insurance Year"></span> </th>
+                <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
                 <th> <span data-hi="अद्यतन" data-en="Update"></span> </th>
             </tr>
         </thead>
         <tbody>
+            @if ($dailyDashboard->isEmpty())
+                <tr>
+                    <td colspan="15" class="text-center">No data found</td>
+                </tr>
+            @endif
 
+            @php $i = 1 @endphp
+            @foreach($dailyDashboard as $daliData)
+                <tr>
+                    <td>{{ $i }}</td>
+                    <td>{{ $daliData['num_of_ai_year'] }}</td>
+                    <td>{{ $daliData['heading_of_ai'] }}</td>
+                    <td>{{ $daliData['num_of_ai'] }}</td>
+                    <td>{{ $daliData['num_of_pd_year'] }}</td>
+                    <td>{{ $daliData['heading_of_pd'] }}</td>
+                    <td>{{ $daliData['num_of_pd'] }}</td>
+                    <td>{{ $daliData['num_of_calving_year'] }}</td>
+                    <td>{{ $daliData['heading_of_calving'] }}</td>
+                    <td>{{ $daliData['num_of_calving'] }}</td>
+                    <td>{{ $daliData['number_of_insurance_year'] }}</td>
+                    <td>{{ $daliData['heading_of_insurance'] }}</td>
+                    <td>{{ $daliData['number_of_insurance'] }}</td>
+                    <td>{{ $daliData['created_at'] }}</td>
+                    <td><button class="btn btn-danger">Edit</button></td>
+                </tr>
+                @php $i++ @endphp
+            @endforeach
 
         </tbody>
     </table>

@@ -31,18 +31,23 @@ class AdminInventoryController extends Controller
     }
 
     public function adminDailyDashboard(){
-        return view('adminstockform.admin-daily-dashboard');
+        $dailyDashboard = DailyDashboard::all();
+        return view('adminstockform.admin-daily-dashboard', compact('dailyDashboard'));
     }
 
     public function saveDaliDashboard(Request $request){
         DailyDashboard::create([
             'num_of_ai_year'            => $request->num_of_ai_year,
+            'heading_of_ai'             => $request->heading_of_ai,
             'num_of_ai'                 => $request->num_of_ai,
             'num_of_pd_year'            => $request->num_of_pd_year,
+            'heading_of_pd'             => $request->heading_of_pd,
             'num_of_pd'                 => $request->num_of_pd,
             'num_of_calving_year'       => $request->num_of_calving_year,
+            'heading_of_calving'        => $request->heading_of_calving,
             'num_of_calving'            => $request->num_of_calving,
             'number_of_insurance_year'  => $request->number_of_insurance_year,
+            'heading_of_insurance'      => $request->heading_of_insurance,
             'number_of_insurance'       => $request->number_of_insurance,
         ]);
         return redirect()->back()->with('success','Daily Dashboard Added!');
