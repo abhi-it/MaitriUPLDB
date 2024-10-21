@@ -276,7 +276,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("store-deo-user-data", [BlockUserController::class, 'storeDeoUserData'])->name('store-deo-user-data');
     Route::post("deo-store-user-data", [BlockUserController::class, 'deoUserDataStore'])->name('deo-store-user-data');
     
-    // deo dashboard
+    // deo dashboard 
+    Route::get("search-maitri-data", [DeoStockUserController::class, 'searchMaitriData'])->name('search-maitri-data');
     Route::get("deo-inventory", [DeoStockUserController::class, 'deoInventory'])->name('deo-inventory');
     Route::get("deo-show-stock-record", [DeoStockUserController::class, 'deoStockRecord'])->name('deo-show-stock-record');
     Route::get("deo-stock-details", [DeoStockUserController::class, 'deoStockDetaikls'])->name('deo-stock-details');

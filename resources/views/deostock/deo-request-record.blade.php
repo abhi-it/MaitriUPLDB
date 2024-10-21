@@ -34,7 +34,12 @@
             </thead>
             <tbody>
 
-               
+                @if(count($getRecordData) == 0)
+                    <tr>
+                        <td colspan="16" class="text-center">No Record Found</td>
+                    </tr>
+                @endif
+
                 @php $i = 1; @endphp
                 @foreach ($getRecordData as $key => $requestRecord)
                     <tr>

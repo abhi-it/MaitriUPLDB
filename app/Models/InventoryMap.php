@@ -12,7 +12,8 @@ class InventoryMap extends Model
         'user_id',
         'zone_id',
         'inventory_id',
-        'deo_id' ,
+        'deo_id',
+        'maitri_id',
     ];
     protected $table = 'inventory_map_user';
 }

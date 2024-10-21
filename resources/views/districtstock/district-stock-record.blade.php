@@ -33,6 +33,12 @@
             </thead>
             <tbody>
 
+                @if(count($districtStock) == 0)
+                    <tr>
+                        <td colspan="15" class="text-center">No Record Found</td>
+                    </tr>
+                @endif
+
                
                 @php $i = 1; @endphp
                 @foreach ($districtStock as $key => $stockDistrict)

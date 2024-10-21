@@ -56,6 +56,7 @@ class CheckRole
     {
         return [
             'deo' => [
+                'search-maitri-data',
                 'create-deo-user-form',
                 'deo-inventory',
                 'deo-stock-form',

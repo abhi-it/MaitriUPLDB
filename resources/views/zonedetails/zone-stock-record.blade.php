@@ -32,6 +32,11 @@
                 </tr>
             </thead>
             <tbody>
+                @if(count($zoneStock) == 0)
+                    <tr>
+                        <td colspan="15" class="text-center">No Record Found</td>
+                    </tr>
+                @endif
 
                
                 @php $i = 1; @endphp

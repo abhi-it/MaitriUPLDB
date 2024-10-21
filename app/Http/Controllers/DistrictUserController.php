@@ -64,7 +64,7 @@ class DistrictUserController extends Controller{
                         ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
                         ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
                         ->select('zone_stock_details.*', 'deo_users.*')
-                        ->where('inventory_map_user.user_id', $division_User_id)
+                        ->where(['inventory_map_user.user_id' => $division_User_id, 'inventory_map_user.assign_user_id' => $user_id])
                         ->get();
 
             foreach($results as $result){

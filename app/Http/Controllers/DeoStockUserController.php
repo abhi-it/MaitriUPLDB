@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AIcenters;
 use App\Models\API\Role;
 use App\Models\Block;
+use App\Models\Maitri;
 use App\Models\Blockslist;
 use App\Models\Cliniclocation;
 use App\Models\DeoUser;
@@ -27,6 +28,20 @@ class DeoStockUserController extends Controller
 {
     public function deoInventory(){
         return view('deostock.index');
+    }
+
+    public function searchMaitriData(Request $request){
+        $aiCenterId = $request->id;
+        $aiCenterName = Cliniclocation::where('id', $aiCenterId)->first();
+        $aiMandal = $aiCenterName['mandal_name'];
+        $aiJanpad = $aiCenterName['janpad_name'];
+        $aiBlock = $aiCenterName['block'];
+
+        $getMaitris = Maitri::where('mandal_name', 'LIKE', $aiMandal)
+                    ->where('janpad_name', 'LIKE', $aiJanpad)
+                    ->where('block', 'LIKE', $aiBlock)
+                    ->get();
+        return response()->json(['type' => 'maitri', 'success' => $getMaitris]);
     }
 
     public function deoStockForm(){
@@ -68,19 +83,17 @@ class DeoStockUserController extends Controller
             $results = DB::table('inventory_map_user')
                         ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
                         ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->select('zone_stock_details.*', 'deo_users.*')
-                        ->where('inventory_map_user.user_id', $division_User_id)
+                        ->join('maitries', 'maitries.id', '=', 'inventory_map_user.maitri_id')
+                        ->select('zone_stock_details.*', 'deo_users.*', 'maitries.*')
+                        ->where(['inventory_map_user.assign_user_id' => $user_id])
                         ->get();
 
             foreach($results as $result){
-                $division_id = $result->division_id;
-                $user_id = $result->user_id;
-                $divisonData = Divisions::where('id', $division_id)->first();
-                $userData = User::where('id', $user_id)->first();
-                if ($divisonData) {
-                    $result->user_name = $userData['FirstName'] . ' ' . $userData['LastName'];
-                    $result->division_name_eng = $divisonData['name_eng'];
-                    $result->division_name_hindi = $divisonData['name_hindi'];
+                $maitri_id = $result->id;
+                $userData = Maitri::where('id', $maitri_id)->first();
+                if ($userData) {
+                    $result->user_name = $userData['maitri_name'];
+                    $result->maitri_mobile_no = $userData['maitri_mobile_no'];
                     $deoStock[] = $result;
                 }
             }
@@ -271,7 +284,8 @@ class DeoStockUserController extends Controller
                 'assign_user_id' => $assign_user_id,
                 'user_id' => $user_id,
                 'inventory_id' => $inventory->id,
-                'deo_id' => $deoTableId
+                'deo_id' => $deoTableId,
+                'maitri_id' => $request->select_maitri
             ]);
             return redirect()->back()->with('success','Stock data submitted successfully!');
         }

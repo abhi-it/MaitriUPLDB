@@ -70,7 +70,7 @@
             <hr>
             
             <div class="row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
@@ -80,6 +80,15 @@
                         @foreach($ai_centerName as $aiCenterName)
                             <option value="{{ $aiCenterName['id'] }}" data-hi="{{ $aiCenterName['name_hindi'] }}" data-en="{{ $aiCenterName['name_eng'] }}"></option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4"> 
+                        <span data-hi="मैत्री चुनें" data-en="Select Maitri"></span> 
+                    </label> 
+                    
+                    <select name="select_maitri" id="select_maitri" class="form-control" required>
+                        <option value="" data-hi="मैत्री चुनें" data-en="Select Maitri"></option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -280,10 +289,41 @@
 <script>
     $(document).ready(function() {
 
+        $('#select_aicenter').change(function() {
+            var aiCenterID = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('search-maitri-data') }}",
+                dataType: 'json',
+                data: { id: aiCenterID },
+                success: function (result) {
+                    // Clear existing options in select_maitri
+                    $('#select_maitri').empty();
+
+                    // Check if data is returned successfully
+                    if (result.success && result.type === 'maitri') {
+                        // Populate select_maitri with new options
+                        $.each(result.success, function(index, maitri) {
+                            // Add new options with the required value and text
+                            $('#select_maitri').append(
+                                $('<option></option>').val(maitri.id).text('Name: '+maitri.maitri_name+'(Num: '+ maitri.maitri_mobile_no +', Bharat Pashudhan Id: '+ maitri.any_bharat_id +', Longitude: '+ maitri.longitude +', Latitude: '+ maitri.latitude +')')
+                            );
+                        });
+                    } else {
+                        // Optionally handle case when no data is returned
+                        $('#select_maitri').append(
+                            $('<option></option>').text('No Maitri available').prop('disabled', true)
+                        );
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: " + error);
+                }
+            });
+        })
+
         $('#semen').change(function() {
             var selectedValue = $(this).val();
-            
-            // Hide all dropdown groups initially
             $('.catle-options').addClass('d-none');
             $('#buffalo-options').addClass('d-none');
             $('#goat-options').addClass('d-none');
@@ -302,8 +342,6 @@
 
         $('#breed').change(function() {
             var selectedBreed = $(this).val();
-            
-            // Hide all breed type dropdowns initially
             $('#breedType1-options').addClass('d-none');
             $('#breedType2-options').addClass('d-none');
             $('#breedType3-options').addClass('d-none');
