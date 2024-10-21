@@ -21,7 +21,7 @@
                     <th><span data-hi="वीर्य" data-en="Semen"></span></th>
                     <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
                     <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                    <th> <span data-hi="कामचोर" data-en="Dangler"></span></th>
+                    <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
                     <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
                     <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
                     <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
