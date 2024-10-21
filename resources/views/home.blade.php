@@ -5,7 +5,7 @@ $m22 = App\Models\Maitri::where('pass_date', 'LIKE', '%2022%')->count();
 $m23 = App\Models\Maitri::where('pass_date', 'LIKE', '%2023%')->count();
 $m24 = App\Models\Maitri::where('pass_date', 'LIKE', '%2024%')->count();
 $latest = App\Models\Latestupdate::whereStatus(1)->get();
-$dailyDashboard = App\Models\DailyDashboard::all()->first();
+$dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
 
 ?>
 
