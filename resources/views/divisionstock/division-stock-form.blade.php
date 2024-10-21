@@ -42,7 +42,7 @@
                     </label> 
                     <select name="semen" id="semen" class="form-control" autofocus="">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                        <option value="catle" data-hi="मवेशी" data-en="Cattle"></option>
+                        <option value="catle" data-hi="गाय" data-en="Cattle"></option>
                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                         <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                     </select>
@@ -56,7 +56,7 @@
                     </label>
                     <select name="breed" id="breed" class="form-control">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                        <option value="swadeshi" data-hi="सहिवाल" data-en="Swadeshi"></option>
+                        <option value="swadeshi" data-hi="स्वदेशी" data-en="Swadeshi"></option>
                         <option value="hybrids-crossbred" data-hi="संकर" data-en="Hybrids - Crossbred"></option>
                         <option value="videshi" data-hi="विदेशी" data-en="Videshi"></option>
                     </select>

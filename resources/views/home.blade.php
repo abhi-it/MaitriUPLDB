@@ -428,7 +428,7 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
     <div class="row g-3">
       <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
         <div class="text-center">
-          <h2 class="fw-bold logo-title"><span data-hi="मवेशी" data-en="Cattle"></span></h2>
+          <h2 class="fw-bold logo-title"><span data-hi="गाय" data-en="Cattle"></span></h2>
           <p class="text-center text-white fs-4 cattle counter">1332510</p>
         </div>
       </div>
@@ -522,7 +522,7 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
              </h5>
           </div>
           <div class="flip-face flip-face-back">
-            <p><span data-hi="राज्य ने मवेशी प्रजनन के लिए इनपुट प्रदान करने के लिए तीन स्तरीय कृत्रिम गर्भाधान (ए.आई.) प्रबंधन प्रणाली विकसित की है, जिसमें बैल स्टेशन, क्षेत्रीय सीमेन बैंक (आरएसबी) और कृत्रिम गर्भाधान केंद्र शामिल हैं।" data-en="The State has evolved a three-tier Artificial Insemination (A.I.) management system to provide the inputs for cattle breeding namely Bull Stations, Regional Semen Banks (RSB), and Artificial Insemination Centres.">
+            <p><span data-hi="राज्य ने गाय प्रजनन के लिए इनपुट प्रदान करने के लिए तीन स्तरीय कृत्रिम गर्भाधान (ए.आई.) प्रबंधन प्रणाली विकसित की है, जिसमें बैल स्टेशन, क्षेत्रीय सीमेन बैंक (आरएसबी) और कृत्रिम गर्भाधान केंद्र शामिल हैं।" data-en="The State has evolved a three-tier Artificial Insemination (A.I.) management system to provide the inputs for cattle breeding namely Bull Stations, Regional Semen Banks (RSB), and Artificial Insemination Centres.">
             </p>
             <button class="btn btn-primary w-100"><span data-hi="और जानें" data-en="Know More"></span></button>
           </div>

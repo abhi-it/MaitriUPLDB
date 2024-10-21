@@ -31,7 +31,7 @@
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
                             <img src="{{ asset('cattleBuffalo/1.avif')}}" alt="...">
-                            <p><span data-hi="सहिवाल" data-en="Sahiwal"></span></p>
+                            <p><span data-hi="स्वदेशी" data-en="Sahiwal"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">

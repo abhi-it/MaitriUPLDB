@@ -141,7 +141,7 @@
             <div class="col-md-6">
                 <select name="semen" id="semen"  class="form-control"  autofocus>
                     <option>-select one-</option>
-                    <option>मवेशी (Cattle)</option>
+                    <option>गाय (Cattle)</option>
                     <option>भैंस (Buffalo)</option>
                     <option>बकरी (Goat)</option>
                 </select>

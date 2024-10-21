@@ -66,7 +66,7 @@
                     </label>
                     <select name="breed" id="breed" class="form-control">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                        <option value="swadeshi" data-hi="सहिवाल" data-en="Swadeshi"></option>
+                        <option value="swadeshi" data-hi="स्वदेशी" data-en="Swadeshi"></option>
                         <option value="hybrids-crossbred" data-hi="संकर" data-en="Hybrids - Crossbred"></option>
                         <option value="videshi" data-hi="विदेशी" data-en="Videshi"></option>
                     </select>
