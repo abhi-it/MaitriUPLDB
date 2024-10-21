@@ -134,6 +134,7 @@
                     </label>
                     <select name="breedType1" id="breedType1" class="form-control">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                        <option value="Sahiwal" data-hi="सहिवाल" data-en="Sahiwal"></option>
                         <option value="gangatiri" data-hi="गंगातिरी" data-en="Gangatiri"></option>
                         <option value="gir" data-hi="गिर" data-en="Gir"></option>
                         <option value="tharparkar" data-hi="थारपारकर" data-en="Tharparkar"></option>
