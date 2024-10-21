@@ -946,25 +946,25 @@ header .navbar li.nav-item.active a.nav-link {
                                         </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span>
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span>
                                            </a>
                                         <a class="dropdown-item"
                                             href="{{ url('avedan-districtwise') }}">
-                                            <span data-hi="नये आवेदन मैत्री जनपद वार" data-en="New Applications District Wise"></span>
+                                            <span data-hi="नये आवेदन मैत्री जनपद वार" data-en="New Applications Maitri District Wise"></span>
                                         </a>
                                     </div>
                                 </li>
                             @else
                                 <li class="nav-item {{ request()->is('avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span>
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span>
                                     </a>
                                 </li>
                             @endif
                             @if (auth()->user()->user_type != 'District Officer')
                                 <li class="nav-item {{ request()->is('total-avedan') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ url('total-avedan') }}">
-                                    <span data-hi="कुल आवेदन मैत्री" data-en="Total Applications"></span>
+                                    <span data-hi="कुल आवेदन मैत्री" data-en="Total Applications Maitri"></span>
 
                                     </a>
                                 </li>
