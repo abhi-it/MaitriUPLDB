@@ -725,7 +725,7 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
 <section class="py-5 my-3 counter-section">
   <div class="container">
     <div class="d-flex mb-5 flex-column align-items-center justify-content-center text-white text-center">
-      <h2 class="fw-bold"> <span data-hi="मैत्री जनसंख्या उत्तर प्रदेश" data-en="Maitri Population Uttar Pradesh"></span>  </h2>
+      <h2 class="fw-bold"> <span data-hi="भारत पशुधन दैनिक डैशबोर्ड उत्तर प्रदेश" data-en="Bharat Pashudhan Daily Dashboard Uttar Pradesh"></span>  </h2>
     </div>
     <div class="row g-3">
         <div class="col-lg-3 p-2">
