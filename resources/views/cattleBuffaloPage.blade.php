@@ -49,7 +49,7 @@
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
                             <img src="{{ asset('cattleBuffalo/4.avif') }}" alt="...">
-                            <p><span data-hi="गिर" data-en="Gir"></span></p>
+                            <p><span data-hi="थारपारकर" data-en="Tharparkar"></span></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
