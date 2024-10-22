@@ -70,7 +70,15 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
-
+$(document).ready(function () {
+    // new DataTable('#myTable_wrapper', {
+    //     layout: {
+    //         topStart: {
+    //             buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    //         }
+    //     }
+    // });
+});
 </script>
 
 @endsection
