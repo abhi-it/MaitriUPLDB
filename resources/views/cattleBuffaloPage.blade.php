@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
-                            <img src="{{ asset('cattleBuffalo/4.avif') }}" alt="...">
+                            <img src="{{ asset('cattleBuffalo/4.avif') }}" alt="..." style="object-fit: unset;">
                             <p><span data-hi="थारपारकर" data-en="Tharparkar"></span></p>
                         </div>
                     </div>
