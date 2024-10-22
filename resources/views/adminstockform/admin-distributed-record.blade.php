@@ -3,9 +3,9 @@
 
 <style>
     .search__button{
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
     }
     @media screen and (min-width: 1024px){
         .table-responsive {
@@ -75,12 +75,7 @@
         </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
-    </script>
+   
 
 @endsection
 

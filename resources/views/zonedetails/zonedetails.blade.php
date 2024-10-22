@@ -3,15 +3,20 @@
 
 <style>
     .search__button{
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    @media screen and (min-width: 1024px){
+        .table-responsive {
+            display: block !important;
+        }
     }
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
         <h3 class="text-center m-4 fw-bold">  <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span> </h3>
 
-        <table  id="myTable" class="table table-striped  table-responsive table-bordered">
+        <table  id="myTable" class="table table-striped  table-responsive table-bordered"  width="100%">
             <thead>
                 <tr>
                     <th><span data-hi="S.No" data-en="S.No"></span></th>
@@ -56,15 +61,9 @@
 
             </tbody>
         </table>
-
-        <div class="row">
-
-        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
-
-</script>
+    
 
 @endsection
 

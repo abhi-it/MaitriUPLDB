@@ -3,9 +3,14 @@
 
 <style>
     .search__button{
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    @media screen and (min-width: 1024px){
+        .table-responsive {
+            display: block !important;
+        }
     }
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
