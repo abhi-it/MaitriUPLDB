@@ -7,11 +7,17 @@
     align-items: flex-end;
     gap: 10px;
     }
+    @media screen and (min-width: 1024px){
+        .table-responsive {
+            display: block !important;
+        }
+    }
+
 </style>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
         <h3 class="text-center m-4 fw-bold">  <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
-        <table  id="myTable" class="table table-striped  table-responsive table-bordered">
+        <table  id="myTable" class="display table table-striped table-responsive table-bordered" width="100%">
             <thead>
                 <tr>
                     <th><span data-hi="S.No" data-en="S.No"></span></th>
@@ -39,22 +45,22 @@
                     @foreach ($zoneStock as $stockZone)
                         @foreach($stockZone as $zoneUser)
                             <tr>
-                            <td>{{ $i }}</td>
-                            <td>{{ $zoneUser->FirstName }}</td>
-                            <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
-                            <td>{{ $zoneUser->demand_section }}</td>
-                            <td>{{ $zoneUser->semen }}</td>
-                            <td>{{ $zoneUser->semen_type }}</td>
-                            <td>{{ $zoneUser->banner }}</td>
-                            <td>{{ $zoneUser->dangler }}</td>
-                            <td>{{ $zoneUser->standee }}</td>
-                            <td>{{ $zoneUser->pamphlet }}</td>
-                            <td>{{ $zoneUser->ai_kit }}</td>
-                            <td>{{ $zoneUser->container }}</td>
-                            <td>{{ $zoneUser->container_capacity }}</td>
-                            <td>{{ $zoneUser->scheme }}</td>
-                            <td>{{ $zoneUser->bull_ids }}</td>
-                            <td>{{ $zoneUser->created_at }}</td>
+                                <td>{{ $i }}</td>
+                                <td>{{ $zoneUser->FirstName }}</td>
+                                <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
+                                <td>{{ $zoneUser->demand_section }}</td>
+                                <td>{{ $zoneUser->semen }}</td>
+                                <td>{{ $zoneUser->semen_type }}</td>
+                                <td>{{ $zoneUser->banner }}</td>
+                                <td>{{ $zoneUser->dangler }}</td>
+                                <td>{{ $zoneUser->standee }}</td>
+                                <td>{{ $zoneUser->pamphlet }}</td>
+                                <td>{{ $zoneUser->ai_kit }}</td>
+                                <td>{{ $zoneUser->container }}</td>
+                                <td>{{ $zoneUser->container_capacity }}</td>
+                                <td>{{ $zoneUser->scheme }}</td>
+                                <td>{{ $zoneUser->bull_ids }}</td>
+                                <td>{{ $zoneUser->created_at }}</td>
                             </tr>
                         @endforeach
                         @php $i++ @endphp
@@ -67,15 +73,14 @@
 
             </tbody>
         </table>
-
-        <div class="row">
-
-        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
-
-</script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 
 @endsection
 
