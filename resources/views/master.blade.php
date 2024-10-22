@@ -1199,7 +1199,7 @@
                             <li class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
-                                    <span data-hi="एडमिन स्टॉक और रिकॉर्ड" data-en="Admin Stock & Record"></span>
+                                    <span data-hi="प्रशासनिक स्टॉक और रिकॉर्ड" data-en="Admin Stock & Record"></span>
                                 </a>
                                 <div class="dropdown-menu">
 
@@ -1215,7 +1215,7 @@
                             <li class="nav-item dropdown {{ (request()->is('inventory') || request()->is('admin-distributed-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
-                                    <span data-hi="इन्वेंटरी एवं वितरण" data-en="Inventory & Distribute"></span>
+                                    <span data-hi="इभंडारण एवं वितरण" data-en="Inventory & Distribute"></span>
                                 </a>
                                 <div class="dropdown-menu">
 
