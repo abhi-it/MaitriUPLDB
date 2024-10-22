@@ -482,7 +482,7 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
             <div class="flex-box-counter">
 
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="विदेशी और संकर नस्ल के मवेशी" data-en="Exotic & Crossbred Cattle"></span></h2>
+                    <h2 class="fw-bold"><span data-hi="विदेशी और संकर नस्ल के गाय" data-en="Exotic & Crossbred Cattle"></span></h2>
                     <p class="text-center text-white fs-4 cattle counter">6122628</p>
                 </div>
                 <div class="flex-box-inner">
