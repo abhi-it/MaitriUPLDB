@@ -33,7 +33,10 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
-
+    <!-- New Export Data CDN Start -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.dataTables.min.css"/>
+    <!-- New Export Data CDN Start -->
 
     <link href="{{ asset('') }}css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
     <script src="{{ asset('') }}js/jquery.dataTables.min.js" type="text/javascript"></script>

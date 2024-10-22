@@ -28,6 +28,11 @@
         integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- New Export Data CDN Start -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.dataTables.min.css"/>
+    <!-- New Export Data CDN Start -->
+
 
     <!--Data Table---->
     <link href="{{ asset('') }}css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">

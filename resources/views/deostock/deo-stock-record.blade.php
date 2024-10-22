@@ -16,7 +16,7 @@
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
         <h3 class="text-center m-4 fw-bold">  <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
-        <table  id="myTable" class="table table-striped  table-responsive table-bordered">
+        <table  id="my-new-table" class="table table-striped  table-responsive table-bordered">
             <thead>
                 <tr>
                     <th><span data-hi="S.No" data-en="S.No"></span></th>
@@ -79,9 +79,33 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
 
-</script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"></script>
+    <!-- End DataTable -->
+
+    <script>
+        $(document).ready(function () {
+            $('#my-new-table').DataTable({
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                pageLength: 10,
+                dom: 'lBfrtip',
+                buttons: [
+                    'csv', 'excel'
+                ]
+            });
+
+        });
+    </script>
 
 @endsection
 
