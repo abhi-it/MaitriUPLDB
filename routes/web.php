@@ -209,6 +209,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getallAIcenters", [MaitriController::class, 'getAllAICenters'])->name('getallAIcenters');
     Route::get("getalldistrictdata", [MaitriController::class, 'getAllDistrictData'])->name('getalldistrictdata');
     Route::get("exportselectedAIcenters", [MaitriController::class, 'exportAICenters'])->name('exportselectedAIcenters');
+    Route::get("exportAllAIcenters", [MaitriController::class, 'exportAllAIcenters'])->name('exportAllAIcenters');
     Route::get("exportselectedLocation", [MaitriController::class, 'exportLocations'])->name('exportselectedLocation');
 
     Route::get("latest-updates", [UpdateController::class, 'getAllLatestUpdated'])->name('latest-updates');

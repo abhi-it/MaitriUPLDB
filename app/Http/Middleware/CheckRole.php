@@ -215,6 +215,9 @@ class CheckRole
                 'getallAIcenters',
                 'getalldistrictdata',
                 'exportselectedAIcenters',
+
+                'exportAllAIcenters',
+
                 'exportselectedLocation',
                 'changeLang',
                 'latest-updates',
@@ -333,6 +336,9 @@ class CheckRole
                 'getallAIcenters',
                 'getalldistrictdata',
                 'exportselectedAIcenters',
+
+                'exportAllAIcenters',
+
                 'exportselectedLocation',
                 'changeLang',
                 'latest-updates',

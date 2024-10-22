@@ -14,6 +14,7 @@ use App\Models\Cliniclocation;
 use App\Helpers\TranslateTextHelper;
 use App\Exports\MaitriListExport;
 use App\Exports\AIcenterExport;
+use App\Exports\AIAllCenterExport;
 use App\Exports\LocationExport;
 use DB;
 
@@ -177,6 +178,14 @@ class MaitriController extends Controller
         $data     = $query->select('type','name', 'mobile','address','lattitute','longitute')->where('address', 'like', "%{$address}%")->get();
         return \Excel::download(new AIcenterExport($data), 'AICenter-list.xlsx');
     }
+
+    public function exportAllAIcenters(Request $request){
+
+        $query    = Cliniclocation::orderBy('id', 'DESC');
+        $data     = $query->select('mandal_name','janpad_name', 'block','type', 'name', 'lattitute', 'longitute')->get();
+        return \Excel::download(new AIAllCenterExport($data), 'AllAiCenter-list.xlsx');
+    }
+    
 
     public function exportLocations(Request $request){
         $query      = Districts::orderBy('id', 'DESC');

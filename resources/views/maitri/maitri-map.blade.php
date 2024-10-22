@@ -73,6 +73,15 @@
           </select>
         </div>
       </div>
+
+      <div class="export_aiCenter" style="display: none;">
+        <form method="get" action="{{ route('exportAllAIcenters') }}"> 
+            <div class="col-md-4 mb-4">
+              <button class="btn btn-primary" type="submit" id="ExportAllAiCenter" >Export All</button>
+            </div>
+        </form>
+      </div>
+
       <div id="maitri" class="row">
           <div class="col-md-4 mb-4">
           <select class="form-control" name="district" id="district" >
@@ -277,6 +286,7 @@ $('#type').change(function() {
     initMap(null, totalmaitri);
   }
   if(val=='2'){
+    $('.export_aiCenter').show();
     $('#aicenter').show();
     $('#map').show();
     initAIMap(null,aicount);
