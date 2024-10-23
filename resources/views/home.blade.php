@@ -416,16 +416,8 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
                         </h3>
                         <p><i>
                                 <span
-                                    data-hi="हमारा उद्देश्य नियमित और निरंतर आधार पर सभी स्तरों पर कौशल और व्यावसायिक क्षमता को बढ़ाने के लिए मौजूदा सुविधाओं का आधुनिकीकरण और उन्नयन करना है। पशुधन के प्रजनन और विकास तथा उनकी उत्पादकता से संबंधित संस्थागत ढांचे को समग्र रूप से मजबूत बनाने में राज्य सरकार को सलाह और सहायता देना, तथा राज्य भर में पशुधन प्रजनन बुनियादी ढांचे पर पहले से किए गए निवेश पर अधिकतम लाभ प्राप्त करने के लिए नई संस्थाओं की स्थापना में सहायता करना। उत्पादकता वृद्धि और उद्यम संवर्धन के लिए तकनीकी सहायता प्रदान करना। देशी नस्लों के संरक्षण और आनुवंशिक उन्नयन के लिए पहल को बढ़ावा देना। जैव विविधता और आनुवंशिक संसाधनों के संरक्षण और आर्थिक महत्व के पशुधन की देशी नस्लों के विकास और वाणिज्यिक दोहन में राष्ट्रीय प्रयास में सहायता करना। प्रजनन क्षेत्र में बोर्ड के लिए विकास गतिविधियों को बढ़ावा देना और वित्तपोषित करना।"
-                                    data-en="We aim to Modernize and upgrade existing facilities to enhance skills and professional competence at
-                all levels on a regular and continuing basis. Advise and assist the State Govt. in overall strengthening
-                of the institutional setup dealing with breeding and development of livestock, and their productivity,
-                and help in establishing new institutions to maximize returns on investments already made on livestock
-                breeding infrastructure statewide. Technical support for productivity enhancement and enterprise
-                promotion. Promoting initiatives for conservation and genetic up-gradation of indigenous breeds. Assist
-                the national effort in the conservation of biodiversity and genetic resources and development and
-                commercial exploitation of indigenous breeds of livestock of economic importance. Promote and fund
-                development activities for the board in the breeding sector."></span>
+                                    data-hi="हम कौशल और पेशेवर क्षमता को लगातार बढ़ाने के लिए मौजूदा सुविधाओं का आधुनिकीकरण करने के लिए प्रतिबद्ध हैं। हम पशुधन प्रजनन और उत्पादकता के लिए संस्थानों को मजबूत करने में राज्य सरकार का सक्रिय रूप से समर्थन करेंगे, और हम राज्य भर में निवेश पर अधिकतम रिटर्न के लिए नए संस्थान स्थापित करेंगे। हमारा तकनीकी समर्थन उत्पादकता बढ़ाने में मदद करेगा, और हम देशी नस्लों के संरक्षण और आनुवंशिक सुधार के लिए पहल करेंगे। हम जैव विविधता को संरक्षित करने और प्रजनन क्षेत्र के भीतर प्रभावशाली गतिविधियों को वित्तपोषित करते हुए आर्थिक रूप से महत्वपूर्ण देशी पशुधन नस्लों को विकसित करने के लिए दृढ़ हैं।"
+                                    data-en="We are committed to modernizing existing facilities to continuously enhance skills and professional competence. We will actively support the State Government in strengthening institutions for livestock breeding and productivity, and we will establish new institutions to maximize returns on investments across the state. Our technical support will drive productivity enhancements, and we will champion initiatives for the conservation and genetic improvement of indigenous breeds. We are determined to conserve biodiversity and develop economically important indigenous livestock breeds while funding impactful activities within the breeding sector."></span>
                             </i></p>
                     </div>
                     <div class="col-xl-3 col-lg-6">
