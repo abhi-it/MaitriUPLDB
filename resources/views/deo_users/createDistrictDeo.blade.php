@@ -95,7 +95,7 @@
     </style>
 
     <div x-data="deoUser()" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-        <h3 class="text-center m-4 fw-bold"> <span data-hi="ज़िला ऑपरेटर आईडी बनाएं" data-en="Create District Operator ID"></span> </h3>
+        <h3 class="text-center m-4 fw-bold"> <span data-hi="ज़िला आईडी बनाएं" data-en="Create District ID"></span> </h3>
         <div class="custom-radio-container">
             <div class="row">
                 <div class="col-md-12">
