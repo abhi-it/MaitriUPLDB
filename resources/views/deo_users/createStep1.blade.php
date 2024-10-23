@@ -212,6 +212,7 @@
                 getZoneDistrict(zoneId) {
 
                     this.selectedAicenters = '';
+                    this.aiCenterNullMess = 1;
 
                     axios.get('{{ route('get-all-zone-district') }}', {
                             params: {
