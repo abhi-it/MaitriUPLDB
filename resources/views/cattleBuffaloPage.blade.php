@@ -9,7 +9,7 @@
     .animal-section img {
         width: 100%;
         height: 200px;
-        object-fit: cover;
+        object-fit: unset;
         border-radius: 10px;
     }
 
@@ -26,7 +26,7 @@
         <section class="py-4">
             <div class="container">
             <div class="card p-4 rounded mb-3">
-                    <h4 class="mb-4"><b>Cattle Breeds</b></h4>
+                    <h4 class="mb-4"><b><span data-hi="गाय की नस्लें" data-en="Cattle Breeds"></span></b></h4>
                 <div class="row g-4">
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="animal-section">
@@ -79,7 +79,7 @@
                 </div>
                 </div>
                 <div class="card p-4 rounded  mb-3">
-                    <h4 class="mb-4"><b>Buffalo Breeds</b></h4>
+                    <h4 class="mb-4"><b><span data-hi="भैंस की नस्लें" data-en="Buffalo Breeds"></span></b></h4>
                     <div class="row g-4">
                         <div class="col-md-4 col-lg-4 col-xl-3">
                             <div class="animal-section">
