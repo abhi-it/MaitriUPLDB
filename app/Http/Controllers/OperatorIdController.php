@@ -13,9 +13,6 @@ class OperatorIdController extends Controller
     public function index(){
         $roles = Role::whereIn('name', ['zone'])->pluck('id');
         $zoneUsers = User::whereIn('role_id', $roles)->with(['getDeoUser.zone'])->get();
-
-        // echo '<pre>';print_r($zoneUsers);exit;
-        
         return view('operatorId.index', compact('zoneUsers'));
     }
 

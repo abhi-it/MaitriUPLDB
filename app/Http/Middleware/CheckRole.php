@@ -234,6 +234,8 @@ class CheckRole
                 'inventory',
                 'saveInentorrData',
                 'operator-id',
+                'get-all-zone-district',
+                'get-all-zone-aicenter',
 
                 'check-zone-user',
                 'admin-distributed-record',
@@ -353,7 +355,7 @@ class CheckRole
 
                 'inventory',
                 'saveInentorrData',
-
+                'get-all-zone-district',
                 'operator-id',
                 'deo-user-step1',
                 'deo-user-store-step1',
@@ -362,6 +364,7 @@ class CheckRole
                 'deo-operator-store-step2',
 
           
+                'get-zone-divisions',
                 'district-deo-user-step1',
                 'district-Operator-store-step1',
                 'deo-district-user-step2',
@@ -372,6 +375,7 @@ class CheckRole
                 'zone-user-create-form',
                 'zone-user-store-data',
                 
+                'get-all-zone-aicenter',
                 'check-zone-user',
                 'admin-distributed-record',
 

@@ -12,9 +12,9 @@
         <h3 class="text-center m-4 fw-bold">  <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span> </h3>
         <div class="row mb-4">
             <div class="col-md-12">
-                <!-- <a href="{{ route('district-deo-user-step1') }}" data-hi="ज़िला ऑपरेटर आईडी बनाएं" data-en="Create District Operator ID"  class="btn btn-primary"></a>
-                <a href="{{ route('deo-user-step1') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID" class="btn btn-primary"></a> -->
-                <a href="{{ route('create-zone') }}" class="btn btn-primary" data-hi="क्षेत्र बनाएं" data-en="Create Zone"></a>
+                <a href="{{ route('create-zone') }}" class="btn btn-primary" data-hi="क्षेत्र आईडी बनाएं" data-en="Create Zone ID"></a>
+                <a href="{{ route('district-deo-user-step1') }}" data-hi="ज़िला आईडी बनाएं" data-en="Create District ID"  class="btn btn-primary"></a>
+                <a href="{{ route('deo-user-step1') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID" class="btn btn-primary"></a>
             </div>
         </div>
 

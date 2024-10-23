@@ -119,7 +119,7 @@
                                         <span :for="'zone' + zone.id" :data-hi="zone.name_hi" :data-en="zone.name_en"
                                             x-text="localStorage.getItem('selectedProject') === 'en' ? zone.name_en : zone.name_hi"></span>
                                         <input type="radio" class="zone_radios" name="zone" :id="'zone' + zone.id"
-                                            :value="zone.id" x-on:click="getDivisions(zone.id)">
+                                            :value="zone.id" x-on:click="getZoneDistrict(zone.id)">
                                         <span class="checkmarkradio"></span>
                                     </label>
                                 </div>
@@ -128,28 +128,6 @@
                     </div>
 
                     <div class="row mt-5">
-
-                        <div class="col-md-3">
-                            <div x-show="selectedDivisions.length > 0">
-                                <h5 class="m-4 fw-bold"> <span data-hi="डिवीशन चुनें" data-en="Select Division"></span>
-                                </h5>
-                                <template x-for="(division, index) in selectedDivisions" :key="index">
-                                    <div class="custom-radio">
-                                        <label class="radio-button-container">
-                                            <span :for="'division' + division.id" :data-hi="division.name_hindi"
-                                                :data-en="division.name_eng"
-                                                x-text="localStorage.getItem('selectedProject') === 'en' ? division.name_eng : division.name_hindi"></span>
-                                            <input type="radio" name="division" :id="'division' + division.id"
-                                                :value="division.id" x-on:click="getDistricts(division.id)">
-                                            <span class="checkmarkradio"></span>
-                                        </label>
-                                    </div>
-                                </template>
-                            </div>
-
-                            <button class="btn btn-primary mb-4" x-on:click="createDEOUser()">Create</button>
-                        </div>
-
                         <div class="col-md-3">
                             <div x-show="selectedDistricts.length > 0">
                                 <h5 class="m-4 fw-bold"> <span data-hi="डिस्ट्रिक्ट चुनें" data-en="Select District"></span>
@@ -167,6 +145,7 @@
                                     </div>
                                 </template>
                             </div>
+                            <button class="btn btn-primary mb-4" x-on:click="createDEOUser()">Create</button>
                         </div>
                     </div>
 
@@ -191,47 +170,21 @@
                     }, 5000);
                 },
                 zones: @json($zones),
-
-                selectedDivisions: [],
                 selectedDistricts: [],
                 
                 errorMessage: '',
                 objectErrorMessage: {},
-                getDivisions(zoneId) {
+                getZoneDistrict(zoneId) {
 
                     console.log(zoneId, 'zoneId');
 
-                    axios.get('{{ route('get-divisions') }}', {
+                    axios.get('{{ route('get-all-zone-district') }}', {
                             params: {
                                 zone_id: zoneId
                             }
                         })
                         .then(response => {
-                            this.selectedDivisions = response.data.divisions;
-                            this.selectedDistricts = [];
-                            setTimeout(() => {
-                                this.selectedDivisions.forEach(division => {
-                                    console.log(division, 'division');
-                                    let radio = document.getElementById('division' + division.id);
-                                    if (radio) {
-                                        radio.checked = false;
-                                    }
-                                });
-                            }, 100);
-                        })
-                        .catch(error => {
-                            console.error('There was an error fetching the divisions!', error);
-                        });
-                },
-                getDistricts(divisionId) {
-
-                    axios.get('{{ route('get-districts') }}', {
-                            params: {
-                                division_id: divisionId
-                            }
-                        })
-                        .then(response => {
-                            this.selectedDistricts = response.data.districts;
+                            this.selectedDistricts = response.data.district;
                             setTimeout(() => {
                                 this.selectedDistricts.forEach(district => {
                                     let radio = document.getElementById('district' + district.id);
@@ -242,11 +195,9 @@
                             }, 100);
                         })
                         .catch(error => {
-                            console.error('There was an error fetching the districts!', error);
+                            console.error('There was an error fetching the divisions!', error);
                         });
-
                 },
-                
                 createDEOUser() {
 
                     const selectedZoneValue = this.getSelectedValue('zone');
@@ -255,23 +206,16 @@
                         return;
                     }
 
-                    const selectedDivisionValue = this.getSelectedValue('division');
-                    if (!selectedDivisionValue) {
-                        this.errorMessage = 'Please select a division';
+                    const selectedDistrictValue = this.getSelectedValue('district');
+                    if (!selectedDistrictValue) {
+                        this.errorMessage = 'Please select a district';
                         return;
                     }
-
-                    const selectedDistrictValue = this.getSelectedValue('district');
-                    // if (selectedDistrictValue) {
-                    //     this.errorMessage = 'Please select a district';
-                    //     return;
-                    // }
 
                    
 
                     axios.post('{{ route('district-Operator-store-step1') }}', {
                             zone: selectedZoneValue,
-                            division: selectedDivisionValue,
                             district: selectedDistrictValue,
                         })
                         .then(response => {

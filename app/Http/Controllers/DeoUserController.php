@@ -9,7 +9,7 @@ use App\Models\Blockslist;
 use App\Models\Cliniclocation;
 use App\Models\DeoUser;
 use App\Models\Districts;
-use App\Models\Divisions as ModelsDivisions;
+use App\Models\Divisions;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -18,12 +18,40 @@ use Illuminate\Support\Facades\Hash;
 
 class DeoUserController extends Controller
 {
-    public function create()
-    {
+    public function create() {
         $zones = Zone::all();
         session()->forget('form_step1');
 
         return view('deo_users.createStep1', compact('zones'));
+    }
+
+    public function getAllZoneDistrict(Request $request){
+        $zone_id = $request->zone_id;
+        $divisionIds = Divisions::where('zone_id', $zone_id)->get();
+        $district = [];
+        foreach($divisionIds as $divisionId){
+            $districtNames = Districts::where('division_id', $divisionId->id)->get();
+            foreach($districtNames as $districtName){
+                $district[] = $districtName;
+            }
+        }
+        return response()->json(['district' => $district]);
+    }
+
+    public function getAllZoneAICenter(Request $request){
+        $district_id = $request->district_id;
+        $districtDatas = Block::where('dis_id', $district_id)->get();
+        $aiCenter = [];
+        foreach($districtDatas as $district){
+            $blockName = $district['block_hindi'];
+            $getAiCenters = Cliniclocation::where('block', $blockName)->get();
+            foreach($getAiCenters as $getAiCenter){
+                if($getAiCenter['name'] != '' && $getAiCenter['name_eng'] != ''){
+                    $aiCenter[] = $getAiCenter;
+                }
+            }
+        }
+        return response()->json(['aicenter' => $aiCenter]);
     }
 
     public function districtsDeoCreate(){
@@ -34,7 +62,7 @@ class DeoUserController extends Controller
 
     public function getDivisions(Request $request)
     {
-        $divisions = ModelsDivisions::where('zone_id', $request->zone_id)->get();
+        $divisions = Divisions::where('zone_id', $request->zone_id)->get();
         return response()->json(['divisions' => $divisions]);
     }
 
@@ -61,11 +89,8 @@ class DeoUserController extends Controller
 
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
-            'division' => 'required|integer',
             'district' => 'required|integer',
-            'block' => 'required|integer',
-            'aicenters' => 'required|array',
-            'aicenters.*' => 'integer',
+            'aicenters' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -84,7 +109,6 @@ class DeoUserController extends Controller
 
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
-            'division' => 'required|integer',
             'district' => 'required'
         ]);
 
@@ -138,6 +162,9 @@ class DeoUserController extends Controller
         $role = Role::where('name', 'deo')->first();
         $role_id = $role ? $role->id : null;
 
+        $getDistrictData = Districts::where('id', $form_step1['district'])->first();
+        $division_id = $getDistrictData['division_id'];
+
         $user = User::create([
             'name'        => $validatedData['username'],
             'FirstName'   => $validatedData['username'],
@@ -145,20 +172,28 @@ class DeoUserController extends Controller
             'email'       => $validatedData['email'],
             'password'    => Hash::make($validatedData['password']),
             'district_id' => $form_step1['district'],
-            'division_id' => $form_step1['division'],
+            'division_id' => $division_id,
             'role_id'     => $role_id,
             'role'        => 'DEO',
             'user_type'   => 'DEO',
         ]);
 
-        $deoUser = DeoUser::create([
-            'user_id' => $user->id,
-            'zone_id' => $form_step1['zone'],
-            'division_id' => $form_step1['division'],
-            'district_id' => $form_step1['district'],
-            'block_id' => $form_step1['block'],
-            'aicenters_id' => implode(',',$form_step1['aicenters'])
-        ]);
+        foreach($form_step1['aicenters'] as $aicenterId){
+            $getBlockName = Cliniclocation::where('id', $aicenterId)->first();
+            $block_id = Block::where('block_hindi', $getBlockName['block'])->first();
+            $deoUser = DeoUser::create([
+                'user_id' => $user->id,
+                'zone_id' => $form_step1['zone'],
+                'division_id' => $division_id,
+                'district_id' => $form_step1['district'],
+                'block_id' => $block_id['id'],
+                'aicenters_id' => $aicenterId
+            ]);
+
+        }
+        exit;
+
+       
 
         session()->forget('form_step1');
 
@@ -183,26 +218,29 @@ class DeoUserController extends Controller
 
         $form_step1 = session('form_step1');
 
-        $role = Role::where('name', 'district-deo')->first();
+        $role = Role::where('name', 'district')->first();
         $role_id = $role ? $role->id : null;
 
+        $getDistrictData = Districts::where('id', $form_step1['district'])->first();
+        $division_id = $getDistrictData['division_id'];
+       
         $user = User::create([
             'name'        => $validatedData['username'],
             'FirstName'   => $validatedData['username'],
             'LastName'    => $validatedData['username'],
             'email'       => $validatedData['email'],
             'password'    => Hash::make($validatedData['password']),
-            'division_id' => $form_step1['division'],
-            'district_id' => $form_step1['district'][0],
+            'division_id' => $division_id,
+            'district_id' => $form_step1['district'],
             'role_id'     => $role_id,
-            'role'        => 'District Operator',
-            'user_type'   => 'District DEO',
+            'role'        => 'district',
+            'user_type'   => 'District',
         ]);
 
         $deoUser = DeoUser::create([
             'user_id' => $user->id,
             'zone_id' => $form_step1['zone'],
-            'division_id' => $form_step1['division'],
+            'division_id' => $division_id,
             'district_id' => $form_step1['district'],
         ]);
         session()->forget('form_step1');

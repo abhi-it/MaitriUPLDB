@@ -326,6 +326,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
     
     
+    Route::get("get-all-zone-aicenter", [App\Http\Controllers\DeoUserController::class, 'getAllZoneAICenter'])->name('get-all-zone-aicenter');
+    Route::get("get-all-zone-district", [App\Http\Controllers\DeoUserController::class, 'getAllZoneDistrict'])->name('get-all-zone-district');
     Route::get("operator-id", [App\Http\Controllers\OperatorIdController::class, 'index'])->name('operator-id');
     
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
