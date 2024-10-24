@@ -649,6 +649,9 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
                     </a>
                 </div>
             </div>
+
+
+            
             <div class="col-lg-4 mt-3 position-relative">
                 <img src="{{ asset('assets/images/home-ne1.jpeg')}}" width="100%" alt="">
                 <div class="position-absolute home_sec-content">

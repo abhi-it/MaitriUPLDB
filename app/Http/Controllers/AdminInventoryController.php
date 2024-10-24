@@ -12,6 +12,7 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\RequestData;
 use App\Models\InventoryMap; 
+use App\Models\EventModal; 
 use App\Models\DailyDashboard;
 use App\Models\User;
 use App\Models\Zone;
@@ -21,6 +22,7 @@ use App\Models\Zonestock;
 use App\Models\RemainingStock; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 
@@ -28,6 +30,70 @@ class AdminInventoryController extends Controller
 {
     public function adminStockForm(){
         return view('adminstockform.admin-stock-form');
+    }
+
+    public function eventAndNews(){
+        $events = EventModal::all();
+        return view('adminstockform.eventnews', compact('events'));
+    }
+
+    public function destroy($id) {
+        $event = EventModal::findOrFail($id);
+        $event->delete();
+        return redirect()->back()->with('success', 'Event deleted successfully!');
+    }
+
+    public function createOrEdit($id = null) {
+        $event = $id ? EventModal::findOrFail($id) : null;
+        return view('adminstockform.createEventNews', compact('event'));
+    }
+
+    public function storeOrUpdate(Request $request, $id = null) {
+        $event = $id ? EventModal::findOrFail($id) : new EventModal;
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'title_hindi' => 'required|string|max:255',
+            'description' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        $directory = 'uploads/events';
+        if (!file_exists(public_path($directory))) {
+            mkdir(public_path($directory), 0777, true);
+        }
+
+        $front_images = $request->file('front_images');
+        if($front_images){
+
+            $front_filename = time() . '_' . $front_images->getClientOriginalName();
+            $front_images->move(public_path($directory), $front_filename);
+            $frontImages = $directory . '/' . $front_filename;
+        }
+        
+        $images = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $filename = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path($directory), $filename);
+                $images[] = $directory . '/' . $filename;
+            }
+        }
+
+        if($front_images == ''){
+            $frontImages = $event['front_image'];
+        }
+     
+
+        // Update or Create
+        $event->title = $validated['title'];
+        $event->title_hindi = $validated['title_hindi'];
+        $event->description = $validated['description'];
+        $event->images = json_encode($images);
+        $event->front_image = $frontImages;
+        $event->save();
+
+        return redirect()->back()->with('success', $id ? 'Event updated successfully!' : 'Event created successfully!');
     }
 
     public function adminDailyDashboard(){

@@ -312,7 +312,16 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
 
 
-    // inventory   
+    // inventory 
+
+    Route::post('save-events-data/{id?}', [App\Http\Controllers\AdminInventoryController::class, 'storeOrUpdate'])->name('save-events-data');
+
+    Route::get('/events/{id}/edit', [App\Http\Controllers\AdminInventoryController::class, 'createOrEdit'])->name('edit-event');
+    Route::delete('/events/{id}', [App\Http\Controllers\AdminInventoryController::class, 'destroy'])->name('events-delete');
+
+    // Route::post('save-events-data', [App\Http\Controllers\AdminInventoryController::class, 'store'])->name('save-events-data');
+    Route::get("create-event-news", [App\Http\Controllers\AdminInventoryController::class, 'createOrEdit'])->name('create-event-news');
+    Route::get("event-news", [App\Http\Controllers\AdminInventoryController::class, 'eventAndNews'])->name('event-news');
     Route::get("check-zone-user", [App\Http\Controllers\AdminInventoryController::class, 'checkZoneUser'])->name('check-zone-user');
     Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
     Route::get("daily-dashboard", [App\Http\Controllers\AdminInventoryController::class, 'adminDailyDashboard'])->name('daily-dashboard');

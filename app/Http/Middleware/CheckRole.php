@@ -237,6 +237,12 @@ class CheckRole
                 'get-all-zone-district',
                 'get-all-zone-aicenter',
 
+                'event-news',
+                'edit-event',
+                'events-delete',
+                'save-events-data/{id?}',
+                'save-events-data',
+                'create-event-news',
                 'check-zone-user',
                 'admin-distributed-record',
                 
@@ -375,6 +381,12 @@ class CheckRole
                 'zone-user-create-form',
                 'zone-user-store-data',
                 
+                'event-news',
+                'edit-event',
+                'events-delete',
+                'save-events-data/{id?}',
+                'save-events-data',
+                'create-event-news',
                 'get-all-zone-aicenter',
                 'check-zone-user',
                 'admin-distributed-record',

@@ -1194,6 +1194,10 @@
                             </li>
 
                             <!-- Admin Stock Form Menu Start -->
+                            <li class="nav-item  {{ request()->is('event-news') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('event-news') }}">
+                                    <span data-hi="घटना एवं समाचार" data-en="Event & News"></span></a>
+                            </li>
                             <li class="nav-item  {{ request()->is('daily-dashboard') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('daily-dashboard') }}">
                                     <span data-hi="दैनिक डैशबोर्ड" data-en="Daily Dashboard"></span></a>
