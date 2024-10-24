@@ -59,9 +59,9 @@ class AdminInventoryController extends Controller
         ]);
 
         $directory = 'uploads/events';
-        if (!file_exists(public_path($directory))) {
-            mkdir(public_path($directory), 0777, true);
-        }
+        // if (!file_exists(public_path($directory))) {
+        //     mkdir(public_path($directory), 0777, true);
+        // }
 
         $front_images = $request->file('front_images');
         if($front_images){
