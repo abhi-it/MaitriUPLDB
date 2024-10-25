@@ -6,6 +6,11 @@
         font-size: 8px;
         color: red;
     }
+    .cus-btn{
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
 </style>
 <div class="container main-div py-5" style="background-color:white;">
   
@@ -63,16 +68,18 @@
                         <td>N/A</td>
                     @endif
                     <td>
-                        <a href="{{ route('edit-event', $event->id) }}" class="btn btn-warning btn-sm"> 
-                            <i class="ri-eye-line"></i>
-                        </a>
-
-                        <form action="{{ route('events-delete', $event->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
-                            <i class="ri-delete-bin-line"></i>
-                        </form>
+                        <div class="cus-btn">
+                            <a href="{{ route('edit-event', $event->id) }}" class="btn btn-warning btn-sm"> 
+                                <i class="ri-eye-line"></i>
+                            </a>
+    
+                            <form action="{{ route('events-delete', $event->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                <i class="ri-delete-bin-line"></i>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @php $i++ @endphp
