@@ -53,11 +53,15 @@
                     @else
                         <td>N/A</td>
                     @endif
-                    <td>
-                        @foreach(json_decode($event->images, true) as $image)
-                            <img src="{{ asset($image) }}" width="50" alt="image">
-                        @endforeach
-                    </td>
+                    @if($event->images0)
+                        <td>
+                            @foreach(json_decode($event->images, true) as $image)
+                                <img src="{{ asset($image) }}" width="50" alt="image">
+                            @endforeach
+                        </td>
+                    @else
+                        <td>N/A</td>
+                    @endif
                     <td>
                         <a href="{{ route('edit-event', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
