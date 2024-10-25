@@ -53,7 +53,7 @@
                     <td>{{ $i }}</td>
                     <td><span data-hi="{{ Str::limit($event->title_hindi, 100) }}" data-en="{{ Str::limit($event->title, 100) }}"></td>
                     <td>{{ Str::limit($event->description, 100) }}</td>
-                    @if($event->front_image)
+                    @if($event->front_image != 'null')
                         <td><img src="{{ asset($event->front_image) }}" width="50" alt="image"></td>
                     @else
                         <td>N/A</td>
