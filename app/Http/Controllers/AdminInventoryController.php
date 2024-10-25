@@ -59,16 +59,13 @@ class AdminInventoryController extends Controller
         ]);
 
         $directory = 'uploads/events';
-        // if (!file_exists(public_path($directory))) {
-        //     mkdir(public_path($directory), 0777, true);
-        // }
-
         $front_images = $request->file('front_images');
         if($front_images){
-
             $front_filename = time() . '_' . $front_images->getClientOriginalName();
             $front_images->move(public_path($directory), $front_filename);
             $frontImages = $directory . '/' . $front_filename;
+        }else{
+            $frontImages = $event['front_image'];
         }
         
         $images = [];
@@ -78,14 +75,17 @@ class AdminInventoryController extends Controller
                 $image->move(public_path($directory), $filename);
                 $images[] = $directory . '/' . $filename;
             }
-        }
 
-        if($front_images == ''){
-            $frontImages = $event['front_image'];
+            if($event['images']){
+                $getImages = $event['images'];
+                $OldImages = json_decode($getImages);
+                $images = array_merge($OldImages, $images);
+            }
+        }else{
+            $getImages = $event['images'];
+            $images = json_decode($getImages);
         }
-     
-
-        // Update or Create
+       
         $event->title = $validated['title'];
         $event->title_hindi = $validated['title_hindi'];
         $event->description = $validated['description'];
