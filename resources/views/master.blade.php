@@ -1050,6 +1050,7 @@
                                 </div>
                             </li>
 
+                           
 
                             @if (auth()->user()->user_type == 'District Officer')
                             <li class="nav-item {{ request()->is('document-verification') ? 'active' : '' }}">
@@ -1192,6 +1193,9 @@
                                 <a class="nav-link" href="{{ url('totalsessionlist') }}">
                                     <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
                             </li>
+                            @endif
+                            
+                            @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
                             <!-- Admin Stock Form Menu Start -->
                             <li class="nav-item  {{ request()->is('event-news') ? 'active' : '' }}">
@@ -1234,13 +1238,15 @@
                                     </a>
                                 </div>
                             </li>
-                            
+
                             <li class="nav-item  {{ request()->is('operator-id') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('operator-id') }}">
                                     <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span></a>
                             </li>
                             <!-- Admin Stock Form Menu End -->
                             @endif
+
+
                             @if(auth()->user()->user_type == 'District Officer')
                             <!-- <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('upload-shapatpatra') }}">
@@ -1252,6 +1258,7 @@
                                         data-en="Upload the list of candidates selected by CVO"></span></a>
                             </li>
                             @endif
+
                             @endif
                             @else
                             <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
