@@ -237,6 +237,7 @@ class CheckRole
                 'get-all-zone-district',
                 'get-all-zone-aicenter',
 
+                'user-delete',
                 'event-news',
                 'edit-event',
                 'events-delete',
@@ -381,6 +382,7 @@ class CheckRole
                 'zone-user-create-form',
                 'zone-user-store-data',
                 
+                'user-delete',
                 'event-news',
                 'edit-event',
                 'events-delete',

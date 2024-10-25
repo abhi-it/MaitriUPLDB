@@ -338,6 +338,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("get-all-zone-aicenter", [App\Http\Controllers\DeoUserController::class, 'getAllZoneAICenter'])->name('get-all-zone-aicenter');
     Route::get("get-all-zone-district", [App\Http\Controllers\DeoUserController::class, 'getAllZoneDistrict'])->name('get-all-zone-district');
     Route::get("operator-id", [App\Http\Controllers\OperatorIdController::class, 'index'])->name('operator-id');
+    Route::delete("user-delete/{id}", [App\Http\Controllers\OperatorIdController::class, 'userDelete'])->name('user-delete');
     
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');

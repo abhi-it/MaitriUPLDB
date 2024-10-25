@@ -60,7 +60,7 @@
                     @endif
                     @if($event->images)
                         <td>
-                            @foreach(json_decode($event->images, true) as $image)
+                            @foreach(json_decode($event->images) as $image)
                                 <img src="{{ asset($image) }}" width="50" alt="image">
                             @endforeach
                         </td>
