@@ -33,7 +33,7 @@ class AdminInventoryController extends Controller
     }
 
     public function eventAndNews(){
-        $events = EventModal::all();
+        $events = EventModal::orderBy('id', 'desc')->get();
         return view('adminstockform.eventnews', compact('events'));
     }
 

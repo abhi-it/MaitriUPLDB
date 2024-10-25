@@ -7,6 +7,8 @@ $m24 = App\Models\Maitri::where('pass_date', 'LIKE', '%2024%')->count();
 $latest = App\Models\Latestupdate::whereStatus(1)->get();
 $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
 
+$events = App\Models\EventModal::orderBy('id', 'desc')->get();
+
 ?>
 
 <!-- Swiper CSS -->
@@ -637,76 +639,21 @@ $dailyDashboard = App\Models\DailyDashboard::orderBy('id', 'desc')->first();
             </h2>
         </div>
         <div class="row home_sec-new">
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne2.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span data-hi="मुज़फ़्फ़रनगर चीयर्स - गोवंश का आशीर्वाद मिला! दो स्वस्थ..."
-                            data-en=" Muzaffarnagar Cheers - Got Bovine Blessings! Two Healthy..."> </span>
-                    </h6>
-                    <a href="{{route('eventdetails')}}">
-                        <span data-hi="सभी देखें" data-en="View All"> </span>
-                    </a>
-                </div>
-            </div>
 
-
-            
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne1.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span data-hi="उत्तर प्रदेश पशुधन बोर्ड ने डेयरी विकास के 25 वर्षों पर प्रकाश डाला। निवेश"
-                            data-en="UP Livestock Board Highlights 25 Years of Dairy Development. Invests..."> </span>
-                    </h6><a href="{{route('eventdetails')}}"><span data-hi="सभी देखें" data-en="View All"> </span></a>
+            @foreach($events->take(6) as $event)
+                <div class="col-lg-4 mt-3 position-relative">
+                    <img src="{{ asset($event->front_image) }}" width="100%" alt="">
+                    <div class="position-absolute home_sec-content">
+                        <h6>
+                            <span data-hi="{{ Str::limit($event->title_hindi, 100) }}"
+                                data-en="{{ Str::limit($event->title, 100) }}"> </span>
+                        </h6>
+                        <a href="{{route('eventdetails')}}">
+                            <span data-hi="सभी देखें" data-en="View All"> </span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne3.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span
-                            data-hi="मैत्री एआई तकनीशियन राम मोहन ने किसान ओम प्रकाश को गोजातीय आशीर्वाद से सशक्त बनाया..."
-                            data-en="MAITRI AI Technician Ram Mohan Empower Farmer Om Prakash with Bovine Blessing...">
-                        </span>
-                    </h6>
-                    <a href="{{route('eventdetails')}}"><span data-hi="सभी देखें" data-en="View All"> </span></a>
-                </div>
-            </div>
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne4.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span data-hi="पशु उत्थान वर्णसंकर केंद्र, मुड़िया मुकर्रमपुर गांव में मैत्री प्रशिक्षण..."
-                            data-en=" MAITRI Training at Pashu Utthan Varnsankar Kendra, Mudiya Mukarrampur Village ...">
-                        </span>
-                    </h6>
-                    <a href="{{route('eventdetails')}}"><span data-hi="सभी देखें" data-en="View All"> </span></a>
-                </div>
-            </div>
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne5.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span
-                            data-hi="रायबरेली के बैलों को मिला तकनीकी उन्नयन! स्वस्थ प्रजनन के लिए AI-संचालित गर्भाधान..."
-                            data-en="Rae Bareli's Bulls Get a Tech Upgrade! AI-powered insemination for healthier....">
-                        </span>
-                    </h6>
-                    <a href="{{route('eventdetails')}}"><span data-hi="सभी देखें" data-en="View All"> </span></a>
-                </div>
-            </div>
-            <div class="col-lg-4 mt-3 position-relative">
-                <img src="{{ asset('assets/images/home-ne6.jpeg')}}" width="100%" alt="">
-                <div class="position-absolute home_sec-content">
-                    <h6>
-                        <span data-hi="यूपीएलडीबी के रजत जयंती वर्ष में भवन निर्माण के 25 वर्ष पूरे होने का जश्न..."
-                            data-en="UPLDB's Silver Jubilee Year Celebrates 25 Years of Building..."> </span>
-                    </h6>
-                    <a href="{{route('eventdetails')}}"><span data-hi="सभी देखें" data-en="View All"> </span></a>
-                </div>
-            </div>
-
+            @endforeach
         </div>
     </div>
 </section>

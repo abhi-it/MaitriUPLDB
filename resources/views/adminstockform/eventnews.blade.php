@@ -31,11 +31,11 @@
         <thead>
             <tr>
                 <th>S.No</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Front Images</th>
-                <th>Gallery Images</th>
-                <th>Actions</th>
+                <th><span data-hi="शीर्षक" data-en="Title"></th>
+                <th><span data-hi="विवरण" data-en="Description"></th>
+                <th><span data-hi="सामने की छवि" data-en="Front Image"></th>
+                <th><span data-hi="गैलरी छवियाँ" data-en="Gallery Images"></th>
+                <th><span data-hi="एडिट/डिलीट" data-en="Action"></th>
             </tr>
         </thead>
         <tbody>
@@ -51,7 +51,7 @@
             @foreach($events as $event)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ Str::limit($event->title, 100) }}</td>
+                    <td><span data-hi="{{ Str::limit($event->title_hindi, 100) }}" data-en="{{ Str::limit($event->title, 100) }}"></td>
                     <td>{{ Str::limit($event->description, 100) }}</td>
                     @if($event->front_image)
                         <td><img src="{{ asset($event->front_image) }}" width="50" alt="image"></td>
