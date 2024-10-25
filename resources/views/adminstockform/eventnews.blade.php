@@ -53,7 +53,7 @@
                     @else
                         <td>N/A</td>
                     @endif
-                    @if($event->images0)
+                    @if($event->images)
                         <td>
                             @foreach(json_decode($event->images, true) as $image)
                                 <img src="{{ asset($image) }}" width="50" alt="image">
@@ -63,12 +63,15 @@
                         <td>N/A</td>
                     @endif
                     <td>
-                        <a href="{{ route('edit-event', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('edit-event', $event->id) }}" class="btn btn-warning btn-sm"> 
+                            <i class="ri-eye-line"></i>
+                        </a>
 
                         <form action="{{ route('events-delete', $event->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                            <i class="ri-delete-bin-line"></i>
                         </form>
                     </td>
                 </tr>
