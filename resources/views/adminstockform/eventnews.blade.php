@@ -58,7 +58,7 @@
                     @else
                         <td>N/A</td>
                     @endif
-                    @if($event->images != null)
+                    @if($event->images != 'null')
                         <td>
                             @foreach(json_decode($event->images) as $image)
                                 <img src="{{ asset($image) }}" width="50" alt="image">
