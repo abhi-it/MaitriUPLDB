@@ -58,7 +58,7 @@
                         </td>
                         <td>
                             <div class="cus-btn">
-                                <a href="{{ route('edit-event', $zoneUser->id) }}" class="btn btn-warning btn-sm"> 
+                                <a href="{{ route('edit-user', $zoneUser->id) }}" class="btn btn-warning btn-sm"> 
                                     <i class="ri-eye-line"></i>
                                 </a>
         
