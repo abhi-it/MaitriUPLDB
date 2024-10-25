@@ -58,7 +58,7 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
        @foreach($events as $event)
             <div class="my-lg-5 my-md-4 my-3">
                 <h3 class="text-center">
-                    <span data-hi="{{ $event->title_hind }}" data-en="{{ $event->title }}">  </span>
+                    <span data-hi="{{ $event->title_hindi }}" data-en="{{ $event->title }}">  </span>
                 </h3>
                 <div>
                     <div class="event-details_cards d-flex  align-items-center flex-wrap gap-4 ">
