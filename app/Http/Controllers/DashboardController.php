@@ -742,7 +742,7 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                 ->whereYear('avedans.created_at', $this->sessionYear)
                 ->orderBy('avedans.category', 'DESC')
                 ->get();

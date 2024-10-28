@@ -555,8 +555,20 @@ async function initLocationMap(code,locations) {
                   $('#janpad').empty();
                   $('#janpad').append($("<option>-Select one-</option>"));
                   $.each(data.data.results, function(i, index) {
-                    $('#janpad').append($("<option value="+index.janpad_name+">"+index.janpad_name+" ( "+index.count+"  )</option>"));
-                  });
+                    // Skip the iteration if the janpad_name is "विन्ध्याचल"
+                    if (index.janpad_name === "विन्ध्याचल") {
+                        return true; // This will skip the current iteration
+                    }
+
+                    // Create the option element with value and display text
+                    var option = $("<option></option>")
+                        .attr("value", index.janpad_name)
+                        .text(index.janpad_name + " (" + index.count + ")");
+
+                    // Append the option to the select element
+                    $('#janpad').append(option);
+                });
+
                   var maitricount = data.data.maitri;
                   var janpad       = data.data.janapad;
                   if(maitricount.length>0){
