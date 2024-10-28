@@ -9,6 +9,7 @@ use App\Models\Janpad;
 use App\Imports\ImportMaitri;
 use App\Models\HospitalInstitute;
 use App\Models\Divisions;
+use App\Models\Block;
 use App\Models\Districts;
 use App\Models\Cliniclocation;
 use App\Helpers\TranslateTextHelper;
@@ -157,9 +158,22 @@ class MaitriController extends Controller
 
     public function getAllAICenters(Request $request){
         $data               = [];
+
+        if($request->district != ''){
+            $blocks = Block::where('dis_id', $request->district)->get();
+            foreach($blocks as $block){
+                $aiCenter = Cliniclocation::where('block', 'like', "%{$block['block_hindi']}%")->get();
+                $data['aicenter'] = $aiCenter;
+            }
+            return $data;
+        }
+
         $id                 = $request->id;
         $data['code']       = Janpad::where(['name'=>$id])->first();
         $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->get();
+        $division           = Divisions::where('name_hindi', 'like', "%{$id}%")->first();
+        $data['district']     = Districts::where('division_id',$division['id'])->get();
+       
         return $data;
     }
    

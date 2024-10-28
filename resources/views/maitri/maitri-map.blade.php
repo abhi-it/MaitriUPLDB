@@ -127,6 +127,11 @@
                 @endforeach
               </select>
           </div>
+          <div class="col-md-4 mb-4">
+            <select class="form-control" name="get_district" id="get_district" style="display:none;">
+            <option value="">Select District</option>
+            </select>
+          </div>
           <form method="get" action="{{ route('exportselectedAIcenters') }}"> 
               <div class="col-md-4 mb-4">
                 <input type="hidden" id="ai_id" name="ai_id">
@@ -355,15 +360,54 @@ $('#address').change(function() {
             },
             cache: false,
             success: function(data) {
-                if(data.maitri){
-                  $('#map').show();
-                  $('#AIExport').show();
-                  initAIMap(data.code, data.maitri);
-                }
+
+              if(data.district){
+                $('#get_district').show();
+                var district = data.district;
+                $.each(district, function(index, item) {
+                    const option = $('<option></option>')
+                        .attr('value', item.id)
+                        .text(item.name_eng + ' (' + item.name_hindi + ')');
+                    $('#get_district').append(option);
+                });
+              }
+
+              if(data.maitri){
+                $('#map').show();
+                $('#AIExport').show();
+                initAIMap(data.code, data.maitri);
+              }
             }
         });
     }
 });
+
+
+$('#get_district').change(function() {
+  var district_id = $("#get_district option:selected").val();
+  if (district_id) {
+        $.ajax({
+            type: "GET",
+            url: "getallAIcenters",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'district': district_id
+            },
+            cache: false,
+            success: function(data) {
+
+              if(data.aicenter){
+                $('#map').show();
+                $('#AIExport').show();
+                initAIMap(data.code, data.aicenter);
+              }
+            }
+        });
+    }
+})
 
 async function initAIMap(code,locations) {
     var lat  = (code)?code.latt:27.5706;
