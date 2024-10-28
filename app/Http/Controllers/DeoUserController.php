@@ -90,7 +90,7 @@ class DeoUserController extends Controller
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',
             'district' => 'required|integer',
-            // 'aicenters' => 'required',
+            'aicenters' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -178,19 +178,22 @@ class DeoUserController extends Controller
             'user_type'   => 'DEO',
         ]);
 
-        // foreach($form_step1['aicenters'] as $aicenterId){
-            // $getBlockName = Cliniclocation::where('id', $aicenterId)->first();
-            // $block_id = Block::where('block_hindi', $getBlockName['block'])->first();
+        foreach($form_step1['aicenters'] as $aicenterId){
+            $getBlockName = Cliniclocation::where('id', $aicenterId)->first();
+            $block_id = Block::where('block_hindi', $getBlockName['block'])->first();
             $deoUser = DeoUser::create([
                 'user_id' => $user->id,
                 'zone_id' => $form_step1['zone'],
                 'division_id' => $division_id,
                 'district_id' => $form_step1['district'],
-                // 'block_id' => $block_id['id'],
-                // 'aicenters_id' => $aicenterId
+                'block_id' => $block_id['id'],
+                'aicenters_id' => $aicenterId
             ]);
 
-        // }
+        }
+        exit;
+
+       
 
         session()->forget('form_step1');
 
