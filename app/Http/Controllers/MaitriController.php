@@ -160,6 +160,7 @@ class MaitriController extends Controller
         $data               = [];
 
         if($request->district != ''){
+            $data['code']       = Districts::where(['id' => $request->district])->first();
             $blocks = Block::where('dis_id', $request->district)->get();
             foreach($blocks as $block){
                 $aiCenter = Cliniclocation::where('block', 'like', "%{$block['block_hindi']}%")->get();
