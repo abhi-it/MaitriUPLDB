@@ -24,6 +24,10 @@ class CreateZoneController extends Controller
         return view('zones.index', compact('zones'));
     }
 
+    public function changePassword(){
+        return view('allLoginChangePassword.change-password');
+    }
+
     public function zoneStoreData(Request $request){
         $validator = \Validator::make($request->all(), [
             'zone' => 'required|integer',

@@ -941,6 +941,11 @@ header .navbar li.nav-item.active a.nav-link {
                                 <a class="nav-link" href="{{ url('show-zone-stock-record') }}">
                                     <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('change-password') }}">
+                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
+                                </a>
+                            </li>
                         @endif
 
                         @if (auth()->user()->user_type == 'Division')
@@ -972,6 +977,11 @@ header .navbar li.nav-item.active a.nav-link {
                                 <a class="nav-link" href="{{ url('district-show-stock-record') }}">
                                     <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('change-password') }}">
+                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
+                                </a>
+                            </li>
                             
                         @endif
 
@@ -1002,6 +1012,11 @@ header .navbar li.nav-item.active a.nav-link {
                             <li class="nav-item  {{ request()->is('deo-show-stock-record') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('deo-show-stock-record') }}">
                                     <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('change-password') }}">
+                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
+                                </a>
                             </li>
                         @endif
                     @endauth

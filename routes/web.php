@@ -230,6 +230,9 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 
     // zone dashboard
+
+    Route::get("change-password", [CreateZoneController::class, 'changePassword'])->name('change-password');
+    
     Route::get("zone-dashboard", [ZoneDashBoardController::class, 'dashboard'])->name('zone-dashboard');
     Route::get("zone-inventory", [ZoneDashBoardController::class, 'zoneInventory'])->name('zone-inventory');
     Route::get("create-division-user", [ZoneDashBoardController::class, 'createDivisionUser'])->name('create-division-user');

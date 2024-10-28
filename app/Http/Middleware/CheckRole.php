@@ -56,6 +56,10 @@ class CheckRole
     {
         return [
             'deo' => [
+
+                'change-password',
+                'changePasswordPost',
+                
                 'search-maitri-data',
                 'create-deo-user-form',
                 'deo-inventory',
@@ -84,6 +88,10 @@ class CheckRole
                 'get-aicenter'
             ],
             'district' => [
+
+                'change-password',
+                'changePasswordPost',
+
                 'check-zone-user',
                 'ai-center-get',
                 'check-stock-limit',
@@ -114,6 +122,9 @@ class CheckRole
                 'get-districts',
             ],    
             'zone' => [
+                'change-password',
+                'changePasswordPost',
+
                 'check-zone-user',
                 'get-zone-district',
                 'check-stock-limit',
