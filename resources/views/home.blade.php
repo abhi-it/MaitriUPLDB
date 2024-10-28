@@ -266,7 +266,7 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                                 <div>
                                     <p class="m-0 text-center"><b>
                                             <span data-hi="श्री के रविंद्र नायक, आई०ए०एस"
-                                                data-en="Shri K. Ravindra Naik, IAS"></span>
+                                                data-en="Shri K. Ravinder Naik, IAS"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
                                             <span data-hi="प्रमुख सचिव / पशुधन"
