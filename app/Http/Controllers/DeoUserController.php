@@ -174,7 +174,7 @@ class DeoUserController extends Controller
             'district_id' => $form_step1['district'],
             'division_id' => $division_id,
             'role_id'     => $role_id,
-            'role'        => 'DEO',
+            'role'        => 'deo',
             'user_type'   => 'DEO',
         ]);
 
