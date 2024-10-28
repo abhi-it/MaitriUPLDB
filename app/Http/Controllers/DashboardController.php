@@ -743,8 +743,10 @@ class DashboardController extends Controller
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
             
-            $datas = Avedan::where('is_approved', '=', 4)->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            ->whereYear('avedans.created_at', $this->sessionYear)
+            $datas = Avedan::where('is_approved', '=', 4)
+            ->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            // ->whereYear('avedans.created_at', $this->sessionYear)
+            ->where('avedans.created_at', 'LIKE', '%'.$this->sessionYear.'%')
             ->orderBy('avedans.category', 'DESC')
             ->get();
             
