@@ -164,7 +164,7 @@ class MaitriController extends Controller
             $blocks = Block::where('dis_id', $request->district)->get();
             foreach($blocks as $block){
                 $aiCenter = Cliniclocation::where('block', 'like', "%{$block['block_hindi']}%")->get();
-                $data['aicenter'] = $aiCenter;
+                $data['aicenter'][] = $aiCenter;
             }
             return $data;
         }

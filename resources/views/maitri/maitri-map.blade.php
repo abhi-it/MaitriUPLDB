@@ -400,7 +400,6 @@ $('#get_district').change(function() {
             success: function(data) {
 
               if(data.aicenter){
-                var code
                 $('#map').show();
                 $('#AIExport').show();
                 initAIMap(data.code, data.aicenter);
