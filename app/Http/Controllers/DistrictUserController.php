@@ -97,6 +97,13 @@ class DistrictUserController extends Controller{
                         ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
                         ->get();
         
+        if($aiCenters == ''){
+            $divisionName = Divisions::where('id', $division_id)->first();
+            $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $divisionName['name_hindi'])
+                        ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
+                        ->get();
+        }
+        
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
     }
