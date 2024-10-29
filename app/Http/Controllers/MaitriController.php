@@ -162,10 +162,16 @@ class MaitriController extends Controller
         if($request->district != ''){
             $data['code']       = Districts::where(['id' => $request->district])->first();
             $blocks = Block::where('dis_id', $request->district)->get();
+            $getAi = [];
             foreach($blocks as $block){
                 $aiCenter = Cliniclocation::where('block', 'like', "%{$block['block_hindi']}%")->get();
-                $data['aicenter'][] = $aiCenter;
+                if ($aiCenter->isEmpty()) {
+                    continue;
+                }
+                $getAi[] = $aiCenter;
+                
             }
+            $data['aicenter'] = $getAi;
             return $data;
         }
 
