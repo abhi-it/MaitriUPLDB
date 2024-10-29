@@ -191,10 +191,6 @@ class DeoUserController extends Controller
             ]);
 
         }
-        exit;
-
-       
-
         session()->forget('form_step1');
 
         return response()->json(['status' => 200]);
