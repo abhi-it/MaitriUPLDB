@@ -91,12 +91,9 @@ class DistrictUserController extends Controller{
         $district_id = $getData['district_id'];
         $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
         $zone_id = $deoUser['zone_id'];
-        
         $districtName = Districts::where('id', $district_id)->first();
         $zoneName = Zone::where('id', $zone_id)->first();
-        
-        
-        $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hindi'])
+        $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hi'])
                         ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
                         ->get();
         
