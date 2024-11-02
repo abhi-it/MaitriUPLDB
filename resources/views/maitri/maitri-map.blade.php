@@ -273,7 +273,7 @@
   //     size: new google.maps.Size(50, 50),
   //     origin: new google.maps.Point(0, 0),
   // };
-
+ 
   var lc_img = {
     url: "{{ asset('') }}images/l1.svg",
     size: new google.maps.Size(100, 100),  // Original size
