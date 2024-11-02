@@ -96,12 +96,17 @@ class DistrictUserController extends Controller{
         $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hi'])
                         ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
                         ->get();
-        
-        if($aiCenters == ''){
+        if($aiCenters->isEmpty()){
             $divisionName = Divisions::where('id', $division_id)->first();
-            $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $divisionName['name_hindi'])
-                        ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
-                        ->get();
+            if($divisionName['name_hindi'] == 'मिर्ज़ापुर'){
+                $divisionHindi = 'मिर्जापुर';
+            }else{
+                $divisionHindi = $divisionName['name_hindi'];
+            }
+
+            $aiCenters = ClinicLocation::where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
+                            ->where('mandal_name', 'LIKE', '%'.$divisionHindi.'%')
+                            ->get();
         }
         
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();

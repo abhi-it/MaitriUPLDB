@@ -268,10 +268,17 @@
       size: new google.maps.Size(50, 50),
       origin: new google.maps.Point(0, 0),
   };
-  var lc_img =  {
-      url: "{{ asset('') }}images/l1.svg",
-      size: new google.maps.Size(50, 50),
-      origin: new google.maps.Point(0, 0),
+  // var lc_img =  {
+  //     url: "{{ asset('') }}images/l1.svg",
+  //     size: new google.maps.Size(50, 50),
+  //     origin: new google.maps.Point(0, 0),
+  // };
+
+  var lc_img = {
+    url: "{{ asset('') }}images/l1.svg",
+    size: new google.maps.Size(100, 100),  // Original size
+    scaledSize: new google.maps.Size(50, 50),  // New larger size
+    origin: new google.maps.Point(0, 0),
   };
 
 $('#type').change(function() {
@@ -697,11 +704,21 @@ async function initLocationMap(code,locations) {
               disableAutoPan: false,
               content: contentString,
             });
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
-              map: map,
-              icon: icon,
-            });
+
+
+            if(locations[i]['mandal_name'] == 'मेरठ'){
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+                map: map,
+                icon: icon7,
+              });
+            }else{
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+                map: map,
+                icon: icon,
+              });
+            }
               var currentInfowindow = null;
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
