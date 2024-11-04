@@ -706,19 +706,19 @@ async function initLocationMap(code,locations) {
             });
 
 
-            if(locations[i]['mandal_name'] == 'मेरठ'){
-              marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
-                map: map,
-                icon: icon7,
-              });
-            }else{
+            // if(locations[i]['mandal_name'] == 'मेरठ'){
+            //   marker = new google.maps.Marker({
+            //     position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+            //     map: map,
+            //     icon: icon7,
+            //   });
+            // }else{
               marker = new google.maps.Marker({
                 position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
                 map: map,
                 icon: icon,
               });
-            }
+            // }
               var currentInfowindow = null;
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
@@ -788,9 +788,18 @@ async function initLiveStockMap(code,locations) {
           if(locations[i]['district']=='हापुड़' || locations[i]['district']=='ललितपुर' || locations[i]['district']=='बाराबंकी'){
             var imgcustom  = icon3;
           }
-          if(locations[i]['district']=='वाराणसी' || locations[i]['district']=='मेरठ' || locations[i]['district']=='सीतापुर'){
+          if(locations[i]['district']=='वाराणसी'){
+            var imgcustom  = icon7;
+          }
+
+          if(locations[i]['district']=='मेरठ'){
             var imgcustom  = icon8;
           }
+
+          if(locations[i]['district']=='सीतापुर'){
+            var imgcustom  = icon8;
+          }
+
           if(locations[i]['district']=='इटावा'){
             var imgcustom  = icon9;
           }
