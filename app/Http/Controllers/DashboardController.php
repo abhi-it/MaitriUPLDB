@@ -748,21 +748,19 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            if($districtID){
-                $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                        ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
-                        ->where('avedans.is_approved', 4)
-                        ->orderBy('avedans.category', 'DESC')
-                        ->get();
-            }else{
-                $datas = Avedan::with('district') // Eager load the Districts model
-                        ->where('is_approved', 4)
-                        ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
-                        ->orderBy('avedans.category', 'DESC')
-                        ->get();
-            }
+            $datas = DB::table('avedans')
+                    ->join('districts', 'avedans.district_id', '=', 'districts.id')
+                    ->select('avedans.*', 'districts.*') // Select required columns
+                    ->where('avedans.is_approved', 4)
+                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
             
-            
+            // $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            //     ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+            //     ->where('avedans.is_approved', 4)
+            //     ->orderBy('avedans.category', 'DESC')
+            //     ->get();
 
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
