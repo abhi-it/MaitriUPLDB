@@ -785,6 +785,7 @@ async function initLiveStockMap(code,locations) {
           var imgcustom  = icon2;
         }
         if(locations[i]['type']=='bull_mother' ){
+          console.log(locations[i]);
           if(locations[i]['district']=='हापुड़' || locations[i]['district']=='ललितपुर' || locations[i]['district']=='बाराबंकी'){
             var imgcustom  = icon3;
           }
@@ -793,6 +794,10 @@ async function initLiveStockMap(code,locations) {
           }
 
           if(locations[i]['district']=='मेरठ'){
+            var imgcustom  = icon8;
+          }
+
+          if(locations[i]['district']=='झांसी'){
             var imgcustom  = icon8;
           }
 
