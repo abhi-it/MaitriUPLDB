@@ -115,10 +115,31 @@ class MaitriController extends Controller
         $location           = $request->id;
         $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$location}%")->get();
         $data['janapad']    = Janpad::where(['name'=>$location])->first();
-        $data['results']    = Maitri::select('janpad_name', DB::raw('count(*) as count'))
-        ->where('mandal_name', 'like', "%{$location}%")
-        ->groupBy('janpad_name')
-        ->get();
+
+        $divisionData       = Divisions::where(['name_hindi' => $location])->first();
+        $data['result'] =   DB::table('districts')
+                ->select(
+                    'districts.id',
+                    'districts.name_hindi',
+                    'districts.division_id',
+                    'maitries.janpad_name',
+                    DB::raw('COUNT(maitries.janpad_name) AS count')
+                )
+                ->leftJoin('maitries', function($join) use ($location) {
+                    $join->on('districts.name_hindi', '=', 'maitries.janpad_name')
+                        ->where('maitries.mandal_name', 'like', '%' . $location . '%');
+                })
+                ->where('districts.division_id', $divisionData['id'])
+                ->groupBy('districts.id', 'districts.name_hindi', 'districts.division_id', 'maitries.janpad_name')
+                ->get();
+
+        // $data['results']    = Maitri::select('janpad_name', DB::raw('count(*) as count'))
+        // ->where('mandal_name', 'like', "%{$location}%")
+        // ->groupBy('janpad_name')
+        // ->get();
+
+
+
         return \Response::json(['status'=>'success','message'=>'Get all janpad successfully!','data'=>$data],200);
     }
 

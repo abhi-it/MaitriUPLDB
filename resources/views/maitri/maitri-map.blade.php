@@ -268,10 +268,17 @@
       size: new google.maps.Size(50, 50),
       origin: new google.maps.Point(0, 0),
   };
-  var lc_img =  {
+  /*var lc_img =  {
       url: "{{ asset('') }}images/l1.svg",
       size: new google.maps.Size(50, 50),
       origin: new google.maps.Point(0, 0),
+  };*/
+
+  var lc_img = {
+    url: "{{ asset('') }}images/l1.svg",
+    size: new google.maps.Size(100, 100),  // Original size
+    scaledSize: new google.maps.Size(50, 50),  // New larger size
+    origin: new google.maps.Point(0, 0),
   };
 
 $('#type').change(function() {
@@ -372,8 +379,6 @@ $('#address').change(function() {
                 });
               }
 
-              console.log("Maitri = "+data.maitri);
-
               if(data.maitri){
                 $('#map').show();
                 $('#AIExport').show();
@@ -402,8 +407,6 @@ $('#get_district').change(function() {
             success: function(data) {
 
               if(data.aicenter){
-
-                console.log("Aicenter = "+data.aicenter);
                 $('#map').show();
                 $('#AIExport').show();
                 initAIMap(data.code, data.aicenter);
@@ -602,16 +605,11 @@ async function initLocationMap(code,locations) {
                   $('#janpad').show();
                   $('#janpad').empty();
                   $('#janpad').append($("<option>-Select one-</option>"));
-                  $.each(data.data.results, function(i, index) {
-                    // Skip the iteration if the janpad_name is "विन्ध्याचल"
-                    if (index.janpad_name === "विन्ध्याचल") {
-                        return true; // This will skip the current iteration
-                    }
-
-                    // Create the option element with value and display text
+                  $.each(data.data.result, function(i, index) {
+                   var janpad_name = ( index.janpad_name ) ? index.janpad_name : index.name_hindi;
                     var option = $("<option></option>")
                         .attr("value", index.janpad_name)
-                        .text(index.janpad_name + " (" + index.count + ")");
+                        .text(janpad_name + " (" + index.count + ")");
 
                     // Append the option to the select element
                     $('#janpad').append(option);
@@ -660,7 +658,10 @@ async function initLocationMap(code,locations) {
   async function initMap(code,locations) {
       var lat  = (code)?code.latt:27.5706;
       var long  = (code)?code.long:80.0982;
-      const zoom = ((locations.length)>20)? 10 : 7;
+
+      console.log(locations.length);
+
+      const zoom = ((locations.length)>20)? 8 : 9;
       var latlng = new google.maps.LatLng( lat,long);
       var map = new google.maps.Map(document.getElementById('map'), {
             center: latlng,
@@ -697,11 +698,21 @@ async function initLocationMap(code,locations) {
               disableAutoPan: false,
               content: contentString,
             });
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
-              map: map,
-              icon: icon,
-            });
+
+
+             if(locations[i]['mandal_name'] == 'मेरठ'){
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+                map: map,
+                icon: icon7,
+              });
+            }else{
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i]['latitude'], locations[i]['longitude']),
+                map: map,
+                icon: icon,
+              });
+            }
               var currentInfowindow = null;
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {

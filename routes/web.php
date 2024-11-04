@@ -342,6 +342,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("get-all-zone-district", [App\Http\Controllers\DeoUserController::class, 'getAllZoneDistrict'])->name('get-all-zone-district');
     Route::get("operator-id", [App\Http\Controllers\OperatorIdController::class, 'index'])->name('operator-id');
     Route::get("edit-user/{id}/edit", [App\Http\Controllers\OperatorIdController::class, 'editUser'])->name('edit-user');
+    Route::post("update-user", [App\Http\Controllers\OperatorIdController::class, 'updateUser'])->name('update-user');
     Route::delete("user-delete/{id}", [App\Http\Controllers\OperatorIdController::class, 'userDelete'])->name('user-delete');
     
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');

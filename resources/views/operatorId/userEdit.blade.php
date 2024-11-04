@@ -9,28 +9,29 @@
 </style>
 <div class="container main-div py-5" style="background-color:white;">
     @if(session()->has('success'))
-    <div class="alert alert-success">
-        {{ session()->get('success') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
     @endif
 
     <div class="container">
         <h2><span data-hi="यूजर को संपादित करो" data-en="Edit User"></span></h2>
 
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('update-user') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="user_id" value="{{ $user_id }}"/>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="title"><span data-hi="नाम" data-en="Name"></span></label>
-                        <input type="text" name="title" class="form-control" value="{{ $userData['FirstName'] }}"
+                        <input type="text" name="FirstName" class="form-control" value="{{ $userData['FirstName'] }}"
                             required/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="title"><span data-hi="उपयोगकर्ता नाम" data-en="User Name"></span></label>
-                        <input type="text" name="title" class="form-control" value="{{ $userData['name'] }}"
+                        <input type="text" name="name" class="form-control" value="{{ $userData['name'] }}"
                             required/>
                     </div>
                 </div>
@@ -39,15 +40,14 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="title"><span data-hi="ईमेल" data-en="Email"></span></label>
-                        <input type="email" name="title" class="form-control" value="{{ $userData['email'] }}"
+                        <input type="email" name="email" class="form-control" value="{{ $userData['email'] }}"
                             required/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="title"><span data-hi="पासवर्ड" data-en="Password"></span></label>
-                        <input type="password" name="title" class="form-control" value=""
-                            required/>
+                        <input type="password" name="password" class="form-control" value="" required/>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="title"><span data-hi="जिला चुनें" data-en="Select District"></span></label>
-                        <select name="select_district" id="select_zone" class="form-control">
+                        <select name="select_district" id="select_district" class="form-control">
                             <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
                             @foreach($getDistrict as $district)
                                 <option value="{{ $district['id'] }}" {{ $district['id'] == $userData['district_id'] ? 'selected' : '' }} data-hi="{{ $district['name_hindi'] }}" data-en="{{ $district['name_eng'] }}"></option>
@@ -92,7 +92,7 @@
                 @endif
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" name="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 
