@@ -140,7 +140,10 @@
                                                 :data-en="district.name_eng"
                                                 x-text="localStorage.getItem('selectedProject') === 'en' ? district.name_eng : district.name_hindi"></span>
                                             <input type="radio" name="district" :id="'district' + district.id"
-                                                :value="district.id" x-on:click="getAllAiCenter(district.id)">
+                                                :value="district.id">
+
+                                            <!-- <input type="radio" name="district" :id="'district' + district.id"
+                                                :value="district.id" x-on:click="getAllAiCenter(district.id)"> -->
                                             <span class="checkmarkradio"></span>
                                         </label>
                                     </div>
@@ -203,7 +206,7 @@
                 zones: @json($zones),
                 
                 selectedDistricts: [],
-                selectedAicenters: [],
+                // selectedAicenters: [],
 
                 aiCenterNullMess: 1,
                 
@@ -304,9 +307,9 @@
                         return;
                     }
 
-                    const selectedAicenters = Array.from(document.querySelectorAll(
-                            'input[name="aicenter"]:checked'))
-                        .map(aicenter => aicenter.value);
+                    // const selectedAicenters = Array.from(document.querySelectorAll(
+                    //         'input[name="aicenter"]:checked'))
+                    //     .map(aicenter => aicenter.value);
                     // if (selectedAicenters.length === 0) {
                     //     this.errorMessage = 'Please select at least one aicenter';
                     //     return;
@@ -315,7 +318,7 @@
                     axios.post('{{ route('deo-user-store-step1') }}', {
                             zone: selectedZoneValue,
                             district: selectedDistrictValue,
-                            aicenters: selectedAicenters
+                            // aicenters: selectedAicenters
                         })
                         .then(response => {
                             console.log(response.data);

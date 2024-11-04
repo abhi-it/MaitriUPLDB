@@ -51,31 +51,22 @@ class DeoStockUserController extends Controller
 
     public function deoStockForm(){
         $user_id = Auth::user()->id;
-        $getDatas = DeoUser::where('user_id', $user_id)->first();
-        $district_id = $getDatas['district_id'];
-
-        $blocksDatas = Block::where('dis_id', $district_id)->get();
-        foreach($blocksDatas as $blocksData){
-            $blockName = $blocksData['block_hindi'];
-            $aiCenters = Cliniclocation::where('block', 'Like', '%'.$blockName.'%')->get();
-            echo '<pre>';print_r($aiCenters);
-        }
-        exit;
+        $getDatas = DeoUser::where('user_id', $user_id)->get();
       
-        // $ai_centerName = [];
-        // foreach($getDatas as $getData){
-        //     $aiCenterId = $getData['aicenters_id'];
-        //     $aiCenterName = Cliniclocation::where('id', $getData['aicenters_id'])->first();
-        //     $ai_centerName[] = [
-        //         'id' => $aiCenterName['id'],
-        //         'name_hindi' => $aiCenterName['name'],
-        //         'name_eng' => $aiCenterName['name_eng'],
-        //         'zone_id' => $getData['zone_id'],
-        //         'division_id' => $getData['division_id'],
-        //         'district_id' => $getData['district_id'],
-        //         'block_id' => $getData['block_id'],
-        //     ];
-        // }
+        $ai_centerName = [];
+        foreach($getDatas as $getData){
+            $aiCenterId = $getData['aicenters_id'];
+            $aiCenterName = Cliniclocation::where('id', $getData['aicenters_id'])->first();
+            $ai_centerName[] = [
+                'id' => $aiCenterName['id'],
+                'name_hindi' => $aiCenterName['name'],
+                'name_eng' => $aiCenterName['name_eng'],
+                'zone_id' => $getData['zone_id'],
+                'division_id' => $getData['division_id'],
+                'district_id' => $getData['district_id'],
+                'block_id' => $getData['block_id'],
+            ];
+        }
         $deoStock = RemainingStock::where('user_id', $user_id)->get();
         return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock'));
     }

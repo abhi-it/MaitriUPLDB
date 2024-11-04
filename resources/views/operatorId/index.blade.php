@@ -59,7 +59,7 @@
                         <td>
                             <div class="cus-btn">
                                 <a href="{{ route('edit-user', $zoneUser->id) }}" class="btn btn-warning btn-sm"> 
-                                    <i class="ri-eye-line"></i>
+                                    <i class="ri-edit-box-line"></i>
                                 </a>
         
                                 <form action="{{ route('user-delete', $zoneUser->id) }}" method="POST" style="display:inline-block;">

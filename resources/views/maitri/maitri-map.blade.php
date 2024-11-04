@@ -792,15 +792,15 @@ async function initLiveStockMap(code,locations) {
             var imgcustom  = icon3;
           }
           if(locations[i]['district']=='वाराणसी'){
-            var imgcustom  = icon7;
+            var imgcustom  = icon;
           }
 
           if(locations[i]['district']=='मेरठ'){
-            var imgcustom  = icon8;
+            var imgcustom  = icon7;
           }
 
           if(locations[i]['district']=='झांसी'){
-            var imgcustom  = icon8;
+            var imgcustom  = icon;
           }
 
           if(locations[i]['district']=='सीतापुर'){
