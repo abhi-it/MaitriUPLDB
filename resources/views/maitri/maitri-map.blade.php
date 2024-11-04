@@ -142,7 +142,7 @@
 
       <div id="location" class="row">
           <div class="col-md-4 mb-4">
-            <select class="form-control" name="division" id="division" >
+            <select class="form-control" name="division" id="division" style="font-size: 15px;">
                 <option>-कोई भी चुनें-</option>
                 @foreach($division as $val)
                 @if($val!='' ||$val != null)
