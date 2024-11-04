@@ -531,7 +531,7 @@ async function initLocationMap(code,locations) {
           mapId: "a3efe1c035bad51b", 
           zoomControl: false,
     });
-    var markers = [];
+    var markers = []; 
     if(locations.length>0){
       var marker, i ,labels;
       var markers=[];

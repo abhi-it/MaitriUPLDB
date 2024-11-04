@@ -54,7 +54,7 @@ class MaitriController extends Controller
                     ->join('districts', 'district_map_data.district_hi', '=', 'districts.name_hindi')
                     ->select('district_map_data.*', 'districts.*')
                     ->get();
-
+ 
         $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get(); 
         $cvblocks    =  DB::table('cryo_vessel_blocks')->orderBy('id','ASC')->get();
        
