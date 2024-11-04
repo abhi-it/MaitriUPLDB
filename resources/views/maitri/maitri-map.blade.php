@@ -65,7 +65,7 @@
             <option value="cryo_vessel_blocks">क्रायो-वेसल ब्लॉक (Cryo-Vessel Blocks) ({{count($cvblocks)}})</option>
             <option value="1">मैत्री (पशु मित्र)  ({{count($maitricount)}})</option>
             <option value="2">एआई सेंटर/एलईओ सेंटर/पशु चिकित्सा अस्पताल  ({{count($aicount)}})</option>
-            <option value="3">जिलों  ({{count($disticcount)}})</option>
+            <option value="3">जिलों  ({{count($countDistrict)}})</option>
             <option value="lc_agency">सीमेन बैंक / क्षेत्रीय केंद्र (Semen Bank / Zonal Centers) ( {{$agency}} )</option>
             <option value="semen_station">सीमेन डी.एफ.एस. स्टेशन (Semen D F S Station ) ({{$station}})</option>
             <option value="ett_ivf">ईटीटी / आईवीएफ सुविधा केंद्र (ETT /  IVF Facility Center) ({{$ivf}})</option>
@@ -532,6 +532,9 @@ async function initLocationMap(code,locations) {
       var marker, i ,labels;
       var markers=[];
       for (let i = 0; i < locations.length; i++) {
+
+        console.log(locations[i]);
+
         if (locations[i]['long'] !== "" && locations[i]['latt'] !== "") {
           const contentString =
                     '<div id="content">' +
@@ -539,6 +542,11 @@ async function initLocationMap(code,locations) {
                     "</div>" +
                     '<div id="bodyContent">' +
                     "<p>  नाम : <b>"+locations[i]['name_hindi']+"</b>,</br> " +
+                    "<p>  प्रजनन योग्य देशी गाय : <b>"+locations[i]['breedable_cattle']+"</b>,</br> " +
+                    "<p>  प्रजनन योग्य विदेशी और संकर गाय : <b>"+locations[i]['breedable_extic_cattle']+"</b>,</br> " +
+                    "<p>  प्रजनन योग्य भैंसें : <b>"+locations[i]['breeable_buffaloes']+"</b>,</br> " +
+                    "<p>  कुल प्रजनन योग्य गोजातीय जनसंख्या : <b>"+locations[i]['total_breedable_bovine']+"</b>,</br> " +
+                    "<p>  कुल AIT आईडी : <b>"+locations[i]['total_ait_ids']+"</b>,</br> " +
                     "</p></div>" +
                     "</div>";
           const infowindow = new google.maps.InfoWindow({

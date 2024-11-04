@@ -6,6 +6,7 @@ use App\Models\CVOOfficers;
 use App\Models\Institute;
 use App\Models\Tehsil;
 use App\Models\Blockslist;
+use App\Models\DistrictMapData;
 use App\Models\Hospitals;
 use App\Models\AIcenters;
 use App\Models\Maitri;
@@ -19,49 +20,20 @@ class ImportOfficers implements ToModel
         set_time_limit(300);
     
         if ($row[0]) {
-            $mandal_name = $row[0];
-            $janpad_name = $row[1];
-            $type = $row[3];
-            $aiCenterNameHindi = $row[2];
-            $aiCenterNameEng = $row[4];
+
+            $district_name              = $row[0];
+            $total_ait_ids              = $row[1];
+            $district = $this->engtohindi($district_name);
     
-            $aiCenter = $aiCenterNameHindi ? $this->changeText($aiCenterNameHindi) : $this->engtohindi($aiCenterNameEng);
-    
-            if (!empty($aiCenter)) {
-                // Convert names
-                $mandal_name_hindi = $this->engtohindi($mandal_name);
-                $janpad_name_hindi = $this->engtohindi($janpad_name);
-    
-                // Try wrapping in a transaction
-                \DB::transaction(function () use ($mandal_name_hindi, $janpad_name_hindi, $type, $aiCenter, $row) {
-                    $checkdata = Cliniclocation::where([
-                        'mandal_name' => $mandal_name_hindi,
-                        'janpad_name' => $janpad_name_hindi,
-                        'name' => $aiCenter
-                    ])->first();
-    
-                    if (empty($checkdata)) {
-                        // Insert if not found
-                        $maitri = new Cliniclocation();
-                        $maitri->mandal_name = $mandal_name_hindi;
-                        $maitri->janpad_name = $janpad_name_hindi;
-                        $maitri->type = $type;
-                        $maitri->name = $aiCenter;
-                        $maitri->name_eng = $this->hinditoenglish($aiCenter);
-                        $maitri->lattitute = str_replace('-', '.', $row[5]);
-                        $maitri->longitute = str_replace('-', '.', $row[6]);
-                        $maitri->save();
-                    } else {
-                        // Update if found, but only if values have changed
-                        $checkdata->update([
-                            'name' => $aiCenter,
-                            'name_eng' => $this->hinditoenglish($aiCenter),
-                            'lattitute' => str_replace('-', '.', $row[5]),
-                            'longitute' => str_replace('-', '.', $row[6]),
-                        ]);
-                    }
-                }, 3); // Retry up to 3 times in case of deadlock
+            $mapData = DistrictMapData::where('district_hi', $district)->first();
+
+            if ($mapData) {
+                // If found, update it
+                $mapData->update([
+                    'total_ait_ids' => $total_ait_ids,
+                ]);
             }
+       
         }
     }
     
