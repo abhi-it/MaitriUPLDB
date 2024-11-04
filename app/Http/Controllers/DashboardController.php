@@ -421,7 +421,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -588,10 +588,16 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
            
-            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            // $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            //     ->whereYear('avedans.created_at', $this->sessionYear)
+            //     ->orderBy('avedans.category', 'DESC')
+            //     ->get();
+
+            $datas = Avedan::with('district') // Eager load the Districts model
+                    ->where('is_approved', 1)
+                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
 
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
@@ -609,7 +615,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -742,11 +748,11 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = Avedan::join('districts', 'avedans.district_id', '=', 'districts.id')
-                    ->where('is_approved', 4)
-                    ->where('avedans.created_at', 'LIKE', '%'.$this->sessionYear.'%')
-                    ->orderBy('avedans.category', 'DESC')
-                    ->get();
+            $datas = Avedan::with('district') // Eager load the Districts model
+            ->where('is_approved', 4)
+            ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+            ->orderBy('avedans.category', 'DESC')
+            ->get();
             
             // $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
             //     ->whereYear('avedans.created_at', $this->sessionYear)
@@ -769,7 +775,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -852,10 +858,18 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            // $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            //     ->whereYear('avedans.created_at', $this->sessionYear)
+            //     ->orderBy('avedans.category', 'DESC')
+            //     ->get();
+
+            $datas = Avedan::with('district') // Eager load the Districts model
+            ->where('is_approved', 4)
+            ->where('avedans.category', 'LIKE', '%जनरल%')
+            ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+            ->orderBy('avedans.category', 'DESC')
+            ->get();
+
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
                 $high_school_calculation = round(($high_percentage*8)/10);
@@ -872,7 +886,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -960,10 +974,19 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            // $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            //     ->whereYear('avedans.created_at', $this->sessionYear)
+            //     ->orderBy('avedans.category', 'DESC')
+            //     ->get();
+
+            $datas = Avedan::with('district') // Eager load the Districts model
+                    ->where('is_approved', 4)
+                    ->where('avedans.category', 'LIKE', '%ओ बी सी%')
+                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
+
+
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
                 $high_school_calculation = round(($high_percentage*8)/10);
@@ -980,7 +1003,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -1064,10 +1087,17 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            // $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
+            //     ->whereYear('avedans.created_at', $this->sessionYear)
+            //     ->orderBy('avedans.category', 'DESC')
+            //     ->get();
+
+            $datas = Avedan::with('district') // Eager load the Districts model
+                    ->where('is_approved', 4)
+                    ->where('avedans.category', 'LIKE', '%एस सी%')
+                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
 
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
@@ -1085,7 +1115,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
@@ -1167,10 +1197,12 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-                ->whereYear('avedans.created_at', $this->sessionYear)
-                ->orderBy('avedans.category', 'DESC')
-                ->get();
+            $datas = Avedan::with('district') // Eager load the Districts model
+                    ->where('is_approved', 4)
+                    ->where('avedans.category', 'LIKE', '%एस टी%')
+                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+                    ->orderBy('avedans.category', 'DESC')
+                    ->get();
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
                 $high_school_calculation = round(($high_percentage*8)/10);
@@ -1187,7 +1219,7 @@ class DashboardController extends Controller
                     'mobile' => $item->mobile,
                     'email' => $item->email,
                     'category' => $item->category,
-                    'districts' => $item->district->name_hindi,
+                    'districts' => $item->district->name_hindi ?? Null,
                     'tehsil' => $item->tehsil,
                     'post_office' => $item->post_office,
                     'gram_panchayat_name' => $item->gram_panchayat_name,
