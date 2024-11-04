@@ -48,7 +48,13 @@ class MaitriController extends Controller
         $bull       = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
         $maitricount = Maitri::get();
         $aicount      = Cliniclocation::get();
-        $disticcount =  Districts::get();
+        $countDistrict =  Districts::get();
+
+        $disticcount =  DB::table('district_map_data')
+                    ->join('districts', 'district_map_data.district_hi', '=', 'districts.name_hindi')
+                    ->select('district_map_data.*', 'districts.*')
+                    ->get();
+
         $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get(); 
         $cvblocks    =  DB::table('cryo_vessel_blocks')->orderBy('id','ASC')->get();
        
@@ -60,6 +66,7 @@ class MaitriController extends Controller
             'maitricount'=> $maitricount,
             'aicount'   =>  $aicount,
             'disticcount'=> $disticcount,
+            'countDistrict' => $countDistrict,
             'agency'    =>  $agency,
             'station'   =>  $station,
             'ivf'       =>  $ivf,
