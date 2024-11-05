@@ -760,15 +760,6 @@ class DashboardController extends Controller
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
 
-            if($datas->isEmpty()){
-                if($districtID == 36){
-                    $datas = $query->with('district') // Perform the join
-                            ->where('avedans.is_approved', 4)
-                            ->orderBy('avedans.category', 'DESC')
-                            ->get();
-                }
-            }
-
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
                 $high_school_calculation = round(($high_percentage*8)/10);
@@ -803,6 +794,9 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
+            if($districtID == 36 && $results->isEmpty()){
+                $results = $query->where('created_at', 'LIKE', $this->sessionYear)->paginate(50);
+            }
             return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
         }
     }
