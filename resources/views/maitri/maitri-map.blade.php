@@ -19,7 +19,7 @@
 	}
 }
 
-/* SPINNER ANIMATION */
+/ SPINNER ANIMATION /
 .spinner {
 	position: relative;
 	top: 35%;
@@ -351,6 +351,7 @@ $('#type').change(function() {
 });
 // AIcenter function start here 
 $('#address').change(function() {
+  $('#get_district').empty();
   $('#ai_id').val();
     var val = $("#address option:selected").val();
     $('#ai_id').val(val);
@@ -368,16 +369,21 @@ $('#address').change(function() {
             cache: false,
             success: function(data) {
 
-              if(data.district){
-                $('#get_district').show();
-                var district = data.district;
-                $.each(district, function(index, item) {
-                    const option = $('<option></option>')
-                        .attr('value', item.id)
-                        .text(item.name_eng + ' (' + item.name_hindi + ')');
-                    $('#get_district').append(option);
-                });
+              if (data.district) {
+                  $('#get_district').show();
+                  const defaultOption = $('<option></option>')
+                      .attr('value', '')
+                      .text('Select District');
+                  $('#get_district').append(defaultOption);
+                  var district = data.district;
+                  $.each(district, function(index, item) {
+                      const option = $('<option></option>')
+                          .attr('value', item.id)
+                          .text(item.name_eng + ' (' + item.name_hindi + ')');
+                      $('#get_district').append(option);
+                  });
               }
+
 
               if(data.maitri){
                 $('#map').show();

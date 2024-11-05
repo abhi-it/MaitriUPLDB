@@ -192,14 +192,16 @@ class MaitriController extends Controller
             $blocks = Block::where('dis_id', $request->district)->get();
             $getAi = [];
             foreach($blocks as $block){
-                $aiCenter = Cliniclocation::where('block', 'like', "%{$block['block_hindi']}%")->get();
-                if ($aiCenter->isEmpty()) {
-                    continue;
-                }
-                $getAi[] = $aiCenter;
+                
+                $getAi[] = $block['block_hindi'];
                 
             }
-            $data['aicenter'] = $getAi;
+            $query = ClinicLocation::query();
+            foreach ($getAi as $blockName) {
+                $query->orWhere('block', 'LIKE', '%' . $blockName . '%');
+            }
+            $clinicLocations = $query->get();
+            $data['aicenter'] = $clinicLocations;
             return $data;
         }
 
@@ -251,4 +253,3 @@ class MaitriController extends Controller
       
     }
 }
-
