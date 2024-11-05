@@ -760,6 +760,15 @@ class DashboardController extends Controller
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
 
+            if($datas->isEmpty()){
+                if($districtID == 36){
+                    $datas = $query->with('district') // Perform the join
+                            ->where('avedans.is_approved', 4)
+                            ->orderBy('avedans.category', 'DESC')
+                            ->get();
+                }
+            }
+
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
                 $high_school_calculation = round(($high_percentage*8)/10);
