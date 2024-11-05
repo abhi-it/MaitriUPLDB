@@ -794,10 +794,10 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            if($districtID == 36 && $results->isEmpty()){
-                $results = $query->where('created_at', 'LIKE', $this->sessionYear)->paginate(50);
-            }
-            return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
+           if($_GET['district_id'] === '36' && $results->isEmpty()){
+                $results = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->paginate(50);
+           }
+           return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
         }
     }
     public function generalList(Request $request, $year = null) // General + OBC List will display here for status 4 (FInal Selected list after documents verify)
