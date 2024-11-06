@@ -201,6 +201,9 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("maitri-listing", [MaitriController::class, 'maitriListing'])->name('maitri-listing');
     Route::get("getallmaitrifilterlist", [MaitriController::class, 'maitriListing'])->name('getallmaitrifilterlist');
 
+    Route::get('/matri-to-fetch-record/{id}', [MaitriController::class, 'fetchRecord'])->name('matri-to-fetch-record');
+    Route::post('/matri-to-update-record', [MaitriController::class, 'updateRecord'])->name('matri-to-update-record');
+
 
     Route::get("getallofficers", [CVOOfficerController::class, 'getAllOfficers'])->name('getallofficers');
 

@@ -152,6 +152,9 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'matri-to-fetch-record',
+                'matri-to-update-record',
+
                 'waitingAvedanFullDetails',
                 'getVikaskhand',
                 'dashboard',
@@ -281,6 +284,10 @@ class CheckRole
             ],
 
             'Superadmin' => [
+
+                'matri-to-fetch-record',
+                'matri-to-update-record',
+
                 'save-daily-dashboard',
                 'daily-dashboard',
 				'institute.create',

@@ -184,6 +184,22 @@ class MaitriController extends Controller
         return \Excel::download(new MaitriListExport($data), 'maitri-list.xlsx');
     }
 
+    public function fetchRecord($id){
+        $record = Maitri::find($id);
+        return response()->json($record);
+    }
+
+    public function updateRecord(Request $request){
+        $latitude   = $request['latitude'];
+        $longitude  = $request['longitude'];
+        $record     = Maitri::find($request->id);
+        $record->update($request->only([
+            'latitude', 'longitude'
+        ]));
+        return response()->json(['success' => 'Record updated successfully']);
+    }
+
+
     public function getAllAICenters(Request $request){
         $data               = [];
 
