@@ -794,8 +794,11 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'general-list.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-           if($_GET['district_id'] === '36' && $results->isEmpty()){
-                $results = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
+
+            if(isset(($_GET['district_id']))){
+            if($_GET['district_id'] === '36' && $results->isEmpty()){
+                    $results = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
+            }
            }
            return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
         }
