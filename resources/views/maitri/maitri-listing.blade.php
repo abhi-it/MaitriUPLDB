@@ -144,6 +144,8 @@
 
     <!-- Edit Modal Pop-up End -->
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
@@ -174,11 +176,22 @@ $(document).ready(function () {
             data: $(this).serialize(),
             success: function (response) {
                 $('#editModal').modal('hide');
-                alert('Record updated successfully');
-                location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Record updated successfully.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload();
+                });
             },
             error: function (error) {
-                alert('An error occurred while updating.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while updating.',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     });
