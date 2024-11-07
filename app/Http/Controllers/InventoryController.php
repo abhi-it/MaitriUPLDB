@@ -135,6 +135,7 @@ class InventoryController extends Controller
                 'demand_section'        => $request->demand_section,
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
+                'selectDate_supply'     => $selectDate_supply,
                 'semen'                 => $request->semen,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
@@ -165,8 +166,8 @@ class InventoryController extends Controller
             $data = [
                 'user_id'            => $user_id,
                 'demand_section'     => $request->demand_section,
-                'breed'                 => $request->breed,
-                'breed_type'            => $breedType,
+                'breed'              => $request->breed,
+                'breed_type'         => $breedType,
                 'semen'              => $request->semen,
                 'semen_type'         => $request->semen_type,
                 'banner'             => $request->banner,

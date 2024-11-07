@@ -12,6 +12,7 @@ class Zonestock extends Model
         'dsf_station',
         'breed',
         'breed_type',
+        'supply_date',
         'semen' ,
         'semen_type' ,
         'banner' ,

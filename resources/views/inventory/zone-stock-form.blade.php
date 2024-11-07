@@ -95,6 +95,13 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4"> 
+                        <span data-hi="LN2 आपूर्ति तिथि" data-en="LN2 Supply Date"></span> 
+                        <span id="errorDemand" class="errorclass"></span> 
+                    </label> 
+                    <input name="selectDate_supply" id="selectDate_supply" data-filed_type="selectDate_supply" type="date" class="form-control" autofocus>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4"> 
                         <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
                     </label> 
                     <select name="semen" id="semen" class="form-control" autofocus="">
