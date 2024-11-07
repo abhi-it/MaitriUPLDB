@@ -135,7 +135,7 @@ class InventoryController extends Controller
                 'demand_section'        => $request->demand_section,
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
-                'supply_date'     => $request->selectDate_supply,
+                'supply_date'           => $request->selectDate_supply,
                 'semen'                 => $request->semen,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
