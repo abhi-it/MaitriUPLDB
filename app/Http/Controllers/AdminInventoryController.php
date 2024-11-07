@@ -173,8 +173,6 @@ class AdminInventoryController extends Controller
         foreach($inventoryIds as $inventory){
             $district_User_id = $inventory['user_id'];
             $inventory_id = $inventory['inventory_id'];
-
-
             $results = DB::table('inventory_map_user')
                         ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
                         ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')

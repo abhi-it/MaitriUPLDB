@@ -24,6 +24,7 @@
                     <th><span data-hi="उपयोगकर्ता नाम" data-en="UserName"></span></th>
                     <th><span data-hi="क्षेत्र" data-en="Zone"></span></th>
                     <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
+                    <th><span data-hi="LN2 आपूर्ति तिथि" data-en="LN2 Supply Date"></span></th>
                     <th><span data-hi="वीर्य" data-en="Semen"></span></th>
                     <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
                     <th><span data-hi="बैनर" data-en="Banner"></span></th>
@@ -49,6 +50,7 @@
                                 <td>{{ $zoneUser->FirstName }}</td>
                                 <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
                                 <td>{{ $zoneUser->demand_section }}</td>
+                                <td>{{ $zoneUser->supply_date ? $zoneUser->supply_date : 'N/A' }}</td>
                                 <td>{{ $zoneUser->semen }}</td>
                                 <td>{{ $zoneUser->semen_type }}</td>
                                 <td>{{ $zoneUser->banner }}</td>
