@@ -265,7 +265,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">
-                <span data-hi="भारत पशुधन पर पंजीकृत यौन वीर्य संतति की संख्या" data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span>   </label> 
+                <span data-hi="भारत पशुधन पर पंजीकृत वर्गीकृत वीर्य संतति की संख्या" data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span>   </label> 
                 <input name="registered_sexed_calves" id="registered_sexed_calves" type="text" ata-placeholder-hi="भारत पशुधन पर पंजीकृत वर्गीकृत वीर्य संतति की संख्या" data-placeholder-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
         </div>
         <div class="form-group col-md-6">
