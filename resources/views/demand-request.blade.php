@@ -65,7 +65,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4"> <span data-hi="प्रशिक्षण समापन वर्ष" data-en="Training Completion Year"></span> </label> 
-            <input name="training_year" id="training_year" type="text"  data-placeholder-en="Training Completion Year" data-placeholder-hi="प्रशिक्षण केंद्र का नाम" placeholder="" class="form-control"  autofocus>
+            <input name="training_year" id="training_year" type="text"  data-placeholder-en="Training Completion Year" data-placeholder-hi="प्रशिक्षण समापन वर्ष" placeholder="" class="form-control"  autofocus>
         </div>
 
 
@@ -253,20 +253,20 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">
-                <span data-hi="भारत पशुधन पर पंजीकृत गाय बछड़ों की संख्या" data-en="Number of Cow Calves Registered on Bharat Pashudhan">
+                <span data-hi="भारत पशुधन पर पंजीकृत गाय संतति की संख्या" data-en="Number of Cow Calves Registered on Bharat Pashudhan">
                 </span>   </label> 
-                <input name="registered_cow_calves" id="registered_cow_calves" type="text" data-placeholder-hi="भारत पशुधन पर पंजीकृत गाय बछड़ों की संख्या" data-placeholder-en="Number of Cow Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
+                <input name="registered_cow_calves" id="registered_cow_calves" type="text" data-placeholder-hi="भारत पशुधन पर पंजीकृत गाय संतति की संख्या" data-placeholder-en="Number of Cow Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
         </div>
         
         <div class="form-group col-md-6">
             <label for="inputEmail4">
-                <span data-hi="भारत पशुधन पर पंजीकृत भैंस बछड़ों की संख्या" data-en="Number of Buffalo Calves Registered on Bharat Pashudhan"></span>   </label> 
-                <input name="registered_buffalo_calves" id="registered_buffalo_calves" type="text" data-placeholder-hi="भारत पशुधन पर पंजीकृत भैंस बछड़ों की संख्या" data-placeholder-en="Number of Buffalo Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
+                <span data-hi="भारत पशुधन पर पंजीकृत भैंस संतति की संख्या" data-en="Number of Buffalo Calves Registered on Bharat Pashudhan"></span>   </label> 
+                <input name="registered_buffalo_calves" id="registered_buffalo_calves" type="text" data-placeholder-hi="भारत पशुधन पर पंजीकृत भैंस संतति की संख्या" data-placeholder-en="Number of Buffalo Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">
-                <span data-hi="भारत पशुधन पर पंजीकृत यौन वीर्य बछड़ों की संख्या" data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span>   </label> 
-                <input name="registered_sexed_calves" id="registered_sexed_calves" type="text" ata-placeholder-hi="भारत पशुधन पर पंजीकृत यौन वीर्य बछड़ों की संख्या" data-placeholder-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
+                <span data-hi="भारत पशुधन पर पंजीकृत यौन वीर्य संतति की संख्या" data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span>   </label> 
+                <input name="registered_sexed_calves" id="registered_sexed_calves" type="text" ata-placeholder-hi="भारत पशुधन पर पंजीकृत वर्गीकृत वीर्य संतति की संख्या" data-placeholder-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan" class="form-control"  autofocus>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">
@@ -374,6 +374,7 @@ $('#district').change(function() {
                 }else{
                     $('#post_office').append($("<option value=''>-Data not found.-</option>"));
                 }
+
                 if(ai_center.length>0){
                     $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
                     ai_center.forEach(item => {
@@ -382,6 +383,7 @@ $('#district').change(function() {
                 }else{
                     $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
                 }
+                
                 if(tehsil.length>0){
                     $('#tehsil').append($("<option value=''>-तहसील चुनें-</option>"));
                     tehsil.forEach(item => {
