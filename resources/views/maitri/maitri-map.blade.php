@@ -118,12 +118,9 @@
             <select class="form-control" name="address" id="address" >
                 <option>-कोई भी चुनें-</option>
                 @foreach($aicenter as $val)
-                @if($val!='' ||$val != null)
-                  @php
-                    $distcount   = App\Models\Cliniclocation::where(['mandal_name'=>$val['mandal_name']])->count();
-                  @endphp
-                  <option value="{{$val['mandal_name']}}">{{$val['mandal_name']}}   ({{$distcount }})</option>
-                @endif
+                  @if($val!='' ||$val != null)
+                    <option value="{{$val->mandal_name}}">{{$val->mandal_name}}   ({{ $val->count }})</option>
+                  @endif
                 @endforeach
               </select>
           </div>
