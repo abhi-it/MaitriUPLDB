@@ -110,7 +110,7 @@
           </form>
           <div class="col-md-2 mb-4" id="janpad_count">
             
-          </div>
+          </div> 
       </div>
 
       <div id="aicenter" class="row"> 
