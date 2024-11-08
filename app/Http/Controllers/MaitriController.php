@@ -204,20 +204,17 @@ class MaitriController extends Controller
         $data               = [];
 
         if($request->district != ''){
+            $districts       = Districts::where(['id' => $request->district])->first();
             $data['code']       = Districts::where(['id' => $request->district])->first();
-            $blocks = Block::where('dis_id', $request->district)->get();
-            $getAi = [];
-            foreach($blocks as $block){
-                
-                $getAi[] = $block['block_hindi'];
-                
-            }
-            $query = ClinicLocation::query();
-            foreach ($getAi as $blockName) {
-                $query->orWhere('block', 'LIKE', '%' . $blockName . '%');
-            }
-            $clinicLocations = $query->get();
-            $data['aicenter'] = $clinicLocations;
+            $divisions          = Divisions::where(['id' => $districts['division_id']])->first();
+
+            $districtName       = $districts['name_hindi'];
+            $divisionName       = $divisions['name_hindi'];
+            $query = DB::table('clinic_location')
+                            ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
+                            ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
+                            ->get();
+            $data['aicenter'] = $query;
             return $data;
         }
 
