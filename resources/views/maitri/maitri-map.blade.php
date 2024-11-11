@@ -375,11 +375,15 @@ $('#address').change(function() {
                   var district = data.district;
                   $.each(district, function(index, item) {    
 
-                      (item.name_eng == 'Pratapgarh') ? 'प्रतापगढ़' : item.name_hindi;
-                    
+                      var hindi_name = item.name_hindi;
+                      if(item.name_eng == 'Pratapgarh'){
+                        hindi_name = 'प्रतापगढ़';
+                      }else{
+                        hindi_name = item.name_hindi
+                      }
                       const option = $('<option></option>')
                           .attr('value', item.id)
-                          .text(item.name_eng + ' (' + item.name_hindi + ')');
+                          .text(item.name_eng + ' (' + hindi_name + ')');
                       $('#get_district').append(option);
                   });
               }
