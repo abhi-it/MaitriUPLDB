@@ -19,8 +19,6 @@ class ImportOfficers implements ToModel
         set_time_limit(300);
     
         if ($row[0]) {
-
-           
             $mandal_name = $row[0];
             $janpad_name = $row[1];
             $type = $row[3];
@@ -28,7 +26,7 @@ class ImportOfficers implements ToModel
             $aiCenterNameEng = $row[4];
     
             // Determine AI Center Name
-            $aiCenter = $aiCenterNameHindi ? $this->changeText($aiCenterNameHindi) : $this->engtohindi($aiCenterNameEng);
+            $aiCenter = $aiCenterNameHindi ? $aiCenterNameHindi : $this->engtohindi($aiCenterNameEng);
     
             // Convert names to Hindi
             $mandal_name_hindi = $this->engtohindi($mandal_name);
