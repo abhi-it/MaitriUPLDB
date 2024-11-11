@@ -19,7 +19,7 @@
 	}
 }
 
-/ SPINNER ANIMATION /
+/* SPINNER ANIMATION */
 .spinner {
 	position: relative;
 	top: 35%;
