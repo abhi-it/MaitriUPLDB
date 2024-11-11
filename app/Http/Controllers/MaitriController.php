@@ -217,6 +217,7 @@ class MaitriController extends Controller
                             ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
                             ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
                             ->get();
+                            
             $data['aicenter'] = $query;
             return $data;
         }
