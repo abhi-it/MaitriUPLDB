@@ -36,12 +36,15 @@ class MaitriController extends Controller
 
    public function maitri_map() {
         $dist       =  Maitri::all()->unique('mandal_name')->toArray();
-        $aicenter   = Cliniclocation::all()->unique('mandal_name')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
+        // $aicenter   = Cliniclocation::all()->unique('mandal_name')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
+        $aicenter   = DB::table('divisions')
+                    ->join('clinic_location', 'divisions.name_hindi', '=', 'clinic_location.mandal_name')
+                    ->select('divisions.name_hindi', 'clinic_location.mandal_name', DB::raw('COUNT(*) as count'))
+                    ->groupBy('divisions.name_hindi', 'clinic_location.mandal_name')
+                    ->get();
+       
         $division   = Divisions::all()->unique('name_hindi')->toArray();
-        $placeid    =Janpad::select('place_id') 
-        ->distinct('name')    
-        ->get()                
-        ->pluck('place_id');   
+        $placeid    =Janpad::select('place_id')->distinct('name')->get()->pluck('place_id');   
         $agency     = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
         $station    = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
         $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
