@@ -373,7 +373,10 @@ $('#address').change(function() {
                       .text('Select District');
                   $('#get_district').append(defaultOption);
                   var district = data.district;
-                  $.each(district, function(index, item) {
+                  $.each(district, function(index, item) {    
+
+                      (item.name_eng == 'Pratapgarh') ? 'प्रतापगढ़' : item.name_hindi;
+                    
                       const option = $('<option></option>')
                           .attr('value', item.id)
                           .text(item.name_eng + ' (' + item.name_hindi + ')');
