@@ -215,9 +215,14 @@ class MaitriController extends Controller
             $divisionName       = $divisions['name_hindi'];
 
             if($divisionName == 'मिर्ज़ापुर'){
+                if($districtName == 'मिर्ज़ापुर'){
+                    $newname = 'मिर्जापुर';
+                }else{
+                    $newname = $districtName;
+                }
                 $query = DB::table('clinic_location')
                             ->where('mandal_name', 'LIKE', '%मिर्जापुर%')
-                            ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
+                            ->where('janpad_name', 'LIKE', '%'.$newname.'%')
                             ->get();
             }else{
                 $query = DB::table('clinic_location')
