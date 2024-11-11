@@ -462,10 +462,14 @@ async function initAIMap(code,locations) {
           });
           var icons =    (locations[i]['type']=='AI') ?aiimg :vhimg;
           marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i]['lattitute'], locations[i]['longitute']),
-            map: map, 
-            icon:icons,
-          });
+                position: new google.maps.LatLng(
+                  parseFloat(locations[i]['lattitute'].replace('⁰', '')), 
+                  parseFloat(locations[i]['longitute'].replace('⁰', ''))
+                ),
+                map: map, 
+                icon: icons,
+              });
+
             var currentInfowindow = null;
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
