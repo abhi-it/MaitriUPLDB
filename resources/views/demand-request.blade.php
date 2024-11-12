@@ -97,7 +97,7 @@
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                     @if(count($district)>0)
                         @foreach($district as $key=>$val)
-                            <option value="{{$val->id}}" data-hi="{{$val->name_hindi}}" data-en="{{$val->name_eng}}"></option>
+                            <option value="{{$val->id}}">{{$val->name_eng}}</option>
                         @endforeach
                     @endif
                 </select>
