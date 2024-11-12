@@ -422,7 +422,8 @@ $('#mandal').change(function() {
         // populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
         // $('#ai_center').prop('disabled', false);
 
-        
+        $('#ai_center').prop('disabled', false);
+        $('#ai_center').empty();
         var mandal = $("#district option:selected").text();
         var janpad = $("#mandal option:selected").text();
 
@@ -445,8 +446,6 @@ $('#mandal').change(function() {
                     var mandal = data.mandal;
                     
                     var ai_center = data.ai_center;
-                    $('#ai_center').prop('disabled', false);
-                    $('#ai_center').empty();
                     if (ai_center.length > 0) {
                         $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
                         ai_center.forEach(item => {
