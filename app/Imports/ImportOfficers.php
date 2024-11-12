@@ -19,6 +19,7 @@ class ImportOfficers implements ToModel
         set_time_limit(300);
     
         if ($row[0]) {
+         
             $mandal_name = $row[0];
             $janpad_name = $row[1];
             $type = $row[3];
@@ -48,7 +49,7 @@ class ImportOfficers implements ToModel
                     'type'      => ($type) ? $type : '',
                     'lattitute' => str_replace('-', '.', $row[5]),
                     'longitute' => str_replace('-', '.', $row[6]),
-                ];
+                ];     
     
                 if ($checkdata) {
                     // Update if record exists

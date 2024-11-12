@@ -96,19 +96,10 @@
                 <select name="district" id="district" class="form-control" autofocus>
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                     @if(count($district)>0)
-                    @foreach($district as $key=>$val)
-                    <option value="{{$val->id}}" data-hi="{{$val->name_hindi}}" data-en="{{$val->name_eng}}"></option>
-                    @endforeach
+                        @foreach($district as $key=>$val)
+                            <option value="{{$val->id}}" data-hi="{{$val->name_hindi}}" data-en="{{$val->name_eng}}"></option>
+                        @endforeach
                     @endif
-                </select>
-            </div>
-
-
-
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
-                <select name="vikas_khand" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus>
-
                 </select>
             </div>
 
@@ -119,20 +110,20 @@
                 </select>
             </div>
 
-
-
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
-                <select name="post_office" id="post_office" class="form-control" placeholder="पोस्ट ऑफिस" autofocus>
-
-                </select>
-            </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> </label>
                 <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
 
                 </select>
             </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
+                <select name="vikas_khand" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus>
+
+                </select>
+            </div>
+            
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="एआई सेंटर (पशु चिकित्सा अस्पताल / एलईओ सेंटर)"
                         data-en="AI Centre (Veterinary Hospital / LEO Center)"></span> </label>
@@ -140,6 +131,13 @@
 
                 </select>
             </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
+                <input type="text" name="post_office" id="post_office"  class="form-control" placeholder="पोस्ट ऑफिस" autofocus>
+            </div>
+
+
             <div class="form-group col-md-6">
                 <label for="inputEmail4"><span data-hi="पिनकोड" data-en="Pincode"></span></label>
                 <span id="error-message" style="color: red; display:none; font-size:10px; ">(Pincode must be a 6-digit
@@ -377,9 +375,23 @@ $(document).ready(function() {
 
 $('.added_vh_ai_center').hide();
 $('.semen_source_added').hide();
+
+
+
+var allData = {}; 
 $('#district').change(function() {
     var val = $("#district option:selected").val();
     var text = $("#district option:selected").text();
+
+    $('#mandal').prop('disabled', false);
+    $('#mandal').empty();
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    $('#tehsil').prop('disabled', false);
+    $('#tehsil').empty();
+    
     if (val) {
         $.ajax({
             type: "GET",
@@ -394,80 +406,95 @@ $('#district').change(function() {
             },
             cache: false,
             success: function(data) {
-                console.log('data', data)
-                var mandal = data.mandal;
-                var blocks = data.blocks;
-                var postoffice = data.postoffice;
-                var ai_center = data.ai_center;
-                var tehsil = data.tehsil;
-
+                allData = data;
+                populateDropdown('#mandal', allData.mandal, 'name_hindi', '-मंडल चुनें-');
                 $('#mandal').prop('disabled', false);
-                $('#mandal').empty();
-                $('#vikas_khand').prop('disabled', false);
-                $('#vikas_khand').empty();
-                $('#post_office').prop('disabled', false);
-                $('#post_office').empty();
-                $('#ai_center').prop('disabled', false);
-                $('#ai_center').empty();
-                $('#tehsil').prop('disabled', false);
-                $('#tehsil').empty();
-
-                if (mandal.length > 0) {
-                    $('#mandal').append($("<option>-ज़िला चुनें-</option>"));
-                    mandal.forEach(item => {
-                        $('#mandal').append('<option value="' + item.name_hindi + '">' +
-                            item.name_hindi + '</option>')
-                    });
-                } else {
-                    $('#mandal').append($("<option value=''>-Data not found.-</option>"));
-                }
-
-
-
-
-                if (blocks.length > 0) {
-                    $('#vikas_khand').append($("<option>-विकास खण्ड चुनें-</option>"));
-                    blocks.forEach(item => {
-                        $('#vikas_khand').append('<option value="' + item.block_name +
-                            '">' + item.block_name + '</option>')
-                    });
-                } else {
-                    $('#vikas_khand').append($("<option value=''>-Data not found.-</option>"));
-                }
-
-                if (postoffice.length > 0) {
-                    $('#post_office').append($("<option value=''>-पोस्ट ऑफिस चुनें-</option>"));
-                    postoffice.forEach(item => {
-                        $('#post_office').append('<option value="' + item.post_office +
-                            '">' + item.post_office + '</option>')
-                    });
-                } else {
-                    $('#post_office').append($("<option value=''>-Data not found.-</option>"));
-                }
-
-                if (ai_center.length > 0) {
-                    $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
-                    ai_center.forEach(item => {
-                        $('#ai_center').append('<option value="' + item.name + '">' + item
-                            .name + '</option>')
-                    });
-                } else {
-                    $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
-                }
-
-                if (tehsil.length > 0) {
-                    $('#tehsil').append($("<option value=''>-तहसील चुनें-</option>"));
-                    tehsil.forEach(item => {
-                        $('#tehsil').append('<option value="' + item.tehsil + '">' + item
-                            .tehsil + '</option>')
-                    });
-                } else {
-                    $('#tehsil').append($("<option value=''>-Data not found.-</option>"));
-                }
             }
         });
     }
 });
+
+$('#mandal').change(function() {
+    if ($('#mandal').val()) {
+        populateDropdown('#tehsil', allData.tehsil, 'tehsil', '-तहसील चुनें-');
+        $('#tehsil').prop('disabled', false);
+
+        // populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
+        // $('#ai_center').prop('disabled', false);
+
+        
+        var mandal = $("#district option:selected").text();
+        var janpad = $("#mandal option:selected").text();
+
+        console.log(mandal+'='+janpad)
+        if (mandal && janpad) {
+            $.ajax({
+                type: "GET",
+                url: "getAllBlocks",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "mandal": mandal,
+                    "janpad": janpad,
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('data', data)
+                    var mandal = data.mandal;
+                    
+                    var ai_center = data.ai_center;
+                    $('#ai_center').prop('disabled', false);
+                    $('#ai_center').empty();
+                    if (ai_center.length > 0) {
+                        $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
+                        ai_center.forEach(item => {
+                            $('#ai_center').append('<option value="' + item.name + '">' + item
+                                .name + '</option>')
+                        });
+                    } else {
+                        $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
+                    }
+                    
+                }
+            })
+        }
+
+    }
+});
+
+$('#tehsil').change(function() {
+    if ($('#tehsil').val()) {
+        // Populate Vikas Khand dropdown after selecting Tehsil
+        populateDropdown('#vikas_khand', allData.blocks, 'block_hindi', '-विकास खण्ड चुनें-');
+        $('#vikas_khand').prop('disabled', false);
+    }
+});
+
+// $('#vikas_khand').change(function() {
+//     if ($('#vikas_khand').val()) {
+//         populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
+//         $('#ai_center').prop('disabled', false);
+//     }
+// });
+
+function populateDropdown(selector, data, valueField, defaultText) {
+    $(selector).empty();
+    $(selector).append(`<option value="">${defaultText}</option>`);
+    
+    if (data && data.length > 0) {
+        data.forEach(item => {
+            $(selector).append(`<option value="${item[valueField]}">${item[valueField]}</option>`);
+        });
+    } else {
+        $(selector).append('<option value="">-Data not found.-</option>');
+    }
+}
+
+
+
+
 $('#training_center_id').change(function() {
     $('.added_vh_ai_center').hide()
     var val = $("#training_center_id option:selected").val();

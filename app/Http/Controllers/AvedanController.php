@@ -682,11 +682,20 @@ class AvedanController extends Controller
     public function getAllBlocks(Request $request){
         $id = $request->id;
         $text = $request->text;
-        $data['mandal']   =  Districts::where(['division_id'=>$id])->get();
-        $data['blocks']   =  Block::where(['dis_id'=>$id])->get();
-        $data['postoffice'] = Postoffice::where(['dis_id'=>$id])->get();
-        $data['ai_center']  = DB::table('clinic_location')->where(['mandal_name'=>$text])->get();
-        $data['tehsil']  = DB::table('tehsil')->where(['dis_id'=>$id])->get();
+        if(isset($request->mandal) && $request->mandal !='' && isset($request->janpad) && $request->janpad !=''){
+            $divisionName = $request->mandal;
+            $districtName = $request->janpad;
+            $data['ai_center'] = DB::table('clinic_location')
+                        ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
+                        ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
+                        ->get();
+        }else{
+            $data['mandal']   =  Districts::where(['division_id'=>$id])->get();
+            $data['blocks']   =  Block::where(['dis_id'=>$id])->get();
+            $data['postoffice'] = Postoffice::where(['dis_id'=>$id])->get();
+            $data['ai_center']  = DB::table('clinic_location')->where(['mandal_name'=>$text])->get();
+            $data['tehsil']  = DB::table('tehsil')->where(['dis_id'=>$id])->get();
+        }
         return $data;
     }
 
