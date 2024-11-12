@@ -421,7 +421,19 @@ $('#mandal').change(function() {
 
         // populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
         // $('#ai_center').prop('disabled', false);
+    }
+});
 
+$('#tehsil').change(function() {
+    if ($('#tehsil').val()) {
+        // Populate Vikas Khand dropdown after selecting Tehsil
+        populateDropdown('#vikas_khand', allData.blocks, 'block_hindi', '-विकास खण्ड चुनें-');
+        $('#vikas_khand').prop('disabled', false);
+    }
+});
+
+$('#vikas_khand').change(function() {
+    if ($('#vikas_khand').val()) {
         $('#ai_center').prop('disabled', false);
         $('#ai_center').empty();
         var mandal = $("#district option:selected").text();
@@ -462,21 +474,6 @@ $('#mandal').change(function() {
 
     }
 });
-
-$('#tehsil').change(function() {
-    if ($('#tehsil').val()) {
-        // Populate Vikas Khand dropdown after selecting Tehsil
-        populateDropdown('#vikas_khand', allData.blocks, 'block_hindi', '-विकास खण्ड चुनें-');
-        $('#vikas_khand').prop('disabled', false);
-    }
-});
-
-// $('#vikas_khand').change(function() {
-//     if ($('#vikas_khand').val()) {
-//         populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
-//         $('#ai_center').prop('disabled', false);
-//     }
-// });
 
 function populateDropdown(selector, data, valueField, defaultText) {
     $(selector).empty();
