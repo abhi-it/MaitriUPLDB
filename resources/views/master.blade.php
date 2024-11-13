@@ -1073,19 +1073,19 @@
                                         data-en="List of Selected Candidates"></span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ url('all-list') }}">
+                                    <a class="dropdown-item" href="{{ url('all-list/' . request()->route('year')) }}">
                                         <span data-hi="सभी" data-en="All"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('general-list') }}">
+                                    <a class="dropdown-item" href="{{ url('general-list/' . request()->route('year')) }}">
                                         <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('obc-list') }}">
+                                    <a class="dropdown-item" href="{{ url('obc-list/' . request()->route('year')) }}">
                                         <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('sc-list') }}">
+                                    <a class="dropdown-item" href="{{ url('sc-list/' . request()->route('year')) }}">
                                         <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('st-list') }}">
+                                    <a class="dropdown-item" href="{{ url('st-list/' . request()->route('year')) }}">
                                         <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                     </a>
                                 </div>
