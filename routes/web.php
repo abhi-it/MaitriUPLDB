@@ -19,6 +19,7 @@ use App\Http\Controllers\DivisionUserController;
 use App\Http\Controllers\DistrictUserController;
 use App\Http\Controllers\BlockUserController;
 use App\Http\Controllers\DeoStockUserController;
+use App\Http\Controllers\ImportAIcenterController;
 
 
 
@@ -193,6 +194,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     Route::get("cvo-officer", [CVOOfficerController::class, 'index'])->name('cvo-officer');
     Route::get("officers-import", [CVOOfficerController::class, 'officerImportForm'])->name('officers-import');
+    Route::get("import-aicenter", [ImportAIcenterController::class, 'aicenterImportForm'])->name('import-aicenter');
+    Route::post("importAiCenter", [ImportAIcenterController::class, 'importAiCenter'])->name('importAiCenter');
     Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
 
     Route::get("demand-requests-list", [DemandRequestController::class, 'demandRequestsListing'])->name('demand-requests-list');

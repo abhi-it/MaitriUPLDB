@@ -1197,6 +1197,11 @@
                             
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
+
+                            <li class="nav-item  {{ request()->is('import-aicenter') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('import-aicenter') }}">
+                                    <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span></a>
+                            </li>
                             <!-- Admin Stock Form Menu Start -->
                             <li class="nav-item  {{ request()->is('event-news') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('event-news') }}">

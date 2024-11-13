@@ -152,6 +152,8 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'import-aicenter',
+                'importAiCenter',
                 'matri-to-fetch-record',
                 'matri-to-update-record',
 
@@ -285,6 +287,8 @@ class CheckRole
 
             'Superadmin' => [
 
+                'import-aicenter',
+                'importAiCenter',
                 'matri-to-fetch-record',
                 'matri-to-update-record',
 

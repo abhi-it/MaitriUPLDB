@@ -1,74 +1,36 @@
 <?php
 
 namespace App\Imports;
-use DB;
 use App\Models\CVOOfficers;
 use App\Models\Institute;
-use App\Models\Tehsil;
-use App\Models\Blockslist;
-use App\Models\DistrictMapData;
-use App\Models\Hospitals;
-use App\Models\AIcenters;
-use App\Models\Maitri;
-use App\Models\Cliniclocation;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Helpers\TranslateTextHelper;
 class ImportOfficers implements ToModel
 {
-    public function model(array $row) {
+    public function model(array $row)
+    {
+        $checkdata = '';
         set_time_limit(300);
-    
-        if ($row[0]) {
-         
-            $mandal_name = $row[0];
-            $janpad_name = $row[1];
-            $type = $row[3];
-            $aiCenterNameHindi = $row[2];
-            $aiCenterNameEng = $row[4];
-    
-            // Determine AI Center Name
-            $aiCenter = $aiCenterNameHindi ? $aiCenterNameHindi : $this->engtohindi($aiCenterNameEng);
-    
-            // Convert names to Hindi
-            $mandal_name_hindi = $this->engtohindi($mandal_name);
-            $janpad_name_hindi = $this->engtohindi($janpad_name);
-    
-            // Start a transaction to handle both insert and update operations
-            \DB::transaction(function () use ($mandal_name_hindi, $janpad_name_hindi, $type, $aiCenter, $row) {
-                // Check if the Cliniclocation already exists
-                $checkdata = Cliniclocation::where([
-                    'mandal_name' => $mandal_name_hindi,
-                    'janpad_name' => $janpad_name_hindi,
-                    'name' => $aiCenter
-                ])->first();
-    
-                // Data to be saved or updated
-                $data = [
-                    'name'      => $aiCenter,
-                    'name_eng'  => $this->hinditoenglish($aiCenter),
-                    'type'      => ($type) ? $type : '',
-                    'lattitute' => str_replace('-', '.', $row[5]),
-                    'longitute' => str_replace('-', '.', $row[6]),
-                ];     
-    
-                if ($checkdata) {
-                    // Update if record exists
-                    $checkdata->update($data);
-                } else {
-                    // Insert new record if not found
-                    $maitri = new Cliniclocation();
-                    $maitri->mandal_name = $mandal_name_hindi;
-                    $maitri->janpad_name = $janpad_name_hindi;
-                    $maitri->type = $type;
-                    $maitri->fill($data);
-                    $maitri->save();
-                }
-            }, 3); // Retry up to 3 times in case of deadlock
+        if (isset($row[4])){
+            $checkdata =  CVOOfficers::where(['mobile_no'=>$row[4]])->first();
         }
+        if(empty($checkdata)){
+            if(is_numeric($row[0])){
+                // echo "<pre>"; print_r($this->engtohindi($row[1])); echo "</pre>"; exit;
+                $officer=new CVOOfficers();
+                $officer->mandal_name='औरैया';
+                $officer->janpad_name=$this->changeText($row[1]);
+                $officer->login_id='';//$row[6];
+                $officer->officer_name=$this->changeText($row[2]);
+                $officer->designation=$this->changeText($row[3]);
+                $officer->animal_care_center=$this->changeText($row[4]);
+                $officer->mobile_no='';//$row[4];
+                $officer->longitute =isset($row[5])?str_replace('-','.',$row[5]):'';
+                $officer->lattitute =isset($row[6])?str_replace('-','.',$row[6]):'';
+                $officer->save(); 
+            }
+         }
     }
-    
-
-    
 
     function changeText($val){
         $arr=array(
@@ -76,11 +38,11 @@ class ImportOfficers implements ToModel
             'format'    => 'json',
             'to_font'   => 'mangal'
         );
-        
+
         if($val!=null){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost:4000/api/unicode-krutidev',
+            CURLOPT_URL => 'https://hindi-font-converter.vercel.app/api/unicode-krutidev',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -96,7 +58,6 @@ class ImportOfficers implements ToModel
             $response = curl_exec($curl);
             curl_close($curl);
             $response=json_decode($response,true);
-          
             if(isset($response['data'])){
                 return $response['data']['output_text'];
             } else {
@@ -107,19 +68,8 @@ class ImportOfficers implements ToModel
         }
     }
 
-
     function engtohindi($val){
         TranslateTextHelper::setSource('en')->setTarget('hi');
-        if($val!=null){
-            $translatedText = TranslateTextHelper::translate($val);
-        }else{
-            $translatedText ='';
-        }
-        return $translatedText; 
-    }
-
-    function hinditoenglish($val){
-        TranslateTextHelper::setSource('hi')->setTarget('en');
         if($val!=null){
             $translatedText = TranslateTextHelper::translate($val);
         }else{
