@@ -136,7 +136,7 @@ class MaitriController extends Controller
                     DB::raw('COUNT(maitries.janpad_name) AS count')
                 )
                 ->leftJoin('maitries', function($join) use ($location) {
-                    $join->on('districts.name_hindi', '=', 'maitries.janpad_name')
+                    $join->on('districts.name_hindi', 'LIKE', 'maitries.janpad_name')
                         ->where('maitries.mandal_name', 'like', '%' . $location . '%');
                 })
                 ->where('districts.division_id', $divisionData['id'])
@@ -213,23 +213,12 @@ class MaitriController extends Controller
 
             $districtName       = $districts['name_hindi'];
             $divisionName       = $divisions['name_hindi'];
-
-            if($divisionName == 'मिर्ज़ापुर'){
-                if($districtName == 'मिर्ज़ापुर'){
-                    $newname = 'मिर्जापुर';
-                }else{
-                    $newname = $districtName;
-                }
-                $query = DB::table('clinic_location')
-                            ->where('mandal_name', 'LIKE', '%मिर्जापुर%')
-                            ->where('janpad_name', 'LIKE', '%'.$newname.'%')
-                            ->get();
-            }else{
-                $query = DB::table('clinic_location')
-                        ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
-                        ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
-                        ->get();
-            }
+            
+            $query = DB::table('clinic_location')
+                    ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
+                    ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
+                    ->get();
+           
 
             $data['aicenter'] = $query;
             return $data;
