@@ -753,17 +753,17 @@ class DashboardController extends Controller
             //             ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
             //             ->orderBy('avedans.category', 'DESC')
             //             ->get();
-            if(isset(($_GET['district_id']))){
-                if($_GET['district_id'] === '36'){
-                        $datas = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
-                }
-            }else{
+            // if(isset(($_GET['district_id']))){
+            //     if($_GET['district_id'] === '36'){
+            //             $datas = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
+            //     }
+            // }else{
                 $datas = $query->with('district') // Perform the join
                     ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
                     ->where('avedans.is_approved', 4)
                     ->orderBy('avedans.category', 'DESC')
                     ->get();
-            }
+            // }
 
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
@@ -800,11 +800,11 @@ class DashboardController extends Controller
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
 
-            if(isset(($_GET['district_id']))){
-                if($_GET['district_id'] === '36' && $results->isEmpty()){
-                        $results = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
-                }
-            }
+            // if(isset(($_GET['district_id']))){
+            //     if($_GET['district_id'] === '36' && $results->isEmpty()){
+            //             $results = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
+            //     }
+            // }
            return view('viewAvedan', compact('results', 'heading', "districts"))->with('route', 'allList')->with('year', $this->sessionYear);
         }
     }
