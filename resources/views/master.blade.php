@@ -718,17 +718,6 @@
 
         });
 
-        $('#myTable121').DataTable({
-            "pageLength": 25,
-            "ordering": false,
-            "oLanguage": {
-                "sInfo": "कुल रिकॉर्ड :  _TOTAL_",
-            },
-            "language": {
-                "emptyTable": "Please Select CVO"
-            }
-        });
-
         $('#myTable').DataTable({
             "pageLength": 25,
             "ordering": false,

@@ -19,17 +19,17 @@ class CVOOfficerController extends Controller{
     }
 
     public function viewImportedBy(){
-        $dataImportedBy = DB::table('cvo_vo_officers')
-                    ->join('users', 'cvo_vo_officers.importBy_user_id', '=', 'users.id')
-                    ->select('users.id', 'users.name', 'users.email', DB::raw('COUNT(cvo_vo_officers.id) as count'))
-                    ->whereNotNull('cvo_vo_officers.importBy_user_id')
+        $dataImportedBy = DB::table('scanned_file')
+                    ->join('users', 'scanned_file.uploadById', '=', 'users.id')
+                    ->select('users.id', 'users.name', 'users.email', DB::raw('COUNT(scanned_file.id) as count'))
+                    ->whereNotNull('scanned_file.uploadById')
                     ->groupBy('users.id', 'users.name', 'users.email')
                     ->get();
         return view('officer.importedDataBy',compact('dataImportedBy'));
     }
     public function getRecordDetails(Request $request){
         $recordId = $request->input('id');
-        $record = DB::table('cvo_vo_officers')->where('importBy_user_id', $recordId)->get();
+        $record = DB::table('scanned_file')->where('uploadById', $recordId)->get();
 
         if ($record) {
             return response()->json([

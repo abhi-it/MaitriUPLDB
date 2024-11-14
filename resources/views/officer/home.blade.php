@@ -38,14 +38,14 @@
                 </div>
             </div>
             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
-            <!-- <div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="card text-center">
                     <div class="card-header"><span data-hi="आयातित डेटा" data-en="Imported Data By CVO"></span></div>
                     <div class="card-body" style="padding:10px">
                       <a href="{{ url('view-imported-data-by')}}" class="btn btn-primary">View</a>                
                     </div>
                 </div>
-            </div> -->
+            </div>
             @endif
 		</div>
 	</div>

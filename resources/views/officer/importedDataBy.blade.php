@@ -22,15 +22,9 @@
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span> </th>
-                <th><span data-hi="मंडल का नाम" data-en="Mandal Name"></span> </th>
-                <th> <span data-hi="जनपद का नाम" data-en="Janpad Name"></span>  </th>
-                <th><span data-hi="अधिकारी का नाम" data-en="Officer Name"></span> </th>
-                <th><span data-hi="लॉगिन आईडी" data-en="Login ID"></span></th>
-                <th><span data-hi="ईमेल" data-en="Email"></span></th>
-                <th><span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span></th>
-                <th><span data-hi="आधार नंबर" data-en="Aadhar Number"></span></th>
-                <th> <span data-hi="पद का नाम" data-en="Designation"></span></th>
-                <th><span data-hi="पशु देखभाल केंद्र" data-en="Animal Care Center"></span> </th>
+                <th><span data-hi="मैत्री लक्ष्य फ़ाइल" data-en="Maitri Target File"></span></th>
+                <th><span data-hi="स्कैन की गई फ़ाइल" data-en="Scanned File"></span></th>
+                <th><span data-hi="कब जोड़ा गया" data-en="Created At"></span></th>
             </tr>
         </thead>
         <tbody id="recordSet">
@@ -44,9 +38,17 @@ $(document).ready(function() {
     
     $('#select_cvo').select2();
 
+    var table = $('#myTable121').DataTable({
+        "pageLength": 25,
+        "language": {
+            "emptyTable": "Please Select CVO"
+        }
+    });
+
     $(document).on('change', '.select_cvo', function() {
         var importedId = $(this).val();
-        $('#recordSet').empty();
+        table.clear().destroy();
+        // $('#recordSet').empty();
         $.ajax({
             url: '/get-record-details',
             type: 'GET',
@@ -61,22 +63,27 @@ $(document).ready(function() {
                     $(getRecord).each(function(index, record) {
                         var row = '<tr>' +
                             '<td>' + i + '</td>' +
-                            '<td>' + (record.mandal_name || 'N/A') + '</td>' +
-                            '<td>' + (record.janpad_name || 'N/A') + '</td>' +
-                            '<td>' + (record.officer_name || 'N/A') + '</td>' +
-                            '<td>' + (record.login_id || 'N/A') + '</td>' +
-                            '<td>' + (record.email || 'N/A') + '</td>' +
-                            '<td>' + (record.mobile_no || 'N/A') + '</td>' +
-                            '<td>' + (record.adhar_no || 'N/A') + '</td>' +
-                            '<td>' + (record.designation || 'N/A') + '</td>' +
-                            '<td>' + (record.animal_care_center || 'N/A') + '</td>' +
+                            '<td>' + (record.maitri_target_file 
+                                    ? '<a href="/scanned_files/' + record.maitri_target_file + '" download="' + record.maitri_target_file + '">' +
+                                        '<button type="button" class="btn-sm btn btn-primary"><i class="fa fa-download"></i> Download</button>' +
+                                    '</a>' 
+                                    : 'N/A') + '</td>' +
+                            '<td>' + (record.scanned_file 
+                                    ? '<a href="/scanned_files/' + record.scanned_file + '" download="' + record.scanned_file + '">' +
+                                        '<button type="button" class="btn-sm btn btn-primary"><i class="fa fa-download"></i> Download</button>' +
+                                    '</a>' 
+                                    : 'N/A') + '</td>' +
+                            '<td>' + (record.created_at || 'N/A') + '</td>' +
                             '</tr>';
                         i++;
                         $('#recordSet').append(row);
                     });
-                    
-                   
-                   
+                    table = $('#myTable121').DataTable({
+                        "pageLength": 25,
+                        "language": {
+                            "emptyTable": "Please Select CVO"
+                        }
+                    });
                 } else {
                     alert('Record not found');
                 }

@@ -15,6 +15,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Validator;
 use App\Models\SemanrRquests;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -284,8 +285,9 @@ class HomeController extends Controller
 				$maitri_target_file = 'maitri_target_file'.$current_time.'.'.$request->file('maitri_target_file')->extension();
 				$request->file('maitri_target_file')->move(public_path('scanned_files'), $maitri_target_file);
 		   	}
-		  
+			$user_id = Auth::user()->id;
             $request  = DB::table('scanned_file')->insert([
+                'uploadById'      	=> $user_id,
                 'scanned_file'      => $scanned_file,
 				'maitri_target_file'=> $maitri_target_file,
             ]);
