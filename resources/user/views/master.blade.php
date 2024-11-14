@@ -116,6 +116,12 @@
 
 </style>
 
+<script>
+    $(document).ready(function () {
+        $('#myTable121').DataTable();
+    });
+</script>
+
     <script>
         $(document).ready(function() {
             var currentDate = new Date();
@@ -699,7 +705,6 @@
 
 
             });
-
 
             $('#myTable').DataTable({
                 "pageLength": 25,

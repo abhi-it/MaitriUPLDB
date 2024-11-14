@@ -17,5 +17,6 @@ class CVOOfficers extends Model
         'mobile_no',
         'lattitute',
         'longitute',
+        'importBy_user_id',
     ];
 }

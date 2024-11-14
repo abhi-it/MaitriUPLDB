@@ -17,6 +17,7 @@ class ImportOfficers implements ToModel
         if(empty($checkdata)){
             if(is_numeric($row[0])){
                 // echo "<pre>"; print_r($this->engtohindi($row[1])); echo "</pre>"; exit;
+                $importBy_user_id = Auth::user()->id;
                 $officer=new CVOOfficers();
                 $officer->mandal_name='औरैया';
                 $officer->janpad_name=$this->changeText($row[1]);

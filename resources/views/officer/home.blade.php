@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="card text-center">
-                    <div class="card-header">कुल अधिकारी</div>
+                    <div class="card-header"><span data-hi="कुल अधिकारी" data-en="Total Officers"></span></div>
              		<div class="card-body" style="padding:10px">
                         <h5 class="card-title"><a href="{{route('getallofficers')}}" class="btn btn-primary"> View {{$count}} </a></h5>                        
                     </div>
@@ -31,9 +31,17 @@
             </div>
 			<div class="col-sm-3">
                 <div class="card text-center">
-                    <div class="card-header">अधिकारी इम्पोर्ट करें</div>
+                    <div class="card-header"><span data-hi="अधिकारी इम्पोर्ट करें" data-en="Import officials"></span></div>
                     <div class="card-body" style="padding:10px">
                       <a href="{{ url('officers-import')}}" class="btn btn-primary">View</a>                
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card text-center">
+                    <div class="card-header"><span data-hi="आयातित डेटा" data-en="Imported Data By"></span></div>
+                    <div class="card-body" style="padding:10px">
+                      <a href="{{ url('view-imported-data-by')}}" class="btn btn-primary">View</a>                
                     </div>
                 </div>
             </div>

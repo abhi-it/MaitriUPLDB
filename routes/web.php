@@ -192,11 +192,15 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("getJanpadUnique", [MaitriController::class, 'getJanpadUnique'])->name('getJanpadUnique');
     Route::get("allMaitriesData", [MaitriController::class, 'allMaitriesData'])->name('allMaitriesData');
 
+    Route::get('get-record-details', [CVOOfficerController::class, 'getRecordDetails'])->name('get-record-details');
     Route::get("cvo-officer", [CVOOfficerController::class, 'index'])->name('cvo-officer');
     Route::get("officers-import", [CVOOfficerController::class, 'officerImportForm'])->name('officers-import');
+    Route::get("view-imported-data-by", [CVOOfficerController::class, 'viewImportedBy'])->name('view-imported-data-by');
+    Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
+    
     Route::get("import-aicenter", [ImportAIcenterController::class, 'aicenterImportForm'])->name('import-aicenter');
     Route::post("importAiCenter", [ImportAIcenterController::class, 'importAiCenter'])->name('importAiCenter');
-    Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
+    
 
     Route::get("demand-requests-list", [DemandRequestController::class, 'demandRequestsListing'])->name('demand-requests-list');
     Route::post("deleteRequests", [DemandRequestController::class, 'deleteDemandRequests'])->name('deleteRequests');

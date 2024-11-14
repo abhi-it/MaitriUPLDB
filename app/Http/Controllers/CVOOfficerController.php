@@ -8,6 +8,8 @@ use Excel;
 use App\Imports\ImportOfficers;
 use App\Helpers\TranslateTextHelper;
 use App\Exports\CVOListExport;
+use DB;
+
 
 class CVOOfficerController extends Controller{
 
@@ -15,6 +17,33 @@ class CVOOfficerController extends Controller{
         $count=CVOOfficers::count();
         return view('officer.home',compact('count'));
     }
+
+    public function viewImportedBy(){
+        $dataImportedBy = DB::table('cvo_vo_officers')
+                    ->join('users', 'cvo_vo_officers.importBy_user_id', '=', 'users.id')
+                    ->select('users.id', 'users.name', 'users.email', DB::raw('COUNT(cvo_vo_officers.id) as count'))
+                    ->whereNotNull('cvo_vo_officers.importBy_user_id')
+                    ->groupBy('users.id', 'users.name', 'users.email')
+                    ->get();
+        return view('officer.importedDataBy',compact('dataImportedBy'));
+    }
+    public function getRecordDetails(Request $request){
+        $recordId = $request->input('id');
+        $record = DB::table('cvo_vo_officers')->where('importBy_user_id', $recordId)->get();
+
+        if ($record) {
+            return response()->json([
+                'success' => true,
+                'data' => $record
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Record not found'
+            ]);
+        }
+    }
+
 
     public function officerImportForm(){
         return view('officer.import');
