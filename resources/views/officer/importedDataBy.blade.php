@@ -40,6 +40,7 @@ $(document).ready(function() {
 
     var table = $('#myTable121').DataTable({
         "pageLength": 25,
+        "searching": false,
         "language": {
             "emptyTable": "Please Select CVO"
         }
