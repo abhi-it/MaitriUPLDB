@@ -723,8 +723,6 @@
             "ordering": false,
             "oLanguage": {
                 "sInfo": "कुल रिकॉर्ड :  _TOTAL_",
-                "sLengthMenu": "देखें  _MENU_ आवेदन",
-                "sSearch": "आवेदन को खोजें :",
             },
             "language": {
                 "emptyTable": "Please Select CVO"
