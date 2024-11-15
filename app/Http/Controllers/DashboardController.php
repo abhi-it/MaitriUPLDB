@@ -714,21 +714,12 @@ class DashboardController extends Controller
                 ->orderBy('topper_number', 'DESC');
         } else { //CVO
 
-            // $query = Avedan::where('is_approved', '=', 4)
-            //     // ->whereIn('category', ["जनरल", "ओ बी सी"])
-            //     ->where('district_id', '=', $districtID)
-            //     ->orderBy('topper_number', 'DESC');
+            $query = Avedan::where('is_approved', '=', 4)
+                // ->whereIn('category', ["जनरल", "ओ बी सी"])
+                ->where('district_id', '=', $districtID)
+                ->orderBy('topper_number', 'DESC');
 
-            $query = Avedan::where(function ($query) {
-                $query->where('is_approved', 4)
-                      ->orWhere(function ($query) {
-                          $query->where('health_certificate', '')
-                                ->where('is_approved', '!=', 3)
-                                ->where('is_approved', '!=', 2);
-                      });
-            })
-            ->where('district_id', '=', $districtID)
-            ->orderBy('topper_number', 'DESC');
+          
 
         }
 
