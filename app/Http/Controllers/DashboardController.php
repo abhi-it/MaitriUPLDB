@@ -722,7 +722,7 @@ class DashboardController extends Controller
             $query = Avedan::where(function ($query) {
                 $query->where('is_approved', 4)
                       ->orWhere(function ($query) {
-                          $query->whereNotNull('health_certificate')
+                          $query->where('health_certificate', '')
                                 ->where('is_approved', '!=', 3)
                                 ->where('is_approved', '!=', 2);
                       });
