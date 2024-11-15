@@ -20,6 +20,7 @@ use App\Http\Controllers\DistrictUserController;
 use App\Http\Controllers\BlockUserController;
 use App\Http\Controllers\DeoStockUserController;
 use App\Http\Controllers\ImportAIcenterController;
+use App\Http\Controllers\ZoneDistrictController;
 
 
 
@@ -187,6 +188,13 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     Route::post("addUpdateMaitri", [MaitriController::class, 'addUpdateMaitri'])->name('addUpdateMaitri');
     Route::post("importMaitries", [MaitriController::class, 'importMaitries'])->name('importMaitries');
+
+
+    
+
+    Route::get("zone-district-mapping", [ZoneDistrictController::class, 'index'])->name('zone-district-mapping');
+    Route::get('/districts/{zone_id}', [ZoneDistrictController::class, 'getDistricts'])->name('getAll-District');
+    Route::post('/save-selection', [ZoneDistrictController::class, 'store'])->name('save-selection');
 
 
     Route::get("getJanpadUnique", [MaitriController::class, 'getJanpadUnique'])->name('getJanpadUnique');

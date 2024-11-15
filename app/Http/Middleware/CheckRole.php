@@ -152,6 +152,9 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'save-selection',
+                'getAll-District',
+                'zone-district-mapping',
                 'get-record-details',
                 'view-imported-data-by',
                 'import-aicenter',
@@ -289,6 +292,9 @@ class CheckRole
 
             'Superadmin' => [
 
+                'save-selection',
+                'getAll-District',
+                'zone-district-mapping',
                 'get-record-details',
                 'view-imported-data-by',
                 'import-aicenter',

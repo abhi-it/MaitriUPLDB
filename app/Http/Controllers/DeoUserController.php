@@ -10,6 +10,7 @@ use App\Models\Cliniclocation;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions;
+use App\Models\ZoneDistrict;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -27,10 +28,10 @@ class DeoUserController extends Controller
 
     public function getAllZoneDistrict(Request $request){
         $zone_id = $request->zone_id;
-        $divisionIds = Divisions::where('zone_id', $zone_id)->get();
+        $districtIds = ZoneDistrict::where('zone_id', $zone_id)->get();
         $district = [];
-        foreach($divisionIds as $divisionId){
-            $districtNames = Districts::where('division_id', $divisionId->id)->get();
+        foreach($districtIds as $districtId){
+            $districtNames = Districts::where('id', $districtId['district_id'])->get();
             foreach($districtNames as $districtName){
                 $district[] = $districtName;
             }

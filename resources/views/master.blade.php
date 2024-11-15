@@ -1247,6 +1247,11 @@
                                 <a class="nav-link" href="{{ url('operator-id') }}">
                                     <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span></a>
                             </li>
+
+                            <!-- <li class="nav-item  {{ request()->is('zone-district-mapping') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('zone-district-mapping') }}">
+                                    <span data-hi="क्षेत्र जिला" data-en="Zone District"></span></a>
+                            </li> -->
                             <!-- Admin Stock Form Menu End -->
                             @endif
 
