@@ -702,7 +702,7 @@ class DashboardController extends Controller
             });
         }
 
-        if ($user_type == 'Director') { //Director
+        /*if ($user_type == 'Director') { //Director
 
             $query = Avedan::where('is_approved', '=', 4)
                 // ->whereIn('category', ["जनरल", "ओ बी सी"])
@@ -718,7 +718,44 @@ class DashboardController extends Controller
                 // ->whereIn('category', ["जनरल", "ओ बी सी"])
                 ->where('district_id', '=', $districtID)
                 ->orderBy('topper_number', 'DESC');
+        }*/
+
+        if ($user_type == 'Director') { //Director
+            $query = Avedan::where(function ($query) {
+                $query->where('is_approved', 4)
+                      ->orWhere(function ($query) {
+                          $query->whereNotNull('health_certificate')
+                                ->where('is_approved', '!=', 3)
+                                ->where('is_approved', '!=', 2);
+                      });
+            })
+            ->orderBy('topper_number', 'DESC');
+        } else if ($user_type == 'Admin') { //Super Admin
+
+            $query = Avedan::where(function ($query) {
+                $query->where('is_approved', 4)
+                      ->orWhere(function ($query) {
+                          $query->whereNotNull('health_certificate')
+                                ->where('is_approved', '!=', 3)
+                                ->where('is_approved', '!=', 2);
+                      });
+            })
+            ->orderBy('topper_number', 'DESC');
+        } else { //CVO
+
+            $query = Avedan::where(function ($query) {
+                $query->where('is_approved', 4)
+                      ->orWhere(function ($query) {
+                          $query->whereNotNull('health_certificate')
+                                ->where('is_approved', '!=', 3)
+                                ->where('is_approved', '!=', 2);
+                      });
+            })
+            ->where('district_id', '=', $districtID)
+            ->orderBy('topper_number', 'DESC');
         }
+
+
 
         if (!empty($request->input('applicationNumber'))) {
             $query->where(function ($q) use ($request) {
@@ -758,11 +795,14 @@ class DashboardController extends Controller
             //             $datas = Avedan::where('district_id', $_GET['district_id'])->where('is_approved', 4)->orderBy('id', 'DESC')->paginate(50);
             //     }
             // }else{
+
+
                 $datas = $query->with('district') // Perform the join
                     ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
                     ->where('avedans.is_approved', 4)
                     ->orderBy('avedans.category', 'DESC')
                     ->get();
+                    
             // }
 
             $data = $datas->map(function ($item) {
