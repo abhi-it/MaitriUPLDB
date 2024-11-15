@@ -702,7 +702,7 @@ class DashboardController extends Controller
             });
         }
 
-        /*if ($user_type == 'Director') { //Director
+        if ($user_type == 'Director') { //Director
 
             $query = Avedan::where('is_approved', '=', 4)
                 // ->whereIn('category', ["जनरल", "ओ बी सी"])
@@ -714,13 +714,25 @@ class DashboardController extends Controller
                 ->orderBy('topper_number', 'DESC');
         } else { //CVO
 
-            $query = Avedan::where('is_approved', '=', 4)
-                // ->whereIn('category', ["जनरल", "ओ बी सी"])
-                ->where('district_id', '=', $districtID)
-                ->orderBy('topper_number', 'DESC');
-        }*/
+            // $query = Avedan::where('is_approved', '=', 4)
+            //     // ->whereIn('category', ["जनरल", "ओ बी सी"])
+            //     ->where('district_id', '=', $districtID)
+            //     ->orderBy('topper_number', 'DESC');
 
-        if ($user_type == 'Director') { //Director
+            $query = Avedan::where(function ($query) {
+                $query->where('is_approved', 4)
+                      ->orWhere(function ($query) {
+                          $query->whereNotNull('health_certificate')
+                                ->where('is_approved', '!=', 3)
+                                ->where('is_approved', '!=', 2);
+                      });
+            })
+            ->where('district_id', '=', $districtID)
+            ->orderBy('topper_number', 'DESC');
+
+        }
+
+        /*if ($user_type == 'Director') { //Director
             $query = Avedan::where(function ($query) {
                 $query->where('is_approved', 4)
                       ->orWhere(function ($query) {
@@ -753,7 +765,7 @@ class DashboardController extends Controller
             })
             ->where('district_id', '=', $districtID)
             ->orderBy('topper_number', 'DESC');
-        }
+        }*/
 
 
 
