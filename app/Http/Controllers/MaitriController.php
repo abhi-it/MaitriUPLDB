@@ -226,7 +226,7 @@ class MaitriController extends Controller
 
         $id                 = $request->id;
         $data['code']       = Janpad::where(['name'=>$id])->first();
-        $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->get();
+        $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->orderby('desc')->get();
         $division           = Divisions::where('name_hindi', 'like', "%{$id}%")->first();
         $data['district']     = Districts::where('division_id',$division['id'])->get();
        
