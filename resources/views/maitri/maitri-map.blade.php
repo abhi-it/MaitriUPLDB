@@ -373,17 +373,11 @@ $('#address').change(function() {
                       .text('Select District');
                   $('#get_district').append(defaultOption);
                   var district = data.district;
-                  $.each(district, function(index, item) {    
-
-                      var hindi_name = item.name_hindi;
-                      if(item.name_eng == 'Pratapgarh'){
-                        hindi_name = 'प्रतापगढ़';
-                      }else{
-                        hindi_name = item.name_hindi
-                      }
+                  $.each(district, function(index, item) {   
+                      
                       const option = $('<option></option>')
                           .attr('value', item.id)
-                          .text(item.name_eng + ' (' + hindi_name + ')');
+                          .text(item.name_eng + ' (' + item.name_hindi + ')');
                       $('#get_district').append(option);
                   });
               }
