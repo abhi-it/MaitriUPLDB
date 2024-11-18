@@ -465,8 +465,16 @@ async function initAIMap(code,locations) {
 
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
-                  parseFloat(locations[i]['lattitute'].replace('⁰', '')), 
-                  parseFloat(locations[i]['longitute'].replace('⁰', ''))
+                  parseFloat(
+                    locations[i]['lattitute'].includes('⁰') 
+                      ? locations[i]['lattitute'].replace('⁰', '') 
+                      : locations[i]['lattitute']
+                  ),
+                  parseFloat(
+                    locations[i]['longitute'].includes('⁰') 
+                      ? locations[i]['longitute'].replace('⁰', '') 
+                      : locations[i]['longitute']
+                  )
                 ),
                 map: map, 
                 icon: icons,
