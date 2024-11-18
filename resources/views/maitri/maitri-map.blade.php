@@ -456,10 +456,21 @@ async function initAIMap(code,locations) {
           });
           var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
 
+         
+          if(locations[i]['lattitute'] == NULL){
+            console.log("lattitute =" +locations[i]['lattitute']);
+          }
+
+          if(locations[i]['longitute'] == NULL){
+            console.log("longitute =" +locations[i]['longitute']);
+          }
+
+
+
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
-                  parseFloat( locations[i]['lattitute'].includes('⁰') ? locations[i]['lattitute'].replace('⁰', '')  : locations[i]['lattitute']),
-                  parseFloat( locations[i]['longitute'].includes('⁰') ? locations[i]['longitute'].replace('⁰', '')  : locations[i]['longitute'])
+                  parseFloat(locations[i]['lattitute'].replace('⁰', '')), 
+                  parseFloat(locations[i]['longitute'].replace('⁰', ''))
                 ),
                 map: map, 
                 icon: icons,
