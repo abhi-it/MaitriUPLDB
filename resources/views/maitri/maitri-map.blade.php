@@ -456,8 +456,11 @@ async function initAIMap(code,locations) {
           });
           var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
 
-          console.log('lattitute ='+parseFloat(locations[i]['lattitute'].replace('⁰', '')));
-          console.log('longitute ='+parseFloat(locations[i]['longitute'].replace('⁰', '')));
+          if(locations[i]['janpad_name'] == 'वाराणसी'){
+            console.log('lattitute ='+parseFloat(locations[i]['lattitute'].replace('⁰', '')));
+            console.log('longitute ='+parseFloat(locations[i]['longitute'].replace('⁰', '')));
+          }
+         
 
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
