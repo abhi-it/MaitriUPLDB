@@ -457,11 +457,11 @@ async function initAIMap(code,locations) {
           var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
 
          
-          if(locations[i]['lattitute'] == NULL){
+          if(locations[i]['lattitute'] == null){
             console.log("lattitute =" +locations[i]['lattitute']);
           }
 
-          if(locations[i]['longitute'] == NULL){
+          if(locations[i]['longitute'] == null){
             console.log("longitute =" +locations[i]['longitute']);
           }
 
