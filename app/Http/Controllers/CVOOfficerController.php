@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CVOOfficers;
+use App\Models\User;
 use Excel;
 use App\Imports\ImportOfficers;
 use App\Helpers\TranslateTextHelper;
@@ -19,12 +20,13 @@ class CVOOfficerController extends Controller{
     }
 
     public function viewImportedBy(){
-        $dataImportedBy = DB::table('scanned_file')
-                    ->join('users', 'scanned_file.uploadById', '=', 'users.id')
-                    ->select('users.id', 'users.name', 'users.email', DB::raw('COUNT(scanned_file.id) as count'))
-                    ->whereNotNull('scanned_file.uploadById')
-                    ->groupBy('users.id', 'users.name', 'users.email')
-                    ->get();
+       
+        $dataImportedBy = User::select('users.id', 'users.name', 'users.email', DB::raw('COUNT(scanned_file.id) as file_count'))
+                        ->where('users.role', 'Admin')
+                        ->where('users.user_type', 'District Officer')
+                        ->leftJoin('scanned_file', 'users.id', '=', 'scanned_file.uploadById')
+                        ->groupBy('users.id', 'users.name', 'users.email')
+                        ->get();
         return view('officer.importedDataBy',compact('dataImportedBy'));
     }
     public function getRecordDetails(Request $request){

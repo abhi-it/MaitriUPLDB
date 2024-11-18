@@ -454,7 +454,7 @@ async function initAIMap(code,locations) {
             disableAutoPan: false,
             content: contentString,
           });
-          var icons =    (locations[i]['type']=='AI') ?aiimg :vhimg;
+          var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
                   parseFloat(locations[i]['lattitute'].replace('⁰', '')), 

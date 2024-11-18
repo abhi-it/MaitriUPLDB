@@ -12,7 +12,7 @@
             <select name="select_cvo" id="select_cvo" class="select_cvo form-control">
                 <option value="">Select CVO</option>
                 @foreach($dataImportedBy as $val)
-                    <option value="{{ $val->id }}">Name: {{ $val->name }} | Email: {{ $val->email }} | Record Count: {{ $val->count }}</option>
+                    <option value="{{ $val['id'] }}">{{ $val['name'] }}( {{ $val['email'] }} ) | Uploaded Files: {{ $val['file_count'] }}</option>
                 @endforeach
             </select>
         </div>
@@ -82,7 +82,7 @@ $(document).ready(function() {
                     table = $('#myTable121').DataTable({
                         "pageLength": 25,
                         "language": {
-                            "emptyTable": "Please Select CVO"
+                            "emptyTable": "No Record Found"
                         }
                     });
                 } else {
