@@ -455,6 +455,10 @@ async function initAIMap(code,locations) {
             content: contentString,
           });
           var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
+
+          console.log('lattitute ='+parseFloat(locations[i]['lattitute'].replace('⁰', '')));
+          console.log('longitute ='+parseFloat(locations[i]['longitute'].replace('⁰', '')));
+
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
                   parseFloat(locations[i]['lattitute'].replace('⁰', '')), 
