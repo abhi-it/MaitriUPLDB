@@ -7,7 +7,10 @@ use App\Models\Institute;
 use App\Models\Tehsil;
 use App\Models\Blockslist;
 use App\Models\DistrictMapData;
-use App\Models\Hospitals;
+use App\Models\Districts;
+use App\Models\Divisions;
+use App\Models\Hospitals; 
+use App\Models\NewAiceter;
 use App\Models\AIcenters;
 use App\Models\Maitri;
 use App\Models\Cliniclocation;
@@ -21,54 +24,82 @@ class ImportAicenter implements ToModel
     
         if ($row[0]) {
          
-            $mandal_name = $row[0];
-            $janpad_name = $row[1];
-            $type = $row[3];
-            $aiCenterNameHindi = $row[2];
-            $aiCenterNameEng = $row[4];
-    
-            // Determine AI Center Name
-            $aiCenter = $aiCenterNameHindi ? $aiCenterNameHindi : $this->engtohindi($aiCenterNameEng);
-    
-            // Convert names to Hindi
-            $mandal_name_hindi = $this->engtohindi($mandal_name);
-            $janpad_name_hindi = $this->engtohindi($janpad_name);
-    
-            // Start a transaction to handle both insert and update operations
-            \DB::transaction(function () use ($mandal_name_hindi, $janpad_name_hindi, $type, $aiCenter, $row) {
-                // Check if the Cliniclocation already exists
-                $checkdata = Cliniclocation::where([
-                    'mandal_name' => $mandal_name_hindi,
-                    'janpad_name' => $janpad_name_hindi,
-                    'name' => $aiCenter
-                ])->first();
-    
-                // Data to be saved or updated
-                $data = [
-                    'name'      => $aiCenter,
-                    'name_eng'  => $this->hinditoenglish($aiCenter),
-                    'type'      => ($type) ? $type : '',
-                    'lattitute' => str_replace('-', '.', $row[5]),
-                    'longitute' => str_replace('-', '.', $row[6]),
-                ];     
-    
-                if ($checkdata) {
-                    // Update if record exists
-                    $checkdata->update($data);
-                } else {
-                    // Insert new record if not found
-                    $maitri = new Cliniclocation();
-                    $maitri->mandal_name = $mandal_name_hindi;
-                    $maitri->janpad_name = $janpad_name_hindi;
-                    $maitri->type = $type;
-                    $maitri->fill($data);
-                    $maitri->save();
+            $district_eng       = $this->detectLanguage($row[0]) === 'English' ? $row[0] : $this->hinditoenglish($row[0]);
+            $district_hindi     = $this->detectLanguage($row[0]) === 'English' ? $this->engtohindi($row[0]) : $row[0];
+            $tehsil_eng         = $this->detectLanguage($row[1]) === 'English' ? $row[1] : $this->hinditoenglish($row[1]);
+            $tehsil_hindi       = $this->detectLanguage($row[1]) === 'English' ? $this->engtohindi($row[1]) : $row[1];
+            $block_eng          = $this->detectLanguage($row[2]) === 'English' ? $row[2] : $this->hinditoenglish($row[2]);
+            $block_hindi        = $this->detectLanguage($row[2]) === 'English' ? $this->engtohindi($row[2]) : $row[2];
+            $aicenter_eng       = $this->detectLanguage($row[3]) === 'English' ? $row[3] : $this->hinditoenglish($row[3]);
+            $aicenter_hindi     = $this->detectLanguage($row[3]) === 'English' ? $this->engtohindi($row[3]) : $row[3];
+
+            $associated_maitri_name     = $row[4];
+            $bharat_pashudhan_id        = $row[5];
+            $maitri_mobilen_no          = $row[6];
+            $latitude                   = $row[7];
+            $longitude                  = $row[8];
+
+            if($latitude != '' && $longitude != '' && $aicenter_eng != '' && $aicenter_hindi != ''){
+                $getDistrict    = Districts::where('name_eng', 'LIKE', '%'.$district_eng.'%')->first();
+                if($getDistrict){
+                    $district_id    = $getDistrict['id'];
+                    $division_id    = $getDistrict['division_id'];
+                    $getDivision    = Divisions::where('id', $division_id)->first();
+                    $zone_id        = $getDivision['zone_id'];
+            
+                    // $checkData = NewAiceter::where([
+                    //     'district_eng'                      => $district_eng,
+                    //     'district_hindi'                    => $district_hindi,
+                    //     'tehsil_eng'                        => $tehsil_eng,
+                    //     'tehsil_hindi'                      => $tehsil_hindi,
+                    //     'block_eng'                         => $block_eng,
+                    //     'block_hindi'                       => $block_hindi,
+                    //     'ai_center_eng'                     => $aicenter_eng,
+                    //     'ai_center_hindi'                   => $aicenter_hindi,
+                    // ])->first();
+
+                    // if ($checkData) {
+                    //     $checkData->update([
+                    //         'latitude'  => $latitude,
+                    //         'longitude' => $longitude,
+                    //     ]);
+                    // } else {
+                        NewAiceter::create([
+                            'zone_id'                           => $zone_id,
+                            'division_id'                       => $division_id,
+                            'district_id'                       => $district_id,
+                            'district_eng'                      => $district_eng,
+                            'district_hindi'                    => $district_hindi,
+                            'tehsil_eng'                        => $tehsil_eng,
+                            'tehsil_hindi'                      => $tehsil_hindi,
+                            'block_eng'                         => $block_eng,
+                            'block_hindi'                       => $block_hindi,
+                            'ai_center_eng'                     => $aicenter_eng,
+                            'ai_center_hindi'                   => $aicenter_hindi,
+                            'maitri_associated_aiCenter'        => $associated_maitri_name,
+                            'bharat_pashudhan_id'               => $bharat_pashudhan_id,
+                            'maitri_mobile_no'                  => $maitri_mobilen_no,
+                            'latitude'                          => $latitude,
+                            'longitude'                         => $longitude,
+                        ]);
+                    // }
                 }
-            }, 3); // Retry up to 3 times in case of deadlock
+            }
         }
     }
     
 
+    function detectLanguage($text) {
+        if (preg_match('/[\x{0900}-\x{097F}]/u', $text)) {
+            return "Hindi";
+        }
+    
+        if (preg_match('/[a-zA-Z]/', $text)) {
+            return "English";
+        }
+    
+        return "Unknown language";
+    }
     
 
     function changeText($val){
