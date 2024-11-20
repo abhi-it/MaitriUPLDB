@@ -57,7 +57,7 @@ class DeoStockUserController extends Controller
         $divisionName = Divisions::where('id', $getDatas['division_id'])->first();
 
         $getAiCenter = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
-                                        ->where('mandal_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
+                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
        
         $district_id =  $getDatas['district_id'];                             
         $division_id =  $getDatas['division_id']; 
