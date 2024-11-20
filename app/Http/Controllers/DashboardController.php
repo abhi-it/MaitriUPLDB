@@ -650,13 +650,13 @@ class DashboardController extends Controller
 
         if ($user_type == 'Director') { //Director
 
-            $query = Avedan::where('is_approved', '=', 2)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 2)->orderBy('avedans.id', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
 
-            $query = Avedan::where('is_approved', '=', 2)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 2)->orderBy('avedans.id', 'DESC');
         } else { //CVO
 
-            $query = Avedan::where('is_approved', '=', 2)->where('district_id', '=', $districtID)->orderBy('id', 'DESC');
+            $query = Avedan::where('is_approved', '=', 2)->where('district_id', '=', $districtID)->orderBy('avedans.id', 'DESC');
         }
 
         if (!empty($request->input('applicationNumber'))) {
@@ -677,7 +677,35 @@ class DashboardController extends Controller
         $heading = 'अस्वीकार आवेदन';
 
         if (!empty($request->input('export'))) {
-            $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
+            $data = $query->leftJoin('districts', 'avedans.district_id', '=', 'districts.id')
+                    ->select(
+                        'avedans.applicationNumber', 
+                        'avedans.applicant_name', 
+                        'avedans.fname', 
+                        'avedans.mother', 
+                        'avedans.gender', 
+                        'avedans.mobile', 
+                        'avedans.email', 
+                        'avedans.category', 
+                        'districts.name_hindi',
+                        'avedans.tehsil', 
+                        'avedans.post_office', 
+                        'avedans.gram_panchayat_name', 
+                        'avedans.vikas_khand', 
+                        'avedans.permanent_address', 
+                        'avedans.high_marks', 
+                        'avedans.high_total_marks', 
+                        'avedans.high_percentage', 
+                        'avedans.inter_marks', 
+                        'avedans.inter_total_marks', 
+                        'avedans.inter_percentage' // Removed trailing comma here
+                    )
+                    ->whereYear('avedans.created_at', $this->sessionYear)
+                    ->orderBy('avedans.id', 'DESC')
+                    ->get();
+
+            // dd($query->toSql());
+            // echo '<pre>';print_r($data);exit;
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);

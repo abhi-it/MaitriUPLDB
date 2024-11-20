@@ -97,8 +97,6 @@ class ExportAvedan implements FromCollection, WithHeadings
         'इण्टर प्रतिशत',
         // 'हाई स्कूल फार्मूला प्रतिशत',
         // 'इण्टर फार्मूला प्रतिशत',
-        'कुल स्वतः मूल्यांकन अंक',
-
 		// 'applicationNumber',
 		// 'आवेदक का नाम',
         // 'पिता / पति का नाम',
