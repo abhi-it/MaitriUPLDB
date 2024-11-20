@@ -75,10 +75,13 @@
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
                     
+                    <input type="hidden" name="district_id" id="district_id" value="{{ $district_id }}">
+                    <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
+
                     <select name="select_aicenter" id="select_aicenter" class="form-control" required>
                         <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
                         @foreach($ai_centerName as $aiCenterName)
-                            <option value="{{ $aiCenterName['id'] }}" data-hi="{{ $aiCenterName['name_hindi'] }}" data-en="{{ $aiCenterName['name_eng'] }}"></option>
+                            <option value="{{ $aiCenterName['id'] }}">{{ $aiCenterName['name_hindi'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -296,22 +299,18 @@
                 type: "GET",
                 url: "{{ route('search-maitri-data') }}",
                 dataType: 'json',
-                data: { id: aiCenterID },
+                data: { 
+                    id: aiCenterID 
+                },
                 success: function (result) {
-                    // Clear existing options in select_maitri
                     $('#select_maitri').empty();
-
-                    // Check if data is returned successfully
                     if (result.success && result.type === 'maitri' && result.success != '') {
-                        // Populate select_maitri with new options
                         $.each(result.success, function(index, maitri) {
-                            // Add new options with the required value and text
                             $('#select_maitri').append(
                                 $('<option></option>').val(maitri.id).text('Name: '+maitri.maitri_name+'(Num: '+ maitri.maitri_mobile_no +', Bharat Pashudhan Id: '+ maitri.any_bharat_id +', Longitude: '+ maitri.longitude +', Latitude: '+ maitri.latitude +')')
                             );
                         });
                     } else {
-                        // Optionally handle case when no data is returned
                         $('#select_maitri').append(
                             $('<option></option>').text('No Maitri available').prop('disabled', true)
                         );

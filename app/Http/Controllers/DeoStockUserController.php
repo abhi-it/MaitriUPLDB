@@ -37,9 +37,8 @@ class DeoStockUserController extends Controller
         $aiJanpad = $aiCenterName['janpad_name'];
         $aiBlock = $aiCenterName['block'];
 
-        $getMaitris = Maitri::where('block', 'LIKE', $aiBlock)->get();
-                        // where('mandal_name', 'LIKE', $aiMandal)
-                    // ->where('janpad_name', 'LIKE', $aiJanpad)
+        $getMaitris = Maitri::where('mandal_name', 'LIKE', $aiMandal)
+                    ->where('janpad_name', 'LIKE', $aiJanpad)->get();
                     
                     
         if($getMaitris){
@@ -53,21 +52,27 @@ class DeoStockUserController extends Controller
     public function deoStockForm(){
         $user_id = Auth::user()->id;
         $getDatas = DeoUser::where('user_id', $user_id)->first();
-        $blocksDatas = Block::where('dis_id', $getDatas['district_id'])->get();
+
+        $districtName = Districts::where('id', $getDatas['district_id'])->first();
+        $divisionName = Divisions::where('id', $getDatas['division_id'])->first();
+
+        $getAiCenter = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+                                        ->where('mandal_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
+       
+        $district_id =  $getDatas['district_id'];                             
+        $division_id =  $getDatas['division_id']; 
+
         $ai_centerName = [];
-        foreach($blocksDatas as $blocksData){
-            $blockName = $blocksData['block_hindi'];
-            $aiCenters = Cliniclocation::where('block', 'Like', '%'.$blockName.'%')->get();
-            foreach($aiCenters as $aiCenter){
-                $ai_centerName[] = [
-                    'id' => $aiCenter['id'],
-                    'name_hindi' => $aiCenter['name'],
-                    'name_eng' => $aiCenter['name_eng'],
-                    'zone_id' => $getDatas['zone_id'],
-                    'division_id' => $getDatas['division_id'],
-                    'district_id' => $getDatas['district_id'],
-                ];
-            }
+        foreach($getAiCenter as $aiCenter){
+          
+            $ai_centerName[] = [
+                'id' => $aiCenter['id'],
+                'name_hindi' => $aiCenter['name'],
+                'name_eng' => $aiCenter['name_eng'],
+                'zone_id' => $getDatas['zone_id'],
+                'division_id' => $getDatas['division_id'],
+                'district_id' => $getDatas['district_id'],
+            ];
         }
         // $ai_centerName = [];
         // foreach($getDatas as $getData){
@@ -84,7 +89,7 @@ class DeoStockUserController extends Controller
         //     ];
         // }
         $deoStock = RemainingStock::where('user_id', $user_id)->get();
-        return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock'));
+        return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock', 'division_id', 'district_id'));
     }
 
     public function deoStockDetaikls(){
