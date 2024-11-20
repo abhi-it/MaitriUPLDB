@@ -39,17 +39,31 @@ class ImportAicenter implements ToModel
             $latitude                   = $row[7];
             $longitude                  = $row[8];
 
-           
-            $getDistrict    = Districts::where('name_eng', 'LIKE', '%'.$district_eng.'%')->first();
-            if($getDistrict){
-                $district_id    = $getDistrict['id'];
-                $division_id    = $getDistrict['division_id'];
-                $getDivision    = Divisions::where('id', $division_id)->first();
-                $zone_id        = $getDivision['zone_id'];
-                
-                $alreadyAdded = Maitri::where('maitri_mobile_no', $maitri_mobilen_no)->first();
-                if( $alreadyAdded == ''){
-                    // if($latitude == '' && $longitude == ''){
+            if($latitude != '' && $longitude != '' && $aicenter_eng != '' && $aicenter_hindi != ''){
+                $getDistrict    = Districts::where('name_eng', 'LIKE', '%'.$district_eng.'%')->first();
+                if($getDistrict){
+                    $district_id    = $getDistrict['id'];
+                    $division_id    = $getDistrict['division_id'];
+                    $getDivision    = Divisions::where('id', $division_id)->first();
+                    $zone_id        = $getDivision['zone_id'];
+            
+                    // $checkData = NewAiceter::where([
+                    //     'district_eng'                      => $district_eng,
+                    //     'district_hindi'                    => $district_hindi,
+                    //     'tehsil_eng'                        => $tehsil_eng,
+                    //     'tehsil_hindi'                      => $tehsil_hindi,
+                    //     'block_eng'                         => $block_eng,
+                    //     'block_hindi'                       => $block_hindi,
+                    //     'ai_center_eng'                     => $aicenter_eng,
+                    //     'ai_center_hindi'                   => $aicenter_hindi,
+                    // ])->first();
+
+                    // if ($checkData) {
+                    //     $checkData->update([
+                    //         'latitude'  => $latitude,
+                    //         'longitude' => $longitude,
+                    //     ]);
+                    // } else {
                         NewAiceter::create([
                             'zone_id'                           => $zone_id,
                             'division_id'                       => $division_id,

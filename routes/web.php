@@ -150,6 +150,10 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("total-avedan/{year?}/{export?}", [App\Http\Controllers\DashboardController::class, 'totalAvedan'])->name('totalAvedan');
     Route::get("rejected-avedan/{year?}", [App\Http\Controllers\DashboardController::class, 'rejectedAvedan'])->name('rejectedAvedan');
     Route::get("approved-avedan/{year?}", [App\Http\Controllers\DashboardController::class, 'approvedAvedan'])->name('approvedAvedan');
+    
+    Route::get("placed-candidates", [App\Http\Controllers\DashboardController::class, 'placedCandidates'])->name('placed-candidates');
+    
+    
     Route::get("view-Avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'avedanFullDetails'])->name('avedanFullDetails');
     Route::get("view-waiting-avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'waitingAvedanFullDetails'])->name('waitingAvedanFullDetails');
     Route::get("merit-Avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'meritAvedanDetails'])->name('meritAvedanDetails');

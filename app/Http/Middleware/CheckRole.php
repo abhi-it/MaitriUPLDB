@@ -152,6 +152,7 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'placed-candidates',
                 'save-selection',
                 'getAll-District',
                 'zone-district-mapping',
@@ -292,6 +293,7 @@ class CheckRole
 
             'Superadmin' => [
 
+                'placed-candidates',
                 'save-selection',
                 'getAll-District',
                 'zone-district-mapping',

@@ -538,6 +538,10 @@ class DashboardController extends Controller
         }
     }
 
+    public function placedCandidates(){
+        $heading = 'नियुक्त उम्मीदवार';
+        return view('placedCandidates', compact('heading'));
+    }
 
     public function approvedAvedan(Request $request, $year = null)
     {
@@ -703,9 +707,6 @@ class DashboardController extends Controller
                     ->whereYear('avedans.created_at', $this->sessionYear)
                     ->orderBy('avedans.id', 'DESC')
                     ->get();
-
-            // dd($query->toSql());
-            // echo '<pre>';print_r($data);exit;
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
