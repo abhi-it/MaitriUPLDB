@@ -91,23 +91,18 @@ class DistrictUserController extends Controller{
         $district_id = $getData['district_id'];
         $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
         $zone_id = $deoUser['zone_id'];
-        $districtName = Districts::where('id', $district_id)->first();
         $zoneName = Zone::where('id', $zone_id)->first();
-        $aiCenters = ClinicLocation::where('mandal_name', 'LIKE', $zoneName['name_hi'])
-                        ->where('janpad_name', 'LIKE', $districtName['name_hindi'] )
-                        ->get();
-        if($aiCenters->isEmpty()){
-            $divisionName = Divisions::where('id', $division_id)->first();
-            if($divisionName['name_hindi'] == 'मिर्ज़ापुर'){
-                $divisionHindi = 'मिर्जापुर';
-            }else{
-                $divisionHindi = $divisionName['name_hindi'];
-            }
 
-            $aiCenters = ClinicLocation::where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
-                            ->where('mandal_name', 'LIKE', '%'.$divisionHindi.'%')
-                            ->get();
-        }
+
+        $districtName = Districts::where('id', $getData['district_id'])->first();
+        $divisionName = Divisions::where('id', $getData['division_id'])->first();
+
+        $aiCenters = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
+       
+   
+
+      
         
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
