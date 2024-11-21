@@ -539,8 +539,7 @@ class DashboardController extends Controller
     }
 
     public function placedCandidates(){
-        $heading = 'नियुक्त उम्मीदवार';
-        return view('placedCandidates', compact('heading'));
+        return view('placedCandidates');
     }
 
     public function approvedAvedan(Request $request, $year = null)

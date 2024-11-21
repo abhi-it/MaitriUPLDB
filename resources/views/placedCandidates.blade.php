@@ -2,7 +2,7 @@
 @section('content')
 
     <div x-data="viewAvedan" class="container main-div">
-        <h3 class="text-center fw-bold m-4">{{ $heading }}</h3>
+        <h3 class="text-center fw-bold m-4"><span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span></h3>
 
 
         <form method="get" action="{{ Request::url() }}" class="form-comman">
