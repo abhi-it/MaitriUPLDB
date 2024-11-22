@@ -454,7 +454,7 @@ async function initAIMap(code,locations) {
             disableAutoPan: false,
             content: contentString,
           });
-          var icons =    (locations[i]['type']=='AI') ? aiimg : vhimg;
+          var icons =    (locations[i]['type']=='AI' || locations[i]['type']=='VH' || locations[i]['type']=='विहि' || locations[i]['type']=='V.O.') ? aiimg : vhimg;
          
           marker = new google.maps.Marker({
                 position: new google.maps.LatLng(
