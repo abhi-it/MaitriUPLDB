@@ -230,7 +230,7 @@ class MaitriController extends Controller
         $division           = Divisions::where('name_hindi', 'like', "%{$id}%")->first();
         // $data['district']     = Districts::where('division_id',$division['id'])->get();
 
-        $data['district'] = DB::table('clinic_location_new')
+        $data['district'] = DB::table('clinic_location')
                             ->selectRaw("
                                 janpad_name,
                                 SUM(CASE WHEN type IN ('LEO Center', 'Leo', 'LEO') THEN 1 ELSE 0 END) as leo_count,
