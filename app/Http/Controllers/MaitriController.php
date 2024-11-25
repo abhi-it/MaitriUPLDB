@@ -228,7 +228,18 @@ class MaitriController extends Controller
         $data['code']       = Janpad::where(['name'=>$id])->first();
         $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->orderBy('id', 'desc')->get();
         $division           = Divisions::where('name_hindi', 'like', "%{$id}%")->first();
-        $data['district']     = Districts::where('division_id',$division['id'])->get();
+        // $data['district']     = Districts::where('division_id',$division['id'])->get();
+
+        $data['district'] = DB::table('clinic_location_new')
+                            ->selectRaw("
+                                janpad_name,
+                                SUM(CASE WHEN type IN ('LEO Center', 'Leo', 'LEO') THEN 1 ELSE 0 END) as leo_count,
+                                SUM(CASE WHEN type = 'VH' THEN 1 ELSE 0 END) as vh_count
+                            ")
+                            ->where('mandal_name', 'LIKE', '%'.$id.'%')
+                            ->groupBy('janpad_name')
+                            ->get();
+
        
         return $data;
     }

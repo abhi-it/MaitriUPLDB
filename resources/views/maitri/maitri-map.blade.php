@@ -117,7 +117,7 @@
           <div class="col-md-4 mb-4">
             <select class="form-control" name="address" id="address" >
                 <option>-कोई भी चुनें-</option>
-                @foreach($aicenter as $val)
+                @foreach($aicenter  as $val)
                   @if($val!='' ||$val != null)
                     <option value="{{$val->mandal_name}}">{{$val->mandal_name}}   ({{ $val->count }})</option>
                   @endif
@@ -365,22 +365,20 @@ $('#address').change(function() {
             },
             cache: false,
             success: function(data) {
-
               if (data.district) {
                   $('#get_district').show();
-                  const defaultOption = $('<option></option>')
-                      .attr('value', '')
-                      .text('Select District');
+                  const defaultOption = $('<option></option>').attr('value', '').text('Select District');
                   $('#get_district').append(defaultOption);
                   var district = data.district;
-                  $.each(district, function(index, item) {   
-                      
+                  $.each(district, function(index, item) {
+                      console.log(item);
                       const option = $('<option></option>')
                           .attr('value', item.id)
-                          .text(item.name_eng + ' (' + item.name_hindi + ')');
+                          .text(item.janpad_name + ': VH(' + item.vh_count + ') - LEO(' + item.leo_count + ')');
                       $('#get_district').append(option);
                   });
               }
+
 
 
               if(data.maitri){
