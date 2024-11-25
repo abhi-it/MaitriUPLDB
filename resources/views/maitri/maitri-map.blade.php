@@ -64,7 +64,7 @@
             <option value="pd_lab">गर्भावस्था निदान प्रयोगशाला (Pregnancy Diagnosis Laboratory) ({{count($pdlab)}})</option>
             <option value="cryo_vessel_blocks">क्रायो-वेसल ब्लॉक (Cryo-Vessel Blocks) ({{count($cvblocks)}})</option>
             <option value="1">मैत्री (पशु मित्र)  ({{count($maitricount)}})</option>
-            <option value="2">एआई सेंटर/एलईओ सेंटर/पशु चिकित्सा अस्पताल  (4412)</option>
+            <option value="2">एआई सेंटर/एलईओ सेंटर/पशु चिकित्सा अस्पताल  ({{count($aicount)}})</option>
             <option value="3">जिलों  ({{count($countDistrict)}})</option>
             <option value="lc_agency">सीमेन बैंक / क्षेत्रीय केंद्र (Semen Bank / Zonal Centers) ( {{$agency}} )</option>
             <option value="semen_station">सीमेन डी.एफ.एस. स्टेशन (Semen D F S Station ) ({{$station}})</option>
