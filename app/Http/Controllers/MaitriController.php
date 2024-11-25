@@ -207,12 +207,9 @@ class MaitriController extends Controller
         $data               = [];
 
         if($request->district != ''){
-            $districts       = Districts::where(['id' => $request->district])->first();
-            $data['code']       = Districts::where(['id' => $request->district])->first();
-            $divisions          = Divisions::where(['id' => $districts['division_id']])->first();
-
-            $districtName       = $districts['name_hindi'];
-            $divisionName       = $divisions['name_hindi'];
+            $data['code']       = Districts::where(['name_hindi' => $request->district])->first();
+            $districtName       = $request->district;
+            $divisionName       = $request->mandal_name;
             
             $query = DB::table('clinic_location')
                     ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')

@@ -373,7 +373,7 @@ $('#address').change(function() {
                   $.each(district, function(index, item) {
                       console.log(item);
                       const option = $('<option></option>')
-                          .attr('value', item.id)
+                          .attr('value', item.janpad_name)
                           .text(item.janpad_name + ': VH(' + item.vh_count + ') - LEO(' + item.leo_count + ')');
                       $('#get_district').append(option);
                   });
@@ -393,7 +393,8 @@ $('#address').change(function() {
 
 
 $('#get_district').change(function() {
-  var district_id = $("#get_district option:selected").val();
+  var district_id = $("#get_district").val();
+  var mandal_name = $("#address").val();
   if (district_id) {
         $.ajax({
             type: "GET",
@@ -403,6 +404,7 @@ $('#get_district').change(function() {
             },
             data: {
                 "_token": "{{ csrf_token() }}",
+                'mandal_name': mandal_name,
                 'district': district_id
             },
             cache: false,
