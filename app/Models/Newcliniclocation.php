@@ -4,15 +4,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliniclocation extends Model
+class Newcliniclocation extends Model
 {
     use HasFactory;
-    protected $table = 'clinic_location';
+    protected $table = 'clinic_location_new';
 
     protected $fillable = [
-        'zone_id',
-        'division_id',
-        'district_id',
         'mandal_name',
         'janpad_name',
         'block',

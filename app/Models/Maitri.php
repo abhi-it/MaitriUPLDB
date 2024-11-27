@@ -10,6 +10,9 @@ class Maitri extends Model
     use HasFactory;
     protected $table = 'maitries';
     protected $fillable = [
+        'zone_id',
+        'division_id',
+        'district_id',
         'mandal_name',
         'janpad_name',
         'maitri_name',

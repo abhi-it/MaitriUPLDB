@@ -8,6 +8,12 @@ use Excel;
 use App\Imports\ImportAicenter;
 use App\Helpers\TranslateTextHelper;
 use App\Exports\CVOListExport;
+use App\Models\Maitri;
+use App\Models\Districts;
+use App\Models\Divisions;
+use App\Models\Cliniclocation;
+use App\Models\NewAiceter;
+use DB;
 
 class ImportAIcenterController extends Controller{
 
@@ -16,9 +22,10 @@ class ImportAIcenterController extends Controller{
         return view('officer.home',compact('count'));
     }
 
-    public function aicenterImportForm(){
+    public function aicenterImportForm() {
         return view('aicenter.import');
     }
+
 
     public function importAiCenter(Request $request){
         $request->validate([
@@ -27,6 +34,6 @@ class ImportAIcenterController extends Controller{
         $file = $request->file('file');
         
         Excel::import(new ImportAicenter, $request->file('file')->store('files'));
-        return redirect('officers-import')->with('success', 'File Imported successfully!');
+        return redirect('import-aicenter')->with('success', 'File Imported successfully!');
     }
 }
