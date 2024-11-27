@@ -890,9 +890,10 @@
         <div class="logo-header">
             <div class="container py-3">
                 <div class="row g-3 align-items-center">
-                    <div class="col-lg-8 col-md-12 col-12">
+                    <div class="col-lg-9 col-md-12 col-12">
                         <div
-                            class="d-flex flex-wrap align-items-center gap-2 justify-content-md-start justify-content-center">
+                            class="d-flex flex-wrap align-items-center gap-2 justify-content-md-between justify-content-center">
+                            <div class="d-flex align-items-center gap-2">
                             <div class="d-flex align-items-center gap-2">
                                 <div class="text-center">
                                     <a href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}"
@@ -915,9 +916,13 @@
                                         data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
                                 </h6>
                             </div>
+                            </div>
+                            <div class="kumbhlogo">
+                               <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-flex flex-column ">
                             <span>Helpline - <a href="tel:1800-309-1938">1800-309-1938</a></span>
                             <span>Email ID - <a href="mailto:upldbte@gmail.com">upldbte@gmail.com </a></span>
