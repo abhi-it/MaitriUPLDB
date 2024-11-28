@@ -125,8 +125,9 @@ class MaitriController extends Controller
         $location           = $request->id;
         $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$location}%")->get();
         $data['janapad']    = Janpad::where(['name'=>$location])->first();
-
-        $divisionData       = Divisions::where(['name_hindi' => $location])->first();
+        // $data['janapad']    = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
+      
+        $divisionData       = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
         $data['result'] =   DB::table('districts')
                 ->select(
                     'districts.id',

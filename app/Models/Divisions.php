@@ -12,5 +12,8 @@ class Divisions extends Model
         'name_eng',
         'name_hindi',
         'zone_id',
+        'latt',
+        'long',
+        'place_id',
     ];
 }

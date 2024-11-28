@@ -423,7 +423,7 @@ $('#get_district').change(function() {
 async function initAIMap(code,locations) {
     var lat  = (code)?code.latt:27.5706;
     var long  = (code)?code.long:80.0982;
-    const zoom = ((locations.length)>20) ? 10 : 7;
+    const zoom = ((locations.length)>10) ? 10 : 7;
     var latlng = new google.maps.LatLng( lat,long);
     var map = new google.maps.Map(document.getElementById('map'), {
           center: latlng,
