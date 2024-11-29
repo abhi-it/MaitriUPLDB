@@ -1207,13 +1207,13 @@
                                     <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें" data-en="Placed Candidates & Update Maitri GEO Location"></span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="nav-link" href="{{ url('all-maitri-geo-location') }}">
+                                    <a class="dropdown-item" href="{{ url('all-maitri-geo-location') }}">
                                         <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span>
                                     </a>
-                                    <a class="nav-link" href="{{ url('placed-candidates') }}">
+                                    <a class="dropdown-item" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
                                     </a>
-                                    <a class="nav-link" href="{{ url('import-aicenter') }}">
+                                    <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a>
                                 </div>
@@ -1226,10 +1226,10 @@
                                     <span data-hi="समाचार घटना और दैनिक डैशबोर्ड" data-en="News Event & Daily Dashboard"></span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="nav-link" href="{{ url('daily-dashboard') }}">
+                                    <a class="dropdown-item" href="{{ url('daily-dashboard') }}">
                                         <span data-hi="दैनिक डैशबोर्ड" data-en="Daily Dashboard"></span>
                                     </a>
-                                    <a class="nav-link" href="{{ url('event-news') }}">
+                                    <a class="dropdown-item" href="{{ url('event-news') }}">
                                         <span data-hi="घटना एवं समाचार" data-en="Event & News"></span>
                                     </a>
                                 </div>
