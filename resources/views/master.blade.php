@@ -1218,17 +1218,23 @@
                                     </a>
                                 </div>
                             </li>
-                            </li>
                             <!-- Admin Stock Form Menu Start -->
-                            <li class="nav-item  {{ request()->is('event-news') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('event-news') }}">
-                                    <span data-hi="घटना एवं समाचार" data-en="Event & News"></span></a>
-                            </li>
-                            <li class="nav-item  {{ request()->is('daily-dashboard') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('daily-dashboard') }}">
-                                    <span data-hi="दैनिक डैशबोर्ड" data-en="Daily Dashboard"></span></a>
-                            </li>
 
+                            <li class="nav-item dropdown {{ (request()->is('event-news') || request()->is('daily-dashboard')) ? 'active' : '' }}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="समाचार घटना और दैनिक डैशबोर्ड" data-en="News Event & Daily Dashboard"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="nav-link" href="{{ url('daily-dashboard') }}">
+                                        <span data-hi="दैनिक डैशबोर्ड" data-en="Daily Dashboard"></span>
+                                    </a>
+                                    <a class="nav-link" href="{{ url('event-news') }}">
+                                        <span data-hi="घटना एवं समाचार" data-en="Event & News"></span>
+                                    </a>
+                                </div>
+                            </li>
+                           
                             <li class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
