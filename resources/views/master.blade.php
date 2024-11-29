@@ -1204,7 +1204,7 @@
                             <li class="nav-item dropdown {{ (request()->is('all-maitri-geo-location') || request()->is('placed-candidates')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
-                                    <span data-hi="प्रशासनिक स्टॉक और रिकॉर्ड" data-en="Placed Candidates & Update Maitri GEO Location"></span>
+                                    <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें" data-en="Placed Candidates & Update Maitri GEO Location"></span>
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="nav-link" href="{{ url('all-maitri-geo-location') }}">
