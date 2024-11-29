@@ -1201,7 +1201,7 @@
                             
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
-                            <li class="nav-item dropdown {{ (request()->is('all-maitri-geo-location') || request()->is('placed-candidates')) ? 'active' : '' }}">
+                            <li class="nav-item dropdown {{ (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter)) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें" data-en="Placed Candidates & Update Maitri GEO Location"></span>
@@ -1213,11 +1213,11 @@
                                     <a class="nav-link" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
                                     </a>
+                                    <a class="nav-link" href="{{ url('import-aicenter') }}">
+                                        <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
+                                    </a>
                                 </div>
                             </li>
-                            <li class="nav-item  {{ request()->is('import-aicenter') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('import-aicenter') }}">
-                                    <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span></a>
                             </li>
                             <!-- Admin Stock Form Menu Start -->
                             <li class="nav-item  {{ request()->is('event-news') ? 'active' : '' }}">
