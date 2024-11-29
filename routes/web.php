@@ -21,6 +21,7 @@ use App\Http\Controllers\BlockUserController;
 use App\Http\Controllers\DeoStockUserController;
 use App\Http\Controllers\ImportAIcenterController;
 use App\Http\Controllers\ZoneDistrictController;
+use App\Http\Controllers\GeoLocationUpdateController;
 
 
 
@@ -251,8 +252,12 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("filtered-monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'filteredMonthlyReport'])->name('filtered-monthly-report');
 
 
-    // zone dashboard
+    // Update Maitri GEO Location 
+    Route::get("all-maitri-geo-location", [GeoLocationUpdateController::class, 'index'])->name('all-maitri-geo-location');
+    Route::get("edit-geo-maitri/{id}/edit", [GeoLocationUpdateController::class, 'editGeoLocation'])->name('edit-geo-maitri');
+    Route::post("update-geo-location", [GeoLocationUpdateController::class, 'updateGeoLocation'])->name('update-geo-location');
 
+    // zone dashboard
     Route::get("change-password", [CreateZoneController::class, 'changePassword'])->name('change-password');
     
     Route::get("zone-dashboard", [ZoneDashBoardController::class, 'dashboard'])->name('zone-dashboard');

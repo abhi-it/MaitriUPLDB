@@ -152,6 +152,9 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'update-geo-location',
+                'edit-geo-maitri',
+                'all-maitri-geo-location',
                 'placed-candidates',
                 'save-selection',
                 'getAll-District',
@@ -292,7 +295,9 @@ class CheckRole
             ],
 
             'Superadmin' => [
-
+                'update-geo-location',
+                'edit-geo-maitri',
+                'all-maitri-geo-location',
                 'placed-candidates',
                 'save-selection',
                 'getAll-District',

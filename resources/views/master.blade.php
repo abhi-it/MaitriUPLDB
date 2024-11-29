@@ -1201,6 +1201,10 @@
                             
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
+                            <li class="nav-item  {{ request()->is('all-maitri-geo-location') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('all-maitri-geo-location') }}">
+                                    <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span></a>
+                            </li>
 
                             <li class="nav-item  {{ request()->is('placed-candidates') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('placed-candidates') }}">
