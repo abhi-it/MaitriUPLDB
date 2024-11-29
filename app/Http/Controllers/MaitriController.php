@@ -156,9 +156,12 @@ class MaitriController extends Controller
 
     public function allMaitriesData(Request $request){
         $data               = [];
-        $janpad             = $request->id;
-        $data['code']       = Janpad::where(['name'=>$janpad])->first();
-        $data['maitri']     = Maitri::where('janpad_name', 'like', "%{$janpad}%")->get();
+        $janpad             = $request->id; 
+        $mandal             = $request->mandal_name; 
+        // $data['code']       = Janpad::where(['name'=>$janpad])->first();
+        $data['code']       = Districts::where('name', 'LIKE', '%'.$janpad.'%')->first();
+        $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$mandal}%")
+                                    ->where('janpad_name', 'LIKE', '%'.$janpad.'%')->get();
         return $data;
     }
     public function maitriListing(Request $request){

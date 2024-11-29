@@ -645,6 +645,7 @@ async function initLocationMap(code,locations) {
   $('#janpad').change(function() {
       $('#maitriExport').hide();
       var val = $("#janpad option:selected").val();
+      var mandal_name = $("#district").val();
       $('#id').val(val);
       if (val) {
           $.ajax({
@@ -655,7 +656,8 @@ async function initLocationMap(code,locations) {
               },
               data: {
                   "_token": "{{ csrf_token() }}",
-                  "id": val
+                  "id": val,
+                  "mandal_name": mandal_name,
               },
               cache: false,
               success: function(data) {
