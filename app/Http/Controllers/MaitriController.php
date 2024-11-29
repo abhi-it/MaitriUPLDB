@@ -159,7 +159,7 @@ class MaitriController extends Controller
         $janpad             = $request->id; 
         $mandal             = $request->mandal_name; 
         // $data['code']       = Janpad::where(['name'=>$janpad])->first();
-        $data['code']       = Districts::where('name', 'LIKE', '%'.$janpad.'%')->first();
+        $data['code']       = Districts::where('name_hindi', 'LIKE', '%'.$janpad.'%')->first();
         $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$mandal}%")
                                     ->where('janpad_name', 'LIKE', '%'.$janpad.'%')->get();
         return $data;
