@@ -10,7 +10,7 @@
 <div class="container main-div py-5" style="background-color:white;">
 
     <div class="container">
-        <h2><span data-hi="यूजर को संपादित करो" data-en="Edit GEO Loction"></span></h2>
+        <h2><span data-hi="यूजर को संपादित करो" data-en="Edit GEO Location"></span></h2>
 
         <form action="{{ route('update-geo-location') }}" method="POST" enctype="multipart/form-data">
             @csrf
