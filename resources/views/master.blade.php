@@ -1201,16 +1201,20 @@
                             
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
-                            <li class="nav-item  {{ request()->is('all-maitri-geo-location') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('all-maitri-geo-location') }}">
-                                    <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span></a>
+                            <li class="nav-item dropdown {{ (request()->is('all-maitri-geo-location') || request()->is('placed-candidates')) ? 'active' : '' }}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="प्रशासनिक स्टॉक और रिकॉर्ड" data-en="Placed Candidates & Update Maitri GEO Location"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="nav-link" href="{{ url('all-maitri-geo-location') }}">
+                                        <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span>
+                                    </a>
+                                    <a class="nav-link" href="{{ url('placed-candidates') }}">
+                                        <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
+                                    </a>
+                                </div>
                             </li>
-
-                            <li class="nav-item  {{ request()->is('placed-candidates') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('placed-candidates') }}">
-                                    <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span></a>
-                            </li>
-
                             <li class="nav-item  {{ request()->is('import-aicenter') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('import-aicenter') }}">
                                     <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span></a>
