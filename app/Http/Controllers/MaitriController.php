@@ -128,26 +128,26 @@ class MaitriController extends Controller
         // $data['janapad']    = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
       
         $divisionData       = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
-        $data['result'] =   DB::table('districts')
-                ->select(
-                    'districts.id',
-                    'districts.name_hindi',
-                    'districts.division_id',
-                    'maitries.janpad_name',
-                    DB::raw('COUNT(maitries.janpad_name) AS count')
-                )
-                ->leftJoin('maitries', function($join) use ($location) {
-                    $join->on('districts.name_hindi', 'LIKE', 'maitries.janpad_name')
-                        ->where('maitries.mandal_name', 'like', '%' . $location . '%');
-                })
-                ->where('districts.division_id', $divisionData['id'])
-                ->groupBy('districts.id', 'districts.name_hindi', 'districts.division_id', 'maitries.janpad_name')
-                ->get();
+        // $data['result'] =   DB::table('districts')
+        //         ->select(
+        //             'districts.id',
+        //             'districts.name_hindi',
+        //             'districts.division_id',
+        //             'maitries.janpad_name',
+        //             DB::raw('COUNT(maitries.janpad_name) AS count')
+        //         )
+        //         ->leftJoin('maitries', function($join) use ($location) {
+        //             $join->on('districts.name_hindi', 'LIKE', 'maitries.janpad_name')
+        //                 ->where('maitries.mandal_name', 'like', '%' . $location . '%');
+        //         })
+        //         ->where('districts.division_id', $divisionData['id'])
+        //         ->groupBy('districts.id', 'districts.name_hindi', 'districts.division_id', 'maitries.janpad_name')
+        //         ->get();
 
-        // $data['results']    = Maitri::select('janpad_name', DB::raw('count(*) as count'))
-        // ->where('mandal_name', 'like', "%{$location}%")
-        // ->groupBy('janpad_name')
-        // ->get();
+        $data['result']    = Maitri::select('janpad_name', DB::raw('count(*) as count'))
+                            ->where('mandal_name', 'like', "%{$location}%")
+                            ->groupBy('janpad_name')
+                            ->get();
 
 
 
