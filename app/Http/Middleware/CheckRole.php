@@ -152,6 +152,10 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'get-all-aicenter',
+                'get-all-block',
+                'get-all-tehsil',
+                'get-all-district',
                 'update-geo-location',
                 'edit-geo-maitri',
                 'all-maitri-geo-location',
@@ -295,6 +299,10 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'get-all-aicenter',
+                'get-all-block',
+                'get-all-tehsil',
+                'get-all-district',
                 'update-geo-location',
                 'edit-geo-maitri',
                 'all-maitri-geo-location',

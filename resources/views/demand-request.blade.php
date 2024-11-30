@@ -380,9 +380,6 @@ $('.semen_source_added').hide();
 
 var allData = {}; 
 $('#district').change(function() {
-    var val = $("#district option:selected").val();
-    var text = $("#district option:selected").text();
-
     $('#mandal').prop('disabled', false);
     $('#mandal').empty();
     $('#vikas_khand').prop('disabled', false);
@@ -392,101 +389,146 @@ $('#district').change(function() {
     $('#tehsil').prop('disabled', false);
     $('#tehsil').empty();
     
+    var val = $("#district option:selected").val();
+    var text = $("#district option:selected").text();
     if (val) {
         $.ajax({
             type: "GET",
-            url: "getAllBlocks",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            url: "get-all-district",
             data: {
-                "_token": "{{ csrf_token() }}",
                 "id": val,
-                "text": text,
+                "mandal": text,
             },
             cache: false,
             success: function(data) {
-                allData = data;
-                populateDropdown('#mandal', allData.mandal, 'name_hindi', '-मंडल चुनें-');
-                $('#mandal').prop('disabled', false);
+                var getMandal = data.data;
+                if (getMandal && getMandal.length > 0) {
+                    $('#mandal').append(`<option value="">Select District</option>`);
+                    getMandal.forEach(item => {
+                        if (item.janpad_name && item.janpad_name.trim() !== '') {
+                            $('#mandal').append(`<option value="${item.janpad_name}">${item.janpad_name}</option>`);
+                        }
+                    });
+                } else {
+                    $('#mandal').append('<option value="">-Data not found.-</option>');
+                }
             }
         });
     }
 });
 
 $('#mandal').change(function() {
-    if ($('#mandal').val()) {
-        populateDropdown('#tehsil', allData.tehsil, 'tehsil', '-तहसील चुनें-');
-        $('#tehsil').prop('disabled', false);
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    $('#tehsil').prop('disabled', false);
+    $('#tehsil').empty();
 
-        // populateDropdown('#ai_center', allData.ai_center, 'name', '-एआई सेंटर चुनें-');
-        // $('#ai_center').prop('disabled', false);
-    }
+    var mandal = $("#district option:selected").text();
+    var janpad = $("#mandal option:selected").val();
+    $.ajax({
+        type: "GET",
+        url: "get-all-tehsil",
+        data: {
+            "mandal": mandal,
+            "janpad": janpad,
+        },
+        cache: false,
+        success: function(data) {
+            var getTehsil = data.data;
+            if (getTehsil && getTehsil.length > 0) {
+                $('#tehsil').append(`<option value="">Select Tehsil</option>`);
+                getTehsil.forEach(item => {
+                    if (item.tehsil && item.tehsil.trim() !== '') {
+                        $('#tehsil').append(`<option value="${item.tehsil}">${item.tehsil}</option>`);
+                    }
+                }); 
+            } else {
+                $('#tehsil').append('<option value="">-Data not found.-</option>');
+            }
+        }
+    });
 });
 
 $('#tehsil').change(function() {
-    if ($('#tehsil').val()) {
-        // Populate Vikas Khand dropdown after selecting Tehsil
-        populateDropdown('#vikas_khand', allData.blocks, 'block_hindi', '-विकास खण्ड चुनें-');
-        $('#vikas_khand').prop('disabled', false);
-    }
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    var tehsil = $(this).val();
+    var mandal = $("#district option:selected").text();
+    var janpad = $("#mandal option:selected").val();
+    $.ajax({
+        type: "GET",
+        url: "get-all-block",
+        data: {
+            "tehsil": tehsil,
+            "mandal": mandal,
+            "janpad": janpad,
+        },
+        cache: false,
+        success: function(data) {
+            var getBlock = data.data;
+            if (getBlock && getBlock.length > 0) {
+                $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
+                getBlock.forEach(item => {
+                    if (item.block && item.block.trim() !== '') {
+                        $('#vikas_khand').append(`<option value="${item.block}">${item.block}</option>`);
+                    }
+                }); 
+            } else {
+                $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+            }
+        }
+    });
 });
 
 $('#vikas_khand').change(function() {
-    if ($('#vikas_khand').val()) {
-        $('#ai_center').prop('disabled', false);
-        $('#ai_center').empty();
-        var mandal = $("#district option:selected").text();
-        var janpad = $("#mandal option:selected").text();
-
-        console.log(mandal+'='+janpad)
-        if (mandal && janpad) {
-            $.ajax({
-                type: "GET",
-                url: "getAllBlocks",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "mandal": mandal,
-                    "janpad": janpad,
-                },
-                cache: false,
-                success: function(data) {
-                    console.log('data', data)
-                    var mandal = data.mandal;
-                    
-                    var ai_center = data.ai_center;
-                    if (ai_center.length > 0) {
-                        $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
-                        ai_center.forEach(item => {
-                            $('#ai_center').append('<option value="' + item.name + '">' + item
-                                .name + '</option>')
-                        });
-                    } else {
-                        $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
+    $('#ai_center').prop('disabled', false);
+    var block = $(this).val();
+    var tehsil = $('#tehsil').val();
+    var mandal = $("#district option:selected").text();
+    var janpad = $("#mandal option:selected").val();
+    $('#ai_center').empty();
+    $.ajax({
+        type: "GET",
+        url: "get-all-aicenter",
+        data: {
+            "block": block,
+            "tehsil": tehsil,
+            "mandal": mandal,
+            "janpad": janpad,
+        },
+        cache: false,
+        success: function(data) {
+            var getAiCenter = data.data;
+            if (getAiCenter && getAiCenter.length > 0) {
+                $('#ai_center').append(`<option value="">Select AI Center</option>`);
+                getAiCenter.forEach(item => {
+                    if (item.center_name && item.center_name.trim() !== '') {
+                        $('#ai_center').append(`<option value="${item.center_name}">${item.center_name}</option>`);
                     }
-                    
-                }
-            })
+                }); 
+            } else {
+                $('#ai_center').append('<option value="">-Data not found.-</option>');
+            }
         }
-
-    }
+    });
 });
 
-function populateDropdown(selector, data, valueField, defaultText) {
-    $(selector).empty();
-    $(selector).append(`<option value="">${defaultText}</option>`);
+// function populateDropdown(selector, data, valueField, defaultText) {
+//     $(selector).empty();
+//     $(selector).append(`<option value="">${defaultText}</option>`);
     
-    if (data && data.length > 0) {
-        data.forEach(item => {
-            $(selector).append(`<option value="${item[valueField]}">${item[valueField]}</option>`);
-        });
-    } else {
-        $(selector).append('<option value="">-Data not found.-</option>');
-    }
-}
+//     if (data && data.length > 0) {
+//         data.forEach(item => {
+//             $(selector).append(`<option value="${item[valueField]}">${item[valueField]}</option>`);
+//         });
+//     } else {
+//         $(selector).append('<option value="">-Data not found.-</option>');
+//     }
+// }
 
 
 

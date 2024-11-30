@@ -428,6 +428,12 @@ Route::post("maitri-add", [App\Http\Controllers\UsersController::class, 'maitriR
 Route::get("cattle-buffalo", [App\Http\Controllers\DemandRequestController::class, 'cattleBuffalo'])->name('cattle-buffalo');
 Route::get("hierarchy-chart", [App\Http\Controllers\DemandRequestController::class, 'hierarchyChart'])->name('hierarchy-chart');
 Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
+Route::get("get-all-district", [DemandRequestController::class, 'getDistrictAll'])->name('get-all-district');
+Route::get("get-all-tehsil", [DemandRequestController::class, 'getTehsilAll'])->name('get-all-tehsil');
+Route::get("get-all-block", [DemandRequestController::class, 'getBlockAll'])->name('get-all-block');
+Route::get("get-all-aicenter", [DemandRequestController::class, 'getAiCenterAll'])->name('get-all-aicenter');
+
+
 Route::get("getAllrequestedBlocks", [DemandRequestController::class, 'getAllrequestedBlocks'])->name('getAllrequestedBlocks');
 Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');
 Route::get("exportDemandRequest", [DemandRequestController::class, 'exportDemandRequest'])->name('exportDemandRequest');

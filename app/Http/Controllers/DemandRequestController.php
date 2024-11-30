@@ -21,7 +21,55 @@ class DemandRequestController extends Controller{
         $institute  = Institute::get();
         return view('demand-request',['district'=>$district,'institute'=>$institute]);
     }
+    
+    public function getDistrictAll(Request $request){
+        $mandal = $request->mandal;
+        $getDistict =  Maitri::select('janpad_name')
+                        ->where('mandal_name', 'LIKE', $mandal)
+                        ->groupBy('janpad_name')
+                        ->get();
+        return \Response::json(['status'=>'success','message'=>'Get all district successfully!','data'=>$getDistict],200);
+    }
 
+    public function getTehsilAll(Request $request){
+        $mandal = $request->mandal;
+        $janpad = $request->janpad;
+        $getTeshil =  Maitri::select('tehsil')
+                        ->where('mandal_name', 'LIKE', $mandal)
+                        ->where('janpad_name', 'LIKE', $janpad)
+                        ->groupBy('tehsil')
+                        ->get();
+        return \Response::json(['status'=>'success','message'=>'Get all tehsil successfully!','data'=>$getTeshil],200);
+    }
+
+    public function getBlockAll(Request $request){
+        $tehsil = $request->tehsil;
+        $mandal = $request->mandal;
+        $janpad = $request->janpad;
+        $getBlock =  Maitri::select('block')
+                        ->where('mandal_name', 'LIKE', $mandal)
+                        ->where('janpad_name', 'LIKE', $janpad)
+                        ->where('tehsil', 'LIKE', $tehsil)
+                        ->groupBy('block')
+                        ->get();
+        return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$getBlock],200);
+    }
+
+    public function getAiCenterAll(Request $request){
+        $block = $request->block;
+        $tehsil = $request->tehsil;
+        $mandal = $request->mandal;
+        $janpad = $request->janpad;
+        $getAIcenter =  Maitri::select('center_name')
+                        ->where('mandal_name', 'LIKE', $mandal)
+                        ->where('janpad_name', 'LIKE', $janpad)
+                        ->where('tehsil', 'LIKE', $tehsil)
+                        ->where('block', 'LIKE', $block)
+                        ->groupBy('center_name')
+                        ->get();
+        return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$getAIcenter],200);
+    }
+    
     public function getAllrequestedBlocks(Request $request){
         $location          = $request->id;
         $blocks            = Districts::where(['id'=>$location])->distinct('name_hindi')->pluck('name_hindi')->toArray();
