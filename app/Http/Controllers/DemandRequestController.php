@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Maitri;
 use App\Models\Janpad;
-use App\Models\Districts;
+use App\Models\Districts; 
+use App\Models\Manganurodhdata;
 use App\Models\Divisions;
 use App\Models\Institute;
 use App\Helpers\TranslateTextHelper;
@@ -24,7 +25,7 @@ class DemandRequestController extends Controller{
     
     public function getDistrictAll(Request $request){
         $mandal = $request->mandal;
-        $getDistict =  Maitri::select('janpad_name')
+        $getDistict =  Manganurodhdata::select('janpad_name')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->groupBy('janpad_name')
                         ->get();
@@ -34,7 +35,7 @@ class DemandRequestController extends Controller{
     public function getTehsilAll(Request $request){
         $mandal = $request->mandal;
         $janpad = $request->janpad;
-        $getTeshil =  Maitri::select('tehsil')
+        $getTeshil =  Manganurodhdata::select('tehsil')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->groupBy('tehsil')
@@ -46,7 +47,7 @@ class DemandRequestController extends Controller{
         $tehsil = $request->tehsil;
         $mandal = $request->mandal;
         $janpad = $request->janpad;
-        $getBlock =  Maitri::select('block')
+        $getBlock =  Manganurodhdata::select('block')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->where('tehsil', 'LIKE', $tehsil)
@@ -60,7 +61,7 @@ class DemandRequestController extends Controller{
         $tehsil = $request->tehsil;
         $mandal = $request->mandal;
         $janpad = $request->janpad;
-        $getAIcenter =  Maitri::select('center_name')
+        $getAIcenter =  Manganurodhdata::select('center_name')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->where('tehsil', 'LIKE', $tehsil)
