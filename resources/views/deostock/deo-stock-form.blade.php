@@ -81,7 +81,7 @@
                     <select name="select_aicenter" id="select_aicenter" class="form-control" required>
                         <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
                         @foreach($ai_centerName as $aiCenterName)
-                            <option value="{{ $aiCenterName['id'] }}">{{ $aiCenterName['name_hindi'] }}</option>
+                            <option value="{{ $aiCenterName['center_name'] }}">{{ $aiCenterName['center_name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -307,7 +307,7 @@
                     if (result.success && result.type === 'maitri' && result.success != '') {
                         $.each(result.success, function(index, maitri) {
                             $('#select_maitri').append(
-                                $('<option></option>').val(maitri.id).text('Name: '+maitri.maitri_name+'(Num: '+ maitri.maitri_mobile_no +', Bharat Pashudhan Id: '+ maitri.any_bharat_id +', Longitude: '+ maitri.longitude +', Latitude: '+ maitri.latitude +')')
+                                $('<option></option>').val(maitri.id).text('Name: '+maitri.maitri_name+'(Num: '+ maitri.maitri_mobile_no +', Bharat Pashudhan Id: '+ maitri.any_bharat_id +')')
                             );
                         });
                     } else {

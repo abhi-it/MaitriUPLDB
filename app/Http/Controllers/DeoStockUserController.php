@@ -8,6 +8,7 @@ use App\Models\Block;
 use App\Models\Maitri;
 use App\Models\Blockslist;
 use App\Models\Cliniclocation;
+use App\Models\Manganurodhdata;
 use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions;
@@ -31,14 +32,8 @@ class DeoStockUserController extends Controller
     }
 
     public function searchMaitriData(Request $request){
-        $aiCenterId = $request->id;
-        $aiCenterName = Cliniclocation::where('id', $aiCenterId)->first();
-        $aiMandal = $aiCenterName['mandal_name'];
-        $aiJanpad = $aiCenterName['janpad_name'];
-        $aiBlock = $aiCenterName['block'];
-
-        $getMaitris = Maitri::where('mandal_name', 'LIKE', $aiMandal)
-                    ->where('janpad_name', 'LIKE', $aiJanpad)->get();
+        $aiCentername = $request->id;
+        $getMaitris = Manganurodhdata::where('center_name', 'LIKE', '%'.$aiCentername.'%')->get();
                     
                     
         if($getMaitris){
@@ -56,8 +51,12 @@ class DeoStockUserController extends Controller
         $districtName = Districts::where('id', $getDatas['district_id'])->first();
         $divisionName = Divisions::where('id', $getDatas['division_id'])->first();
 
-        $getAiCenter = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
-                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
+        $getAiCenter = Manganurodhdata::select('center_name')->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
+                        ->groupBy(['center_name'])
+                        ->get();
+    
+        // $getAiCenter = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+        //                 ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
        
         $district_id =  $getDatas['district_id'];                             
         $division_id =  $getDatas['division_id']; 
@@ -66,28 +65,10 @@ class DeoStockUserController extends Controller
         foreach($getAiCenter as $aiCenter){
           
             $ai_centerName[] = [
-                'id' => $aiCenter['id'],
-                'name_hindi' => $aiCenter['name'],
-                'name_eng' => $aiCenter['name_eng'],
-                'zone_id' => $getDatas['zone_id'],
-                'division_id' => $getDatas['division_id'],
-                'district_id' => $getDatas['district_id'],
+                'center_name' => $aiCenter['center_name'],
             ];
         }
-        // $ai_centerName = [];
-        // foreach($getDatas as $getData){
-        //     $aiCenterId = $getData['aicenters_id'];
-        //     $aiCenterName = Cliniclocation::where('id', $getData['aicenters_id'])->first();
-        //     $ai_centerName[] = [
-        //         'id' => $aiCenterName['id'],
-        //         'name_hindi' => $aiCenterName['name'],
-        //         'name_eng' => $aiCenterName['name_eng'],
-        //         'zone_id' => $getData['zone_id'],
-        //         'division_id' => $getData['division_id'],
-        //         'district_id' => $getData['district_id'],
-        //         'block_id' => $getData['block_id'],
-        //     ];
-        // }
+       
         $deoStock = RemainingStock::where('user_id', $user_id)->get();
         return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock', 'division_id', 'district_id'));
     }
