@@ -42,6 +42,8 @@ class UsersController extends Controller{
             }
         }else{
             if($request->MobileNumber){
+                $district_id = Districts::where('name_hindi', 'LIKE', '%'.$request->district_id.'%')->first();
+               
                 $user  = new User([
                     'name'      => $request->first_name,
                     'FirstName' => $request->first_name,
@@ -49,7 +51,7 @@ class UsersController extends Controller{
                     'email'     => $request->email,
                     'MobileNumber'=> $request->MobileNumber,
                     'password'   => Hash::make($request->password),
-                    'district_id'=> $request->district_id,
+                    'district_id'=> $district_id['id'],
                     'division_id'=> $request->division_id,
                     'role_id'   => '4',
                     'breeds'    => $request->breeds,

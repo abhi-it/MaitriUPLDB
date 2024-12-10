@@ -1345,7 +1345,7 @@
                         </li> -->
                             <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('farmer-register') }}">
-                                    <span data-hi="पशुपालक पंजीकरण" data-en="Livestock  Registration"></span>
+                                    <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Registration"></span>
                                 </a>
                             </li>
                             <!-- <li class="nav-item ">
