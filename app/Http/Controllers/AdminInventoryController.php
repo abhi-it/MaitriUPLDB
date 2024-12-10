@@ -39,7 +39,7 @@ class AdminInventoryController extends Controller
         
 
         if (!empty($request->input('district_id'))) {
-            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%'.$request->input('district_id').'%')->get()->paginate(50);
+            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%'.$request->input('district_id').'%')->get();
         }else{
             $manganurodhdata = Manganurodhdata::all();
         }
