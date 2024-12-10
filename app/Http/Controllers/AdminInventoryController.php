@@ -12,7 +12,8 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\RequestData;
 use App\Models\InventoryMap; 
-use App\Models\EventModal; 
+use App\Models\EventModal;  
+use App\Models\Manganurodhdata;
 use App\Models\DailyDashboard;
 use App\Models\User;
 use App\Models\Zone;
@@ -30,6 +31,44 @@ class AdminInventoryController extends Controller
 {
     public function adminStockForm(){
         return view('adminstockform.admin-stock-form');
+    }
+
+    public function viewMaitriData(Request $request){
+        $districts = Districts::all();
+
+        
+
+        if (!empty($request->input('district_id'))) {
+            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%'.$request->input('district_id').'%')->get()->paginate(50);
+        }else{
+            $manganurodhdata = Manganurodhdata::all();
+        }
+        
+        return view('maitriaicenter.index', compact('manganurodhdata', 'districts'));
+    }
+
+    public function editMaitriAicenter($id){
+        $editData = Manganurodhdata::find($id);
+        return view('maitriaicenter.editData', compact('editData'));
+    }
+
+    public function updateMaitriData(Request $request){
+        $validatedData = $request->validate([
+            'maitri_id' => 'required|exists:maitries,id',
+        ]);
+        $updateGeo = Manganurodhdata::findOrFail($validatedData['maitri_id']);
+        $updateGeo->update([
+            'mandal_name'       => $request->mandal_name,
+            'janpad_name'       => $request->janpad_name,
+            'maitri_name'       => $request->maitri_name,
+            'block'             => $request->block,
+            'tehsil'            => $request->tehsil,
+            'maitri_mobile_no'  => $request->maitri_mobile_no,
+            'center_name'       => $request->center_name,
+            'latitude'          => $request->latitude,
+            'longitude'         => $request->longitude
+        ]);
+        return redirect()->route('view-update-maitri-aicenter')->with('success', 'Data Updated Successfully');
     }
 
     public function eventAndNews(){

@@ -22,6 +22,7 @@ class Manganurodhdata extends Model
         'adhaar_card' ,
         'father_name' ,
         'father_mobile_no' ,
+        'center_name' ,
         'certificate_no' ,
         'pass_date' ,
         'expiry_date' ,

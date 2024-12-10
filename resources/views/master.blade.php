@@ -1216,6 +1216,9 @@
                                     <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a>
+                                    <a class="dropdown-item" href="{{ url('view-update-maitri-aicenter') }}">
+                                        <span data-hi="मैत्री/एआई सेंटर डेटा अपडेट करें" data-en="Update Maitri/AI Center data"></span>
+                                    </a>
                                 </div>
                             </li>
                             <!-- Admin Stock Form Menu Start -->

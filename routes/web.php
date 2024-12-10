@@ -360,6 +360,12 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
     
+    Route::get("view-update-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'viewMaitriData'])->name('view-update-maitri-aicenter');
+    Route::get("edit-maitri-record/{id}/edit", [App\Http\Controllers\AdminInventoryController::class, 'editMaitriAicenter'])->name('edit-maitri-record');
+    Route::post("update-mairti-aicenter-data", [App\Http\Controllers\AdminInventoryController::class, 'updateMaitriData'])->name('update-mairti-aicenter-data');
+    
+    
+
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
     Route::get("check-stock-limit", [App\Http\Controllers\InventoryController::class, 'checkStockLimit'])->name('check-stock-limit');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');

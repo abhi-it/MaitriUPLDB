@@ -152,6 +152,9 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'update-mairti-aicenter-data',
+                'edit-maitri-record',
+                'view-update-maitri-aicenter',
                 'get-all-aicenter',
                 'get-all-block',
                 'get-all-tehsil',
@@ -299,6 +302,9 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'update-mairti-aicenter-data',
+                'edit-maitri-record',
+                'view-update-maitri-aicenter',
                 'get-all-aicenter',
                 'get-all-block',
                 'get-all-tehsil',
