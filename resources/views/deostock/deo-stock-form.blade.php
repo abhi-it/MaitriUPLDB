@@ -74,7 +74,8 @@
                     <label for="inputEmail4"> 
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
-                    
+                    <input type="hidden" name="district_name" id="district_name" value="{{ $names['district'] }}">
+                    <input type="hidden" name="division_name" id="division_name" value="{{ $names['division'] }}">
                     <input type="hidden" name="district_id" id="district_id" value="{{ $district_id }}">
                     <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
 
@@ -295,12 +296,17 @@
 
         $('#select_aicenter').change(function() {
             var aiCenterID = $(this).val();
+            var district = $('#district_name').val();
+            var division = $('#division_name').val();
+            var aiCenterID = $(this).val();
             $.ajax({
                 type: "GET",
                 url: "{{ route('search-maitri-data') }}",
                 dataType: 'json',
                 data: { 
-                    id: aiCenterID 
+                    id: aiCenterID, 
+                    district: district, 
+                    division: division, 
                 },
                 success: function (result) {
                     $('#select_maitri').empty();

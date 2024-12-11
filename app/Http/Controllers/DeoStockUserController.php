@@ -32,8 +32,12 @@ class DeoStockUserController extends Controller
     }
 
     public function searchMaitriData(Request $request){
-        $aiCentername = $request->id;
-        $getMaitris = Manganurodhdata::where('center_name', 'LIKE', $aiCentername)->get();
+        $aiCentername   = $request->id;
+        $district       = $request->district;
+        $division       = $request->division;
+        $getMaitris     = Manganurodhdata::where('mandal_name', 'LIKE', '%'.$division.'%')
+                                            ->where('janpad_name', 'LIKE', '%'.$district.'%')
+                                            ->where('center_name', 'LIKE', $aiCentername)->get();
                     
                     
         if($getMaitris){
@@ -60,6 +64,10 @@ class DeoStockUserController extends Controller
        
         $district_id =  $getDatas['district_id'];                             
         $division_id =  $getDatas['division_id']; 
+        $names = [
+            'district' => $districtName['name_hindi'],
+            'division' => $divisionName['name_hindi'],
+        ];
 
         $ai_centerName = [];
         foreach($getAiCenter as $aiCenter){
@@ -70,7 +78,7 @@ class DeoStockUserController extends Controller
         }
        
         $deoStock = RemainingStock::where('user_id', $user_id)->get();
-        return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock', 'division_id', 'district_id'));
+        return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock', 'division_id', 'district_id', 'names'));
     }
 
     public function deoStockDetaikls(){

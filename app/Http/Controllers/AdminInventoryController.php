@@ -36,12 +36,11 @@ class AdminInventoryController extends Controller
     public function viewMaitriData(Request $request){
         $districts = Districts::all();
 
-        
-
         if (!empty($request->input('district_id'))) {
-            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%'.$request->input('district_id').'%')->get();
-        }else{
-            $manganurodhdata = Manganurodhdata::all();
+            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%')
+                ->paginate(10);
+        } else {
+            $manganurodhdata = Manganurodhdata::paginate(10);
         }
         
         return view('maitriaicenter.index', compact('manganurodhdata', 'districts'));
