@@ -33,7 +33,7 @@ class DeoStockUserController extends Controller
 
     public function searchMaitriData(Request $request){
         $aiCentername = $request->id;
-        $getMaitris = Manganurodhdata::where('center_name', 'LIKE', '%'.$aiCentername.'%')->get();
+        $getMaitris = Manganurodhdata::where('center_name', 'LIKE', $aiCentername)->get();
                     
                     
         if($getMaitris){
