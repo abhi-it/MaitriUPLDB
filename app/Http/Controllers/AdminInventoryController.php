@@ -64,14 +64,16 @@ class AdminInventoryController extends Controller
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
             'block' => $request->input('block'),
-        ]);;
+        ]);
         return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData'));
     }
     
 
     public function editMaitriAicenter($id){
+        $districts = Districts::all();
+        $divisions = Divisions::all();
         $editData = Manganurodhdata::find($id);
-        return view('maitriaicenter.editData', compact('editData'));
+        return view('maitriaicenter.editData', compact('editData', 'districts', 'divisions'));
     }
 
     public function updateMaitriData(Request $request){
