@@ -32,7 +32,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="title"><span data-hi="जनपद का नाम" data-en="Janpad Name"></span></label>
-                        <select name="mandal_name" class="form-control">
+                        <select name="janpad_name" class="form-control">
                             <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
                             @foreach($districts as $district)
                                 <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
