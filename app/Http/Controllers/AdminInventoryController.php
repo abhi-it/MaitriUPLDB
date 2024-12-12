@@ -33,18 +33,33 @@ class AdminInventoryController extends Controller
         return view('adminstockform.admin-stock-form');
     }
 
-    public function viewMaitriData(Request $request){
+    public function viewMaitriData(Request $request)
+    {
         $districts = Districts::all();
-
+        $tehsilData =[];
+        $blockData =[];
+        $query = Manganurodhdata::query();
+       
         if (!empty($request->input('district_id'))) {
-            $manganurodhdata = Manganurodhdata::where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%')
-                ->paginate(10);
-        } else {
-            $manganurodhdata = Manganurodhdata::paginate(10);
+            $query->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
+            $groupByTehsil = clone $query;
+            $tehsilData = $groupByTehsil->select('tehsil', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('tehsil')
+                                    ->get();
+        }
+       
+        if (!empty($request->input('tehsil'))) {
+            $query->where('tehsil', 'LIKE', '%' . $request->input('tehsil') . '%');
+            $groupByBlock = clone $query;
+            $blockData = $groupByBlock->select('block', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('block')
+                                    ->get();
         }
         
-        return view('maitriaicenter.index', compact('manganurodhdata', 'districts'));
+        $manganurodhdata = $query->paginate(10);
+        return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData'));
     }
+    
 
     public function editMaitriAicenter($id){
         $editData = Manganurodhdata::find($id);
