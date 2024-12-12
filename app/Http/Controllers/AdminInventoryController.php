@@ -55,6 +55,10 @@ class AdminInventoryController extends Controller
                                     ->groupBy('block')
                                     ->get();
         }
+
+        if (!empty($request->input('block'))) {
+            $query->where('block', 'LIKE', $request->input('block'));
+        }
         
         $manganurodhdata = $query->paginate(10)->appends([
             'district_id' => $request->input('district_id'),
