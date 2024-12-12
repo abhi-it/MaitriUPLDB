@@ -56,7 +56,11 @@ class AdminInventoryController extends Controller
                                     ->get();
         }
         
-        $manganurodhdata = $query->paginate(10);
+        $manganurodhdata = $query->paginate(10)->appends([
+            'district_id' => $request->input('district_id'),
+            'tehsil' => $request->input('tehsil'),
+            'block' => $request->input('block'),
+        ]);;
         return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData'));
     }
     
