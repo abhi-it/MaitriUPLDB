@@ -94,15 +94,15 @@
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Mandal"></span></th>
-                <th><span data-hi="वीर्य" data-en="Janpad"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Tehsil"></span></th>
-                <th><span data-hi="बैनर" data-en="Block"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="AI Center"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Maitri Name"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Mobile No"></span></th>
-                <th> <span data-hi="एआई किट" data-en="bahar Pashudhan Id"></span> </th>
-                <th> <span data-hi="निर्माण तिथि" data-en="Action"></span> </th>
+                <th><span data-hi="मंडल" data-en="Mandal"></span></th>
+                <th><span data-hi="जनपद" data-en="Janpad"></span></th>
+                <th><span data-hi="तहसील" data-en="Tehsil"></span></th>
+                <th><span data-hi="ब्लॉक" data-en="Block"></span></th>
+                <th> <span data-hi="एआई सेंटर" data-en="AI Center"></span></th>
+                <th><span data-hi="मैत्री नाम" data-en="Maitri Name"></span></th>
+                <th><span data-hi="मोबाइल" data-en="Mobile No"></span></th>
+                <th> <span data-hi="भारत पशुधन आईडी" data-en="bahar Pashudhan Id"></span> </th>
+                <th> <span data-hi="अपडेट करें" data-en="Action"></span> </th>
             </tr>
         </thead>
         <tbody>
