@@ -49,7 +49,7 @@ class AdminInventoryController extends Controller
         }
        
         if (!empty($request->input('tehsil'))) {
-            $query->where('tehsil', 'LIKE', '%' . $request->input('tehsil') . '%');
+            $query->where('tehsil', 'LIKE', $request->input('tehsil'));
             $groupByBlock = clone $query;
             $blockData = $groupByBlock->select('block', \DB::raw('COUNT(*) as count'))
                                     ->groupBy('block')
