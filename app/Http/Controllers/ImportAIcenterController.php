@@ -13,6 +13,7 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\Cliniclocation;
 use App\Models\NewAiceter;
+use App\Models\Manganurodhdata;
 use DB;
 
 class ImportAIcenterController extends Controller{
@@ -24,6 +25,38 @@ class ImportAIcenterController extends Controller{
 
     public function aicenterImportForm() {
         return view('aicenter.import');
+    }
+    
+    function detectLanguage($text) {
+        if (preg_match('/[\x{0900}-\x{097F}]/u', $text)) {
+            return "Hindi";
+        }
+    
+        if (preg_match('/[a-zA-Z]/', $text)) {
+            return "English";
+        }
+    
+        return "Unknown language";
+    }
+
+    function engtohindi($val){
+        TranslateTextHelper::setSource('en')->setTarget('hi');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
+    }
+
+    function hinditoenglish($val){
+        TranslateTextHelper::setSource('hi')->setTarget('en');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
     }
 
 
