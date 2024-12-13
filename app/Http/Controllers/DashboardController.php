@@ -185,10 +185,10 @@ class DashboardController extends Controller
     /*-----Start Display only New Applications--------------*/
     public function avedan(Request $request, $year = null, $export = null)
     {
+        $this->sessionYear = $year ? $year : $this->sessionYear;
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
-        //echo '<pre>';print_r($user);exit;
 
         if ($user_type == 'Director') { //Director
             $query = Avedan::where('is_approved', '=', 0)->with('district')->orderBy('id', 'DESC');
