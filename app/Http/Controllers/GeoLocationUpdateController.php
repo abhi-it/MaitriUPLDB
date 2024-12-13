@@ -71,15 +71,14 @@ class GeoLocationUpdateController extends Controller{
     public function updateGeoLocation(Request $request) {
         $validatedData = $request->validate([
             'maitri_id' => 'required|exists:maitries,id',
-            'latitude'  => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
         ]);
 
         try {
             $updateGeo = Maitri::findOrFail($validatedData['maitri_id']);
             $updateGeo->update([
-                'latitude'  => $validatedData['latitude'],
-                'longitude' => $validatedData['longitude'],
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+                'status' => $request->status,
             ]);
             return redirect()->route('all-maitri-geo-location')->with('success', 'GEO Location Updated Successfully');
         } catch (\Exception $e) {

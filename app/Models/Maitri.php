@@ -32,5 +32,6 @@ class Maitri extends Model
         'equipment_received',
         'longitude',
         'latitude',
+        'status',
     ];
 }

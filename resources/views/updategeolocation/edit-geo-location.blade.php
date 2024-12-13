@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="title"><span data-hi="एआई सेंटर" data-en="AI Center"></span></label>
                         <input type="text" name="center_name" readonly class="form-control" value="{{ $getMaitri['center_name'] }}"/>
@@ -72,6 +72,16 @@
                     <div class="form-group">
                         <label for="title"><span data-hi="Longitude" data-en="Longitude"></span></label>
                         <input type="text" name="longitude" class="form-control" value="{{ $getMaitri['longitude'] }}"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="title"><span data-hi="स्थिति" data-en="Status"></span></label>
+                        <select name="status" class="form-control">
+                            <option value="" data-hi="स्थिति चुनें" data-en="Select Status"></option>
+                            <option value="0" @if($getMaitri['status'] == 0) selected @endif>Active</option>
+                            <option value="1" @if($getMaitri['status'] == 1) selected @endif>Inactive</option>
+                        </select>
                     </div>
                 </div>
             </div>

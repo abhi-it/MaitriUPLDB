@@ -112,6 +112,7 @@
                 <th><span data-hi="तहसील" data-en="Tehsil"></span></th>
                 <th><span data-hi="अक्षांश" data-en="Latitude"></span></th>
                 <th><span data-hi="देशान्तर" data-en="Longitude"></span></th>
+                <th> <span data-hi="स्थिति" data-en="Status"></span> </th>
                 <th><span data-hi="अद्यतन" data-en="Action"></span></th>
             </tr>
         </thead>
@@ -129,6 +130,7 @@
                 <td>{{ $maitri['tehsil'] }}</td>
                 <td>{{ $maitri['latitude'] }}</td>
                 <td>{{ $maitri['longitude'] }}</td>
+                <td>{{ $maitri['status'] == 0 ? 'Active' : 'Inactive' }}</td>
                 <td>
                     <div class="cus-btn">
                         <a href="{{ route('edit-geo-maitri', $maitri->id) }}" class="btn btn-warning btn-sm">
