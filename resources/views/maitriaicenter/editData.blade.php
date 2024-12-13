@@ -10,7 +10,7 @@
 <div class="container main-div py-5" style="background-color:white;">
 
     <div class="container">
-        <h2><span data-hi="मैत्री/एआई केंद्र डेटा संपादित करें" data-en="Edit Maitri/AI Center data"></span></h2>
+        <h2><span data-hi="मांग अनुरोध और सूची संपादित करें" data-en="Edit Demand Request & Inventory"></span></h2>
 
         <form action="{{ route('update-mairti-aicenter-data') }}" method="POST" enctype="multipart/form-data">
             @csrf
