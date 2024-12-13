@@ -40,6 +40,7 @@ class MaitriController extends Controller
         $aicenter   = DB::table('divisions')
                     ->join('clinic_location', 'divisions.name_hindi', '=', 'clinic_location.mandal_name')
                     ->select('divisions.name_hindi', 'clinic_location.mandal_name', DB::raw('COUNT(*) as count'))
+                    ->where('clinic_location.status', 0)
                     ->groupBy('divisions.name_hindi', 'clinic_location.mandal_name')
                     ->get();
        
@@ -50,7 +51,7 @@ class MaitriController extends Controller
         $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
         $bull       = DB::table('livestock_agencies')->where(['type'=>'bull_mother'])->count();
         $maitricount = Maitri::get();
-        $aicount      = Cliniclocation::get();
+        $aicount      = Cliniclocation::where('clinic_location.status', 0)->get();
         $countDistrict =  Districts::get();
 
         $disticcount =  DB::table('district_map_data')
@@ -218,6 +219,7 @@ class MaitriController extends Controller
             $query = DB::table('clinic_location')
                     ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
                     ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
+                    ->where('status', 0)
                     ->get();
            
 
@@ -227,7 +229,8 @@ class MaitriController extends Controller
 
         $id                 = $request->id;
         $data['code']       = Janpad::where(['name'=>$id])->first();
-        $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")->orderBy('id', 'desc')->get();
+        $data['maitri']     = Cliniclocation::where('mandal_name', 'like', "%{$id}%")
+                                        ->where('status', 0)->orderBy('id', 'desc')->get();
         $division           = Divisions::where('name_hindi', 'like', "%{$id}%")->first();
         // $data['district']     = Districts::where('division_id',$division['id'])->get();
 
@@ -238,6 +241,7 @@ class MaitriController extends Controller
                                 SUM(CASE WHEN type = 'VH' THEN 1 ELSE 0 END) as vh_count
                             ")
                             ->where('mandal_name', 'LIKE', '%'.$id.'%')
+                            ->where('status', 0)
                             ->groupBy('janpad_name')
                             ->get();
 
