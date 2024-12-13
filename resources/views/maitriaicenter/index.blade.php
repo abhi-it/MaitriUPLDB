@@ -24,7 +24,7 @@
 }
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-    <h3 class="text-center m-4 fw-bold"> <span data-hi="मैत्री/एआई सेंटर डेटा" data-en="Maitri/AI Center data"></span>
+    <h3 class="text-center m-4 fw-bold"> <span data-hi="मांग अनुरोध और सूची" data-en="Demand Request & Inventory"></span>
     </h3>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
