@@ -56,14 +56,21 @@
                         @endforeach
                     </select>
 
-
-
-                    <select name="block" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus>
+                    <select name="block" id="vikas_khand" class="form-control"autofocus>
                         <option value="" data-hi="ब्लॉक चुनें" data-en="Select Block"></option>
                         @foreach($blockData as $block)
                             <option value="{{ $block['block'] }}" data-hi="{{ $block['block'] }}"
                                 data-en="{{ $block['block'] }}"
                                 @if(request('block') == $block['block']) selected @endif></option>
+                        @endforeach
+                    </select>
+
+                    <select name="aicenter" id="aicenter" class="form-control"autofocus>
+                        <option value="" data-hi="एआई सेंटर चुनें" data-en="Select AiCenter"></option>
+                        @foreach($aiCenterData as $aiCenter)
+                            <option value="{{ $aiCenter['center_name'] }}" data-hi="{{ $aiCenter['center_name'] }}"
+                                data-en="{{ $aiCenter['center_name'] }}"
+                                @if(request('aicenter') == $aiCenter['center_name']) selected @endif></option>
                         @endforeach
                     </select>
 

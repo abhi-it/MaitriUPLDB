@@ -38,6 +38,7 @@ class AdminInventoryController extends Controller
         $districts = Districts::all();
         $tehsilData =[];
         $blockData =[];
+        $aiCenterData =[];
         $query = Manganurodhdata::query();
        
         if (!empty($request->input('district_id'))) {
@@ -58,14 +59,23 @@ class AdminInventoryController extends Controller
 
         if (!empty($request->input('block'))) {
             $query->where('block', 'LIKE', $request->input('block'));
+            $groupByAicenter = clone $query;
+            $aiCenterData = $groupByAicenter->select('center_name', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('center_name')
+                                    ->get();
+        }
+
+        if (!empty($request->input('aicenter'))) {
+            $query->where('center_name', 'LIKE', $request->input('aicenter'));
         }
         
         $manganurodhdata = $query->paginate(50)->appends([
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
             'block' => $request->input('block'),
+            'aicenter' => $request->input('aicenter'),
         ]);
-        return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData'));
+        return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
     }
     
 
@@ -97,6 +107,7 @@ class AdminInventoryController extends Controller
             'district_id' => $request->janpad_name,
             'tehsil'      => $request->tehsil,
             'block'       => $request->block,
+            'aicenter'    => $request->center_name,
         ]);
     
         return redirect($redirectUrl)->with('success', 'Data Updated Successfully');

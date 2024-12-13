@@ -19,27 +19,27 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="title"><span data-hi="मंडल का नाम" data-en="Mandal Name"></span></label>
-                        <select name="mandal_name" class="form-control">
+                        <!-- <select name="mandal_name" class="form-control" readonly>
                             <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                             @foreach($divisions as $division)
                                 <option value="{{ $division['name_hindi'] }}" data-hi="{{ $division['name_hindi'] }}"
                                 data-en="{{ $division['name_eng'] }}" @if($editData['mandal_name'] == $division['name_hindi']) selected @endif></option>
                             @endforeach
-                        </select>
-                        <!-- <input type="text" name="mandal_name"  class="form-control" value="{{ $editData['mandal_name'] }}"/> -->
+                        </select> -->
+                        <input type="text" readonly name="mandal_name"  class="form-control" value="{{ $editData['mandal_name'] }}"/>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="title"><span data-hi="जनपद का नाम" data-en="Janpad Name"></span></label>
-                        <select name="janpad_name" class="form-control">
+                        <!-- <select name="janpad_name" class="form-control" readonly>
                             <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
                             @foreach($districts as $district)
                                 <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
                                 data-en="{{ $district['name_eng'] }}" @if($editData['janpad_name'] == $district['name_hindi']) selected @endif></option>
                             @endforeach
-                        </select>
-                        <!-- <input type="text" name="janpad_name" class="form-control" value="{{ $editData['janpad_name'] }}"/> -->
+                        </select> -->
+                        <input type="text" readonly name="janpad_name" class="form-control" value="{{ $editData['janpad_name'] }}"/>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="title"><span data-hi="Longitude" data-en="Longitude"></span></label>
+                        <label for="title"><span data-hi="देशान्तर" data-en="Longitude"></span></label>
                         <input type="text" name="longitude" class="form-control" value="{{ $editData['longitude'] }}"/>
                     </div>
                 </div>
