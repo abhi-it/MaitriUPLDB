@@ -10,7 +10,8 @@ use App\Models\DistrictMapData;
 use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\Hospitals; 
-use App\Models\Newcliniclocation;
+use App\Models\Newcliniclocation; 
+use App\Models\Manganurodhdata;
 use App\Models\NewAiceter;
 use App\Models\AIcenters;
 use App\Models\Maitri;
@@ -26,7 +27,7 @@ class ImportAicenter implements ToModel
         set_time_limit(300);
     
         if ($row[0]) {
-         
+
             /*$maitries = Cliniclocation::all();
             foreach ($maitries as $data) {
                 $division = $data['mandal_name'];
@@ -53,31 +54,30 @@ class ImportAicenter implements ToModel
             $aicenter_hindi     = $this->detectLanguage($row[3]) === 'English' ? $this->engtohindi($row[3]) : $row[3];
             */
 
-            $district_name              = $row[0];
-            $tehsil_name                = $row[1];
-            $block_name                 = $row[2];
-            $aicenter_name              = $row[3];
-            $associated_maitri_name     = $row[4];
-            $bharat_pashudhan_id        = $row[5];
-            $maitri_mobilen_no          = $row[6];
-            $latitude                   = $row[7];
-            $longitude                  = $row[8];
+            // $district_name              = $row[0];
+            // $tehsil_name                = $row[1];
+            // $block_name                 = $row[2];
+            // $aicenter_name              = $row[3];
             
-            $alreadyAdded = Maitri::where('maitri_mobile_no', $maitri_mobilen_no)->first();
-            if(!$alreadyAdded){
-                NewAiceter::create([
-                    'district_eng'                      => $district_name,
-                    'tehsil_eng'                        => $tehsil_name,
-                    'block_eng'                         => $block_name,
-                    'ai_center_eng'                     => $aicenter_name,
-                    'maitri_associated_aiCenter'        => $associated_maitri_name,
-                    'bharat_pashudhan_id'               => $bharat_pashudhan_id,
-                    'maitri_mobile_no'                  => $maitri_mobilen_no,
-                    'latitude'                          => $latitude,
-                    'longitude'                         => $longitude,
-                ]);
-            }
             
+            
+            $tehsil_hindi       = $this->detectLanguage($row[1]) === 'English' ? $this->engtohindi($row[1]) : $row[1];
+            $block_hindi        = $this->detectLanguage($row[2]) === 'English' ? $this->engtohindi($row[2]) : $row[2];
+            $aicenter_hindi     = $this->detectLanguage($row[3]) === 'English' ? $this->engtohindi($row[3]) : $row[3];
+            $maitri_name        = $row[5];
+            $bharat_pashudhan_id        = $row[4];
+            $maitri_mobile_no          = (string)$row[6];
+            
+            Manganurodhdata::create([
+                'mandal_name'           => 'वाराणसी',
+                'janpad_name'           => 'गाजीपुर',
+                'block'                 => $block_hindi,
+                'tehsil'                => $tehsil_hindi,
+                'center_name'           => $aicenter_hindi,
+                'maitri_name'           => $maitri_name,
+                'maitri_mobile_no'      => $maitri_mobile_no,
+                'any_bharat_id'         => $bharat_pashudhan_id,
+            ]);
         }
     }
 

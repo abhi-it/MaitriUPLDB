@@ -401,12 +401,12 @@ $('#district').change(function() {
             },
             cache: false,
             success: function(data) {
-                var getMandal = data.data;
+                var getMandal = data.district;
                 if (getMandal && getMandal.length > 0) {
                     $('#mandal').append(`<option value="">Select District</option>`);
                     getMandal.forEach(item => {
-                        if (item.janpad_name && item.janpad_name.trim() !== '') {
-                            $('#mandal').append(`<option value="${item.janpad_name}">${item.janpad_name}</option>`);
+                        if (item.name_hindi && item.name_hindi.trim() !== '') {
+                            $('#mandal').append(`<option value="${item.name_hindi}">${item.name_hindi}</option>`);
                         }
                     });
                 } else {

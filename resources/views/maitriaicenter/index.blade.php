@@ -102,6 +102,7 @@
                 <th><span data-hi="मैत्री नाम" data-en="Maitri Name"></span></th>
                 <th><span data-hi="मोबाइल" data-en="Mobile No"></span></th>
                 <th> <span data-hi="भारत पशुधन आईडी" data-en="bahar Pashudhan Id"></span> </th>
+                <th> <span data-hi="स्थिति" data-en="Status"></span> </th>
                 <th> <span data-hi="अपडेट करें" data-en="Action"></span> </th>
             </tr>
         </thead>
@@ -119,6 +120,7 @@
                 <td>{{ ($data->maitri_name) ? $data->maitri_name : 'N/A' }}</td>
                 <td>{{ ($data->maitri_mobile_no) ? $data->maitri_mobile_no : 'N/A' }}</td>
                 <td>{{ ($data->any_bharat_id) ? $data->any_bharat_id : 'N/A' }}</td>
+                <td>{{ $data->status == 0 ? 'Active' : 'Inactive' }}</td>
                 <td><a href="{{ route('edit-maitri-record', $data->id) }}" class="btn btn-primary"><i
                             class="fa fa-edit"></i></a></td>
             </tr>

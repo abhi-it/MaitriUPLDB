@@ -90,7 +90,8 @@ class AdminInventoryController extends Controller
             'maitri_mobile_no'  => $request->maitri_mobile_no,
             'center_name'       => $request->center_name,
             'latitude'          => $request->latitude,
-            'longitude'         => $request->longitude
+            'longitude'         => $request->longitude,
+            'status'            => $request->status
         ]);
         return redirect()->route('view-update-maitri-aicenter')->with('success', 'Data Updated Successfully');
     }
