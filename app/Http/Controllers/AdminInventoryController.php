@@ -60,7 +60,7 @@ class AdminInventoryController extends Controller
             $query->where('block', 'LIKE', $request->input('block'));
         }
         
-        $manganurodhdata = $query->paginate(10)->appends([
+        $manganurodhdata = $query->paginate(50)->appends([
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
             'block' => $request->input('block'),
