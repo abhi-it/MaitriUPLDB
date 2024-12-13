@@ -257,6 +257,10 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("edit-geo-maitri/{id}/edit", [GeoLocationUpdateController::class, 'editGeoLocation'])->name('edit-geo-maitri');
     Route::post("update-geo-location", [GeoLocationUpdateController::class, 'updateGeoLocation'])->name('update-geo-location');
 
+    Route::get("all-aicenter-geo-location", [GeoLocationUpdateController::class, 'aicenterindex'])->name('all-aicenter-geo-location');
+    Route::get("edit-geo-aicenter/{id}/edit", [GeoLocationUpdateController::class, 'editGeoAicenter'])->name('edit-geo-aicenter');
+    Route::post("update-aicenter-data", [GeoLocationUpdateController::class, 'updateAicenterLocation'])->name('update-aicenter-data');
+
     // zone dashboard
     Route::get("change-password", [CreateZoneController::class, 'changePassword'])->name('change-password');
     

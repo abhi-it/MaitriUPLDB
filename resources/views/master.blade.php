@@ -1201,7 +1201,7 @@
                             
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
-                            <li class="nav-item dropdown {{ (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
+                            <li class="nav-item dropdown {{ request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें" data-en="Placed Candidates & Update Maitri GEO Location"></span>
@@ -1209,6 +1209,9 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{ url('all-maitri-geo-location') }}">
                                         <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('all-aicenter-geo-location') }}">
+                                        <span data-hi="एआई सेंटर जीईओ स्थान अपडेट करें" data-en="Update AI Center GEO Location"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>

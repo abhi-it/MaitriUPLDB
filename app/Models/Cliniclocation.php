@@ -21,5 +21,6 @@ class Cliniclocation extends Model
         'name_eng',
         'lattitute',
         'longitute',
+        'status',
     ];
 }
