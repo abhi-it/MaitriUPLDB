@@ -93,7 +93,13 @@ class AdminInventoryController extends Controller
             'longitude'         => $request->longitude,
             'status'            => $request->status
         ]);
-        return redirect()->route('view-update-maitri-aicenter')->with('success', 'Data Updated Successfully');
+        $redirectUrl = '/view-update-maitri-aicenter?' . http_build_query([
+            'district_id' => $request->janpad_name,
+            'tehsil'      => $request->tehsil,
+            'block'       => $request->block,
+        ]);
+    
+        return redirect($redirectUrl)->with('success', 'Data Updated Successfully');
     }
 
     public function eventAndNews(){
