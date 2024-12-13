@@ -38,7 +38,7 @@
                         <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
                             data-en="{{ $district['name_eng'] }}" @if(request('district_id')==$district['name_hindi'])
                             selected @endif></option>
-                        @endforeach
+                        @endforeach 
                     </select>
 
                     <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
