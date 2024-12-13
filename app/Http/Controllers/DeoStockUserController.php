@@ -35,7 +35,8 @@ class DeoStockUserController extends Controller
         $aiCentername   = $request->id;
         $district       = $request->district;
         $division       = $request->division;
-        $getMaitris     = Manganurodhdata::where('mandal_name', 'LIKE', '%'.$division.'%')
+        $getMaitris     = Manganurodhdata::where('status',0)
+                                            ->where('mandal_name', 'LIKE', '%'.$division.'%')
                                             ->where('janpad_name', 'LIKE', '%'.$district.'%')
                                             ->where('center_name', 'LIKE', $aiCentername)->get();
                     
