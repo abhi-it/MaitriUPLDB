@@ -155,7 +155,7 @@ class AdminInventoryController extends Controller
             $query->where('center_name', 'LIKE', $request->input('aicenter'));
         }
         
-        $manganurodhdata = $query->orderByDesc('id')->paginate(50)->appends([
+        $manganurodhdata = $query->whereNotNull('maitri_name')->orderByDesc('id')->paginate(50)->appends([
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
             'block' => $request->input('block'),
