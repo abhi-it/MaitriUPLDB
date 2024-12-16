@@ -77,6 +77,48 @@ class AdminInventoryController extends Controller
         return view('maitriaicenter.inactiveAicenterMaitri', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
     }
     
+    public function createMaitriAicenter(){
+        $districts = Districts::all();
+        $divisions = Divisions::all(); 
+        return view('maitriaicenter.createMaitriAicenter', compact('districts', 'divisions'));
+    }
+
+    public function createMaitriAicenterData(Request $request){
+
+        $getData = Divisions::where('name_hindi', 'LIKE', '%'.$request->mandal_name.'%')->first();
+        $getDis = Districts::where('name_hindi', 'LIKE', '%'.$request->janpad_name.'%')->first();
+
+        $checkData = Manganurodhdata::where('mandal_name', 'LIKE', '%'.$request->mandal_name.'%')
+                                    ->where('janpad_name', 'LIKE', '%'.$request->janpad_name.'%')
+                                    ->where('center_name', 'LIKE', '%'.$request->center_name.'%')
+                                    ->first();
+        if($checkData){
+            return redirect('view-update-maitri-aicenter')->with('success', 'Record already exists');
+        }else{
+
+            $data = Manganurodhdata::create([
+                'zone_id'           => $getData->zone_id,
+                'division_id'       => $getData->id,
+                'district_id'       => $getDis->id,
+                'mandal_name'       => $request->mandal_name,
+                'janpad_name'       => $request->janpad_name,
+                'maitri_name'       => $request->maitri_name,
+                'block'             => $request->block,
+                'tehsil'            => $request->tehsil,
+                'maitri_mobile_no'  => $request->maitri_mobile_no,
+                'center_name'       => $request->center_name,
+                'latitude'          => $request->latitude,
+                'longitude'         => $request->longitude,
+                'status'            => $request->status
+            ]);
+            if($data){
+                return redirect('view-update-maitri-aicenter')->with('success', 'Record Created Successfully');
+            }else{
+                return redirect('view-update-maitri-aicenter')->with('success', 'Record Not Created');
+            }
+        }
+    }
+
     public function viewMaitriData(Request $request)
     {
         $districts = Districts::all();
@@ -113,7 +155,7 @@ class AdminInventoryController extends Controller
             $query->where('center_name', 'LIKE', $request->input('aicenter'));
         }
         
-        $manganurodhdata = $query->paginate(50)->appends([
+        $manganurodhdata = $query->orderByDesc('id')->paginate(50)->appends([
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
             'block' => $request->input('block'),

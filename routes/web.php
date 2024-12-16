@@ -369,6 +369,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     
     
     Route::get("inactive-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'inactiveMaitriAicenterData'])->name('inactive-maitri-aicenter');
+    Route::get("create-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenter'])->name('create-maitri-aicenter');
+    Route::post("create-mairti-aicenter-data", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenterData'])->name('create-mairti-aicenter-data');
     
     Route::get("view-update-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'viewMaitriData'])->name('view-update-maitri-aicenter');
     Route::get("edit-maitri-record/{id}/edit", [App\Http\Controllers\AdminInventoryController::class, 'editMaitriAicenter'])->name('edit-maitri-record');

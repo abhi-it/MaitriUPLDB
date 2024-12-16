@@ -26,6 +26,7 @@
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="मांग अनुरोध और सूची" data-en="Demand Request & Inventory"></span>
     </h3>
+    <a href="/create-maitri-aicenter"><button class="mb-3 btn btn-primary">Create Maitri/AI Center</button></a>
     <a href="/inactive-maitri-aicenter"><button class="mb-3 btn btn-primary">Inactive Maitri/AI Center</button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
