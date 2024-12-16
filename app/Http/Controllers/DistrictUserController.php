@@ -98,11 +98,11 @@ class DistrictUserController extends Controller{
         $districtName = Districts::where('id', $getData['district_id'])->first();
         $divisionName = Divisions::where('id', $getData['division_id'])->first();
 
-        $aiCenters = Manganurodhdata::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
-                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
-       
-   
-
+        $aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
+                    ->where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+                    ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
+                    ->groupBy('center_name')
+                    ->get();
       
         
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
