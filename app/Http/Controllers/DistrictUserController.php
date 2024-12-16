@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use File;
+use App\Models\Manganurodhdata;
 use App\Models\InventoryMap;
 use App\Models\Zonestock;
 use App\Models\Block;
@@ -97,7 +98,7 @@ class DistrictUserController extends Controller{
         $districtName = Districts::where('id', $getData['district_id'])->first();
         $divisionName = Divisions::where('id', $getData['division_id'])->first();
 
-        $aiCenters = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+        $aiCenters = Manganurodhdata::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
                         ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
        
    
