@@ -24,9 +24,9 @@
 }
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-    <h3 class="text-center m-4 fw-bold"> <span data-hi="मांग अनुरोध और सूची" data-en="Demand Request & Inventory"></span>
+    <h3 class="text-center m-4 fw-bold"> <span data-hi="निष्क्रिय मैत्री/एआई केंद्र" data-en="Inactive Maitri/AI Center"></span>
     </h3>
-    <a href="/inactive-maitri-aicenter"><button class="mb-3 btn btn-primary">Inactive Maitri/AI Center</button></a>
+    <a href="{{ url()->previous() }}"><button class="mb-3 btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;<b>Back</b></button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
         <div class="row">
@@ -112,6 +112,10 @@
             </tr>
         </thead>
         <tbody>
+
+            @php if($manganurodhdata->isEmpty()){ @endphp
+                <tr><td colspan="11" class="text-center">No Record</td></tr>
+            @php } @endphp
 
             @php $i = 1; @endphp
             @foreach ($manganurodhdata as $key => $data)

@@ -23,9 +23,10 @@
     min-width: 265px;
 }
 </style>
-<div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+<div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="एआई केंद्र जीईओ स्थान" data-en="AI Center GEO Location"></span>
     </h3>
+    <a href="/inactive-aicenter-geo-location"><button class="mb-3 btn btn-primary">Inactive AI Center GEO Location</button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
         <div class="row">

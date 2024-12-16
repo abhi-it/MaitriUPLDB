@@ -19,6 +19,51 @@ use DB;
 
 class GeoLocationUpdateController extends Controller{
 
+
+    public function inactiveMaitriGEO(Request $request){
+        $districts = Districts::all();
+        $tehsilData =[];
+        $blockData =[];
+        $aiCenterData =[];
+        $query = Maitri::query();
+       
+        if (!empty($request->input('district_id'))) {
+            $query->where('status', 1)->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
+            $groupByTehsil = clone $query;
+            $tehsilData = $groupByTehsil->select('tehsil', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('tehsil')
+                                    ->get();
+        }
+       
+        if (!empty($request->input('tehsil'))) {
+            $query->where('status', 1)->where('tehsil', 'LIKE', $request->input('tehsil'));
+            $groupByBlock = clone $query;
+            $blockData = $groupByBlock->select('block', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('block')
+                                    ->get();
+        }
+
+        if (!empty($request->input('block'))) {
+            $query->where('status', 1)->where('block', 'LIKE', $request->input('block'));
+            $groupByAicenter = clone $query;
+            $aiCenterData = $groupByAicenter->select('center_name', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('center_name')
+                                    ->get();
+        }
+
+        if (!empty($request->input('aicenter'))) {
+            $query->where('status', 1)->where('center_name', 'LIKE', $request->input('aicenter'));
+        }
+        
+        $allMaitri = $query->where('status', 1)->paginate(50)->appends([
+            'district_id' => $request->input('district_id'),
+            'tehsil' => $request->input('tehsil'),
+            'block' => $request->input('block'),
+            'aicenter' => $request->input('aicenter'),
+        ]);
+        return view('updategeolocation.inactiveMaitriGeo', compact('allMaitri', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));                                                                             
+    }
+
     public function index(Request $request){
         $districts = Districts::all();
         $tehsilData =[];
@@ -87,6 +132,31 @@ class GeoLocationUpdateController extends Controller{
     }
 
     // Update AI Center GEO Locations
+
+    public function inactiveAiCneterGEO(Request $request){
+        $districts = Districts::all();
+        $aiCenterData =[];
+        $query = Cliniclocation::query();
+       
+        if (!empty($request->input('district_id'))) {
+            $query->where('status', 1)->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
+            $groupByTehsil = clone $query;
+            $aiCenterData = $groupByTehsil->select('name', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('name')
+                                    ->get();
+        }
+
+        if (!empty($request->input('aicenter'))) {
+            $query->where('status', 1)->where('name', 'LIKE', $request->input('aicenter'));
+        }
+        
+        $allAicenter = $query->where('status', 1)->paginate(50)->appends([
+            'district_id' => $request->input('district_id'),
+            'aicenter' => $request->input('aicenter'),
+        ]);
+        return view('updategeoaicenter.inactiveAicenter', compact('allAicenter', 'districts', 'aiCenterData'));
+    }
+
     public function aicenterindex(Request $request){
         $districts = Districts::all();
         $aiCenterData =[];

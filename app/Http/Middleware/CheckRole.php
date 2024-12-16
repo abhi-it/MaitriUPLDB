@@ -152,6 +152,9 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'inactive-aicenter-geo-location',
+                'inactive-maitri-geo-location',
+                'inactive-maitri-aicenter',
                 'update-aicenter-data',
                 'edit-geo-aicenter',
                 'all-aicenter-geo-location',
@@ -305,6 +308,9 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'inactive-aicenter-geo-location',
+                'inactive-maitri-geo-location',
+                'inactive-maitri-aicenter',
                 'update-aicenter-data',
                 'edit-geo-aicenter',
                 'all-aicenter-geo-location',

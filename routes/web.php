@@ -252,11 +252,14 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("filtered-monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'filteredMonthlyReport'])->name('filtered-monthly-report');
 
 
-    // Update Maitri GEO Location 
+    // Update Maitri GEO Location
+    Route::get("inactive-maitri-geo-location", [GeoLocationUpdateController::class, 'inactiveMaitriGEO'])->name('inactive-maitri-geo-location');
+    Route::get("inactive-aicenter-geo-location", [GeoLocationUpdateController::class, 'inactiveAiCneterGEO'])->name('inactive-aicenter-geo-location');
+    
     Route::get("all-maitri-geo-location", [GeoLocationUpdateController::class, 'index'])->name('all-maitri-geo-location');
     Route::get("edit-geo-maitri/{id}/edit", [GeoLocationUpdateController::class, 'editGeoLocation'])->name('edit-geo-maitri');
     Route::post("update-geo-location", [GeoLocationUpdateController::class, 'updateGeoLocation'])->name('update-geo-location');
-
+    
     Route::get("all-aicenter-geo-location", [GeoLocationUpdateController::class, 'aicenterindex'])->name('all-aicenter-geo-location');
     Route::get("edit-geo-aicenter/{id}/edit", [GeoLocationUpdateController::class, 'editGeoAicenter'])->name('edit-geo-aicenter');
     Route::post("update-aicenter-data", [GeoLocationUpdateController::class, 'updateAicenterLocation'])->name('update-aicenter-data');
@@ -363,6 +366,9 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
     Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
+    
+    
+    Route::get("inactive-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'inactiveMaitriAicenterData'])->name('inactive-maitri-aicenter');
     
     Route::get("view-update-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'viewMaitriData'])->name('view-update-maitri-aicenter');
     Route::get("edit-maitri-record/{id}/edit", [App\Http\Controllers\AdminInventoryController::class, 'editMaitriAicenter'])->name('edit-maitri-record');

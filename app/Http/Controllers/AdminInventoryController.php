@@ -33,6 +33,50 @@ class AdminInventoryController extends Controller
         return view('adminstockform.admin-stock-form');
     }
 
+    public function inactiveMaitriAicenterData(Request $request){
+        $districts = Districts::all();
+        $tehsilData =[];
+        $blockData =[];
+        $aiCenterData =[];
+        $query = Manganurodhdata::query();
+       
+        if (!empty($request->input('district_id'))) {
+            $query->where('status', 1)->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
+            $groupByTehsil = clone $query;
+            $tehsilData = $groupByTehsil->select('tehsil', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('tehsil')
+                                    ->get();
+        }
+       
+        if (!empty($request->input('tehsil'))) {
+            $query->where('status', 1)->where('tehsil', 'LIKE', $request->input('tehsil'));
+            $groupByBlock = clone $query;
+            $blockData = $groupByBlock->select('block', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('block')
+                                    ->get();
+        }
+
+        if (!empty($request->input('block'))) {
+            $query->where('status', 1)->where('block', 'LIKE', $request->input('block'));
+            $groupByAicenter = clone $query;
+            $aiCenterData = $groupByAicenter->select('center_name', \DB::raw('COUNT(*) as count'))
+                                    ->groupBy('center_name')
+                                    ->get();
+        }
+
+        if (!empty($request->input('aicenter'))) {
+            $query->where('status', 1)->where('center_name', 'LIKE', $request->input('aicenter'));
+        }
+        
+        $manganurodhdata = $query->where('status', 1)->paginate(50)->appends([
+            'district_id'   => $request->input('district_id'),
+            'tehsil'        => $request->input('tehsil'),
+            'block'         => $request->input('block'),
+            'aicenter'      => $request->input('aicenter'),
+        ]);
+        return view('maitriaicenter.inactiveAicenterMaitri', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
+    }
+    
     public function viewMaitriData(Request $request)
     {
         $districts = Districts::all();

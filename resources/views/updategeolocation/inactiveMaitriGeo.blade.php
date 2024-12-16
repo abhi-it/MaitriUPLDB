@@ -24,8 +24,8 @@
 }
 </style>
 <div class="container main-div">
-    <h3 class="text-center fw-bold m-4"><span data-hi="मैत्री जीईओ स्थान" data-en="Maitri GEO Location"></span></h3>
-    <a href="/inactive-maitri-geo-location"><button class="mb-3 btn btn-primary">Inactive Maitri GEO Location</button></a>
+    <h3 class="text-center fw-bold m-4"><span data-hi="मैत्री जीईओ स्थान" data-en="Inactive Maitri GEO Location"></span></h3>
+    <a href="{{ url()->previous() }}"><button class="mb-3 btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;<b>Back</b></button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
         <div class="row">
@@ -118,6 +118,10 @@
             </tr>
         </thead>
         <tbody>
+            @php if($allMaitri->isEmpty()){ @endphp
+                <tr><td colspan="12" class="text-center">No Record</td></tr>
+            @php } @endphp
+            
             @php $i = 1 @endphp
             @foreach($allMaitri as $maitri)
             <tr>
