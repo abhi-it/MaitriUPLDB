@@ -107,7 +107,7 @@
                 <th> <span data-hi="एआई सेंटर" data-en="AI Center"></span></th>
                 <th><span data-hi="मैत्री नाम" data-en="Maitri Name"></span></th>
                 <th><span data-hi="मोबाइल" data-en="Mobile No"></span></th>
-                <th> <span data-hi="भारत पशुधन आईडी" data-en="bahar Pashudhan Id"></span> </th>
+                <th> <span data-hi="भारत पशुधन आईडी" data-en="Bharat Pashudhan Id"></span> </th>
                 <th> <span data-hi="स्थिति" data-en="Status"></span> </th>
                 <th> <span data-hi="अपडेट करें" data-en="Action"></span> </th>
             </tr>

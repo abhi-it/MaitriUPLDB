@@ -87,7 +87,9 @@
                         @if(count($aiCenters)>0)
                             <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
                             @foreach($aiCenters as $aiCenter)
+                                @php if($aiCenter['center_name'] != ''){ @endphp
                                 <option value="{{ $aiCenter['id'] }}" data-hi="{{ $aiCenter['center_name'] }}" data-en="{{ $aiCenter['center_name'] }}"></option>  
+                                @php } @endphp
                             @endforeach
                         @else
                             <option value="" data-hi="कोई AI केंद्र नहीं" data-en="No AI Center"></option>

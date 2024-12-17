@@ -82,9 +82,7 @@
                     <select name="select_aicenter" id="select_aicenter" class="form-control" required>
                         <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
                         @foreach($ai_centerName as $aiCenterName)
-                            @php if($aiCenterName['center_name'] != ''){ @endphp
                             <option value="{{ $aiCenterName['center_name'] }}">{{ $aiCenterName['center_name'] }}</option>
-                            @php } @endphp
                         @endforeach
                     </select>
                 </div>
