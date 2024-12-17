@@ -27,6 +27,7 @@ class DemandRequestController extends Controller{
         $mandal = $request->mandal;
         $getDistict =  Manganurodhdata::select('janpad_name')
                         ->where('mandal_name', 'LIKE', $mandal)
+                        ->where('status', 0)
                         ->groupBy('janpad_name')
                         ->get();
         $mandalId = Divisions::where('name_hindi', 'LIKE', $mandal)->first();
@@ -40,6 +41,7 @@ class DemandRequestController extends Controller{
         $getTeshil =  Manganurodhdata::select('tehsil')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
+                        ->where('status', 0)
                         ->groupBy('tehsil')
                         ->get();
         return \Response::json(['status'=>'success','message'=>'Get all tehsil successfully!','data'=>$getTeshil],200);
@@ -53,6 +55,7 @@ class DemandRequestController extends Controller{
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->where('tehsil', 'LIKE', $tehsil)
+                        ->where('status', 0)
                         ->groupBy('block')
                         ->get();
         return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$getBlock],200);
@@ -68,6 +71,7 @@ class DemandRequestController extends Controller{
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->where('tehsil', 'LIKE', $tehsil)
                         ->where('block', 'LIKE', $block)
+                        ->where('status', 0)
                         ->groupBy('center_name')
                         ->get();
         return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$getAIcenter],200);
