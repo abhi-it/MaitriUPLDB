@@ -1216,9 +1216,9 @@
                                     <a class="dropdown-item" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('import-aicenter') }}">
+                                    <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
-                                    </a>
+                                    </a> -->
                                     <a class="dropdown-item" href="{{ url('view-update-maitri-aicenter') }}">
                                         <span data-hi="मांग अनुरोध और सूची" data-en="Demand Request & Inventory"></span>
                                     </a>
