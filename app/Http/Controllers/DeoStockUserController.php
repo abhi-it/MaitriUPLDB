@@ -189,7 +189,7 @@ class DeoStockUserController extends Controller
                 $breedType = $request->breedType4;
             }else if($request->semen == 'goat'){
                 $breedType = $request->breedType5;
-            }
+            } 
             $inventory  = new Zonestock([
                 'demand_section'        => $request->demand_section,
                 'breed'                 => $request->breed,
