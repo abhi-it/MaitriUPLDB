@@ -70,7 +70,6 @@
         <h3 class="text-center fw-bold m-4">
         <span data-hi="ज़िला स्टॉक फॉर्म" data-en="District Stock Form"></span>
          </h3>
-         <input type="hidden" name="getUserId" id="getUser_id" value="{{ $user_id }}"/>
         <form method="post" action="{{ route('district-save-stock-data') }}" class="form-comman">
             @csrf
             <hr>
@@ -79,6 +78,7 @@
                     <label for="inputEmail4"> 
                         <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span> 
                     </label> 
+                    <input type="hidden" name="getUserId" id="getUser_id" value="{{ $user_id }}"/>
                     <input type="hidden" value="{{ $zone_id }}" name="zone_id" id="zone_id">
                     <input type="hidden" value="{{ $division_id }}" name="division_id">
                     <input type="hidden" value="{{ $district_id }}" name="district_id">

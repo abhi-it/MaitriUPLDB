@@ -94,7 +94,6 @@ class DistrictUserController extends Controller{
         $zone_id = $deoUser['zone_id'];
         $zoneName = Zone::where('id', $zone_id)->first();
 
-
         $districtName = Districts::where('id', $getData['district_id'])->first();
         $divisionName = Divisions::where('id', $getData['division_id'])->first();
 
@@ -103,7 +102,6 @@ class DistrictUserController extends Controller{
                     ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
                     ->groupBy('center_name')
                     ->get();
-      
         
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
@@ -140,22 +138,18 @@ class DistrictUserController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
-            
-            $zone_id = $request->zone_id;
-            $division_id = $request->division_id;
-            $district_id = $request->district_id;
-            $district_id = $request->district_id;
-            $block_id = $request->block_id;
+            $getUserId        = $request->getUserId;
+            $zone_id        = $request->zone_id;
+            $division_id    = $request->division_id;
+            $district_id    = $request->district_id;
+            $district_id    = $request->district_id;
             $select_aiCenter = $request->select_aiCenter;
-            // $type = ( $division_id != '' ) ? 'Division' : '';
-            if($select_aiCenter != ''){
-                $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id, 'aicenters_id' => $select_aiCenter])->first();
-                $deoTableId = $result['id'];
-                $user_id = $result['user_id'];
-                // echo '<pre>';print_r($result);
-            }
 
-            // exit;
+            if($select_aiCenter != ''){
+                // $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id, 'aicenters_id' => $select_aiCenter])->first();
+                $result = DeoUser::where(['user_id' => $getUserId,'zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->first();
+                $deoTableId = $result['id'];
+            }
          
             $bullIds = implode(',',$request->bull_ids);
             $breedType = null;
