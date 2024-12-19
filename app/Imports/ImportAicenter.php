@@ -11,6 +11,7 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\Hospitals; 
 use App\Models\Newcliniclocation; 
+use App\Models\Latestaicenter; 
 use App\Models\Manganurodhdata;
 use App\Models\NewAiceter;
 use App\Models\AIcenters;
@@ -27,7 +28,6 @@ class ImportAicenter implements ToModel
         set_time_limit(300);
     
         if ($row[0]) {
-
             /*$maitries = Cliniclocation::all();
             foreach ($maitries as $data) {
                 $division = $data['mandal_name'];
@@ -44,6 +44,29 @@ class ImportAicenter implements ToModel
                     ]);
                 }
             }
+
+            // $maitries = Latestaicenter::all();
+            // foreach ($maitries as $data) {
+                
+            //     $division = $data['mandal_name'];
+            //     $district = $data['janpad_name'];
+            //     $getData = Divisions::where('name_hindi', 'LIKE', '%'.$division.'%')->first();
+            //     $getDis = Districts::where('name_hindi', 'LIKE', '%'.$district.'%')->first();
+
+            //     $tehsil     = $this->hinditoenglish($data['tehsil']);
+            //     $block      = $this->hinditoenglish($data['block']);
+            //     $aicenter   = $this->hinditoenglish($data['aicenter']);
+                
+            //     $data->update([
+            //         'mandal_eng'    => $getData['name_eng'],
+            //         'janpad_eng'    => $getDis['name_eng'],
+            //         'tehsil_eng'    => $tehsil,
+            //         'block_eng'     => $block,
+            //         'aicenter_eng'  => $aicenter,
+            //     ]);
+            // }
+
+
             $district_eng       = $this->detectLanguage($row[0]) === 'English' ? $row[0] : $this->hinditoenglish($row[0]);
             $district_hindi     = $this->detectLanguage($row[0]) === 'English' ? $this->engtohindi($row[0]) : $row[0];
             $tehsil_eng         = $this->detectLanguage($row[1]) === 'English' ? $row[1] : $this->hinditoenglish($row[1]);

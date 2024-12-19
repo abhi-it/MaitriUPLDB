@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use File;
+use App\Models\Latestaicenter;
 use App\Models\Manganurodhdata;
 use App\Models\InventoryMap;
 use App\Models\Zonestock;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\RemainingStock;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Helpers\TranslateTextHelper; 
 use DB;
 
 class DistrictUserController extends Controller{
@@ -97,14 +99,38 @@ class DistrictUserController extends Controller{
         $districtName = Districts::where('id', $getData['district_id'])->first();
         $divisionName = Divisions::where('id', $getData['division_id'])->first();
 
-        $aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
+        /*$aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
                     ->where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
                     ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
                     ->groupBy('center_name')
-                    ->get();
+                    ->get();*/
         
+        $aiCenters = Latestaicenter::where('division_id', $divisionName['id'])
+                    ->where('district_id', $districtName['id'])
+                    ->get();
+
         $districtInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
+    }
+
+    function engtohindi($val){
+        TranslateTextHelper::setSource('en')->setTarget('hi');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
+    }
+
+    function hinditoenglish($val){
+        TranslateTextHelper::setSource('hi')->setTarget('en');
+        if($val!=null){
+            $translatedText = TranslateTextHelper::translate($val);
+        }else{
+            $translatedText ='';
+        }
+        return $translatedText; 
     }
 
     public function aiCenterGet(Request $request){
@@ -138,14 +164,14 @@ class DistrictUserController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
-            $getUserId        = $request->getUserId;
+            $getUserId      = $request->getUserId;
             $zone_id        = $request->zone_id;
             $division_id    = $request->division_id;
             $district_id    = $request->district_id;
             $district_id    = $request->district_id;
-            $select_aiCenter = $request->select_aiCenter;
+            $aiCenter_id    = $request->select_aiCenter;
 
-            if($select_aiCenter != ''){
+            if($aiCenter_id != ''){
                 // $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id, 'aicenters_id' => $select_aiCenter])->first();
                 $result = DeoUser::where(['user_id' => $getUserId,'zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->first();
                 $deoTableId = $result['id'];
@@ -218,7 +244,7 @@ class DistrictUserController extends Controller{
             }
 
             $data = [
-                'user_id'            => $user_id,
+                'user_id'            => $aiCenter_id,
                 'demand_section'     => $request->demand_section,
                 'breed'              => $request->breed,
                 'breed_type'         => $breedType,
@@ -239,7 +265,7 @@ class DistrictUserController extends Controller{
 
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
-                'user_id' => $user_id,
+                'user_id' => $aiCenter_id,
                 'inventory_id' => $inventory->id,
                 'deo_id' => $deoTableId
             ]);
