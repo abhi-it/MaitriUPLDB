@@ -16,6 +16,7 @@ use App\Models\RequestData;
 use App\Models\RemainingStock;
 use App\Models\User;
 use App\Models\Zone;
+use App\Models\Latestaicenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\InventoryMap;
@@ -56,9 +57,12 @@ class DeoStockUserController extends Controller
         $districtName = Districts::where('id', $getDatas['district_id'])->first();
         $divisionName = Divisions::where('id', $getDatas['division_id'])->first();
 
-        $getAiCenter = Manganurodhdata::select('center_name')->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
-                        ->groupBy(['center_name'])
-                        ->get();
+        // $getAiCenter = Manganurodhdata::select('center_name')->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
+        //                 ->groupBy(['center_name'])
+        //                 ->get();
+        $getAiCenter = Latestaicenter::where('division_id', $divisionName['id'])
+                    ->where('district_id', $districtName['id'])
+                    ->get();
     
         // $getAiCenter = Cliniclocation::where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
         //                 ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')->get();
@@ -74,7 +78,7 @@ class DeoStockUserController extends Controller
         foreach($getAiCenter as $aiCenter){
           
             $ai_centerName[] = [
-                'center_name' => $aiCenter['center_name'],
+                'center_name' => $aiCenter['aicenter'],
             ];
         }
        
