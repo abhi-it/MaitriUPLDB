@@ -174,7 +174,7 @@ class AdminInventoryController extends Controller
 
     public function updateMaitriData(Request $request){
         $validatedData = $request->validate([
-            'maitri_id' => 'required|exists:maitries,id',
+            'maitri_id' => 'required',
         ]);
         $updateGeo = Manganurodhdata::findOrFail($validatedData['maitri_id']);
         $updateGeo->update([
