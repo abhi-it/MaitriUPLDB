@@ -41,7 +41,7 @@
 
                 @if(count($deoStock) == 0)
                     <tr>
-                        <td colspan="15" class="text-center">No Record Found</td>
+                        <td colspan="16" class="text-center">No Record Found</td>
                     </tr>
                 @endif
 

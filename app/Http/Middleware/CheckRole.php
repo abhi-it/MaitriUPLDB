@@ -56,7 +56,7 @@ class CheckRole
     {
         return [
             'deo' => [
-
+                'check-stock-limit',
                 'change-password',
                 'changePasswordPost',
                 

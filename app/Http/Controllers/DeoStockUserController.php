@@ -8,6 +8,8 @@ use App\Models\Block;
 use App\Models\Maitri;
 use App\Models\Blockslist;
 use App\Models\Cliniclocation;
+use App\Models\Aicentermapping;
+use App\Models\Latestaicenter;
 use App\Models\Manganurodhdata;
 use App\Models\DeoUser;
 use App\Models\Districts;
@@ -16,7 +18,6 @@ use App\Models\RequestData;
 use App\Models\RemainingStock;
 use App\Models\User;
 use App\Models\Zone;
-use App\Models\Latestaicenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\InventoryMap;
@@ -36,14 +37,22 @@ class DeoStockUserController extends Controller
         $aiCentername   = $request->id;
         $district       = $request->district;
         $division       = $request->division;
-        $getMaitris     = Manganurodhdata::where('status',0)
-                            ->where('mandal_name', 'LIKE', '%'.$division.'%')
-                            ->where('janpad_name', 'LIKE', '%'.$district.'%')
-                            ->where('center_name', 'LIKE', $aiCentername)->get();
-                    
+
+        // $getMaitris     = Aicentermapping::where('status',0)
+        //                     ->where('mandal_name', 'LIKE', '%'.$division.'%')
+        //                     ->where('janpad_name', 'LIKE', '%'.$district.'%')
+        //                     ->where('center_name', 'LIKE', $aiCentername)->get();
+        $remainingStock = RemainingStock::where('user_id', $aiCentername)->first();
+        $getMaitrisData     = Aicentermapping::where('aiCenter_id', $aiCentername)->get();
+        $getMaitris = [];
+        foreach($getMaitrisData as $data){
+            $maitri_id  = $data['maitri_id'];
+            $maitridata = Manganurodhdata::where('status', 0)->where('id', $maitri_id)->first();
+            $getMaitris[] = $maitridata;
+        }         
                     
         if($getMaitris){
-            return response()->json(['type' => 'maitri', 'success' => $getMaitris]);
+            return response()->json(['type' => 'maitri', 'success' => $getMaitris, 'remainingStock' => $remainingStock]);
         }else{
             return response()->json(['type' => 'nomaitri',]);
         }
@@ -78,19 +87,37 @@ class DeoStockUserController extends Controller
         foreach($getAiCenter as $aiCenter){
           
             $ai_centerName[] = [
+                'id' => $aiCenter['id'],
                 'center_name' => $aiCenter['aicenter'],
             ];
         }
-       
         $deoStock = RemainingStock::where('user_id', $user_id)->get();
         return view('deostock.deo-stock-form', compact('ai_centerName', 'deoStock', 'division_id', 'district_id', 'names'));
     }
 
     public function deoStockDetaikls(){
         $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $deoStock = RemainingStock::where('user_id', $user_id)->get();
-        return view('deostock.deodetails', compact('deoStock'));
+        $deoUser = DeoUser::where('user_id', $user_id)->first();
+        $division_id = $deoUser['division_id'];
+        $district_id = $deoUser['district_id'];
+        $getAiCenters = Latestaicenter::where('division_id', $division_id)
+                    ->where('district_id', $district_id)
+                    ->get();
+                    
+        $inventoryData = [];
+        $deoStock = [];
+        foreach ($getAiCenters as $aiCenter) {
+            $aiCenterUserId = $aiCenter['id'];
+            $inventoryIds = InventoryMap::where('user_id', $aiCenterUserId)->first();
+            $deoStockData = RemainingStock::where('user_id', $aiCenterUserId)->first();
+            if ($inventoryIds ) {
+                $inventoryData[] = $inventoryIds;
+            }
+            if ($deoStockData ) {
+                $deoStock[] = $deoStockData;
+            }
+        }
+        return view('deostock.deodetails', compact('deoStock', 'inventoryData'));
     }
 
     public function deoStockRecord(){
@@ -240,12 +267,11 @@ class DeoStockUserController extends Controller
             }
         }else{
             
-            $select_aicenter = $request->select_aicenter;
+            $aicenter_id = $request->select_aicenter;
             $assign_user_id = Auth::user()->id;
-            if($select_aicenter != ''){
-                $result = DeoUser::where(['user_id' => $assign_user_id, 'aicenters_id' => $select_aicenter])->first();
+            if($aicenter_id != ''){
+                $result = DeoUser::where(['user_id' => $assign_user_id])->first();
                 $deoTableId = $result['id'];
-                $user_id = $result['user_id'];
             }
 
             $bullIds = implode(',',$request->bull_ids);
@@ -302,7 +328,7 @@ class DeoStockUserController extends Controller
             $assign_user_id = Auth::user()->id;
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
-                'user_id' => $user_id,
+                'user_id' => $aicenter_id,
                 'inventory_id' => $inventory->id,
                 'deo_id' => $deoTableId,
                 'maitri_id' => $request->select_maitri
