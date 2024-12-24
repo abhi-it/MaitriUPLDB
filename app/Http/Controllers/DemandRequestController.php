@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Validator;
 class DemandRequestController extends Controller{
 
     public function index(Request $request){
-        $district   = Divisions::get();
+        $division   = Divisions::get();
         $institute  = Institute::get();
-        return view('demand-request',['district'=>$district,'institute'=>$institute]);
+        return view('demand-request',['division'=>$division,'institute'=>$institute]);
     }
     
     public function getDistrictAll(Request $request){
@@ -111,10 +111,14 @@ class DemandRequestController extends Controller{
                 'training_center_id'     => $request->training_center_id,
                 'bharat_pashudhan_id'     => $request->bharat_pashudhan_id,
                 'smart_mobile_no'     => $request->smart_mobile_no,
-                'district'     => $request->mandal,
-                'mandal'     => $request->district,
-                'block'     => $request->block,
-                'vh_ai_center'     => $request->vh_ai_center,
+
+                'district'          => $request->mandal,
+                'mandal'            => $request->district,
+                'tehsil'            => $request->tehsil,
+                'block'             => $request->vikas_khand,
+                'vikas_khand'       => $request->vikas_khand,
+                'vh_ai_center'      => $request->vh_ai_center,
+
                 'pincode'     => $request->pincode,
                 'villages_coevring'     => $request->villages_coevring,
                 'demand_section'     => $request->demand_section,
@@ -132,9 +136,7 @@ class DemandRequestController extends Controller{
                 'any_other_item'     => $request->any_other_item,
                 'any_suggestion'     => $request->any_suggestion,
                 'any_complaint'     => $request->any_complaint,
-                'vikas_khand'     => $request->vikas_khand,
                 'post_office'     => $request->post_office,
-                'tehsil'     => $request->tehsil,
                 'semen_type'     => $request->semen_type,
                 'training_year'=>$request->training_year,
                 'month'=>$request->month,
@@ -184,7 +186,7 @@ class DemandRequestController extends Controller{
                 'training_center_id' => $item->training_center_id,
                 'bharat_pashudhan_id' => $item->bharat_pashudhan_id,
                 'smart_mobile_no' => $item->smart_mobile_no,
-                'district' => '',//($item->district)?$item->district->name_hindi:'N/A',
+                'district' => ($item->district) ? $item->district : 'N/A',
                 'vikas_khand' => $item->vikas_khand,
                 'post_office' => $item->post_office,
                 'tehsil' => $item->tehsil,

@@ -19,10 +19,11 @@
             <div class="form-group col-md-4">
                 <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
                 <select class="form-control" name="id" id="id">
-                    <option value=""></option>
+                    <option value="">Select Janpad</option>
                     @if(count($district)>0)
                         @foreach($district as $val)
-                            <option value="{{$val->id}}">{{$val->name_hindi}}</option>
+                            <option value="{{$val->name_hindi}}"
+                            {{ request()->get('id') == $val->name_hindi ? 'selected' : '' }}>{{$val->name_hindi}}</option>
                         @endforeach
                     @endif
                 </select>  
@@ -38,7 +39,7 @@
                 @csrf
                 <div class="row">
                  <div class="col-md-1 mb-4">
-                    <input type="hidden" id="dis_id" name="dis_id">
+                    <input type="hidden" id="dis_id" name="dis_id" value="{{ (request()->get('id')) ? request()->get('id') : '' }}">
                     <button class="btn btn-primary" type="submit" id="demandRequest" >Export</button>
                 </div>
                 </div>
@@ -73,7 +74,8 @@
                 <td>{{ date('j F, Y', strtotime($val->date_of_birth))}}</td>
                 <td>{{$val->gender}}</td>
                 <td>{{$val->training_center_id}}</td>
-                <td>{{($val->district)?$dis_name:'N/A'}} </td>
+                <!-- <td>{{($val->district)?$dis_name:'N/A'}} </td> -->
+                <td>{{($val->district) ? $val->district:'N/A'}} </td>
                 <td>{{($val->tehsil)?$val->tehsil:'N/A'}} </td>
                 <td>{{($val->post_office)?$val->post_office:'N/A'}} </td>
                 <td>{{$val->smart_mobile_no}}</td> 
@@ -145,14 +147,14 @@ $('.deleteRequest').click(function() {
             }
         });
 });
-$('#id').change(function() {
-    $('#dis_id').val();
-    var val = $("#id option:selected").val();
-    console.log('val',val)
-    if(val){
-        $('#dis_id').val(val);
-    }
-});
+// $('#id').change(function() {
+//     $('#dis_id').val();
+//     var val = $("#id option:selected").val();
+//     console.log('val',val)
+//     if(val){
+//         $('#dis_id').val(val);
+//     }
+// });
 </script>
 
 @endsection

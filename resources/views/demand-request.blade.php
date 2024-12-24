@@ -95,8 +95,8 @@
                 <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label>
                 <select name="district" id="district" class="form-control" autofocus>
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
-                    @if(count($district)>0)
-                        @foreach($district as $key=>$val)
+                    @if(count($division)>0)
+                        @foreach($division as $key=>$val)
                             <option value="{{$val->id}}">{{$val->name_hindi}}</option>
                         @endforeach
                     @endif

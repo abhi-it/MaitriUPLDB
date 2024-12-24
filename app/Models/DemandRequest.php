@@ -18,7 +18,7 @@ class DemandRequest extends Model
         'smart_mobile_no'  ,
         'district' ,
         'mandal',
-        'block'  ,
+        'block',
         'vh_ai_center' ,
         'pincode' ,
         'villages_coevring' ,
