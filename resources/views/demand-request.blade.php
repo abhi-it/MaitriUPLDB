@@ -93,7 +93,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label>
-                <select name="district" id="district" class="form-control" autofocus>
+                <select name="district" id="district" class="form-control" autofocus required>
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                     @if(count($division)>0)
                         @foreach($division as $key=>$val)
@@ -105,21 +105,21 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label>
-                <select name="mandal" id="mandal" class="form-control" autofocus>
+                <select name="mandal" id="mandal" class="form-control" autofocus required>
 
                 </select>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> </label>
-                <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
+                <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus required>
 
                 </select>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
-                <select name="vikas_khand" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus>
+                <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड" autofocus>
 
                 </select>
             </div>
@@ -127,7 +127,7 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="एआई सेंटर (पशु चिकित्सा अस्पताल / एलईओ सेंटर)"
                         data-en="AI Centre (Veterinary Hospital / LEO Center)"></span> </label>
-                <select name="vh_ai_center" id="ai_center" class="form-control" autofocus>
+                <select name="vh_ai_center" id="ai_center" class="form-control" autofocus required>
 
                 </select>
             </div>
