@@ -30,9 +30,9 @@ class UsersController extends Controller{
         // dd($request->all());
          $validator = Validator::make($request->all(),[
             'first_name'  => ['bail', 'required', 'string', 'max:255'],
-            'last_name'  => ['bail', 'required', 'string', 'max:255'],
-            'email'    => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['bail', 'required', 'string', 'min:8'],
+            // 'last_name'  => ['bail', 'required', 'string', 'max:255'],
+            // 'email'    => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'password' => ['bail', 'required', 'string', 'min:8'],
             'MobileNumber' => [ 'required'],
         ]);
         if($validator->fails()){
