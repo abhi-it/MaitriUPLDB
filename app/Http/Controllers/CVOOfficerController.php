@@ -69,7 +69,7 @@ class CVOOfficerController extends Controller{
                 $q->where('mandal_name', 'like',  $request->input('id'));
             });
         }
-        $data = $query->orderBy('id', 'DESC')->paginate(50);
+        $data = $query->orderBy('id', 'DESC')->paginate(30);
         $items = $data->appends(request()->except('page'));
         
         return view('officer.officers-listing',['data'=>$data,'dist'=>$dist,'items'=>$items]);

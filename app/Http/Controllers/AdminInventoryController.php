@@ -24,11 +24,66 @@ use App\Models\RemainingStock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\FarmarListExport;
 use DB;
 
 
 class AdminInventoryController extends Controller
 {
+    public function farmarsData(Request $request){
+        $districts = Districts::get();
+        $farmarUserQuery = User::where('role', 'LIKE', 'Farmer')
+                            ->join('districts', 'users.district_id', '=', 'districts.id')
+                            ->orderBy('users.id', 'desc');
+        
+        if ($request->has('district_id') && !empty($request->input('district_id'))) {
+            $districtId = $request->input('district_id');
+            $farmarUserQuery->where('users.district_id', $districtId);
+        }
+
+        if ($request->has('mobile') && !empty($request->input('mobile'))) {
+            $mobile = $request->input('mobile');
+            $farmarUserQuery->where('users.MobileNumber', $mobile);
+        }
+    
+        $farmarUser = $farmarUserQuery->paginate(30);
+        return view('farmardata.index', compact('farmarUser', 'districts'));
+    }
+
+    public function exportFarmarList(Request $request){
+        $query = User::where('role', 'LIKE', 'Farmer')
+                ->join('districts', 'users.district_id', '=', 'districts.id')
+                ->orderBy('users.id', 'desc');
+               
+        if($request->has('dis_id') && !empty($request->input('dis_id'))){
+            $districtId = $request->input('dis_id');
+            $datas = $query->where('users.district_id', $districtId);
+        }
+
+        if ($request->has('mobile') && !empty($request->input('mobile'))) {
+            $mobile = $request->input('mobile');
+            $datas = $query->where('users.MobileNumber', $mobile);
+        }
+
+        $datas    = $query->get();
+        // echo '<pre>';print_r($datas);exit;
+
+        $data = $datas->map(function ($item) {
+            return [
+                'name'                  => $item->name,
+                'MobileNumber'            => $item->MobileNumber,
+                'district_id'              => $item->name_hindi,
+                'tehsil'                => $item->tehsil,
+                'block'                 => $item->block,
+                'gram_panchayat'        => $item->gram_panchayat,
+                'breeds'                 => $item->mobile_no,
+                'cattale_no'           => $item->cattale_no,
+                'milk_day'              => $item->milk_day,
+            ];
+        });
+        return \Excel::download(new FarmarListExport($data), 'farmar-list.xlsx');
+    }
+
     public function adminStockForm(){
         return view('adminstockform.admin-stock-form');
     }

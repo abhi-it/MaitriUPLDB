@@ -591,16 +591,15 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
            
-            // $datas = $query->with('district')->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
-            //     ->whereYear('avedans.created_at', $this->sessionYear)
-            //     ->orderBy('avedans.category', 'DESC')
-            //     ->get();
+            $datas = $query->with('district')->whereYear('avedans.created_at', 'LIKE', '%' . $this->sessionYear. '%')
+                ->orderBy('avedans.category', 'DESC')
+                ->get();
 
-            $datas = Avedan::with('district') // Eager load the Districts model
-                    ->where('is_approved', 1)
-                    ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
-                    ->orderBy('avedans.category', 'DESC')
-                    ->get();
+            // $datas = Avedan::with('district') 
+            //         ->where('is_approved', 1)
+            //         ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
+            //         ->orderBy('avedans.category', 'DESC')
+            //         ->get();
 
             $data = $datas->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
@@ -637,7 +636,6 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'approved-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('id', 'DESC')->paginate(50);
-            //echo '<pre>';print_r($results);exit;
             return view('viewAvedan', compact('results', 'heading', 'districts'))->with('route', 'approvedAvedan')->with('year', $this->sessionYear);
         }
     }

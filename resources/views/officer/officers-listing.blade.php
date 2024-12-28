@@ -12,7 +12,7 @@
                         <option>- सेलेक्ट जनपद -</option>
                         @foreach($dist as $val)
                             @if($val!='' ||$val != null)
-                            <option value="{{$val['mandal_name']}}">{{$val['mandal_name']}}</option>
+                            <option value="{{$val['mandal_name']}}" {{ $val['mandal_name'] == request('id') ? 'selected' : '' }}>{{$val['mandal_name']}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -25,7 +25,8 @@
             <form method="get" action="{{ route('exportCVOList') }}" > 
                 @csrf
                 <div class="col-md-2 m-2">
-                    <input type="hidden" id="dis_id" name="dis_id">
+                    <input type="hidden" id="dis_id" name="dis_id" value="{{ request('id') ?: '' }}">
+
                     <button class="btn btn-primary" type="submit" id="cvoExportList" >
                     एक्सपोर्ट</button>
                 </div>
@@ -34,16 +35,16 @@
         <table id="myTable202" class="table table-striped  table-responsive table-bordered">
             <thead>
                 <tr>
-                    <th><span data-hi="मंडल का नाम" date-en="Mandal Name"></span> </th>
-                    <th> <span data-hi="जनपद का नाम" date-en="Janpad Name"></span>  </th>
-                    <th><span data-hi="अधिकारी का नाम" date-en="Officer Name"></span> </th>
-                    <th><span data-hi="लॉगिन आईडी" date-en="Login ID"></span></th>
-                    <th><span data-hi="ईमेल" date-en="Email"></span></th>
-                    <th><span data-hi="मोबाइल नंबर" date-en="Mobile Number"></span></th>
-                    <th><span data-hi="आधार नंबर" date-en="Aadhar Number"></span></th>
-                    <th> <span data-hi="पद का नाम" date-en="Designation"></span></th>
-                    <th><span data-hi="पशु देखभाल केंद्र" date-en="Animal Care Center"></span> </th>
-                    <th><span data-hi="गतिविधि" date-en="Action"></span> </th>
+                    <th><span data-hi="मंडल का नाम" data-en="Mandal Name"></span> </th>
+                    <th> <span data-hi="जनपद का नाम" data-en="Janpad Name"></span>  </th>
+                    <th><span data-hi="अधिकारी का नाम" data-en="Officer Name"></span> </th>
+                    <th><span data-hi="लॉगिन आईडी" data-en="Login ID"></span></th>
+                    <th><span data-hi="ईमेल" data-en="Email"></span></th>
+                    <th><span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span></th>
+                    <th><span data-hi="आधार नंबर" data-en="Aadhar Number"></span></th>
+                    <th> <span data-hi="पद का नाम" data-en="Designation"></span></th>
+                    <th><span data-hi="पशु देखभाल केंद्र" data-en="Animal Care Center"></span> </th>
+                    <th><span data-hi="गतिविधि" data-en="Action"></span> </th>
                 </tr>
             </thead>
             <tbody >

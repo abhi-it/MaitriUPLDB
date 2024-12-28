@@ -20,12 +20,12 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
-                    <span data-hi="पहला नाम" data-en="First Name"></span>
+                    <span data-hi="नाम" data-en="First Name"></span>
                 </label>
                 <input type="text" class="form-control" name="first_name" id="first_name" required
-                    data-placeholder-hi="पहला नाम " autocomplete="off" data-placeholder-en="First Name">
+                    data-placeholder-hi="नाम" autocomplete="off" data-placeholder-en="First Name">
             </div>
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="उपनाम" data-en="Last Name"></span>
                 </label>
@@ -46,7 +46,7 @@
                 </label>
                 <input type="password" class="form-control" id="password" name="password" required
                     data-placeholder-hi="पासवर्ड" autocomplete="off" data-placeholder-en="Password">
-            </div>
+            </div> -->
 
             <div class="form-group col-md-6">
                 <label for="inputPassword4">
@@ -68,7 +68,7 @@
 
             <div class="form-group col-md-6">
                 <label for="animal">
-                    <span data-hi="मवेशियों की संख्या" data-en="Number of cattle"></span>
+                    <span data-hi="पशु की संख्या" data-en="Number of cattle"></span>
                 </label>
                 <div class="block mb-2">
                     <span class="add btn btn-primary"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" required
-                                data-placeholder-hi="मवेशियों की संख्या" data-placeholder-en="Cattle Number"
+                                data-placeholder-hi="पशु की संख्या" data-placeholder-en="Cattle Number"
                                 autocomplete="off">
                         </div>
                         <div class="form-group col-md-1">
@@ -99,10 +99,19 @@
 
             <div class="form-group col-md-6">
                 <label for="inputPassword4">
-                    <span data-hi="गाय/भैंस की नस्लें" data-en="Breeds of Cow/Buffalo"></span>
+                    <span data-hi="दूध/प्रतिदिन/प्रति पशु" data-en="Milk/day/Per Animal"></span>
+                </label>
+                <input type="text" class="form-control" id="milk_day" name="milk_day" required
+                    data-placeholder-hi="दूध/प्रतिदिन/प्रति पशु" autocomplete="off"
+                    data-placeholder-en="Milk/day/Per Animal">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">
+                    <span data-hi="गाय/भैंस/बकरी की नस्लें" data-en="Breeds of Cow/Buffalo"></span>
                 </label>
                 <input type="text" class="form-control" id="breeds" name="breeds" required
-                    data-placeholder-hi="गाय/भैंस की नस्लें" autocomplete="off"
+                    data-placeholder-hi="गाय/भैंस/बकरी की नस्लें" autocomplete="off"
                     data-placeholder-en="Breeds of Cow/Buffalo">
             </div>
 
@@ -128,7 +137,7 @@
             <!-- New HTML Start -->
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="मंडल" data-en="Mandal"></span> </label>
-                <select name="division_id" id="district" class="form-control" autofocus>
+                <select name="division_id" id="district" class="form-control" autofocus required>
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                     @if(count($divisions)>0)
                     @foreach($divisions as $key => $val)
@@ -140,28 +149,28 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label>
-                <select name="district_id" id="mandal" class="form-control" autofocus>
+                <select name="district_id" id="mandal" class="form-control" autofocus required>
 
                 </select>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> </label>
-                <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
+                <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus required>
 
                 </select>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
-                <select name="block" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus>
+                <select name="block" id="vikas_khand" class="form-control" placeholder="विकास खण्ड" autofocus required>
 
                 </select>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
-                <input type="text" name="post_office" id="post_office" class="form-control" placeholder="पोस्ट ऑफिस"
+                <input type="text" name="post_office" id="post_office" required class="form-control" placeholder="पोस्ट ऑफिस"
                     autofocus>
             </div>
 
@@ -170,7 +179,7 @@
                 <label for="inputEmail4"><span data-hi="पिनकोड" data-en="Pincode"></span></label>
                 <span id="error-message" style="color: red; display:none; font-size:10px; ">(Pincode must be a 6-digit
                     number.)</span>
-                <input type="text" name="pincode" maxlength="6" id="pincode" class="form-control"
+                <input type="text" name="pincode" maxlength="6" id="pincode" required class="form-control"
                     data-placeholder-en="Enter Pincode Here" data-placeholder-hi="यहां पिनकोड दर्ज करें" autofocus>
             </div>
             <!-- New HTML End -->
@@ -180,7 +189,7 @@
                 <label for="inputPassword4">
                     <span data-hi="ग्राम पंचायत" data-en="Gram Panchayat"></span>
                 </label>
-                <input type="text" class="form-control" id="gram_panchayat" name="gram_panchayat" required
+                <input type="text" class="form-control" id="gram_panchayat" required name="gram_panchayat" required
                     data-placeholder-hi="ग्राम पंचायत" autocomplete="off" data-placeholder-en="Gram Panchayat">
             </div>
         </div>
@@ -431,7 +440,7 @@ $(document).ready(function() {
                         </select> \
                     </div> \
                     <div class="form-group col-md-5"> \
-                        <input type="number" class="form-control cattale_no" id="cattale_no" name="cattale_no[]"  placeholder="मवेशियों की संख्या" autocomplete="off"> \
+                        <input type="number" class="form-control cattale_no" id="cattale_no" name="cattale_no[]"  placeholder="पशु की संख्या" autocomplete="off"> \
                     </div> \
                     <div class="form-group col-md-1"> \
                         <span class="remove" data-index="' + fieldCount + '">Remove</span> \

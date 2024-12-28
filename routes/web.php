@@ -368,6 +368,10 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
     
     
+
+    Route::get("farmers-data", [App\Http\Controllers\AdminInventoryController::class, 'farmarsData'])->name('farmers-data');
+    Route::get("exportFarmarList", [App\Http\Controllers\AdminInventoryController::class, 'exportFarmarList'])->name('exportFarmarList');
+    
     Route::get("inactive-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'inactiveMaitriAicenterData'])->name('inactive-maitri-aicenter');
     Route::get("create-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenter'])->name('create-maitri-aicenter');
     Route::post("create-mairti-aicenter-data", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenterData'])->name('create-mairti-aicenter-data');

@@ -152,6 +152,8 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'farmers-data',
+                'exportFarmarList',
                 'create-mairti-aicenter-data',
                 'create-maitri-aicenter',
                 'inactive-aicenter-geo-location',
@@ -310,6 +312,8 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'farmers-data',
+                'exportFarmarList',
                 'create-mairti-aicenter-data',
                 'create-maitri-aicenter',
                 'inactive-aicenter-geo-location',
