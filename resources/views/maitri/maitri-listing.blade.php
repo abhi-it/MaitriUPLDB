@@ -11,7 +11,7 @@
                             <option>-select one-</option>
                             @foreach($dist as $val)
                                 @if($val!='' ||$val != null)
-                                <option value="{{$val['mandal_name']}}">{{$val['mandal_name']}}</option>
+                                <option value="{{$val['name_hindi']}}" {{ $val['name_hindi'] == request('id') ? 'selected' : '' }}>{{$val['name_hindi']}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -28,7 +28,7 @@
             <div class="row">
             <form method="get" action="{{ route('exportselectedmaitries') }}"> 
                     <div class="col-md-1 mb-4">
-                        <input type="hidden" id="dis_id" name="id">
+                        <input type="hidden" id="dis_id" name="id" value="{{ request('id') ?: '' }}">
                         <button class="btn btn-primary" type="submit" id="maitriExport" >Export</button>
                     </div>
                 </form>
@@ -196,18 +196,6 @@ $(document).ready(function () {
         });
     });
 });
-</script>
-
-
-<script>
-    $('#id').change(function() {
-        $('#dis_id').val();
-        var val = $("#id option:selected").text();
-        console.log('val',val)
-        if(val){
-            $('#dis_id').val(val);
-        }
-    });
 </script>
 @endsection
 

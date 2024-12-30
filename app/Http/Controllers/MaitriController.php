@@ -166,7 +166,8 @@ class MaitriController extends Controller
         return $data;
     }
     public function maitriListing(Request $request){
-        $dist  =  Maitri::all()->unique('mandal_name')->toArray();
+        // $dist  =  Maitri::all()->unique('mandal_name')->toArray();
+        $dist  =  Divisions::get();
         $query = Maitri::orderBy('id', 'DESC');
         if (!empty($request->input('id'))) {
             $query->where(function ($q) use ($request) {
@@ -185,7 +186,7 @@ class MaitriController extends Controller
         $query    = Maitri::orderBy('id', 'DESC');
         $janpad   = $request->id;
         if($request->id){
-            $data     = $query->select( 'mandal_name','janpad_name','maitri_name','maitri_mobile_no','gram_panchayat','post_office','block','tehsil','adhaar_card','father_name','father_mobile_no','certificate_no','center_name','pass_date','any_bharat_id','equipment_received','longitude','latitude',)->where('janpad_name', 'like', "%{$janpad}%")->get();
+            $data     = $query->select( 'mandal_name','janpad_name','maitri_name','maitri_mobile_no','gram_panchayat','post_office','block','tehsil','adhaar_card','father_name','father_mobile_no','certificate_no','center_name','pass_date','any_bharat_id','equipment_received','longitude','latitude',)->where('mandal_name', 'like', "%{$janpad}%")->get();
         }else{
             $data     = $query->select( 'mandal_name','janpad_name','maitri_name','maitri_mobile_no','gram_panchayat','post_office','block','tehsil','adhaar_card','father_name','father_mobile_no','certificate_no','center_name','pass_date','any_bharat_id','equipment_received','longitude','latitude',)->get();
         }

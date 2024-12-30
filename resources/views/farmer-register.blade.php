@@ -104,7 +104,7 @@
 
                        
                         <div class="form-group col-md-1">
-                        <span class="add btn btn-primary btn-sm"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
+                            <span class="add btn btn-primary btn-sm"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
                             <!-- <span class="remove">Remove</span> -->
                         </div>
                     </div>
