@@ -70,9 +70,6 @@
                 <label for="animal">
                     <span data-hi="पशु की जानकारी" data-en="Number of cattle"></span>
                 </label>
-                <div class="block mb-2">
-                    <span class="add btn btn-primary"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
-                </div>
                 <div class="optionBox">
                     <div class="block row adddiv_0">
                         <div class="form-group col-md-3">
@@ -96,7 +93,7 @@
                                 data-placeholder-hi="पशु की जानकारी" data-placeholder-en="Cattle Number"
                                 autocomplete="off">
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <!-- <label for="inputPassword4">
                                 <span data-hi="दूध/प्रतिदिन/प्रति पशु" data-en="Milk/day/Per Animal"></span>
                             </label> -->
@@ -107,6 +104,7 @@
 
                        
                         <div class="form-group col-md-1">
+                        <span class="add btn btn-primary btn-sm"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
                             <!-- <span class="remove">Remove</span> -->
                         </div>
                     </div>
@@ -449,7 +447,7 @@ $(document).ready(function() {
                         <input type="text" class="form-control" id="milk_day" name="milk_day[]" required placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">\
                     </div>\
                     <div class="form-group col-md-1"> \
-                        <span class="remove" data-index="' + fieldCount + '">Remove</span> \
+                        <span class="remove btn btn-danger btn-sm" data-index="' + fieldCount + '">Remove</span> \
                     </div> \
                 </div>';
 
