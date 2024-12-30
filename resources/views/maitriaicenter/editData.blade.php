@@ -71,7 +71,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="title"><span data-hi="भारत पशुधन आईडी" data-en="Bharat Pashudhan Id"></span></label>
-                        <input type="text" name="bharat_pasudhan_id" class="form-control"/>
+                        <input type="text" name="bharat_pasudhan_id" value="{{ $editData['any_bharat_id'] }}" class="form-control"/>
                     </div>
                 </div>
             </div>
