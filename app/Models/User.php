@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password','user_type','role','gram_panchayat','post_office','block','tehsil','milk_day',
+        'password','user_type','role','gram_panchayat','post_office','block','tehsil','milk_day','animal_type',
         'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no'
     ];
 

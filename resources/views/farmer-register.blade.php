@@ -18,7 +18,7 @@
     <form method="post" action="{{ route('farmer-add') }}" class="form-comman">
         @csrf
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="inputEmail4">
                     <span data-hi="नाम" data-en="First Name"></span>
                 </label>
@@ -48,14 +48,14 @@
                     data-placeholder-hi="पासवर्ड" autocomplete="off" data-placeholder-en="Password">
             </div> -->
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="inputPassword4">
                     <span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span>
                 </label>
                 <input type="number" class="form-control" id="MobileNumber" name="MobileNumber" required
                     data-placeholder-hi="मोबाइल नंबर" autocomplete="off" data-placeholder-en="Mobile Number">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="inputEmail4"> <span data-hi="लिंग" data-en="Gender"> </span></label>
                 <select class="form-control" name="gender" id="gender" required>
                     <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
@@ -66,16 +66,16 @@
             </div>
 
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="animal">
-                    <span data-hi="पशु की संख्या" data-en="Number of cattle"></span>
+                    <span data-hi="पशु की जानकारी" data-en="Number of cattle"></span>
                 </label>
                 <div class="block mb-2">
                     <span class="add btn btn-primary"> <span data-hi="जोड़ें" data-en="Add"></span> </span>
                 </div>
                 <div class="optionBox">
                     <div class="block row adddiv_0">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
                             <select class="form-control" id="animal_type" name="animal_type[]" required>
                                 <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                                 <option value="cow" data-hi="गाय" data-en="Cow"> </option>
@@ -83,11 +83,29 @@
                                 <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                             </select>
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
+                            <!-- <label for="inputPassword4">
+                                <span data-hi="गाय/भैंस/बकरी की नस्लें" data-en="Breeds of Cow/Buffalo"></span>
+                            </label> -->
+                            <input type="text" class="form-control" id="breeds" name="breeds[]" required
+                                data-placeholder-hi="गाय/भैंस/बकरी की नस्लें" autocomplete="off"
+                                data-placeholder-en="Breeds of Cow/Buffalo">
+                        </div>
+                        <div class="form-group col-md-3">
                             <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" required
-                                data-placeholder-hi="पशु की संख्या" data-placeholder-en="Cattle Number"
+                                data-placeholder-hi="पशु की जानकारी" data-placeholder-en="Cattle Number"
                                 autocomplete="off">
                         </div>
+                        <div class="form-group col-md-3">
+                            <!-- <label for="inputPassword4">
+                                <span data-hi="दूध/प्रतिदिन/प्रति पशु" data-en="Milk/day/Per Animal"></span>
+                            </label> -->
+                            <input type="text" class="form-control" id="milk_day" name="milk_day[]" required
+                                data-placeholder-hi="दूध/प्रतिदिन/प्रति पशु" autocomplete="off"
+                                data-placeholder-en="Milk/day/Per Animal">
+                        </div>
+
+                       
                         <div class="form-group col-md-1">
                             <!-- <span class="remove">Remove</span> -->
                         </div>
@@ -95,24 +113,6 @@
                 </div>
 
 
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">
-                    <span data-hi="दूध/प्रतिदिन/प्रति पशु" data-en="Milk/day/Per Animal"></span>
-                </label>
-                <input type="text" class="form-control" id="milk_day" name="milk_day" required
-                    data-placeholder-hi="दूध/प्रतिदिन/प्रति पशु" autocomplete="off"
-                    data-placeholder-en="Milk/day/Per Animal">
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">
-                    <span data-hi="गाय/भैंस/बकरी की नस्लें" data-en="Breeds of Cow/Buffalo"></span>
-                </label>
-                <input type="text" class="form-control" id="breeds" name="breeds" required
-                    data-placeholder-hi="गाय/भैंस/बकरी की नस्लें" autocomplete="off"
-                    data-placeholder-en="Breeds of Cow/Buffalo">
             </div>
 
             <!-- <div class="form-group col-md-6">
@@ -170,8 +170,8 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
-                <input type="text" name="post_office" id="post_office" required class="form-control" placeholder="पोस्ट ऑफिस"
-                    autofocus>
+                <input type="text" name="post_office" id="post_office" required class="form-control"
+                    placeholder="पोस्ट ऑफिस" autofocus>
             </div>
 
 
@@ -275,7 +275,7 @@ $(document).ready(function() {
                                 '') {
                                 $('#mandal').append(
                                     `<option value="${item.janpad_name}">${item.janpad_name}</option>`
-                                    );
+                                );
                             }
                         });
                     } else {
@@ -312,7 +312,7 @@ $(document).ready(function() {
                         if (item.tehsil && item.tehsil.trim() !== '') {
                             $('#tehsil').append(
                                 `<option value="${item.tehsil}">${item.tehsil}</option>`
-                                );
+                            );
                         }
                     });
                 } else {
@@ -343,12 +343,12 @@ $(document).ready(function() {
                 var getBlock = data.data;
                 if (getBlock && getBlock.length > 0) {
                     $('#vikas_khand').append(
-                    `<option value="">Select Vikas Khand</option>`);
+                        `<option value="">Select Vikas Khand</option>`);
                     getBlock.forEach(item => {
                         if (item.block && item.block.trim() !== '') {
                             $('#vikas_khand').append(
                                 `<option value="${item.block}">${item.block}</option>`
-                                );
+                            );
                         }
                     });
                 } else {
@@ -431,17 +431,23 @@ $(document).ready(function() {
     $('.add').click(function() {
         if (fieldCount < maxFields) {
             var newField = '<div class="block row adddiv_' + fieldCount + '"> \
-                    <div class="form-group col-md-5"> \
-                        <select class="form-control animal_type" id="animal_type" name="animal_type[]" > \
-                            <option value="">किसी एक को चुनें</option> \
-                            <option value="cow">गाय</option> \
-                            <option value="buffalo">भैंस</option> \
-                            <option value="goat">बकरी</option> \
-                        </select> \
-                    </div> \
-                    <div class="form-group col-md-5"> \
-                        <input type="number" class="form-control cattale_no" id="cattale_no" name="cattale_no[]"  placeholder="पशु की संख्या" autocomplete="off"> \
-                    </div> \
+                    <div class="form-group col-md-3">\
+                        <select class="form-control" id="animal_type" name="animal_type[]" required>\
+                            <option value="">एक का चयन करें</option>\
+                            <option value="cow">गाय</option>\
+                            <option value="buffalo">भैंस</option>\
+                            <option value="goat">बकरी</option>\
+                        </select>\
+                    </div>\
+                    <div class="form-group col-md-3">\
+                        <input type="text" class="form-control" id="breeds" name="breeds[]" required autocomplete="off" placeholder="गाय/भैंस/बकरी की नस्लें">\
+                    </div>\
+                    <div class="form-group col-md-3">\
+                        <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" required placeholder="पशु की जानकारी" autocomplete="off">\
+                    </div>\
+                    <div class="form-group col-md-2">\
+                        <input type="text" class="form-control" id="milk_day" name="milk_day[]" required placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">\
+                    </div>\
                     <div class="form-group col-md-1"> \
                         <span class="remove" data-index="' + fieldCount + '">Remove</span> \
                     </div> \
