@@ -47,22 +47,28 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="title"><span data-hi="ब्लॉक का नाम" data-en="Block"></span></label>
                         <input type="text" name="block" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="title"><span data-hi="तहसील" data-en="Tehsil"></span></label>
                         <input type="text" name="tehsil" class="form-control"/>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="title"><span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span></label>
                         <input type="text" name="maitri_mobile_no" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="title"><span data-hi="भारत पशुधन आईडी" data-en="Bharat Pashudhan Id"></span></label>
+                        <input type="text" name="bharat_pasudhan_id" class="form-control"/>
                     </div>
                 </div>
             </div>
