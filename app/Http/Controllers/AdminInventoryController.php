@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Exports\FarmarListExport;
 use DB;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 class AdminInventoryController extends Controller
@@ -220,6 +222,20 @@ class AdminInventoryController extends Controller
         return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
     }
     
+    public function generatePDF($id)  {
+        $maitriData = Manganurodhdata::where('id', $id)->first();
+        $data = [
+            'name' => $maitriData['maitri_name'],
+        ];
+        $html = view('certificate.template', $data)->render();
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $dompdf->stream('certificate.pdf', ['Attachment' => true]);
+    }
 
     public function editMaitriAicenter($id){
         $districts = Districts::all();
@@ -410,7 +426,6 @@ class AdminInventoryController extends Controller
         }
         return view('adminstockform.admin-distributed-record', compact('zoneStock'));
     }
-
 
     public function adminStockDataSave(Request $request){
         $validator = Validator::make($request->all(),[

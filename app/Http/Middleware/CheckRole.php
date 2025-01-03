@@ -152,6 +152,7 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'generate-certificate',
                 'farmers-data',
                 'exportFarmarList',
                 'create-mairti-aicenter-data',
@@ -312,6 +313,7 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'generate-certificate',
                 'farmers-data',
                 'exportFarmarList',
                 'create-mairti-aicenter-data',
