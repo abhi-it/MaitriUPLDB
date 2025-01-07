@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Divisions;
 use App\Models\Districts;
-use App\MODELS\FarmerFeedback;
+use App\Models\FarmerFeedback;
 use App\Models\API\Role;
 use App\Models\FarmerHighYielingAnimal;
 use App\Models\API\Servicerequest;
