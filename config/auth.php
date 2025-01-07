@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',  // This ensures JWT is used for the API guard
+            'provider' => 'users',  // Ensure 'users' is the correct provider for your application
+        ],
     ],
 
     /*
