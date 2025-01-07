@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -20,7 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password','user_type','role','gram_panchayat','post_office','block','tehsil','milk_day','animal_type',
+        'password','user_type','role','gram_panchayat','post_office','block','tehsil','milk_day','animal_type','otp_login',
         'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no'
     ];
 
@@ -46,5 +47,15 @@ class User extends Authenticatable
     public function getDeoUser()
     {
         return $this->hasOne(DeoUser::class, 'user_id');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -86,7 +86,8 @@ class FarmerController extends Controller{
     }
 
     public function highYieldingAnimal(Request $request){
-        $data   = DB::table('farmer_high_yielding_animal')->get();
+        $user  =  Auth::user()->id;
+        $data   = DB::table('farmer_high_yielding_animal')->where('user_id', $user)->get();
         return view('web.farmer.yielding-animal-form',['data'=>$data]);
         
     }
