@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     use FormatResponseTrait;
 
-    public function farmerLogin(Request $request){
+    public function login(Request $request){
         try {
             $request->validate([
                 'mobileNumber' => 'required',
@@ -50,7 +50,7 @@ class AuthController extends Controller
                 return $this->errorResponse('Number  not correct',404);
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return $this->errorResponse($e->getMessage(), 422);
+            return $this->errorResponse($e->errors(), 422);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }
