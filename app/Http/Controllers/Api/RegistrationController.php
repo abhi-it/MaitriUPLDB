@@ -27,9 +27,9 @@ class RegistrationController extends Controller
     {
         try {
             $divisions  = Divisions::get();
-
             return $this->successResponse('Mandal List displayed successfully',200, $divisions);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
         } 
     }
@@ -38,9 +38,9 @@ class RegistrationController extends Controller
     {
         try {
             $districts  = Districts::where('division_id', $request->division_id)->get();
-
             return $this->successResponse('District List displayed successfully',200, $districts);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
         } 
     }
@@ -56,8 +56,10 @@ class RegistrationController extends Controller
                                         ->groupBy('tehsil')
                                         ->get();
 
-            return $this->successResponse('Tehsil List displayed successfully',200, $getTeshil);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+            $tensilData = $getTeshil->pluck('block')->toArray();
+            return $this->successResponse('Tehsil List displayed successfully',200, $tensilData);
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
         } 
     }
@@ -72,7 +74,8 @@ class RegistrationController extends Controller
             ];
 
             return $this->successResponse('Tehsil List displayed successfully',200, $animals);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
         } 
     }
@@ -89,7 +92,8 @@ class RegistrationController extends Controller
 
             $blocks = $getBlock->pluck('block')->toArray();
             return $this->successResponse('Block List displayed successfully',200, $blocks);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
         } 
     }
@@ -112,26 +116,27 @@ class RegistrationController extends Controller
                 'milk_day' => 'required',
             ]);
             $user  = new User([
-                'name'              => $request->first_name,
-                'FirstName'         => $request->first_name,
-                'MobileNumber'      => $request->mobile,
-                'district_id'       => $request->district_id,
-                'division_id'       => $request->division_id,
-                'role_id'           => '4',
-                'animal_type'       => $request->animal_type,
-                'breeds'            => $request->breeds,
-                'cattale_no'        => $request->cattale_no,
-                'gram_panchayat'    => $request->gram_panchayat,
-                'post_office'       => $request->post_office,
-                'block'             => $request->block,
-                'tehsil'            => $request->tehsil,
-                'milk_day'          => $request->milk_day,
-                'role'              => 'Farmer',
-                'user_type'         => 'Farmer',
+                'name'           => $request->first_name,
+                'FirstName'      => $request->first_name,
+                'MobileNumber'   => $request->mobile,
+                'district_id'    => $request->district_id,
+                'division_id'    => $request->division_id,
+                'role_id'        => '4',
+                'animal_type'    => $request->animal_type,
+                'breeds'         => $request->breeds,
+                'cattale_no'     => $request->cattale_no,
+                'gram_panchayat' => $request->gram_panchayat,
+                'post_office'    => $request->post_office,
+                'block'          => $request->block,
+                'tehsil'         => $request->tehsil,
+                'milk_day'       => $request->milk_day,
+                'role'           => 'Farmer',
+                'user_type'      => 'Farmer',
             ]);
             $user->save();
             return $this->successResponse('User Registered successfully',200, $user);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse("Validation failed", 422, $e->errors());
         } 
     }
