@@ -164,7 +164,7 @@ class InventoryController extends Controller
             }
 
             $data = [
-                'user_id'            => $assign_user_id,
+                'user_id'            => $user_id,
                 'demand_section'     => $request->demand_section,
                 'breed'              => $request->breed,
                 'breed_type'         => $breedType,

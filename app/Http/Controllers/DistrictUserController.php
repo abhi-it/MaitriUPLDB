@@ -51,8 +51,8 @@ class DistrictUserController extends Controller{
     public function districtStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        // $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
-        $divisionStock = RemainingStock::where('user_id', $user_id)->get();
+        $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+        // $divisionStock = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.districtdetails', compact('divisionStock'));
     }
 
