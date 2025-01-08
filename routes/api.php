@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
+use App\Http\Controllers\Api\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Farmer
 Route::prefix('v1')->group(function () {
-    Route::post('farmer-login', [AuthController::class, 'farmerLogin'])->name('farmer-login');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('otp-verify', [AuthController::class, 'otpVerify'])->name('otp-verify');
+
+    //Registration
+    Route::get('getAllBlock', [RegistrationController::class, 'getAllBlock'])->name('getAllBlock');
+    Route::get('mandal_list', [RegistrationController::class, 'mandal_list'])->name('mandal_list');
+    Route::get('district_list', [RegistrationController::class, 'district_list'])->name('district_list');
+    Route::get('tehsil_list', [RegistrationController::class, 'tehsil_list'])->name('tehsil_list');
+    Route::get('animal_types', [RegistrationController::class, 'animal_types'])->name('animal_types');
+    Route::post('register', [RegistrationController::class, 'register'])->name('register');
 });
 
 Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() {
