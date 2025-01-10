@@ -18,15 +18,29 @@ use DB;
 class FarmerController extends Controller{
 
     public function index(){
+        $districts  = Districts::get();
+        $divisions  = Divisions::get();
         $user       = Auth::user()->id;
         $data       = Servicerequest::where(['user_id'=>$user])->get();
-       return view('web.farmer.dashbaord',['data'=>$data]);
+       return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
     }
     public function getServiceFrom(){
         $dis_id         = Auth::user()->district_id;
         $maitries       = User::where(['district_id'=>$dis_id,'role_id'=>3])->get();
        return view('web.farmer.service-form',['maitries'=>$maitries]);
 
+    }
+
+    public function checkUserDetails() {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
+        }
+        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->profile);
+        return response()->json([
+            'status' => $isFilled ? 'filled' : 'not_filled',
+            'userData' => $user
+        ]);
     }
 
     public function addFarmerRequests(Request $request){

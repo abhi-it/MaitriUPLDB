@@ -492,6 +492,7 @@ class CheckRole
                 'filtered-monthly-report',
             ],
             'Farmer' => [
+                'check.user.details',
                 'farmer-dashboard',
                 'get-all-maitri',
                 'farmer-request',

@@ -329,6 +329,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     
 
     //farmer dashbaord
+    // Route::post('/submit-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'submitUserDetails'])->name('submit.user.details');
+    // routes/web.php
+    Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
+
+
     Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');
     Route::get("service-request", [App\Http\Controllers\farmer\FarmerController::class, 'getServiceFrom'])->name('service-request');
     Route::post("get-all-maitri", [App\Http\Controllers\farmer\FarmerController::class, 'getAllMaitries'])->name('get-all-maitri');

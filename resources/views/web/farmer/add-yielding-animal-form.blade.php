@@ -33,7 +33,7 @@
     }
 </style>
 <div class="container main-div">
- <h3 class="text-center fw-bold m-4">High Yielding Animal Details Form</h3>
+ <h3 class="text-center fw-bold m-4">उच्च उपज देने वाले पशु विवरण प्रपत्र</h3>
         @if(session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}
@@ -52,30 +52,28 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">Animal</label> 
+                        <label for="inputEmail4">जानवर</label> 
                         <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
                         <select class="form-control" name="type" id="type" required>
-                            <option value="">select</option>
-                                <option value="buffalo">Buffalo</option>
-                                <option value="cow">Cow</option>
-                                <option value="goat">Goat</option>
-                                <option value="horse">Horse</option>
-                                <option value="goat">Goat</option>
-                          
+                            <option value="">एक का चयन करें</option>
+                                <option value="buffalo">भैंस</option>
+                                <option value="cow">गाय</option>
+                                <option value="goat">बकरी</option>
+                                <option value="horse">घोड़ा</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                    <label for="inputEmail4">Animal Photo</label> 
+                    <label for="inputEmail4">पशु फोटो</label> 
                         <input type="file" name="file"  class="form-control" requires>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="inputEmail4">Details</label> 
+                        <label for="inputEmail4">विवरण</label> 
                         <textarea id="request_message" class="form-control"  name="details" rows="4" cols="50"></textarea>
                     </div>
                 </div>
                 <div style="overflow:auto;margin-bottom:20px;">
                     <div style="margin-top: 5px;" >
-                        <button type="submit" class="submit btn btn-primary buttonWizard" id="submitForm">Submit</button>
+                        <button type="submit" class="submit btn btn-primary buttonWizard" id="submitForm">जमा करे</button>
                     </div>
                 </div>
             </form>
