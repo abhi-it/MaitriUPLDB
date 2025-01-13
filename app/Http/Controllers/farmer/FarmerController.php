@@ -24,11 +24,49 @@ class FarmerController extends Controller{
         $data       = Servicerequest::where(['user_id'=>$user])->get();
        return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
     }
+
+    public function updateFarmerDateils(Request $request){
+        $request->validate([
+            'first_name'      => 'required|string|max:255',
+            'MobileNumber'    => 'required|string|max:15',
+            'district_id'     => 'required|string',
+            'division_id'     => 'nullable|integer',
+            'animal_type'     => 'nullable|array',
+            'breeds'          => 'nullable|array',
+            'cattale_no'      => 'nullable|array',
+            'gram_panchayat'  => 'nullable|string|max:255',
+            'post_office'     => 'nullable|string|max:255',
+            'block'           => 'nullable|string|max:255',
+            'tehsil'          => 'nullable|string|max:255',
+        ]);
+        $user_id = $request->user_id;
+        $user = User::findOrFail($user_id);
+        $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+
+        $user->name           = $request->first_name;
+        $user->FirstName      = $request->first_name;
+        $user->MobileNumber   = $request->MobileNumber;
+        $user->gender         = $request->gender;
+        $user->district_id    = $district ? $district->id : null;
+        $user->division_id    = $request->division_id;
+        $user->animal_type    = $request->animal_type ? implode(',', $request->animal_type) : null;
+        $user->breeds         = $request->breeds ? implode(',', $request->breeds) : null;
+        $user->cattale_no     = $request->cattale_no ? implode(',', $request->cattale_no) : null;
+        $user->gram_panchayat = $request->gram_panchayat;
+        $user->post_office    = $request->post_office;
+        $user->pincode        = $request->pincode;
+        $user->block          = $request->block;
+        $user->tehsil         = $request->tehsil;
+        $user->milk_day       = $request->milk_day ? implode(',', $request->milk_day) : null;
+        $user->save();
+        return redirect('/farmer-dashboard')->with('success', 'Profile updated successfully!');
+    }
+
+
     public function getServiceFrom(){
         $dis_id         = Auth::user()->district_id;
         $maitries       = User::where(['district_id'=>$dis_id,'role_id'=>3])->get();
        return view('web.farmer.service-form',['maitries'=>$maitries]);
-
     }
 
     public function checkUserDetails() {
@@ -36,10 +74,12 @@ class FarmerController extends Controller{
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
         }
-        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->profile);
+        $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
+        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
-            'userData' => $user
+            'userData' => $user,
+            'districtName' => $district['name_hindi']
         ]);
     }
 

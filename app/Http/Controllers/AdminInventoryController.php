@@ -28,10 +28,15 @@ use App\Exports\FarmarListExport;
 use DB;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use App\Models\API\Servicerequest;
 
 class AdminInventoryController extends Controller
 {
+    public function getFarmerRequest(){
+        $data    =  Servicerequest::with('user','maitri')->paginate(10);
+        return view('farmardata.farmer-request-list',['data'=>$data]);
+    }
+
     public function farmarsData(Request $request){
         $districts = Districts::get();
         $farmarUserQuery = User::where('role', 'LIKE', 'Farmer')

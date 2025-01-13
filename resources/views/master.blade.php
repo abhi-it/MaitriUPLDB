@@ -34,8 +34,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
     <!-- New Export Data CDN Start -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.dataTables.min.css" />
     <!-- New Export Data CDN Start -->
 
     <link href="{{ asset('') }}css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -894,31 +895,31 @@
                         <div
                             class="d-flex flex-wrap align-items-center gap-2 justify-content-md-between justify-content-center">
                             <div class="d-flex align-items-center gap-2">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="text-center">
-                                    <a href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}"
-                                            height="100" /></a>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-center">
+                                        <a href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}"
+                                                height="100" /></a>
+                                    </div>
+                                    <span class="middle-line">|</span>
+                                    <div class="text-center">
+                                        <a href="{{ url('/') }}">
+                                            <img src="{{ asset('assets/images/upldb-logo.png')}}" height="100" />
+                                        </a>
+                                    </div>
                                 </div>
-                                <span class="middle-line">|</span>
-                                <div class="text-center">
-                                    <a href="{{ url('/') }}">
-                                        <img src="{{ asset('assets/images/upldb-logo.png')}}" height="100" />
-                                    </a>
+                                <div class="text-md-left text-center">
+                                    <h1 class="mb-2 fw-bold">
+                                        <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="Rashtriya Gokul Mission"></span>
+                                    </h1>
+                                    <h6>
+                                        <span
+                                            data-hi="स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया) हेतु ऑनलाइन आवेदन"
+                                            data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
+                                    </h6>
                                 </div>
-                            </div>
-                            <div class="text-md-left text-center">
-                                <h1 class="mb-2 fw-bold">
-                                    <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="Rashtriya Gokul Mission"></span>
-                                </h1>
-                                <h6>
-                                    <span
-                                        data-hi="स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया) हेतु ऑनलाइन आवेदन"
-                                        data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
-                                </h6>
-                            </div>
                             </div>
                             <div class="kumbhlogo">
-                               <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
+                                <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
                             </div>
                         </div>
                     </div>
@@ -1054,7 +1055,7 @@
                                 </div>
                             </li>
 
-                           
+
 
                             @if (auth()->user()->user_type == 'District Officer')
                             <li class="nav-item {{ request()->is('document-verification') ? 'active' : '' }}">
@@ -1080,7 +1081,8 @@
                                     <a class="dropdown-item" href="{{ url('all-list/' . request()->route('year')) }}">
                                         <span data-hi="सभी" data-en="All"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('general-list/' . request()->route('year')) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ url('general-list/' . request()->route('year')) }}">
                                         <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('obc-list/' . request()->route('year')) }}">
@@ -1198,26 +1200,33 @@
                                     <span data-hi="मैत्री का रिकार्ड" data-en="Record Of Maitri"></span></a>
                             </li>
                             @endif
-                            
+
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
-                            <li class="nav-item dropdown {{ request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
+                            <li
+                                class="nav-item dropdown {{ request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
-                                    <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें" data-en="Placed Candidates & Update Maitri GEO Location"></span>
+                                    <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें"
+                                        data-en="Placed Candidates & Update Maitri GEO Location"></span>
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{ url('all-maitri-geo-location') }}">
-                                        <span data-hi="मैत्री GEO स्थान अपडेट करें" data-en="Update Maitri GEO Location"></span>
+                                        <span data-hi="मैत्री GEO स्थान अपडेट करें"
+                                            data-en="Update Maitri GEO Location"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('all-aicenter-geo-location') }}">
-                                        <span data-hi="एआई सेंटर जीईओ स्थान अपडेट करें" data-en="Update AI Center GEO Location"></span>
+                                        <span data-hi="एआई सेंटर जीईओ स्थान अपडेट करें"
+                                            data-en="Update AI Center GEO Location"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('farmers-data') }}">
                                         <span data-hi="किसान पंजीकरण डेटा" data-en="Farmer Registration Data"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
+                                        <span data-hi="नियुक्त उम्मीदवार" data-en="Farmer Request"></span>
                                     </a>
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
@@ -1229,10 +1238,12 @@
                             </li>
                             <!-- Admin Stock Form Menu Start -->
 
-                            <li class="nav-item dropdown {{ (request()->is('event-news') || request()->is('daily-dashboard')) ? 'active' : '' }}">
+                            <li
+                                class="nav-item dropdown {{ (request()->is('event-news') || request()->is('daily-dashboard')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
-                                    <span data-hi="समाचार घटना और दैनिक डैशबोर्ड" data-en="News Event & Daily Dashboard"></span>
+                                    <span data-hi="समाचार घटना और दैनिक डैशबोर्ड"
+                                        data-en="News Event & Daily Dashboard"></span>
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{ url('daily-dashboard') }}">
@@ -1243,8 +1254,9 @@
                                     </a>
                                 </div>
                             </li>
-                           
-                            <li class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
+
+                            <li
+                                class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="प्रशासनिक स्टॉक और रिकॉर्ड" data-en="Admin Stock & Record"></span>
@@ -1260,7 +1272,8 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown {{ (request()->is('inventory') || request()->is('admin-distributed-record')) ? 'active' : '' }}">
+                            <li
+                                class="nav-item dropdown {{ (request()->is('inventory') || request()->is('admin-distributed-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="इभंडारण एवं वितरण" data-en="Inventory & Distribute"></span>
