@@ -152,6 +152,7 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',
                 'exportFarmarList',
@@ -313,6 +314,7 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',
                 'exportFarmarList',
@@ -492,6 +494,12 @@ class CheckRole
                 'filtered-monthly-report',
             ],
             'Farmer' => [
+                'update-farmer-details',
+                'get-all-aicenter',
+                'get-all-block',
+                'get-all-tehsil',
+                'get-all-district',
+                
                 'check.user.details',
                 'farmer-dashboard',
                 'get-all-maitri',

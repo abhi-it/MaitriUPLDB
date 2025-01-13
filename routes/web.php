@@ -334,6 +334,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
 
 
+    Route::post("update-farmer-details", [App\Http\Controllers\farmer\FarmerController::class, 'updateFarmerDateils'])->name('update-farmer-details');
+
     Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');
     Route::get("service-request", [App\Http\Controllers\farmer\FarmerController::class, 'getServiceFrom'])->name('service-request');
     Route::post("get-all-maitri", [App\Http\Controllers\farmer\FarmerController::class, 'getAllMaitries'])->name('get-all-maitri');
@@ -356,6 +358,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     // inventory 
 
+    Route::get('get-farmer-request', [App\Http\Controllers\AdminInventoryController::class, 'getFarmerRequest'])->name('get-farmer-request');
+    
     Route::post('save-events-data/{id?}', [App\Http\Controllers\AdminInventoryController::class, 'storeOrUpdate'])->name('save-events-data');
 
     Route::get('/events/{id}/edit', [App\Http\Controllers\AdminInventoryController::class, 'createOrEdit'])->name('edit-event');
