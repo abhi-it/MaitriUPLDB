@@ -269,23 +269,23 @@
         //     }
         // });
 
-        // $('#user-details-form').on('submit', function (e) {
-        //     e.preventDefault();
-        //     const formData = $(this).serialize();
+        $('#user-details-form').on('submit', function (e) {
+            e.preventDefault();
+            const formData = $(this).serialize();
 
-        //     $.ajax({
-        //         url: "/submit-user-details", // Update with your actual endpoint
-        //         type: "POST",
-        //         data: formData,
-        //         success: function (response) {
-        //             alert("Details submitted successfully!");
-        //             $('#userDetailsModal').modal('hide'); // Hide the modal
-        //         },
-        //         error: function (xhr) {
-        //             console.error("An error occurred:", xhr.responseJSON.message);
-        //         }
-        //     });
-        // });
+            $.ajax({
+                url: "/submit-user-details", // Update with your actual endpoint
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    alert("Details submitted successfully!");
+                    $('#userDetailsModal').modal('hide'); // Hide the modal
+                },
+                error: function (xhr) {
+                    console.error("An error occurred:", xhr.responseJSON.message);
+                }
+            });
+        });
     });
 </script>
 
