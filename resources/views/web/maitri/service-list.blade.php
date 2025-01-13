@@ -1,18 +1,18 @@
 @extends('submaster')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 class="text-center fw-bold m-4">Service's Request List</h3>
+<h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
 <table class="table">
     <thead>
         <tr>
-			<th>ID</th>
-			<th>User Name</th>
-			<th>Service's Name </th>
-			<th>Maitri Name</th>
+			<th>क्र. सं.</th>
+			<th>उपयोगकर्ता नाम</th>
+			<th>सेवा का नाम </th>
+			<th>मैत्री नाम</th>
 			<th>Message</th>
-			<th>Status</th>
-            <th>Action</th>
+			<th>स्थिति</th>
+            <!-- <th>Action</th> -->
         </tr>
     </thead>
     <tbody>
@@ -55,10 +55,10 @@
                 @endphp
 
                 <select class="form-control status {{$color}}" name="status" id="{{$row->id}}" >
-                    <option value="1" {{($row->status==1)?'selected':""}}>New</option>
-                    <option value="2" {{($row->status==2)?'selected':""}}>Waiting</option>
-                    <option value="3"{{($row->status==3)?'selected':""}} >Decline</option>
-                    <option value="0" {{($row->status==0)?'selected':""}} >Accept</option>
+                    <option value="1" {{($row->status==1)?'selected':""}}>नया है</option>
+                    <option value="2" {{($row->status==2)?'selected':""}}>इंतज़ार में है</option>
+                    <option value="3"{{($row->status==3)?'selected':""}} >अस्वीकार किया गया है</option>
+                    <option value="0" {{($row->status==0)?'selected':""}} >स्वीकार कर लिया है</option>
                 </select>
             </td>
             <!-- <td> @if($row->status==1)
@@ -71,16 +71,16 @@
                  <button class="btn btn-success"> Accept</button>
                 @endif -->
             <!-- </td> -->
-            <td>
-				<!-- <a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> |  -->
+            <!-- <td>
+				<a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> | 
                 <button type="button" class="btn custom-btn btn-danger deleteUser"  data-id="{{$row->id}}"><i class="fa fa-trash">Delete</i></button>
 
-			</td>
+			</td> -->
         </tr>
         @endforeach
         @else
         <tr>
-            <td colspan="5" style="color:red;">No records..</td>
+            <td colspan="5" style="color:red;">कोई रिकॉर्ड नहीं..</td>
         </tr>
 		@endif
     </tbody>

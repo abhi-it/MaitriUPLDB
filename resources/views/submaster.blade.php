@@ -997,7 +997,7 @@
                         @if (Route::has('login'))
                             <span>
                                 @auth
-                                    Welcome,&nbsp;{{ Auth::user()->name }} |
+                                    स्वागत,&nbsp;{{ Auth::user()->name }} |
                                     <a href="{{ route('logout') }}" id="logout_btn"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout
                                         &nbsp;</a>
@@ -1222,7 +1222,7 @@
     @endauth
     @endif      
     <div class="copy-right py-2 text-center copyright-text footer-counter">
-    <a href='https://www.free-counters.org/'>www.free-Counter.org</a> 
+    <!-- <a href='https://www.free-counters.org/'>www.free-Counter.org</a>  -->
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5"></script>
 

@@ -34,8 +34,8 @@
 </style>
 <div class="container main-div">
     <div class="row mb-5">
-        <a href="{{route('add-yielding-animal')}}" class="btn btn-primary">Add New Animal</a>
-        <h3 class="text-center fw-bold m-4">High Yielding Animal</h3>
+        <a href="{{route('add-yielding-animal')}}" class="btn btn-primary">नया पशु जोड़ें</a>
+        <h3 class="text-center fw-bold m-4">उच्च उपज देने वाला पशु</h3>
     </div>
        
         @if(session()->has('success'))
@@ -49,15 +49,15 @@
         </div>
         @endif
         <div class="row">
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th width="2%">ID</th>
-                        <th width="10%">User Name</th>
-                        <th width="15%">Animal</th>
-                        <th width="15%">File</th>
-                        <th width="15%">Details</th>
-                        <th width="10%"> Action</th>
+                        <th>क्र. सं.</th>
+                        <!-- <th width="10%">User Name</th> -->
+                        <th>जानवर</th>
+                        <th>फ़ाइल</th>
+                        <th>विवरण</th>
+                        <!-- <th>कार्रवाई</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -66,15 +66,15 @@
                 @foreach($data as$key=> $row)
                 <tr>
                     <td>{{$key+1}}</td>
-                    <td>{{Auth::user()->FirstName}}</td>
+                    <!-- <td>{{Auth::user()->FirstName}}</td> -->
                     <td>{{$row->type}}</td>
                     <td><img src="https://maitriupldb.in/public/animals/filepng" alt="" width="50" height="50"></td>
                     <td>  {{$row->details}}   </td>
                 
-                    <td>
+                    <!-- <td>
                         <button type="button" class="btn custom-btn btn-danger deleteUser"  data-id="}"><i class="fa fa-trash">Delete</i></button>
 
-                    </td>
+                    </td> -->
                 </tr>
                 @endforeach
                 @else

@@ -1,18 +1,18 @@
 @extends('submaster')
 @section('content')
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-<h3 class="text-center fw-bold m-4">Service's Request List</h3>
+<h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
-			<th>ID</th>
-			<th>User Name</th>
-			<th>Service's Name </th>
-			<th>Maitri Name</th>
-			<th>Message</th>
-			<th>Status</th>
-            <th>Action</th>
+			<th>क्र. सं.</th>
+			<!-- <th>User Name</th> -->
+			<th>सेवा का नाम</th>
+			<!-- <th>Maitri Name</th> -->
+			<th>संदेश</th>
+			<th>स्थिति देखे</th>
+            <!-- <th>Action</th> -->
         </tr>
     </thead>
     <tbody>
@@ -20,41 +20,36 @@
 		@foreach($data as$key=> $row)
         <tr>
             <td>{{$key+1}}</td>
-            <td>{{$row->user->name}}</td>
-             @if($row->service_name=='frozen_semen_ai')
-                <td>Frozen Semen AI</td>
-            @elseif($row->service_name=='sex_semen_ai')
-                <td>Sex Sorted Semen AI</td>
-            @elseif($row->service_name=='ivf_embryo')
-                <td>IVF Embryo</td>
-            @elseif($row->service_name=='health_medical_checkip')
-                <td>Helath/Medical Checkup</td>
-            @elseif($row->service_name=='animal_insurance')
-                <td>Animal Insurance</td>
-            @elseif($row->service_name=='vaccination')
-                <td>Vaccination</td>
-            @elseif($row->service_name=='pregnancy_diagnosis')
-                <td>Pregnancy Diagnosis</td>
+            <!-- <td>{{$row->user->name}}</td> -->
+            @if($row->service_name == 'health_medical_checkip')
+                <td>स्वास्थ्य/चिकित्सा जांच</td>
+            @elseif($row->service_name == 'animal_insurance')
+                <td>पशु बीमा</td>
+            @elseif($row->service_name == 'vaccination')
+                <td>टीकाकरण</td>
+            @elseif($row->service_name == 'pregnancy_diagnosis')
+                <td>गर्भावस्था निदान</td>
             @endif
+
         
             
-            <td>{{$row->maitri->name}}</td>
+            <!-- <td>{{$row->maitri->name}}</td> -->
             <td>{{$row->request_message}}</td>
-            <td> @if($row->status==1)
-                 <button class="btn btn-primary"> New</button>
-                 @elseif($row->status==2)
-                 <button class="btn btn-warning"> Waiting</button>
-                 @elseif($row->status==3)
-                 <button class="btn btn-danger">Decline</button>
-                 @elseif($row->status==0)
-                 <button class="btn btn-success"> Accept</button>
-                @endif
-            </td>
-            <td>
-				<!-- <a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> |  -->
+            @if($row->status==1)
+                <td> <button class="btn btn-primary">नया है</button></td>
+            @elseif($row->status==2)
+                <td><button class="btn btn-warning">इंतज़ार में है</button></td>
+            @elseif($row->status==3)
+                <td><button class="btn btn-danger">अस्वीकार किया गया है</button></td>
+            @elseif($row->status==0)
+                <td><button class="btn btn-success">स्वीकार कर लिया है</button></td>
+            @endif
+          
+            <!-- <td>
+				<a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> | 
                 <button type="button" class="btn custom-btn btn-danger deleteUser"  data-id="{{$row->id}}"><i class="fa fa-trash">Delete</i></button>
 
-			</td>
+			</td> -->
         </tr>
         @endforeach
         @else
