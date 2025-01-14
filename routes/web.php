@@ -357,7 +357,8 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
 
     // inventory 
-
+    Route::post('admin-update-status', [App\Http\Controllers\AdminInventoryController::class, 'updateStatus'])->name('admin-update-status');
+    Route::post('admin-delete-request', [App\Http\Controllers\AdminInventoryController::class, 'farmerDeleteRequest'])->name('admin-delete-request');
     Route::get('get-farmer-request', [App\Http\Controllers\AdminInventoryController::class, 'getFarmerRequest'])->name('get-farmer-request');
     
     Route::post('save-events-data/{id?}', [App\Http\Controllers\AdminInventoryController::class, 'storeOrUpdate'])->name('save-events-data');

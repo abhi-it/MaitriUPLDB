@@ -4,6 +4,7 @@ namespace App\Models\API;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Districts;
 use App\Models\User;
 class Servicerequest extends Model
 {
@@ -18,8 +19,13 @@ class Servicerequest extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
+    
     public function maitri(){
         return $this->belongsTo(User::class,'maitri_id','id');
+    }
+
+    public function district(){
+        return $this->user->district();
     }
 
 }
