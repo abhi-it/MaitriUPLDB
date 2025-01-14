@@ -152,6 +152,8 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'admin-update-status',
+                'admin-delete-request',
                 'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',
@@ -314,6 +316,8 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'admin-update-status',
+                'admin-delete-request',
                 'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',

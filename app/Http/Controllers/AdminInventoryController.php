@@ -32,10 +32,22 @@ use App\Models\API\Servicerequest;
 
 class AdminInventoryController extends Controller
 {
-    public function getFarmerRequest(){
-        $data    =  Servicerequest::with('user','maitri')->paginate(10);
-        return view('farmardata.farmer-request-list',['data'=>$data]);
+    public function getFarmerRequest(Request $request){
+        $district = Districts::get();
+        $query = Servicerequest::with(['user', 'maitri', 'user.district']); 
+        if (!empty($request->input('district_id'))) {
+            $districtId = $request->input('district_id');
+            $query->whereHas('user', function ($q) use ($districtId) {
+                $q->where('district_id', '=', $districtId);
+            });
+        }
+        $data = $query->paginate(10);
+        return view('farmardata.farmer-request-list', [
+            'data' => $data,
+            'district' => $district
+        ]);
     }
+    
 
     public function farmarsData(Request $request){
         $districts = Districts::get();
@@ -56,6 +68,22 @@ class AdminInventoryController extends Controller
         $farmarUser = $farmarUserQuery->paginate(30);
         return view('farmardata.index', compact('farmarUser', 'districts'));
     }
+
+    public function farmerDeleteRequest(Request $request){
+        $data = Servicerequest::where(['id'=>$request->id])->delete();
+        return response()->json(["message"=>'Request deleted successfully!',"status"=>'Success',"data"=>$data],200);
+    }
+
+    public function updateStatus(Request $request){
+        $row = Servicerequest::find($request->id);
+        if ($row) {
+            $row->status = $request->status;
+            $row->save();
+            return response()->json(['success' => 'Status updated successfully.']);
+        }
+        return response()->json(['error' => 'Record not found.'], 404);
+    }
+
 
     public function exportFarmarList(Request $request){
         $query = User::where('role', 'LIKE', 'Farmer')
