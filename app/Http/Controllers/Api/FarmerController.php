@@ -182,7 +182,6 @@ class FarmerController extends Controller
             return $this->successResponse('Animal Data saved successfully',200, $data);
         } else {
             return $this->errorResponse('Error in saving data', 404);
-            return response()->json(['error' => 'Error in saving data'], 404);
         }
     }
 

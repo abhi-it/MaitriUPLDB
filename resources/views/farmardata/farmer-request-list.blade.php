@@ -44,9 +44,13 @@
         </div>
     </form>
     <div class="pagination">
-        {{ $data->links() }}
+        <div class="col-md-12">
+            <div class="pagnation-scroll">
+                {{ $data->links() }}
+            </div>
+        </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-striped  table-responsive table-bordered">
         <thead>
             <tr>
                 <th>क्र. सं.</th>

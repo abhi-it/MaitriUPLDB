@@ -894,7 +894,7 @@
                     <div class="col-lg-9 col-md-12 col-12">
                         <div
                             class="d-flex flex-wrap align-items-center gap-2 justify-content-md-between justify-content-center">
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center gap-2 flex-column flex-md-row">
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="text-center">
                                         <a href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}"
