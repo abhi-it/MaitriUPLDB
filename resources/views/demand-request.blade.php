@@ -96,9 +96,9 @@
                 <select name="district" id="district" class="form-control" autofocus required>
                     <option value="" data-hi="मंडल चुनें" data-en="Select Mandal"></option>
                     @if(count($division)>0)
-                        @foreach($division as $key=>$val)
-                            <option value="{{$val->id}}">{{$val->name_hindi}}</option>
-                        @endforeach
+                    @foreach($division as $key=>$val)
+                    <option value="{{$val->id}}">{{$val->name_hindi}}</option>
+                    @endforeach
                     @endif
                 </select>
             </div>
@@ -119,11 +119,12 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
-                <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड" autofocus>
+                <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड"
+                    autofocus>
 
                 </select>
             </div>
-            
+
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="एआई सेंटर (पशु चिकित्सा अस्पताल / एलईओ सेंटर)"
                         data-en="AI Centre (Veterinary Hospital / LEO Center)"></span> </label>
@@ -134,7 +135,8 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
-                <input type="text" name="post_office" id="post_office"  class="form-control" placeholder="पोस्ट ऑफिस" autofocus>
+                <input type="text" name="post_office" id="post_office" class="form-control" placeholder="पोस्ट ऑफिस"
+                    autofocus>
             </div>
 
 
@@ -320,7 +322,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
-                    <span data-hi="भारत पशुधन पर पंजीकृत यौन वर्गीकृत संतति की संख्या"
+                    <span data-hi="भारत पशुधन पर पंजीकृत वर्गीकृत संतति की संख्या"
                         data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span> </label>
                 <input name="registered_sexed_calves" id="registered_sexed_calves" type="text"
                     ata-placeholder-hi="भारत पशुधन पर पंजीकृत वर्गीकृत वीर्य संतति की संख्या"
@@ -378,7 +380,7 @@ $('.semen_source_added').hide();
 
 
 
-var allData = {}; 
+var allData = {};
 $('#district').change(function() {
     $('#mandal').prop('disabled', false);
     $('#mandal').empty();
@@ -388,7 +390,7 @@ $('#district').change(function() {
     $('#ai_center').empty();
     $('#tehsil').prop('disabled', false);
     $('#tehsil').empty();
-    
+
     var val = $("#district option:selected").val();
     var text = $("#district option:selected").text();
     if (val) {
@@ -406,7 +408,9 @@ $('#district').change(function() {
                     $('#mandal').append(`<option value="">Select District</option>`);
                     getMandal.forEach(item => {
                         if (item.name_hindi && item.name_hindi.trim() !== '') {
-                            $('#mandal').append(`<option value="${item.name_hindi}">${item.name_hindi}</option>`);
+                            $('#mandal').append(
+                                `<option value="${item.name_hindi}">${item.name_hindi}</option>`
+                            );
                         }
                     });
                 } else {
@@ -441,9 +445,10 @@ $('#mandal').change(function() {
                 $('#tehsil').append(`<option value="">Select Tehsil</option>`);
                 getTehsil.forEach(item => {
                     if (item.tehsil && item.tehsil.trim() !== '') {
-                        $('#tehsil').append(`<option value="${item.tehsil}">${item.tehsil}</option>`);
+                        $('#tehsil').append(
+                            `<option value="${item.tehsil}">${item.tehsil}</option>`);
                     }
-                }); 
+                });
             } else {
                 $('#tehsil').append('<option value="">-Data not found.-</option>');
             }
@@ -474,9 +479,10 @@ $('#tehsil').change(function() {
                 $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
                 getBlock.forEach(item => {
                     if (item.block && item.block.trim() !== '') {
-                        $('#vikas_khand').append(`<option value="${item.block}">${item.block}</option>`);
+                        $('#vikas_khand').append(
+                            `<option value="${item.block}">${item.block}</option>`);
                     }
-                }); 
+                });
             } else {
                 $('#vikas_khand').append('<option value="">-Data not found.-</option>');
             }
@@ -507,9 +513,11 @@ $('#vikas_khand').change(function() {
                 $('#ai_center').append(`<option value="">Select AI Center</option>`);
                 getAiCenter.forEach(item => {
                     if (item.center_name && item.center_name.trim() !== '') {
-                        $('#ai_center').append(`<option value="${item.center_name}">${item.center_name}</option>`);
+                        $('#ai_center').append(
+                            `<option value="${item.center_name}">${item.center_name}</option>`
+                        );
                     }
-                }); 
+                });
             } else {
                 $('#ai_center').append('<option value="">-Data not found.-</option>');
             }
@@ -520,7 +528,7 @@ $('#vikas_khand').change(function() {
 // function populateDropdown(selector, data, valueField, defaultText) {
 //     $(selector).empty();
 //     $(selector).append(`<option value="">${defaultText}</option>`);
-    
+
 //     if (data && data.length > 0) {
 //         data.forEach(item => {
 //             $(selector).append(`<option value="${item[valueField]}">${item[valueField]}</option>`);

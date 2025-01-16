@@ -11,50 +11,63 @@
     <h3 class="text-center fw-bold m-4">
         <span data-hi="किसान पंजीकरण डेटा" data-en="Farmer Registration Data"></span>
     </h3>
-    <form method="get" action="{{ Request::url() }}" class="form-comman">
+
+    <div class="form-comman">
+        <form method="get" action="{{ Request::url() }}">
             @csrf
             <div class="row">
 
                 <div class="form-group col-md-5 col-xl-3">
-                    <label for="inputEmail4" class="fw-bold"> <span data-hi="सेलेक्ट जनपद" data-en="Select Janpad"></span></label>
+                    <label for="inputEmail4" class="fw-bold"> <span data-hi="सेलेक्ट जनपद"
+                            data-en="Select Janpad"></span></label>
                     <select class="form-control" name="district_id" id="district_id">
                         <option value="">Select District</option>
                         @foreach($districts as $data)
-                        <option value="{{ $data['id'] }}" {{ $data['id'] == request('district_id') ? 'selected' : '' }}>{{ $data['name_hindi'] }}</option>
+                        <option value="{{ $data['id'] }}" {{ $data['id'] == request('district_id') ? 'selected' : '' }}>
+                            {{ $data['name_hindi'] }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"> <span data-hi="अथवा" data-en="Or" ></span> </div>
+                <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"> <span data-hi="अथवा"
+                        data-en="Or"></span> </div>
 
                 <div class="form-group col-md-5 col-xl-3">
-                    <label for="inputEmail4"  class="fw-bold" data-hi="मोबाइल नंबर" data-en="Mobile Number" ></label>
+                    <label for="inputEmail4" class="fw-bold" data-hi="मोबाइल नंबर" data-en="Mobile Number"></label>
                     <input type="text" value="{{ @$_GET['mobile'] }}" class="form-control" name="mobile" id="mobile"
-                    data-placeholder-hi="मोबाइल नंबर" data-placeholder-en="Mobile Number">
+                        data-placeholder-hi="मोबाइल नंबर" data-placeholder-en="Mobile Number">
                 </div>
 
                 <div class="form-group col-xl-3 mt-4 col-md-12">
-                    <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search"> </span></button>
-                    <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें" data-en="Reset"></span></a>
-                   
+                    <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">
+                        </span></button>
+                    <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें"
+                            data-en="Reset"></span></a>
+
                 </div>
 
             </div>
         </form>
-        <form method="get" action="{{ route('exportFarmarList') }}" > 
+        <form method="get" action="{{ route('exportFarmarList') }}">
             @csrf
-            <div class="col-md-2 m-2">
+
+            <div class="">
                 <input type="hidden" id="mobile" name="mobile" value="{{ request('mobile') ?: '' }}">
                 <input type="hidden" id="dis_id" name="dis_id" value="{{ request('district_id') ?: '' }}">
 
-                <button class="btn btn-primary" type="submit" id="exportFarmarList" >
+                <button class="btn btn-primary" type="submit" id="exportFarmarList">
                     <span data-hi="एक्सपोर्ट" data-en="Export"></span>
                 </button>
             </div>
-        </form>
 
+        </form>
+    </div>
     <div class="pagination">
-        {{ $farmarUser->links() }}
+        <div class="col-md-12">
+            <div class="pagnation-scroll">
+                {{ $farmarUser->links() }}
+            </div>
+        </div>
     </div>
     <table class="table table-striped  table-responsive table-bordered" style="display:block !important;">
         <thead>
@@ -99,7 +112,11 @@
 
     </table>
     <div class="pagination">
-        {{ $farmarUser->links() }}
+        <div class="col-md-12">
+            <div class="pagnation-scroll">
+                {{ $farmarUser->links() }}
+            </div>
+        </div>
     </div>
 </div>
 

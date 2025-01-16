@@ -26,51 +26,58 @@
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="एआई केंद्र जीईओ स्थान" data-en="AI Center GEO Location"></span>
     </h3>
-    <a href="/inactive-aicenter-geo-location"><button class="mb-3 btn btn-primary">Inactive AI Center GEO Location</button></a>
+    <a href="/inactive-aicenter-geo-location"><button class="mb-3 btn btn-primary">Inactive AI Center GEO
+            Location</button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
         <div class="row">
             <!-- <div class="form-group col-md-5 col-xl-3">
                    
             </div> -->
-            <div class="form-group col-xl-3 mt-4 col-md-12 d-flex">
+            <div class="form-group col-xl-3 mt-4 col-md-12">
                 <label for="inputEmail4" class="fw-bold"> <span data-hi="जिला चुनें"
                         data-en="Select District"></span></label>
-                <div>
-                    <select class="form-control" name="district_id" id="mandal">
-                        <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
-                        @foreach($districts as $district)
-                        <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
-                            data-en="{{ $district['name_eng'] }}" 
-                            @if(request('district_id') == $district['name_hindi']) selected @endif></option>
-                        @endforeach
-                    </select>
 
-                    <select name="aicenter" id="aicenter" class="form-control"autofocus>
-                        <option value="" data-hi="एआई सेंटर चुनें" data-en="Select AiCenter"></option>
-                        @foreach($aiCenterData as $aiCenter)
-                            <option value="{{ $aiCenter['name'] }}" data-hi="{{ $aiCenter['name'] }}"
-                                data-en="{{ $aiCenter['name'] }}"
-                                @if(request('aicenter') == $aiCenter['name']) selected @endif></option>
-                        @endforeach
-                    </select>
-
-                    <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">
-                        </span></button>
-                    <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें"
-                            data-en="Reset"></span></a>
-                    @if (isset($route, $year))
-                    @php
-                    $queryParameters = request()->query();
-
-                    $queryParameters['export'] = true;
-                    $queryParameters['year'] = $year;
-                    @endphp
-
-                    <a class="btn btn-secondary btn-export" href="{{ route($route, $queryParameters) }}">Export</a>
-                    @endif
-                </div>
+                <select class="form-control" name="district_id" id="mandal">
+                    <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
+                    @foreach($districts as $district)
+                    <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
+                        data-en="{{ $district['name_eng'] }}" @if(request('district_id')==$district['name_hindi'])
+                        selected @endif></option>
+                    @endforeach
+                </select>
             </div>
+
+            <div class="form-group col-xl-3 mt-4 col-md-12">
+                <label class="fw-bold">Select AiCenter</label>
+
+                <select name="aicenter" id="aicenter" class="form-control" autofocus>
+                    <option value="" data-hi="एआई सेंटर चुनें" data-en="Select AiCenter"></option>
+                    @foreach($aiCenterData as $aiCenter)
+                    <option value="{{ $aiCenter['name'] }}" data-hi="{{ $aiCenter['name'] }}"
+                        data-en="{{ $aiCenter['name'] }}" @if(request('aicenter')==$aiCenter['name']) selected @endif>
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-xl-3 mt-4 col-md-12">
+                <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">
+                    </span></button>
+                <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें"
+                        data-en="Reset"></span></a>
+            </div>
+            @if (isset($route, $year))
+            @php
+            $queryParameters = request()->query();
+
+            $queryParameters['export'] = true;
+            $queryParameters['year'] = $year;
+            @endphp
+
+            <a class="btn btn-secondary btn-export" href="{{ route($route, $queryParameters) }}">Export</a>
+            @endif
+
+        </div>
     </form>
 
     @if(session()->has('success'))
@@ -79,7 +86,11 @@
     </div>
     @endif
     <div class="pagination">
-        {{ $allAicenter->links() }}
+        <div class="col-md-12">
+            <div class="pagnation-scroll">
+                {{ $allAicenter->links() }}
+            </div>
+        </div>
     </div>
     <table class="table table-striped table-responsive table-bordered">
         <thead>
@@ -112,7 +123,11 @@
         </tbody>
     </table>
     <div class="pagination">
-        {{ $allAicenter->links() }}
+        <div class="col-md-12">
+            <div class="pagnation-scroll">
+                {{ $allAicenter->links() }}
+            </div>
+        </div>
     </div>
 
 </div>
@@ -151,7 +166,7 @@ $(document).ready(function() {
     //                         );
     //                     }
     //                 });
-                   
+
     //             } else {
     //                 $('#tehsil').append(
     //                     '<option value="">-Data not found.-</option>');
@@ -163,7 +178,7 @@ $(document).ready(function() {
     //         }
     //     });
     // });
-   
+
     // $('#tehsil').change(function() {
     //     $('#vikas_khand').prop('disabled', false);
     //     $('#vikas_khand').empty();

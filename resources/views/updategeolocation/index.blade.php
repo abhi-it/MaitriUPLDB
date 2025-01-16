@@ -25,68 +25,79 @@
 </style>
 <div class="container main-div">
     <h3 class="text-center fw-bold m-4"><span data-hi="मैत्री जीईओ स्थान" data-en="Maitri GEO Location"></span></h3>
-    <a href="/inactive-maitri-geo-location"><button class="mb-3 btn btn-primary">Inactive Maitri GEO Location</button></a>
+    <a href="/inactive-maitri-geo-location"><button class="mb-3 btn btn-primary">Inactive Maitri GEO
+            Location</button></a>
     <form method="get" action="{{ Request::url() }}" class="form-comman maitri-update">
         @csrf
         <div class="row">
-            <div class="form-group col-xl-3 mt-4 col-md-12 d-flex">
+            <div class="form-group col-md-5 col-xl-3">
                 <label for="inputEmail4" class="fw-bold"> <span data-hi="जिला चुनें"
                         data-en="Select District"></span></label>
-                <div>
-                    <select class="form-control" name="district_id" id="mandal">
-                        <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
-                        @foreach($districts as $district)
-                        <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
-                            data-en="{{ $district['name_eng'] }}" @if(request('district_id')==$district['name_hindi'])
-                            selected @endif></option>
-                        @endforeach 
-                    </select>
-
-                    <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
-                        <option value="" data-hi="तहसील चुनें" data-en="Select Tehsil"></option>
-                        @foreach($tehsilData as $tehsil)
-                        @if($tehsil != '')
-                        <option value="{{ $tehsil['tehsil'] }}" data-hi="{{ $tehsil['tehsil'] }}"
-                            data-en="{{ $tehsil['tehsil'] }}" @if(request('tehsil')==$tehsil['tehsil']) selected @endif>
-                        </option>
-                        @endif
-                        @endforeach
-                    </select>
-
-                    <select name="block" id="vikas_khand" class="form-control" autofocus>
-                        <option value="" data-hi="ब्लॉक चुनें" data-en="Select Block"></option>
-                        @foreach($blockData as $block)
-                        <option value="{{ $block['block'] }}" data-hi="{{ $block['block'] }}"
-                            data-en="{{ $block['block'] }}" @if(request('block')==$block['block']) selected @endif>
-                        </option>
-                        @endforeach
-                    </select>
-
-                    <select name="aicenter" id="aicenter" class="form-control" autofocus>
-                        <option value="" data-hi="एआई सेंटर चुनें" data-en="Select AiCenter"></option>
-                        @foreach($aiCenterData as $aiCenter)
-                        <option value="{{ $aiCenter['center_name'] }}" data-hi="{{ $aiCenter['center_name'] }}"
-                            data-en="{{ $aiCenter['center_name'] }}" @if(request('aicenter')==$aiCenter['center_name'])
-                            selected @endif></option>
-                        @endforeach
-                    </select>
-
-                    <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">
-                        </span></button>
-                    <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें"
-                            data-en="Reset"></span></a>
-                    @if (isset($route, $year))
-                    @php
-                    $queryParameters = request()->query();
-
-                    $queryParameters['export'] = true;
-                    $queryParameters['year'] = $year;
-                    @endphp
-
-                    <a class="btn btn-secondary btn-export" href="{{ route($route, $queryParameters) }}">Export</a>
-                    @endif
-                </div>
+                <select class="form-control" name="district_id" id="mandal">
+                    <option value="" data-hi="जिला चुनें" data-en="Select District"></option>
+                    @foreach($districts as $district)
+                    <option value="{{ $district['name_hindi'] }}" data-hi="{{ $district['name_hindi'] }}"
+                        data-en="{{ $district['name_eng'] }}" @if(request('district_id')==$district['name_hindi'])
+                        selected @endif></option>
+                    @endforeach
+                </select>
             </div>
+            <div class="form-group col-md-5 col-xl-3">
+                <label class="fw-bold">Select tehsil</label>
+                <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus>
+                    <option value="" data-hi="तहसील चुनें" data-en="Select Tehsil"></option>
+                    @foreach($tehsilData as $tehsil)
+                    @if($tehsil != '')
+                    <option value="{{ $tehsil['tehsil'] }}" data-hi="{{ $tehsil['tehsil'] }}"
+                        data-en="{{ $tehsil['tehsil'] }}" @if(request('tehsil')==$tehsil['tehsil']) selected @endif>
+                    </option>
+                    @endif
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group col-md-5 col-xl-3">
+                <label class="fw-bold">Select Block</label>
+                <select name="block" id="vikas_khand" class="form-control" autofocus>
+                    <option value="" data-hi="ब्लॉक चुनें" data-en="Select Block"></option>
+                    @foreach($blockData as $block)
+                    <option value="{{ $block['block'] }}" data-hi="{{ $block['block'] }}"
+                        data-en="{{ $block['block'] }}" @if(request('block')==$block['block']) selected @endif>
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group col-md-5 col-xl-3">
+                <label class="fw-bold">Select AiCenter</label>
+                <select name="aicenter" id="aicenter" class="form-control" autofocus>
+                    <option value="" data-hi="एआई सेंटर चुनें" data-en="Select AiCenter"></option>
+                    @foreach($aiCenterData as $aiCenter)
+                    <option value="{{ $aiCenter['center_name'] }}" data-hi="{{ $aiCenter['center_name'] }}"
+                        data-en="{{ $aiCenter['center_name'] }}" @if(request('aicenter')==$aiCenter['center_name'])
+                        selected @endif></option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group col-xl-3 mt-4 col-md-12">
+                <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">
+                    </span></button>
+                <a href="{{ Request::url() }}" class="btn btn-secondary"> <span data-hi=" रीसेट करें"
+                        data-en="Reset"></span></a>
+            </div>
+            @if (isset($route, $year))
+            @php
+            $queryParameters = request()->query();
+
+            $queryParameters['export'] = true;
+            $queryParameters['year'] = $year;
+            @endphp
+
+            <a class="btn btn-secondary btn-export" href="{{ route($route, $queryParameters) }}">Export</a>
+            @endif
+
+        </div>
     </form>
 
     @if(session()->has('success'))
@@ -97,7 +108,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            {{ $allMaitri->appends(request()->query())->links() }}
+            <div class="pagnation-scroll">
+                {{ $allMaitri->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
     <table id="myTable202" class="table table-striped  table-responsive table-bordered">
@@ -146,7 +159,9 @@
     </table>
     <div class="row">
         <div class="col-md-12">
-            {{ $allMaitri->appends(request()->query())->links() }}
+            <div class="pagnation-scroll">
+                {{ $allMaitri->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
 </div>
