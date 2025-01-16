@@ -80,7 +80,8 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
             <div class="form-group col-md-4">
                 <label for="inputPassword4">
                     <span data-hi="ज़िला" data-en="District"></span>
-                </label> : {{ ($data->district)?$distric:'' }}
+                </label> : {{ ($data->district) ? $data->district :'' }}
+                <!-- {{ ($data->district) ? $distric :'' }} -->
             </div>
 
             <div class="form-group col-md-4">
