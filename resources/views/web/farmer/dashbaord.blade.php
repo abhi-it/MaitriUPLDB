@@ -136,7 +136,6 @@
                             </select>
                         </div>
 
-
                         <div class="form-group col-md-12">
                             <label for="animal">
                                 <span>पशु की जानकारी</span>
@@ -152,7 +151,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-
                                         <input type="text" class="form-control" id="breeds" name="breeds[]" required
                                             placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
                                     </div>
@@ -161,12 +159,11 @@
                                             required placeholder="पशु की जानकारी" autocomplete="off">
                                     </div>
                                     <div class="form-group col-md-2">
-
                                         <input type="text" class="form-control" id="milk_day" name="milk_day[]" required
                                             placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
                                     </div>
                                     <div class="form-group col-md-1">
-                                        <span class="add btn btn-primary btn-sm"><span></span>जोड़ें</span>
+                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
                                     </div>
                                 </div>
                             </div>
@@ -250,6 +247,20 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
 $(document).ready(function() {
+
+    $('.optionBox').on('click', '.add', function() {
+        var newRow = $(this).closest('.block').clone();
+        newRow.find('input').val('');
+        newRow.find('.add').removeClass('add btn-primary').addClass('remove btn-danger').text(
+            'हटाएं');
+        $('.optionBox').append(newRow);
+    });
+
+    // Function to remove a row
+    $('.optionBox').on('click', '.remove', function() {
+        $(this).closest('.block').remove(); // Remove the row
+    });
+
     var allData = {};
     $('#district').change(function() {
         $('#mandal').prop('disabled', false);
@@ -375,15 +386,47 @@ $(document).ready(function() {
                 $('#first_name').val(getUserData.FirstName);
                 $('#MobileNumber').val(getUserData.MobileNumber);
                 $('#gender').val(getUserData.gender);
-                $('#animal_type').val(getUserData.animal_type);
-                $('#breeds').val(getUserData.breeds);
-                $('#cattale_no').val(getUserData.cattale_no);
                 $('#user_id').val(getUserData.id);
-
                 $('#post_office').val(getUserData.post_office);
                 $('#pincode').val(getUserData.pincode);
                 $('#gram_panchayat').val(getUserData.gram_panchayat);
-                $('#milk_day').val(getUserData.milk_day);
+
+                // $('.optionBox').empty();
+                $.each(response.animal_type, function(index, animalType) {
+                    var breed = response.breeds[index];
+                    var cattaleNo = response.cattale_no[index];
+                    var milkDay = response.milk_day[index];
+
+                    var newRow = `
+                    <div class="block row adddiv_${index}">
+                        <div class="form-group col-md-3">
+                            <select class="form-control" name="animal_type[]" required>
+                                <option value="cow" ${animalType === 'cow' ? 'selected' : ''}>गाय</option>
+                                <option value="buffalo" ${animalType === 'buffalo' ? 'selected' : ''}>भैंस</option>
+                                <option value="goat" ${animalType === 'goat' ? 'selected' : ''}>बकरी</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="breeds[]" required value="${breed}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number" class="form-control" name="cattale_no[]" required value="${cattaleNo}" placeholder="पशु की जानकारी" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" name="milk_day[]" required value="${milkDay}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-1">
+                            <span class="remove btn btn-danger btn-sm">हटाएं</span>
+                        </div>
+                    </div>`;
+                    $('.optionBox').append(newRow);
+                });
+
+                $('.optionBox').on('click', '.remove', function() {
+                    $(this).closest('.block').remove();
+                });
+
+
 
                 if (getUserData.division_id) {
                     $('#district').val(getUserData.division_id);

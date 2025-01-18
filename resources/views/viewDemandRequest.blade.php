@@ -205,6 +205,40 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
                         data-en="Number of SeXed Calves Registered on Bharat Pashudhan"></span>
                 </label> : {{$data->registered_buffalo_calves}}
             </div>
+            @php
+            // Split the comma-separated data into arrays
+            $semenArray = explode(',', $data->semen);
+            $semenTypeArray = explode(',', $data->semen_type);
+            $breedArray = explode(',', $data->breed);
+            $semenSourceArray = explode(',', $data->semen_source);
+
+            // Determine the maximum count to handle mismatched array lengths
+            $maxCount = max(count($semenArray), count($semenTypeArray), count($breedArray), count($semenSourceArray));
+            @endphp
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th><span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span></th>
+                                <th><span data-hi="वीर्य प्रकार" data-en="Semen Type"></span></th>
+                                <th><span data-hi="नस्ल" data-en="Breed"></span></th>
+                                <th><span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i < $maxCount; $i++) <tr>
+                                <td>{{ $semenArray[$i] ?? '' }}</td>
+                                <td>{{ $semenTypeArray[$i] ?? '' }}</td>
+                                <td>{{ $breedArray[$i] ?? '' }}</td>
+                                <td>{{ $semenSourceArray[$i] ?? '' }}</td>
+                                </tr>
+                                @endfor
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
 
         </div>

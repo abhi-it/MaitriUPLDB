@@ -163,64 +163,76 @@
                 <input name="demand_section" id="demand_section" type="text" class="form-control"
                     data-placeholder-hi="तरल नाइट्रोजन" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
-                </label>
-                <select name="semen" id="semen" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                    <option value="catle" data-hi="गाय" data-en="Cattle"></option>
-                    <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
-                    <option value="goat" data-hi="बकरी" data-en="Goat"></option>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>
-                <select name="semen_type" id="semen_type" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                    <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>
-                    <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span> </label>
-                <select name="semen_source" id="semen_source" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                    <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>
-                    <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
-                    <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>
-                    <option value="Amul" data-hi="अमूल" data-en="Amul"></option>
-                    <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>
-                    <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>
-                    <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>
-                    <option value="others" data-hi="अन्य" data-en="Others"></option>
-                </select>
-            </div>
-            <div class="form-group col-md-6 semen_source_added">
-                <label for="inputEmail4"> <span data-hi="कृपया वीर्य का स्रोत भरें"
-                        data-en="Please enter source of semen"></span> </label>
-                <input type="text" name="semen_source" class="form-control" id="semen_source_added"
-                    data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
-            </div>
 
 
 
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>
-                <input name="breed" id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"
-                    data-placeholder-en="Breed" autofocus>
+            <div class="form-group col-md-12 pt-4 main_div_block" style="background: #eee;">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">
+                            <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
+                        </label>
+                        <select name="semen[]" id="semen" class="form-control" autofocus>
+                            <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                            <option value="catle" data-hi="गाय" data-en="Cattle"></option>
+                            <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
+                            <option value="goat" data-hi="बकरी" data-en="Goat"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>
+                        <select name="semen_type[]" id="semen_type" class="form-control" autofocus>
+                            <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                            <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>
+                            <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>
+                        </label>
+                        <select name="semen_source[]" id="semen_source" class="form-control" autofocus>
+                            <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                            <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>
+                            <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
+                            <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>
+                            <option value="Amul" data-hi="अमूल" data-en="Amul"></option>
+                            <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>
+                            <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>
+                            <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>
+                            <option value="others" data-hi="अन्य" data-en="Others"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4 semen_source_added">
+                        <label for="inputEmail4"> <span data-hi="कृपया वीर्य का स्रोत भरें"
+                                data-en="Please enter source of semen"></span> </label>
+                        <input type="text" name="semen_source[]" class="form-control" id="semen_source_added"
+                            data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>
+                        <input name="breed[]" id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"
+                            data-placeholder-en="Breed" autofocus>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>
+                        <input name="bull_id[]" id="bull_id" type="text" class="form-control"
+                            data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>
+                        </label>
+                        <input name="Sheath[]" id="Sheath" type="text" class="form-control"
+                            data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>
+                    </div>
+                    <div class="form-group col-md-12 text-center">
+                        <span class="add btn btn-primary btn-sm demand-request-add-btn">Add More</span>
+                        <!-- <span class="remove">Remove</span> -->
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>
-                <input name="bull_id" id="bull_id" type="text" class="form-control" data-placeholder-hi="बुल आई.डी."
-                    data-placeholder-en="Bull ID" autofocus>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>
-                </label>
-                <input name="Sheath" id="Sheath" type="text" class="form-control" data-placeholder-hi="शीत क्वांटिटी"
-                    data-placeholder-en="AI Sheath Quantity" autofocus>
-            </div>
+
+
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="एआई ग्लव्स की मात्रा" data-en="AI Gloves Quantity"></span>
                 </label>
@@ -378,6 +390,88 @@ $(document).ready(function() {
 $('.added_vh_ai_center').hide();
 $('.semen_source_added').hide();
 
+var maxFields = 6;
+var fieldCount = 0;
+$('.demand-request-add-btn').click(function() {
+    if (fieldCount < maxFields) {
+        var newField = '<div class="form-group col-md-12 pt-4 sub_block_' + fieldCount + '" style="background: #eee;">\
+            <div class="row">\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4">\
+                        <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>\
+                    </label>\
+                    <select name="semen[]" id="semen" class="form-control" autofocus>\
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+                        <option value="catle" data-hi="गाय" data-en="Cattle"></option>\
+                        <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>\
+                        <option value="goat" data-hi="बकरी" data-en="Goat"></option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>\
+                    <select name="semen_type[]" id="semen_type" class="form-control" autofocus>\
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+                        <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>\
+                        <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>\
+                    </label>\
+                    <select name="semen_source[]" id="semen_source" class="form-control" autofocus>\
+                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+                        <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>\
+                        <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>\
+                        <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>\
+                        <option value="Amul" data-hi="अमूल" data-en="Amul"></option>\
+                        <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>\
+                        <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>\
+                        <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>\
+                        <option value="others" data-hi="अन्य" data-en="Others"></option>\
+                    </select>\
+                </div>\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>\
+                    <input name="breed[]" id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"\
+                        data-placeholder-en="Breed" autofocus>\
+                </div>\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>\
+                    <input name="bull_id[]" id="bull_id" type="text" class="form-control"\
+                        data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>\
+                </div>\
+                <div class="form-group col-md-4">\
+                    <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>\
+                    </label>\
+                    <input name="Sheath[]" id="Sheath" type="text" class="form-control"\
+                        data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>\
+                </div>\
+                <div class="form-group col-md-12 text-center">\
+                    <span class="demand-request-remove-btn btn btn-danger btn-sm" data-index="' + fieldCount + '">Remove</span>\
+                </div>\
+            </div>\
+        </div>';
+
+        $('.main_div_block:last').after(newField);
+        fieldCount++;
+
+        var lang = $(".switchlang option:selected").val();
+        localStorage.setItem("selectedProject", lang);
+        switchLang(lang)
+
+        if (fieldCount === maxFields) {
+            $('.demand-request-add-btn').hide();
+        }
+    }
+
+});
+
+$(document).on('click', '.demand-request-remove-btn', function() {
+    var index = $(this).data('index');
+    $(this).closest('.sub_block_' + index).remove();
+    fieldCount--;
+    $('.demand-request-add-btn').show();
+});
 
 
 var allData = {};
