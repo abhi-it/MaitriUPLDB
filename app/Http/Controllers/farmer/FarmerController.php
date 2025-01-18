@@ -75,11 +75,21 @@ class FarmerController extends Controller{
             return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
         }
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
-        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+        $isFilled = !empty($user->profile) &&!empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+        
+        $animalTypes = explode(',', $user->animal_type);
+        $breeds = explode(',', $user->breeds);
+        $cattaleNos = explode(',', $user->cattale_no);
+        $milkDays = explode(',', $user->milk_day);
+
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
             'userData' => $user,
-            'districtName' => $district['name_hindi']
+            'districtName' => $district['name_hindi'],
+            'animal_type' => $animalTypes,
+            'breeds' => $breeds,
+            'cattale_no' => $cattaleNos,
+            'milk_day' => $milkDays
         ]);
     }
 
