@@ -435,8 +435,6 @@ $(document).ready(function() {
                     $(this).closest('.block').remove();
                 });
 
-
-
                 if (getUserData.division_id) {
                     $('#district').val(getUserData.division_id);
                     $('#district').change();
@@ -467,7 +465,7 @@ $(document).ready(function() {
                             .click();
                     }
                 }, 1600);
-
+                $('#exampleModal').modal('show');
                 $('#userDetailsModal').modal('show');
 
             } else if (response.status === "filled") {
