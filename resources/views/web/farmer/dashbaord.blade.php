@@ -248,14 +248,15 @@
 <script>
 $(document).ready(function() {
 
-    // $(window).on('load', function() {
-    //     var modelShown = localStorage.getItem('farmer');
-    //     console.log('localStorage', localStorage, modelShown)
-    //     if (modelShown != 'YES') {
-    //         $('#exampleModal').modal('show');
-    //         localStorage.setItem('farmer', 'YES');
-    //     }
-    // });
+    $(window).on('load', function() {
+        var modelShown = localStorage.getItem('farmer');
+        console.log('localStorage', localStorage, modelShown)
+        if (modelShown != 'YES') {
+            $('#exampleModal').modal('show');
+            localStorage.setItem('farmer', 'YES');
+        }
+    });
+
     $('.optionBox').on('click', '.add', function() {
         var newRow = $(this).closest('.block').clone();
         newRow.find('input').val('');
