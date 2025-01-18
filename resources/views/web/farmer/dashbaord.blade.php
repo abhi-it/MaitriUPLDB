@@ -248,165 +248,165 @@
 <script>
 $(document).ready(function() {
 
-    $(window).on('load', function() {
-        var modelShown = localStorage.getItem('farmer');
-        console.log('localStorage', localStorage, modelShown)
-        if (modelShown != 'YES') {
-            $('#exampleModal').modal('show');
-            localStorage.setItem('farmer', 'YES');
-        }
-    });
+    // $(window).on('load', function() {
+    //     var modelShown = localStorage.getItem('farmer');
+    //     console.log('localStorage', localStorage, modelShown)
+    //     if (modelShown != 'YES') {
+    //         $('#exampleModal').modal('show');
+    //         localStorage.setItem('farmer', 'YES');
+    //     }
+});
 
-    $('.optionBox').on('click', '.add', function() {
-        var newRow = $(this).closest('.block').clone();
-        newRow.find('input').val('');
-        newRow.find('.add').removeClass('add btn-primary').addClass('remove btn-danger').text(
-            'हटाएं');
-        $('.optionBox').append(newRow);
-    });
+$('.optionBox').on('click', '.add', function() {
+    var newRow = $(this).closest('.block').clone();
+    newRow.find('input').val('');
+    newRow.find('.add').removeClass('add btn-primary').addClass('remove btn-danger').text(
+        'हटाएं');
+    $('.optionBox').append(newRow);
+});
 
-    // Function to remove a row
-    $('.optionBox').on('click', '.remove', function() {
-        $(this).closest('.block').remove(); // Remove the row
-    });
+// Function to remove a row
+$('.optionBox').on('click', '.remove', function() {
+    $(this).closest('.block').remove(); // Remove the row
+});
 
-    var allData = {};
-    $('#district').change(function() {
-        $('#mandal').prop('disabled', false);
-        $('#mandal').empty();
-        $('#vikas_khand').prop('disabled', false);
-        $('#vikas_khand').empty();
-        $('#ai_center').prop('disabled', false);
-        $('#ai_center').empty();
-        $('#tehsil').prop('disabled', false);
-        $('#tehsil').empty();
+var allData = {};
+$('#district').change(function() {
+    $('#mandal').prop('disabled', false);
+    $('#mandal').empty();
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    $('#tehsil').prop('disabled', false);
+    $('#tehsil').empty();
 
-        var val = $("#district option:selected").val();
-        var text = $("#district option:selected").text();
-        if (val) {
-            $.ajax({
-                type: "GET",
-                url: "get-all-district",
-                data: {
-                    "id": val,
-                    "mandal": text,
-                },
-                cache: false,
-                success: function(data) {
-                    var getMandal = data.data;
-                    if (getMandal && getMandal.length > 0) {
-                        $('#mandal').append(`<option value="">जिला चुने</option>`);
-                        getMandal.forEach(item => {
-                            if (item.janpad_name && item.janpad_name.trim() !==
-                                '') {
-                                $('#mandal').append(
-                                    `<option value="${item.janpad_name}">${item.janpad_name}</option>`
-                                );
-                            }
-                        });
-                    } else {
-                        $('#mandal').append('<option value="">-Data not found.-</option>');
-                    }
-                }
-            });
-        }
-    });
-
-    $('#mandal').change(function() {
-        $('#vikas_khand').prop('disabled', false);
-        $('#vikas_khand').empty();
-        $('#ai_center').prop('disabled', false);
-        $('#ai_center').empty();
-        $('#tehsil').prop('disabled', false);
-        $('#tehsil').empty();
-
-        var mandal = $("#district option:selected").text();
-        var janpad = $("#mandal option:selected").val();
+    var val = $("#district option:selected").val();
+    var text = $("#district option:selected").text();
+    if (val) {
         $.ajax({
             type: "GET",
-            url: "get-all-tehsil",
+            url: "get-all-district",
             data: {
-                "mandal": mandal,
-                "janpad": janpad,
+                "id": val,
+                "mandal": text,
             },
             cache: false,
             success: function(data) {
-                var getTehsil = data.data;
-                if (getTehsil && getTehsil.length > 0) {
-                    $('#tehsil').append(`<option value="">तहसील चूने</option>`);
-                    getTehsil.forEach(item => {
-                        if (item.tehsil && item.tehsil.trim() !== '') {
-                            $('#tehsil').append(
-                                `<option value="${item.tehsil}">${item.tehsil}</option>`
+                var getMandal = data.data;
+                if (getMandal && getMandal.length > 0) {
+                    $('#mandal').append(`<option value="">जिला चुने</option>`);
+                    getMandal.forEach(item => {
+                        if (item.janpad_name && item.janpad_name.trim() !==
+                            '') {
+                            $('#mandal').append(
+                                `<option value="${item.janpad_name}">${item.janpad_name}</option>`
                             );
                         }
                     });
                 } else {
-                    $('#tehsil').append('<option value="">-Data not found.-</option>');
+                    $('#mandal').append('<option value="">-Data not found.-</option>');
                 }
             }
         });
-    });
+    }
+});
 
-    $('#tehsil').change(function() {
-        $('#vikas_khand').prop('disabled', false);
-        $('#vikas_khand').empty();
-        $('#ai_center').prop('disabled', false);
-        $('#ai_center').empty();
-        var tehsil = $(this).val();
-        var mandal = $("#district option:selected").text();
-        var janpad = $("#mandal option:selected").val();
-        $.ajax({
-            type: "GET",
-            url: "get-all-block",
-            data: {
-                "tehsil": tehsil,
-                "mandal": mandal,
-                "janpad": janpad,
-            },
-            cache: false,
-            success: function(data) {
-                var getBlock = data.data;
-                if (getBlock && getBlock.length > 0) {
-                    $('#vikas_khand').append(
-                        `<option value="">विकास खंड चूने</option>`);
-                    getBlock.forEach(item => {
-                        if (item.block && item.block.trim() !== '') {
-                            $('#vikas_khand').append(
-                                `<option value="${item.block}">${item.block}</option>`
-                            );
-                        }
-                    });
-                } else {
-                    $('#vikas_khand').append('<option value="">-Data not found.-</option>');
-                }
-            }
-        });
-    });
+$('#mandal').change(function() {
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    $('#tehsil').prop('disabled', false);
+    $('#tehsil').empty();
 
+    var mandal = $("#district option:selected").text();
+    var janpad = $("#mandal option:selected").val();
     $.ajax({
-        url: "{{ route('check.user.details') }}",
         type: "GET",
-        success: function(response) {
-            if (response.status === "not_filled") {
+        url: "get-all-tehsil",
+        data: {
+            "mandal": mandal,
+            "janpad": janpad,
+        },
+        cache: false,
+        success: function(data) {
+            var getTehsil = data.data;
+            if (getTehsil && getTehsil.length > 0) {
+                $('#tehsil').append(`<option value="">तहसील चूने</option>`);
+                getTehsil.forEach(item => {
+                    if (item.tehsil && item.tehsil.trim() !== '') {
+                        $('#tehsil').append(
+                            `<option value="${item.tehsil}">${item.tehsil}</option>`
+                        );
+                    }
+                });
+            } else {
+                $('#tehsil').append('<option value="">-Data not found.-</option>');
+            }
+        }
+    });
+});
 
-                var getUserData = response.userData;
-                var district = response.districtName;
-                $('#first_name').val(getUserData.FirstName);
-                $('#MobileNumber').val(getUserData.MobileNumber);
-                $('#gender').val(getUserData.gender);
-                $('#user_id').val(getUserData.id);
-                $('#post_office').val(getUserData.post_office);
-                $('#pincode').val(getUserData.pincode);
-                $('#gram_panchayat').val(getUserData.gram_panchayat);
+$('#tehsil').change(function() {
+    $('#vikas_khand').prop('disabled', false);
+    $('#vikas_khand').empty();
+    $('#ai_center').prop('disabled', false);
+    $('#ai_center').empty();
+    var tehsil = $(this).val();
+    var mandal = $("#district option:selected").text();
+    var janpad = $("#mandal option:selected").val();
+    $.ajax({
+        type: "GET",
+        url: "get-all-block",
+        data: {
+            "tehsil": tehsil,
+            "mandal": mandal,
+            "janpad": janpad,
+        },
+        cache: false,
+        success: function(data) {
+            var getBlock = data.data;
+            if (getBlock && getBlock.length > 0) {
+                $('#vikas_khand').append(
+                    `<option value="">विकास खंड चूने</option>`);
+                getBlock.forEach(item => {
+                    if (item.block && item.block.trim() !== '') {
+                        $('#vikas_khand').append(
+                            `<option value="${item.block}">${item.block}</option>`
+                        );
+                    }
+                });
+            } else {
+                $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+            }
+        }
+    });
+});
 
-                // $('.optionBox').empty();
-                $.each(response.animal_type, function(index, animalType) {
-                    var breed = response.breeds[index];
-                    var cattaleNo = response.cattale_no[index];
-                    var milkDay = response.milk_day[index];
+$.ajax({
+    url: "{{ route('check.user.details') }}",
+    type: "GET",
+    success: function(response) {
+        if (response.status === "not_filled") {
 
-                    var newRow = `
+            var getUserData = response.userData;
+            var district = response.districtName;
+            $('#first_name').val(getUserData.FirstName);
+            $('#MobileNumber').val(getUserData.MobileNumber);
+            $('#gender').val(getUserData.gender);
+            $('#user_id').val(getUserData.id);
+            $('#post_office').val(getUserData.post_office);
+            $('#pincode').val(getUserData.pincode);
+            $('#gram_panchayat').val(getUserData.gram_panchayat);
+
+            // $('.optionBox').empty();
+            $.each(response.animal_type, function(index, animalType) {
+                var breed = response.breeds[index];
+                var cattaleNo = response.cattale_no[index];
+                var milkDay = response.milk_day[index];
+
+                var newRow = `
                     <div class="block row adddiv_${index}">
                         <div class="form-group col-md-3">
                             <select class="form-control" name="animal_type[]" required>
@@ -428,73 +428,73 @@ $(document).ready(function() {
                             <span class="remove btn btn-danger btn-sm">हटाएं</span>
                         </div>
                     </div>`;
-                    $('.optionBox').append(newRow);
-                });
+                $('.optionBox').append(newRow);
+            });
 
-                $('.optionBox').on('click', '.remove', function() {
-                    $(this).closest('.block').remove();
-                });
+            $('.optionBox').on('click', '.remove', function() {
+                $(this).closest('.block').remove();
+            });
 
 
 
-                if (getUserData.division_id) {
-                    $('#district').val(getUserData.division_id);
-                    $('#district').change();
-                    $('#district option[value="' + getUserData.division_id + '"]').click();
+            if (getUserData.division_id) {
+                $('#district').val(getUserData.division_id);
+                $('#district').change();
+                $('#district option[value="' + getUserData.division_id + '"]').click();
+            }
+
+            setTimeout(() => {
+                if (district) {
+                    $('#mandal').val(district);
+                    $('#mandal').change();
+                    $('#mandal option[value="' + district + '"]').click();
                 }
+            }, 1000);
 
-                setTimeout(() => {
-                    if (district) {
-                        $('#mandal').val(district);
-                        $('#mandal').change();
-                        $('#mandal option[value="' + district + '"]').click();
-                    }
-                }, 1000);
+            setTimeout(() => {
+                if (getUserData.tehsil) {
+                    $('#tehsil').val(getUserData.tehsil);
+                    $('#tehsil').change();
+                    $('#tehsil option[value="' + getUserData.tehsil + '"]').click();
+                }
+            }, 1300);
 
-                setTimeout(() => {
-                    if (getUserData.tehsil) {
-                        $('#tehsil').val(getUserData.tehsil);
-                        $('#tehsil').change();
-                        $('#tehsil option[value="' + getUserData.tehsil + '"]').click();
-                    }
-                }, 1300);
+            setTimeout(() => {
+                if (getUserData.block) {
+                    $('#vikas_khand').val(getUserData.block);
+                    $('#vikas_khand').change();
+                    $('#vikas_khand option[value="' + getUserData.block + '"]')
+                        .click();
+                }
+            }, 1600);
 
-                setTimeout(() => {
-                    if (getUserData.block) {
-                        $('#vikas_khand').val(getUserData.block);
-                        $('#vikas_khand').change();
-                        $('#vikas_khand option[value="' + getUserData.block + '"]')
-                            .click();
-                    }
-                }, 1600);
+            $('#userDetailsModal').modal('show');
 
-                $('#userDetailsModal').modal('show');
-
-            } else if (response.status === "filled") {
-                console.log("User details are already filled.");
-            }
-        },
-        error: function(xhr) {
-            console.error("An error occurred:", xhr.responseJSON.message);
+        } else if (response.status === "filled") {
+            console.log("User details are already filled.");
         }
-    });
+    },
+    error: function(xhr) {
+        console.error("An error occurred:", xhr.responseJSON.message);
+    }
+});
 
-    $('#user-details-form').on('submit', function(e) {
-        e.preventDefault();
-        const formData = $(this).serialize();
+$('#user-details-form').on('submit', function(e) {
+e.preventDefault();
+const formData = $(this).serialize();
 
-        $.ajax({
-            url: "/submit-user-details",
-            type: "POST",
-            data: formData,
-            success: function(response) {
-                alert("Details submitted successfully!");
-                $('#userDetailsModal').modal('hide');
-            },
-            error: function(xhr) {
-                console.error("An error occurred:", xhr.responseJSON.message);
-            }
-        });
-    });
+$.ajax({
+    url: "/submit-user-details",
+    type: "POST",
+    data: formData,
+    success: function(response) {
+        alert("Details submitted successfully!");
+        $('#userDetailsModal').modal('hide');
+    },
+    error: function(xhr) {
+        console.error("An error occurred:", xhr.responseJSON.message);
+    }
+});
+});
 });
 </script>
