@@ -75,7 +75,7 @@ class FarmerController extends Controller{
             return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
         }
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
-        $isFilled = !empty($user->profile) &&!empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
         
         $animalTypes = explode(',', $user->animal_type);
         $breeds = explode(',', $user->breeds);
