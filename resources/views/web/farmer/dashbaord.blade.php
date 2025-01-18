@@ -465,7 +465,12 @@ $(document).ready(function() {
                             .click();
                     }
                 }, 1600);
-                $('#exampleModal').modal('show');
+                var modelShown = localStorage.getItem('farmer');
+                console.log('localStorage', localStorage, modelShown)
+                if (modelShown != 'YES') {
+                    $('#exampleModal').modal('show');
+                    localStorage.setItem('farmer', 'YES');
+                }
                 $('#userDetailsModal').modal('show');
 
             } else if (response.status === "filled") {
