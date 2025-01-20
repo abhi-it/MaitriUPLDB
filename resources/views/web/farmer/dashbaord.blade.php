@@ -465,12 +465,12 @@ $(document).ready(function() {
                             .click();
                     }
                 }, 1600);
-                var modelShown = localStorage.getItem('farmer');
-                console.log('localStorage', localStorage, modelShown)
-                if (modelShown != 'YES') {
-                    $('#exampleModal').modal('show');
-                    localStorage.setItem('farmer', 'YES');
-                }
+                // var modelShown = localStorage.getItem('farmer');
+                // console.log('localStorage', localStorage, modelShown)
+                // if (modelShown != 'YES') {
+                //     $('#exampleModal').modal('show');
+                //     localStorage.setItem('farmer', 'YES');
+                // }
                 $('#userDetailsModal').modal('show');
 
             } else if (response.status === "filled") {

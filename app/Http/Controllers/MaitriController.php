@@ -114,10 +114,7 @@ class MaitriController extends Controller
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',
         ]);
-
-        // Get the uploaded file
         $file = $request->file('file');
-        
         Excel::import(new ImportMaitri, $request->file('file')->store('files'));
         return redirect('maitri-import')->with('success', 'File Imported successfully!');
     }
