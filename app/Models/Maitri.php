@@ -33,5 +33,6 @@ class Maitri extends Model
         'longitude',
         'latitude',
         'status',
+        'newMaitri',
     ];
 }
