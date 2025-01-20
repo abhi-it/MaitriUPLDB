@@ -211,9 +211,12 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
             $semenTypeArray = explode(',', $data->semen_type);
             $breedArray = explode(',', $data->breed);
             $semenSourceArray = explode(',', $data->semen_source);
+            $bull_idArray = explode(',', $data->bull_id);
+            $SheathArray = explode(',', $data->Sheath);
 
             // Determine the maximum count to handle mismatched array lengths
-            $maxCount = max(count($semenArray), count($semenTypeArray), count($breedArray), count($semenSourceArray));
+            $maxCount = max(count($semenArray), count($semenTypeArray), count($breedArray), count($semenSourceArray),
+            count($bull_idArray), count($SheathArray));
             @endphp
 
             <div class="row">
@@ -225,6 +228,8 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
                                 <th><span data-hi="वीर्य प्रकार" data-en="Semen Type"></span></th>
                                 <th><span data-hi="नस्ल" data-en="Breed"></span></th>
                                 <th><span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span></th>
+                                <th><span data-hi="बुल आई.डी" data-en="Bull ID"></span></th>
+                                <th><span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -233,6 +238,8 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
                                 <td>{{ $semenTypeArray[$i] ?? '' }}</td>
                                 <td>{{ $breedArray[$i] ?? '' }}</td>
                                 <td>{{ $semenSourceArray[$i] ?? '' }}</td>
+                                <td>{{ $bull_idArray[$i] ?? '' }}</td>
+                                <td>{{ $SheathArray[$i] ?? '' }}</td>
                                 </tr>
                                 @endfor
                         </tbody>

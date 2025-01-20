@@ -1,5 +1,29 @@
 @extends('master')
 @section('content')
+<style>
+form#loginForm {
+    padding: 15px 35px;
+    width: 88%;
+    margin: 40px auto;
+}
+
+form#loginForm p span {
+    margin-bottom: 40px !important;
+    display: block;
+    margin-top: 14px;
+}
+
+.demand-request-remove-btn {
+    padding: 9px 25px;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+    form#loginForm {
+        width: 100%;
+    }
+}
+</style>
 <div class="container main-div py-5" style="background-color:white; height: 100%; min-height:380px;">
     <!--First row Start -->
 
@@ -32,19 +56,19 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="नाम" data-en="Name"></span> </label>
-                <input name="name" id="name" type="text" class="form-control" data-placeholder-en="Name"
+                <input name="name" id="name" type="text" required class="form-control" data-placeholder-en="Name"
                     data-placeholder-hi="नाम" autofocus="off">
             </div>
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="जन्म की तारीख" data-en="Date of Birth"></span> </label>
-                <input name="date_of_birth" id="date_of_birth" type="date" data-placeholder-en="Date of Birth"
+                <input name="date_of_birth" id="date_of_birth" required type="date" data-placeholder-en="Date of Birth"
                     data-placeholder-hi="जन्म की तारीख" class="form-control" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="लिंग" data-en="Gender"></span> </label>
-                <select name="gender" id="gender" class="form-control" autofocus>
+                <select name="gender" id="gender" class="form-control" required autofocus>
                     <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                     <option value="male" data-hi="पुरुष" data-en="Male"></option>
                     <option value="female" data-hi="महिला" data-en="Female"></option>
@@ -54,7 +78,7 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="प्रशिक्षण केंद्र का नाम"
                         data-en="Name of the Training Center"></span> </label>
-                <select name="training_center_id" id="training_center_id" class="form-control" autofocus>
+                <select name="training_center_id" id="training_center_id" required class="form-control" autofocus>
                     <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                     @foreach($institute as $val)
                     <option value="{{$val->name}}" data-hi="{{$val->name}}" data-en="{{$val->name}}"></option>
@@ -66,14 +90,14 @@
             <div class="form-group col-md-6 added_vh_ai_center">
                 <label for="inputEmail4"> <span data-hi="कृपया प्रशिक्षण केंद्र का नाम दर्ज करें"
                         data-en="Please Enter Training Center Name "></span> </label>
-                <input name="training_center_id" id="training_center_added" type="text" class="form-control"
+                <input name="training_center_id" id="training_center_added" required type="text" class="form-control"
                     data-placeholder-hi="प्रशिक्षण केंद्र का नाम दर्ज करें"
                     data-placeholder-en="Enter Training Center Name">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="प्रशिक्षण समापन वर्ष"
                         data-en="Training Completion Year"></span> </label>
-                <input name="training_year" id="training_year" type="text"
+                <input name="training_year" id="training_year" required type="text"
                     data-placeholder-en="Training Completion Year" data-placeholder-hi="प्रशिक्षण समापन वर्ष"
                     placeholder="" class="form-control" autofocus>
             </div>
@@ -81,14 +105,14 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="भारत पशुधन आईडी" data-en="Bharat Livestock ID"></span> </label>
-                <input name="bharat_pashudhan_id" id="bharat_pashudhan_id" type="text"
+                <input name="bharat_pashudhan_id" required id="bharat_pashudhan_id" type="text"
                     data-placeholder-en="Bharat Livestock ID" data-placeholder-hi="भारत पशुधन आईडी" class="form-control"
                     autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="व्हाट्सएप मोबाइल नंबर" data-en="WhatsApp Mobile Number"></span>
                 </label>
-                <input name="smart_mobile_no" id="smart_mobile_no" type="text" class="form-control"
+                <input name="smart_mobile_no" id="smart_mobile_no" required type="text" class="form-control"
                     data-placeholder-en="WhatsApp Mobile Number" data-placeholder-hi="व्हाट्सएप मोबाइल नंबर" autofocus>
             </div>
             <div class="form-group col-md-6">
@@ -135,8 +159,8 @@
 
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="पोस्ट ऑफिस" data-en="Post Office"></span> </label>
-                <input type="text" name="post_office" id="post_office" class="form-control" placeholder="पोस्ट ऑफिस"
-                    autofocus>
+                <input type="text" name="post_office" id="post_office" required class="form-control"
+                    placeholder="पोस्ट ऑफिस" autofocus>
             </div>
 
 
@@ -144,7 +168,7 @@
                 <label for="inputEmail4"><span data-hi="पिनकोड" data-en="Pincode"></span></label>
                 <span id="error-message" style="color: red; display:none; font-size:10px; ">(Pincode must be a 6-digit
                     number.)</span>
-                <input type="text" name="pincode" maxlength="6" id="pincode" class="form-control"
+                <input type="text" name="pincode" maxlength="6" required id="pincode" class="form-control"
                     data-placeholder-en="Enter Pincode Here" data-placeholder-hi="यहां पिनकोड दर्ज करें" autofocus>
             </div>
 
@@ -152,7 +176,7 @@
                 <label for="inputEmail4">
                     <span data-hi="आपके भारत पशुधन आईडी पर कितने गांव मैप किए गए हैं"
                         data-en="How many Villages are mapped on your Bharat Pashudhan ID"></span> </label>
-                <input name="villages_coevring" id="villages_coevring" type="text" class="form-control"
+                <input name="villages_coevring" id="villages_coevring" required type="text" class="form-control"
                     data-placeholder-en="How many Villages are mapped on your Bharat Pashudhan ID"
                     data-placeholder-hi="आपके भारत पशुधन आईडी पर कितने गांव मैप किए गए हैं" autofocus>
             </div>
@@ -160,7 +184,7 @@
                 <label for="inputEmail4">
                     <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span>
                 </label>
-                <input name="demand_section" id="demand_section" type="text" class="form-control"
+                <input name="demand_section" id="demand_section" required type="text" class="form-control"
                     data-placeholder-hi="तरल नाइट्रोजन" data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
             </div>
 
@@ -172,7 +196,7 @@
                         <label for="inputEmail4">
                             <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
                         </label>
-                        <select name="semen[]" id="semen" class="form-control" autofocus>
+                        <select name="semen[]" id="semen" class="form-control" required autofocus>
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                             <option value="catle" data-hi="गाय" data-en="Cattle"></option>
                             <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
@@ -181,7 +205,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>
-                        <select name="semen_type[]" id="semen_type" class="form-control" autofocus>
+                        <select name="semen_type[]" id="semen_type" required class="form-control" autofocus>
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                             <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>
                             <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>
@@ -190,7 +214,7 @@
                     <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>
                         </label>
-                        <select name="semen_source[]" id="semen_source" class="form-control" autofocus>
+                        <select name="semen_source[]" id="semen_source" required class="form-control" autofocus>
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                             <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>
                             <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
@@ -206,23 +230,23 @@
                     <div class="form-group col-md-4 semen_source_added">
                         <label for="inputEmail4"> <span data-hi="कृपया वीर्य का स्रोत भरें"
                                 data-en="Please enter source of semen"></span> </label>
-                        <input type="text" name="semen_source[]" class="form-control" id="semen_source_added"
+                        <input type="text" name="semen_source[]" required class="form-control" id="semen_source_added"
                             data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>
-                        <input name="breed[]" id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"
-                            data-placeholder-en="Breed" autofocus>
+                        <input name="breed[]" id="breed" type="text" required class="form-control"
+                            data-placeholder-hi="नस्ल" data-placeholder-en="Breed" autofocus>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>
-                        <input name="bull_id[]" id="bull_id" type="text" class="form-control"
+                        <input name="bull_id[]" id="bull_id" type="text" required class="form-control"
                             data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>
                         </label>
-                        <input name="Sheath[]" id="Sheath" type="text" class="form-control"
+                        <input name="Sheath[]" id="Sheath" type="text" required class="form-control"
                             data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>
                     </div>
                     <div class="form-group col-md-12 text-center">
@@ -236,59 +260,59 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="एआई ग्लव्स की मात्रा" data-en="AI Gloves Quantity"></span>
                 </label>
-                <input name="gloves" id="gloves" type="text" class="form-control"
+                <input name="gloves" id="gloves" type="text" required class="form-control"
                     data-placeholder-hi="एआई ग्लव्स की मात्रा" data-placeholder-en="AI Gloves Quantity" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="कितने पशु टैग की आवश्यकता है?"
                         data-en="How many Animal Tags are required?"></span>
                 </label>
-                <input name="animal_tag" id="animal_tag" type="text" class="form-control"
+                <input name="animal_tag" id="animal_tag" type="text" required class="form-control"
                     data-placeholder-hi="पशु टैग की आवश्यकता" data-placeholder-en="How many Animal Tags are required?"
                     autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="खनिज मिश्रण (किलोग्राम में)"
                         data-en="Mineral mixtures (In Kg)"></span> </label>
-                <input name="mineral_mixture" id="mineral_mixture" type="text" class="form-control"
+                <input name="mineral_mixture" id="mineral_mixture" required type="text" class="form-control"
                     data-placeholder-hi="खनिज मिश्रण (किलोग्राम में)" data-placeholder-en="Mineral mixtures (In Kg)"
                     autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="कृमिनाशक (बोलस)" data-en="Bolus"></span> </label>
-                <input name="dewormer" id="dewormer" type="text" class="form-control" data-placeholder-hi="कृमिनाशक"
-                    data-placeholder-en="Bolus" autofocus>
+                <input name="dewormer" id="dewormer" type="text" required class="form-control"
+                    data-placeholder-hi="कृमिनाशक" data-placeholder-en="Bolus" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="बीमा पुस्तिका" data-en="Insurance Booklet"></span> </label>
-                <input name="insurance_booklet" id="insurance_booklet" type="text" class="form-control"
+                <input name="insurance_booklet" id="insurance_booklet" required type="text" class="form-control"
                     data-placeholder-hi="बीमा पुस्तिका" data-placeholder-en="Insurance Booklet" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="गर्भावस्था फ़ीड (किलोग्राम में) "
                         data-en="Pregnancy Feed (In Kg)"></span> </label>
-                <input name="pregnancy_feed" id="pregnancy_feed" type="text" class="form-control"
+                <input name="pregnancy_feed" id="pregnancy_feed" required type="text" class="form-control"
                     data-placeholder-hi="गर्भावस्था फ़ीड" data-placeholder-en="Pregnancy Feed" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="बछड़ा स्टार्टर (किलोग्राम में) "
                         data-en="Calf Starter (In Kg)"></span> </label>
-                <input name="calf_starter" id="calf_starter" type="text" class="form-control"
+                <input name="calf_starter" id="calf_starter" required type="text" class="form-control"
                     data-placeholder-hi="बछड़ा स्टार्टर" data-placeholder-en="Calf Starter" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="कोई अन्य वस्तु" data-en="Any Other Item"></span> </label>
-                <input name="any_other_item" id="any_other_item" type="text" class="form-control"
+                <input name="any_other_item" id="any_other_item" required type="text" class="form-control"
                     data-placeholder-hi="अन्य वस्तु" data-placeholder-en="Any other item" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="कोई सुझाव?" data-en="Any Suggestion"></span> </label>
-                <input name="any_suggestion" id="any_suggestion" type="text" class="form-control"
+                <input name="any_suggestion" id="any_suggestion" required type="text" class="form-control"
                     data-placeholder-hi="सुझाव" data-placeholder-en="Suggetion" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="कोई  शिकायत?" data-en="Any Complaint"></span> </label>
-                <select name="any_complaint" id="any_complaint" class="form-control" placeholder="शिकायत">
+                <select name="any_complaint" id="any_complaint" required class="form-control" placeholder="शिकायत">
                     <option value="स्ट्रॉ से संबंधित" data-hi="स्ट्रॉ से संबंधित" data-en="Related to Straws"> </option>
                     <option value="तरल नाइट्रोजन से संबंधित" data-hi="तरल नाइट्रोजन से संबंधित "
                         data-en="Related to Liquid Nitrogen"></option>
@@ -304,12 +328,12 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="महीना" data-en="Month"></span> </label>
-                <input name="month" id="month" type="month" data-placeholder-hi="महीना" data-placeholder-en="Month"
-                    class="form-control" autofocus>
+                <input name="month" id="month" type="month" required data-placeholder-hi="महीना"
+                    data-placeholder-en="Month" class="form-control" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4"> <span data-hi="प्रश्न" data-en="Query/Question"></span> </label>
-                <input name="question" id="question" type="text" data-placeholder-hi="प्रश्न"
+                <input name="question" id="question" type="text" required data-placeholder-hi="प्रश्न"
                     data-placeholder-en="Question" class="form-control" autofocus>
             </div>
             <div class="form-group col-md-6">
@@ -317,7 +341,7 @@
                     <span data-hi="भारत पशुधन पर पंजीकृत गाय संतति की संख्या"
                         data-en="Number of Cow Calves Registered on Bharat Pashudhan">
                     </span> </label>
-                <input name="registered_cow_calves" id="registered_cow_calves" type="text"
+                <input name="registered_cow_calves" id="registered_cow_calves" required type="text"
                     data-placeholder-hi="भारत पशुधन पर पंजीकृत गाय संतति की संख्या"
                     data-placeholder-en="Number of Cow Calves Registered on Bharat Pashudhan" class="form-control"
                     autofocus>
@@ -327,7 +351,7 @@
                 <label for="inputEmail4">
                     <span data-hi="भारत पशुधन पर पंजीकृत भैंस संतति की संख्या"
                         data-en="Number of Buffalo Calves Registered on Bharat Pashudhan"></span> </label>
-                <input name="registered_buffalo_calves" id="registered_buffalo_calves" type="text"
+                <input name="registered_buffalo_calves" required id="registered_buffalo_calves" type="text"
                     data-placeholder-hi="भारत पशुधन पर पंजीकृत भैंस संतति की संख्या"
                     data-placeholder-en="Number of Buffalo Calves Registered on Bharat Pashudhan" class="form-control"
                     autofocus>
@@ -336,7 +360,7 @@
                 <label for="inputEmail4">
                     <span data-hi="भारत पशुधन पर पंजीकृत वर्गीकृत संतति की संख्या"
                         data-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"></span> </label>
-                <input name="registered_sexed_calves" id="registered_sexed_calves" type="text"
+                <input name="registered_sexed_calves" required id="registered_sexed_calves" type="text"
                     ata-placeholder-hi="भारत पशुधन पर पंजीकृत वर्गीकृत वीर्य संतति की संख्या"
                     data-placeholder-en="Number of SeXed Semen Calves Registered on Bharat Pashudhan"
                     class="form-control" autofocus>
@@ -345,7 +369,7 @@
                 <label for="inputEmail4">
                     <span data-hi="भारत पशुधन पर पंजीकृत किसानों की संख्या"
                         data-en="Number of Farmers Registered on Bharat Pashudhan"></span> </label>
-                <input name="registered_farmers" id="registered_farmers" type="text"
+                <input name="registered_farmers" required id="registered_farmers" type="text"
                     ata-placeholder-hi="भारत पशुधन पर पंजीकृत किसानों की संख्या"
                     data-placeholder-en="Number of Farmers Registered on Bharat Pashudhan" class="form-control"
                     autofocus>
@@ -400,7 +424,7 @@ $('.demand-request-add-btn').click(function() {
                     <label for="inputEmail4">\
                         <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>\
                     </label>\
-                    <select name="semen[]" id="semen" class="form-control" autofocus>\
+                    <select name="semen[]" id="semen" required class="form-control" autofocus>\
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
                         <option value="catle" data-hi="गाय" data-en="Cattle"></option>\
                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>\
@@ -409,7 +433,7 @@ $('.demand-request-add-btn').click(function() {
                 </div>\
                 <div class="form-group col-md-4">\
                     <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>\
-                    <select name="semen_type[]" id="semen_type" class="form-control" autofocus>\
+                    <select name="semen_type[]" required id="semen_type" class="form-control" autofocus>\
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
                         <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>\
                         <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>\
@@ -418,7 +442,7 @@ $('.demand-request-add-btn').click(function() {
                 <div class="form-group col-md-4">\
                     <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>\
                     </label>\
-                    <select name="semen_source[]" id="semen_source" class="form-control" autofocus>\
+                    <select name="semen_source[]" required id="semen_source" class="form-control" autofocus>\
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
                         <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>\
                         <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>\
@@ -432,18 +456,18 @@ $('.demand-request-add-btn').click(function() {
                 </div>\
                 <div class="form-group col-md-4">\
                     <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>\
-                    <input name="breed[]" id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"\
+                    <input name="breed[]" required id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"\
                         data-placeholder-en="Breed" autofocus>\
                 </div>\
                 <div class="form-group col-md-4">\
                     <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>\
-                    <input name="bull_id[]" id="bull_id" type="text" class="form-control"\
+                    <input name="bull_id[]" required id="bull_id" type="text" class="form-control"\
                         data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>\
                 </div>\
                 <div class="form-group col-md-4">\
                     <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>\
                     </label>\
-                    <input name="Sheath[]" id="Sheath" type="text" class="form-control"\
+                    <input name="Sheath[]" required id="Sheath" type="text" class="form-control"\
                         data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>\
                 </div>\
                 <div class="form-group col-md-12 text-center">\
