@@ -46,13 +46,11 @@ class Handler extends ExceptionHandler
         //         'message' => 'Invalid or missing token',
         //     ], 401);
         // }
-        if ($request->expectsJson()) {
             if ($exception instanceof AuthenticationException) {
                 return response()->json([
-                    'message' => 'Invalid or missing token',
+                    'message' => 'User not authenticated',
                 ], 401);
             }
-        }
 
         return parent::render($request, $exception);
     }
