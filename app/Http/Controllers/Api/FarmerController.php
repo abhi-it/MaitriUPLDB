@@ -49,6 +49,9 @@ class FarmerController extends Controller
             ], 401);
         }
         if ($user) {
+            $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+            $check_profile = $isFilled ? 'completed' : 'not_completed';
+            $user['profileDone'] = $check_profile;
             return $this->successResponse('Get User Profile Successfully',200,$user);
         }else{
             return $this->errorResponse($e->getMessage(), 500);
