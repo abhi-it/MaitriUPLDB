@@ -11,7 +11,7 @@ use App\Traits\ServiceBuilder;
 
 trait FormatResponseTrait {
     
-    public function successResponse($message=' ' , $statusCode, $data = NULL, $paginate = array()){
+    public function successResponse($message=' ' , $statusCode, $data = NULL, $paginate = array(), ){
         $response                   = array();
         $response['message']        = $message;
         $response['status']         = "success";
