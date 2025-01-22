@@ -48,32 +48,18 @@ class RegistrationController extends Controller
     public function tehsil_list(Request $request)
     {
         try {
-            $tehsil  = DB::table('tehsil')->where(['dis_id' => $request->district_id])->get();
             $janpad = $request->district_name;
             $getTeshil =  Manganurodhdata::select('tehsil')
                                         ->where('janpad_name', 'LIKE', $janpad)
                                         ->where('status', 0)
                                         ->groupBy('tehsil')
                                         ->get();
-
-            $tensilData = $getTeshil->pluck('block')->toArray();
-            return $this->successResponse('Tehsil List displayed successfully',200, $tensilData);
-        } 
-        catch (\Illuminate\Validation\ValidationException $e) {
-            return $this->errorResponse($e->getMessage(), 422);
-        } 
-    }
-
-    public function animal_types(Request $request)
-    {
-        try {
-            $animals = [
-                ['value' => 'buffalo', 'label' => 'Buffalo'],
-                ['value' => 'cow', 'label' => 'Cow'],
-                ['value' => 'goat', 'label' => 'Goat'],
-            ];
-
-            return $this->successResponse('Tehsil List displayed successfully',200, $animals);
+            $tehsil = [];
+            foreach($getTeshil as $data){
+                $tehsil[] = $data['tehsil'];
+            }
+        
+            return $this->successResponse('Tehsil List displayed successfully',200, $tehsil);
         } 
         catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
@@ -89,9 +75,29 @@ class RegistrationController extends Controller
                             ->where('status', 0)
                             ->groupBy('block')
                             ->get();
+                          
+            $block = [];
+            foreach($getBlock as $data){
+                $block[] = $data['block'];
+            }
+            return $this->successResponse('Block List displayed successfully',200, $block);
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorResponse($e->getMessage(), 422);
+        } 
+    }
 
-            $blocks = $getBlock->pluck('block')->toArray();
-            return $this->successResponse('Block List displayed successfully',200, $blocks);
+    
+    public function animal_types(Request $request)
+    {
+        try {
+            $animals = [
+                ['value' => 'buffalo', 'label' => 'Buffalo'],
+                ['value' => 'cow', 'label' => 'Cow'],
+                ['value' => 'goat', 'label' => 'Goat'],
+            ];
+
+            return $this->successResponse('Tehsil List displayed successfully',200, $animals);
         } 
         catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
