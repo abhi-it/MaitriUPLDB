@@ -63,12 +63,15 @@ class AuthController extends Controller
                 'mobileNumber' => 'required',
                 'otp' => 'required|numeric|digits:5',
             ]);
-            $farmer = User::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
-            if ($farmer) {
+            $user = User::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
+            if ($user) {
                 $token = JWTAuth::fromUser($farmer);
+                $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+                $check_profile = $isFilled ? 'completed' : 'not_completed';
+                $user['profileDone'] = $check_profile;
                 $data = [
                     'token'     => $token,
-                    'user'      => $farmer,
+                    'user'      => $user,
                 ];
                 return $this->successResponse('OTP verified successfully',200, $data);
             } else {
