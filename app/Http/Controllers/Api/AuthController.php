@@ -47,7 +47,7 @@ class AuthController extends Controller
                     return $this->successResponse('OTP generated successfully',200, $otp);
                 }
             } else {
-                return $this->errorResponse('Number  not correct',404);
+                return $this->errorResponse('Number  not correct',200);
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->errors(), 422);
