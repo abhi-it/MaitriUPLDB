@@ -59,7 +59,7 @@ class FarmerController extends Controller{
         $user->tehsil         = $request->tehsil;
         $user->milk_day       = $request->milk_day ? implode(',', $request->milk_day) : null;
         $user->save();
-        return redirect('/farmer-dashboard')->with('success', 'Profile updated successfully!');
+        return redirect('/farmer-dashboard')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }
 
 
@@ -96,7 +96,7 @@ class FarmerController extends Controller{
     public function addFarmerRequests(Request $request){
         $validator = Validator::make($request->all(),[
             'user_id'  => [ 'required'],
-            'maitri_id' => [ 'required'],
+            // 'maitri_id' => [ 'required'],
         ]);
         if($validator->fails()){
             $errors = $validator->errors();
@@ -112,7 +112,7 @@ class FarmerController extends Controller{
                 'status' => 1,
             ]);
             $request->save();
-            return redirect()->back()->with('success','Your request submitted successfully!');
+            return redirect()->back()->with('success','आपका अनुरोध सफलतापूर्वक सबमिट किया गया!');
         }
     }
 
@@ -145,7 +145,7 @@ class FarmerController extends Controller{
                         'feedback'    =>  $request->feedback,
                         'created_at'  =>   date('Y-m-d h:m:s'),
                 ]);
-            return redirect()->back()->with('success','Request Submitted successfully!');
+            return redirect()->back()->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
        }
     }
 
@@ -182,7 +182,7 @@ class FarmerController extends Controller{
                         'details'   =>  $request->details,
                 ]);
             }
-            return redirect('high-yielding-animal')->with('success','Request Submitted successfully!');
+            return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
        }
 
     }
