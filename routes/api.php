@@ -40,6 +40,7 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('getProfile',  [FarmerController::class, 'getProfile']);
     Route::get('view-service-request', [FarmerController::class, 'getServiceRequest'])->name('view-service-request');
     Route::post('service-request', [FarmerController::class, 'getServiceFrom'])->name('service-request');
     Route::get('maitri-list',  [FarmerController::class, 'maitri_list']);

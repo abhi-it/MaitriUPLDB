@@ -41,6 +41,20 @@ class FarmerController extends Controller
         }
     }
 
+    public function getProfile(){
+        $user = JWTAuth::user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        if ($user) {
+            return $this->successResponse('Get User Profile Successfully',200,$user);
+        }else{
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
     public function getServiceFrom(Request $request)
     {
         try {
