@@ -1096,6 +1096,10 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/high-yielding-animal') }}">उच्च उपज वाले पशु </a>
                                 </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('/farmer-details') }}">प्रोफ़ाइल अद्यतन</a>
+                                </li>
+
                                 @endif
                                 @endauth
                                 @endif

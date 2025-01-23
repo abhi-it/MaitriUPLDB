@@ -63,20 +63,18 @@
                 <tbody>
                     
                 @if(count($data))
-                @foreach($data as$key=> $row)
-                <tr>
-                    <td>{{$key+1}}</td>
-                    <!-- <td>{{Auth::user()->FirstName}}</td> -->
-                    <td>{{$row->type}}</td>
-                    <td><img src="https://maitriupldb.in/public/animals/filepng" alt="" width="50" height="50"></td>
-                    <td>  {{$row->details}}   </td>
-                
-                    <!-- <td>
-                        <button type="button" class="btn custom-btn btn-danger deleteUser"  data-id="}"><i class="fa fa-trash">Delete</i></button>
-
-                    </td> -->
-                </tr>
-                @endforeach
+                    @foreach($data as $key => $row)
+                    <tr>
+                        <td><span data-hi>{{$key+1}}</span></td>
+                        <!-- <td>{{Auth::user()->FirstName}}</td> -->
+                        <td><span data-hi>{{$row->type}}</span></td>
+                        <td><img src="https://maitriupldb.in/public/animals/filepng" alt="" width="50" height="50"></td>
+                        <td><span lang="hi">{{$row->details}}</span></td>
+                        <!-- <td>
+                            <button type="button" class="btn custom-btn btn-danger deleteUser" data-id="}"><i class="fa fa-trash">Delete</i></button>
+                        </td> -->
+                    </tr>
+                    @endforeach
                 @else
                 <tr>
                     <td colspan="5" style="color:red;">No records..</td>
