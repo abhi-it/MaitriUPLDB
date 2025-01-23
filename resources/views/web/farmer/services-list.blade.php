@@ -32,10 +32,6 @@
                 @else
                 <td>--</td>
                 @endif
-
-
-
-                <!-- <td>{{$row->maitri->name}}</td> -->
                 <td>{{$row->request_message}}</td>
                 @if($row->status==1)
                 <td> <button class="btn btn-primary">नया है</button></td>

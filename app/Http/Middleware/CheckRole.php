@@ -516,6 +516,7 @@ class CheckRole
                 'high-yielding-animal',
                 'add-yielding-animal',
                 'addUpdateAnimalDetails',
+                'farmer-details',
             ],
 
             /*

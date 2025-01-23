@@ -334,6 +334,7 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
 
 
+    Route::get("farmer-details", [App\Http\Controllers\farmer\FarmerController::class, 'farmer_details'])->name('farmer-details');
     Route::post("update-farmer-details", [App\Http\Controllers\farmer\FarmerController::class, 'updateFarmerDateils'])->name('update-farmer-details');
 
     Route::get("farmer-dashboard", [App\Http\Controllers\farmer\FarmerController::class, 'index'])->name('farmer-dashboard');

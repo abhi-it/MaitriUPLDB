@@ -25,7 +25,18 @@ class FarmerController extends Controller{
        return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
     }
 
+    public function farmer_details()
+    {
+        $id = Auth::user()->id;
+        $districts  = Districts::get();
+        $divisions  = Divisions::get();
+        $data = User::where('id', $id)->first();
+
+        return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
+    }
+
     public function updateFarmerDateils(Request $request){
+        
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'MobileNumber'    => 'required|string|max:15',
@@ -38,6 +49,7 @@ class FarmerController extends Controller{
             'post_office'     => 'nullable|string|max:255',
             'block'           => 'nullable|string|max:255',
             'tehsil'          => 'nullable|string|max:255',
+            'gender'          => 'required|string',
         ]);
         $user_id = $request->user_id;
         $user = User::findOrFail($user_id);
@@ -58,6 +70,7 @@ class FarmerController extends Controller{
         $user->block          = $request->block;
         $user->tehsil         = $request->tehsil;
         $user->milk_day       = $request->milk_day ? implode(',', $request->milk_day) : null;
+
         $user->save();
         return redirect('/farmer-dashboard')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }

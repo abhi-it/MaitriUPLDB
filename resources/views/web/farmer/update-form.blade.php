@@ -1,0 +1,309 @@
+@extends('submaster')
+@section('content')
+<style>
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: 0.25rem;
+    }
+
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+    }
+
+    .modal-dialog {
+        max-width: 40% !important;
+    }
+
+    .openModal {
+        display: none;
+    }
+
+    .contain-form {
+        margin: auto;
+        padding: 20px;
+    }
+</style>
+<div class="container main-div">
+    <h3 class="text-center fw-bold m-4">प्रोफ़ाइल अद्यतन</h3>
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    @if(session()->has('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+    @endif
+
+    <div class="row">
+        <div class="col-sm-8 contain-form card">
+            <form method="post" action="{{ route('update-farmer-details') }}" class="form-comman">
+                @csrf
+                <input type="hidden" name="user_id" value="{{ $id ?? '' }}">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="first_name">
+                            <span>नाम</span>
+                        </label>
+                        <input type="text" class="form-control" name="first_name" id="first_name" value="{{ $data->FirstName ?? '' }}"  placeholder="नाम" autocomplete="off">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="MobileNumber">
+                            <span>मोबाइल नंबर</span>
+                        </label>
+                        <input type="number" class="form-control" id="MobileNumber" name="MobileNumber" value="{{ $data->MobileNumber ?? '' }}"  placeholder="मोबाइल नंबर" autocomplete="off">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="gender"> <span>लिंग</span></label>
+                        <select class="form-control" name="gender" id="gender" >
+                            <option value="">एक का चयन करें</option>
+                            <option value="male" {{ (isset($data->gender) && $data->gender == 'male') ? 'selected' : '' }}>पुरुष</option>
+                            <option value="female" {{ (isset($data->gender) && $data->gender == 'female') ? 'selected' : '' }}>महिला</option>
+                            <option value="others" {{ (isset($data->gender) && $data->gender == 'others') ? 'selected' : '' }}>अन्य</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="animal">
+                            <span>पशु की जानकारी</span>
+                        </label>
+                        @php
+                            // cattale_no, breeds, and milk_day are comma-separated strings
+                            $cattaleNoArray = explode(',', $data->cattale_no); 
+                            $breedsArray = explode(',', $data->breeds); 
+                            $milkDayArray = explode(',', $data->milk_day);
+                            $animalTypes = explode(',', $data->animal_type); // You can modify this if animal_type is in a different format
+                        @endphp
+
+                        <div class="optionBox">
+                            @foreach($animalTypes as $index => $animalType)
+                            <div class="block row adddiv_{{ $index }}">
+                                <div class="form-group col-md-3">
+                                    <select class="form-control" id="animal_type" name="animal_type[]" >
+                                        <option value="">एक का चयन करें</option>
+                                        <option value="cow" {{ $animalType == 'cow' ? 'selected' : '' }}>गाय</option>
+                                        <option value="buffalo" {{ $animalType == 'buffalo' ? 'selected' : '' }}>भैंस</option>
+                                        <option value="goat" {{ $animalType == 'goat' ? 'selected' : '' }}>बकरी</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" id="breeds" name="breeds[]" value="{{ $breedsArray[$index] ?? '' }}"  placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                                </div>
+                                
+                                <div class="form-group col-md-3">
+                                    <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" value="{{ $cattaleNoArray[$index] ?? '' }}"  placeholder="पशु की जानकारी" autocomplete="off">
+                                </div>
+                                
+                                <div class="form-group col-md-2">
+                                    <input type="text" class="form-control" id="milk_day" name="milk_day[]" value="{{ $milkDayArray[$index] ?? '' }}"  placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                                </div>
+                                
+                                @if ($loop->last)
+                                <div class="form-group col-md-1">
+                                    <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                                </div>
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="district"> <span>मंडल</span></label>
+                        <select name="division_id" id="district" class="form-control">
+                            <option value="">मंडल चुनें</option>
+                            @foreach($divisions as $division)
+                            <option value="{{ $division->id }}" {{ isset($data->division_id) && $data->division_id == $division->id ? 'selected' : '' }}>{{ $division->name_hindi }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="mandal"> <span>ज़िला</span></label>
+                        <select name="district_id" id="mandal" class="form-control" >
+                            @foreach($districts as $district)
+                            <option value="{{ $district->id }}" {{ isset($data->district) && $data->district->id == $district->id ? 'selected' : '' }}>{{ $district->name_hindi }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="tehsil"> <span>तहसील</span></label>
+                        <select name="tehsil" id="tehsil" class="form-control" >
+                            <option value="{{ $data->tehsil ?? '' }}">{{ $data->tehsil ?? 'N/A' }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="vikas_khand"> <span>विकास खण्ड</span></label>
+                        <select name="block" id="vikas_khand" class="form-control" >
+                            <option value="{{ $data->block ?? '' }}">{{ $data->block ?? 'N/A' }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="post_office"> <span>पोस्ट ऑफिस</span></label>
+                        <input type="text" name="post_office" id="post_office" value="{{ $data->post_office ?? '' }}"  class="form-control" placeholder="पोस्ट ऑफिस">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="pincode"><span>पिनकोड</span></label>
+                        <span id="error-message" style="color: red; display:none; font-size:10px;">(Pincode must be a 6-digit number.)</span>
+                        <input type="text" name="pincode" maxlength="6" id="pincode" value="{{ $data->pincode ?? '' }}"  class="form-control" placeholder="यहां पिनकोड दर्ज करें">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="gram_panchayat">
+                            <span>ग्राम पंचायत</span>
+                        </label>
+                        <input type="text" class="form-control" id="gram_panchayat" value="{{ $data->gram_panchayat ?? '' }}" name="gram_panchayat"  placeholder="ग्राम पंचायत" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4 mt-5 m-auto">
+                        <button type="submit" class="btn btn-primary submit buttonWizard">
+                            <span>सबमिट</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var allData = {};
+        $('#district').change(function() {
+            $('#mandal').prop('disabled', false);
+            $('#mandal').empty();
+            $('#vikas_khand').prop('disabled', false);
+            $('#vikas_khand').empty();
+            $('#ai_center').prop('disabled', false);
+            $('#ai_center').empty();
+            $('#tehsil').prop('disabled', false);
+            $('#tehsil').empty();
+
+            var val = $("#district option:selected").val();
+            var text = $("#district option:selected").text();
+            if (val) {
+                $.ajax({
+                    type: "GET",
+                    url: "get-all-district",
+                    data: {
+                        "id": val,
+                        "mandal": text,
+                    },
+                    cache: false,
+                    success: function(data) {
+                        var getMandal = data.data;
+                        if (getMandal && getMandal.length > 0) {
+                            $('#mandal').append(`<option value="">जिला चुने</option>`);
+                            getMandal.forEach(item => {
+                                if (item.janpad_name && item.janpad_name.trim() !==
+                                    '') {
+                                    $('#mandal').append(
+                                        `<option value="${item.janpad_name}">${item.janpad_name}</option>`
+                                    );
+                                }
+                            });
+                        } else {
+                            $('#mandal').append('<option value="">-Data not found.-</option>');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#mandal').change(function() {
+            $('#vikas_khand').prop('disabled', false);
+            $('#vikas_khand').empty();
+            $('#ai_center').prop('disabled', false);
+            $('#ai_center').empty();
+            $('#tehsil').prop('disabled', false);
+            $('#tehsil').empty();
+
+            var mandal = $("#district option:selected").text();
+            var janpad = $("#mandal option:selected").val();
+            $.ajax({
+                type: "GET",
+                url: "get-all-tehsil",
+                data: {
+                    "mandal": mandal,
+                    "janpad": janpad,
+                },
+                cache: false,
+                success: function(data) {
+                    var getTehsil = data.data;
+                    if (getTehsil && getTehsil.length > 0) {
+                        $('#tehsil').append(`<option value="">तहसील चूने</option>`);
+                        getTehsil.forEach(item => {
+                            if (item.tehsil && item.tehsil.trim() !== '') {
+                                $('#tehsil').append(
+                                    `<option value="${item.tehsil}">${item.tehsil}</option>`
+                                );
+                            }
+                        });
+                    } else {
+                        $('#tehsil').append('<option value="">-Data not found.-</option>');
+                    }
+                }
+            });
+        });
+
+        $('#tehsil').change(function() {
+            $('#vikas_khand').prop('disabled', false);
+            $('#vikas_khand').empty();
+            $('#ai_center').prop('disabled', false);
+            $('#ai_center').empty();
+            var tehsil = $(this).val();
+            var mandal = $("#district option:selected").text();
+            var janpad = $("#mandal option:selected").val();
+            $.ajax({
+                type: "GET",
+                url: "get-all-block",
+                data: {
+                    "tehsil": tehsil,
+                    "mandal": mandal,
+                    "janpad": janpad,
+                },
+                cache: false,
+                success: function(data) {
+                    var getBlock = data.data;
+                    if (getBlock && getBlock.length > 0) {
+                        $('#vikas_khand').append(
+                            `<option value="">विकास खंड चूने</option>`);
+                        getBlock.forEach(item => {
+                            if (item.block && item.block.trim() !== '') {
+                                $('#vikas_khand').append(
+                                    `<option value="${item.block}">${item.block}</option>`
+                                );
+                            }
+                        });
+                    } else {
+                        $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+                    }
+                }
+            });
+        });
+    });
+</script>
