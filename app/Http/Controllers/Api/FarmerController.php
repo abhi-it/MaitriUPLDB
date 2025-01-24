@@ -274,4 +274,24 @@ class FarmerController extends Controller
             return $this->errorResponse('Error in saving data', 404);
         }
     }
+
+    public function getStatus(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+
+        //0-Accept, 1-New, 2-Waiting, 3-Decline	
+        $status = [
+            ['id' => '0', 'name' => 'Accept'],
+            ['id' => '1', 'name' => 'New'],
+            ['id' => '2', 'name' => 'Waiting'],
+            ['id' => '3', 'name' => 'Decline'],
+        ];
+
+        return $this->successResponse('Status displayed successfully.',200, $status);
+    }
 }
