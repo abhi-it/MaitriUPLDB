@@ -58,5 +58,8 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() 
     Route::post('maitri/update-status', [MaitriController::class, 'update_service_status']);
     Route::get('maitri/service-categories', [MaitriController::class, 'service_category_list']);
     Route::post('maitri/add-animal-service', [MaitriController::class, 'add_animal_service_request']);
+
+    //Status  
+    Route::get('get-status', [FarmerController::class, 'getStatus']);
     
 });

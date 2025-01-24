@@ -48,7 +48,7 @@
     @endif
 
     <div class="row">
-        <div class="col-sm-8 contain-form card">
+        <div class="contain-form card">
             <form method="post" action="{{ route('update-farmer-details') }}" class="form-comman">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $id ?? '' }}">
@@ -92,32 +92,50 @@
                         <div class="optionBox">
                             @foreach($animalTypes as $index => $animalType)
                             <div class="block row adddiv_{{ $index }}">
+                                
+                                @if ($loop->first)  
+                                    <div class="form-group col-md-3">
+                                        <label for="animal_type">पशु प्रकार</label>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="breeds">नस्लें</label>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="cattale_no">पशु संख्या</label>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="milk_day">दूध/प्रतिदिन/प्रति पशु</label>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                                    </div>
+                                    
+                                @endif
+
                                 <div class="form-group col-md-3">
-                                    <select class="form-control" id="animal_type" name="animal_type[]" >
+                                    <select class="form-control" id="animal_type" name="animal_type[]">
                                         <option value="">एक का चयन करें</option>
                                         <option value="cow" {{ $animalType == 'cow' ? 'selected' : '' }}>गाय</option>
                                         <option value="buffalo" {{ $animalType == 'buffalo' ? 'selected' : '' }}>भैंस</option>
                                         <option value="goat" {{ $animalType == 'goat' ? 'selected' : '' }}>बकरी</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" id="breeds" name="breeds[]" value="{{ $breedsArray[$index] ?? '' }}"  placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                                    <input type="text" class="form-control" id="breeds" name="breeds[]" value="{{ $breedsArray[$index] ?? '' }}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
                                 </div>
-                                
+
                                 <div class="form-group col-md-3">
-                                    <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" value="{{ $cattaleNoArray[$index] ?? '' }}"  placeholder="पशु की जानकारी" autocomplete="off">
+                                    <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" value="{{ $cattaleNoArray[$index] ?? '' }}" placeholder="पशु की जानकारी" autocomplete="off">
                                 </div>
-                                
+
                                 <div class="form-group col-md-2">
-                                    <input type="text" class="form-control" id="milk_day" name="milk_day[]" value="{{ $milkDayArray[$index] ?? '' }}"  placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                                    <input type="text" class="form-control" id="milk_day" name="milk_day[]" value="{{ $milkDayArray[$index] ?? '' }}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
                                 </div>
-                                
-                                @if ($loop->last)
+
                                 <div class="form-group col-md-1">
-                                    <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                                    <button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>
                                 </div>
-                                @endif
                             </div>
                             @endforeach
                         </div>
@@ -305,5 +323,25 @@
                 }
             });
         });
+
+       
+        $(".add").click(function() {
+            var newRow = $(this).closest('.row').clone(); 
+            newRow.find("input").val(''); 
+            newRow.find(".add").remove(); 
+
+            // var removeButton = $('<button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>');
+            // removeButton.click(function() {
+            //     $(this).closest('.row').remove(); 
+            // });
+            // newRow.append(removeButton); 
+
+            $(this).closest('.optionBox').append(newRow); 
+        });
+
+        $(document).on('click', '.remove', function() {
+            $(this).closest('.row').remove(); 
+        });
     });
+
 </script>
