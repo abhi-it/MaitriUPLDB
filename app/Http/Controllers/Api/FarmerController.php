@@ -71,13 +71,12 @@ class FarmerController extends Controller
         
             $request->validate([
                 'services'      => 'required|string',
-                'maitri_id'         => 'required|string',
                 'request_message'   => 'required|string',
             ]);
             $data = [
                 'user_id'           => $user->id,
                 'service_name'      => $request->services,
-                'maitri_id'         => $request->maitri_id,
+                // 'maitri_id'         => $request->maitri_id,
                 'request_message'   => $request->request_message,
                 'status'            => 1,
             ];
