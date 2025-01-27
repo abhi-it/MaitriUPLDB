@@ -51,6 +51,8 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() 
     Route::post('add_animal', [FarmerController::class, 'add_animal']);
     Route::post('delete-animal', [FarmerController::class, 'delete_animal']);
     Route::post('/upload-image', [FarmerController::class, 'uploadImage']);
+    Route::post('/update-profile', [FarmerController::class, 'update_profile']);
+    
 
     //Maitri
     Route::post('monthly-progress-report', [MaitriController::class, 'monthly_progress_report']);
