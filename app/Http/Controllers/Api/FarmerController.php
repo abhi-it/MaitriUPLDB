@@ -310,6 +310,7 @@ class FarmerController extends Controller
                 'block' => 'nullable|string',
                 'tehsil' => 'nullable|string',
                 'milk_day' => 'nullable|string',
+                'gender' => 'nullable|string',
             ]);
     
             $user = auth()->user();
@@ -343,6 +344,7 @@ class FarmerController extends Controller
                 'milk_day' => $request->milk_day,
                 'role' => 'Farmer', 
                 'user_type' => 'Farmer',
+                'gender' => $request->gender,
             ]);
     
             return $this->successResponse('User Profile Updated successfully', 200, $user);
