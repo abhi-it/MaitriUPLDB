@@ -294,4 +294,65 @@ class FarmerController extends Controller
 
         return $this->successResponse('Status displayed successfully.',200, $status);
     }
+
+    public function update_profile(Request $request)
+    {
+        try {
+            $request->validate([
+                'first_name' => 'nullable|string',
+                'mobile' => 'nullable|int',
+                'district_id' => 'nullable|int',
+                'division_id' => 'nullable|int',
+                'animal_type' => 'nullable|string',
+                'breeds' =>'nullable|string',
+                'cattale_no' => 'nullable|string',
+                'gram_panchayat' => 'nullable|string',
+                'post_office' => 'nullable|string',
+                'block' => 'nullable|string',
+                'tehsil' => 'nullable|string',
+                'milk_day' => 'nullable|string',
+            ]);
+    
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not authenticated',
+                ], 401);
+            }
+    
+            $user_id = $user->id;
+            $userData = User::find($user_id);
+    
+            if (!$userData) {
+                return $this->errorResponse('User Not found', 404);
+            }
+    
+            $userData->update([
+                'name' => $request->first_name,
+                'FirstName' => $request->first_name,
+                'MobileNumber' => $request->mobile,
+                'district_id' => $request->district_id,
+                'division_id' => $request->division_id,
+                'role_id' => '4', 
+                'animal_type' => $request->animal_type,
+                'breeds' => $request->breeds,
+                'cattale_no' => $request->cattale_no,
+                'gram_panchayat' => $request->gram_panchayat,
+                'post_office' => $request->post_office,
+                'block' => $request->block,
+                'tehsil' => $request->tehsil,
+                'milk_day' => $request->milk_day,
+                'role' => 'Farmer', 
+                'user_type' => 'Farmer',
+            ]);
+    
+            return $this->successResponse('User Profile Updated successfully', 200, $user);
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorResponse("Validation failed", 422, $e->errors());
+        } catch (\Exception $e) {
+            return $this->errorResponse("An error occurred", 500, $e->getMessage());
+        }
+    }
+    
 }
