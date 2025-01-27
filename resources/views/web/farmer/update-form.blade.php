@@ -108,8 +108,7 @@
                                     </div>
                                     <div class="form-group col-md-1">
                                         <span class="add btn btn-primary btn-sm">जोड़ें</span>
-                                    </div>
-                                    
+                                    </div>                                   
                                 @endif
 
                                 <div class="form-group col-md-3">
@@ -142,8 +141,8 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="district"> <span>मंडल</span></label>
-                        <select name="division_id" id="district" class="form-control">
+                        <label for="division"> <span>मंडल</span></label>
+                        <select name="division_id" id="division" class="form-control">
                             <option value="">मंडल चुनें</option>
                             @foreach($divisions as $division)
                             <option value="{{ $division->id }}" {{ isset($data->division_id) && $data->division_id == $division->id ? 'selected' : '' }}>{{ $division->name_hindi }}</option>
@@ -155,7 +154,7 @@
                         <label for="mandal"> <span>ज़िला</span></label>
                         <select name="district_id" id="mandal" class="form-control" >
                             @foreach($districts as $district)
-                            <option value="{{ $district->id }}" {{ isset($data->district) && $data->district->id == $district->id ? 'selected' : '' }}>{{ $district->name_hindi }}</option>
+                            <option value="{{ $district->name_hindi }}" {{ isset($data->district) && $data->district->id == $district->id ? 'selected' : '' }}>{{ $district->name_hindi }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -211,7 +210,41 @@
 <script>
     $(document).ready(function() {
         var allData = {};
-        $('#district').change(function() {
+        var preSelectedDistrict = $("#division").val();
+        var preSelectedMandal = $("#mandal").val();
+      
+        if(preSelectedDistrict){
+            var text = $("#division option:selected").text();
+
+            $.ajax({
+                type: "GET",
+                url: "getDistrict",
+                data: {
+                    "id": preSelectedDistrict,
+                    "mandal": text,
+                },
+                cache: false,
+                success: function(data) {
+                    var getMandal = data.data;
+                    var mandalOptions = '';
+
+                    if (getMandal && getMandal.length > 0) {
+                        mandalOptions += `<option value="">जिला चुने</option>`;
+                        getMandal.forEach(item => {
+                            if (item.janpad_name && item.janpad_name.trim() !== '') {
+                                mandalOptions += `<option value="${item.janpad_name}" ${item.janpad_name === preSelectedMandal ? 'selected' : ''}>${item.janpad_name}</option>`;
+                            }
+                        });
+
+                        $('#mandal').html(mandalOptions);  
+                    } else {
+                        $('#mandal').html('<option value="">-Data not found.-</option>');
+                    }
+                }
+            });
+        }
+
+        $('#division').change(function() {
             $('#mandal').prop('disabled', false);
             $('#mandal').empty();
             $('#vikas_khand').prop('disabled', false);
@@ -221,8 +254,9 @@
             $('#tehsil').prop('disabled', false);
             $('#tehsil').empty();
 
-            var val = $("#district option:selected").val();
-            var text = $("#district option:selected").text();
+            var val = $("#division option:selected").val();
+            var text = $("#division option:selected").text();
+
             if (val) {
                 $.ajax({
                     type: "GET",
@@ -342,6 +376,39 @@
         $(document).on('click', '.remove', function() {
             $(this).closest('.row').remove(); 
         });
+
+        // let container = document.getElementById('animal-type-container');
+        // let newRow = document.createElement('div');
+        // newRow.classList.add('row');
+        // newRow.innerHTML = `
+        //     <div class="form-group col-md-3">
+        //         <select class="form-control" id="animal_type" name="animal_type[]">
+        //             <option value="">एक का चयन करें</option>
+        //             <option value="cow">गाय</option>
+        //             <option value="buffalo">भैंस</option>
+        //             <option value="goat">बकरी</option>
+        //         </select>
+        //     </div>
+        //     <div class="form-group col-md-3">
+        //         <input type="text" class="form-control" id="breeds" name="breeds[]" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+        //     </div>
+        //     <div class="form-group col-md-3">
+        //         <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" placeholder="पशु की जानकारी" autocomplete="off">
+        //     </div>
+        //     <div class="form-group col-md-2">
+        //         <input type="text" class="form-control" id="milk_day" name="milk_day[]" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+        //     </div>
+        //     <div class="form-group col-md-1">
+        //         <button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>
+        //     </div>
+        // `;
+        // container.appendChild(newRow);
+
+        // // Add event listener to remove the newly added row
+        // newRow.querySelector('.remove').addEventListener('click', function() {
+        //     newRow.remove();
+        // });
+
     });
 
 </script>

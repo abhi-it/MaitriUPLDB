@@ -35,8 +35,8 @@ class FarmerController extends Controller{
         return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
-    public function updateFarmerDateils(Request $request){
-        
+    public function updateFarmerDateils(Request $request)
+    {
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'MobileNumber'    => 'required|string|max:15',
@@ -53,7 +53,9 @@ class FarmerController extends Controller{
         ]);
         $user_id = $request->user_id;
         $user = User::findOrFail($user_id);
-        $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+
+        $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
+                               ->orWhere('id', $request->district_id)->first();
 
         $user->name           = $request->first_name;
         $user->FirstName      = $request->first_name;
