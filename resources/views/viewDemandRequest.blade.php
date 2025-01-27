@@ -203,7 +203,13 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
                 <label for="inputPassword4">
                     <span data-hi="भारत पशुधन पर पंजीकृत बछड़ों की संख्या"
                         data-en="Number of SeXed Calves Registered on Bharat Pashudhan"></span>
-                </label> : {{$data->registered_buffalo_calves}}
+                </label> : {{$data->registered_sexed_calves}}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputPassword4">
+                    <span data-hi="भारत पशुधन पर पंजीकृत किसानों की संख्या"
+                        data-en="Number of Farmers Registered on Bharat Pashudhan"></span>
+                </label> : {{$data->registered_farmers}}
             </div>
             @php
             // Split the comma-separated data into arrays
