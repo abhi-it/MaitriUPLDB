@@ -468,6 +468,9 @@ Route::get("get-all-tehsil", [DemandRequestController::class, 'getTehsilAll'])->
 Route::get("get-all-block", [DemandRequestController::class, 'getBlockAll'])->name('get-all-block');
 Route::get("get-all-aicenter", [DemandRequestController::class, 'getAiCenterAll'])->name('get-all-aicenter');
 
+Route::get("getDistrict", [DemandRequestController::class, 'getDistrict'])->name('getDistrict');
+
+
 
 Route::get("getAllrequestedBlocks", [DemandRequestController::class, 'getAllrequestedBlocks'])->name('getAllrequestedBlocks');
 Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');

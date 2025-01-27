@@ -35,6 +35,20 @@ class DemandRequestController extends Controller{
         return \Response::json(['status'=>'success','message'=>'Get all district successfully!','data'=>$getDistict, 'district' => $getAllDistrict],200);
     }
 
+    public function getDistrict(Request $request)
+    {
+        $mandal = $request->mandal;
+        $getDistict =  Manganurodhdata::select('janpad_name')
+                                        ->where('mandal_name', 'LIKE', $mandal)
+                                        ->where('status', 0)
+                                        ->groupBy('janpad_name')
+                                        ->get();
+
+        $mandalId = Divisions::where('name_hindi', 'LIKE', $mandal)->first();
+        $getAllDistrict = Districts::where('division_id', $mandalId['id'])->get();
+        return \Response::json(['status'=>'success','message'=>'Get all district successfully!','data'=>$getDistict, 'district' => $getAllDistrict],200);
+    }
+
     public function getTehsilAll(Request $request){
         $mandal = $request->mandal;
         $janpad = $request->janpad;
