@@ -77,69 +77,6 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <label for="animal">
-                            <span>पशु की जानकारी</span>
-                        </label>
-                        @php
-                            // cattale_no, breeds, and milk_day are comma-separated strings
-                            $cattaleNoArray = explode(',', $data->cattale_no); 
-                            $breedsArray = explode(',', $data->breeds); 
-                            $milkDayArray = explode(',', $data->milk_day);
-                            $animalTypes = explode(',', $data->animal_type); // You can modify this if animal_type is in a different format
-                        @endphp
-
-                        <div class="optionBox">
-                            @foreach($animalTypes as $index => $animalType)
-                            <div class="block row adddiv_{{ $index }}">
-                                
-                                @if ($loop->first)  
-                                    <div class="form-group col-md-3">
-                                        <label for="animal_type">पशु प्रकार</label>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="breeds">नस्लें</label>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="cattale_no">पशु संख्या</label>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="milk_day">दूध/प्रतिदिन/प्रति पशु</label>
-                                    </div>
-                                    <div class="form-group col-md-1">
-                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
-                                    </div>                                   
-                                @endif
-
-                                <div class="form-group col-md-3">
-                                    <select class="form-control" id="animal_type" name="animal_type[]">
-                                        <option value="">एक का चयन करें</option>
-                                        <option value="cow" {{ $animalType == 'cow' ? 'selected' : '' }}>गाय</option>
-                                        <option value="buffalo" {{ $animalType == 'buffalo' ? 'selected' : '' }}>भैंस</option>
-                                        <option value="goat" {{ $animalType == 'goat' ? 'selected' : '' }}>बकरी</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" id="breeds" name="breeds[]" value="{{ $breedsArray[$index] ?? '' }}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" value="{{ $cattaleNoArray[$index] ?? '' }}" placeholder="पशु की जानकारी" autocomplete="off">
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <input type="text" class="form-control" id="milk_day" name="milk_day[]" value="{{ $milkDayArray[$index] ?? '' }}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
                     <div class="form-group col-md-6">
                         <label for="division"> <span>मंडल</span></label>
                         <select name="division_id" id="division" class="form-control">
@@ -191,6 +128,69 @@
                         <input type="text" class="form-control" id="gram_panchayat" value="{{ $data->gram_panchayat ?? '' }}" name="gram_panchayat"  placeholder="ग्राम पंचायत" autocomplete="off">
                     </div>
                 </div>
+
+                <div class="form-group col-md-12">
+                        <label for="animal">
+                            <span>पशु की जानकारी</span>
+                        </label>
+                        
+                        @php
+                            // cattale_no, breeds, and milk_day are comma-separated strings
+                            $cattaleNoArray = explode(',', $data->cattale_no); 
+                            $breedsArray = explode(',', $data->breeds); 
+                            $milkDayArray = explode(',', $data->milk_day);
+                            $animalTypes = explode(',', $data->animal_type); // You can modify this if animal_type is in a different format
+                        @endphp
+
+                        <div class="optionBox">
+                            @foreach($animalTypes as $index => $animalType)
+                            <div class="block row adddiv_{{ $index }}">
+                                
+                                @if ($loop->first)  
+                                    <div class="form-group col-md-3 label-col">
+                                        <label for="animal_type">पशु प्रकार</label>
+                                    </div>
+                                    <div class="form-group col-md-3 label-col">
+                                        <label for="breeds">नस्लें</label>
+                                    </div>
+                                    <div class="form-group col-md-3 label-col">
+                                        <label for="cattale_no">पशु संख्या</label>
+                                    </div>
+                                    <div class="form-group col-md-2 label-col">
+                                        <label for="milk_day">दूध/प्रतिदिन/प्रति पशु</label>
+                                    </div>  
+                                    <div class="form-group col-md-1 label-col">
+                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                                    </div>                      
+                                @endif
+
+                                <div class="form-group col-md-3">
+                                    <select class="form-control" id="animal_type" name="animal_type[]">
+                                        <option value="">एक का चयन करें</option>
+                                        <option value="cow" {{ $animalType == 'cow' ? 'selected' : '' }}>गाय</option>
+                                        <option value="buffalo" {{ $animalType == 'buffalo' ? 'selected' : '' }}>भैंस</option>
+                                        <option value="goat" {{ $animalType == 'goat' ? 'selected' : '' }}>बकरी</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" id="breeds" name="breeds[]" value="{{ $breedsArray[$index] ?? '' }}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <input type="number" class="form-control" id="cattale_no" name="cattale_no[]" value="{{ $cattaleNoArray[$index] ?? '' }}" placeholder="पशु की जानकारी" autocomplete="off">
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <input type="text" class="form-control" id="milk_day" name="milk_day[]" value="{{ $milkDayArray[$index] ?? '' }}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
 
                 <div class="row">
                     <div class="mb-4 mt-5 m-auto">
@@ -363,6 +363,9 @@
             var newRow = $(this).closest('.row').clone(); 
             newRow.find("input").val(''); 
             newRow.find(".add").remove(); 
+
+            newRow.find(".label-col").hide();  
+            // $(this).closest('.row').after(newRow);
 
             // var removeButton = $('<button type="button" class="remove btn btn-danger btn-sm">हटाएं</button>');
             // removeButton.click(function() {
