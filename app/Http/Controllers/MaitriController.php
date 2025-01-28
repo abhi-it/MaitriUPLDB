@@ -11,6 +11,7 @@ use App\Models\HospitalInstitute;
 use App\Models\Divisions;
 use App\Models\Block;
 use App\Models\Districts;
+use App\Models\Institute;
 use App\Models\Cliniclocation;
 use App\Helpers\TranslateTextHelper;
 use App\Exports\MaitriListExport;
@@ -45,7 +46,7 @@ class MaitriController extends Controller
                     ->get();
        
         $division   = Divisions::all()->unique('name_hindi')->toArray();
-        $placeid    =Janpad::select('place_id')->distinct('name')->get()->pluck('place_id');   
+        $placeid    = Janpad::select('place_id')->distinct('name')->get()->pluck('place_id');   
         $agency     = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
         $station    = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
         $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
@@ -53,6 +54,7 @@ class MaitriController extends Controller
         $maitricount = Maitri::get();
         $aicount      = Cliniclocation::where('clinic_location.status', 0)->get();
         $countDistrict =  Districts::get();
+        $aiTranningCenter = Institute::get();
 
         $disticcount =  DB::table('district_map_data')
                     ->join('districts', 'district_map_data.district_hi', '=', 'districts.name_hindi')
@@ -77,6 +79,7 @@ class MaitriController extends Controller
             'bull'      =>  $bull,
             'pdlab'     =>  $pdlab,
             'cvblocks'  =>  $cvblocks,
+            'aiTranningCenter' => $aiTranningCenter,
         ]);
     }
 
