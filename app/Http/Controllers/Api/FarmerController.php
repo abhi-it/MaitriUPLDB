@@ -294,7 +294,7 @@ class FarmerController extends Controller
         return $this->successResponse('Status displayed successfully.',200, $status);
     }
 
-    public function update_profile(Request $request)
+    public function update_profile_old(Request $request)
     {
         try {
             $request->validate([
@@ -310,6 +310,7 @@ class FarmerController extends Controller
                 'block' => 'nullable|string',
                 'tehsil' => 'nullable|string',
                 'milk_day' => 'nullable|string',
+                'gender' => 'nullable|string',
             ]);
     
             $user = auth()->user();
@@ -343,9 +344,10 @@ class FarmerController extends Controller
                 'milk_day' => $request->milk_day,
                 'role' => 'Farmer', 
                 'user_type' => 'Farmer',
+                'gender' => $request->gender,
             ]);
     
-            return $this->successResponse('User Profile Updated successfully', 200, $user);
+            return $this->successResponse('User Profile Updated successfully', 200, $userData);
     
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse("Validation failed", 422, $e->errors());
@@ -353,5 +355,97 @@ class FarmerController extends Controller
             return $this->errorResponse("An error occurred", 500, $e->getMessage());
         }
     }
+
+    public function update_profile(Request $request)
+    {
+        try {
+            $request->validate([
+                'first_name' => 'nullable|string',
+                'mobile' => 'nullable|int',
+                'district_id' => 'nullable|int',
+                'division_id' => 'nullable|int',
+                'animal_type' => 'nullable|string',
+                'breeds' =>'nullable|string',
+                'cattale_no' => 'nullable|string',
+                'gram_panchayat' => 'nullable|string',
+                'post_office' => 'nullable|string',
+                'block' => 'nullable|string',
+                'tehsil' => 'nullable|string',
+                'milk_day' => 'nullable|string',
+                'gender' => 'nullable|string',
+            ]);
+
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not authenticated',
+                ], 401);
+            }
+
+            $user_id = $user->id;
+            $userData = User::find($user_id);
+
+            if (!$userData) {
+                return $this->errorResponse('User Not found', 404);
+            }
+
+            $updateData = [];
+
+            if ($request->filled('first_name')) {
+                $updateData['name'] = $request->first_name;
+                $updateData['FirstName'] = $request->first_name;
+            }
+            if ($request->filled('mobile')) {
+                $updateData['MobileNumber'] = $request->mobile;
+            }
+            if ($request->filled('district_id')) {
+                $updateData['district_id'] = $request->district_id;
+            }
+            if ($request->filled('division_id')) {
+                $updateData['division_id'] = $request->division_id;
+            }
+            if ($request->filled('animal_type')) {
+                $updateData['animal_type'] = $request->animal_type;
+            }
+            if ($request->filled('breeds')) {
+                $updateData['breeds'] = $request->breeds;
+            }
+            if ($request->filled('cattale_no')) {
+                $updateData['cattale_no'] = $request->cattale_no;
+            }
+            if ($request->filled('gram_panchayat')) {
+                $updateData['gram_panchayat'] = $request->gram_panchayat;
+            }
+            if ($request->filled('post_office')) {
+                $updateData['post_office'] = $request->post_office;
+            }
+            if ($request->filled('block')) {
+                $updateData['block'] = $request->block;
+            }
+            if ($request->filled('tehsil')) {
+                $updateData['tehsil'] = $request->tehsil;
+            }
+            if ($request->filled('milk_day')) {
+                $updateData['milk_day'] = $request->milk_day;
+            }
+            if ($request->filled('gender')) {
+                $updateData['gender'] = $request->gender;
+            }
+
+            $updateData['role_id'] = '4';
+            $updateData['role'] = 'Farmer';
+            $updateData['user_type'] = 'Farmer';
+
+            $userData->update($updateData);
+
+            return $this->successResponse('User Profile Updated successfully', 200, $userData);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorResponse("Validation failed", 422, $e->errors());
+        } catch (\Exception $e) {
+            return $this->errorResponse("An error occurred", 500, $e->getMessage());
+        }
+    }
+
     
 }
