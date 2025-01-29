@@ -159,6 +159,7 @@
                     @endphp
 
                     <div class="optionBox">
+                        @if($data->getAnimalInformation )
                         @foreach($data->getAnimalInformation as $index => $animal)
                         <div class="block row adddiv_{{ $index }}">
                             <input type="hidden" name="animal_id[]" value="{{ $animal->id }}">
@@ -216,6 +217,63 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="block row adddiv_{{ $index }}">
+                            <input type="hidden" name="animal_id[]" value="{{ $animal->id }}">
+
+                            @if ($loop->first)
+                            <div class="form-group col-md-3 label-col">
+                                <label for="animal_type">पशु प्रकार</label>
+                            </div>
+                            <div class="form-group col-md-3 label-col">
+                                <label for="breeds">नस्लें</label>
+                            </div>
+                            <div class="form-group col-md-3 label-col">
+                                <label for="cattale_no">पशु संख्या</label>
+                            </div>
+                            <div class="form-group col-md-2 label-col">
+                                <label for="milk_day">दूध/प्रतिदिन/प्रति पशु</label>
+                            </div>
+                            <div class="form-group col-md-1 label-col">
+                                <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                            </div>
+                            @endif
+
+                            <div class="form-group col-md-3">
+                                <select class="form-control" required id="animal_type" name="animal_type[]">
+                                    <option value="">एक का चयन करें</option>
+                                    <option value="cow" {{ $animal->animal_type == 'cow' ? 'selected' : '' }}>गाय
+                                    </option>
+                                    <option value="buffalo" {{ $animal->animal_type == 'buffalo' ? 'selected' : '' }}>
+                                        भैंस</option>
+                                    <option value="goat" {{ $animal->animal_type == 'goat' ? 'selected' : '' }}>बकरी
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" required id="breeds" name="breeds[]"
+                                    value="{{ $animal->breeds ?? '' }}" placeholder="गाय/भैंस/बकरी की नस्लें"
+                                    autocomplete="off">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <input type="number" class="form-control" required id="cattale_no" name="cattale_no[]"
+                                    value="{{ $animal->cattale_no ?? '' }}" placeholder="पशु की जानकारी"
+                                    autocomplete="off">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" required id="milk_day" name="milk_day[]"
+                                    value="{{ $animal->milk_day ?? '' }}" placeholder="दूध/प्रतिदिन/प्रति पशु"
+                                    autocomplete="off">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <button type="button" data-animalId="{{ $animal->id }}"
+                                    class="remove btn btn-danger btn-sm">हटाएं</button>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
