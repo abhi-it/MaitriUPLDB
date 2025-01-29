@@ -5,6 +5,7 @@ namespace App\Http\Controllers\farmer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\AnimalInformation;
 use App\Models\Districts;
 use App\Models\API\Role;
 use App\Models\API\Servicerequest;
@@ -30,8 +31,7 @@ class FarmerController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data = User::where('id', $id)->first();
-
+        $data = User::with('getAnimalInformation')->where('id', $id)->first();
         return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
@@ -63,17 +63,54 @@ class FarmerController extends Controller{
         $user->gender         = $request->gender;
         $user->district_id    = $district ? $district->id : null;
         $user->division_id    = $request->division_id;
-        $user->animal_type    = $request->animal_type ? implode(',', $request->animal_type) : null;
-        $user->breeds         = $request->breeds ? implode(',', $request->breeds) : null;
-        $user->cattale_no     = $request->cattale_no ? implode(',', $request->cattale_no) : null;
         $user->gram_panchayat = $request->gram_panchayat;
         $user->post_office    = $request->post_office;
         $user->pincode        = $request->pincode;
         $user->block          = $request->block;
         $user->tehsil         = $request->tehsil;
-        $user->milk_day       = $request->milk_day ? implode(',', $request->milk_day) : null;
-
         $user->save();
+
+        $uid = $user->id;
+        if ($request->has('removeAnimal')) {
+            AnimalInformation::whereIn('id', $request->removeAnimal)
+                ->where('user_id', $uid)
+                ->delete();
+        }
+
+        foreach ($request->animal_type as $index => $animalType) {
+            $animalId = $request->animal_id[$index]; // Get the animal_id from the hidden input
+    
+            if ($animalId) {
+                AnimalInformation::where('id', $animalId)->where('user_id', $uid)->update([
+                    'animal_type' => $animalType,
+                    'breeds' => $request->breeds[$index],
+                    'cattale_no' => $request->cattale_no[$index],
+                    'milk_day' => $request->milk_day[$index],
+                ]);
+            } else {
+                AnimalInformation::create([
+                    'user_id' => $uid,
+                    'animal_type' => $animalType,
+                    'breeds' => $request->breeds[$index],
+                    'cattale_no' => $request->cattale_no[$index],
+                    'milk_day' => $request->milk_day[$index],
+                ]);
+            }
+        }
+    
+
+        
+        // foreach ($milk_days as $index => $milk_day) {
+        //     DB::table('user_animal_information')->insert([
+        //         'user_id'      => $uid,
+        //         'milk_day'     => $milk_day,
+        //         'animal_type'  => $animal_types[$index] ?? null,
+        //         'breeds'       => $breeds[$index] ?? null,
+        //         'cattale_no'   => $cattale_numbers[$index] ?? null,
+        //     ]);
+        // }
+
+      
         return redirect('/farmer-dashboard')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }
 

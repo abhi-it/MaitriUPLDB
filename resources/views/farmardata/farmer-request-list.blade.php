@@ -58,6 +58,7 @@
                 <th>ज़िला</th>
                 <th>सेवा का नाम</th>
                 <th>संदेश</th>
+                <th>मैत्री को नियुक्त करें</th>
                 <th>स्थिति</th>
                 <th>स्थिति बदलें</th>
                 <th>डिलीट करे</th>
@@ -83,6 +84,7 @@
                 @endif
 
                 <td>{{$row->request_message}}</td>
+                <td>{{($row->user->name) ?? '--'}}</td>
 
                 @if($row->status==1)
                 <td> <button class="btn btn-primary btn-sm">नया है</button></td>
@@ -135,6 +137,13 @@
                                 <option value="3">अस्वीकार किया गया है</option>
                                 <option value="0">स्वीकार कर लिया है</option>
                             </select>
+                            <select name="assign_maitri" id="assign_maitri" class="form-select mt-2">
+                                <option value="" data-hi="मैत्री को नियुक्त करें" data-en="Assign Maitri"></option>
+                                @foreach($getMaitri as $mairti)
+                                <option value="{{ $mairti['id'] }}">{{ $mairti['name'] }}</option>
+                                @endforeach
+
+                            </select>
                         </div>
                         <input type="hidden" id="rowId" name="rowId">
                     </form>
@@ -172,6 +181,7 @@ $(document).ready(function() {
     $('#saveStatus').click(function() {
         var rowId = $('#rowId').val();
         var newStatus = $('#modalStatus').val();
+        var assign_maitri = $('#assign_maitri').val();
         Swal.fire({
             title: "Are you sure?",
             text: "You won't to change this status",
@@ -188,6 +198,7 @@ $(document).ready(function() {
                     data: {
                         id: rowId,
                         status: newStatus,
+                        assign_maitri: assign_maitri,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

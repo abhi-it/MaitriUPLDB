@@ -449,6 +449,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
     // google map routes
 });
 
+
+
+Route::post('login-farmer-maitri', [App\Http\Controllers\UsersController::class, 'loginFarmerMaitri'])->name('login-farmer-maitri');
+Route::get('send-otp-faramer-maitri', [App\Http\Controllers\UsersController::class, 'sendOtpToLogin'])->name('send-otp-faramer-maitri');
+
 Route::get("farmer-register", [App\Http\Controllers\UsersController::class, 'index'])->name('farmer-register');
 Route::post("farmer-add", [App\Http\Controllers\UsersController::class, 'farmerRegister'])->name('farmer-add');
 Route::post("get-district", [App\Http\Controllers\UsersController::class, 'getAllDistrict'])->name('get-district');

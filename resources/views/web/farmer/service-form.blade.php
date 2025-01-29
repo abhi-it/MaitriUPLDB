@@ -96,3 +96,26 @@
 
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{{ asset('') }}js/google_Jsapi.js" type="text/javascript"></script>
+<script type="text/javascript">
+google.load("elements", "1", {
+    packages: "transliteration"
+});
+
+function onLoad() {
+    var options = {
+        sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+        destinationLanguage: [google.elements.transliteration.LanguageCode.HINDI],
+        shortcutKey: 'ctrl+g',
+        transliterationEnabled: true
+    };
+
+    var control = new google.elements.transliteration.TransliterationControl(options);
+
+    control.makeTransliteratable(
+        [
+            'request_message',
+        ]);
+}
+google.setOnLoadCallback(onLoad);
+</script>

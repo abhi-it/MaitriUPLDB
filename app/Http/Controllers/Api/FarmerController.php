@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\FarmerFeedback;
+use App\Models\AnimalInformation;
 use App\Models\API\Role;
 use App\Models\FarmerHighYielingAnimal;
 use App\Models\API\Servicerequest;
@@ -23,6 +24,101 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class FarmerController extends Controller
 {
     use FormatResponseTrait;
+
+
+    public function allAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', $request->page);
+        $query = AnimalInformation::where('user_id', $user->id)->orderBy('id', 'desc');
+        $data = $query->paginate($perPage, ['*'], 'page', $page);
+        $items = $data->items();
+
+        if (empty($items)) {
+            return $this->successResponse('No Animal Info Found', 200);
+        }else{
+            return $this->successResponse('Get All Animal Information',200,$items, $data);
+        }
+    }
+
+    public function deleteAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        $animal_id = $request->animal_id;
+        $animal = AnimalInformation::find($animal_id);
+        
+        if (!$animal) {
+            return $this->errorResponse('Animal record not found', 404);
+        }
+        $animal->delete();
+        return $this->successResponse('Animal record deleted successfully',200, $animal_id);
+    }
+
+    public function saveAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        $data = $request->json()->all();
+
+        $validator = Validator::make($data, [
+            '*.user_id' => 'required|integer|exists:users,id',
+            '*.animal_type' => 'required|string|in:cow,buffalo,goat',
+            '*.breeds' => 'required|string',
+            '*.cattale_no' => 'required|integer',
+            '*.milk_day' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+        $msg = '';
+        foreach ($data as $animalData) {
+            if($animalData['id'] == ''){
+                AnimalInformation::create([
+                    'user_id'       => $animalData['user_id'],
+                    'animal_type'   => $animalData['animal_type'],
+                    'breeds'        => $animalData['breeds'],
+                    'cattale_no'    => $animalData['cattale_no'],
+                    'milk_day'      => $animalData['milk_day'],
+                ]);
+                $msg = "Animal information saved successfully";
+                
+            }else{
+                $animal = AnimalInformation::where('id', $animalData['id'])->first();
+                if ($animal) {
+                    $animal->update([
+                        'animal_type'   => $animalData['animal_type'],
+                        'breeds'        => $animalData['breeds'],
+                        'cattale_no'    => $animalData['cattale_no'],
+                        'milk_day'      => $animalData['milk_day'],
+                    ]);
+                }
+                $msg = "Animal information updated successfully";
+            }
+        }
+
+        return $this->successResponse($msg,200, $data);
+    }
 
     public function maitri_list(Request $request)
     {
@@ -282,13 +378,12 @@ class FarmerController extends Controller
                 'message' => 'User not authenticated',
             ], 401);
         }
-
         //0-Accept, 1-New, 2-Waiting, 3-Decline	
         $status = [
-            ['id' => '0', 'name' => 'Accept'],
-            ['id' => '1', 'name' => 'New'],
-            ['id' => '2', 'name' => 'Waiting'],
-            ['id' => '3', 'name' => 'Decline'],
+            ['id' => '0', 'name' => 'स्वीकार',],
+            ['id' => '1', 'name' => 'नया'],
+            ['id' => '2', 'name' => 'इंतज़ार'],
+            ['id' => '3', 'name' => 'अस्वीकार'],
         ];
 
         return $this->successResponse('Status displayed successfully.',200, $status);
