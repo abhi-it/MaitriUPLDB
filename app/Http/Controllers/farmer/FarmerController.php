@@ -5,7 +5,7 @@ namespace App\Http\Controllers\farmer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Divisions;
-use App\Models\AnimalInformation;
+use App\Models\Animalinformation;
 use App\Models\Districts;
 use App\Models\API\Role;
 use App\Models\API\Servicerequest;
@@ -31,7 +31,7 @@ class FarmerController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data = User::with('getAnimalInformation')->where('id', $id)->first();
+        $data = User::with('getAnimalinformation')->where('id', $id)->first();
         return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
@@ -72,7 +72,7 @@ class FarmerController extends Controller{
 
         $uid = $user->id;
         if ($request->has('removeAnimal')) {
-            AnimalInformation::whereIn('id', $request->removeAnimal)
+            Animalinformation::whereIn('id', $request->removeAnimal)
                 ->where('user_id', $uid)
                 ->delete();
         }
@@ -81,14 +81,14 @@ class FarmerController extends Controller{
             $animalId = $request->animal_id[$index]; // Get the animal_id from the hidden input
     
             if ($animalId) {
-                AnimalInformation::where('id', $animalId)->where('user_id', $uid)->update([
+                Animalinformation::where('id', $animalId)->where('user_id', $uid)->update([
                     'animal_type' => $animalType,
                     'breeds' => $request->breeds[$index],
                     'cattale_no' => $request->cattale_no[$index],
                     'milk_day' => $request->milk_day[$index],
                 ]);
             } else {
-                AnimalInformation::create([
+                Animalinformation::create([
                     'user_id' => $uid,
                     'animal_type' => $animalType,
                     'breeds' => $request->breeds[$index],
