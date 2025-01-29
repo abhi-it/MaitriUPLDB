@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\FarmerFeedback;
-use App\Models\AnimalInformation;
+use App\Models\Animalinformation;
 use App\Models\API\Role;
 use App\Models\FarmerHighYielingAnimal;
 use App\Models\API\Servicerequest;
@@ -37,7 +37,7 @@ class FarmerController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', $request->page);
-        $query = AnimalInformation::where('user_id', $user->id)->orderBy('id', 'desc');
+        $query = Animalinformation::where('user_id', $user->id)->orderBy('id', 'desc');
         $data = $query->paginate($perPage, ['*'], 'page', $page);
         $items = $data->items();
 
@@ -57,7 +57,7 @@ class FarmerController extends Controller
             ], 401);
         }
         $animal_id = $request->animal_id;
-        $animal = AnimalInformation::find($animal_id);
+        $animal = Animalinformation::find($animal_id);
         
         if (!$animal) {
             return $this->errorResponse('Animal record not found', 404);
@@ -94,7 +94,7 @@ class FarmerController extends Controller
         $msg = '';
         foreach ($data as $animalData) {
             if($animalData['id'] == ''){
-                AnimalInformation::create([
+                Animalinformation::create([
                     'user_id'       => $animalData['user_id'],
                     'animal_type'   => $animalData['animal_type'],
                     'breeds'        => $animalData['breeds'],
@@ -104,7 +104,7 @@ class FarmerController extends Controller
                 $msg = "Animal information saved successfully";
                 
             }else{
-                $animal = AnimalInformation::where('id', $animalData['id'])->first();
+                $animal = Animalinformation::where('id', $animalData['id'])->first();
                 if ($animal) {
                     $animal->update([
                         'animal_type'   => $animalData['animal_type'],
