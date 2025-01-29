@@ -159,7 +159,7 @@
                     @endphp
 
                     <div class="optionBox">
-                        @if($data->getAnimalInformation )
+                        @if(count($data->getAnimalInformation ) > 0)
                         @foreach($data->getAnimalInformation as $index => $animal)
                         <div class="block row adddiv_{{ $index }}">
                             <input type="hidden" name="animal_id[]" value="{{ $animal->id }}">
@@ -218,10 +218,10 @@
                         </div>
                         @endforeach
                         @else
-                        <div class="block row adddiv_{{ $index }}">
-                            <input type="hidden" name="animal_id[]" value="{{ $animal->id }}">
+                        <div class="block row adddiv">
+                            <input type="hidden" name="animal_id[]" value="">
 
-                            @if ($loop->first)
+
                             <div class="form-group col-md-3 label-col">
                                 <label for="animal_type">पशु प्रकार</label>
                             </div>
@@ -237,39 +237,36 @@
                             <div class="form-group col-md-1 label-col">
                                 <span class="add btn btn-primary btn-sm">जोड़ें</span>
                             </div>
-                            @endif
+
 
                             <div class="form-group col-md-3">
                                 <select class="form-control" required id="animal_type" name="animal_type[]">
                                     <option value="">एक का चयन करें</option>
-                                    <option value="cow" {{ $animal->animal_type == 'cow' ? 'selected' : '' }}>गाय
+                                    <option value="cow">गाय
                                     </option>
-                                    <option value="buffalo" {{ $animal->animal_type == 'buffalo' ? 'selected' : '' }}>
+                                    <option value="buffalo">
                                         भैंस</option>
-                                    <option value="goat" {{ $animal->animal_type == 'goat' ? 'selected' : '' }}>बकरी
+                                    <option value="goat">बकरी
                                     </option>
                                 </select>
                             </div>
 
                             <div class="form-group col-md-3">
-                                <input type="text" class="form-control" required id="breeds" name="breeds[]"
-                                    value="{{ $animal->breeds ?? '' }}" placeholder="गाय/भैंस/बकरी की नस्लें"
-                                    autocomplete="off">
+                                <input type="text" class="form-control" required id="breeds" name="breeds[]" value=""
+                                    placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
                             </div>
 
                             <div class="form-group col-md-3">
                                 <input type="number" class="form-control" required id="cattale_no" name="cattale_no[]"
-                                    value="{{ $animal->cattale_no ?? '' }}" placeholder="पशु की जानकारी"
-                                    autocomplete="off">
+                                    value="" placeholder="पशु की जानकारी" autocomplete="off">
                             </div>
 
                             <div class="form-group col-md-2">
                                 <input type="text" class="form-control" required id="milk_day" name="milk_day[]"
-                                    value="{{ $animal->milk_day ?? '' }}" placeholder="दूध/प्रतिदिन/प्रति पशु"
-                                    autocomplete="off">
+                                    value="" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
                             </div>
                             <div class="form-group col-md-1">
-                                <button type="button" data-animalId="{{ $animal->id }}"
+                                <button type="button" data-animalId=""
                                     class="remove btn btn-danger btn-sm">हटाएं</button>
                             </div>
                         </div>
