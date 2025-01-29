@@ -54,6 +54,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(DeoUser::class, 'user_id');
     }
 
+    public function getAnimalInformation()
+    {
+        return $this->hasMany(Animalinformation::class, 'user_id');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
