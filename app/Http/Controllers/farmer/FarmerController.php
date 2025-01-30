@@ -129,12 +129,8 @@ class FarmerController extends Controller{
         $user_id = Auth::user()->id;
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
         $data = User::with('getAnimalinformation')->where('id', $user_id)->first();
-        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($data->getAnimalinformation->cattale_no) && !empty($data->getAnimalinformation->animal_type) && !empty($data->getAnimalinformation->breeds) && !empty($data->getAnimalinformation->milk_day) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
-        
-        $animalTypes = explode(',', $user->animal_type);
-        $breeds = explode(',', $user->breeds);
-        $cattaleNos = explode(',', $user->cattale_no);
-        $milkDays = explode(',', $user->milk_day);
+        $isFilled = !empty($user->name) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
+
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
             'userData' => $user,
