@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use TokenInvalidException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\FarmerUser;
 use App\Models\API\Servicerequest;
 use App\Traits\FormatResponseTrait;
 
@@ -23,7 +24,7 @@ class AuthController extends Controller
             $request->validate([
                 'mobileNumber' => 'required',
             ]);
-            $farmer = User::where('MobileNumber', $request->mobileNumber)->first();
+            $farmer = FarmerUser::where('MobileNumber', $request->mobileNumber)->first();
             if ($farmer) {
                 $otp = rand(10000, 99999);
                 $farmer->otp_login = $otp;
@@ -63,10 +64,10 @@ class AuthController extends Controller
                 'mobileNumber' => 'required',
                 'otp' => 'required|numeric|digits:5',
             ]);
-            $user = User::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
+            $user = FarmerUser::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
             if ($user) {
                 $token = JWTAuth::fromUser($user);
-                $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+                $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
                 $check_profile = $isFilled ? 'completed' : 'not_completed';
                 $user['profileDone'] = $check_profile;
                 $data = [

@@ -12,6 +12,7 @@ use TokenInvalidException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\FarmerUser;
 use App\Models\Districts;
 use App\Models\Tehsil;
 use App\Models\Manganurodhdata;
@@ -121,25 +122,36 @@ class RegistrationController extends Controller
                 'tehsil' => 'required',
                 'milk_day' => 'required',
             ]);
-            $user  = new User([
+            $user  = new FarmerUser([
                 'name'           => $request->first_name,
                 'FirstName'      => $request->first_name,
                 'MobileNumber'   => $request->mobile,
                 'district_id'    => $request->district_id,
                 'division_id'    => $request->division_id,
                 'role_id'        => '4',
-                'animal_type'    => $request->animal_type,
-                'breeds'         => $request->breeds,
-                'cattale_no'     => $request->cattale_no,
                 'gram_panchayat' => $request->gram_panchayat,
                 'post_office'    => $request->post_office,
                 'block'          => $request->block,
                 'tehsil'         => $request->tehsil,
-                'milk_day'       => $request->milk_day,
                 'role'           => 'Farmer',
                 'user_type'      => 'Farmer',
             ]);
             $user->save();
+            $uid = $user->id;
+            $milk_days = $request->milk_day;
+            $animal_types = $request->animal_type;
+            $breeds = $request->breeds;
+            $cattale_numbers = $request->cattale_no;
+            
+            foreach ($milk_days as $index => $milk_day) {
+                DB::table('user_animal_information')->insert([
+                    'user_id'      => $uid,
+                    'milk_day'     => $milk_day,
+                    'animal_type'  => $animal_types[$index] ?? null,
+                    'breeds'       => $breeds[$index] ?? null,
+                    'cattale_no'   => $cattale_numbers[$index] ?? null,
+                ]);
+            }
             return $this->successResponse('User Registered successfully',200, $user);
         } 
         catch (\Illuminate\Validation\ValidationException $e) {
