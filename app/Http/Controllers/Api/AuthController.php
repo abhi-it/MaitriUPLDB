@@ -24,7 +24,7 @@ class AuthController extends Controller
             $request->validate([
                 'mobileNumber' => 'required',
             ]);
-            $farmer = FarmerUser::where('MobileNumber', $request->mobileNumber)->first();
+            $farmer = User::where('MobileNumber', $request->mobileNumber)->first();
             if ($farmer) {
                 $otp = rand(10000, 99999);
                 $farmer->otp_login = $otp;
@@ -64,7 +64,7 @@ class AuthController extends Controller
                 'mobileNumber' => 'required',
                 'otp' => 'required|numeric|digits:5',
             ]);
-            $user = FarmerUser::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
+            $user = User::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
             if ($user) {
                 $token = JWTAuth::fromUser($user);
                 $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
