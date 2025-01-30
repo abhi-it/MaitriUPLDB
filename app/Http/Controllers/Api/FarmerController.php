@@ -257,7 +257,7 @@ class FarmerController extends Controller
 
     public function animal_list(Request $request)
     {
-        $user = auth()->user();
+        $user = JWTAuth::user();
         if (!$user) {
             return response()->json([
                 'message' => 'User not authenticated',
@@ -265,10 +265,10 @@ class FarmerController extends Controller
         }
 
         $animals = [
-            ['value' => 'buffalo', 'label' => 'Buffalo'],
-            ['value' => 'cow', 'label' => 'Cow'],
-            ['value' => 'goat', 'label' => 'Goat'],
-            ['value' => 'horse', 'label' => 'Horse'],
+            ['value' => 'buffalo', 'label' => 'भैंस'],
+            ['value' => 'cow', 'label' => 'गाय'],
+            ['value' => 'goat', 'label' => 'बकरी'],
+            ['value' => 'horse', 'label' => 'घोड़ा'],
         ];
         return $this->successResponse('Animal Types displayed successfully.',200, $animals);
     }
