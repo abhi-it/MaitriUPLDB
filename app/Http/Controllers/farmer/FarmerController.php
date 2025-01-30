@@ -23,7 +23,7 @@ class FarmerController extends Controller{
         $divisions  = Divisions::get();
         $user       = Auth::user()->id;
         $data       = Servicerequest::where(['user_id'=>$user])->get();
-       return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
+        return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
     }
 
     public function farmer_details()
@@ -97,20 +97,6 @@ class FarmerController extends Controller{
                 ]);
             }
         }
-    
-
-        
-        // foreach ($milk_days as $index => $milk_day) {
-        //     DB::table('user_animal_information')->insert([
-        //         'user_id'      => $uid,
-        //         'milk_day'     => $milk_day,
-        //         'animal_type'  => $animal_types[$index] ?? null,
-        //         'breeds'       => $breeds[$index] ?? null,
-        //         'cattale_no'   => $cattale_numbers[$index] ?? null,
-        //     ]);
-        // }
-
-      
         return redirect('/farmer-dashboard')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }
 
