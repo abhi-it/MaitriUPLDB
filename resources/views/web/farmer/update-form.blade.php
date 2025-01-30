@@ -150,14 +150,6 @@
                         <span>पशु की जानकारी</span>
                     </label>
 
-                    @php
-                    // cattale_no, breeds, and milk_day are comma-separated strings
-                    $cattaleNoArray = explode(',', $data->cattale_no);
-                    $breedsArray = explode(',', $data->breeds);
-                    $milkDayArray = explode(',', $data->milk_day);
-                    $animalTypes = explode(',', $data->animal_type); // You can modify this if animal_typ
-                    @endphp
-
                     <div class="optionBox">
                         @if(count($data->getAnimalInformation ) > 0)
                         @foreach($data->getAnimalInformation as $index => $animal)
@@ -220,8 +212,6 @@
                         @else
                         <div class="block row adddiv">
                             <input type="hidden" name="animal_id[]" value="">
-
-
                             <div class="form-group col-md-3 label-col">
                                 <label for="animal_type">पशु प्रकार</label>
                             </div>
@@ -237,7 +227,6 @@
                             <div class="form-group col-md-1 label-col">
                                 <span class="add btn btn-primary btn-sm">जोड़ें</span>
                             </div>
-
 
                             <div class="form-group col-md-3">
                                 <select class="form-control" required id="animal_type" name="animal_type[]">
