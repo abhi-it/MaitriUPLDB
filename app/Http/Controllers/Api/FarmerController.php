@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\FarmerUser;
 use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\FarmerFeedback;
@@ -146,8 +145,7 @@ class FarmerController extends Controller
             ], 401);
         }
         if ($user) {
-            $userData = FarmerUser::where('id', $user->id)->first();
-            $isFilled = !empty($userData->name) && !empty($userData->email) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
+            $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
             $check_profile = $isFilled ? 'completed' : 'not_completed';
             $user['profileDone'] = $check_profile;
             return $this->successResponse('Get User Profile Successfully',200,$user);
@@ -216,6 +214,7 @@ class FarmerController extends Controller
         }
     }
 
+
     public function serviceList(Request $request)
     {
         $user = auth()->user();
@@ -257,7 +256,7 @@ class FarmerController extends Controller
 
     public function animal_list(Request $request)
     {
-        $user = JWTAuth::user();
+        $user = auth()->user();
         if (!$user) {
             return response()->json([
                 'message' => 'User not authenticated',
@@ -265,10 +264,10 @@ class FarmerController extends Controller
         }
 
         $animals = [
-            ['value' => 'buffalo', 'label' => 'भैंस'],
-            ['value' => 'cow', 'label' => 'गाय'],
-            ['value' => 'goat', 'label' => 'बकरी'],
-            ['value' => 'horse', 'label' => 'घोड़ा'],
+            ['value' => 'buffalo', 'label' => 'Buffalo'],
+            ['value' => 'cow', 'label' => 'Cow'],
+            ['value' => 'goat', 'label' => 'Goat'],
+            ['value' => 'horse', 'label' => 'Horse'],
         ];
         return $this->successResponse('Animal Types displayed successfully.',200, $animals);
     }
@@ -417,7 +416,7 @@ class FarmerController extends Controller
             }
     
             $user_id = $user->id;
-            $userData = FarmerUser::find($user_id);
+            $userData = User::find($user_id);
     
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
@@ -479,7 +478,7 @@ class FarmerController extends Controller
             }
 
             $user_id = $user->id;
-            $userData = FarmerUser::find($user_id);
+            $userData = User::find($user_id);
 
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
