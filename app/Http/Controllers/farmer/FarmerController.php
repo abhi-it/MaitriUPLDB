@@ -5,6 +5,7 @@ namespace App\Http\Controllers\farmer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\FarmerUser;
 use App\Models\Animalinformation;
 use App\Models\Districts;
 use App\Models\API\Role;
@@ -31,7 +32,7 @@ class FarmerController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data = User::with('getAnimalinformation')->where('id', $id)->first();
+        $data = FarmerUser::with('getAnimalinformation')->where('id', $id)->first();
         return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
@@ -52,7 +53,7 @@ class FarmerController extends Controller{
             'gender'          => 'required|string',
         ]);
         $user_id = $request->user_id;
-        $user = User::findOrFail($user_id);
+        $user = FarmerUser::findOrFail($user_id);
 
         $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
                                ->orWhere('id', $request->district_id)->first();
@@ -114,14 +115,14 @@ class FarmerController extends Controller{
         }
         $user_id = Auth::user()->id;
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
-        $data = User::with('getAnimalinformation')->where('id', $user_id)->first();
+        $farmerData = FarmerUser::with('getAnimalinformation')->where('id', $user_id)->first();
         $isFilled = !empty($user->name) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
 
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
-            'userData' => $user,
+            'userData' => $farmerData,
             'districtName' => $district['name_hindi'],
-            'animalInfo' => $data,
+            'animalInfo' => $farmerData,
         ]);
     }
 
