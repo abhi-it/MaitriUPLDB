@@ -126,22 +126,20 @@ class FarmerController extends Controller{
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
         }
+        $user_id = Auth::user()->id;
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
-        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+        $data = User::with('getAnimalinformation')->where('id', $user_id)->first();
+        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($data->getAnimalinformation->cattale_no) && !empty($data->getAnimalinformation->animal_type) && !empty($data->getAnimalinformation->breeds) && !empty($data->getAnimalinformation->milk_day) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
         
         $animalTypes = explode(',', $user->animal_type);
         $breeds = explode(',', $user->breeds);
         $cattaleNos = explode(',', $user->cattale_no);
         $milkDays = explode(',', $user->milk_day);
-
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
             'userData' => $user,
             'districtName' => $district['name_hindi'],
-            'animal_type' => $animalTypes,
-            'breeds' => $breeds,
-            'cattale_no' => $cattaleNos,
-            'milk_day' => $milkDays
+            'animalInfo' => $data,
         ]);
     }
 

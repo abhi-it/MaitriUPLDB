@@ -136,39 +136,6 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-md-12">
-                            <label for="animal">
-                                <span>पशु की जानकारी</span>
-                            </label>
-                            <div class="optionBox">
-                                <div class="block row adddiv_0">
-                                    <div class="form-group col-md-3">
-                                        <select class="form-control" id="animal_type" name="animal_type[]" required>
-                                            <option value="">एक का चयन करें</option>
-                                            <option value="cow">गाय</option>
-                                            <option value="buffalo">भैंस</option>
-                                            <option value="goat">बकरी</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <input type="text" class="form-control" id="breeds" name="breeds[]" required
-                                            placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <input type="number" class="form-control" id="cattale_no" name="cattale_no[]"
-                                            required placeholder="पशु की जानकारी" autocomplete="off">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <input type="text" class="form-control" id="milk_day" name="milk_day[]" required
-                                            placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
-                                    </div>
-                                    <div class="form-group col-md-1">
-                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group col-md-6">
                             <label for="inputEmail4"> <span>मंडल</span></label>
                             <select name="division_id" id="district" class="form-control" autofocus required>
@@ -225,6 +192,41 @@
                             <input type="text" class="form-control" id="gram_panchayat" required name="gram_panchayat"
                                 required placeholder="ग्राम पंचायत" autocomplete="off">
                         </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="animal">
+                                <span>पशु की जानकारी</span>
+                            </label>
+                            <div class="optionBox">
+                                <div class="block row adddiv_0">
+                                    <input type="hidden" name="animal_id[]" value="">
+                                    <div class="form-group col-md-3">
+                                        <select class="form-control" id="animal_type" name="animal_type[]" required>
+                                            <option value="">एक का चयन करें</option>
+                                            <option value="cow">गाय</option>
+                                            <option value="buffalo">भैंस</option>
+                                            <option value="goat">बकरी</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <input type="text" class="form-control" id="breeds" name="breeds[]" required
+                                            placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <input type="number" class="form-control" id="cattale_no" name="cattale_no[]"
+                                            required placeholder="पशु की जानकारी" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <input type="text" class="form-control" id="milk_day" name="milk_day[]" required
+                                            placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <span class="add btn btn-primary btn-sm">जोड़ें</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="row">
@@ -399,30 +401,29 @@ $(document).ready(function() {
                 $('#post_office').val(getUserData.post_office);
                 $('#pincode').val(getUserData.pincode);
                 $('#gram_panchayat').val(getUserData.gram_panchayat);
-
                 // $('.optionBox').empty();
-                $.each(response.animal_type, function(index, animalType) {
-                    var breed = response.breeds[index];
-                    var cattaleNo = response.cattale_no[index];
-                    var milkDay = response.milk_day[index];
+
+                var animalInfo = response.animalInfo.get_animalinformation
+                $.each(animalInfo, function(index, value) {
 
                     var newRow = `
                     <div class="block row adddiv_${index}">
+                        <input type="hidden" name="animal_id[]" value="${value.id}">
                         <div class="form-group col-md-3">
                             <select class="form-control" name="animal_type[]" required>
-                                <option value="cow" ${animalType === 'cow' ? 'selected' : ''}>गाय</option>
-                                <option value="buffalo" ${animalType === 'buffalo' ? 'selected' : ''}>भैंस</option>
-                                <option value="goat" ${animalType === 'goat' ? 'selected' : ''}>बकरी</option>
+                                <option value="cow" ${value.animal_type === 'cow' ? 'selected' : ''}>गाय</option>
+                                <option value="buffalo" ${value.animal_type === 'buffalo' ? 'selected' : ''}>भैंस</option>
+                                <option value="goat" ${value.animal_type === 'goat' ? 'selected' : ''}>बकरी</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="breeds[]" required value="${breed}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
+                            <input type="text" class="form-control" name="breeds[]" required value="${value.breeds}" placeholder="गाय/भैंस/बकरी की नस्लें" autocomplete="off">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="number" class="form-control" name="cattale_no[]" required value="${cattaleNo}" placeholder="पशु की जानकारी" autocomplete="off">
+                            <input type="number" class="form-control" name="cattale_no[]" required value="${value.cattale_no}" placeholder="पशु की जानकारी" autocomplete="off">
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="text" class="form-control" name="milk_day[]" required value="${milkDay}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
+                            <input type="text" class="form-control" name="milk_day[]" required value="${value.milk_day}" placeholder="दूध/प्रतिदिन/प्रति पशु" autocomplete="off">
                         </div>
                         <div class="form-group col-md-1">
                             <span class="remove btn btn-danger btn-sm">हटाएं</span>
