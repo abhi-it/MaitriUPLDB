@@ -214,7 +214,6 @@ class FarmerController extends Controller
         }
     }
 
-
     public function serviceList(Request $request)
     {
         $user = auth()->user();

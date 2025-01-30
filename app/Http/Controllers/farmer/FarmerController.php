@@ -223,14 +223,36 @@ class FarmerController extends Controller{
             }
         }else{
             if($request->hasfile('file')){
-                $name  = 'file'.$request->file('file')->extension();
-                $request->file('file')->move(public_path('animals'), $name);
-                DB::table('farmer_high_yielding_animal')->insert([
-                        'user_id'   =>  $user,
-                        'type'      =>  $request->type,
-                        'file'      =>  $name,
-                        'details'   =>  $request->details,
-                ]);
+                // $name  = 'file'.$request->file('file')->extension();
+                $file = $request->file;
+                $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
+                if ($file) {
+                    $file = $request->file('file');
+                    if ($file) {
+                        $fileName = 'file_' . time() . '.' . $file->extension();
+                    
+                        $destinationPath = public_path('assets/animals/');
+                        if (!file_exists($destinationPath)) {
+                            mkdir($destinationPath, 0777, true); 
+                        }
+                    
+                        $file->move($destinationPath, $fileName);
+                    
+                        $data = [
+                            'file'    => $fileName,
+                            'file_path' => asset('assets/animals/' . $fileName),
+                        ];
+                        
+                  
+                        // $request->file('file')->move(public_path('animals'), $name);
+                        DB::table('farmer_high_yielding_animal')->insert([
+                                'user_id'   =>  $user,
+                                'type'      =>  $request->type,
+                                'file'      =>  $fileName,
+                                'details'   =>  $request->details,
+                        ]);
+                    }
+                }
             }
             return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
        }
