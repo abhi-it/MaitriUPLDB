@@ -30,7 +30,7 @@ class UsersController extends Controller{
     public function sendOtpToLogin(Request $request){
         // echo 'hello';exit;
         $phone = $request->input('phone');
-        $userfarmerMaitri = FarmerUser::where('MobileNumber', $phone)->first();
+        $userfarmerMaitri = User::where('MobileNumber', $phone)->first();
         if ($userfarmerMaitri) {
             $otp = rand(10000, 99999);
             $userfarmerMaitri->otp_login = $otp;
@@ -61,7 +61,7 @@ class UsersController extends Controller{
     public function loginFarmerMaitri(Request $request){
         $number = $request->input('mobileNumber');
         $otp = $request->input('otp');
-        $userfarmerMaitri = FarmerUser::where('MobileNumber', $number)->where('otp_login', $otp)->first();
+        $userfarmerMaitri = User::where('MobileNumber', $number)->where('otp_login', $otp)->first();
         if ($userfarmerMaitri){
                 Auth::login($userfarmerMaitri);
                 return response()->json(['status' => 'success']);
@@ -88,7 +88,7 @@ class UsersController extends Controller{
             if($request->MobileNumber){
                 $district_id = Districts::where('name_hindi', 'LIKE', '%'.$request->district_id.'%')->first();
                
-                $user  = new FarmerUser([
+                $user  = new User([
                     'name'              => $request->first_name,
                     'FirstName'         => $request->first_name,
                     // 'LastName'          => $request->last_name,
