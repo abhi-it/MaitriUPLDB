@@ -1,103 +1,112 @@
 @extends('submaster')
 @section('content')
 <style>
-    .card {
-        position: relative;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid rgba(0, 0, 0, .125);
-        border-radius: 0.25rem;
-    }
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0.25rem;
+}
 
-    .card-body {
-        -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-        padding: 1.25rem;
-    }
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
 
-    .modal-dialog {
-        max-width: 40% !important;
-    }
-    .openModal{
-        display:none;
-    }
-    .contain-form{
-        margin: auto;
-        padding: 20px;
-    }
+.modal-dialog {
+    max-width: 40% !important;
+}
+
+.openModal {
+    display: none;
+}
+
+.contain-form {
+    margin: auto;
+    padding: 20px;
+}
 </style>
 <div class="container main-div">
     <div class="row mb-5">
         <a href="{{route('add-yielding-animal')}}" class="btn btn-primary">नया पशु जोड़ें</a>
         <h3 class="text-center fw-bold m-4">उच्च उपज देने वाला पशु</h3>
     </div>
-       
-        @if(session()->has('success'))
-        <div class="alert alert-success">
-            {{ session()->get('success') }}
-        </div>
-        @endif
-        @if(session()->has('error'))
-        <div class="alert alert-danger">
-            {{ session()->get('error') }}
-        </div>
-        @endif
-        <div class="row">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>क्र. सं.</th>
-                        <!-- <th width="10%">User Name</th> -->
-                        <th>जानवर</th>
-                        <th>फ़ाइल</th>
-                        <th>विवरण</th>
-                        <!-- <th>कार्रवाई</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    
+
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    @if(session()->has('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+    @endif
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>क्र. सं.</th>
+                    <!-- <th width="10%">User Name</th> -->
+                    <th>जानवर</th>
+                    <th>फ़ाइल</th>
+                    <th>विवरण</th>
+                    <!-- <th>कार्रवाई</th> -->
+                </tr>
+            </thead>
+            <tbody>
+
                 @if(count($data))
-                    @foreach($data as $key => $row)
-                    <tr>
-                        <td><span data-hi>{{$key+1}}</span></td>
-                        <!-- <td>{{Auth::user()->FirstName}}</td> -->
-                        <td><span data-hi>{{$row->type}}</span></td>
-                        <td><img src="https://maitriupldb.in/public/animals/filepng" alt="" width="50" height="50"></td>
-                        <td><span lang="hi">{{$row->details}}</span></td>
-                        <!-- <td>
+                @foreach($data as $key => $row)
+                <tr>
+                    <td><span data-hi>{{$key+1}}</span></td>
+                    <!-- <td>{{Auth::user()->FirstName}}</td> -->
+                    <td><span data-hi>{{$row->type}}</span></td>
+                    <td>
+                        @if(!empty($row->file) && file_exists(public_path('assets/animals/' . $row->file)))
+                        <img src="{{ asset('assets/animals/' . $row->file) }}" alt="" width="50" height="50">
+                        @else
+                        <img src="https://maitriupldb.in/public/animals/filepng" alt="" width="50" height="50">
+                        @endif
+                    </td>
+                    </td>
+                    <td><span lang="hi">{{$row->details}}</span></td>
+                    <!-- <td>
                             <button type="button" class="btn custom-btn btn-danger deleteUser" data-id="}"><i class="fa fa-trash">Delete</i></button>
                         </td> -->
-                    </tr>
-                    @endforeach
+                </tr>
+                @endforeach
                 @else
                 <tr>
                     <td colspan="5" style="color:red;">No records..</td>
                 </tr>
                 @endif
-                
-                </tbody>
-            </table>
-        </div>
+
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    
-  $(window).on('load', function() {
+$(window).on('load', function() {
     var modelShown = localStorage.getItem('farmer');
-    console.log('localStorage',localStorage,modelShown)
-    if(modelShown != 'YES'){
-      $('#exampleModal').modal('show');
-      localStorage.setItem('farmer', 'YES');
+    console.log('localStorage', localStorage, modelShown)
+    if (modelShown != 'YES') {
+        $('#exampleModal').modal('show');
+        localStorage.setItem('farmer', 'YES');
     }
-  });
+});
 </script>
