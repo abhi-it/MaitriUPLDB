@@ -110,7 +110,7 @@ class RegistrationController extends Controller
         try {
             $request->validate([
                 'first_name' => 'required',
-                'mobile' => 'required',
+                'mobile' => ['required', 'unique:farmer_users,MobileNumber'],
                 'district_id' => 'required',
                 'division_id' => 'required',
                 'animal_type' => 'required',
