@@ -42,7 +42,11 @@ return [
         ],
         'api' => [
             'driver' => 'jwt',  // This ensures JWT is used for the API guard
-            'provider' => 'users',  // Ensure 'users' is the correct provider for your application
+            'provider' => 'users'  // Ensure 'users' is the correct provider for your application
+        ],
+        'farmer_api' => [  // Add a separate guard for FarmerUser
+            'driver' => 'jwt',
+            'provider' => 'farmer_users',
         ],
     ],
 
@@ -67,6 +71,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'farmer_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\FarmerUser::class,
         ],
 
         // 'users' => [

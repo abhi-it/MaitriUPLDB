@@ -416,7 +416,7 @@ class FarmerController extends Controller
             }
     
             $user_id = $user->id;
-            $userData = User::find($user_id);
+            $userData = FarmerUser::find($user_id);
     
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
@@ -429,14 +429,10 @@ class FarmerController extends Controller
                 'district_id' => $request->district_id,
                 'division_id' => $request->division_id,
                 'role_id' => '4', 
-                'animal_type' => $request->animal_type,
-                'breeds' => $request->breeds,
-                'cattale_no' => $request->cattale_no,
                 'gram_panchayat' => $request->gram_panchayat,
                 'post_office' => $request->post_office,
                 'block' => $request->block,
                 'tehsil' => $request->tehsil,
-                'milk_day' => $request->milk_day,
                 'role' => 'Farmer', 
                 'user_type' => 'Farmer',
                 'gender' => $request->gender,
@@ -478,7 +474,7 @@ class FarmerController extends Controller
             }
 
             $user_id = $user->id;
-            $userData = User::find($user_id);
+            $userData = FarmerUser::find($user_id);
 
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
@@ -499,15 +495,6 @@ class FarmerController extends Controller
             if ($request->filled('division_id')) {
                 $updateData['division_id'] = $request->division_id;
             }
-            if ($request->filled('animal_type')) {
-                $updateData['animal_type'] = $request->animal_type;
-            }
-            if ($request->filled('breeds')) {
-                $updateData['breeds'] = $request->breeds;
-            }
-            if ($request->filled('cattale_no')) {
-                $updateData['cattale_no'] = $request->cattale_no;
-            }
             if ($request->filled('gram_panchayat')) {
                 $updateData['gram_panchayat'] = $request->gram_panchayat;
             }
@@ -520,9 +507,7 @@ class FarmerController extends Controller
             if ($request->filled('tehsil')) {
                 $updateData['tehsil'] = $request->tehsil;
             }
-            if ($request->filled('milk_day')) {
-                $updateData['milk_day'] = $request->milk_day;
-            }
+            
             if ($request->filled('gender')) {
                 $updateData['gender'] = $request->gender;
             }

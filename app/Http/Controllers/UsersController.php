@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Divisions;
 use App\Models\FarmerUser;
+use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\API\Role;
 use App\Models\Usermeta;
@@ -30,7 +30,7 @@ class UsersController extends Controller{
     public function sendOtpToLogin(Request $request){
         // echo 'hello';exit;
         $phone = $request->input('phone');
-        $userfarmerMaitri = User::where('MobileNumber', $phone)->first();
+        $userfarmerMaitri = FarmerUser::where('MobileNumber', $phone)->first();
         if ($userfarmerMaitri) {
             $otp = rand(10000, 99999);
             $userfarmerMaitri->otp_login = $otp;
@@ -61,7 +61,7 @@ class UsersController extends Controller{
     public function loginFarmerMaitri(Request $request){
         $number = $request->input('mobileNumber');
         $otp = $request->input('otp');
-        $userfarmerMaitri = User::where('MobileNumber', $number)->where('otp_login', $otp)->first();
+        $userfarmerMaitri = FarmerUser::where('MobileNumber', $number)->where('otp_login', $otp)->first();
         if ($userfarmerMaitri){
                 Auth::login($userfarmerMaitri);
                 return response()->json(['status' => 'success']);
@@ -84,11 +84,11 @@ class UsersController extends Controller{
             foreach($errors->all() as $key => $value){
                  return redirect()->back()->with('error',ucfirst($value));
             }
-        }else{
+        }else{ 
             if($request->MobileNumber){
                 $district_id = Districts::where('name_hindi', 'LIKE', '%'.$request->district_id.'%')->first();
                
-                $user  = new User([
+                $user  = new FarmerUser([
                     'name'              => $request->first_name,
                     'FirstName'         => $request->first_name,
                     // 'LastName'          => $request->last_name,

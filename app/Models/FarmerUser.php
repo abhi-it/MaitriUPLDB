@@ -59,5 +59,16 @@ class FarmerUser extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Animalinformation::class, 'user_id');
     }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     
 }
