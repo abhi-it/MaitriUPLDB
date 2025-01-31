@@ -32,19 +32,7 @@ class AuthController extends Controller
                 $number = $request->mobileNumber;
             
                 if($otp){
-                    $curl = curl_init();
-                    curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://otpmsg.in//api/mt/SendSMS?apikey=b7f2ac82d29a4417b324b6ad1bddcbf9&senderid=UPLDBL&channel=Trans&DCS=0&flashsms=0&number='.$number.'&text=OTP%20for%20Login%20in%20Maitri%20app%20'.$otp.'%20If%20not%20requested%20by%20you%2C%20please%20contact%20your%20request%20maitriupldb.in%20UPLDB&route=18',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'GET',
-                    ));
-                    $response = curl_exec($curl);
-                    curl_close($curl);
+                    $this->sendMobileMessage($number, $otp);
                     $farmer->save();
                     return $this->successResponse('OTP generated successfully',200, $otp);
                 }
@@ -54,24 +42,32 @@ class AuthController extends Controller
                 $number = $request->mobileNumber;
             
                 if($otp){
-                    $curl = curl_init();
-                    curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://otpmsg.in//api/mt/SendSMS?apikey=b7f2ac82d29a4417b324b6ad1bddcbf9&senderid=UPLDBL&channel=Trans&DCS=0&flashsms=0&number='.$number.'&text=OTP%20for%20Login%20in%20Maitri%20app%20'.$otp.'%20If%20not%20requested%20by%20you%2C%20please%20contact%20your%20request%20maitriupldb.in%20UPLDB&route=18',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'GET',
-                    ));
-                    $response = curl_exec($curl);
-                    curl_close($curl);
+                    $this->sendMobileMessage($number, $otp);
                     $maitri->save();
                     return $this->successResponse('OTP generated successfully',200, $otp);
                 }
             } else {
-                return $this->errorResponse('Number  not correct',200);
+                $farmerRegister  = new FarmerUser([
+                    'MobileNumber'   => $request->mobileNumber,
+                    'role_id'        => '4',
+                    'role'           => 'Farmer',
+                    'user_type'      => 'Farmer',
+                ]);
+                $registerFarmer = $farmerRegister->save();
+                if($registerFarmer){
+                    $number = $request->mobileNumber;
+                    $userId = $farmerRegister->id;
+                    $farmerData = FarmerUser::where('id', $userId)->first();
+                    if($farmerData){
+                        $otp = rand(10000, 99999);
+                        $farmerData->otp_login = $otp;
+                        $this->sendMobileMessage($number, $otp);
+                        $farmerData->save();
+                        return $this->successResponse('Farmer Register OTP send successfully',200, $otp);
+                    }
+                }else{
+                    return $this->errorResponse('Number  not correct',200);
+                }
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->errors(), 422);
@@ -118,7 +114,24 @@ class AuthController extends Controller
             return $this->errorResponse($e->getMessage(), 500);
         }
     }
-   
+    
+    public function sendMobileMessage($number, $otp){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://otpmsg.in//api/mt/SendSMS?apikey=b7f2ac82d29a4417b324b6ad1bddcbf9&senderid=UPLDBL&channel=Trans&DCS=0&flashsms=0&number='.$number.'&text=OTP%20for%20Login%20in%20Maitri%20app%20'.$otp.'%20If%20not%20requested%20by%20you%2C%20please%20contact%20your%20request%20maitriupldb.in%20UPLDB&route=18',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return;
+    }
+
     public function logout()
     {
         try {
