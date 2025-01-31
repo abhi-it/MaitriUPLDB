@@ -32,7 +32,7 @@ class FarmerController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data = User::with('getAnimalinformation')->where('id', $id)->first();
+        $data = FarmerUser::with('getAnimalinformation')->where('id', $id)->first();
         return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
