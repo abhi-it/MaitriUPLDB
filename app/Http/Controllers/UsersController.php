@@ -71,13 +71,9 @@ class UsersController extends Controller{
     }
 
     public function farmerRegister(Request $request){
-        // dd($request->all());
          $validator = Validator::make($request->all(),[
             'first_name'  => ['bail', 'required', 'string', 'max:255'],
-            // 'last_name'  => ['bail', 'required', 'string', 'max:255'],
-            // 'email'    => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
-            // 'password' => ['bail', 'required', 'string', 'min:8'],
-            'MobileNumber' => [ 'required'],
+            'MobileNumber' => ['required', 'unique:farmer_users,MobileNumber'],
         ]);
         if($validator->fails()){
             $errors = $validator->errors();
@@ -91,9 +87,6 @@ class UsersController extends Controller{
                 $user  = new FarmerUser([
                     'name'              => $request->first_name,
                     'FirstName'         => $request->first_name,
-                    // 'LastName'          => $request->last_name,
-                    // 'email'             => $request->email,
-                    // 'password'          => Hash::make($request->password),
                     'MobileNumber'      => $request->MobileNumber,
                     'district_id'       => $district_id['id'],
                     'division_id'       => $request->division_id,
