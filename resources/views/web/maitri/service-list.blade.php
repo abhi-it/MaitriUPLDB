@@ -36,7 +36,7 @@
                 <td>Pregnancy Diagnosis</td>
                 @endif
 
-                <td>{{$row->request_message}}</td>
+                <td>{{ $row->request_message ? $row->request_message : '--' }}</td>
                 <td>
                     @php
                     $color = '';
