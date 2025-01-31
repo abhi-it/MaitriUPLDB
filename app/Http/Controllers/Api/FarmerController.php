@@ -283,19 +283,43 @@ class FarmerController extends Controller
             ], 401);
         }
 
-        $id = DB::table('farmer_high_yielding_animal')->insertGetID([
+        $file = $request->file;
+        $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
+        if ($file) {
+            $file = $request->file('file');
+            if ($file) {
+                $fileName = 'file_' . time() . '.' . $file->extension();
+            
+                $destinationPath = public_path('assets/animals/');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true); 
+                }
+            
+                $file->move($destinationPath, $fileName);
+            
+                $data = [
+                    'file'    => $fileName,
+                    'file_path' => asset('assets/animals/' . $fileName),
+                ];
+
+                $id = DB::table('farmer_high_yielding_animal')->insertGetID([
                         'user_id' =>  $user->id,
                         'type'    =>  $request->type,
-                        'file'    =>  $request->file,
+                        'file'    =>  $fileName,
                         'details' =>  $request->details,
                 ]);
 
-        $data =  FarmerHighYielingAnimal::where('id', $id)->first();
+                $data =  FarmerHighYielingAnimal::where('id', $id)->first();
 
-        if($data){
-            return $this->successResponse('Animal Data saved successfully',200, $data);
-        } else {
-            return $this->errorResponse('Error in saving data', 404);
+                if($data){
+                    return $this->successResponse('Animal Data saved successfully',200, $data);
+                } else {
+                    return $this->errorResponse('Error in saving data', 404);
+                }
+                
+            } else {
+                return $this->errorResponse('Uploaded file is not valid', 404);
+            }
         }
     }
 
