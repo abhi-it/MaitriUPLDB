@@ -135,7 +135,7 @@ Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addS
 Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
 Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
 
-Route::group(['middleware' => ['auth', 'roles',]], function () {
+Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
     Route::resource('institute', App\Http\Controllers\InstituteController::class);
