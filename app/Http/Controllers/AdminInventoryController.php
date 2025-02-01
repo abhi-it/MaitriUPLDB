@@ -42,6 +42,9 @@ class AdminInventoryController extends Controller
             });
         }
         $data = $query->paginate(10);
+
+        // echo '<pre>';print_r($data);exit;
+
         $getMaitri = User::where('role', 'Maitri')->get();
         return view('farmardata.farmer-request-list', [
             'data' => $data,
@@ -80,7 +83,7 @@ class AdminInventoryController extends Controller
         $row = Servicerequest::find($request->id);
         if ($row) {
             $row->status = $request->status;
-            $row->maitri_id = $request->assign_maitri;
+            $row->maitri_id = $request->assign_maitri ?? $row->maitri_id;
             $row->save();
             return response()->json(['success' => 'Status updated successfully.']);
         }
