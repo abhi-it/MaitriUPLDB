@@ -1226,7 +1226,7 @@
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
-                                        <span data-hi="नियुक्त उम्मीदवार" data-en="Farmer Request"></span>
+                                        <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
                                     </a>
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
