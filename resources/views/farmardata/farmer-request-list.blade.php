@@ -69,7 +69,7 @@
             @foreach($data as$key=> $row)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$row->user->name}}</td>
+                <td>{{$row->user->name  }}</td>
                 <td>{{$row->user->district['name_hindi']}}</td>
                 @if($row->service_name == 'health_medical_checkip')
                 <td>स्वास्थ्य/चिकित्सा जांच</td>
@@ -84,7 +84,7 @@
                 @endif
 
                 <td>{{$row->request_message}}</td>
-                <td>{{($row->user->name) ?? '--'}}</td>
+                <td>{{($row->maitri->name) ?? '--'}}</td>
 
                 @if($row->status==1)
                 <td> <button class="btn btn-primary btn-sm">नया है</button></td>
@@ -110,7 +110,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="5" style="color:red;">No records..</td>
+                <td colspan="9" class="text-center" style="color:red;">No records..</td>
             </tr>
             @endif
         </tbody>
