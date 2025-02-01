@@ -63,8 +63,8 @@ class UsersController extends Controller{
         $otp = $request->input('otp');
         $userfarmerMaitri = FarmerUser::where('MobileNumber', $number)->where('otp_login', $otp)->first();
         if ($userfarmerMaitri){
-                Auth::login($userfarmerMaitri);
-                return response()->json(['status' => 'success']);
+            Auth::guard('webFarmer')->login($userfarmerMaitri);
+            return response()->json(['status' => 'success']);
         }else{
             return response()->json(['status' => 'error']);
         }
