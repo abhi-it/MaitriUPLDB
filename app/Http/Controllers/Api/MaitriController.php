@@ -24,6 +24,70 @@ class MaitriController extends Controller
 {
     use FormatResponseTrait;
 
+    public function getMaitriDetails(){
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        $mairtiData =  User::where(['id'=>$user->id])->first();
+        $district = Districts::where('id', 'LIKE', '%' . $mairtiData['district_id'] . '%')->first();
+        $mairtiData['districtName'] = $district['name_hindi'];
+        if($mairtiData){
+            $data = [
+                'userData' => $mairtiData,
+            ];
+            return $this->successResponse('Get Profile Successfully',200, $data);
+        }else{
+            return $this->errorResponse('Profile Not get', 403);
+        }
+    }
+
+    public function updateMaitriDetails(Request $request){
+        
+        $request->validate([
+            'first_name'      => 'required|string|max:255',
+            'MobileNumber'    => 'required',
+            'district_id'     => 'nullable|string',
+            'division_id'     => 'nullable|integer',
+            'gram_panchayat'  => 'nullable|string|max:255',
+            'post_office'     => 'nullable|string|max:255',
+            'block'           => 'nullable|string|max:255',
+            'tehsil'          => 'nullable|string|max:255',
+            'gender'          => 'required|string',
+        ]);
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        
+        $mairtiUser = User::findOrFail($user->id);
+        $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
+                               ->orWhere('id', $request->district_id)->first();
+ 
+        if($mairtiUser){
+            $mairtiUser->name           = $request->first_name;
+            $mairtiUser->FirstName      = $request->first_name;
+            $mairtiUser->MobileNumber   = $request->MobileNumber;
+            $mairtiUser->gender         = $request->gender;
+            $mairtiUser->district_id    = $district ? $district->id : null;
+            $mairtiUser->division_id    = $request->division_id;
+            $mairtiUser->gram_panchayat = $request->gram_panchayat;
+            $mairtiUser->post_office    = $request->post_office;
+            $mairtiUser->pincode        = $request->pincode;
+            $mairtiUser->block          = $request->block;
+            $mairtiUser->tehsil         = $request->tehsil;
+            $mairtiUser->save();
+    
+            return $this->successResponse('Profile Updated successfully', 200, $mairtiUser);
+        }else{
+            return $this->errorResponse('Profile not Updated', 400);
+        }
+    }
+
     public function monthly_progress_report(Request $request)
     {
         try {
