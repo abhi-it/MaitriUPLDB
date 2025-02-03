@@ -496,6 +496,12 @@ class CheckRole
                 'changeLang',
                 'monthly-report',
                 'filtered-monthly-report',
+                'maitri-details',
+                'get-all-block',
+                'get-all-tehsil',
+                'get-all-district',
+                'check-maitri-details',
+                'update-maitri-details',
             ],
             'Farmer' => [
                 'update-farmer-details',

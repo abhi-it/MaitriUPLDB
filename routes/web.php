@@ -330,9 +330,13 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     //farmer dashbaord
     // Route::post('/submit-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'submitUserDetails'])->name('submit.user.details');
-    // routes/web.php
+    // routes/web.php 
     Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
+    Route::get('/check-maitri-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkMaitriDetails'])->name('check-maitri-details');
 
+
+    Route::get("maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'maitri_details'])->name('maitri-details');
+    Route::post("update-maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'updateMaitriDateils'])->name('update-maitri-details');
 
     Route::get("farmer-details", [App\Http\Controllers\farmer\FarmerController::class, 'farmer_details'])->name('farmer-details');
     Route::post("update-farmer-details", [App\Http\Controllers\farmer\FarmerController::class, 'updateFarmerDateils'])->name('update-farmer-details');
