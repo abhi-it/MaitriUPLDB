@@ -63,7 +63,7 @@ class MaitriController extends Controller{
         $mairtiUser = User::findOrFail($user_id);
         $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
                                ->orWhere('id', $request->district_id)->first();
-
+ 
         $mairtiUser->name           = $request->first_name;
         $mairtiUser->FirstName      = $request->first_name;
         $mairtiUser->MobileNumber   = $request->MobileNumber;

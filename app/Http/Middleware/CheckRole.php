@@ -486,7 +486,7 @@ class CheckRole
                 'admin-inventory-record',
                 'admin-stock-save-data',
                 'check-stock-limit',
-            ],
+            ], 
             'Maitri' => [
                 'maitri-dashboard',
                 'maitri-dashdata',
