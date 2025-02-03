@@ -58,6 +58,7 @@
                 <th>ज़िला</th>
                 <th>सेवा का नाम</th>
                 <th>संदेश</th>
+                <th>मैत्री को नियुक्त करें</th>
                 <th>स्थिति</th>
                 <th>स्थिति बदलें</th>
                 <th>डिलीट करे</th>
@@ -68,7 +69,7 @@
             @foreach($data as$key=> $row)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$row->user->name}}</td>
+                <td>{{$row->user->name  }}</td>
                 <td>{{$row->user->district['name_hindi']}}</td>
                 @if($row->service_name == 'health_medical_checkip')
                 <td>स्वास्थ्य/चिकित्सा जांच</td>
@@ -83,6 +84,7 @@
                 @endif
 
                 <td>{{$row->request_message}}</td>
+                <td>{{($row->maitri->name) ?? '--'}}</td>
 
                 @if($row->status==1)
                 <td> <button class="btn btn-primary btn-sm">नया है</button></td>
@@ -96,7 +98,7 @@
                 <td>
                     <button type="button" class="btn custom-btn btn-primary changeStatus btn-sm" data-id="{{$row->id}}"
                         data-farmer="{{$row->user->name}}" data-status="{{$row->status}}"
-                        data-service="{{$row->service_name}}">
+                        data-mairtiId="{{$row->maitri->id}}" data-service="{{$row->service_name}}">
                         Change Status
                     </button>
                 </td>
@@ -108,7 +110,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="5" style="color:red;">No records..</td>
+                <td colspan="9" class="text-center" style="color:red;">No records..</td>
             </tr>
             @endif
         </tbody>
@@ -134,6 +136,13 @@
                                 <option value="2">इंतज़ार में है</option>
                                 <option value="3">अस्वीकार किया गया है</option>
                                 <option value="0">स्वीकार कर लिया है</option>
+                            </select>
+                            <select name="assign_maitri" id="assign_maitri" class="form-select mt-2">
+                                <option value="" data-hi="मैत्री को नियुक्त करें" data-en="Assign Maitri"></option>
+                                @foreach($getMaitri as $mairti)
+                                <option value="{{ $mairti['id'] }}">{{ $mairti['name'] }}</option>
+                                @endforeach
+
                             </select>
                         </div>
                         <input type="hidden" id="rowId" name="rowId">
@@ -163,15 +172,22 @@ $(document).ready(function() {
     $('.changeStatus').click(function() {
         var rowId = $(this).data('id');
         var currentStatus = $(this).data('status');
+        var mairtiId = $(this).attr('data-mairtiId');
 
         $('#rowId').val(rowId);
         $('#modalStatus').val(currentStatus);
+        if ($("#assign_maitri option[value='" + mairtiId + "']").length > 0) {
+            $('#assign_maitri').val(mairtiId).change();
+        } else {
+            console.warn('Option value not found:', mairtiId);
+        }
         $('#statusModal').modal('show');
     });
 
     $('#saveStatus').click(function() {
         var rowId = $('#rowId').val();
         var newStatus = $('#modalStatus').val();
+        var assign_maitri = $('#assign_maitri').val();
         Swal.fire({
             title: "Are you sure?",
             text: "You won't to change this status",
@@ -188,6 +204,7 @@ $(document).ready(function() {
                     data: {
                         id: rowId,
                         status: newStatus,
+                        assign_maitri: assign_maitri,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

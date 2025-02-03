@@ -36,7 +36,7 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [RegistrationController::class, 'register'])->name('register');
 });
 
-Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() {
+Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], function() {
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -50,8 +50,12 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api'] ], function() 
     Route::get('animal_list', [FarmerController::class, 'animal_list']);
     Route::post('add_animal', [FarmerController::class, 'add_animal']);
     Route::post('delete-animal', [FarmerController::class, 'delete_animal']);
-    Route::post('/upload-image', [FarmerController::class, 'uploadImage']);
-    Route::post('/update-profile', [FarmerController::class, 'update_profile']);
+    Route::post('upload-image', [FarmerController::class, 'uploadImage']);
+    Route::post('update-profile', [FarmerController::class, 'update_profile']);
+    
+    Route::post('save-animal-info', [FarmerController::class, 'saveAnimalInfo']);
+    Route::post('delete-animal-info', [FarmerController::class, 'deleteAnimalInfo']);
+    Route::get('all-animal-info', [FarmerController::class, 'allAnimalInfo']);
     
 
     //Maitri

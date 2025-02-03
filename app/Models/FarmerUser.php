@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\User;
 
-class User extends Authenticatable implements JWTSubject
+class FarmerUser extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,6 +19,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
+    protected $table = 'farmer_users';
     protected $fillable = [
         'name','email', 
         'password','user_type','role','gender','pincode','gram_panchayat','post_office','block','tehsil','milk_day','animal_type','otp_login',
@@ -68,4 +69,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    
 }

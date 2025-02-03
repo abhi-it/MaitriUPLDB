@@ -5,6 +5,8 @@ namespace App\Http\Controllers\farmer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\FarmerUser;
+use App\Models\Animalinformation;
 use App\Models\Districts;
 use App\Models\API\Role;
 use App\Models\API\Servicerequest;
@@ -22,7 +24,7 @@ class FarmerController extends Controller{
         $divisions  = Divisions::get();
         $user       = Auth::user()->id;
         $data       = Servicerequest::where(['user_id'=>$user])->get();
-       return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
+        return view('web.farmer.dashbaord',['data'=>$data], compact('districts','divisions'));
     }
 
     public function farmer_details()
@@ -30,14 +32,8 @@ class FarmerController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data = User::where('id', $id)->first();
-     
-        $cattaleNoArray = explode(',', $data->cattale_no); 
-        $breedsArray = explode(',', $data->breeds); 
-        $milkDayArray = explode(',', $data->milk_day);
-        $animalTypes = explode(',', $data->animal_type);
-
-        return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions','animalTypes','milkDayArray','breedsArray','cattaleNoArray')); 
+        $data = FarmerUser::with('getAnimalinformation')->where('id', $id)->first();
+        return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
     }
 
     public function updateFarmerDateils(Request $request)
@@ -57,7 +53,7 @@ class FarmerController extends Controller{
             'gender'          => 'required|string',
         ]);
         $user_id = $request->user_id;
-        $user = User::findOrFail($user_id);
+        $user = FarmerUser::findOrFail($user_id);
 
         $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
                                ->orWhere('id', $request->district_id)->first();
@@ -68,17 +64,40 @@ class FarmerController extends Controller{
         $user->gender         = $request->gender;
         $user->district_id    = $district ? $district->id : null;
         $user->division_id    = $request->division_id;
-        $user->animal_type    = $request->animal_type ? implode(',', $request->animal_type) : null;
-        $user->breeds         = $request->breeds ? implode(',', $request->breeds) : null;
-        $user->cattale_no     = $request->cattale_no ? implode(',', $request->cattale_no) : null;
         $user->gram_panchayat = $request->gram_panchayat;
         $user->post_office    = $request->post_office;
         $user->pincode        = $request->pincode;
         $user->block          = $request->block;
         $user->tehsil         = $request->tehsil;
-        $user->milk_day       = $request->milk_day ? implode(',', $request->milk_day) : null;
-
         $user->save();
+
+        $uid = $user->id;
+        if ($request->has('removeAnimal')) {
+            Animalinformation::whereIn('id', $request->removeAnimal)
+                ->where('user_id', $uid)
+                ->delete();
+        }
+
+        foreach ($request->animal_type as $index => $animalType) {
+            $animalId = $request->animal_id[$index]; // Get the animal_id from the hidden input
+    
+            if ($animalId) {
+                Animalinformation::where('id', $animalId)->where('user_id', $uid)->update([
+                    'animal_type' => $animalType,
+                    'breeds' => $request->breeds[$index],
+                    'cattale_no' => $request->cattale_no[$index],
+                    'milk_day' => $request->milk_day[$index],
+                ]);
+            } else {
+                Animalinformation::create([
+                    'user_id' => $uid,
+                    'animal_type' => $animalType,
+                    'breeds' => $request->breeds[$index],
+                    'cattale_no' => $request->cattale_no[$index],
+                    'milk_day' => $request->milk_day[$index],
+                ]);
+            }
+        }
         return redirect('/farmer-dashboard')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }
 
@@ -94,22 +113,16 @@ class FarmerController extends Controller{
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
         }
+        $user_id = Auth::user()->id;
         $district = Districts::where('id', 'LIKE', '%' . $user['district_id'] . '%')->first();
-        $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
-        
-        $animalTypes = explode(',', $user->animal_type);
-        $breeds = explode(',', $user->breeds);
-        $cattaleNos = explode(',', $user->cattale_no);
-        $milkDays = explode(',', $user->milk_day);
+        $farmerData = FarmerUser::with('getAnimalinformation')->where('id', $user_id)->first();
+        $isFilled = !empty($user->name) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
 
         return response()->json([
             'status' => $isFilled ? 'filled' : 'not_filled',
-            'userData' => $user,
+            'userData' => $farmerData,
             'districtName' => $district['name_hindi'],
-            'animal_type' => $animalTypes,
-            'breeds' => $breeds,
-            'cattale_no' => $cattaleNos,
-            'milk_day' => $milkDays
+            'animalInfo' => $farmerData,
         ]);
     }
 
@@ -193,14 +206,36 @@ class FarmerController extends Controller{
             }
         }else{
             if($request->hasfile('file')){
-                $name  = 'file'.$request->file('file')->extension();
-                $request->file('file')->move(public_path('animals'), $name);
-                DB::table('farmer_high_yielding_animal')->insert([
-                        'user_id'   =>  $user,
-                        'type'      =>  $request->type,
-                        'file'      =>  $name,
-                        'details'   =>  $request->details,
-                ]);
+                // $name  = 'file'.$request->file('file')->extension();
+                $file = $request->file;
+                $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
+                if ($file) {
+                    $file = $request->file('file');
+                    if ($file) {
+                        $fileName = 'file_' . time() . '.' . $file->extension();
+                    
+                        $destinationPath = public_path('assets/animals/');
+                        if (!file_exists($destinationPath)) {
+                            mkdir($destinationPath, 0777, true); 
+                        }
+                    
+                        $file->move($destinationPath, $fileName);
+                    
+                        $data = [
+                            'file'    => $fileName,
+                            'file_path' => asset('assets/animals/' . $fileName),
+                        ];
+                        
+                  
+                        // $request->file('file')->move(public_path('animals'), $name);
+                        DB::table('farmer_high_yielding_animal')->insert([
+                                'user_id'   =>  $user,
+                                'type'      =>  $request->type,
+                                'file'      =>  $fileName,
+                                'details'   =>  $request->details,
+                        ]);
+                    }
+                }
             }
             return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
        }

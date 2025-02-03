@@ -34,7 +34,7 @@ class AdminInventoryController extends Controller
 {
     public function getFarmerRequest(Request $request){
         $district = Districts::get();
-        $query = Servicerequest::with(['user', 'maitri', 'user.district']); 
+        $query = Servicerequest::with(['user', 'maitri', 'user.district']) ->orderBy('id', 'desc');; 
         if (!empty($request->input('district_id'))) {
             $districtId = $request->input('district_id');
             $query->whereHas('user', function ($q) use ($districtId) {
@@ -42,9 +42,12 @@ class AdminInventoryController extends Controller
             });
         }
         $data = $query->paginate(10);
+
+        $getMaitri = User::where('role', 'Maitri')->get();
         return view('farmardata.farmer-request-list', [
             'data' => $data,
-            'district' => $district
+            'district' => $district,
+            'getMaitri' => $getMaitri
         ]);
     }
     
@@ -78,6 +81,7 @@ class AdminInventoryController extends Controller
         $row = Servicerequest::find($request->id);
         if ($row) {
             $row->status = $request->status;
+            $row->maitri_id = $request->assign_maitri ?? $row->maitri_id;
             $row->save();
             return response()->json(['success' => 'Status updated successfully.']);
         }

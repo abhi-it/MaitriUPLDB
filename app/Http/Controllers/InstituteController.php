@@ -98,6 +98,8 @@ class InstituteController extends Controller
 		$institute->mobile =  $request->get('mobile');
 		$institute->email =  $request->get('email');
 		$institute->address =  $request->get('address');
+		$institute->lattitute =  $request->get('lattitude');
+		$institute->longitute =  $request->get('longitude');
         $institute->save();
         return redirect('/institute')->with('success', 'data updated successfully!');
     }

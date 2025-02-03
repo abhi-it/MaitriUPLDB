@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\FarmerUser;
 use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\FarmerFeedback;
+use App\Models\Animalinformation;
 use App\Models\API\Role;
 use App\Models\FarmerHighYielingAnimal;
 use App\Models\API\Servicerequest;
@@ -23,6 +25,101 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class FarmerController extends Controller
 {
     use FormatResponseTrait;
+
+
+    public function allAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', $request->page);
+        $query = Animalinformation::where('user_id', $user->id)->orderBy('id', 'desc');
+        $data = $query->paginate($perPage, ['*'], 'page', $page);
+        $items = $data->items();
+
+        if (empty($items)) {
+            return $this->successResponse('No Animal Info Found', 200);
+        }else{
+            return $this->successResponse('Get All Animal Information',200,$items, $data);
+        }
+    }
+
+    public function deleteAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        $animal_id = $request->animal_id;
+        $animal = Animalinformation::find($animal_id);
+        
+        if (!$animal) {
+            return $this->errorResponse('Animal record not found', 404);
+        }
+        $animal->delete();
+        return $this->successResponse('Animal record deleted successfully',200, $animal_id);
+    }
+
+    public function saveAnimalInfo(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+        $data = $request->json()->all();
+
+        $validator = Validator::make($data, [
+            '*.user_id' => 'required|integer|exists:users,id',
+            '*.animal_type' => 'required|string|in:cow,buffalo,goat',
+            '*.breeds' => 'required|string',
+            '*.cattale_no' => 'required|integer',
+            '*.milk_day' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+        $msg = '';
+        foreach ($data as $animalData) {
+            if($animalData['id'] == ''){
+                Animalinformation::create([
+                    'user_id'       => $animalData['user_id'],
+                    'animal_type'   => $animalData['animal_type'],
+                    'breeds'        => $animalData['breeds'],
+                    'cattale_no'    => $animalData['cattale_no'],
+                    'milk_day'      => $animalData['milk_day'],
+                ]);
+                $msg = "Animal information saved successfully";
+                
+            }else{
+                $animal = Animalinformation::where('id', $animalData['id'])->first();
+                if ($animal) {
+                    $animal->update([
+                        'animal_type'   => $animalData['animal_type'],
+                        'breeds'        => $animalData['breeds'],
+                        'cattale_no'    => $animalData['cattale_no'],
+                        'milk_day'      => $animalData['milk_day'],
+                    ]);
+                }
+                $msg = "Animal information updated successfully";
+            }
+        }
+
+        return $this->successResponse($msg,200, $data);
+    }
 
     public function maitri_list(Request $request)
     {
@@ -49,7 +146,8 @@ class FarmerController extends Controller
             ], 401);
         }
         if ($user) {
-            $isFilled = !empty($user->name) && !empty($user->email) && !empty($user->gender) && !empty($user->pincode) && !empty($user->MobileNumber) && !empty($user->cattale_no) && !empty($user->animal_type) && !empty($user->breeds) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil)  && !empty($user->milk_day);
+            $userData = FarmerUser::where('id', $user->id)->first();
+            $isFilled = !empty($userData->name) && !empty($userData->email) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
             $check_profile = $isFilled ? 'completed' : 'not_completed';
             $user['profileDone'] = $check_profile;
             return $this->successResponse('Get User Profile Successfully',200,$user);
@@ -168,10 +266,10 @@ class FarmerController extends Controller
         }
 
         $animals = [
-            ['value' => 'buffalo', 'label' => 'Buffalo'],
-            ['value' => 'cow', 'label' => 'Cow'],
-            ['value' => 'goat', 'label' => 'Goat'],
-            ['value' => 'horse', 'label' => 'Horse'],
+            ['value' => 'buffalo', 'label' => 'भैंस'],
+            ['value' => 'cow', 'label' => 'गाय'],
+            ['value' => 'goat', 'label' => 'बकरी'],
+            ['value' => 'horse', 'label' => 'घोड़ा'],
         ];
         return $this->successResponse('Animal Types displayed successfully.',200, $animals);
     }
@@ -185,19 +283,43 @@ class FarmerController extends Controller
             ], 401);
         }
 
-        $id = DB::table('farmer_high_yielding_animal')->insertGetID([
+        $file = $request->file;
+        $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
+        if ($file) {
+            $file = $request->file('file');
+            if ($file) {
+                $fileName = 'file_' . time() . '.' . $file->extension();
+            
+                $destinationPath = public_path('assets/animals/');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true); 
+                }
+            
+                $file->move($destinationPath, $fileName);
+            
+                $data = [
+                    'file'    => $fileName,
+                    'file_path' => asset('assets/animals/' . $fileName),
+                ];
+
+                $id = DB::table('farmer_high_yielding_animal')->insertGetID([
                         'user_id' =>  $user->id,
                         'type'    =>  $request->type,
-                        'file'    =>  $request->file,
+                        'file'    =>  $fileName,
                         'details' =>  $request->details,
                 ]);
 
-        $data =  FarmerHighYielingAnimal::where('id', $id)->first();
+                $data =  FarmerHighYielingAnimal::where('id', $id)->first();
 
-        if($data){
-            return $this->successResponse('Animal Data saved successfully',200, $data);
-        } else {
-            return $this->errorResponse('Error in saving data', 404);
+                if($data){
+                    return $this->successResponse('Animal Data saved successfully',200, $data);
+                } else {
+                    return $this->errorResponse('Error in saving data', 404);
+                }
+                
+            } else {
+                return $this->errorResponse('Uploaded file is not valid', 404);
+            }
         }
     }
 
@@ -282,13 +404,12 @@ class FarmerController extends Controller
                 'message' => 'User not authenticated',
             ], 401);
         }
-
         //0-Accept, 1-New, 2-Waiting, 3-Decline	
         $status = [
-            ['id' => '0', 'name' => 'Accept'],
-            ['id' => '1', 'name' => 'New'],
-            ['id' => '2', 'name' => 'Waiting'],
-            ['id' => '3', 'name' => 'Decline'],
+            ['id' => '0', 'name' => 'स्वीकार',],
+            ['id' => '1', 'name' => 'नया'],
+            ['id' => '2', 'name' => 'इंतज़ार'],
+            ['id' => '3', 'name' => 'अस्वीकार'],
         ];
 
         return $this->successResponse('Status displayed successfully.',200, $status);
@@ -321,7 +442,7 @@ class FarmerController extends Controller
             }
     
             $user_id = $user->id;
-            $userData = User::find($user_id);
+            $userData = FarmerUser::find($user_id);
     
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
@@ -334,14 +455,10 @@ class FarmerController extends Controller
                 'district_id' => $request->district_id,
                 'division_id' => $request->division_id,
                 'role_id' => '4', 
-                'animal_type' => $request->animal_type,
-                'breeds' => $request->breeds,
-                'cattale_no' => $request->cattale_no,
                 'gram_panchayat' => $request->gram_panchayat,
                 'post_office' => $request->post_office,
                 'block' => $request->block,
                 'tehsil' => $request->tehsil,
-                'milk_day' => $request->milk_day,
                 'role' => 'Farmer', 
                 'user_type' => 'Farmer',
                 'gender' => $request->gender,
@@ -383,7 +500,7 @@ class FarmerController extends Controller
             }
 
             $user_id = $user->id;
-            $userData = User::find($user_id);
+            $userData = FarmerUser::find($user_id);
 
             if (!$userData) {
                 return $this->errorResponse('User Not found', 404);
@@ -404,15 +521,6 @@ class FarmerController extends Controller
             if ($request->filled('division_id')) {
                 $updateData['division_id'] = $request->division_id;
             }
-            if ($request->filled('animal_type')) {
-                $updateData['animal_type'] = $request->animal_type;
-            }
-            if ($request->filled('breeds')) {
-                $updateData['breeds'] = $request->breeds;
-            }
-            if ($request->filled('cattale_no')) {
-                $updateData['cattale_no'] = $request->cattale_no;
-            }
             if ($request->filled('gram_panchayat')) {
                 $updateData['gram_panchayat'] = $request->gram_panchayat;
             }
@@ -425,9 +533,7 @@ class FarmerController extends Controller
             if ($request->filled('tehsil')) {
                 $updateData['tehsil'] = $request->tehsil;
             }
-            if ($request->filled('milk_day')) {
-                $updateData['milk_day'] = $request->milk_day;
-            }
+            
             if ($request->filled('gender')) {
                 $updateData['gender'] = $request->gender;
             }

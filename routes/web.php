@@ -135,7 +135,7 @@ Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addS
 Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
 Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
 
-Route::group(['middleware' => ['auth', 'roles',]], function () {
+Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
     Route::resource('institute', App\Http\Controllers\InstituteController::class);
@@ -448,6 +448,11 @@ Route::group(['middleware' => ['auth', 'roles',]], function () {
 
     // google map routes
 });
+
+
+
+Route::post('login-farmer-maitri', [App\Http\Controllers\UsersController::class, 'loginFarmerMaitri'])->name('login-farmer-maitri');
+Route::get('send-otp-faramer-maitri', [App\Http\Controllers\UsersController::class, 'sendOtpToLogin'])->name('send-otp-faramer-maitri');
 
 Route::get("farmer-register", [App\Http\Controllers\UsersController::class, 'index'])->name('farmer-register');
 Route::post("farmer-add", [App\Http\Controllers\UsersController::class, 'farmerRegister'])->name('farmer-add');

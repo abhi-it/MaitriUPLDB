@@ -69,7 +69,7 @@ class MaitriController extends Controller
 
             $perPage = $request->input('per_page', 10);
             $page = $request->input('page', $request->page);
-            $query = Servicerequest::where(['maitri_id' => $user->id])->orderBy('id', 'desc');
+            $query = Servicerequest::with('user')->where(['maitri_id' => $user->id])->orderBy('id', 'desc');
 
             $data = $query->paginate($perPage, ['*'], 'page', $page);
             $items = $data->items();
