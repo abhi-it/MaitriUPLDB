@@ -59,10 +59,13 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
     
 
     //Maitri
+    Route::get('maitri/get-maitri-details', [MaitriController::class, 'getMaitriDetails']);
+    Route::post('maitri/update-maitri-details', [MaitriController::class, 'updateMaitriDetails']);
+
+    Route::get('maitri/service-categories', [MaitriController::class, 'service_category_list']);
     Route::post('monthly-progress-report', [MaitriController::class, 'monthly_progress_report']);
     Route::post('maitri/service_request', [MaitriController::class, 'service_request']);
     Route::post('maitri/update-status', [MaitriController::class, 'update_service_status']);
-    Route::get('maitri/service-categories', [MaitriController::class, 'service_category_list']);
     Route::post('maitri/add-animal-service', [MaitriController::class, 'add_animal_service_request']);
 
     //Status  
