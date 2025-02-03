@@ -31,8 +31,13 @@ class FarmerController extends Controller{
         $districts  = Districts::get();
         $divisions  = Divisions::get();
         $data = User::where('id', $id)->first();
+     
+        $cattaleNoArray = explode(',', $data->cattale_no); 
+        $breedsArray = explode(',', $data->breeds); 
+        $milkDayArray = explode(',', $data->milk_day);
+        $animalTypes = explode(',', $data->animal_type);
 
-        return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions')); 
+        return view('web.farmer.update-form',['data'=>$data], compact('data','id','districts','divisions','animalTypes','milkDayArray','breedsArray','cattaleNoArray')); 
     }
 
     public function updateFarmerDateils(Request $request)
