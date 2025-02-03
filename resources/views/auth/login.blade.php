@@ -226,8 +226,11 @@ $(document).ready(function() {
                 _token: "{{ csrf_token() }}"
             },
             success: function(response) {
-                if (response.status === "success") {
+                if (response.status == "success" && response.loginStatus == 'farmer') {
                     window.location.href = "/farmer-dashboard";
+                } else if (response.status == "success" && response.loginStatus ==
+                    'maitri') {
+                    window.location.href = "/maitri-dashboard";
                 } else {
                     $('#otp_err').text("अमान्य ओटीपी, कृपया पुनः प्रयास करें।");
                 }

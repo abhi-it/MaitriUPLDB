@@ -28,43 +28,61 @@ class UsersController extends Controller{
     }
 
     public function sendOtpToLogin(Request $request){
-        // echo 'hello';exit;
         $phone = $request->input('phone');
-        $userfarmerMaitri = FarmerUser::where('MobileNumber', $phone)->first();
-        if ($userfarmerMaitri) {
+        $userfarmer = FarmerUser::where('MobileNumber', $phone)->first();
+        $userMaitri = User::where('MobileNumber', $phone)->first();
+        if ($userfarmer) {
             $otp = rand(10000, 99999);
-            $userfarmerMaitri->otp_login = $otp;
+            $userfarmer->otp_login = $otp;
             $number = $request->input('phone');
-        
             if($otp){
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://otpmsg.in//api/mt/SendSMS?apikey=b7f2ac82d29a4417b324b6ad1bddcbf9&senderid=UPLDBL&channel=Trans&DCS=0&flashsms=0&number='.$number.'&text=OTP%20for%20Login%20in%20Maitri%20app%20'.$otp.'%20If%20not%20requested%20by%20you%2C%20please%20contact%20your%20request%20maitriupldb.in%20UPLDB&route=18',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                ));
-                $response = curl_exec($curl);
-                curl_close($curl);
-                $userfarmerMaitri->save();
+                $this->sendMobileMessage($number, $otp);
+                $userfarmer->save();
                 return response()->json(['otp' => $otp, 'status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
             }
-        } else {
+        } else if($userMaitri){
+            $otp = rand(10000, 99999);
+            $userMaitri->otp_login = $otp;
+            $number = $request->input('phone');
+            if($otp){
+                $this->sendMobileMessage($number, $otp);
+                $userMaitri->save();
+                return response()->json(['otp' => $otp, 'status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
+            }
+        }else {
             return response()->json(['status' => 'error', 'message' => 'मोबाइल नंबर ग़लत है'], 200);
         }
+    }
+
+    public function sendMobileMessage($number, $otp){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://otpmsg.in//api/mt/SendSMS?apikey=b7f2ac82d29a4417b324b6ad1bddcbf9&senderid=UPLDBL&channel=Trans&DCS=0&flashsms=0&number='.$number.'&text=OTP%20for%20Login%20in%20Maitri%20app%20'.$otp.'%20If%20not%20requested%20by%20you%2C%20please%20contact%20your%20request%20maitriupldb.in%20UPLDB&route=18',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return;
     }
 
     public function loginFarmerMaitri(Request $request){
         $number = $request->input('mobileNumber');
         $otp = $request->input('otp');
-        $userfarmerMaitri = FarmerUser::where('MobileNumber', $number)->where('otp_login', $otp)->first();
-        if ($userfarmerMaitri){
-            Auth::guard('webFarmer')->login($userfarmerMaitri);
-            return response()->json(['status' => 'success']);
+        $userfarmer = FarmerUser::where('MobileNumber', $number)->where('otp_login', $otp)->first();
+        $userMaitri = User::where('MobileNumber', $number)->where('otp_login', $otp)->first();
+
+        if ($userfarmer){
+            Auth::guard('webFarmer')->login($userfarmer);
+            return response()->json(['status' => 'success', 'loginStatus' => 'farmer']);
+        }else if($userMaitri){
+            Auth::guard('web')->login($userMaitri);
+            return response()->json(['status' => 'success', 'loginStatus' => 'maitri']);
         }else{
             return response()->json(['status' => 'error']);
         }
