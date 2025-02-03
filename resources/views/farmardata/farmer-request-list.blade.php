@@ -98,7 +98,7 @@
                 <td>
                     <button type="button" class="btn custom-btn btn-primary changeStatus btn-sm" data-id="{{$row->id}}"
                         data-farmer="{{$row->user->name}}" data-status="{{$row->status}}"
-                        data-service="{{$row->service_name}}">
+                        data-mairtiId="{{$row->maitri->id}}" data-service="{{$row->service_name}}">
                         Change Status
                     </button>
                 </td>
@@ -172,9 +172,15 @@ $(document).ready(function() {
     $('.changeStatus').click(function() {
         var rowId = $(this).data('id');
         var currentStatus = $(this).data('status');
+        var mairtiId = $(this).attr('data-mairtiId');
 
         $('#rowId').val(rowId);
         $('#modalStatus').val(currentStatus);
+        if ($("#assign_maitri option[value='" + mairtiId + "']").length > 0) {
+            $('#assign_maitri').val(mairtiId).change();
+        } else {
+            console.warn('Option value not found:', mairtiId);
+        }
         $('#statusModal').modal('show');
     });
 

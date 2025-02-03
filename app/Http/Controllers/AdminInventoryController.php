@@ -43,8 +43,6 @@ class AdminInventoryController extends Controller
         }
         $data = $query->paginate(10);
 
-        // echo '<pre>';print_r($data);exit;
-
         $getMaitri = User::where('role', 'Maitri')->get();
         return view('farmardata.farmer-request-list', [
             'data' => $data,
