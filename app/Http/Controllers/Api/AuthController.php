@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function login(Request $request){
         try {
             $request->validate([
-                'mobileNumber' => ['required', 'unique:farmer_users,MobileNumber'],
+                'mobileNumber' => 'required',
             ]);
             $maitri = User::where('MobileNumber', $request->mobileNumber)->first();
             $farmer = FarmerUser::where('MobileNumber', $request->mobileNumber)->first();
