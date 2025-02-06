@@ -487,6 +487,7 @@ class FarmerController extends Controller
                 'gram_panchayat' => 'nullable|string',
                 'post_office' => 'nullable|string',
                 'block' => 'nullable|string',
+                'pincode' => 'nullable|string',
                 'tehsil' => 'nullable|string',
                 'milk_day' => 'nullable|string',
                 'gender' => 'nullable|string',
@@ -536,6 +537,10 @@ class FarmerController extends Controller
             
             if ($request->filled('gender')) {
                 $updateData['gender'] = $request->gender;
+            }
+
+            if ($request->filled('pincode')) {
+                $updateData['pincode'] = $request->pincode;
             }
 
             $updateData['role_id'] = '4';
