@@ -269,7 +269,6 @@ class FarmerController extends Controller
             ['value' => 'buffalo', 'label' => 'भैंस'],
             ['value' => 'cow', 'label' => 'गाय'],
             ['value' => 'goat', 'label' => 'बकरी'],
-            ['value' => 'horse', 'label' => 'घोड़ा'],
         ];
         return $this->successResponse('Animal Types displayed successfully.',200, $animals);
     }
