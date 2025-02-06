@@ -98,7 +98,7 @@ class RegistrationController extends Controller
                 ['value' => 'goat', 'label' => 'Goat'],
             ];
 
-            return $this->successResponse('Tehsil List displayed successfully',200, $animals);
+            return $this->successResponse('Get Animal Type is successfully',200, $animals);
         } 
         catch (\Illuminate\Validation\ValidationException $e) {
             return $this->errorResponse($e->getMessage(), 422);
