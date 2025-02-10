@@ -137,6 +137,7 @@ Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addS
 Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
 Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
 
+Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
@@ -304,7 +305,6 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
 
      /*  Boardcaster Login Access Route Start  */
-     Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
      Route::get('/host',[WebinarController::class, 'host'])->name('host');
      Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');  
      /*  Boardcaster Login Access Route End  */
