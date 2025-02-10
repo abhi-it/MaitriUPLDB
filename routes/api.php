@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\RegistrationController;
+use App\Http\Controllers\Api\IVSBroadCastController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +73,8 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
     Route::get('get-status', [FarmerController::class, 'getStatus']);
     
 });
+
+Route::get('show-stages', [IVSBroadCastController::class, 'showStages'])->name('showStages');
+Route::get('/ivs-stage/participants', [IVSBroadCastController::class, 'showParticipantCount']);
+Route::get('/ivs-publisher', [IVSBroadCastController::class, 'generatePublisherToken']);
+

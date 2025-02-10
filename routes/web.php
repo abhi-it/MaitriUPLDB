@@ -306,7 +306,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
      /*  Boardcaster Login Access Route Start  */
      Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
      Route::get('/host',[WebinarController::class, 'host'])->name('host');
-     Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');
+     Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');  
      /*  Boardcaster Login Access Route End  */
 
     // block dashboard  
@@ -530,3 +530,10 @@ Route::get('/latest-record-year', function(){
     $year = optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
 dd($year);
 });
+
+Route::get("stageList", [BroadcastController::class, 'stageList'])->name('stageList');
+Route::post('/add-broadcaster', [BroadcastController::class, 'addBroadcaster'])->name('addBroadcaster');
+Route::post('/broadcaster/details', [BroadcastController::class, 'view_details'])->name('view-details');
+
+Route::get('/start-webinar',[BroadcastController::class, 'start_webinar'])->name('start_webinar');
+
