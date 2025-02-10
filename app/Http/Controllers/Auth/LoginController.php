@@ -72,6 +72,8 @@ class LoginController extends Controller
                 return redirect("farmer-dashboard");
             }else if(Auth::user()->role_id==3){
                 return redirect("maitri-dashboard");
+            }else if(Auth::user()->role_id==11){
+                return redirect("broadcaster-dashboard");
             }else{
                 return redirect("dashboard");
             }
