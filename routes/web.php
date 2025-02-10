@@ -22,6 +22,8 @@ use App\Http\Controllers\DeoStockUserController;
 use App\Http\Controllers\ImportAIcenterController;
 use App\Http\Controllers\ZoneDistrictController;
 use App\Http\Controllers\GeoLocationUpdateController;
+use App\Http\Controllers\BroadcastController; 
+use App\Http\Controllers\WebinarController;
 
 
 
@@ -300,6 +302,13 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("store-district-user-data", [DistrictUserController::class, 'storeDistrictData'])->name('store-district-user-data');
     Route::post("district-store-user-data", [DistrictUserController::class, 'userDataDistrictStore'])->name('district-store-user-data');
 
+
+     /*  Boardcaster Login Access Route Start  */
+     Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
+     Route::get('/host',[WebinarController::class, 'host'])->name('host');
+     Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');
+     /*  Boardcaster Login Access Route End  */
+
     // block dashboard  
     Route::get("block-request-data", [BlockUserController::class, 'blockRequestData'])->name('block-request-data');
     Route::get("block-request-record-data", [BlockUserController::class, 'blockRequestRecord'])->name('block-request-record-data');
@@ -335,6 +344,9 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get('/check-maitri-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkMaitriDetails'])->name('check-maitri-details');
 
 
+    Route::get("animal-breeding", [App\Http\Controllers\maitri\MaitriController::class, 'animalBreeding'])->name('animal-breeding');
+    Route::post("save-animal-breeding", [App\Http\Controllers\AnimalBreedingController::class, 'store'])->name('save-animal-breeding');
+    
     Route::get("maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'maitri_details'])->name('maitri-details');
     Route::post("update-maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'updateMaitriDateils'])->name('update-maitri-details');
 

@@ -55,6 +55,11 @@ class CheckRole
 	private function userAccessRole()
     {
         return [
+            'broadcaster' => [
+                'host',
+                'subscribers',
+                'broadcaster-dashboard'
+            ],
             'deo' => [
                 'check-stock-limit',
                 'change-password',
@@ -502,6 +507,8 @@ class CheckRole
                 'get-all-district',
                 'check-maitri-details',
                 'update-maitri-details',
+                'animal-breeding',
+                'save-animal-breeding',
             ],
             'Farmer' => [
                 'update-farmer-details',
