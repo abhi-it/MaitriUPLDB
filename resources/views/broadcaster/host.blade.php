@@ -20,32 +20,37 @@
     max-height: 700px;
     width:100%;
     }
+
     .flex{
         display: flex;
         justify-content: center;
         width: 100%;
         align-items: center;
     }
+
     .w-100{
       width:100%;
     }
+    
     .static-controls{
-    position:absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    bottom: 45px;
-    /* top: 50%; */
-    text-align: center;
+      position:absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      bottom: 45px;
+      /* top: 50%; */
+      text-align: center;
     }
+
     .relative{
       position: relative;
     }
+
     .text-center{
       text-align:center;
     }
-    </style>
+  </style>
 </head>
 
 <body>
@@ -69,10 +74,13 @@
             <option selected disabled>Choose Option</option>
         </select>
         </div>
+
+
         <div class="column">
-        <label for="token">Participant Token</label>
-        <input type="text" id="token" name="token" />
+          <label for="token">Participant Token</label>
+          <input type="text" id="token" name="token" value={{$stageArn}}/>
         </div>
+
         <div class="column" style="display: flex; margin-top: 1.5rem">
         <button class="button" style="margin: auto; width: 100%" id="join-button">Join Stage</button>
         </div>

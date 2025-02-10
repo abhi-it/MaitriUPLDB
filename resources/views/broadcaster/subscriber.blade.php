@@ -59,11 +59,11 @@
   <!-- Setup Controls -->
   <div class="row">
     <div class="columns">
-  <label for="token">Token</label>
-  <input type="text" id="token" name="token" />
-  <button class="button" id="join-button">Join</button>
-  <button class="button" id="leave-button" style="display: none;">Leave</button>
-  </div>
+      <label for="token">Token</label>
+      <input type="text" id="token" name="token" />
+      <button class="button" id="join-button">Join</button>
+      <button class="button" id="leave-button" style="display: none;">Leave</button>
+      </div>
   </div>
   <hr />
 
