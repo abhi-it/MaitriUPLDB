@@ -25,7 +25,7 @@ class AnimalBreedingController extends Controller
             'division_id' => $request->division_id ?: null,
             'district_id' => $district->id ?? null,
             'tehsil' => $request->tehsil ?: null,
-            'vikas_khand' => $request->vikas_khand ?: null,
+            'vikas_khand' => $request->block ?: null,
             'ower_village' => $request->ower_village ?: null,
             'project' => $request->project ?: null,
             'animal_id' => $request->animal_id ?: null,
