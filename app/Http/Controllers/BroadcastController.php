@@ -40,6 +40,7 @@ class BroadcastController extends Controller
     //Stages
     public function stageList()
     {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         $stages = $this->listIvsStages();
         return view('broadcaster.stages', compact('stages'));
     }
