@@ -56,10 +56,10 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="transaction_type">
-                            <span>Transaction Type</span>
+                            <span>लेन-देन का प्रकार</span>
                         </label>
                         <select name="transaction_type" id="transaction_type" class="form-control">
-                            <option value="">Select any one</option>
+                            <option value="">कोई भी एक चुनें</option>
                             <option value="calving"
                                 {{ isset($breedingData->transaction_type) && $breedingData->transaction_type == 'calving' ? 'selected' : '' }}>
                                 Calving
@@ -79,24 +79,24 @@
 
                     <div class="form-group col-md-4">
                         <label for="transaction_date">
-                            <span>Transaction Date</span>
+                            <span>कार्यवाही की तिथि</span>
                         </label>
                         <input type="date" class="form-control" id="transaction_date" name="transaction_date"
-                            value="{{ $breedingData->transaction_date ?? '' }}" placeholder="Transaction Date"
+                            value="{{ $breedingData->transaction_date ?? '' }}" placeholder="कार्यवाही की तिथि"
                             autocomplete="off">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="owner_state">
-                            <span>Owner State</span>
+                            <span>स्वामी राज्य</span>
                         </label>
                         <input type="text" class="form-control" required id="owner_state" name="owner_state"
-                            value="{{ isset($breedingData->owner_state) ?? '' }}" placeholder="Owner State"
+                            value="{{ isset($breedingData->owner_state) ?? '' }}" placeholder="स्वामी राज्य"
                             autocomplete="off">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="division"> <span>Mandal</span></label>
+                        <label for="division"> <span>मंडल</span></label>
                         <select name="division_id" id="district" required class="form-control">
                             <option value="">मंडल चुनें</option>
                             @foreach($divisions as $division)
@@ -108,68 +108,68 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="mandal"> <span>District</span></label>
+                        <label for="mandal"> <span>ज़िला</span></label>
                         <select name="district_id" id="mandal" required class="form-control">
 
                         </select>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="tehsil"> <span>Teshil</span></label>
+                        <label for="tehsil"> <span>तहसील</span></label>
                         <select name="tehsil" id="tehsil" required class="form-control">
                             <option value=""></option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="vikas_khand"> <span>Block</span></label>
+                        <label for="vikas_khand"> <span>ब्लॉक</span></label>
                         <select name="block" id="vikas_khand" required class="form-control">
                             <option value=""></option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ower_village"> <span>Owner Village</span></label>
+                        <label for="ower_village"> <span>मालिक गांव</span></label>
                         <input type="text" name="ower_village" id="ower_village"
                             value="{{ $breedingData->ower_village ?? '' }}" class="form-control"
-                            placeholder="Owner Village">
+                            placeholder="मालिक गांव">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="project"> <span>Project</span></label>
+                        <label for="project"> <span>परियोजना</span></label>
                         <input type="text" name="project" id="project" value="{{ $breedingData->project ?? '' }}"
-                            class="form-control" placeholder="Project">
+                            class="form-control" placeholder="परियोजना">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="animal_id"> <span>Animal ID</span></label>
                         <input type="number" name="animal_id" id="animal_id"
-                            value="{{ $breedingData->animal_id ?? '' }}" class="form-control" placeholder="Animal ID">
+                            value="{{ $breedingData->animal_id ?? '' }}" class="form-control" placeholder="पशु आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="dam_id"> <span>Dam ID</span></label>
+                        <label for="dam_id"> <span>बांध आईडी</span></label>
                         <input type="number" name="dam_id" id="dam_id" value="{{ $breedingData->dam_id ?? '' }}"
-                            class="form-control" placeholder="Dam ID">
+                            class="form-control" placeholder="बांध आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="sire_id"><span>Sire ID</span></label>
+                        <label for="sire_id"><span>सायर आईडी</span></label>
                         <input type="text" name="sire_id" id="sire_id" value="{{ $breedingData->sire_id ?? '' }}"
-                            class="form-control" placeholder="Sire ID">
+                            class="form-control" placeholder="सायर आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="animal_dob"><span>Animal DOB</span></label>
                         <input type="date" name="animal_dob" id="animal_dob"
                             value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
-                            placeholder="Animal DOB">
+                            placeholder="पशु की जन्मतिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="semen_type"> <span>Semen Type</span></label>
+                        <label for="semen_type"> <span>वीर्य का प्रकार</span></label>
                         <select name="semen_type" id="semen_type" class="form-control">
-                            <option value="">Select any one</option>
+                            <option value="">कोई भी एक चुनें</option>
                             <option value="sex_sorted"
                                 {{ isset($breedingData->semen_type) && $breedingData->semen_type == 'sex_sorted' ? 'selected' : '' }}>
                                 Sex Sorted
@@ -184,54 +184,54 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="bull_id"> <span>Bull ID</span></label>
+                        <label for="bull_id"> <span>बैल आईडी</span></label>
                         <input type="text" name="bull_id" id="bull_id" value="{{ $breedingData->bull_id ?? '' }}"
-                            class="form-control" placeholder="Bull ID">
+                            class="form-control" placeholder="बैल आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="batch_no"> <span>Batch No</span></label>
+                        <label for="batch_no"> <span>दल संख्या</span></label>
                         <input type="text" name="batch_no" id="batch_no" value="{{ $breedingData->batch_no ?? '' }}"
-                            class="form-control" placeholder="Batch No">
+                            class="form-control" placeholder="दल संख्या">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="lactation_number"> <span>Lactation Number</span></label>
+                        <label for="lactation_number"> <span>स्तनपान संख्या</span></label>
                         <input type="number" name="lactation_number" id="lactation_number"
                             value="{{ $breedingData->lactation_number ?? '' }}" class="form-control"
-                            placeholder="Lactation Number">
+                            placeholder="स्तनपान संख्या">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_id"> <span>AI ID</span></label>
+                        <label for="ai_id"> <span>एआई आईडी</span></label>
                         <input type="number" name="ai_id" id="ai_id" value="{{ $breedingData->ai_id ?? '' }}"
-                            class="form-control" placeholder="AI ID">
+                            class="form-control" placeholder="एआई आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_date"> <span>AI Date</span></label>
+                        <label for="ai_date"> <span>एआई दिनांक</span></label>
                         <input type="date" name="ai_date" id="ai_date" value="{{ $breedingData->ai_date ?? '' }}"
-                            class="form-control" placeholder="AI Date">
+                            class="form-control" placeholder="एआई दिनांक">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_data_entry_date"> <span>AI Data Entry Date</span></label>
+                        <label for="ai_data_entry_date"> <span>एआई डेटा प्रविष्टि तिथि</span></label>
                         <input type="date" name="ai_data_entry_date" id="ai_data_entry_date"
                             value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
-                            placeholder="AI Data Entry Date">
+                            placeholder="एआई डेटा प्रविष्टि तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_status"> <span>AI Status</span></label>
+                        <label for="ai_status"> <span>एआई स्थिति</span></label>
                         <select name="ai_status" id="ai_status" class="form-control">
-                            <option value="">Select any one</option>
+                            <option value="">कोई भी एक चुनें</option>
                             <option value="successful"
                                 {{ isset($breedingData->ai_status) && $breedingData->ai_status == 'successful' ? 'selected' : '' }}>
-                                Successful
+                                सफल
                             </option>
                             <option value="unsuccessful"
                                 {{ isset($breedingData->ai_status) && $breedingData->ai_status == 'unsuccessful' ? 'selected' : '' }}>
-                                Unsuccessful
+                                असफल
                             </option>
                         </select>
 
@@ -239,346 +239,348 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="actual_ai_heat_no"> <span>Actual AI Heat No</span></label>
+                        <label for="actual_ai_heat_no"> <span>वास्तविक AI हीट संख्या</span></label>
                         <input type="number" name="actual_ai_heat_no" id="actual_ai_heat_no"
                             value="{{ $breedingData->actual_ai_heat_no ?? '' }}" class="form-control"
-                            placeholder="Actual AI Heat No">
+                            placeholder="वास्तविक AI हीट संख्या">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_type"> <span>AI Type</span></label>
+                        <label for="ai_type"> <span>एआई प्रकार</span></label>
                         <input type="text" name="ai_type" id="ai_type" value="{{ $breedingData->ai_type ?? '' }}"
-                            class="form-control" placeholder="AI Type">
+                            class="form-control" placeholder="एआई प्रकार">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="heat_start_date"> <span>Heat Start Date</span></label>
+                        <label for="heat_start_date"> <span>हीट प्रारंभ तिथि</span></label>
                         <input type="date" name="heat_start_date" id="heat_start_date"
                             value="{{ $breedingData->heat_start_date ?? '' }}" class="form-control"
-                            placeholder="Heat Start Date">
+                            placeholder="हीट प्रारंभ तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="amount_cervical"> <span>Amount Cervical Mucus Discharge</span></label>
+                        <label for="amount_cervical"> <span>गर्भाशय ग्रीवा बलगम निर्वहन की मात्रा</span></label>
                         <input type="text" name="amount_cervical" id="amount_cervical"
                             value="{{ $breedingData->amount_cervical ?? '' }}" class="form-control"
-                            placeholder="Amount Cervical Mucus Discharge">
+                            placeholder="गर्भाशय ग्रीवा बलगम निर्वहन की मात्रा">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="ai_center"> <span>AI Centre</span></label>
+                        <label for="ai_center"> <span>एआई सेंटर</span></label>
                         <input type="text" name="ai_center" id="ai_center" value="{{ $breedingData->ai_center ?? '' }}"
-                            class="form-control" placeholder="AI Centre">
+                            class="form-control" placeholder="एआई सेंटर">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="doka"><span>Doka</span></label>
+                        <label for="doka"><span>डोका</span></label>
                         <input type="text" name="doka" id="doka" value="{{ $breedingData->doka ?? '' }}"
-                            class="form-control" placeholder="Doka">
+                            class="form-control" placeholder="डोका">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="standing_mounted"> <span>Standing to be Mounted</span></label>
+                        <label for="standing_mounted"> <span>खड़े होकर चढ़ना</span></label>
                         <input type="text" name="standing_mounted" id="standing_mounted"
                             value="{{ $breedingData->standing_mounted ?? '' }}" class="form-control"
-                            placeholder="Standing to be Mounted">
+                            placeholder="खड़े होकर चढ़ना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="mounting_attempt"> <span>Mounting on Herd Mates or Attempt</span></label>
+                        <label for="mounting_attempt"> <span>झुंड के साथियों पर चढ़ना या प्रयास करना</span></label>
                         <input type="text" name="mounting_attempt" id="mounting_attempt"
                             value="{{ $breedingData->mounting_attempt ?? '' }}" class="form-control"
-                            placeholder="Mounting on Herd Mates or Attempt">
+                            placeholder="झुंड के साथियों पर चढ़ना या प्रयास करना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="vocalization"> <span>Vocalization</span></label>
+                        <label for="vocalization"> <span>वोकलिज़ेशन</span></label>
                         <input type="text" name="vocalization" id="vocalization"
                             value="{{ $breedingData->vocalization ?? '' }}" class="form-control"
-                            placeholder="Vocalization">
+                            placeholder="वोकलिज़ेशन">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="mictruition"> <span>Mictruition</span></label>
+                        <label for="mictruition"> <span>बारंबार पेशाब करने की इच्छा</span></label>
                         <input type="text" name="mictruition" id="mictruition"
                             value="{{ $breedingData->mictruition ?? '' }}" class="form-control"
-                            placeholder="Mictruition">
+                            placeholder="बारंबार पेशाब करने की इच्छा">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="swollen_vulva"> <span>Swollen Vulva</span></label>
+                        <label for="swollen_vulva"> <span>सूजी हुई योनी</span></label>
                         <input type="text" name="swollen_vulva" id="swollen_vulva"
                             value="{{ $breedingData->swollen_vulva ?? '' }}" class="form-control"
-                            placeholder="Swollen Vulva">
+                            placeholder="सूजी हुई योनी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_date"> <span>PD Date</span></label>
+                        <label for="pd_date"> <span>पीडी तिथि</span></label>
                         <input type="date" name="pd_date" id="pd_date" value="{{ $breedingData->pd_date ?? '' }}"
-                            class="form-control" placeholder="PD Date">
+                            class="form-control" placeholder="पीडी तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_data_entry_date"><span>PD Data Entry Date</span></label>
+                        <label for="pd_data_entry_date"><span>पीडी डाटा प्रविष्टि तिथि</span></label>
                         <input type="date" name="pd_data_entry_date" id="pd_data_entry_date"
                             value="{{ $breedingData->pd_data_entry_date ?? '' }}" class="form-control"
-                            placeholder="PD Data Entry Date">
+                            placeholder="पीडी डाटा प्रविष्टि तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_id"> <span>PD ID</span></label>
+                        <label for="pd_id"> <span>पीडी आईडी</span></label>
                         <input type="number" name="pd_id" id="pd_id" value="{{ $breedingData->pd_id ?? '' }}"
-                            class="form-control" placeholder="PD ID">
+                            class="form-control" placeholder="पीडी आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_month"> <span>PD Month</span></label>
+                        <label for="pd_month"> <span>पीडी महीना</span></label>
                         <input type="number" name="pd_month" id="pd_month" value="{{ $breedingData->pd_month ?? '' }}"
-                            class="form-control" placeholder="PD Month">
+                            class="form-control" placeholder="पीडी महीना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_bull_id"> <span>PD Bull ID</span></label>
+                        <label for="pd_bull_id"> <span>पीडी बुल आईडी</span></label>
                         <input type="number" name="pd_bull_id" id="pd_bull_id"
-                            value="{{ $breedingData->pd_bull_id ?? '' }}" class="form-control" placeholder="PD Bull ID">
+                            value="{{ $breedingData->pd_bull_id ?? '' }}" class="form-control"
+                            placeholder="पीडी बुल आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="pd_transaction_status"> <span>PD Transaction Status</span></label>
+                        <label for="pd_transaction_status"> <span>पीडी लेनदेन स्थिति</span></label>
                         <input type="text" name="pd_transaction_status" id="pd_transaction_status"
                             value="{{ $breedingData->pd_transaction_status ?? '' }}" class="form-control"
-                            placeholder="PD Transaction Status">
+                            placeholder="पीडी लेनदेन स्थिति">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calving_date"> <span>Calving Date</span></label>
+                        <label for="calving_date"> <span>ब्याने की तिथि</span></label>
                         <input type="date" name="calving_date" id="calving_date"
                             value="{{ $breedingData->calving_date ?? '' }}" class="form-control"
-                            placeholder="Calving Date">
+                            placeholder="ब्याने की तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calving_data_entry_date"> <span>Calving Data Entry Date</span></label>
+                        <label for="calving_data_entry_date"> <span>ब्यांत डेटा प्रविष्टि तिथि</span></label>
                         <input type="date" name="calving_data_entry_date" id="calving_data_entry_date"
                             value="{{ $breedingData->calving_data_entry_date ?? '' }}" class="form-control"
-                            placeholder="Calving Data Entry Date">
+                            placeholder="ब्यांत डेटा प्रविष्टि तिथि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calving_id"> <span>Calving ID</span></label>
+                        <label for="calving_id"> <span>बछड़े का जन्म आईडी</span></label>
                         <input type="number" name="calving_id" id="calving_id"
-                            value="{{ $breedingData->calving_id ?? '' }}" class="form-control" placeholder="Calving ID">
+                            value="{{ $breedingData->calving_id ?? '' }}" class="form-control"
+                            placeholder="बछड़े का जन्म आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_bull_id"> <span>Calf Bull ID</span></label>
+                        <label for="calf_bull_id"> <span>बछड़ा बैल आईडी</span></label>
                         <input type="number" name="calf_bull_id" id="calf_bull_id"
                             value="{{ $breedingData->calf_bull_id ?? '' }}" class="form-control"
-                            placeholder="Calf Bull ID">
+                            placeholder="बछड़ा बैल आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="no_of_alves"> <span>No of Calves</span></label>
+                        <label for="no_of_alves"> <span>बछड़ों की संख्या</span></label>
                         <input type="number" name="no_of_alves" id="pono_of_alvesst_office"
                             value="{{ $breedingData->no_of_alves ?? '' }}" class="form-control"
-                            placeholder="No of Calves">
+                            placeholder="बछड़ों की संख्या">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calving_ease"> <span>Calving Ease</span></label>
+                        <label for="calving_ease"> <span>बछड़े को जन्म देने में आसानी</span></label>
                         <input type="text" name="calving_ease" id="calving_ease"
                             value="{{ $breedingData->calving_ease ?? '' }}" class="form-control"
-                            placeholder="Calving Ease">
+                            placeholder="बछड़े को जन्म देने में आसानी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calving_transaction_status"> <span>Calving Transaction Status</span></label>
+                        <label for="calving_transaction_status"> <span>बछड़े के जन्म के लेन-देन की स्थिति</span></label>
                         <input type="text" name="calving_transaction_status" id="calving_transaction_status"
                             value="{{ $breedingData->calving_transaction_status ?? '' }}" class="form-control"
-                            placeholder="Calving Transaction Status">
+                            placeholder="बछड़े के जन्म के लेन-देन की स्थिति">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_tag_id"> <span>Calf 1 Tag ID</span></label>
+                        <label for="calf_1_tag_id"> <span>बछड़ा 1 टैग आईडी</span></label>
                         <input type="text" name="calf_1_tag_id" id="calf_1_tag_id"
                             value="{{ $breedingData->calf_1_tag_id ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Tag ID">
+                            placeholder="बछड़ा 1 टैग आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_gender"> <span>Calf 1 Gender</span></label>
+                        <label for="calf_1_gender"> <span>बछड़ा 1 लिंग</span></label>
                         <input type="text" name="calf_1_gender" id="calf_1_gender"
                             value="{{ $breedingData->calf_1_gender ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Gender">
+                            placeholder="बछड़ा 1 लिंग">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_status"> <span>Calf 1 Status</span></label>
+                        <label for="calf_1_status"> <span>बछड़ा 1 स्थिति</span></label>
                         <input type="text" name="calf_1_status" id="calf_1_status"
                             value="{{ $breedingData->calf_1_status ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Status">
+                            placeholder="बछड़ा 1 स्थिति">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_length"> <span>Calf 1 Length</span></label>
+                        <label for="calf_1_length"> <span>पिंडली 1 लंबाई</span></label>
                         <input type="text" name="calf_1_length" id="calf_1_length"
                             value="{{ $breedingData->calf_1_length ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Length">
+                            placeholder="पिंडली 1 लंबाई">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_girth"> <span>Calf 1 Girth</span></label>
+                        <label for="calf_1_girth"> <span>पिंडली 1 परिधि</span></label>
                         <input type="text" name="calf_1_girth" id="calf_1_girth"
                             value="{{ $breedingData->calf_1_girth ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Girth">
+                            placeholder="पिंडली 1 परिधि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_weight"> <span>Calf 1 Weight</span></label>
+                        <label for="calf_1_weight"> <span>बछड़े का वजन 1</span></label>
                         <input type="text" name="calf_1_weight" id="calf_1_weight"
                             value="{{ $breedingData->calf_1_weight ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Weight">
+                            placeholder="बछड़े का वजन 1">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_1_genetic_defects"> <span>Calf 1 Genetic Defects</span></label>
+                        <label for="calf_1_genetic_defects"> <span>बछड़े का वजन 1</span></label>
                         <input type="text" name="calf_1_genetic_defects" id="calf_1_genetic_defects"
                             value="{{ $breedingData->calf_1_genetic_defects ?? '' }}" class="form-control"
-                            placeholder="Calf 1 Genetic Defects">
+                            placeholder="बछड़े का वजन 1">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_tag_id"> <span>Calf 2 Tag ID</span></label>
+                        <label for="calf_2_tag_id"> <span>बछड़ा 2 टैग आईडी</span></label>
                         <input type="text" name="calf_2_tag_id" id="calf_2_tag_id"
                             value="{{ $breedingData->calf_2_tag_id ?? '' }}" class="form-control"
-                            placeholder="Calf2 Tag ID">
+                            placeholder="बछड़ा 2 टैग आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_gender"> <span>Calf 2 Gender</span></label>
+                        <label for="calf_2_gender"> <span>बछड़ा 2 लिंग</span></label>
                         <input type="text" name="calf_2_gender" id="calf_2_gender"
                             value="{{ $breedingData->calf_2_gender ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Gender">
+                            placeholder="बछड़ा 2 लिंग">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_status"> <span>Calf 2 Status</span></label>
+                        <label for="calf_2_status"> <span>बछड़ा 2 स्थिति</span></label>
                         <input type="text" name="calf_2_status" id="calf_2_status"
                             value="{{ $breedingData->calf_2_status ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Status">
+                            placeholder="बछड़ा 2 स्थिति">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_length"> <span>Calf 2 Length</span></label>
+                        <label for="calf_2_length"> <span>पिंडली 2 लंबाई</span></label>
                         <input type="text" name="calf_2_length" id="calf_2_length"
                             value="{{ $breedingData->calf_2_length ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Length">
+                            placeholder="पिंडली 2 लंबाई">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_girth"> <span>Calf 2 Girth</span></label>
+                        <label for="calf_2_girth"> <span>पिंडली 2 परिधि</span></label>
                         <input type="text" name="calf_2_girth" id="calf_2_girth"
                             value="{{ $breedingData->calf_2_girth ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Girth">
+                            placeholder="पिंडली 2 परिधि">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_weight"> <span>Calf 2 Weight</span></label>
+                        <label for="calf_2_weight"> <span>बछड़े का वजन 2</span></label>
                         <input type="text" name="calf_2_weight" id="calf_2_weight"
                             value="{{ $breedingData->calf_2_weight ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Weight">
+                            placeholder="बछड़े का वजन 2">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="calf_2_genetic_defects"> <span>Calf 2 Genetic Defects</span></label>
+                        <label for="calf_2_genetic_defects"> <span>बछड़ा 2 आनुवंशिक दोष</span></label>
                         <input type="text" name="calf_2_genetic_defects" id="calf_2_genetic_defects"
                             value="{{ $breedingData->calf_2_genetic_defects ?? '' }}" class="form-control"
-                            placeholder="Calf 2 Genetic Defects">
+                            placeholder="बछड़ा 2 आनुवंशिक दोष">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="treated_for_milk"> <span>Treated for Milk Fever</span></label>
+                        <label for="treated_for_milk"> <span>दूध बुखार का इलाज</span></label>
                         <input type="number" name="treated_for_milk" id="treated_for_milk"
                             value="{{ $breedingData->treated_for_milk ?? '' }}" class="form-control"
-                            placeholder="Treated for Milk Fever">
+                            placeholder="दूध बुखार का इलाज">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="treated_for_ketosis"> <span>Treated for Ketosis</span></label>
+                        <label for="treated_for_ketosis"> <span>कीटोसिस के लिए उपचार</span></label>
                         <input type="number" name="treated_for_ketosis" id="treated_for_ketosis"
                             value="{{ $breedingData->treated_for_ketosis ?? '' }}" class="form-control"
-                            placeholder="Treated for Ketosis">
+                            placeholder="कीटोसिस के लिए उपचार">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="treated_for_downer_syndrome"> <span>Treated for Downer Syndrome</span></label>
+                        <label for="treated_for_downer_syndrome"> <span>डाउनर सिंड्रोम का इलाज</span></label>
                         <input type="number" name="treated_for_downer_syndrome" id="treated_for_downer_syndrome"
                             value="{{ $breedingData->treated_for_downer_syndrome ?? '' }}" class="form-control"
-                            placeholder="Treated for Downer Syndrome">
+                            placeholder="डाउनर सिंड्रोम का इलाज">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="retention_of_placenta"> <span>Retention of Placenta</span></label>
+                        <label for="retention_of_placenta"> <span>प्लेसेंटा का प्रतिधारण</span></label>
                         <input type="text" name="retention_of_placenta" id="retention_of_placenta"
                             value="{{ $breedingData->retention_of_placenta ?? '' }}" class="form-control"
-                            placeholder="Retention of Placenta">
+                            placeholder="प्लेसेंटा का प्रतिधारण">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="prolapse"> <span>Prolapse</span></label>
+                        <label for="prolapse"> <span>आगे को बढ़ाव</span></label>
                         <input type="text" name="prolapse" id="prolapse" value="{{ $breedingData->prolapse ?? '' }}"
-                            class="form-control" placeholder="Prolapse">
+                            class="form-control" placeholder="आगे को बढ़ाव">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="colostrum_feeding"> <span>Colostrum Feeding</span></label>
+                        <label for="colostrum_feeding"> <span>कोलोस्ट्रम खिलाना</span></label>
                         <input type="text" name="colostrum_feeding" id="colostrum_feeding"
                             value="{{ $breedingData->colostrum_feeding ?? '' }}" class="form-control"
-                            placeholder="Colostrum Feeding">
+                            placeholder="कोलोस्ट्रम खिलाना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="cutting_of_naval_cord"> <span>Cutting of Naval Cord</span></label>
+                        <label for="cutting_of_naval_cord"> <span>नौसेना की डोरी काटना</span></label>
                         <input type="text" name="cutting_of_naval_cord" id="cutting_of_naval_cord"
                             value="{{ $breedingData->cutting_of_naval_cord ?? '' }}" class="form-control"
-                            placeholder="Cutting of Naval Cord">
+                            placeholder="नौसेना की डोरी काटना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="metabolic_disease"> <span>Metabolic Disease</span></label>
+                        <label for="metabolic_disease"> <span>चयापचय रोग</span></label>
                         <input type="text" name="metabolic_disease" id="metabolic_disease"
                             value="{{ $breedingData->metabolic_disease ?? '' }}" class="form-control"
-                            placeholder="Metabolic Disease">
+                            placeholder="चयापचय रोग">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="colostrum_feeding_within"> <span>Colostrum Feeding Within Two Hours</span></label>
+                        <label for="colostrum_feeding_within"> <span>दो घंटे के भीतर कोलोस्ट्रम खिलाना</span></label>
                         <input type="text" name="colostrum_feeding_within" id="colostrum_feeding_within"
                             value="{{ $breedingData->colostrum_feeding_within ?? '' }}" class="form-control"
-                            placeholder="Colostrum Feeding Within Two Hours">
+                            placeholder="दो घंटे के भीतर कोलोस्ट्रम खिलाना">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="tag_id"> <span>Tag ID</span></label>
+                        <label for="tag_id"> <span>टैग आईडी</span></label>
                         <input type="text" name="tag_id" id="tag_id" value="{{ $breedingData->tag_id ?? '' }}"
-                            class="form-control" placeholder="Tag ID">
+                            class="form-control" placeholder="टैग आईडी">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="species"> <span>Species</span></label>
+                        <label for="species"> <span>प्रजातियाँ</span></label>
                         <select name="species" id="species" class="form-control">
-                            <option value="">Select any one</option>
+                            <option value="">कोई भी एक चुनें</option>
                             <option value="buffalo"
                                 {{ isset($breedingData->species) && $breedingData->species == 'buffalo' ? 'selected' : '' }}>
-                                Buffalo
+                                भैंस
                             </option>
                             <option value="cattle"
                                 {{ isset($breedingData->species) && $breedingData->species == 'cattle' ? 'selected' : '' }}>
-                                Cattle
+                                पशु
                             </option>
                             <option value="goat"
                                 {{ isset($breedingData->species) && $breedingData->species == 'goat' ? 'selected' : '' }}>
-                                Goat
+                                बकरी
                             </option>
                         </select>
 
@@ -586,23 +588,23 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="owner_name"> <span>Owner Name</span></label>
+                        <label for="owner_name"> <span>मालिक का नाम</span></label>
                         <input type="text" name="owner_name" id="owner_name"
                             value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
-                            placeholder="Owner Name">
+                            placeholder="मालिक का नाम">
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="owner_gender"> <span>Owner Gender</span></label>
+                        <label for="owner_gender"> <span>मालिक का लिंग</span></label>
                         <select name="owner_gender" id="owner_gender" class="form-control">
-                            <option value="">Select any one</option>
+                            <option value="">कोई भी एक चुनें</option>
                             <option value="male"
                                 {{ isset($breedingData->owner_gender) && $breedingData->owner_gender == 'male' ? 'selected' : '' }}>
-                                Male
+                                पुरुष
                             </option>
                             <option value="female"
                                 {{ isset($breedingData->owner_gender) && $breedingData->owner_gender == 'female' ? 'selected' : '' }}>
-                                Female
+                                महिला
                             </option>
                         </select>
 
@@ -610,10 +612,10 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="owner_mobile_no"> <span>Owner Mobile No</span></label>
+                        <label for="owner_mobile_no"> <span>मालिक का मोबाइल नम्बर</span></label>
                         <input type="number" name="owner_mobile_no" id="owner_mobile_no"
                             value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
-                            placeholder="Owner Mobile No">
+                            placeholder="मालिक का मोबाइल नम्बर">
                     </div>
 
                 </div>
