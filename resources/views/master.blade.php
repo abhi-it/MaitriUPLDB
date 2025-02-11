@@ -881,7 +881,9 @@
                             </form>
                             @else
                             <a href="{{ route('login') }}" class="text-black">
-                                <span data-hi="लॉग इन करें" data-en="Log In"></span> </a>
+                                <span data-hi="लॉग इन करें" data-en="Log In"></span> </a> |
+                            <a href="{{ route('farmer-login') }}" class="text-black">
+                                <span data-hi="लॉग इन करें" data-en="Farmer Login"></span> </a>
                             @endauth
                         </span>
                         @endif

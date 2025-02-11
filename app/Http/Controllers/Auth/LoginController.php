@@ -39,6 +39,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     
+
+    public function farmerlogin(){
+        return view('auth.farmerLogin');
+    }
+
+    public function broadCastlogin(){
+        return view('auth.broadcastLogin');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
