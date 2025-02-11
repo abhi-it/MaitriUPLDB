@@ -15,8 +15,6 @@ class AnimalBreedingController extends Controller
         $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
                             ->orWhere('id', $request->district_id)
                             ->first();
-
-        // Check if a record with the given user_id exists
         $animalBreeding = Animalbreeding::where('user_id', $request->user_id)->first();
 
         $data = [

@@ -11,6 +11,7 @@ class Animalbreeding extends Model
 
     protected $table = "animal_breeding";
     protected $fillable = [
+        'user_id',
         'transaction_type',
         'transaction_date',
         'owner_state',
