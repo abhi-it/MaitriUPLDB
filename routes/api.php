@@ -77,4 +77,6 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
 Route::get('show-stages', [IVSBroadCastController::class, 'showStages'])->name('showStages');
 Route::get('/ivs-stage/participants', [IVSBroadCastController::class, 'showParticipantCount']);
 Route::get('/ivs-publisher', [IVSBroadCastController::class, 'generatePublisherToken']);
+Route::get('/ivs-subscribers', [IVSBroadCastController::class, 'generateSubscriberToken']);
+
 

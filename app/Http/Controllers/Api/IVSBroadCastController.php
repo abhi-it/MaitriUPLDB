@@ -131,6 +131,42 @@ class IVSBroadCastController extends Controller
         return response()->json(['publisher_token' => $token]);
     }
 
+    //Create Subscribers
+    public function createSubscriberToken($stageArn)
+    {
+        try {
+            $client = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => 'ap-south-1',
+                'credentials' => [
+                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            // participant token with "SUBSCRIBE" capability
+            $result = $client->createParticipantToken([
+                'stageArn' => $stageArn,
+                'capabilities' => ['SUBSCRIBE'],  // Permission for viewing
+                'durationSeconds' => 43200,   // 12 hours
+                'userId' => 'subscriber_' . uniqid(),  
+            ]);
+
+            return response()->json(['subscriber_token' => $result['participantToken']]);
+
+        } catch (AwsException $e) {
+            return response()->json(['error' => $e->getAwsErrorMessage()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function generateSubscriberToken(Request $request)
+    {
+        $stageArn = $request->stage;
+        $token = $this->createSubscriberToken($stageArn);
+        return response()->json(['subscriber_token' => $token]);
+    }
 
 
 
