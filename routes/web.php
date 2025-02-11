@@ -540,3 +540,7 @@ Route::post('/add-broadcaster', [BroadcastController::class, 'addBroadcaster'])-
 Route::post('/broadcaster/details', [BroadcastController::class, 'view_details'])->name('view-details');
 
 Route::get('/start-webinar',[BroadcastController::class, 'start_webinar'])->name('start_webinar');
+
+//subscriber
+Route::get('/add-subscribers',[BroadcastController::class, 'generateSubscriberToken'])->name('generateSubscriberToken');
+Route::get('/join-webinar',[BroadcastController::class, 'join_webinar'])->name('join_webinar');

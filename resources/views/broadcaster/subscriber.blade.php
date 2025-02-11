@@ -60,7 +60,7 @@
   <div class="row">
     <div class="columns">
       <label for="token">Token</label>
-      <input type="text" id="token" name="token" />
+      <input type="text" id="token" name="token" value={{$stageArn}}/>
       <button class="button" id="join-button">Join</button>
       <button class="button" id="leave-button" style="display: none;">Leave</button>
       </div>
