@@ -31,10 +31,10 @@ class IVSBroadCastController extends Controller
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
     
@@ -61,10 +61,10 @@ class IVSBroadCastController extends Controller
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -97,10 +97,10 @@ class IVSBroadCastController extends Controller
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -137,13 +137,12 @@ class IVSBroadCastController extends Controller
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
-
             // participant token with "SUBSCRIBE" capability
             $result = $client->createParticipantToken([
                 'stageArn' => $stageArn,
