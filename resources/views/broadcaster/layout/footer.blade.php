@@ -287,6 +287,10 @@ $(".changeLang").change(function() {
     window.location.href = url + "?lang=" + $(this).val();
 });
 </script>
+
+<script src="/js/helpers.js"></script>
+<script src="/js/media-devices.js"></script>
+<script src="/js/stages-simpel.js"></script>
 </body>
 
 </html>

@@ -137,6 +137,9 @@ Route::get('/add-seman-form', [App\Http\Controllers\HomeController::class, 'addS
 Route::post('/submitSemanForm', [App\Http\Controllers\HomeController::class, 'submitSemanForm'])->name('submitSemanForm');
 Route::get('/getBlocks', [App\Http\Controllers\HomeController::class, 'getBlocks'])->name('getBlocks');
 
+Route::get('/broad-cast-login',[App\Http\Controllers\Auth\LoginController::class, 'broadCastlogin'])->name('broad-cast-login');
+Route::get('/farmer-login',[App\Http\Controllers\Auth\LoginController::class, 'farmerlogin'])->name('farmer-login');
+
 Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
@@ -342,6 +345,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     // routes/web.php 
     Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
     Route::get('/check-maitri-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkMaitriDetails'])->name('check-maitri-details');
+    Route::get('/check-breeding-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkBreedingDetails'])->name('check-breeding-details');
 
 
     Route::get("animal-breeding", [App\Http\Controllers\maitri\MaitriController::class, 'animalBreeding'])->name('animal-breeding');

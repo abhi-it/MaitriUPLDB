@@ -1,10 +1,6 @@
 @extends('master')
 @section('content')
 <style>
-.mairti-farmer-form {
-    display: none;
-}
-
 .radio-option {
     display: flex;
     justify-content: center;
@@ -33,79 +29,12 @@
 <div class="container main-div" style="background-color:white; ">
     <!--First row Start -->
 
-    <h3 class="text-center fw-bold m-4">Login </h3>
+    <h3 class="text-center fw-bold m-4"><span data-hi="किसान लॉगिन" data-en="Farmer login"></span></h3>
     @if (session()->get('success'))
     <div class="alert alert-success">
         {{ session()->get('success') }}
     </div>
     @endif
-    <div class="radio-option">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="checkOption" id="admin" value="admin" checked>
-            <label class="form-check-label" for="inlineRadio1">Admin</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="checkOption" id="farmerMairti" value="farmerMairti">
-            <label class="form-check-label" for="inlineRadio2">Maitri</label>
-        </div>
-    </div>
-
-    <div class="admin-form">
-        <form method="POST" action="{{ route('login') }}" id="loginForm" name="loginForm">
-            @csrf
-
-            <div class="row mb-3">
-                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('ईमेल पता') }}</label>
-
-                <div class="col-md-6">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-                    <span class="error" id="email_err"></span>
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('पासवर्ड') }}</label>
-
-                <div class="col-md-6">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" autocomplete="current-password">
-                    <span class="error" id="password_err"></span>
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6 offset-md-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                            {{ old('remember') ? 'checked' : '' }}>
-
-                        <label class="form-check-label" for="remember">
-                            {{ __('Remember Me') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-4 mt-4">
-                <div class="col-md-8 offset-md-4">
-                    <button type="submit" class="btn btn-primary" id="btn">
-                        {{ __('Login') }}
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
 
     <div class="mairti-farmer-form">
         <form id="maitriFarmerloginForm">
@@ -241,24 +170,6 @@ $(document).ready(function() {
         });
     });
 
-    if ($('#admin').is(':checked')) {
-        $('.admin-form').show();
-        $('.mairti-farmer-form').hide();
-    } else if ($('#farmerMairti').is(':checked')) {
-        $('.admin-form').hide();
-        $('.mairti-farmer-form').show();
-    }
-
-    // Add change event listener
-    $('input[name="checkOption"]').change(function() {
-        if ($(this).val() === 'admin') {
-            $('.admin-form').show();
-            $('.mairti-farmer-form').hide();
-        } else if ($(this).val() === 'farmerMairti') {
-            $('.admin-form').hide();
-            $('.mairti-farmer-form').show();
-        }
-    });
 
     var $validator = $('#loginForm').validate({
 

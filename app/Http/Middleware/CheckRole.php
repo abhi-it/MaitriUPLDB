@@ -493,6 +493,7 @@ class CheckRole
                 'check-stock-limit',
             ], 
             'Maitri' => [
+                'check-breeding-details',
                 'maitri-dashboard',
                 'maitri-dashdata',
                 'request-list',

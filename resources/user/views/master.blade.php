@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="csrf-token">
@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="{{ asset('assets') }}/favicon.ico">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" />
     <!-- <link href="{{ asset('') }}css/custom.css" rel="stylesheet" type="text/css"> -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet" type="text/css">
@@ -23,7 +23,7 @@
     <script type="text/javascript"
         src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyABHXJPN6L8-6nqf4uUekwdoQBPeHLYe60') }}&callback=initMap">
     </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
         integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -36,952 +36,964 @@
     <link href="{{ asset('') }}css/jquery-ui.css" rel="stylesheet" type="text/css">
     <script src="{{ asset('') }}js/jquery-ui.js" type="text/javascript"></script>
     <style>
-        /* ---f--- */
-.footer_parent {
-  background-color: #f93;
-  color: #000;
-    padding-top: 7rem;
-    margin-top: 9rem
-}
-
-.footer_top_footer__u_0LC {
-    background: #a6dafa;
-    color: #000;
-    width: 80%;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    box-shadow: 2px 2px 5px 0 #2b2b2b;
-    margin: -220px auto 0;
-}
-
-@media (max-width: 768px) {
-    .footer_top_footer__u_0LC{
-        padding: 1rem !important;
-        width: 90% !important;
+    /* ---f--- */
+    .footer_parent {
+        background-color: #f93;
+        color: #000;
+        padding-top: 7rem;
+        margin-top: 9rem
     }
 
-    .footer_top_footer__u_0LC P{
-        text-align: left;
+    .footer_top_footer__u_0LC {
+        background: #a6dafa;
+        color: #000;
+        width: 80%;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        box-shadow: 2px 2px 5px 0 #2b2b2b;
+        margin: -220px auto 0;
     }
-}
 
-.footer_footer__O h3 {
-    border-bottom: 2px solid #e47302;
-    padding-bottom: 5px
-}
+    @media (max-width: 768px) {
+        .footer_top_footer__u_0LC {
+            padding: 1rem !important;
+            width: 90% !important;
+        }
 
-.footer_footer__O a {
-    text-decoration: none;
-    color:  #fff !important;
-}
+        .footer_top_footer__u_0LC P {
+            text-align: left;
+        }
+    }
 
-.footer_footer__O ul li:not(:last-child) {
-    border-bottom: 1px solid #ffffff42
-}
+    .footer_footer__O h3 {
+        border-bottom: 2px solid #e47302;
+        padding-bottom: 5px
+    }
 
-.footer_rightContent {
-    background-color: #e47302;
-    color:  #fff;
-}
+    .footer_footer__O a {
+        text-decoration: none;
+        color: #fff !important;
+    }
 
-.footer_rightContent span {
-    padding: .15rem .5rem;
-    font-size: 1.2rem;
-    letter-spacing: 3px;
-    background:  #000;
-}
-.footer_footer__O a:hover{
-    text-decoration: none;
-    color: #fff !important;
-}
+    .footer_footer__O ul li:not(:last-child) {
+        border-bottom: 1px solid #ffffff42
+    }
 
-.footer--list li a {
-    color: #fff !important;
-}
-.footer--list li:before{
-    border-right: 2px solid #fff  !important;
-    border-bottom: 2px solid #fff  !important;
-}
-.footer--heading{
-    color: #fff !important;
-}
+    .footer_rightContent {
+        background-color: #e47302;
+        color: #fff;
+    }
 
-#error_b02bbc85a30c7c9a99711a8a93df17b315b95524{
-    display:none !important;
-}
+    .footer_rightContent span {
+        padding: .15rem .5rem;
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        background: #000;
+    }
 
-.footer-counter a {
-    pointer-events: none;
-}
+    .footer_footer__O a:hover {
+        text-decoration: none;
+        color: #fff !important;
+    }
 
-</style>
+    .footer--list li a {
+        color: #fff !important;
+    }
+
+    .footer--list li:before {
+        border-right: 2px solid #fff !important;
+        border-bottom: 2px solid #fff !important;
+    }
+
+    .footer--heading {
+        color: #fff !important;
+    }
+
+    #error_b02bbc85a30c7c9a99711a8a93df17b315b95524 {
+        display: none !important;
+    }
+
+    .footer-counter a {
+        pointer-events: none;
+    }
+    </style>
 
     <script>
-        $(document).ready(function() {
-            var currentDate = new Date();
-            var currentYear = currentDate.getFullYear();
-            var currentMonth = currentDate.getMonth() + 1; 
-            var previousDate = new Date(currentYear, 8, 30);
+    $(document).ready(function() {
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var previousDate = new Date(currentYear, 8, 30);
 
-            var previousDateFormatted = ("0" + previousDate.getDate()).slice(-2) + "-" + ("0" + (previousDate
-                .getMonth() + 1)).slice(-2) + "-" + currentYear;
+        var previousDateFormatted = ("0" + previousDate.getDate()).slice(-2) + "-" + ("0" + (previousDate
+            .getMonth() + 1)).slice(-2) + "-" + currentYear;
 
-            $("#dob").datepicker({
-                dateFormat: 'dd-mm-yy',
-                changeYear: true,
-                changeMonth : true,
-                // minDate: '19-10-2016', // Use 'dd-mm-yy' format
-                maxDate: '01-09-2006' ,// Use 'dd-mm-yy' format
-                onSelect: function() {
-                    $(this).valid(); 
-                }
-            });
-
-
-            $("#date").datepicker({
-                dateFormat: 'dd-mm-yy',
-                changeMonth: true,
-                changeYear: true
-            });
-
-            $("#start_date").datepicker({
-                dateFormat: 'dd-mm-yy',
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+1",
-            });
-
-            $("#end_date").datepicker({
-                dateFormat: 'dd-mm-yy',
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "+0:+1",
-            });
-
+        $("#dob").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            // minDate: '19-10-2016', // Use 'dd-mm-yy' format
+            maxDate: '01-09-2006', // Use 'dd-mm-yy' format
+            onSelect: function() {
+                $(this).valid();
+            }
         });
+
+
+        $("#date").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true
+        });
+
+        $("#start_date").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-0:+1",
+        });
+
+        $("#end_date").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "+0:+1",
+        });
+
+    });
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $.validator.addMethod('date', function(value, element, param) {
-                return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
-            }, 'Please enter a valid date!');
-            $.validator.addMethod('month', function(value, element, param) {
-                return (value != 0) && (value <= 12) && (value == parseInt(value, 10));
-            }, 'Please enter a valid month!');
-            $.validator.addMethod('year', function(value, element, param) {
-                return (value != 0) && (value >= 1900) && (value == parseInt(value, 10));
-            }, 'Please enter a valid year not less than 1900!');
-            $.validator.addMethod('username', function(value, element, param) {
-                var nameRegex = /^[a-zA-Z0-9]+$/;
-                return value.match(nameRegex);
-            }, 'Only a-z, A-Z, 0-9 characters are allowed');
-            $.validator.addMethod("checkFileSize", function(value, element, param) {
-                if (value != '') {
+    $(document).ready(function() {
+        $.validator.addMethod('date', function(value, element, param) {
+            return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
+        }, 'Please enter a valid date!');
+        $.validator.addMethod('month', function(value, element, param) {
+            return (value != 0) && (value <= 12) && (value == parseInt(value, 10));
+        }, 'Please enter a valid month!');
+        $.validator.addMethod('year', function(value, element, param) {
+            return (value != 0) && (value >= 1900) && (value == parseInt(value, 10));
+        }, 'Please enter a valid year not less than 1900!');
+        $.validator.addMethod('username', function(value, element, param) {
+            var nameRegex = /^[a-zA-Z0-9]+$/;
+            return value.match(nameRegex);
+        }, 'Only a-z, A-Z, 0-9 characters are allowed');
+        $.validator.addMethod("checkFileSize", function(value, element, param) {
+            if (value != '') {
 
-                    FileSize = element.files[0].size;
+                FileSize = element.files[0].size;
 
-                    if (FileSize > param)
-                        return false;
-                    return true;
-                } else {
-                    return true;
-                }
-            }, "File size must be less than or equal to 100 KB.");
+                if (FileSize > param)
+                    return false;
+                return true;
+            } else {
+                return true;
+            }
+        }, "File size must be less than or equal to 100 KB.");
 
-            $.validator.addMethod("checkFileSize20KB", function(value, element, param) {
+        $.validator.addMethod("checkFileSize20KB", function(value, element, param) {
 
-                if (value != '') {
-                    FileSize = element.files[0].size;
+            if (value != '') {
+                FileSize = element.files[0].size;
 
-                    if (FileSize > param)
-                        return false;
-                    return true;
-                } else {
-                    return true;
-                }
-            }, "File size must be less than or equal to 20 KB.");
+                if (FileSize > param)
+                    return false;
+                return true;
+            } else {
+                return true;
+            }
+        }, "File size must be less than or equal to 20 KB.");
 
-            $.validator.addMethod("uploadTrainingCertificate", function(value, element) {
+        $.validator.addMethod("uploadTrainingCertificate", function(value, element) {
 
-                var month = $("#training_certificate_period_in_month")[0].selectedIndex;
-                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-                var name = $('#training_certificate').val().split('\\').pop();
-                training_certificate_name = name.split('.')[0];
+            var month = $("#training_certificate_period_in_month")[0].selectedIndex;
+            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+            var name = $('#training_certificate').val().split('\\').pop();
+            training_certificate_name = name.split('.')[0];
 
 
-                if (training_certificate_name == '' && (month >= 1 || day >= 1)) {
+            if (training_certificate_name == '' && (month >= 1 || day >= 1)) {
+                return false;
+            }
+
+            return true;
+
+        }, "Please upload training certificate");
+
+        $.validator.addMethod("selectMonthORday", function(value, element) {
+
+            var month = $("#training_certificate_period_in_month")[0].selectedIndex;
+            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+            var name = $('#training_certificate').val().split('\\').pop();
+            training_certificate_name = name.split('.')[0];
+
+            if (training_certificate_name != '' && (month < 1 && day < 1)) {
+                return false;
+            }
+
+            return true;
+
+        }, "Please select month or day");
+
+        $.validator.addMethod("verifyHighSchoolMarks", function(value, element) {
+
+            var high_marks = $("#high_marks").val();
+            var high_total_marks = $("#high_total_marks").val();
+
+            if (high_marks != '' && high_total_marks != '') {
+                if (parseInt(high_marks) > parseInt(high_total_marks)) {
                     return false;
                 }
+            }
 
-                return true;
+            return true;
 
-            }, "Please upload training certificate");
+        }, "Enter valid marks");
 
-            $.validator.addMethod("selectMonthORday", function(value, element) {
 
-                var month = $("#training_certificate_period_in_month")[0].selectedIndex;
-                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-                var name = $('#training_certificate').val().split('\\').pop();
-                training_certificate_name = name.split('.')[0];
+        $.validator.addMethod("verifyInterMarks", function(value, element) {
 
-                if (training_certificate_name != '' && (month < 1 && day < 1)) {
+            var inter_marks = $("#inter_marks").val();
+            var inter_total_marks = $("#inter_total_marks").val();
+
+            if (inter_marks != '' && inter_total_marks != '') {
+                if (parseInt(inter_marks) > parseInt(inter_total_marks)) {
                     return false;
                 }
+            }
+
+            return true;
+
+        }, "Enter valid marks");
+
+
+        $.validator.addMethod("checkCategory", function(value, element) {
+
+            var category = $("#category")[0].selectedIndex;
+            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+            var name = $('#caste_certificate').val().split('\\').pop();
+            caste_certificate_name = name.split('.')[0];
+
+            if (caste_certificate_name == '' && (category == 3 || category == 4)) {
+
+                return false;
+
+            } else {
 
                 return true;
-
-            }, "Please select month or day");
-
-            $.validator.addMethod("verifyHighSchoolMarks", function(value, element) {
-
-                var high_marks = $("#high_marks").val();
-                var high_total_marks = $("#high_total_marks").val();
-
-                if (high_marks != '' && high_total_marks != '') {
-                    if (parseInt(high_marks) > parseInt(high_total_marks)) {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            }, "Enter valid marks");
-
-
-            $.validator.addMethod("verifyInterMarks", function(value, element) {
-
-                var inter_marks = $("#inter_marks").val();
-                var inter_total_marks = $("#inter_total_marks").val();
-
-                if (inter_marks != '' && inter_total_marks != '') {
-                    if (parseInt(inter_marks) > parseInt(inter_total_marks)) {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            }, "Enter valid marks");
-
-
-            $.validator.addMethod("checkCategory", function(value, element) {
-
-                var category = $("#category")[0].selectedIndex;
-                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-                var name = $('#caste_certificate').val().split('\\').pop();
-                caste_certificate_name = name.split('.')[0];
-
-                if (caste_certificate_name == '' && (category == 3 || category == 4)) {
-
-                    return false;
-
-                } else {
-
-                    return true;
-
-                }
-
-            }, "Please upload caste certificate");
-
-
-
-            // $.validator.addMethod("checkDOB", function(value, element) {
-
-            //     var userinput = document.getElementById("dob").value;
-            //     var dob = new Date(userinput);
-            //     var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
-            //     var age_dt = new Date(month_diff);
-            //     var year = age_dt.getUTCFullYear();
-            //     var age = Math.abs(year - 1970);
-
-            //     if (age < 18) {
-            //         return false
-            //         ;
-            //     }
-            //     return true;
-            // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
-
-
-            // new
-
-        
-            // $.validator.addMethod("checkDOB", function(value, element) {
-            //     var userinput = document.getElementById("dob").value;
-            //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-            //     if (age >= 18) {
-            //         return true;
-            //     } else {
-            //         return false;
-            //     }
-            //     return true;
-            // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
-
-            $.validator.addMethod("checkDOB", function(value, element) {
-                var userinput = $(element).val();
-                var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-                return age >= 18;
-            }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
-
-            
-
-            /*---------Add Avedan From Validations Start-----------------------------*/
-            var val = {
-                // Specify validation rules
-                rules: {
-                    "training_certificate_period_in_month": {
-                        uploadTrainingCertificate: true,
-                        selectMonthORday: true,
-                    },
-                    "dob": {
-                        required: true,
-                        checkDOB: true,
-                    },
-                    applicant_name: "required",
-                    yojna_name_for_training: "required",
-                    AIkit: "required",
-                    coption: "required",
-                    tc: "required",
-                    category: "required",
-                    fname: "required",
-                    mother: "required",
-                    mobile: {
-                        required: true,
-                        number: true,
-                        minlength: 10,
-                        maxlength: 10,
-
-                    },
-                    address_type: "required",
-                    post_office: "required",
-                    pincode: "required",
-                    gender: "required",
-                    permanent_address: "required",
-                    gram_panchayat_name: "required",
-                    vikas_khand: "required",
-                    janpad: "required",
-                    letter_address: "required",
-                    high_board_name: "required",
-                    high_passing_year: "required",
-                    "high_marks": {
-                        required: true,
-                        verifyHighSchoolMarks: true,
-                    },
-                    high_total_marks: "required",
-                    high_percentage: "required",
-                    "permanent_address_proof": {
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "applicant_photo": {
-                        required: true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize20KB: 20000,
-                    },
-                    "signature": {
-                        required: true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize20KB: 20000,
-                    },
-                    "high_marksheet": {
-                        required: true,
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "high_certificate": {
-                        required: true,
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-
-                    "inter_marksheet": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "inter_certificate": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-
-                    "graduation_marksheet": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "graduation_certificate": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-
-                    "postgraduation_marksheet": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "postgraduation_certificate": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-
-                    "training_certificate": {
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "id_upload": {
-                        required: true,
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "caste_certificate": {
-                        checkCategory: true,
-                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    nationality: "required",
-                    declaration: "required",
-                },
 
             }
-            $("#myForm").multiStepForm({
-                // defaultStep:0,
-                beforeSubmit: function(form, submit) {
-                    console.log("called before submiting the form");
-                    console.log(form);
-                    console.log(submit);
+
+        }, "Please upload caste certificate");
+
+
+
+        // $.validator.addMethod("checkDOB", function(value, element) {
+
+        //     var userinput = document.getElementById("dob").value;
+        //     var dob = new Date(userinput);
+        //     var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
+        //     var age_dt = new Date(month_diff);
+        //     var year = age_dt.getUTCFullYear();
+        //     var age = Math.abs(year - 1970);
+
+        //     if (age < 18) {
+        //         return false
+        //         ;
+        //     }
+        //     return true;
+        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+
+        // new
+
+
+        // $.validator.addMethod("checkDOB", function(value, element) {
+        //     var userinput = document.getElementById("dob").value;
+        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+        //     if (age >= 18) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        //     return true;
+        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+        $.validator.addMethod("checkDOB", function(value, element) {
+            var userinput = $(element).val();
+            var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+            return age >= 18;
+        }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+
+
+        /*---------Add Avedan From Validations Start-----------------------------*/
+        var val = {
+            // Specify validation rules
+            rules: {
+                "training_certificate_period_in_month": {
+                    uploadTrainingCertificate: true,
+                    selectMonthORday: true,
                 },
-                validations: val,
-            }).navigateTo(0);
-            /*---------Add Avedan From Validations End-------------------------------*/
+                "dob": {
+                    required: true,
+                    checkDOB: true,
+                },
+                applicant_name: "required",
+                yojna_name_for_training: "required",
+                AIkit: "required",
+                coption: "required",
+                tc: "required",
+                category: "required",
+                fname: "required",
+                mother: "required",
+                mobile: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 10,
 
-
-
-            /*---------Edit Avedan From Validations Start-----------------------------*/
-            var valAvedanEdit = {
-                // Specify validation rules
-                rules: {
-                    applicant_name: "required",
-                    category: "required",
-                    fname: "required",
-                    /*email: {
-                        required: true,
-                        email: true
-                    },*/
-                    mobile: {
-                        required: true,
-                        number: true,
-                        minlength: 10,
-                        maxlength: 10,
-
-                    },
-                    dob: "required",
-                    address_type: "required",
-                    post_office: "required",
-                    pincode: "required",
-                    gender: "required",
-                    permanent_address: "required",
-                    "permanent_address_proof": {
-                        //required:true,
-                        //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        //checkFileSize: 100000,
-                    },
-                    gram_panchayat_name: "required",
-                    vikas_khand: "required",
-                    janpad: "required",
-                    letter_address: "required",
-                    "applicant_photo": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize20KB: 20000,
-                    },
-                    "signature": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize20KB: 20000,
-                    },
-                    high_board_name: "required",
-                    high_passing_year: "required",
-                    high_marks: "required",
-                    high_total_marks: "required",
-                    high_percentage: "required",
-                    //inter_board_name: "required",
-                    //inter_passing_year: "required",
-                    //inter_marks: "required",
-                    //inter_total_marks: "required",
-                    //inter_percentage: "required",
-                    "training_certificate": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "id_upload": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "caste_certificate": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "high_marksheet": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "high_certificate": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "inter_marksheet": {
-                        //required:true,
-                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        checkFileSize: 100000,
-                    },
-                    "inter_certificate": {
-                        //required:true,
-                        //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                        //checkFileSize: 100000,
-                    },
-                    nationality: "required",
-                    is_approved: "required",
-                    //training_certificate_period_in_month: "required",
-                    //training_certificate_period_in_days: "required",
+                },
+                address_type: "required",
+                post_office: "required",
+                pincode: "required",
+                gender: "required",
+                permanent_address: "required",
+                gram_panchayat_name: "required",
+                vikas_khand: "required",
+                janpad: "required",
+                letter_address: "required",
+                high_board_name: "required",
+                high_passing_year: "required",
+                "high_marks": {
+                    required: true,
+                    verifyHighSchoolMarks: true,
+                },
+                high_total_marks: "required",
+                high_percentage: "required",
+                "permanent_address_proof": {
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "applicant_photo": {
+                    required: true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize20KB: 20000,
+                },
+                "signature": {
+                    required: true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize20KB: 20000,
+                },
+                "high_marksheet": {
+                    required: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "high_certificate": {
+                    required: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
                 },
 
+                "inter_marksheet": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "inter_certificate": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+
+                "graduation_marksheet": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "graduation_certificate": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+
+                "postgraduation_marksheet": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "postgraduation_certificate": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+
+                "training_certificate": {
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "id_upload": {
+                    required: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "caste_certificate": {
+                    checkCategory: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                nationality: "required",
+                declaration: "required",
+            },
+
+        }
+        $("#myForm").multiStepForm({
+            // defaultStep:0,
+            beforeSubmit: function(form, submit) {
+                console.log("called before submiting the form");
+                console.log(form);
+                console.log(submit);
+            },
+            validations: val,
+        }).navigateTo(0);
+        /*---------Add Avedan From Validations End-------------------------------*/
+
+
+
+        /*---------Edit Avedan From Validations Start-----------------------------*/
+        var valAvedanEdit = {
+            // Specify validation rules
+            rules: {
+                applicant_name: "required",
+                category: "required",
+                fname: "required",
+                /*email: {
+                    required: true,
+                    email: true
+                },*/
+                mobile: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 10,
+
+                },
+                dob: "required",
+                address_type: "required",
+                post_office: "required",
+                pincode: "required",
+                gender: "required",
+                permanent_address: "required",
+                "permanent_address_proof": {
+                    //required:true,
+                    //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    //checkFileSize: 100000,
+                },
+                gram_panchayat_name: "required",
+                vikas_khand: "required",
+                janpad: "required",
+                letter_address: "required",
+                "applicant_photo": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize20KB: 20000,
+                },
+                "signature": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize20KB: 20000,
+                },
+                high_board_name: "required",
+                high_passing_year: "required",
+                high_marks: "required",
+                high_total_marks: "required",
+                high_percentage: "required",
+                //inter_board_name: "required",
+                //inter_passing_year: "required",
+                //inter_marks: "required",
+                //inter_total_marks: "required",
+                //inter_percentage: "required",
+                "training_certificate": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "id_upload": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "caste_certificate": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "high_marksheet": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "high_certificate": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "inter_marksheet": {
+                    //required:true,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 100000,
+                },
+                "inter_certificate": {
+                    //required:true,
+                    //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    //checkFileSize: 100000,
+                },
+                nationality: "required",
+                is_approved: "required",
+                //training_certificate_period_in_month: "required",
+                //training_certificate_period_in_days: "required",
+            },
+
+        }
+        $("#avedanEdit").multiStepForm({
+            // defaultStep:0,
+            beforeSubmit: function(form, submit) {
+                console.log("called before submiting the form");
+                console.log(form);
+                console.log(submit);
+            },
+            validations: valAvedanEdit,
+        }).navigateTo(0);
+        /*---------Edit Avedan From Validations End-------------------------------*/
+
+
+
+    });
+
+    (function($) {
+        $.fn.multiStepForm = function(args) {
+            if (args === null || typeof args !== 'object' || $.isArray(args))
+                throw " : Called with Invalid argument";
+            var form = this;
+            var tabs = form.find('.tab');
+            var steps = form.find('.step');
+            steps.each(function(i, e) {
+                $(e).on('click', function(ev) {});
+            });
+            form.navigateTo = function(i) {
+                /*index*/
+                /*Mark the current section with the class 'current'*/
+                tabs.removeClass('current').eq(i).addClass('current');
+                // Show only the navigation buttons that make sense for the current section:
+                form.find('.previous').toggle(i > 0);
+                atTheEnd = i >= tabs.length - 1;
+                form.find('.next').toggle(!atTheEnd);
+                // console.log('atTheEnd='+atTheEnd);
+                form.find('.submit').toggle(atTheEnd);
+                fixStepIndicator(curIndex());
+                return form;
             }
-            $("#avedanEdit").multiStepForm({
-                // defaultStep:0,
-                beforeSubmit: function(form, submit) {
-                    console.log("called before submiting the form");
-                    console.log(form);
-                    console.log(submit);
-                },
-                validations: valAvedanEdit,
-            }).navigateTo(0);
-            /*---------Edit Avedan From Validations End-------------------------------*/
 
+            function curIndex() {
+                /*Return the current index by looking at which section has the class 'current'*/
+                return tabs.index(tabs.filter('.current'));
+            }
 
-
-        });
-
-        (function($) {
-            $.fn.multiStepForm = function(args) {
-                if (args === null || typeof args !== 'object' || $.isArray(args))
-                    throw " : Called with Invalid argument";
-                var form = this;
-                var tabs = form.find('.tab');
-                var steps = form.find('.step');
+            function fixStepIndicator(n) {
                 steps.each(function(i, e) {
-                    $(e).on('click', function(ev) {});
+                    i == n ? $(e).addClass('active') : $(e).removeClass('active');
                 });
-                form.navigateTo = function(i) {
-                    /*index*/
-                    /*Mark the current section with the class 'current'*/
-                    tabs.removeClass('current').eq(i).addClass('current');
-                    // Show only the navigation buttons that make sense for the current section:
-                    form.find('.previous').toggle(i > 0);
-                    atTheEnd = i >= tabs.length - 1;
-                    form.find('.next').toggle(!atTheEnd);
-                    // console.log('atTheEnd='+atTheEnd);
-                    form.find('.submit').toggle(atTheEnd);
-                    fixStepIndicator(curIndex());
-                    return form;
-                }
+            }
+            /* Previous button is easy, just go back */
+            form.find('.previous').click(function() {
+                form.navigateTo(curIndex() - 1);
+            });
 
-                function curIndex() {
-                    /*Return the current index by looking at which section has the class 'current'*/
-                    return tabs.index(tabs.filter('.current'));
-                }
+            /* Next button goes forward iff current block validates */
+            form.find('.next').click(function() {
 
-                function fixStepIndicator(n) {
-                    steps.each(function(i, e) {
-                        i == n ? $(e).addClass('active') : $(e).removeClass('active');
-                    });
-                }
-                /* Previous button is easy, just go back */
-                form.find('.previous').click(function() {
-                    form.navigateTo(curIndex() - 1);
-                });
-
-                /* Next button goes forward iff current block validates */
-                form.find('.next').click(function() {
-
-                    if ('validations' in args && typeof args.validations === 'object' && !$.isArray(args
-                            .validations)) {
-                        if (!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args
-                                .noValidate)) {
-                            form.validate(args.validations);
-                            if (form.valid() == true) {
-                                form.navigateTo(curIndex() + 1);
+                if ('validations' in args && typeof args.validations === 'object' && !$.isArray(args
+                        .validations)) {
+                    if (!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args
+                            .noValidate)) {
+                        form.validate(args.validations);
+                        if (form.valid() == true) {
+                            form.navigateTo(curIndex() + 1);
 
 
-                                /*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
-                                //var form_data = $(this).parents('form').serialize();
-                                var form_data = new FormData($(this).closest('#myForm').get(0));
-                                //alert(form_data);
-                                //var colage = $('[name="colage"]').val();
-                                //var spichelest = $('[name="spichelest"]').val();
-                                //alert($('[name="yojna_name_for_training"]').val());
-                                $.ajax({
-                                    url: 'getTempData',
-                                    method: "POST",
-                                    data: form_data,
-                                    success: function(data) {
-                                        //console.log(data);
-                                    },
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false
-                                });
-                                /*-------------------End Call Ajax Here to Save Data on each next button-------------*/
-                                /*Start Getting Declaration Data------------------------*/
-                                $('#applicant_named').html($('#applicant_name').val());
-                                $('#fnamed').html($('#fname').val());
-                                $('#janpad_gram').html($('#janpad').find('option:selected').text());
-                                $('#gram_panchayat_named').html($('#gram_panchayat_name').val());
-                                $('#vikas_khandd').html($('#vikas_khand').val());
-                                $('#janpadd').html($('#janpad').find('option:selected').text());
-                                $('#janpaddD').html($('#janpad').find('option:selected').text());
-                                /*Start Getting Declaration Data------------------------*/
+                            /*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
+                            //var form_data = $(this).parents('form').serialize();
+                            var form_data = new FormData($(this).closest('#myForm').get(0));
+                            //alert(form_data);
+                            //var colage = $('[name="colage"]').val();
+                            //var spichelest = $('[name="spichelest"]').val();
+                            //alert($('[name="yojna_name_for_training"]').val());
+                            $.ajax({
+                                url: 'getTempData',
+                                method: "POST",
+                                data: form_data,
+                                success: function(data) {
+                                    //console.log(data);
+                                },
+                                cache: false,
+                                contentType: false,
+                                processData: false
+                            });
+                            /*-------------------End Call Ajax Here to Save Data on each next button-------------*/
+                            /*Start Getting Declaration Data------------------------*/
+                            $('#applicant_named').html($('#applicant_name').val());
+                            $('#fnamed').html($('#fname').val());
+                            $('#janpad_gram').html($('#janpad').find('option:selected').text());
+                            $('#gram_panchayat_named').html($('#gram_panchayat_name').val());
+                            $('#vikas_khandd').html($('#vikas_khand').val());
+                            $('#janpadd').html($('#janpad').find('option:selected').text());
+                            $('#janpaddD').html($('#janpad').find('option:selected').text());
+                            /*Start Getting Declaration Data------------------------*/
 
-                                return true;
-                            }
-                            return false;
+                            return true;
                         }
+                        return false;
                     }
-                    form.navigateTo(curIndex() + 1);
-                });
-                form.find('.submit').on('click', function(e) {
-                    if (typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
-                        args.beforeSubmit(form, this);
-                    /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/
-                    if (typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args
-                            .submit)) {
-                        $('#finalSubmit').hide();
-                        $('#loader').show();
-                        form.submit();
-                    }
-                    return form;
-                });
-                /*By default navigate to the tab 0, if it is being set using defaultStep property*/
-                typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
-                form.noValidate = function() {
-
+                }
+                form.navigateTo(curIndex() + 1);
+            });
+            form.find('.submit').on('click', function(e) {
+                if (typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
+                    args.beforeSubmit(form, this);
+                /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/
+                if (typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args
+                        .submit)) {
+                    $('#finalSubmit').hide();
+                    $('#loader').show();
+                    form.submit();
                 }
                 return form;
-            };
-        }(jQuery));
+            });
+            /*By default navigate to the tab 0, if it is being set using defaultStep property*/
+            typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
+            form.noValidate = function() {
+
+            }
+            return form;
+        };
+    }(jQuery));
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#district_id, #caste').change(function() {
-                var district_id = $("#district_id").val();
-                var category = $("#caste").val();
-                var institute_id = $("#instituteID").val();
+    $(document).ready(function() {
+        $('#district_id, #caste').change(function() {
+            var district_id = $("#district_id").val();
+            var category = $("#caste").val();
+            var institute_id = $("#instituteID").val();
 
 
-                if (district_id != '' && category != '') {
-                    $("#responseID").html('');
-                    $(".loader").show();
+            if (district_id != '' && category != '') {
+                $("#responseID").html('');
+                $(".loader").show();
 
-                    $.ajax({ //create an ajax request to display.php
-                        type: "GET",
-                        url: "{{ url('/getAvedanData') }}?district_id=" + district_id +
-                            '&category=' + category + '&institute_id=' + institute_id,
-                        //dataType: "text",
-                        success: function(response) {
+                $.ajax({ //create an ajax request to display.php
+                    type: "GET",
+                    url: "{{ url('/getAvedanData') }}?district_id=" + district_id +
+                        '&category=' + category + '&institute_id=' + institute_id,
+                    //dataType: "text",
+                    success: function(response) {
 
-                            $("#responseID").html(response);
-                            $(".loader").hide();
-                            //alert(response);
-                        }
+                        $("#responseID").html(response);
+                        $(".loader").hide();
+                        //alert(response);
+                    }
 
-                    });
-                }
+                });
+            }
 
-
-            });
-
-
-            $('#myTable').DataTable({
-                "pageLength": 25,
-                "ordering": false,
-                "oLanguage": {
-                    "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
-                    "sLengthMenu": "देखें  _MENU_ आवेदन",
-                    "sSearch": "आवेदन को खोजें :",
-                    "infoEmpty": "कोई आवेदन नहीं है",
-
-                },
-                "language": {
-                    "emptyTable": "कोई आवेदन नहीं है"
-                }
-            });
-
-
-            $('#instituteTable').DataTable({
-                "pageLength": 25,
-                "ordering": false,
-                "oLanguage": {
-                    "sInfo": "कुल संस्थान :  _TOTAL_",
-                    "sLengthMenu": "देखें  _MENU_ संस्थान",
-                    "sSearch": "संस्थान को खोजें :",
-                    "infoEmpty": "कोई संस्थान नहीं है",
-
-                },
-                "language": {
-                    "emptyTable": "कोई संस्थान नहीं है"
-                }
-            });
 
         });
 
 
-        function viewCalculation(id) {
-            //$("#responseID").html('');
-            //$(".loader").show();
-            $('#myModel').modal('show');
+        $('#myTable').DataTable({
+            "pageLength": 25,
+            "ordering": false,
+            "oLanguage": {
+                "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
+                "sLengthMenu": "देखें  _MENU_ आवेदन",
+                "sSearch": "आवेदन को खोजें :",
+                "infoEmpty": "कोई आवेदन नहीं है",
 
-            $.ajax({ //create an ajax request to display.php
-                type: "GET",
-                url: "{{ url('/viewCalculation') }}/" + id,
-                //dataType: "text",
-                success: function(response) {
+            },
+            "language": {
+                "emptyTable": "कोई आवेदन नहीं है"
+            }
+        });
 
-                    $("#responseID").html(response);
-                    //$('#myModel').modal('hide')
-                    //console.log(response);
-                }
-            });
 
-        }
+        $('#instituteTable').DataTable({
+            "pageLength": 25,
+            "ordering": false,
+            "oLanguage": {
+                "sInfo": "कुल संस्थान :  _TOTAL_",
+                "sLengthMenu": "देखें  _MENU_ संस्थान",
+                "sSearch": "संस्थान को खोजें :",
+                "infoEmpty": "कोई संस्थान नहीं है",
 
-        function changeStatus(id, join_status) {
-            $("#responseID" + id).html('');
-            $(".loader").show();
+            },
+            "language": {
+                "emptyTable": "कोई संस्थान नहीं है"
+            }
+        });
 
-            $.ajax({
-                type: "GET",
-                url: "{{ url('/changeStatus') }}/" + id + '/' + join_status,
-                success: function(response) {
-                    $("#responseID" + id).html(response);
-                    console.log(response);
-                    $(".loader").hide();
-                }
-            });
-        }
+    });
+
+
+    function viewCalculation(id) {
+        //$("#responseID").html('');
+        //$(".loader").show();
+        $('#myModel').modal('show');
+
+        $.ajax({ //create an ajax request to display.php
+            type: "GET",
+            url: "{{ url('/viewCalculation') }}/" + id,
+            //dataType: "text",
+            success: function(response) {
+
+                $("#responseID").html(response);
+                //$('#myModel').modal('hide')
+                //console.log(response);
+            }
+        });
+
+    }
+
+    function changeStatus(id, join_status) {
+        $("#responseID" + id).html('');
+        $(".loader").show();
+
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/changeStatus') }}/" + id + '/' + join_status,
+            success: function(response) {
+                $("#responseID" + id).html(response);
+                console.log(response);
+                $(".loader").hide();
+            }
+        });
+    }
     </script>
-  </head>
-  <body class="pb-0">
+</head>
+
+<body class="pb-0">
     <header>
-      <div class="top-bar py-2">
-        <div class="container">
-          <div class="text-end top-bar-content">
-            <span class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
-                <noscript>
-                    Javascript Required
-                </noscript>
-                <script type="text/javascript">
-                    var d = new Date()
-                    var weekday = new Array("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
-                    var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-                    document.write(weekday[d.getDay()] + ", ")
-                    document.write(d.getDate() + " ")
-                    document.write(monthname[d.getMonth()] + ", ")
-                    document.write(d.getFullYear())
-                </script>
-                <span id="clockDisplay">
-                    <script type="text/javascript" language="javascript">
-                        function renderTime() {
-                            var currentTime = new Date();
-                            var diem = "AM";
-                            var h = currentTime.getHours();
-                            var m = currentTime.getMinutes();
-                            var s = currentTime.getSeconds();
-                            setTimeout('renderTime()', 1000);
-                            if (h == 0) {
-                                h = 12;
-                            } else if (h > 12) {
-                                h = h - 12;
-                                diem = "PM";
+        <div class="top-bar py-2">
+            <div class="container">
+                <div class="text-end top-bar-content">
+                    <span class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
+                        <noscript>
+                            Javascript Required
+                        </noscript>
+                        <script type="text/javascript">
+                        var d = new Date()
+                        var weekday = new Array("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
+                        var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
+                            "Nov", "Dec")
+                        document.write(weekday[d.getDay()] + ", ")
+                        document.write(d.getDate() + " ")
+                        document.write(monthname[d.getMonth()] + ", ")
+                        document.write(d.getFullYear())
+                        </script>
+                        <span id="clockDisplay">
+                            <script type="text/javascript" language="javascript">
+                            function renderTime() {
+                                var currentTime = new Date();
+                                var diem = "AM";
+                                var h = currentTime.getHours();
+                                var m = currentTime.getMinutes();
+                                var s = currentTime.getSeconds();
+                                setTimeout('renderTime()', 1000);
+                                if (h == 0) {
+                                    h = 12;
+                                } else if (h > 12) {
+                                    h = h - 12;
+                                    diem = "PM";
+                                }
+                                if (h < 10) {
+                                    h = "0" + h;
+                                }
+                                if (m < 10) {
+                                    m = "0" + m;
+                                }
+                                if (s < 10) {
+                                    s = "0" + s;
+                                }
+                                var myClock = document.getElementById('clockDisplay');
+                                myClock.textContent = h + ":" + m + ":" + s + " " + diem;
+                                myClock.innerText = h + ":" + m + ":" + s + " " + diem;
                             }
-                            if (h < 10) {
-                                h = "0" + h;
-                            }
-                            if (m < 10) {
-                                m = "0" + m;
-                            }
-                            if (s < 10) {
-                                s = "0" + s;
-                            }
-                            var myClock = document.getElementById('clockDisplay');
-                            myClock.textContent = h + ":" + m + ":" + s + " " + diem;
-                            myClock.innerText = h + ":" + m + ":" + s + " " + diem;
-                        }
-                        renderTime();
-                    </script>
-            </span>
-            <span class="middle-line">|</span>
-            <select class="switchlang">
-                <option value="hi" > Hindi </option>
-                <option value="en" >  English</option>
-            </select>
-            <span class="middle-line">|</span>
-            <span class="social-icon">
-                <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
-                    <i class="ri-twitter-x-line ri-lg"></i>
-                </a>
-                <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board" target="_blank">
-                        <i class="ri-linkedin-line ri-lg"></i>
-                </a>
-                <!-- <i class="ri-instagram-line ri-lg"></i> -->
-                <a target="_blank" href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
-                    <i class="ri-facebook-circle-line ri-lg"></i>
-                </a>
-                <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
-                    <i class="ri-youtube-line ri-lg"></i>
-                </a>
-            </span>
-            <span class="middle-line">|</span>
-            @if (Route::has('login'))
-                <span >
-                    @auth
-                        Welcome,&nbsp;{{ Auth::user()->name }} |
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <span data-hi="लॉग आउट" data-en="Logout"></span> 
-                            &nbsp;</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="text-black">
-                        <span data-hi="लॉग इन करें" data-en="Log In"></span> </a>
-                    @endauth
-                </span>
-            @endif
-          </div>
-        </div>
-      </div>
-      <div class="logo-header">
-        <div class="container py-3">
-            <div class="row g-3 align-items-center">
-                <div class="col-lg-8 col-md-12 col-12">
-                   <div class="d-flex flex-wrap align-items-center gap-2 justify-content-md-start justify-content-center">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="text-center">
-                            <a  href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}" height="100" /></a>
-                           </div>
-                           <span class="middle-line">|</span>
-                           <div class="text-center">
-                            <a href="{{ url('/') }}"> 
-                              <img src="{{ asset('assets/images/upldb-logo.png')}}" height="100" />
+                            renderTime();
+                            </script>
+                        </span>
+                        <span class="middle-line">|</span>
+                        <select class="switchlang">
+                            <option value="hi"> Hindi </option>
+                            <option value="en"> English</option>
+                        </select>
+                        <span class="middle-line">|</span>
+                        <span class="social-icon">
+                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
+                                <i class="ri-twitter-x-line ri-lg"></i>
                             </a>
+                            <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board"
+                                target="_blank">
+                                <i class="ri-linkedin-line ri-lg"></i>
+                            </a>
+                            <!-- <i class="ri-instagram-line ri-lg"></i> -->
+                            <a target="_blank"
+                                href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
+                                <i class="ri-facebook-circle-line ri-lg"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
+                                <i class="ri-youtube-line ri-lg"></i>
+                            </a>
+                        </span>
+                        <span class="middle-line">|</span>
+                        @if (Route::has('login'))
+                        <span>
+                            @auth
+                            Welcome,&nbsp;{{ Auth::user()->name }} |
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                &nbsp;</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                            @else
+                            <a href="{{ route('login') }}" class="text-black">
+                                <span data-hi="लॉग इन करें" data-en="Log In"></span> </a>
+                            @endauth
+                        </span>
+                        @endif
+                </div>
+            </div>
+        </div>
+        <div class="logo-header">
+            <div class="container py-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-8 col-md-12 col-12">
+                        <div
+                            class="d-flex flex-wrap align-items-center gap-2 justify-content-md-start justify-content-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="text-center">
+                                    <a href="{{ url('/') }}"> <img src="{{ asset('assets/images/logo.png') }}"
+                                            height="100" /></a>
+                                </div>
+                                <span class="middle-line">|</span>
+                                <div class="text-center">
+                                    <a href="{{ url('/') }}">
+                                        <img src="{{ asset('assets/images/upldb-logo.png')}}" height="100" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-md-left text-center">
+                                <h1 class="mb-2 fw-bold">
+                                    <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="Rashtriya Gokul Mission"></span>
+                                </h1>
+                                <h6>
+                                    <span
+                                        data-hi="स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया) हेतु ऑनलाइन आवेदन"
+                                        data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
+                                </h6>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-md-left text-center">
-                        <h1 class="mb-2 fw-bold">
-                        <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="Rashtriya Gokul Mission"></span>   </h1>
-                        <h6>
-                        <span data-hi="स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया) हेतु ऑनलाइन आवेदन" data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
-                        </h6>
+                    <div class="col-lg-4 col-md-12 col-12">
+                        <div class="d-flex flex-column ">
+                            <span>Helpline - <a href="tel:1800-309-1938">1800-309-1938</a></span>
+                            <span>Email ID - <a href="mailto:upldb@rediffmail.com">upldb@rediffmail.com</a></span>
+                        </div>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-primary" type="submit">
+                                Search</button>
+                        </form>
                     </div>
-                   </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-12">
-                    <div class="d-flex flex-column ">
-                        <span>Helpline - <a href="tel:1800-309-1938">1800-309-1938</a></span>
-                        <span>Email ID - <a href="mailto:upldb@rediffmail.com">upldb@rediffmail.com</a></span>
-                     </div>
-                     <form class="d-flex mt-3" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-primary" type="submit">
-                        Search</button>
-                      </form>
                 </div>
             </div>
-          </div>
-      </div>
-      <nav class="navbar navbar-expand-xl m-0 p-0">
-        <div class="container-fluid justify-content-end">
-          <button  class="navbar-toggler my-1 bg-white py-1 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"  aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation" >
-            <i class="ri-menu-3-line"></i>
-          </button>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" >
-            <div class="offcanvas-header">
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" ></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-center flex-grow-1">
-                @if (Route::has('login'))
-                    @auth
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">
-                               <span data-hi="डैशबोर्ड" data-en="Dashboard"></span> 
-                            </a>
-                        </li>
-                        @if (auth()->user()->user_type == 'User')
+        </div>
+        <nav class="navbar navbar-expand-xl m-0 p-0">
+            <div class="container-fluid justify-content-end">
+                <button class="navbar-toggler my-1 bg-white py-1 px-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                    aria-label="Toggle navigation">
+                    <i class="ri-menu-3-line"></i>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1">
+                            @if (Route::has('login'))
+                            @auth
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
-                                <span data-hi="संस्थान आवंटन सूची" data-en="Institute Allotment List"></span> 
-                                    </a>
+                                    <span data-hi="डैशबोर्ड" data-en="Dashboard"></span>
+                                </a>
                             </li>
-                        @else
-                            @if (auth()->user()->user_type == 'Director')
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                        key="SCHEME">
-                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span> 
-                                        </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span> 
-                                           </a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('avedan-districtwise') }}">
-                                            <span data-hi="नये आवेदन मैत्री जनपद वार" data-en="New Applications Maitri District Wise"></span> 
-                                        </a>
-                                    </div>
-                                </li>
+                            @if (auth()->user()->user_type == 'User')
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('/dashboard') }}">
+                                    <span data-hi="संस्थान आवंटन सूची" data-en="Institute Allotment List"></span>
+                                </a>
+                            </li>
                             @else
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('avedan') }}">
-                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span> 
+                            @if (auth()->user()->user_type == 'Director')
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="नये आवेदन मैत्री" data-en="New Applications"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('avedan') }}">
+                                        <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span>
                                     </a>
-                                </li>
+                                    <a class="dropdown-item" href="{{ url('avedan-districtwise') }}">
+                                        <span data-hi="नये आवेदन मैत्री जनपद वार"
+                                            data-en="New Applications Maitri District Wise"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            @else
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('avedan') }}">
+                                    <span data-hi="नये आवेदन मैत्री" data-en="New Applications Maitri"></span>
+                                </a>
+                            </li>
                             @endif
                             @if (auth()->user()->user_type != 'District Officer')
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('total-avedan') }}">
-                                    <span data-hi="कुल आवेदन मैत्री" data-en="Total Applications Maitri"></span> 
-                                        
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('total-avedan') }}">
+                                    <span data-hi="कुल आवेदन मैत्री" data-en="Total Applications Maitri"></span>
+
+                                </a>
+                            </li>
                             @endif
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                        key="SCHEME">
-                                        <span data-hi="मेरिट सूची (स्क्रीनिंग)" data-en="Merit List (Screening)"></span> 
-                                       </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('merit-list') }}/1">
-                                            <span data-hi="सामान्य वर्ग" data-en="General/OBC"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('merit-list') }}/1">
-                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('merit-list') }}/2">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
-                                            </a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('merit-list') }}/3">
-                                            <span data-hi=" अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
-                                        </a>
-                                    </div>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="मेरिट सूची (स्क्रीनिंग)" data-en="Merit List (Screening)"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('merit-list') }}/1">
+                                        <span data-hi="सामान्य वर्ग" data-en="General/OBC"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('merit-list') }}/1">
+                                        <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('merit-list') }}/2">
+                                        <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('merit-list') }}/3">
+                                        <span data-hi=" अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
+                                    </a>
+                                </div>
+                            </li>
 
-                                <!-- <li class="nav-item dropdown">
+                            <!-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         key="SCHEME">मेरिट सूची (स्क्रीनिंग)</a>
                                     <div class="dropdown-menu">
@@ -997,208 +1009,213 @@
 
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                    <span data-hi="आवेदन" data-en="Application"></span> 
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="आवेदन" data-en="Application"></span>
                                 </a>
-                                <div class="dropdown-menu" >
-                                    <a class="dropdown-item" href="{{ url('approved-avedan') }}"> 
-                                        <span data-hi="स्वीकृत आवेदन" data-en="Accepted Applications"></span> 
-                                   </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('approved-avedan') }}">
+                                        <span data-hi="स्वीकृत आवेदन" data-en="Accepted Applications"></span>
+                                    </a>
                                     <a class="dropdown-item" href="{{ url('rejected-avedan') }}">
-                                    <span data-hi="अस्वीकृत आवेदन" data-en="Rejected Applications"></span> 
-                                        </a>
+                                        <span data-hi="अस्वीकृत आवेदन" data-en="Rejected Applications"></span>
+                                    </a>
                                 </div>
                             </li>
 
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('document-verification') }}">
-                                        <span data-hi="अभिलेख  सत्यापन" data-en="Record Verification"></span> 
-                                    </a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('upload-documents') }}">
-                                        <span data-hi="अभिलेख  सत्यापन" data-en="Document Verification/Upload"></span> 
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('document-verification') }}">
+                                    <span data-hi="अभिलेख  सत्यापन" data-en="Record Verification"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('upload-documents') }}">
+                                    <span data-hi="अभिलेख  सत्यापन" data-en="Document Verification/Upload"></span>
+                                </a>
+                            </li>
                             @endif
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                        <span data-hi="चयनित अभ्यर्थियों की सूची" data-en="List of Selected Candidates"></span> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="चयनित अभ्यर्थियों की सूची"
+                                        data-en="List of Selected Candidates"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('all-list') }}">
+                                        <span data-hi="सभी" data-en="All"></span>
                                     </a>
-                                    <div class="dropdown-menu" >
-                                        <a class="dropdown-item" href="{{ url('all-list') }}">
-                                            <span data-hi="सभी" data-en="All"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('general-list') }}">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('obc-list') }}">
-                                            <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('sc-list') }}">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('st-list') }}">
-                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
-                                        </a>
-                                    </div>
-                                </li>
+                                    <a class="dropdown-item" href="{{ url('general-list') }}">
+                                        <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('obc-list') }}">
+                                        <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('sc-list') }}">
+                                        <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('st-list') }}">
+                                        <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
+                                    </a>
+                                </div>
+                            </li>
 
                             @if (auth()->user()->user_type == 'District Officer')
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" key="SCHEME">
-                                        <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/1">
+                                        <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span>
                                     </a>
-                                    <div class="dropdown-menu" >
-                                        <a class="dropdown-item"
-                                            href="{{ url('waiting-list') }}/1">
-                                            <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span> 
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('waiting-list') }}/2">
-                                            <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span> 
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('waiting-list') }}/3">
-                                            <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span> 
-                                        </a>
-                                    </div>
-                                </li>
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/2">
+                                        <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/3">
+                                        <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
+                                    </a>
+                                </div>
+                            </li>
                             @endif
 
 
                             @if (auth()->user()->user_type == 'Admin')
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('institute') }}">
-                                    <span data-hi="संस्थान प्रबंधन" data-en="Institute Management"></span> 
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('institute') }}">
+                                    <span data-hi="संस्थान प्रबंधन" data-en="Institute Management"></span>
+                                </a>
+                            </li>
                             @endif
 
 
                             @if (auth()->user()->user_type == 'Director')
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  key="SCHEME">
-                                        <span data-hi="संस्थान प्रबंधन" data-en="Institute Allotment"></span> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="संस्थान प्रबंधन" data-en="Institute Allotment"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('allocation') }}">
+                                        <span data-hi="अभ्यर्थी आवंटन" data-en="Candidate Allocation"></span>
                                     </a>
-                                    <div class="dropdown-menu" >
-                                        <a class="dropdown-item" href="{{ url('allocation') }}">
-                                            <span data-hi="अभ्यर्थी आवंटन" data-en="Candidate Allocation"></span> 
-                                        </a>
-                                        <a class="dropdown-item" href="{{ url('allocation-list') }}">
-                                            <span data-hi="अभ्यर्थी आवंटन सूची" data-en="Candidate Allotment List"></span> 
-                                       </a>
-                                    </div>
-                                </li>
+                                    <a class="dropdown-item" href="{{ url('allocation-list') }}">
+                                        <span data-hi="अभ्यर्थी आवंटन सूची" data-en="Candidate Allotment List"></span>
+                                    </a>
+                                </div>
+                            </li>
                             @endif
 
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('candidate-not-joined') }}">
-                                    <span data-hi="संस्थान ज्वाइन नहीं किया है" data-en="Have not joined the institute"></span> 
+                                    <span data-hi="संस्थान ज्वाइन नहीं किया है"
+                                        data-en="Have not joined the institute"></span>
                                 </a>
                             </li>
 
                             @if (auth()->user()->user_type == 'Admin')
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="{{ url('setting') }}">
-                                        <span data-hi="सेटिंग्स" data-en="Setting"></span> 
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('setting') }}">
+                                    <span data-hi="सेटिंग्स" data-en="Setting"></span>
+                                </a>
+                            </li>
                             @endif
 
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('changePassword') }}">
-                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span> 
+                                    <span data-hi="चेंज पासवर्ड" data-en="Change Password"></span>
                                 </a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('maitri-home') }}">
-                                    <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span> 
+                                    <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span>
                                 </a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
-                                    <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span> 
+                                    <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
                                 </a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('demand-requests-list') }}">
-                                    <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span> 
+                                    <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span>
                                 </a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('latest-updates') }}">
-                                    <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span> 
+                                    <span data-hi="नयी जानकारियाँ" data-en="Latest information"></span>
                                 </a>
                             </li>
-                        @endif
-                        @else
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('/') }}" key="HOME">
-                                <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span> 
-                            <span class="sr-only">(current)</span></a>
-                        </li>
+                            @endif
+                            @else
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('/') }}" key="HOME">
+                                    <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span>
+                                    <span class="sr-only">(current)</span></a>
+                            </li>
 
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('avedan-karein') }}">
-                                <span data-hi="आवेदन" data-en="Applications"></span> 
-                            </a>
-                        </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('avedan-karein') }}">
+                                    <span data-hi="आवेदन" data-en="Applications"></span>
+                                </a>
+                            </li>
 
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('lakshya') }}">
-                                <span data-hi="स्वरोजगारी मैत्री की संख्या" data-en="Number of self-employed maitri"></span> 
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('application-status') }}">
-                                <span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of your application"></span> 
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('downloads') }}">
-                                <span data-hi="डाउनलोड" data-en="Downlaod"></span> 
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('demandRequests') }}">
-                                <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span> 
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item ">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('lakshya') }}">
+                                    <span data-hi="स्वरोजगारी मैत्री की संख्या"
+                                        data-en="Number of self-employed maitri"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('application-status') }}">
+                                    <span data-hi="आवेदन की स्थिति जानिए"
+                                        data-en="Know the status of your application"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('downloads') }}">
+                                    <span data-hi="डाउनलोड" data-en="Downlaod"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('demandRequests') }}">
+                                    <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item ">
                             <a class="nav-link" href="{{ url('maitri-register') }}">
                                 <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri (Animal Friend) Registration"></span>
                             </a>
                         </li> -->
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ url('farmer-register') }}">
-                                <span data-hi="पशुपालक पंजीकरण" data-en="Livestock  Registration"></span>
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item ">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('farmer-register') }}">
+                                    <span data-hi="पशुपालक पंजीकरण" data-en="Livestock  Registration"></span>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item ">
                             <a class="nav-link" href="{{ url('refresher-training') }}">
                                 <span data-hi="रिफ्रेशर प्रशिक्षण फॉर्म" data-en="Refresher Training Form"></span>
                             </a>
                         </li> -->
-                    @endauth
-                @endif
-              </ul>
+                            @endauth
+                            @endif
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
-  
-     <div>
-     @yield('content')
-     </div>
+
+    <div>
+        @yield('content')
+    </div>
     <!-- <footer> -->
     @if (Route::has('login'))
-        @auth
-        @else
-      <!-- <div class="pt-5 pb-3">
+    @auth
+    @else
+    <!-- <div class="pt-5 pb-3">
         <div class="container">
           <div class="row g-3">
             <div class="col-lg-3">
@@ -1282,197 +1299,218 @@
           </div>
         </div>
       </div> -->
-      @endauth
-      @endif                 
-      <!-- <div class="copy-right py-2 text-center copyright-text">
+    @endauth
+    @endif
+    <!-- <div class="copy-right py-2 text-center copyright-text">
         <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> © Rashtriya Gokul Mission All rights reserved</p>
       </div> -->
     <!-- </footer> -->
-<footer class="position-relative">
-    @if (Route::has('login'))
+    <footer class="position-relative">
+        @if (Route::has('login'))
         @auth
         @else
         <div class="footer_parent">
-        <div class="row g-3 footer_top_footer__u_0LC">
-            <div class="col-lg-4">
-                <h5><i class="fa fa-map-marker"></i> 
-                    <span data-hi="हेड ऑफिस" data-en="Head Office"></span> 
-                </h5>
-                <p>
-                    <span data-hi="गोकरन नाथ रोड, बादशाहबाग, लखनऊ 226007" data-en="Gokaran Nath Road, Badshahbagh, Lucknow 226007"></span> 
-               </p>
-                <h5><i class="fa fa-envelope"></i> 
-                    <span data-hi="ईमेल करें" data-en="Email Us"></span> 
-                </h5>
-                <p class="mb-0">
-                <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span> 
-                - upldbte@gmail.com</p>
-                <p class="mb-0">
-                <span data-hi="शिकायत सेल" data-en="Grievance Cell"></span>     
-                - upldbmaitri@gmail.com</p>
-                <p class="mb-0">
-                <span data-hi="बीमा" data-en="Insurance"></span>         
-                 - pashubeemaupldb@gmail.com</p>
-                <p class="mb-0">
-                <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>        
-                 - upldbss@gmail.com</p>
-            </div>
-            <div class="col-lg-4">
-                <h5><i class="fa fa-phone"></i> 
-                    <span data-hi="कॉल करें" data-en="Call Us"></span>       
-                </h5>
-                <p class="mb-0">
-                    <span data-hi="लैंडलाइन नंबर" data-en="Landline Number"></span>           
-                 - +91-522-2977709</p>
-                <p class="mb-0"> 
-                    <span data-hi="बीमा" data-en="Insurance"></span>        
-                - +91 - 9335116448</p>
-                <p class="mb-0">
-                    <span data-hi="मैत्री" data-en="MAITRI"></span>      
-                     - +91 - 9125904205</p>
-                <p class="mb-0 mt-2 fw-semibold">
-                    <span data-hi="उत्तर प्रदेश पशुधन विकास बोर्ड" data-en="Uttar Pradesh Livestock Development Board"></span>   
-                </p>
-            </div>
-            <div class="col-lg-4">
-                <div class="d-flex flex-column justiry-content-center align-items-center w-100">
-                    <h5>
-                    <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>  
+            <div class="row g-3 footer_top_footer__u_0LC">
+                <div class="col-lg-4">
+                    <h5><i class="fa fa-map-marker"></i>
+                        <span data-hi="हेड ऑफिस" data-en="Head Office"></span>
                     </h5>
-                    <a href="#"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png" width="120px" alt=""></a>
+                    <p>
+                        <span data-hi="गोकरन नाथ रोड, बादशाहबाग, लखनऊ 226007"
+                            data-en="Gokaran Nath Road, Badshahbagh, Lucknow 226007"></span>
+                    </p>
+                    <h5><i class="fa fa-envelope"></i>
+                        <span data-hi="ईमेल करें" data-en="Email Us"></span>
+                    </h5>
+                    <p class="mb-0">
+                        <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span>
+                        - upldbte@gmail.com
+                    </p>
+                    <p class="mb-0">
+                        <span data-hi="शिकायत सेल" data-en="Grievance Cell"></span>
+                        - upldbmaitri@gmail.com
+                    </p>
+                    <p class="mb-0">
+                        <span data-hi="बीमा" data-en="Insurance"></span>
+                        - pashubeemaupldb@gmail.com
+                    </p>
+                    <p class="mb-0">
+                        <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>
+                        - upldbss@gmail.com
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <h5><i class="fa fa-phone"></i>
+                        <span data-hi="कॉल करें" data-en="Call Us"></span>
+                    </h5>
+                    <p class="mb-0">
+                        <span data-hi="लैंडलाइन नंबर" data-en="Landline Number"></span>
+                        - +91-522-2977709
+                    </p>
+                    <p class="mb-0">
+                        <span data-hi="बीमा" data-en="Insurance"></span>
+                        - +91 - 9335116448
+                    </p>
+                    <p class="mb-0">
+                        <span data-hi="मैत्री" data-en="MAITRI"></span>
+                        - +91 - 9125904205
+                    </p>
+                    <p class="mb-0 mt-2 fw-semibold">
+                        <span data-hi="उत्तर प्रदेश पशुधन विकास बोर्ड"
+                            data-en="Uttar Pradesh Livestock Development Board"></span>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex flex-column justiry-content-center align-items-center w-100">
+                        <h5>
+                            <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>
+                        </h5>
+                        <a href="#"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
+                                width="120px" alt=""></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row align-items-top gap-5 px-2 mx-0 pt-4 pb-3 footer_footer__O">
-            <div class="col-lg-3 align-items-top text-center">
-                <img src="https://maitriupldb.in/assets/images/upldb-logo.png" alt="" width="150">
-                <span style="line-height:25px;display:block" class="mb-0 mt-3 text-white">
-                <span data-hi="उन्नत संतति हेतु संकल्पबद्ध" data-en="Committed to a better future"></span>  
-                
-                </span>
-                <div class="social-links d-flex justify-content-center gap-3 mt-lg-3  mt-md-4 mt-3 ">
+            <div class="row align-items-top gap-5 px-2 mx-0 pt-4 pb-3 footer_footer__O">
+                <div class="col-lg-3 align-items-top text-center">
+                    <img src="https://maitriupldb.in/assets/images/upldb-logo.png" alt="" width="150">
+                    <span style="line-height:25px;display:block" class="mb-0 mt-3 text-white">
+                        <span data-hi="उन्नत संतति हेतु संकल्पबद्ध" data-en="Committed to a better future"></span>
 
-                    <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
-                        <span> <i class="ri-twitter-x-line ri-lg"></i></span>
-                    </a>
-                    <a target="_blank" href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/" >
-                        <span> <i  class="ri-facebook-circle-line ri-lg"></i></span>
-                    </a>
-                
-                    <a  href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board" target="_blank">
-                        <span><i class="ri-linkedin-line ri-lg"></i></span>
-                    </a>
-                    <a  href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
-                        <span><i class="ri-youtube-line ri-lg"></i> </span>
-                    </a>
+                    </span>
+                    <div class="social-links d-flex justify-content-center gap-3 mt-lg-3  mt-md-4 mt-3 ">
 
-                    </a>
+                        <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
+                            <span> <i class="ri-twitter-x-line ri-lg"></i></span>
+                        </a>
+                        <a target="_blank"
+                            href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
+                            <span> <i class="ri-facebook-circle-line ri-lg"></i></span>
+                        </a>
+
+                        <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board"
+                            target="_blank">
+                            <span><i class="ri-linkedin-line ri-lg"></i></span>
+                        </a>
+                        <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
+                            <span><i class="ri-youtube-line ri-lg"></i> </span>
+                        </a>
+
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-2">
-                <h5 class="footer--heading"> 
-                <span data-hi="महत्वपूर्ण लिंक" data-en="Important Links"></span>
-                </h5> 
-                <ul class="footer--list">
-                    <li>
-                        <a href="{{ url('/') }}" key="HOME">
-                            <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('avedan-karein') }}">
-                            <span data-hi="आवेदन" data-en="Applications"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('lakshya') }}">
-                            <span data-hi="स्वरोजगारी मैत्री (पशु मित्र) की संख्या" data-en="Number of Swarozgari Maitri (Animal Friends)"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('application-status') }}">
-                            <span data-hi="आवेदन की स्थिति जानिए" data-en="Know the status of your application"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('downloads') }}">
-                            <span data-hi="डाउनलोड" data-en="Download"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('demandRequests') }}"> 
-                            <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
-                        </a>
-                    </li>
-                </ul>        
+                <div class="col-lg-2">
+                    <h5 class="footer--heading">
+                        <span data-hi="महत्वपूर्ण लिंक" data-en="Important Links"></span>
+                    </h5>
+                    <ul class="footer--list">
+                        <li>
+                            <a href="{{ url('/') }}" key="HOME">
+                                <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('avedan-karein') }}">
+                                <span data-hi="आवेदन" data-en="Applications"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('lakshya') }}">
+                                <span data-hi="स्वरोजगारी मैत्री (पशु मित्र) की संख्या"
+                                    data-en="Number of Swarozgari Maitri (Animal Friends)"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('application-status') }}">
+                                <span data-hi="आवेदन की स्थिति जानिए"
+                                    data-en="Know the status of your application"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('downloads') }}">
+                                <span data-hi="डाउनलोड" data-en="Download"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('demandRequests') }}">
+                                <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
+                            </a>
+                        </li>
+                    </ul>
 
 
 
-            </div>
-            <div class="col-lg-2">
-                <h5 class="footer--heading">
-                    <span data-hi="त्वरित लिंक" data-en="Quick Links"></span>
-                </h5>
-                <ul class="footer--list">
-                    <!-- <li>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer--heading">
+                        <span data-hi="त्वरित लिंक" data-en="Quick Links"></span>
+                    </h5>
+                    <ul class="footer--list">
+                        <!-- <li>
                         <a href="{{ url('maitri-register') }}">
                             <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri Registration"></span>
                     </a>
                     </li> -->
-                    <li>
-                        <a href="{{ url('farmer-register') }}">
-                            <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
-                        </a>
-                    </li>
-                
-                </ul>
-            </div>
-            <div class="col-lg-2">
-                <h5 class="footer--heading">
-                <span data-hi="संपर्क करें" data-en="Contact Us"></span>
-                </h5>
-                <ul class="list-unstyled">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.08297384528!2d80.935781475438!3d26.86910477667314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd9c9604bea9%3A0x88634ee93200bb69!2sVETERINARY%20POLYCLINIC%20BADSHAH%20BAGH%2C%20LUCKNOW!5e0!3m2!1sen!2sin!4v1705036303907!5m2!1sen!2sin"
-                        width="250" height="200" ></iframe>
-                    </ul>
-            </div>
-        </div>
-        </div>
-    @endauth
-    @endif      
-    <div class="copy-right py-2 text-center copyright-text footer-counter">
-        <a href='https://www.free-counters.org/'>www.free-Counter.org</a> 
-        <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
-        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5"></script>
+                        <li>
+                            <a href="{{ url('farmer-register') }}">
+                                <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
+                            </a>
+                        </li>
 
-        <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> © 
-            <span data-hi="राष्ट्रीय गोकुल मिशन सर्वाधिकार सुरक्षित" data-en="Rashtriya Gokul Mission All rights reserved"></span>
-        </p>
-    </div>
-</footer>
-<button class="common_top_scroll__cuiN4 top-btn">
-    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-</button>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer--heading">
+                        <span data-hi="संपर्क करें" data-en="Contact Us"></span>
+                    </h5>
+                    <ul class="list-unstyled">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.08297384528!2d80.935781475438!3d26.86910477667314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd9c9604bea9%3A0x88634ee93200bb69!2sVETERINARY%20POLYCLINIC%20BADSHAH%20BAGH%2C%20LUCKNOW!5e0!3m2!1sen!2sin!4v1705036303907!5m2!1sen!2sin"
+                            width="250" height="200"></iframe>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @endauth
+        @endif
+        <div class="copy-right py-2 text-center copyright-text footer-counter">
+            <a href='https://www.free-counters.org/'>www.free-Counter.org</a>
+            <script type='text/javascript'
+                src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5">
+            </script>
+
+            <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> ©
+                <span data-hi="राष्ट्रीय गोकुल मिशन सर्वाधिकार सुरक्षित"
+                    data-en="Rashtriya Gokul Mission All rights reserved"></span>
+            </p>
+        </div>
+    </footer>
+    <button class="common_top_scroll__cuiN4 top-btn">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </button>
 
     <script>
     let topBtn = document.querySelector(".top-btn");
 
-    topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+    topBtn.onclick = () => window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
     window.onscroll = () => topBtn.style.opacity = window.scrollY > 500 ? 1 : 0;
 
     var defaultlang = "hi";
-    var ls =localStorage.getItem("selectedProject");
-    if(ls){
+    var ls = localStorage.getItem("selectedProject");
+    if (ls) {
         $(".switchlang").val(ls).change();
         switchLang(ls);
-    }else{
+    } else {
         switchLang(defaultlang);
     }
-    function switchLang(lang){
+
+    function switchLang(lang) {
         document.body.classList.remove("trans_english");
-        if(lang=='en'){
+        if (lang == 'en') {
             document.body.classList.add("trans_english");
         }
         $("[data-" + lang + "]").text(function(i, e) {
@@ -1485,7 +1523,7 @@
         localStorage.setItem("selectedProject", lang);
         switchLang(lang)
     });
-        
+
     function loadlang() {
         var lng = document.getElementById("langselector").value;
         var cnt = document.getElementById("contents");
@@ -1499,8 +1537,7 @@
         }
     }
     </script>
-    <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModel"
-        aria-hidden="true">
+    <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1528,10 +1565,11 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
-        var url = "{{ route('changeLang') }}";
-        $(".changeLang").change(function() {
-            window.location.href = url + "?lang=" + $(this).val();
-        });
+    var url = "{{ route('changeLang') }}";
+    $(".changeLang").change(function() {
+        window.location.href = url + "?lang=" + $(this).val();
+    });
     </script>
-  </body>
+</body>
+
 </html>
