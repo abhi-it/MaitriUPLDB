@@ -82,23 +82,22 @@
         </div>
 
         <div class="column" style="display: flex; margin-top: 1.5rem">
-        <button class="button" style="margin: auto; width: 100%" id="join-button">Join Stage</button>
+          <button class="button" style="margin: auto; width: 100%" id="join-button">Join Stage</button>
         </div>
         <div class="column" style="display: flex; margin-top: 1.5rem">
-        <button class="button" style="margin: auto; width: 100%" id="leave-button">Leave Stage</button>
+          <button class="button" style="margin: auto; width: 100%" id="leave-button">Leave Stage</button>
         </div>
     </div>
 
   <div class="row local-container">
     <div class="w-100 relative">
-    <div class="column" id="local-media"></div>
-    
-    <!-- <div class="col-md-12 flex"> -->
-    <div class="static-controls hidden" id="local-controls">
-      <button class="button" id="mic-control">Mute Mic</button>
-      <button class="button" id="camera-control">Mute Camera</button>
-    </div>
-    </div>
+      <div class="column" id="local-media"></div>   
+      <!-- <div class="col-md-12 flex"> -->
+        <div class="static-controls hidden" id="local-controls">
+          <button class="button" id="mic-control">Mute Mic</button>
+          <button class="button" id="camera-control">Mute Camera</button>
+        </div>
+      </div>
     <!-- </div> -->
   </div>
   </div>

@@ -1089,6 +1089,10 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/maitri-details') }}">प्रोफ़ाइल अद्यतन</a>
                                 </li>
+
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('/animal-breeding') }}">पशु प्रजनन</a>
+                                </li>
                                 @else
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/farmer-dashboard') }}">डैशबोर्ड </a>

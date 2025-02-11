@@ -94,4 +94,57 @@ class BroadcastController extends Controller
         $stageArn = $request->stageArn;
         return view('broadcaster.host', compact('stageArn'));
     }
+
+    //Subscribers
+    public function createSubscriberToken($stageArn)
+    {
+        try {
+            $client = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => 'ap-south-1',
+                'credentials' => [
+                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            // participant token with "SUBSCRIBE" capability
+            $result = $client->createParticipantToken([
+                'stageArn' => $stageArn,
+                'capabilities' => ['SUBSCRIBE'],  // Permission for viewing
+                'durationSeconds' => 43200,   // 12 hours
+                'userId' => 'subscriber_' . uniqid(),  
+            ]);
+
+            return response()->json([
+                'subscriber_token' => $result['participantToken'],
+                // 'userId' => $result['userId'],
+                // 'expirationTime' => $result['expirationTime'],
+            ]);
+
+        } catch (AwsException $e) {
+            return response()->json(['error' => $e->getAwsErrorMessage()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function generateSubscriberToken(Request $request)
+    {
+        $stageArn = $request->stageArn;
+        if (!$stageArn) {
+            return response()->json(['error' => 'Stage ARN is required'], 400);
+        }
+
+        $data = $this->createSubscriberToken($stageArn);
+        $originalData = $data->getData(true); 
+      
+        return view('broadcaster.viewers', compact('originalData','stageArn'));
+    }
+
+    public function join_webinar(Request $request)
+    {
+        $stageArn = $request->stageArn;
+        return view('broadcaster.subscriber', compact('stageArn'));
+    }
 }

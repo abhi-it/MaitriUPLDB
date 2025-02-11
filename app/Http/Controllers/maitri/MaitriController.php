@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\Animalbreeding;
 use DB;
 
 class MaitriController extends Controller{
@@ -24,6 +25,14 @@ class MaitriController extends Controller{
         return view('web.maitri.dashboard',[
             'data'=>$data,
         ]);
+    }
+
+    public function animalBreeding(){
+        $user_id = Auth::user()->id;
+        $breedingData = Animalbreeding::where('user_id', $user_id)->first();
+        $districts  = Districts::get();
+        $divisions  = Divisions::get();
+        return view('web.maitri.animalbreeding',compact('user_id', 'districts','divisions', 'breedingData'));
     }
 
     public function maitri_details(){
@@ -37,6 +46,16 @@ class MaitriController extends Controller{
     public function checkMaitriDetails(){
         $id = Auth::user()->id;
         $mairtiData =  User::where(['id'=>$id])->first();
+        $district = Districts::where('id', 'LIKE', '%' . $mairtiData['district_id'] . '%')->first();
+        return response()->json([
+            'userData' => $mairtiData,
+            'districtName' => $district['name_hindi'],
+        ]);
+    }
+
+    public function checkBreedingDetails(){
+        $id = Auth::user()->id;
+        $mairtiData =  Animalbreeding::where(['user_id'=>$id])->first();
         $district = Districts::where('id', 'LIKE', '%' . $mairtiData['district_id'] . '%')->first();
         return response()->json([
             'userData' => $mairtiData,
