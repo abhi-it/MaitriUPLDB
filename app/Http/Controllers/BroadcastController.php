@@ -16,13 +16,14 @@ class BroadcastController extends Controller
     //Stages List
     public function listIvsStages()
     {
+        require_once base_path('vendor/autoload.php'); 
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
     
@@ -46,13 +47,14 @@ class BroadcastController extends Controller
     //Add broadcaster
     public function createPublisherToken($stageArn)
     {
+        require_once base_path('vendor/autoload.php'); 
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -98,13 +100,14 @@ class BroadcastController extends Controller
     //Subscribers
     public function createSubscriberToken($stageArn)
     {
+        require_once base_path('vendor/autoload.php'); 
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => 'ap-south-1',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => 'AKIAV7JDSE4JDI7UC5WL',  //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => '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',   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -146,5 +149,10 @@ class BroadcastController extends Controller
     {
         $stageArn = $request->stageArn;
         return view('broadcaster.subscriber', compact('stageArn'));
+    }
+
+    public function ivs_latency(Request $request)
+    {
+        return view('broadcaster.ivs_latency');
     }
 }

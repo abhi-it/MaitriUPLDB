@@ -542,3 +542,8 @@ Route::get('/add-subscribers',[BroadcastController::class, 'generateSubscriberTo
 Route::get('/join-webinar',[BroadcastController::class, 'join_webinar'])->name('join_webinar');
 
 
+//IVS-LATENCY
+Route::get('/ivs-latency',[BroadcastController::class, 'ivs_latency'])->name('ivs_latency');
+
+
+

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\IVSBroadCastController;
+use App\Http\Controllers\Api\LatencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,5 +79,9 @@ Route::get('show-stages', [IVSBroadCastController::class, 'showStages'])->name('
 Route::get('/ivs-stage/participants', [IVSBroadCastController::class, 'showParticipantCount']);
 Route::get('/ivs-publisher', [IVSBroadCastController::class, 'generatePublisherToken']);
 Route::get('/ivs-subscribers', [IVSBroadCastController::class, 'generateSubscriberToken']);
+
+//IVS LATENCY
+Route::get('/ivs-streamInfo', [LatencyController::class, 'streamData']);
+
 
 

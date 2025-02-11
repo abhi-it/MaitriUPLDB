@@ -11,7 +11,7 @@
         </ul>
     </nav>
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
-    <h3 class="text-center fw-bold m-4">Subscribers Details</h3>
+        <h3 class="text-center fw-bold m-4">Subscribers Details</h3>
         <table class="table table-striped table-responsive table-bordered">
             <thead>
                 <tr>
