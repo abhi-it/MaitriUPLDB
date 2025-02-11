@@ -137,7 +137,6 @@
 
 
     <script type="text/javascript">
-  
     (function($) {
         $.fn.multiStepForm = function(args) {
             if (args === null || typeof args !== 'object' || $.isArray(args))
@@ -253,98 +252,6 @@
 
 <body class="pb-0">
     <header>
-        <div class="top-bar py-2">
-            <div class="container">
-                <div class="text-end top-bar-content">
-                    <span class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
-                        <noscript>
-                            Javascript Required
-                        </noscript>
-                        <script type="text/javascript">
-                        var d = new Date()
-                        var weekday = new Array("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
-                        var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
-                            "Nov", "Dec")
-                        document.write(weekday[d.getDay()] + ", ")
-                        document.write(d.getDate() + " ")
-                        document.write(monthname[d.getMonth()] + ", ")
-                        document.write(d.getFullYear())
-                        </script>
-                        <span id="clockDisplay">
-                            <script type="text/javascript" language="javascript">
-                            function renderTime() {
-                                var currentTime = new Date();
-                                var diem = "AM";
-                                var h = currentTime.getHours();
-                                var m = currentTime.getMinutes();
-                                var s = currentTime.getSeconds();
-                                setTimeout('renderTime()', 1000);
-                                if (h == 0) {
-                                    h = 12;
-                                } else if (h > 12) {
-                                    h = h - 12;
-                                    diem = "PM";
-                                }
-                                if (h < 10) {
-                                    h = "0" + h;
-                                }
-                                if (m < 10) {
-                                    m = "0" + m;
-                                }
-                                if (s < 10) {
-                                    s = "0" + s;
-                                }
-                                var myClock = document.getElementById('clockDisplay');
-                                myClock.textContent = h + ":" + m + ":" + s + " " + diem;
-                                myClock.innerText = h + ":" + m + ":" + s + " " + diem;
-                            }
-                            renderTime();
-                            </script>
-                        </span>
-                        <span class="middle-line">|</span>
-                        <select class="switchlang">
-                            <option value="hi"> Hindi </option>
-                            <option value="en"> English</option>
-                        </select>
-                        <span class="middle-line">|</span>
-                        <span class="social-icon">
-                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
-                                <i class="ri-twitter-x-line ri-lg"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board"
-                                target="_blank">
-                                <i class="ri-linkedin-line ri-lg"></i>
-                            </a>
-                            <!-- <i class="ri-instagram-line ri-lg"></i> -->
-                            <a target="_blank"
-                                href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
-                                <i class="ri-facebook-circle-line ri-lg"></i>
-                            </a>
-                            <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
-                                <i class="ri-youtube-line ri-lg"></i>
-                            </a>
-                        </span>
-                        <span class="middle-line">|</span>
-                        @if (Route::has('login'))
-                        <span>
-                            @auth
-                            Welcome,&nbsp;{{ Auth::user()->name }} |
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <span data-hi="लॉग आउट" data-en="Logout"></span>
-                                &nbsp;</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                            @else
-                            <a href="{{ route('login') }}" class="text-black">
-                                <span data-hi="लॉग इन करें" data-en="Log In"></span> </a>
-                            @endauth
-                        </span>
-                        @endif
-                </div>
-            </div>
-        </div>
         <div class="logo-header">
             <div class="container py-3">
                 <div class="row g-3 align-items-center">
@@ -375,21 +282,7 @@
                                     </h6>
                                 </div>
                             </div>
-                            <div class="kumbhlogo">
-                                <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="d-flex flex-column ">
-                            <span>Helpline - <a href="tel:1800-309-1938">1800-309-1938</a></span>
-                            <span>Email ID - <a href="mailto:upldbte@gmail.com">upldbte@gmail.com </a></span>
-                        </div>
-                        <form class="d-flex mt-3" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-primary" type="submit">
-                                Search</button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -663,7 +556,7 @@
         }
     }
     </script>
-   
+
     @stack('body-scripts')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
