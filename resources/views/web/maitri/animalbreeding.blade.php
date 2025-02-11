@@ -61,12 +61,19 @@
                         <select name="transaction_type" id="transaction_type" class="form-control">
                             <option value="">Select any one</option>
                             <option value="calving"
-                                {{ $breedingData->transaction_type == 'calving' ? 'selected' : '' }}>Calving</option>
-                            <option value="pd" {{ $breedingData->transaction_type == 'pd' ? 'selected' : '' }}>PD
+                                {{ isset($breedingData->transaction_type) && $breedingData->transaction_type == 'calving' ? 'selected' : '' }}>
+                                Calving
                             </option>
-                            <option value="ai" {{ $breedingData->transaction_type == 'ai' ? 'selected' : '' }}>AI
+                            <option value="pd"
+                                {{ isset($breedingData->transaction_type) && $breedingData->transaction_type == 'pd' ? 'selected' : '' }}>
+                                PD
+                            </option>
+                            <option value="ai"
+                                {{ isset($breedingData->transaction_type) && $breedingData->transaction_type == 'ai' ? 'selected' : '' }}>
+                                AI
                             </option>
                         </select>
+
 
                     </div>
 
@@ -84,7 +91,8 @@
                             <span>Owner State</span>
                         </label>
                         <input type="text" class="form-control" required id="owner_state" name="owner_state"
-                            value="{{ $breedingData->owner_state ?? '' }}" placeholder="Owner State" autocomplete="off">
+                            value="{{ isset($breedingData->owner_state) ?? '' }}" placeholder="Owner State"
+                            autocomplete="off">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -163,11 +171,15 @@
                         <select name="semen_type" id="semen_type" class="form-control">
                             <option value="">Select any one</option>
                             <option value="sex_sorted"
-                                {{ $breedingData->semen_type == 'sex_sorted' ? 'selected' : '' }}>Sex Sorted</option>
+                                {{ isset($breedingData->semen_type) && $breedingData->semen_type == 'sex_sorted' ? 'selected' : '' }}>
+                                Sex Sorted
+                            </option>
                             <option value="conventional"
-                                {{ $breedingData->semen_type == 'conventional' ? 'selected' : '' }}>Conventional
+                                {{ isset($breedingData->semen_type) && $breedingData->semen_type == 'conventional' ? 'selected' : '' }}>
+                                Conventional
                             </option>
                         </select>
+
 
                     </div>
 
@@ -205,7 +217,7 @@
                     <div class="form-group col-md-4">
                         <label for="ai_data_entry_date"> <span>AI Data Entry Date</span></label>
                         <input type="date" name="ai_data_entry_date" id="ai_data_entry_date"
-                            value="{{ $breedingData->transaction_date }}" class="form-control"
+                            value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
                             placeholder="AI Data Entry Date">
                     </div>
 
@@ -213,11 +225,16 @@
                         <label for="ai_status"> <span>AI Status</span></label>
                         <select name="ai_status" id="ai_status" class="form-control">
                             <option value="">Select any one</option>
-                            <option value="successful" {{ $breedingData->ai_status == 'successful' ? 'selected' : '' }}>
-                                Successful</option>
+                            <option value="successful"
+                                {{ isset($breedingData->ai_status) && $breedingData->ai_status == 'successful' ? 'selected' : '' }}>
+                                Successful
+                            </option>
                             <option value="unsuccessful"
-                                {{ $breedingData->ai_status == 'unsuccessful' ? 'selected' : '' }}>Unsuccessful</option>
+                                {{ isset($breedingData->ai_status) && $breedingData->ai_status == 'unsuccessful' ? 'selected' : '' }}>
+                                Unsuccessful
+                            </option>
                         </select>
+
 
                     </div>
 
@@ -551,37 +568,51 @@
                         <label for="species"> <span>Species</span></label>
                         <select name="species" id="species" class="form-control">
                             <option value="">Select any one</option>
-                            <option value="buffalo" {{ $breedingData->species == 'buffalo' ? 'selected' : '' }}>Buffalo
+                            <option value="buffalo"
+                                {{ isset($breedingData->species) && $breedingData->species == 'buffalo' ? 'selected' : '' }}>
+                                Buffalo
                             </option>
-                            <option value="cattle" {{ $breedingData->species == 'cattle' ? 'selected' : '' }}>Cattle
+                            <option value="cattle"
+                                {{ isset($breedingData->species) && $breedingData->species == 'cattle' ? 'selected' : '' }}>
+                                Cattle
                             </option>
-                            <option value="goat" {{ $breedingData->species == 'goat' ? 'selected' : '' }}>Goat</option>
+                            <option value="goat"
+                                {{ isset($breedingData->species) && $breedingData->species == 'goat' ? 'selected' : '' }}>
+                                Goat
+                            </option>
                         </select>
+
 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="owner_name"> <span>Owner Name</span></label>
                         <input type="text" name="owner_name" id="owner_name"
-                            value="{{ $breedingData->transaction_date }}" class="form-control" placeholder="Owner Name">
+                            value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
+                            placeholder="Owner Name">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="owner_gender"> <span>Owner Gender</span></label>
                         <select name="owner_gender" id="owner_gender" class="form-control">
                             <option value="">Select any one</option>
-                            <option value="male" {{ $breedingData->owner_gender == 'male' ? 'selected' : '' }}>Male
+                            <option value="male"
+                                {{ isset($breedingData->owner_gender) && $breedingData->owner_gender == 'male' ? 'selected' : '' }}>
+                                Male
                             </option>
-                            <option value="female" {{ $breedingData->owner_gender == 'female' ? 'selected' : '' }}>
-                                Female</option>
+                            <option value="female"
+                                {{ isset($breedingData->owner_gender) && $breedingData->owner_gender == 'female' ? 'selected' : '' }}>
+                                Female
+                            </option>
                         </select>
+
 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="owner_mobile_no"> <span>Owner Mobile No</span></label>
                         <input type="number" name="owner_mobile_no" id="owner_mobile_no"
-                            value="{{ $breedingData->transaction_date }}" class="form-control"
+                            value="{{ $breedingData->transaction_date ?? '' }}" class="form-control"
                             placeholder="Owner Mobile No">
                     </div>
 
