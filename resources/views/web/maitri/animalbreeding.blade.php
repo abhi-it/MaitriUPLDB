@@ -484,7 +484,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="calf_2_weight"> <span>Calf 2 Weight</span></label>
-                        <input type="text" name="calf_2_weight" required id="calf_2_weight"
+                        <input type="text" name="calf_2_weight" id="calf_2_weight"
                             value="{{ $breedingData->calf_2_weight ?? '' }}" class="form-control"
                             placeholder="Calf 2 Weight">
                     </div>
