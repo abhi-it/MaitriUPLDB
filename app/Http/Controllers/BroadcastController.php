@@ -16,7 +16,7 @@ class BroadcastController extends Controller
     //Stages List
     public function listIvsStages()
     {
-        require_once base_path('vendor/autoload.php'); 
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
@@ -47,7 +47,7 @@ class BroadcastController extends Controller
     //Add broadcaster
     public function createPublisherToken($stageArn)
     {
-        require_once base_path('vendor/autoload.php'); 
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
@@ -100,7 +100,8 @@ class BroadcastController extends Controller
     //Subscribers
     public function createSubscriberToken($stageArn)
     {
-        require_once base_path('vendor/autoload.php'); 
+        // require_once base_path('vendor/autoload.php'); 
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
         try {
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
