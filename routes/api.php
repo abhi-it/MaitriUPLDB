@@ -80,6 +80,10 @@ Route::get('/ivs-stage/participants', [IVSBroadCastController::class, 'showParti
 Route::get('/ivs-publisher', [IVSBroadCastController::class, 'generatePublisherToken']);
 Route::get('/ivs-subscribers', [IVSBroadCastController::class, 'generateSubscriberToken']);
 
+
+Route::get('/ivs-getPublishersList', [IVSBroadCastController::class, 'getPublishersList']);
+
+
 //IVS LATENCY
 Route::get('/ivs-streamInfo', [LatencyController::class, 'streamData']);
 

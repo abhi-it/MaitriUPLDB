@@ -536,8 +536,9 @@ dd($year);
 });
 
 Route::get("stageList", [BroadcastController::class, 'stageList'])->name('stageList');
-Route::post('/add-broadcaster', [BroadcastController::class, 'addBroadcaster'])->name('addBroadcaster');
+Route::get('/add-broadcaster', [BroadcastController::class, 'addBroadcaster'])->name('addBroadcaster');
 Route::post('/broadcaster/details', [BroadcastController::class, 'view_details'])->name('view-details');
+Route::post('/broadcaster/list', [BroadcastController::class, 'broadcasterList'])->name('broadcasterList');
 
 Route::get('/start-webinar',[BroadcastController::class, 'start_webinar'])->name('start_webinar');
 

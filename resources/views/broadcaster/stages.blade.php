@@ -38,17 +38,17 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="actionDropdown{{ $i }}">
                                         <li>
-                                            <form method="POST" action="{{ route('addBroadcaster') }}">
+                                            <form method="POST" action="{{ route('broadcasterList') }}">
                                                 @csrf
                                                 <input type="hidden" name="stageArn" value="{{ $val['arn'] }}">
-                                                <button type="submit" class="dropdown-item">Add Broadcaster</button>
+                                                <button type="submit" class="dropdown-item">Broadcasters List</button>
                                             </form>
                                         </li>
                                         <li>
-                                            <form method="GET" action="{{ route('generateSubscriberToken') }}">
+                                            <form method="GET" action="{{ route('join_webinar') }}">
                                                 @csrf
                                                 <input type="hidden" name="stageArn" value="{{ $val['arn'] }}">
-                                                <button type="submit" class="dropdown-item">Add Subscribers</button>
+                                                <button type="submit" class="dropdown-item">Join Subscribers</button>
                                             </form>
                                         </li>
                                     </ul>
