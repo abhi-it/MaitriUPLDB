@@ -20,7 +20,7 @@ class AnimalBreedingController extends Controller
         $animalBreeding = Animalbreeding::where('user_id', $request->user_id)->first();
 
         $data = [
-            'user_id' => $request->user_id,
+            'user_id' => $user_id,
             'transaction_type' => $request->transaction_type ?: null,
             'transaction_date' => $request->transaction_date ?: null,
             'owner_state' => $request->owner_state ?: null,
