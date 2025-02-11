@@ -62,7 +62,7 @@
   <div class="row">
     <div class="columns">
       <label for="token" style="display: none;">Token</label>
-      <input type="text" id="token" name="token" value={{$stageArn}} style="display: none;" />
+      <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
       <!-- <button class="button" id="join-button">Join</button> -->
       <button class="button" id="leave-button" style="display: none;">Leave</button>
       </div>

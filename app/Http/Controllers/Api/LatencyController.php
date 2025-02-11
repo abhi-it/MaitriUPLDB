@@ -13,7 +13,7 @@ class LatencyController extends Controller
     public function streamData(Request $request)
     {
         try{
-        $channelArn = 'arn:aws:ivs:us-west-2:123456789012:channel/abcd1234';
+        $channelArn = 'arn:aws:ivs:ap-south-1:410780837650:channel/cbTFnQij9NPj';
         $streamInfo = $this->getIvsStreamInfo($channelArn);
 
         return response()->json(['stream_details' => $streamInfo]);
@@ -28,24 +28,26 @@ class LatencyController extends Controller
         try{
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_LATENCY_REGION','us-west-2'),
+                // 'region' => env('AWS_IVS_LATENCY_REGION','us-west-2'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
                     'key' => env('AWS_ACCESS_KEY_ID'),
                     'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
-            $channels = $ivsClient->listChannels();
+            // $channels = $ivsClient->listChannels();
             // $streamKeys = $ivsClient;
             // dd($streamKeys);
 
             $streamKeys = $ivsClient->listStreamKeys([
                 'channelArn' => $channelArn,
             ]);
-
+            dd($streamKeys);
+// 
             if (empty($streamKeys['streamKeys'])) {      
                 // No stream keys exist, create a new one
-                $newStreamKey = $ivsClient->createStreamKey([
+                $newStreamKey = $ivsClient->createChannel([
                     'channelArn' => $channelArn,
                 ]);
 

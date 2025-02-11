@@ -120,6 +120,44 @@ class IVSBroadCastController extends Controller
         }
     }
 
+    public function getPublishersList(Request $request)
+    {
+        try {
+            $stageArn = $request->stage;
+            $ivsClient = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $sessionResult = $ivsClient->listStageSessions([
+                'stageArn' => $stageArn,
+            ]);
+
+            if (empty($sessionResult['stageSessions'])) {
+                return response()->json(['error' => 'No active sessions found'], 404);
+            }
+
+            $sessionId = $sessionResult['stageSessions'][0]['sessionId']; 
+
+            $participantResult = $ivsClient->listParticipants([
+                'stageArn' => $stageArn,
+                'sessionId' => $sessionId,
+            ]);
+
+            $publishers = $participantResult['participants'];
+
+            return response()->json(['publishers' => $publishers]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
     public function generatePublisherToken(Request $request)
     {
         $stageArn = $request->stage; 

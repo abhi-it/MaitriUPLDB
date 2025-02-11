@@ -78,7 +78,7 @@
 
         <div class="column">
           <label for="token">Participant Token</label>
-          <input type="text" id="token" name="token" value={{$stageArn}}/>
+          <input type="text" id="token" name="token" value={{$token}}/>
         </div>
 
         <div class="column" style="display: flex; margin-top: 1.5rem">

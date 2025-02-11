@@ -85,6 +85,56 @@ class BroadcastController extends Controller
         return view('broadcaster.broadcaster', compact('data'));
     }
 
+    public function getPublishersList($stageArn)
+    {
+        try {
+            $ivsClient = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $sessionResult = $ivsClient->listStageSessions([
+                'stageArn' => $stageArn,
+            ]);
+
+            if (empty($sessionResult['stageSessions'])) {
+                return response()->json(['error' => 'No active sessions found'], 404);
+            }
+
+            $sessionId = $sessionResult['stageSessions'][0]['sessionId']; 
+
+            $participantResult = $ivsClient->listParticipants([
+                'stageArn' => $stageArn,
+                'sessionId' => $sessionId,
+            ]);
+
+            $publishers = $participantResult['participants'];
+
+            return response()->json(['publishers' => $publishers]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function broadcasterList(Request $request)
+    {
+        try {
+            $stageArn =  $request->stageArn;
+            $response = $this->getPublishersList($stageArn);
+            $originalData = $response->getData(true); 
+            $allData = $originalData['publishers'];
+           
+            return view('broadcaster.broadcaster_list', compact('allData','stageArn'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function view_details()
     {
         $data = '';
@@ -93,8 +143,15 @@ class BroadcastController extends Controller
 
     public function start_webinar(Request $request)
     {
-        $stageArn = $request->stageArn;
-        return view('broadcaster.host', compact('stageArn'));
+        try {
+            $stageArn = $request->stageArn;
+            $data = $this->createPublisherToken($stageArn);
+            $token = $data['token'];
+
+            return view('broadcaster.host', compact('stageArn','token'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     //Subscribers
@@ -136,6 +193,7 @@ class BroadcastController extends Controller
     public function generateSubscriberToken(Request $request)
     {
         $stageArn = $request->stageArn;
+
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
@@ -149,7 +207,15 @@ class BroadcastController extends Controller
     public function join_webinar(Request $request)
     {
         $stageArn = $request->stageArn;
-        return view('broadcaster.subscriber', compact('stageArn'));
+        if (!$stageArn) {
+            return response()->json(['error' => 'Stage ARN is required'], 400);
+        }
+
+        $response = $this->createSubscriberToken($stageArn);
+        $data = json_decode($response->getContent(), true);  
+        $token = $data['subscriber_token']['token'] ?? null;
+
+        return view('broadcaster.subscriber', compact('stageArn','token'));
     }
 
     public function ivs_latency(Request $request)
