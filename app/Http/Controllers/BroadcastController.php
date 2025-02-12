@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\API\Role;
 use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
+use Aws\Ivs\IvsClient;
 
 class BroadcastController extends Controller
 {
@@ -218,8 +219,116 @@ class BroadcastController extends Controller
         return view('broadcaster.subscriber', compact('stageArn','token'));
     }
 
+
+    //---------------------------latency-------------------------------//
     public function ivs_latency(Request $request)
     {
         return view('broadcaster.ivs_latency');
     }
+
+    public function add_channel()
+    {
+        dd('1213');
+        return view('broadcaster.add_channel');
+    }
+
+    public function createChannel(Request $reques)
+    {
+      
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
+        try {
+            $client = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $result = $ivsClient->createChannel([
+                'name'      => $request->name,
+                'latencyMode' => $request->latency_mode,
+                'type'      => $request->type,
+                'authorized' => false, 
+            ]);
+
+            $channelArn = $result['channel']['arn'];
+            $streamKey  = $result['streamKey']['value'];
+            $ingestEndpoint = $result['channel']['ingestEndpoint'];
+
+            return response()->json([
+                'channel_arn' => $channelArn,
+                'stream_key'  => $streamKey,
+                'ingest_endpoint' => $ingestEndpoint,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function listChannels()
+    {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
+        try {
+            $client = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+    
+            $result = $ivsClient->listChannels([]);
+            $channels = $result['channels'];
+    
+            $data = [];
+    
+            foreach ($channels as $channel) {
+                $channelArn = $channel['arn'];
+    
+                $channelDetails = $ivsClient->getChannel(['arn' => $channelArn]);
+                $streamKeyResult = $ivsClient->listStreamKeys(['channelArn' => $channelArn]);
+    
+                if (empty($streamKeyResult['streamKeys'])) {
+                    $newStreamKey = $ivsClient->createStreamKey([
+                        'channelArn' => $channelArn,
+                    ]);
+                    $streamKey = $newStreamKey['streamKey']['value'] ?? null;
+                } else {
+                    $streamKey = $streamKeyResult['streamKeys'][0]['value'] ?? null;
+                }
+    
+                $data[] = [
+                    'channel_arn'      => $channelArn,
+                    'channel_name'     => $channel['name'],
+                    'ingest_endpoint'  => $channelDetails['channel']['ingestEndpoint'] ?? null,
+                    'stream_key'       => $streamKey,
+                ];
+            }
+            return $data;
+            
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()]; 
+        }
+    }
+    
+
+    public function channels_list(Request $request)
+    {
+        try {
+            $channels = $this->listChannels();
+            dd($channels);
+
+            if (isset($channels['error'])) {
+                return response()->json(['error' => $channels['error']], 500);
+            }
+            return view('broadcaster.channel_list', compact('channels'));
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

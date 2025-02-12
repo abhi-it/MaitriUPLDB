@@ -71,5 +71,40 @@ class LatencyController extends Controller
         }
     }
 
+    public function createChannel()
+    {
+        try {
+            $ivsClient = new IvsClient([
+                'version'     => 'latest',
+                'region'      => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key'    => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            // Create Channel
+            $result = $ivsClient->createChannel([
+                'name'      => 'MyNewChannel',
+                'latencyMode' => 'LOW',
+                'type'      => 'STANDARD',
+                'authorized' => false, 
+            ]);
+
+            $channelArn = $result['channel']['arn'];
+            $streamKey  = $result['streamKey']['value'];
+            $ingestEndpoint = $result['channel']['ingestEndpoint'];
+
+            return response()->json([
+                'channel_arn' => $channelArn,
+                'stream_key'  => $streamKey,
+                'ingest_endpoint' => $ingestEndpoint,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
     
 }

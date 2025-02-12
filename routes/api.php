@@ -86,6 +86,9 @@ Route::get('/ivs-getPublishersList', [IVSBroadCastController::class, 'getPublish
 
 //IVS LATENCY
 Route::get('/ivs-streamInfo', [LatencyController::class, 'streamData']);
+Route::post('/ivs-createChannel', [LatencyController::class, 'createChannel']);
+
+
 
 
 
