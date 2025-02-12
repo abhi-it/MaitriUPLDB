@@ -269,10 +269,10 @@ class BroadcastController extends Controller
 
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -308,10 +308,10 @@ class BroadcastController extends Controller
 
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
             // dd($ivsClient);
@@ -335,7 +335,7 @@ class BroadcastController extends Controller
                     'playback_url' => $channelDetails['channel']['playbackUrl'] ?? null,
                 ];
             }
-            return $data;
+            return $channels;
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()]; 
         }
@@ -345,17 +345,45 @@ class BroadcastController extends Controller
     {
         try {
             require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
-            $channels = $this->listChannels();
+            $awsKey = config('services.aws.key');
+            $awsSecret = config('services.aws.secret');
+            $awsRegion = config('services.aws.region');
 
-            if (isset($channels['error'])) {
-                return response()->json(['error' => $channels['error']], 500);
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $result = $ivsClient->listChannels([]);
+            $channels = $result['channels'];
+          
+            $channelArn = $channels[0]['arn'];
+          
+            if (!$channelArn) {
+                return response()->json(['error' => 'channelArn Invalid'], 500);
             }
 
-            $filteredData = array_filter($channels, function ($channel) {
-                return $channel['channel_name'] === 'UPLDB';
-            });
-
-            $data = $filteredData[3];
+            $channelDetails = $ivsClient->getChannel(['arn' => $channelArn]);
+            $streamKeyResult = $ivsClient->listStreamKeys(['channelArn' => $channelArn]);
+            $streamKeyArn = $streamKeyResult['streamKeys'][0]['arn'];
+           
+            $streamKeyDetails = $ivsClient->getStreamKey([
+                'arn' => $streamKeyArn,
+            ]);
+            
+            $streamKey = $streamKeyDetails['streamKey']['value'] ?? null;
+          
+            $data[] = [
+                'channel_arn'      => $channelArn,
+                'channel_name'     => $channels[0]['name'],
+                'ingest_endpoint'  => $channelDetails['channel']['ingestEndpoint'] ?? null,
+                'stream_key'       => $streamKey,
+                'playback_url' => $channelDetails['channel']['playbackUrl'] ?? null,
+            ];
           
             return view('broadcaster.meeting_detail', compact('data'));
 
@@ -371,7 +399,6 @@ class BroadcastController extends Controller
     public function playback(Request $request)
     {
         $playbackUrl = $request->query('url');
-
         if (!$playbackUrl) {
             return redirect()->back()->with('error', 'Playback URL not found.');
         }
