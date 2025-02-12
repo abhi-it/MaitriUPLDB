@@ -27,7 +27,7 @@ class BroadcastController extends Controller
                     'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
-    
+
             $result = $client->listStages();
             return $result['stages'] ?? [];
     
@@ -226,21 +226,22 @@ class BroadcastController extends Controller
     //---------------------------latency-------------------------------//
     public function ivs_latency(Request $request)
     {
-        return view('broadcaster.ivs_latency');
+        $stream_key = $request->stream_key;
+        $ingest_endpoint = $request->ingest_endpoint;
+
+        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint'));
     }
 
     public function add_channel()
     {
-        dd('1213');
         return view('broadcaster.add_channel');
     }
 
-    public function createChannel(Request $reques)
+    public function createChannel(Request $request)
     {
-      
         require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         try {
-            $client = new IvsRealTimeClient([
+            $ivsClient = new IvsClient([
                 'version' => 'latest',
                 'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
@@ -250,21 +251,21 @@ class BroadcastController extends Controller
             ]);
 
             $result = $ivsClient->createChannel([
-                'name'      => $request->name,
-                'latencyMode' => $request->latency_mode,
-                'type'      => $request->type,
-                'authorized' => false, 
+                'name'         => str_replace(' ', '_', $request->name), 
+                'latencyMode'  => $request->latency_mode,
+                'type'         => $request->type,
+                'authorized'   => false, 
             ]);
 
-            $channelArn = $result['channel']['arn'];
-            $streamKey  = $result['streamKey']['value'];
-            $ingestEndpoint = $result['channel']['ingestEndpoint'];
+            $playbackUrl = $result['channel']['playbackUrl'] ?? null;
 
-            return response()->json([
-                'channel_arn' => $channelArn,
-                'stream_key'  => $streamKey,
-                'ingest_endpoint' => $ingestEndpoint,
-            ]);
+            // return $data = [
+            //     'channel_arn'  => $result['channel']['arn'],
+            //     'stream_key'   => $result['streamKey']['value'],
+            //     'playback_url' => $playbackUrl, 
+            // ];
+
+            return redirect('/ivs-channleList')->with('success','Channel Created successfully!');
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -274,7 +275,7 @@ class BroadcastController extends Controller
     {
         require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         try {
-            $client = new IvsRealTimeClient([
+            $ivsClient = new IvsClient([
                 'version' => 'latest',
                 'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
@@ -285,7 +286,6 @@ class BroadcastController extends Controller
     
             $result = $ivsClient->listChannels([]);
             $channels = $result['channels'];
-    
             $data = [];
     
             foreach ($channels as $channel) {
@@ -293,37 +293,26 @@ class BroadcastController extends Controller
     
                 $channelDetails = $ivsClient->getChannel(['arn' => $channelArn]);
                 $streamKeyResult = $ivsClient->listStreamKeys(['channelArn' => $channelArn]);
-    
-                if (empty($streamKeyResult['streamKeys'])) {
-                    $newStreamKey = $ivsClient->createStreamKey([
-                        'channelArn' => $channelArn,
-                    ]);
-                    $streamKey = $newStreamKey['streamKey']['value'] ?? null;
-                } else {
-                    $streamKey = $streamKeyResult['streamKeys'][0]['value'] ?? null;
-                }
+                $streamKey = !empty($streamKeyResult['streamKeys']) ? $streamKeyResult['streamKeys'][0]['arn'] : null;
     
                 $data[] = [
                     'channel_arn'      => $channelArn,
                     'channel_name'     => $channel['name'],
                     'ingest_endpoint'  => $channelDetails['channel']['ingestEndpoint'] ?? null,
                     'stream_key'       => $streamKey,
+                    'playback_url' => $channelDetails['channel']['playbackUrl'] ?? null,
                 ];
             }
             return $data;
-            
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()]; 
         }
-    }
-    
+    }   
 
     public function channels_list(Request $request)
     {
         try {
             $channels = $this->listChannels();
-            dd($channels);
-
             if (isset($channels['error'])) {
                 return response()->json(['error' => $channels['error']], 500);
             }
@@ -333,5 +322,29 @@ class BroadcastController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+    //Playback URL
+
+    //get
+    public function playback(Request $request)
+    {
+        $playbackUrl = $request->query('playback_url');
+
+        if (!$playbackUrl) {
+            return redirect()->back()->with('error', 'Playback URL not found.');
+        }
+
+        return view('broadcaster.playback', compact('playbackUrl'));
+    }
+
+    //post
+    public function ivsPlayback(Request $request)
+    {
+        $playbackUrl = $request->playback_url; 
+
+        return view('broadcaster.playback', compact('playbackUrl'));
+    }
+
 
 }

@@ -548,10 +548,17 @@ Route::get('/join-webinar',[BroadcastController::class, 'join_webinar'])->name('
 
 
 //IVS-LATENCY
-Route::get('/ivs-latency',[BroadcastController::class, 'ivs_latency'])->name('ivs_latency');
+Route::get('/ivs/start/streaming',[BroadcastController::class, 'ivs_latency'])->name('ivs_latency');
 Route::get('/ivs-channleList', [BroadcastController::class, 'channels_list'])->name('listChannels');
 Route::get('/ivs-add/channel', [BroadcastController::class, 'add_channel'])->name('addChannel');
 Route::post('/ivs-createChannel', [BroadcastController::class, 'createChannel'])->name('createChannel');
+
+//PlayBack
+Route::get('/ivs/playback', [BroadcastController::class, 'playback'])->name('ivs_playback');
+Route::post('/ivs/play/back', [BroadcastController::class, 'ivsPlayback'])->name('ivs.playback');
+
+
+
 
 
 

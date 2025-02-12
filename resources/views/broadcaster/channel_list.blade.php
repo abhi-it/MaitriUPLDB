@@ -4,7 +4,7 @@
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;">
     <div class="d-flex justify-content-between align-items-center m-4">
         <h3 class="text-center fw-bold">Channels List</h3>
-        <!-- <a href="{{ route('addChannel') }}" class="btn btn-primary">Add Channel</a> -->
+        <a href="{{ route('addChannel') }}" class="btn btn-primary">Add Channel</a>
     </div>
 </div>
         <table id="myTable202" class="table table-striped  table-responsive table-bordered">
@@ -12,9 +12,10 @@
                 <tr>
                     <th>S.No</th>
                     <th>Name</th>
-                    <th>Channel ARN</th>                
-                    <th>Stream Key</th>
-                    <th>Ingest Endpoint</th>
+                    <th>Playback URL</th>
+                    <th>Start Live Streaming</th>
+                    {{--<th>Channel ARN</th>                
+                    <th>Ingest Endpoint</th>--}}
                 </tr>
             </thead>
             <tbody >
@@ -24,9 +25,29 @@
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $data['channel_name'] }}</td>
-                    <td>{{ $data['channel_arn'] }}</td>
+                    <!-- <td>{{ $data['playback_url'] }}</td> -->
+                    <td>
+                        <!-- <a href="{{ route('ivs_playback', ['playback_url' => $data['playback_url']]) }}" class="btn btn-primary">Plackback URL</a> -->
+                
+                        <form method="POST" action="{{ route('ivs.playback') }}">
+                            @csrf
+                            <input type="hidden" name="playback_url" value="{{ $playbackUrl }}">
+                            <button type="submit" class="btn btn-primary">Plackback</button>
+                        </form>
+
+                    </td>
+
+                    <td>
+                        <form method="GET" action="{{ route('ivs_latency') }}">
+                            <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
+                            <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
+                            <button type="submit" class="btn btn-primary">Stream</button>
+                        </form>
+                    </td>
+
+                    {{--<td>{{ $data['channel_arn'] }}</td>
                     <td>{{ $data['stream_key'] }}</td> 
-                    <td>{{ $data['ingest_endpoint'] }}</td>
+                    <td>{{ $data['ingest_endpoint'] }}</td>--}}
                 </tr>
                 @php $i++ @endphp
             @endforeach
