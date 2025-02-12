@@ -3,46 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watch Live Stream</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.1/video-js.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.1/video.min.js"></script>
+    <title>AWS IVS Player</title>
+    <script src="https://player.live-video.net/1.20.0/amazon-ivs-player.min.js"></script>
 </head>
 <body>
+<video id="ivs-player" controls width="800"></video>
 
-    <!-- <video id="videoPlayer" class="video-js vjs-default-skin" controls autoplay width="800" height="450">
-        <source src="{{ $playbackUrl }}" type="application/x-mpegURL">
-    </video>
+<script src="https://player.live-video.net/1.22.0/amazon-ivs-player.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (IVSPlayer.isPlayerSupported) {
+            const player = IVSPlayer.create();
+            const videoElement = document.getElementById("ivs-player");
 
-    <script>
-        var player = videojs('videoPlayer');
-        player.play();
-    </script> -->
+            player.attachHTMLVideoElement(videoElement);
+            player.load("{{ $playbackUrl }}");
+            player.play();
 
-    <video id="video" controls autoplay style="width: 100%; max-width: 80%; margin-left:115px"></video>
+            player.addEventListener(IVSPlayer.PlayerEventType.ERROR, (err) => {
+                console.error("IVS Player Error:", err);
+                alert("Playback error: " + err.message);
+            });
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var video = document.getElementById('video');
-            var videoSrc = "{{ $playbackUrl }}";
-
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(videoSrc);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play();
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = videoSrc;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play();
-                });
-            } else {
-                console.error("HLS is not supported in this browser.");
-            }
-        });
-    </script>
+        } else {
+            alert("IVS Player is not supported in this browser.");
+        }
+    });
+</script>
 
 </body>
 </html>

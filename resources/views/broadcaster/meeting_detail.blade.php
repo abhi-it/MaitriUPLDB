@@ -18,18 +18,18 @@
                 @php $i = 1; @endphp
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $data['channel_name'] }}</td>
-                   {{-- <td>{{ $data['playback_url'] }}</td>--}}
+                    <td>{{ $data[0]['channel_name'] }}</td>
+                   {{-- <td>{{ $data[0]['playback_url'] }}</td>--}}
                    <td>
-                        <a href="{{ route('ivs_playback', ['url' => $data['playback_url']]) }}" target="_blank">
-                            {{ route('ivs_playback', ['url' => $data['playback_url']]) }}
+                        <a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" target="_blank">
+                            {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
                         </a>
                     </td>
 
                     <td>
                         <form method="GET" action="{{ route('ivs_latency') }}">
-                            <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
-                            <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
+                            <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
+                            <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
                             <button type="submit" class="btn btn-primary">Stream</button>
                         </form>
                     </td>
