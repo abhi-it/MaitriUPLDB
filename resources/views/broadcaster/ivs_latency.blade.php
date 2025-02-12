@@ -69,13 +69,13 @@
     </select>
   </section>
 
-  <section class="container" style="visibility: hidden;">
+  <section class="container" style="display: none;">
     <label for="ingest-endpoint">Ingest Endpoint</label>
     <input type="text" id="ingest-endpoint" value="{{ $ingest_endpoint ?? '' }}" readonly />
 </section>
 
 
-  <section class="container" style="visibility: hidden;">
+  <section class="container" style="display: none;">
     <label for="stream-key">Stream Key</label>
     <input type="text" id="stream-key" value="{{ $stream_key }}" />
   </section>

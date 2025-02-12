@@ -25,7 +25,12 @@
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $data['channel_name'] }}</td>
-                    <td>{{ $data['playback_url'] }}</td>
+                    <td>
+                        <a href="{{ route('ivs_playback', ['url' => $data['playback_url']]) }}" target="_blank">
+                            {{ route('ivs_playback', ['url' => $data['playback_url']]) }}
+                        </a>
+                    </td>
+
                     {{-- <td>
                         <!-- <a href="{{ route('ivs_playback', ['playback_url' => $data['playback_url']]) }}" class="btn btn-primary">Plackback URL</a> -->
                         <form method="POST" action="{{ route('ivs.playback') }}">
