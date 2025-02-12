@@ -252,6 +252,28 @@
 
 <body class="pb-0">
     <header>
+        <div class="top-bar py-2">
+            <div class="container">
+                <div class="text-end top-bar-content">
+                    <span class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
+                        @if (Route::has('login'))
+                        <span>
+                            @auth
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                &nbsp;</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                            @else
+
+                            @endauth
+                        </span>
+                        @endif
+                </div>
+            </div>
+        </div>
         <div class="logo-header">
             <div class="container py-3">
                 <div class="row g-3 align-items-center">
