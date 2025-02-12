@@ -8,11 +8,13 @@
                 <tr>
                     <th>S.No</th>
                     <th>ID</th>
-                    <th>Stage ARN Token</th>
+                    <th>Participant's Joining Link</th>
+                    <!-- <th>Capability</th> -->
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody >
+               
             @if(count($data)>0)
         
                 @php $i = 1 @endphp
@@ -20,11 +22,16 @@
                     <td>{{ $i }}</td>
                     <td>{{ $data['participantToken']['participantId'] }}</td>
                     <td>
+                        <a href="/join-webinar?stageArn={{ $stageArn }}">{{ url('/') }}/join-webinar?stageArn={{ $stageArn }}</a>
+
+                    </td>
+                    {{--<td> {{  $data['participantToken']['capabilities'][0] }}</td>
+                    <td>
                         <span class="short-token">
                             {{ substr($data['token'], 0, 60) }}... 
                             <a href="javascript:void(0);" class="show-more" data-token="{{ $data['participantToken']['token'] }}">Show More</a>
                         </span>
-                    </td>
+                    </td>--}}
 
                     <td>
                         <form method="GET" action="{{ route('start_webinar', ['stageArn' => $data['participantToken']['token']]) }}">

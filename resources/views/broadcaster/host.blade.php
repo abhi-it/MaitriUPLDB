@@ -55,7 +55,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container custom_frame">
         <div class="row">
             <div class="column">
                 <label for="video-devices">Select Camera</label>

@@ -25,10 +25,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -61,10 +61,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -93,7 +93,7 @@ class BroadcastController extends Controller
         }
 
         $data = $this->createPublisherToken($stageArn);
-        return view('broadcaster.broadcaster', compact('data'));
+        return view('broadcaster.broadcaster', compact('data','stageArn'));
     }
 
     public function getPublishersList($stageArn)
@@ -104,7 +104,7 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            $client = new IvsRealTimeClient([
+            $ivsClient = new IvsRealTimeClient([
                 'version' => 'latest',
                 'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
@@ -266,12 +266,12 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            $client = new IvsRealTimeClient([
+            $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -305,14 +305,15 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            $client = new IvsRealTimeClient([
+            $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
+            // dd($ivsClient);
 
             $result = $ivsClient->listChannels([]);
             $channels = $result['channels'];
@@ -344,10 +345,18 @@ class BroadcastController extends Controller
         try {
             require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
             $channels = $this->listChannels();
+
             if (isset($channels['error'])) {
                 return response()->json(['error' => $channels['error']], 500);
             }
-            return view('broadcaster.channel_list', compact('channels'));
+
+            $filteredData = array_filter($channels, function ($channel) {
+                return $channel['channel_name'] === 'UPLDB';
+            });
+
+            $data = $filteredData[3];
+          
+            return view('broadcaster.meeting_detail', compact('data'));
 
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -360,7 +369,7 @@ class BroadcastController extends Controller
     //get
     public function playback(Request $request)
     {
-        $playbackUrl = $request->query('playback_url');
+        $playbackUrl = $request->query('url');
 
         if (!$playbackUrl) {
             return redirect()->back()->with('error', 'Playback URL not found.');
@@ -375,6 +384,11 @@ class BroadcastController extends Controller
         $playbackUrl = $request->playback_url; 
 
         return view('broadcaster.playback', compact('playbackUrl'));
+    }
+
+    public function meeting_details(Request $request)
+    {
+        return view('broadcaster.meeting_detail');
     }
 
 
