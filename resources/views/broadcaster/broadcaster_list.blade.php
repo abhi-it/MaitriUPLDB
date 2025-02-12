@@ -22,8 +22,8 @@
         </thead>
         <tbody>
             @if(count($allData)>0)
-            @foreach($allData as $data)
             @php $i = 1 @endphp
+            @foreach($allData as $data)
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $data['participantId'] }}</td>
@@ -32,11 +32,9 @@
                 <td>{{ $data['published'] }}</td>
                 <td>{{ $data['recordingState'] }}</td>
                 <td>
-                    <form method="GET" action="{{ route('start_webinar', ['stageArn' => $stageArn]) }}">
-                        @csrf
-                        <input type="hidden" name="stageArn" value="{{ $stageArn }}">
-                        <button type="submit" class="btn btn-primary">Start Streaming</button>
-                    </form>
+                    <a href="{{ route('start_webinar', ['stageArn' => $stageArn]) }}" class="btn btn-primary">Start
+                        Streaming</a>
+
                 </td>
             </tr>
             @php $i++ @endphp
