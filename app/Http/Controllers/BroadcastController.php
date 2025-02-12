@@ -64,7 +64,7 @@ class BroadcastController extends Controller
                 'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
                     'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => nv('AWS_SECRET_ACCESS_KEY'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
