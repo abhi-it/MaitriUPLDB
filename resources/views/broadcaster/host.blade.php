@@ -56,11 +56,6 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1 class="text-center">Amazon IVS Real-Time Streaming Web </h1>
-        </header>
-        <hr />
-
         <div class="row">
             <div class="column">
                 <label for="video-devices">Select Camera</label>
