@@ -311,6 +311,7 @@ class BroadcastController extends Controller
 
     public function channels_list(Request $request)
     {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         try {
             $channels = $this->listChannels();
             if (isset($channels['error'])) {
