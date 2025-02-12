@@ -25,10 +25,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -61,13 +61,12 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
-
 
             $result = $client->createParticipantToken([
                 'stageArn' => $stageArn,  
@@ -76,7 +75,7 @@ class BroadcastController extends Controller
                 'userId' => 'publisher_' . uniqid(),
             ]);
 
-            return $result['participantToken'] ?? null;
+            return $result;
 
         } catch (AwsException $e) {
             return ['error' => $e->getAwsErrorMessage()];
@@ -87,7 +86,8 @@ class BroadcastController extends Controller
 
     public function addBroadcaster(Request $request)
     {
-        $stageArn = $request->stageArn; 
+        $stages = $this->listIvsStages();
+        $stageArn = $stages[0]['arn'];
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
@@ -106,10 +106,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -162,11 +162,14 @@ class BroadcastController extends Controller
     public function start_webinar(Request $request)
     {
         try {
-            $stageArn = $request->stageArn;
-            $data = $this->createPublisherToken($stageArn);
-            $token = $data['token'];
+        
+            // $stageArn = $request->stageArn;
+            // $data = $this->createPublisherToken($stageArn);
+            // $token = $data['token'];
 
-            return view('broadcaster.host', compact('stageArn','token'));
+            $token = $request->token;
+
+            return view('broadcaster.host', compact('token'));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -265,10 +268,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -304,14 +307,13 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
-    
             $result = $ivsClient->listChannels([]);
             $channels = $result['channels'];
             $data = [];
