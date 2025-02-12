@@ -41,6 +41,7 @@ class BroadcastController extends Controller
     //Stages
     public function stageList()
     {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         $stages = $this->listIvsStages();
         return view('broadcaster.stages', compact('stages'));
     }
@@ -88,6 +89,7 @@ class BroadcastController extends Controller
 
     public function getPublishersList($stageArn)
     {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         try {
             $ivsClient = new IvsRealTimeClient([
                 'version' => 'latest',
@@ -124,6 +126,7 @@ class BroadcastController extends Controller
 
     public function broadcasterList(Request $request)
     {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         try {
             $stageArn =  $request->stageArn;
             $response = $this->getPublishersList($stageArn);
