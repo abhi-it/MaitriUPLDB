@@ -8,7 +8,7 @@
   <title>Broadcast To IVS</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
- 
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
   <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
@@ -32,12 +32,34 @@
       width: 100%;
       height: 300;
     }
+
+    .title {
+      font-size: 22px;
+      color: #000;
+      margin-top: 20px;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+
+    .button.rounded-30 {
+      border-radius: 30px !important;
+    }
+
+    .camera-control {
+      background: #ea7427;
+      border: 1px solid #000;
+    }
+
+    .stop-control {
+      background: #ff2323;
+      border: 1px solid #000;
+    }
   </style>
 </head>
 
 <body>
   <header class="container">
-    <h1>Start Live Streaming</h1>
+    <h1 class="title">Start Live Streaming</h1>
     <p>
     </p>
   </header>
@@ -82,8 +104,9 @@
 
   <!-- Broadcast buttons -->
   <section class="container">
-    <button class="button" id="start" disabled onclick="startBroadcast()">Start Broadcast</button>
-    <button class="button" id="stop" disabled onclick="stopBroadcast()">Stop Broadcast</button>
+    <button class="button rounded-30 camera-control" id="start" disabled onclick="startBroadcast()">Start
+      Broadcast</button>
+    <button class="button rounded-30 stop-control" id="stop" disabled onclick="stopBroadcast()">Stop Broadcast</button>
   </section>
 
   <hr />

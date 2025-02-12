@@ -12,92 +12,197 @@
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
     <style>
-    html,
-    body {}
+        html,
+        body {}
 
-    .participant-container {
-        position: relative;
-        margin: auto;
-        width: 100%;
-    }
+        .participant-container {
+            position: relative;
+            margin: auto;
+            width: 100%;
+        }
 
-    .participant-container span {
-        position: absolute;
-        display: inline-block;
-        top: 0;
-        right: 0;
-        color: #fff;
-        font-size: 200%;
-        background: rgba(0, 0, 0, 0.5);
-        font-size: 1.2rem;
-    }
+        .participant-container span {
+            position: absolute;
+            display: inline-block;
+            top: 0;
+            right: 0;
+            color: #fff;
+            font-size: 200%;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 1.2rem;
+        }
 
-    .participant-container video {
-        width: 100%;
-        max-height: 700px;
-    }
+        .participant-container video {
+            width: 100%;
+            max-height: 700px;
+        }
 
-    .columns {
-        justify-content: space-between;
-        width: 100%;
-        display: flex;
-        /* align-items: center; */
-        gap: 20px;
-    }
+        .columns {
+            justify-content: center;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: absolute;
+            bottom: 30px;
+            z-index: 9;
+        }
 
-    .text-center {
-        text-align: center;
-    }
+        .custom_frame {
+            border-radius: 7px;
+            padding: 23px 32px;
+            padding-bottom: 17px;
+            background: rgb(234 115 39 / 8%);
 
-    hr {
-        margin: 2rem 0;
-    }
+        }
 
-    #remote-media video {
-        width: 100%;
-    }
+        .video-container {
+            max-width: 910px;
+            margin: 0 auto;
+
+            position: relative;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        hr {
+            margin: 2rem 0;
+        }
+
+        #remote-media video {
+            width: 100%;
+            display: block;
+            border: 2px solid #000;
+            border-radius: 8px;
+        }
+
+        #leave-button {
+            background: #ff2323;
+            border: 1px solid #ff2323;
+        }
+
+        #join-button {
+            background: #8803fc;
+            border: 1px solid #8803fc;
+        }
+
+        .column button {
+
+            width: 100%;
+        }
+
+        button#mic-control {
+            background: #ea7327;
+            border: 1px solid #ea7327;
+        }
+
+        .container-box {
+            height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .card-item {
+            background: transparent;
+            width: 100%;
+            max-width: 910px;
+            margin: 0 auto;
+
+        }
+
+        .local-container {
+            flex: 1 1 0%;
+        }
+
+        .card-item h3 {
+            font-size: 32px;
+            color: black;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        center {
+            margin-top: 30px;
+        }
+
+        .flex-full {
+
+            width: 100%;
+        }
+
+        .button i {
+            font-size: 14px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            border-radius: 30px;
+        }
+
+        .relative {
+            position: relative;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h3 class="text-center">Real-Time Streaming</h3>
-        <hr />
-        <center> <button class="button" id="join-button">Join</button> </center>
+    <div class="container-fluid custom_frame">
+        <div class="container-box ">
+            <div class="card-item">
+                <h3 class="text-center">Real Time Streaming</h3>
 
-        <!-- Setup Controls -->
-        <div class="row">
-            <div class="columns">
-                <label for="token" style="display: none;">Token</label>
-                <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
-                <!-- <button class="button" id="join-button">Join</button> -->
-                <button class="button" id="leave-button" style="display: none;">Leave</button>
-                <button class="button" id="mic-control"><i class="fa fa-volume-up"></i> Mute</button>
+                <center> <button class="button" id="join-button">Join</button> </center>
+
+                <!-- Setup Controls -->
+                <div class="row">
+
+
+                </div>
+
             </div>
-
-        </div>
-        <hr />
-
-        <!-- Local Participant -->
-        <div class="local-container">
+            <!-- Local Participant -->
+            <!-- <div class="local-container" >
             <div id="local-media"></div>
+        </div> -->
+            <!-- Remote Participants -->
+            <div class="flex-full video-container relative">
+                <div class="columns">
+                    <label for="token" style="display: none;">Token</label>
+                    <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
+                    <!-- <button class="button" id="join-button">Join</button> -->
+                    <button class="button" style="display:none;" id="leave-button">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Leave</button>
+                    <button class="button" id="mic-control">
+
+                        Mute
+                    </button>
+                </div>
+                <div id="remote-media"></div>
+            </div>
         </div>
 
-        <!-- Remote Participants -->
-        <div>
-            <div id="remote-media"></div>
-        </div>
+
+
+
+
     </div>
     <script src="/js/subscriber.js"></script>
     <script src="/js/media-devices.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('#leave-button').click(function() {
-            $('#remote-media').empty();
-        })
-    });
+        $(document).ready(function () {
+            $('#leave-button').click(function () {
+                $('#remote-media').empty();
+            })
+        });
     </script>
 </body>
 

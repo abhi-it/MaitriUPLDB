@@ -135,119 +135,6 @@
     }
     </style>
 
-
-    <script type="text/javascript">
-    (function($) {
-        $.fn.multiStepForm = function(args) {
-            if (args === null || typeof args !== 'object' || $.isArray(args))
-                throw " : Called with Invalid argument";
-            var form = this;
-            var tabs = form.find('.tab');
-            var steps = form.find('.step');
-            steps.each(function(i, e) {
-                $(e).on('click', function(ev) {});
-            });
-            form.navigateTo = function(i) {
-                /*index*/
-                /*Mark the current section with the class 'current'*/
-                tabs.removeClass('current').eq(i).addClass('current');
-                // Show only the navigation buttons that make sense for the current section:
-                form.find('.previous').toggle(i > 0);
-                atTheEnd = i >= tabs.length - 1;
-                form.find('.next').toggle(!atTheEnd);
-                // console.log('atTheEnd='+atTheEnd);
-                form.find('.submit').toggle(atTheEnd);
-                fixStepIndicator(curIndex());
-                return form;
-            }
-
-            function curIndex() {
-                /*Return the current index by looking at which section has the class 'current'*/
-                return tabs.index(tabs.filter('.current'));
-            }
-
-            function fixStepIndicator(n) {
-                steps.each(function(i, e) {
-                    i == n ? $(e).addClass('active') : $(e).removeClass('active');
-                });
-            }
-            /* Previous button is easy, just go back */
-            form.find('.previous').click(function() {
-                form.navigateTo(curIndex() - 1);
-            });
-
-            /* Next button goes forward iff current block validates */
-            form.find('.next').click(function() {
-
-                if ('validations' in args && typeof args.validations === 'object' && !$.isArray(args
-                        .validations)) {
-                    if (!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args
-                            .noValidate)) {
-                        form.validate(args.validations);
-                        if (form.valid() == true) {
-                            form.navigateTo(curIndex() + 1);
-
-
-                            /*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
-                            //var form_data = $(this).parents('form').serialize();
-                            var form_data = new FormData($(this).closest('#myForm').get(0));
-                            //alert(form_data);
-                            //var colage = $('[name="colage"]').val();
-                            //var spichelest = $('[name="spichelest"]').val();
-                            //alert($('[name="yojna_name_for_training"]').val());
-                            $.ajax({
-                                url: 'getTempData',
-                                method: "POST",
-                                data: form_data,
-                                success: function(data) {
-                                    //console.log(data);
-                                },
-                                cache: false,
-                                contentType: false,
-                                processData: false
-                            });
-                            /*-------------------End Call Ajax Here to Save Data on each next button-------------*/
-                            /*Start Getting Declaration Data------------------------*/
-                            $('#applicant_named').html($('#applicant_name').val());
-                            $('#fnamed').html($('#fname').val());
-                            $('#janpad_gram').html($('#janpad').find('option:selected').text());
-                            $('#gram_panchayat_named').html($('#gram_panchayat_name').val());
-                            $('#vikas_khandd').html($('#vikas_khand').val());
-                            $('#janpadd').html($('#janpad').find('option:selected').text());
-                            $('#janpaddD').html($('#janpad').find('option:selected').text());
-                            /*Start Getting Declaration Data------------------------*/
-
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-                form.navigateTo(curIndex() + 1);
-            });
-            form.find('.submit').on('click', function(e) {
-                if (typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
-                    args.beforeSubmit(form, this);
-                /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/
-                if (typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args
-                        .submit)) {
-                    $('#finalSubmit').hide();
-                    $('#loader').show();
-                    form.submit();
-                }
-                return form;
-            });
-            /*By default navigate to the tab 0, if it is being set using defaultStep property*/
-            typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
-            form.noValidate = function() {
-
-            }
-            return form;
-        };
-    }(jQuery));
-    </script>
-    <script type="text/javascript">
-
-    </script>
 </head>
 
 <body class="pb-0">
@@ -261,7 +148,7 @@
                             @auth
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                <span>Logout</span>
                                 &nbsp;</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -295,12 +182,11 @@
                                 </div>
                                 <div class="text-md-left text-center">
                                     <h1 class="mb-2 fw-bold">
-                                        <span data-hi="राष्ट्रीय गोकुल मिशन" data-en="Rashtriya Gokul Mission"></span>
+                                        <span>Rashtriya Gokul Mission</span>
                                     </h1>
                                     <h6>
-                                        <span
-                                            data-hi="स्वरोजगारी मैत्री (मल्टीपरपज ए0आई0 टेक्निशियन इन रूरल इण्डिया) हेतु ऑनलाइन आवेदन"
-                                            data-en="Online Application for Swarojgari Maitri (Multipurpose AI Technician in Rural India)"></span>
+                                        <span>Online Application for Swarojgari Maitri (Multipurpose AI Technician in
+                                            Rural India)</span>
                                     </h6>
                                 </div>
                             </div>
@@ -309,6 +195,36 @@
                 </div>
             </div>
         </div>
+        <!-- <nav class="navbar navbar-expand-xl m-0 p-0">
+            <div class="container-fluid justify-content-end">
+                <button class="navbar-toggler my-1 bg-white py-1 px-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                    aria-label="Toggle navigation">
+                    <i class="ri-menu-3-line"></i>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1">
+                            @if (Route::has('login'))
+                            @auth
+                            @if (auth()->user()->user_type == 'Broadcaster')
+                            <li class="nav-item {{ request()->is('broadcaster-dashboard') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('/broadcaster-dashboard') }}">
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            @endauth
+                            @endif
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav> -->
     </header>
 
     <div>
