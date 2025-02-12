@@ -239,7 +239,7 @@ class BroadcastController extends Controller
 
     public function createChannel(Request $request)
     {
-        require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IvsClient.php');
         try {
             $ivsClient = new IvsClient([
                 'version' => 'latest',
@@ -273,7 +273,7 @@ class BroadcastController extends Controller
 
     public function listChannels()
     {
-        require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IvsClient.php');
         try {
             $ivsClient = new IvsClient([
                 'version' => 'latest',
