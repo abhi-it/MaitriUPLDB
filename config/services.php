@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'aws' => [
+        'key'    => 'AKIAV7JDSE4JDI7UC5WL',
+        'secret' => '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',
+        'region' => 'ap-south-1',
+    ],  
+
 ];
