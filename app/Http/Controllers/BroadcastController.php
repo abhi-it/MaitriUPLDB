@@ -25,10 +25,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -61,10 +61,10 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => nv('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -187,12 +187,13 @@ class BroadcastController extends Controller
 
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
+
 
             // participant token with "SUBSCRIBE" capability
             $result = $client->createParticipantToken([
@@ -268,10 +269,10 @@ class BroadcastController extends Controller
 
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -307,10 +308,10 @@ class BroadcastController extends Controller
 
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => $awsRegion,   //env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => $awsKey,    //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret,   //env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
             // dd($ivsClient);
