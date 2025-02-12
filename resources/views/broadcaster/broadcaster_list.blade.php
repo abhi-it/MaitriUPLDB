@@ -14,6 +14,7 @@
                 <th>S.No</th>
                 <th>Participant ID</th>
                 <th>State</th>
+                <th>Join Stage Link</th>
                 <th>First Join Time</th>
                 <th>Published</th>
                 <th>Recording State</th>
@@ -28,6 +29,11 @@
                 <td>{{ $i }}</td>
                 <td>{{ $data['participantId'] }}</td>
                 <td>{{ $data['state'] }}</td>
+                <td>
+                    <a
+                        href="/join-webinar?stageArn={{ $stageArn }}">{{ url('/') }}/join-webinar?stageArn={{ $stageArn }}</a>
+
+                </td>
                 <td>{{ $data['firstJoinTime'] }}</td>
                 <td>{{ $data['published'] }}</td>
                 <td>{{ $data['recordingState'] }}</td>
