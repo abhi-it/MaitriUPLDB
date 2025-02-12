@@ -263,6 +263,9 @@
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <span data-hi="लॉग आउट" data-en="Logout"></span>
                                 &nbsp;</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                             @else
 
                             @endauth
