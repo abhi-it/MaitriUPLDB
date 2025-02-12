@@ -8,11 +8,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('stageList') }}" style="font-size: 15px;">Stages</a>
+                <a class="nav-link" href="{{ route('stageList') }}" style="font-size: 15px;">RealTime Streaming</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('view-details') }}" style="font-size: 15px;">Broadcasters</a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('listChannels') }}" style="font-size: 15px;">Ultra Low Latency Streaming</a>
+            </li>
         </ul>
     </nav>
         </div>

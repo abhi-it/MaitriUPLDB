@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\API\Role;
 use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
+use Aws\Ivs\IvsClient;
 
 class BroadcastController extends Controller
 {
@@ -26,7 +27,7 @@ class BroadcastController extends Controller
                     'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
-    
+
             $result = $client->listStages();
             return $result['stages'] ?? [];
     
@@ -221,8 +222,129 @@ class BroadcastController extends Controller
         return view('broadcaster.subscriber', compact('stageArn','token'));
     }
 
+
+    //---------------------------latency-------------------------------//
     public function ivs_latency(Request $request)
     {
-        return view('broadcaster.ivs_latency');
+        $stream_key = $request->stream_key;
+        $ingest_endpoint = $request->ingest_endpoint;
+
+        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint'));
     }
+
+    public function add_channel()
+    {
+        return view('broadcaster.add_channel');
+    }
+
+    public function createChannel(Request $request)
+    {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
+        try {
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $result = $ivsClient->createChannel([
+                'name'         => str_replace(' ', '_', $request->name), 
+                'latencyMode'  => $request->latency_mode,
+                'type'         => $request->type,
+                'authorized'   => false, 
+            ]);
+
+            $playbackUrl = $result['channel']['playbackUrl'] ?? null;
+
+            // return $data = [
+            //     'channel_arn'  => $result['channel']['arn'],
+            //     'stream_key'   => $result['streamKey']['value'],
+            //     'playback_url' => $playbackUrl, 
+            // ];
+
+            return redirect('/ivs-channleList')->with('success','Channel Created successfully!');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function listChannels()
+    {
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
+        try {
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+    
+            $result = $ivsClient->listChannels([]);
+            $channels = $result['channels'];
+            $data = [];
+    
+            foreach ($channels as $channel) {
+                $channelArn = $channel['arn'];
+    
+                $channelDetails = $ivsClient->getChannel(['arn' => $channelArn]);
+                $streamKeyResult = $ivsClient->listStreamKeys(['channelArn' => $channelArn]);
+                $streamKey = !empty($streamKeyResult['streamKeys']) ? $streamKeyResult['streamKeys'][0]['arn'] : null;
+    
+                $data[] = [
+                    'channel_arn'      => $channelArn,
+                    'channel_name'     => $channel['name'],
+                    'ingest_endpoint'  => $channelDetails['channel']['ingestEndpoint'] ?? null,
+                    'stream_key'       => $streamKey,
+                    'playback_url' => $channelDetails['channel']['playbackUrl'] ?? null,
+                ];
+            }
+            return $data;
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()]; 
+        }
+    }   
+
+    public function channels_list(Request $request)
+    {
+        try {
+            $channels = $this->listChannels();
+            if (isset($channels['error'])) {
+                return response()->json(['error' => $channels['error']], 500);
+            }
+            return view('broadcaster.channel_list', compact('channels'));
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    //Playback URL
+
+    //get
+    public function playback(Request $request)
+    {
+        $playbackUrl = $request->query('playback_url');
+
+        if (!$playbackUrl) {
+            return redirect()->back()->with('error', 'Playback URL not found.');
+        }
+
+        return view('broadcaster.playback', compact('playbackUrl'));
+    }
+
+    //post
+    public function ivsPlayback(Request $request)
+    {
+        $playbackUrl = $request->playback_url; 
+
+        return view('broadcaster.playback', compact('playbackUrl'));
+    }
+
+
 }

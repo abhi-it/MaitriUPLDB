@@ -37,7 +37,7 @@
 
 <body>
   <header class="container">
-    <h1>Broadcast To IVS</h1>
+    <h1>Start Live Streaming</h1>
     <p>
     </p>
   </header>
@@ -69,14 +69,14 @@
     </select>
   </section>
 
-  <section class="container">
+  <section class="container" style="display:none">
     <label for="ingest-endpoint">Ingest Endpoint</label>
-    <input type="text" id="ingest-endpoint" value="" />
+    <input type="text" id="ingest-endpoint" value="{{ $ingest_endpoint }}" />
   </section>
 
-  <section class="container">
+  <section class="container" style="display:none">
     <label for="stream-key">Stream Key</label>
-    <input type="text" id="stream-key" value="" />
+    <input type="text" id="stream-key" value="{{ $stream_key }}" />
   </section>
 
   <!-- Broadcast buttons -->
