@@ -17,7 +17,7 @@
                 <th>Join Stage Link</th>
                 <th>First Join Time</th>
                 <th>Published</th>
-                <th>Recording State</th>
+                <th>Recording</th>
                 <th>Action</th>
             </tr>
         </thead>
