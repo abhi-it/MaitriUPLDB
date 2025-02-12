@@ -261,7 +261,7 @@ class BroadcastController extends Controller
 
     public function createChannel(Request $request)
     {
-        require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
         try {
             $awsKey = config('services.aws.key');
             $awsSecret = config('services.aws.secret');
@@ -301,7 +301,7 @@ class BroadcastController extends Controller
     public function listChannels()
     {
         try {
-            require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
+            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
             $awsKey = config('services.aws.key');
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
@@ -344,7 +344,7 @@ class BroadcastController extends Controller
     public function channels_list(Request $request)
     {
         try {
-            require_once base_path('vendor/aws/aws-sdk-php/src/Ivs/IvsClient.php');
+            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
             $channels = $this->listChannels();
 
             if (isset($channels['error'])) {
