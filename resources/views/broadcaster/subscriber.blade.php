@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
     <title>IVS Real-Time Streaming - Basic Sample</title>
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
@@ -70,7 +72,7 @@
                 <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
                 <!-- <button class="button" id="join-button">Join</button> -->
                 <button class="button" id="leave-button" style="display: none;">Leave</button>
-                <button class="button" id="mic-control">Mute Mic</button>
+                <button class="button" id="mic-control"><i class="fa fa-volume-up"></i> Mute</button>
             </div>
 
         </div>
