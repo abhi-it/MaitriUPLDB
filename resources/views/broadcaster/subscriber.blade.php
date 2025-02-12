@@ -50,6 +50,10 @@
     hr {
         margin: 2rem 0;
     }
+
+    #remote-media video {
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -66,6 +70,7 @@
                 <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
                 <!-- <button class="button" id="join-button">Join</button> -->
                 <button class="button" id="leave-button" style="display: none;">Leave</button>
+                <button class="button" id="mic-control">Mute Mic</button>
             </div>
 
         </div>
@@ -82,6 +87,16 @@
         </div>
     </div>
     <script src="/js/subscriber.js"></script>
+    <script src="/js/media-devices.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#leave-button').click(function() {
+            $('#remote-media').empty();
+        })
+    });
+    </script>
 </body>
 
 </html>
