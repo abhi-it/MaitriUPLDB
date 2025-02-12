@@ -59,7 +59,7 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">IVS Real-Time Streaming</h1>
+        <h3 class="text-center">Real-Time Streaming</h3>
         <hr />
         <center> <button class="button" id="join-button">Join</button> </center>
 
