@@ -17,25 +17,20 @@
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:600px;">
     <h3 class="text-center fw-bold m-4">Meeting Details</h3>
-    @if(!empty($data))
+    @if(!empty($data[0]))
     <div class="card card-str">
-        <p>Id : <span>{{ $data['channel_name'] }}</span></p>
+        <p>Id : <span>{{ $data[0]['channel_name'] }}</span></p>
         <p>Participant's Joining Link :</p>
         <p>
-            <span class="d-block"><a href="{{ route('ivs_playback', ['url' => $data['playback_url']]) }}"
+            <span class="d-block"><a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}"
                     target="_blank">
-                    {{ route('ivs_playback', ['url' => $data['playback_url']]) }}
+                    {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
                 </a></span>
         </p>
-        <!-- 
-        <form method="GET" action="" class="text-right">
-            <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
-            <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
-            <button type="submit" class="btn btn-primary">Start Live Streaming</button>
-        </form> -->
+
         <form method="GET" class="text-right" target="_blank" action="{{ route('ivs_latency') }}">
-            <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
-            <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
+            <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
+            <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
             <button type="submit" class="btn btn-primary">Stream</button>
         </form>
     </div>
@@ -54,22 +49,25 @@
         </thead>
         <tbody>
 
-            @if(!empty($data))
+
+
+            @if(!empty($data[0]))
             @php $i = 1; @endphp
+
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $data['channel_name'] }}</td>
-                {{-- <td>{{ $data['playback_url'] }}</td>--}}
+                <td>{{ $data[0]['channel_name'] }}</td>
+                {{-- <td>{{ $data[0]['playback_url'] }}</td>--}}
                 <td>
-                    <a href="{{ route('ivs_playback', ['url' => $data['playback_url']]) }}" target="_blank">
-                        {{ route('ivs_playback', ['url' => $data['playback_url']]) }}
+                    <a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" target="_blank">
+                        {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
                     </a>
                 </td>
 
                 <td>
                     <form method="GET" action="{{ route('ivs_latency') }}">
-                        <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
-                        <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
+                        <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
+                        <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
                         <button type="submit" class="btn btn-primary">Stream</button>
                     </form>
                 </td>
