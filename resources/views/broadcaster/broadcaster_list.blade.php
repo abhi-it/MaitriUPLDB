@@ -38,7 +38,8 @@
                 <td>{{ $data['published'] }}</td>
                 <td>{{ $data['recordingState'] }}</td>
                 <td>
-                    <a href="{{ route('start_webinar', ['stageArn' => $stageArn]) }}" class="btn btn-primary">Start
+                    <a href="{{ route('start_webinar', ['stageArn' => $stageArn]) }}" target="_black"
+                        class="btn btn-primary">Start
                         Streaming</a>
 
                 </td>
