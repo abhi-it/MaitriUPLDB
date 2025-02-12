@@ -22,7 +22,7 @@
                     <td>{{ $i }}</td>
                     <td>{{ $data['participantToken']['participantId'] }}</td>
                     <td>
-                        <a href="/join-webinar?stageArn={{ $stageArn }}">{{ url('/') }}/join-webinar?stageArn={{ $stageArn }}</a>
+                        <a href="/join-webinar?stageArn={{ $stageArn }}" target="_blank">{{ url('/') }}/join-webinar?stageArn={{ $stageArn }}</a>
 
                     </td>
                     {{--<td> {{  $data['participantToken']['capabilities'][0] }}</td>
