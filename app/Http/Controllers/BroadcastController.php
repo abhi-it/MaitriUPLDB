@@ -46,7 +46,7 @@ class BroadcastController extends Controller
             return $result['stages'] ?? [];
     
         } catch (AwsException $e) {
-            return ['error' => $e->getAwsErrorMessage()];
+            return ['error' => $e->getMessage()];
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -76,6 +76,7 @@ class BroadcastController extends Controller
                     'key' => env('AWS_ACCESS_KEY_ID'),
                     'secret' => env('AWS_SECRET_ACCESS_KEY'),
                 ],
+              
             ]);
 
             // $client = new IvsRealTimeClient([
@@ -112,7 +113,6 @@ class BroadcastController extends Controller
         }
 
         $data = $this->createPublisherToken($stageArn);
-      
         return view('broadcaster.broadcaster', compact('data','stageArn'));
     }
 
