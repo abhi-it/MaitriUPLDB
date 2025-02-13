@@ -259,69 +259,102 @@
         setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
     </script>
 
-    <!-- <script>
-        let stream; // Global stream variable
-        async function startCamera() {
-            try {
-                // Request access to video and audio
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: true
-                });
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const localMediaContainer = document.getElementById("local-media");
+            const joinButton = document.getElementById("join-button");
+            const leaveButton = document.getElementById("leave-button");
+            const localControls = document.getElementById("local-controls");
+            const micControl = document.getElementById("mic-control");
+            const cameraControl = document.getElementById("camera-control");
 
-                // Display the video stream in a new video element
-                const videoElement = document.createElement('video');
-                videoElement.srcObject = stream;
-                videoElement.autoplay = true;
-                videoElement.muted = true; // Mute to prevent feedback
+            let localStream = null;
+            let micEnabled = true;
+            let cameraEnabled = true;
 
-                const localMediaContainer = document.getElementById('local-media');
-                localMediaContainer.innerHTML = ''; // Clear previous content
-                localMediaContainer.appendChild(videoElement);
-
-                // Enable the device selection dropdowns
-                document.getElementById('video-devices').disabled = false;
-                document.getElementById('audio-devices').disabled = false;
-
-                // Populate the device lists
-                await listDevices();
-            } catch (error) {
-                console.error('Error accessing camera/microphone:', error);
+            if (!localMediaContainer) {
+                console.error("local-media container not found!");
+                return;
             }
-        }
 
-        // Function to list available video and audio devices
-        async function listDevices() {
-            try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const videoSelect = document.getElementById('video-devices');
-                const audioSelect = document.getElementById('audio-devices');
+            // Start camera when page loads
+            startCamera();
 
-                videoSelect.innerHTML = '<option selected disabled>Choose Camera</option>';
-                audioSelect.innerHTML = '<option selected disabled>Choose Microphone</option>';
+            function startCamera() {
+                navigator.mediaDevices
+                    .getUserMedia({ video: true, audio: true })
+                    .then((stream) => {
+                        localStream = stream; 
 
-                devices.forEach(device => {
-                    if (device.kind === 'videoinput') {
-                        const option = document.createElement('option');
-                        option.value = device.deviceId;
-                        option.textContent = device.label || `Camera ${videoSelect.length}`;
-                        videoSelect.appendChild(option);
-                    }
-                    if (device.kind === 'audioinput') {
-                        const option = document.createElement('option');
-                        option.value = device.deviceId;
-                        option.textContent = device.label || `Microphone ${audioSelect.length}`;
-                        audioSelect.appendChild(option);
-                    }
-                });
-            } catch (error) {
-                console.error('Error listing devices:', error);
+                        const videoElement = document.createElement("video");
+                        videoElement.srcObject = stream;
+                        videoElement.autoplay = true;
+                        videoElement.playsInline = true;
+                        videoElement.style.width = "100%";
+
+                        localMediaContainer.innerHTML = "";
+                        localMediaContainer.appendChild(videoElement);
+                    })
+                    .catch((error) => {
+                        console.error("Error accessing camera:", error);
+                    });
             }
-        }
 
-        // Start the camera automatically when the page loads
-        window.onload = startCamera;
-    </script>  -->
+            function stopCamera() {
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
+                    localMediaContainer.innerHTML = "<p>Camera Stopped</p>"; // Indicate camera is off
+                    localStream = null;
+                }
+            }
+
+            function showControls() {
+                localControls.classList.remove("hidden");
+            }
+
+            function hideControls() {
+                localControls.classList.add("hidden");
+            }
+
+            micControl.addEventListener("click", function () {
+                if (localStream) {
+                    localStream.getAudioTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        micEnabled = track.enabled;
+                        micControl.innerHTML = micEnabled ? "Mute Mic" : "Unmute Mic";
+                    });
+                }
+            });
+
+            cameraControl.addEventListener("click", function () {
+                if (localStream) {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        cameraEnabled = track.enabled;
+                        cameraControl.innerHTML = cameraEnabled ? "Mute Camera" : "Unmute Camera";
+                    });
+                }
+            });
+
+            joinButton.addEventListener("click", function () {
+                stopCamera();
+                joinButton.style.display = "none"; // Hide the join button
+                leaveButton.style.display = "block"; // Show the leave button
+                showControls(); // Show Mic & Camera Controls
+            });
+
+            leaveButton.addEventListener("click", function () {
+                startCamera();
+                joinButton.style.display = "block"; // Show the join button
+                leaveButton.style.display = "none"; // Hide the leave button
+                hideControls(); // Hide Mic & Camera Controls
+            });
+
+            leaveButton.style.display = "none";
+            localControls.classList.add("hidden");
+        });
+
+    </script> 
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
