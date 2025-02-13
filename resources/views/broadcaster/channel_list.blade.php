@@ -40,10 +40,12 @@
                         </form>
 
                     </td>--}}
+
                     <td>
                         <form method="GET" action="{{ route('ivs_latency') }}">
                             <input type="hidden" name="stream_key" value="{{ $data['stream_key'] }}">
                             <input type="hidden" name="ingest_endpoint" value="{{ $data['ingest_endpoint'] }}">
+                            <input type="hidden" name="playback_url" value="{{ $data['playback_url'] }}">
                             <button type="submit" class="btn btn-primary">Stream</button>
                         </form>
                     </td>

@@ -182,13 +182,14 @@ class BroadcastController extends Controller
     public function start_webinar(Request $request)
     {
         try {
-        
-            // $stageArn = $request->stageArn;
+            $stageArn = $request->stageArn;
             // $data = $this->createPublisherToken($stageArn);
             // $token = $data['token'];
 
-            $token = $request->token;
-            return view('broadcaster.host', compact('token'));
+            $token = $request->token ?? null;
+            $fullUrl = route('start_webinar', ['token' => $token]);
+
+            return view('broadcaster.host', compact('token', 'fullUrl','stageArn'));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -269,10 +270,13 @@ class BroadcastController extends Controller
     {
         $stream_key = $request->stream_key;
         $ingest_endpoint = $request->ingest_endpoint;
-        $playbackUrl = $request->playbackUrl;
-        $fullUrl = route('ivs_playback', ['url' => urlencode($playbackUrl)]);
+        $playbackUrl = $request->playback_url;
+        // $fullUrl = route('ivs_playback', ['url' => urlencode($playbackUrl)]);
+        $fullUrl = route('ivs_playback', ['url' => $playbackUrl]);
 
-        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint','fullUrl'));
+        $channelArn = $request->channelArn;
+
+        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint','fullUrl','channelArn'));
     }
 
     public function add_channel()
@@ -422,11 +426,47 @@ class BroadcastController extends Controller
                 'stream_key'       => $streamKey,
                 'playback_url' => $channelDetails['channel']['playbackUrl'] ?? null,
             ];
-          
-            return view('broadcaster.meeting_detail', compact('data'));
+
+            return view('broadcaster.meeting_detail', compact('data', 'channelArn'));
 
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    //Check broadcast status
+    public function checkStatus(Request $request)
+    {
+        $channelArn = $request->channelArn; 
+
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+        $awsKey = config('services.aws.key');
+        $awsSecret = config('services.aws.secret');
+        $awsRegion = config('services.aws.region');
+
+        $ivsClient = new IvsClient([
+            'version' => 'latest',
+            'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
+            'credentials' => [
+                'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+            ],
+        ]);
+
+        // $ivsClient = new IvsClient([
+        //     'version' => 'latest',
+        //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+        //     'credentials' => [
+        //         'key' => env('AWS_ACCESS_KEY_ID'),
+        //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        //     ],
+        // ]);
+
+        try {
+            $result = $ivsClient->getStream(['channelArn' => $channelArn]);
+            return response()->json(['is_live' => isset($result['stream'])]);
+        } catch (\Exception $e) {
+            return response()->json(['is_live' => false]); 
         }
     }
 
@@ -456,6 +496,58 @@ class BroadcastController extends Controller
     {
         return view('broadcaster.meeting_detail');
     }
+
+
+    //Count
+    public function getLiveParticipants($stageArn)
+    {
+        try {
+            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+            $awsKey = config('services.aws.key');
+            $awsSecret = config('services.aws.secret');
+            $awsRegion = config('services.aws.region');
+
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            // $ivsClient = new IvsClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+            // ]);
+
+            $result = $ivsClient->listStageSessions([
+                'stageArn' => $stageArn,
+            ]);
+
+            $participantCount = 0;
+            $participants = [];
+
+            if (!empty($result['stageSessions'])) {
+                foreach ($result['stageSessions'] as $session) {
+                    $participantCount += count($session['participantIds']);
+                    $participants = array_merge($participants, $session['participantIds']);
+                }
+            }
+
+            return response()->json([
+                'count' => $participantCount,
+                'participants' => $participants,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 
 
 }
