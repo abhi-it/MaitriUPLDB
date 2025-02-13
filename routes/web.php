@@ -38,6 +38,11 @@ use App\Http\Controllers\WebinarController;
 |
 */
 
+Route::post('/broadcast-logout', function () {
+    Auth::logout();
+    return redirect('/broad-cast-login');
+})->name('broadcast-logout');
+
 //Clear route cache
 Route::get('/route-cache', function () {
     Artisan::call('route:cache');
@@ -561,9 +566,3 @@ Route::post('/ivs/play/back', [BroadcastController::class, 'ivsPlayback'])->name
 
 //Participant Count
 Route::get('/ivs/live-participants/{stageArn}', [BroadcastController::class, 'getLiveParticipants']);
-
-
-
-
-
-
