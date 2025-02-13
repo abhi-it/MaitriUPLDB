@@ -227,7 +227,7 @@
                     </div>
                 </div>
             </div>  
-            
+
             <div class="column" style="display:none;">
                 <label for="token">Participant Token</label>
                 <input type="text" id="token" name="token" value={{$token}} />
@@ -257,8 +257,10 @@
         <div class="row local-container">
             <div class="w-100 relative">
                <div class="video_wrap">
-                    <p>Live Participants: <span id="participant-count">0</span></p>
-                    <div class="column" id="local-media"></div>
+                <div id="partcipantCount" style="display:none">
+                    <p>Live Participants: <span id="participant-count" style="display: none;">0</span></p>
+                </div>
+                    <div class="column" id="local-media" ></div>
                </div> 
                 
                 <!-- <div class="col-md-12 flex"> -->
@@ -295,6 +297,10 @@
     <script src="/js/stages-simple.js"></script>
 
     <script>
+        document.getElementById("join-button").addEventListener("click", function() {
+            document.getElementById("partcipantCount").style.display = "block";
+        });
+
         function fetchLiveParticipants() {
             fetch(`/ivs/live-participants/{{ $stageArn }}`)
                 .then(response => response.json())
@@ -412,7 +418,7 @@
     </script> 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         const joinButton = document.getElementById("join-button");
         const leaveButton = document.getElementById("leave-button");
 

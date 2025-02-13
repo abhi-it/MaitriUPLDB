@@ -155,7 +155,7 @@
     <div class="container-fluid custom_frame">
         <div class="container-box ">
             <div class="card-item">
-                <h3 class="text-center">Real Time Streaming</h3>
+                <h3 class="text-center">राष्ट्रीय गोकुल मिशन वेबिनार - लाइव स्ट्रीम</h3>
 
                 <center> <button class="button" id="join-button">Join</button> </center>
 
