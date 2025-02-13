@@ -41,8 +41,7 @@ header .navbar li.nav-item.active a.nav-link {
 
     <div class="d-flex livestream">
         <a class="nav-link" href="{{ route('addBroadcaster') }}" style="font-size: 15px;">RealTime Streaming</a>
-        <a class="nav-link" href="{{ route('listChannels') }}" style="font-size: 15px;">Ultra Low Latency
-            Streaming</a>
+        {{-- <a class="nav-link" href="{{ route('listChannels') }}" style="font-size: 15px;">Ultra Low Latency Streaming</a> --}}
     </div>
 </div>
 </div>
