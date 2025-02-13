@@ -8,7 +8,7 @@
   <title>Broadcast To IVS</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
- 
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
   <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
@@ -32,12 +32,34 @@
       width: 100%;
       height: 300;
     }
+
+    .title {
+      font-size: 22px;
+      color: #000;
+      margin-top: 20px;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+
+    .button.rounded-30 {
+      border-radius: 30px !important;
+    }
+
+    .camera-control {
+      background: #ea7427;
+      border: 1px solid #000;
+    }
+
+    .stop-control {
+      background: #ff2323;
+      border: 1px solid #000;
+    }
   </style>
 </head>
 
 <body>
   <header class="container">
-    <h1>Start Live Streaming</h1>
+    <h1 class="title">Start Live Streaming</h1>
     <p>
     </p>
   </header>
@@ -69,16 +91,6 @@
       </select>
     </section>
 
-    {{--<section class="container">
-        <label for="ingest-endpoint">Joining Link</label>
-        <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="text" id="ingest-endpoint" value="{{ $fullUrl ?? '' }}" readonly style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
-            <button onclick="copyToClipboard()" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Copy
-            </button>
-        </div>
-    </section>--}}
-
   <section class="container" style="display: none;">
     <label for="ingest-endpoint">Ingest Endpoint</label>
     <input type="text" id="ingest-endpoint" value="{{ $ingest_endpoint ?? '' }}" readonly />
@@ -91,9 +103,35 @@
 
   <!-- Broadcast buttons -->
   <section class="container">
-    <button class="button" id="start" disabled onclick="startBroadcast()">Start Broadcast</button>
-    <button class="button" id="stop" disabled onclick="stopBroadcast()">Stop Broadcast</button>
+    <button class="button rounded-30 camera-control" id="start" disabled onclick="startBroadcast()">Start
+      Broadcast</button>
+    <button class="button rounded-30 stop-control" id="stop" disabled onclick="stopBroadcast()">Stop Broadcast</button>
   </section>
+
+  <section class="container">
+    <!-- Joining Link (For Broadcaster) -->
+    <label for="broadcaster-link">Joining Link</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="broadcaster-link" value="{{ $fullUrl ?? '' }}" readonly style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        <button onclick="copyToClipboard('broadcaster-link')" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Copy
+        </button>
+    </div>
+
+    <!-- Participant Link (Readonly + Copy) -->
+    <label for="participant-link">Participant Link</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="participant-link" value="{{ $participantUrl ?? '' }}" readonly style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        <button onclick="copyToClipboard('participant-link')" style="padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Copy
+        </button>
+    </div>
+
+    <!-- Rejoin Button (Hidden Initially) -->
+    <button id="rejoin-btn" onclick="rejoinStream()" style="display: none; margin-top: 15px; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Rejoin Broadcast
+    </button>
+</section>
 
   <hr />
 
@@ -428,6 +466,35 @@
     init();
 
 </script>
+
+<script>
+    function copyToClipboard(elementId) {
+        var inputField = document.getElementById(elementId);
+        inputField.select();
+        inputField.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(inputField.value).then(() => {
+            alert("Link copied!");
+        }).catch(err => {
+            console.error("Copy failed: ", err);
+        });
+    }
+
+    function checkStreamStatus() {
+        setInterval(() => {
+            var isDisconnected = Math.random() < 0.2; 
+            if (isDisconnected) {
+                document.getElementById("rejoin-btn").style.display = "block";
+            }
+        }, 5000);
+    }
+
+    function rejoinStream() {
+        location.reload(); 
+    }
+
+    checkStreamStatus(); 
+</script>
+
 
 <script>
     function copyToClipboard() {
