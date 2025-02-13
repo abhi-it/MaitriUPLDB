@@ -129,15 +129,24 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            $ivsClient = new IvsRealTimeClient([
+            // $client = new IvsRealTimeClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+              
+            // ]);
+
+            $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
-
 
             $sessionResult = $ivsClient->listStageSessions([
                 'stageArn' => $stageArn,
@@ -192,7 +201,7 @@ class BroadcastController extends Controller
             // $token = $data['token'];
 
             $token = $request->token ?? null;
-            $fullUrl = route('start_webinar', ['token' => $token]);
+            $fullUrl = route('join_webinar', ['token' => $stageArn]);
 
             return view('broadcaster.host', compact('token', 'fullUrl','stageArn'));
         } catch (\Exception $e) {
@@ -210,12 +219,22 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
+            // $client = new IvsRealTimeClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+              
+            // ]);
+
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -257,7 +276,7 @@ class BroadcastController extends Controller
 
     public function join_webinar(Request $request)
     {
-        $stageArn = $request->stageArn;
+        $stageArn = $request->token;
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
