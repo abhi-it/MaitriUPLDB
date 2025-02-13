@@ -36,7 +36,7 @@ class BroadcastController extends Controller
             return $result['stages'] ?? [];
     
         } catch (AwsException $e) {
-            return ['error' => $e->getAwsErrorMessage()];
+            return ['error' => $e->getMessage()];
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -87,6 +87,8 @@ class BroadcastController extends Controller
     public function addBroadcaster(Request $request)
     {
         $stages = $this->listIvsStages();
+
+        dd($stages);
         $stageArn = $stages[0]['arn'];
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
