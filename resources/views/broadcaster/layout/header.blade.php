@@ -146,11 +146,12 @@
                         @if (Route::has('login'))
                         <span>
                             @auth
-                            <a href="{{ route('logout') }}"
+                            <a href="{{ route('broadcast-logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <span>Logout</span>
                                 &nbsp;</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('broadcast-logout') }}" method="POST"
+                                class="d-none">
                                 @csrf
                             </form>
                             @else
