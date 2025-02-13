@@ -22,15 +22,15 @@
 
     <script src="https://player.live-video.net/1.22.0/amazon-ivs-player.min.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-                if (IVSPlayer.isPlayerSupported) {
-                    const player = IVSPlayer.create();
-                    const videoElement = document.getElementById("ivs-player");
+        document.addEventListener("DOMContentLoaded", function() {
+        if (IVSPlayer.isPlayerSupported) {
+            const player = IVSPlayer.create();
+            const videoElement = document.getElementById("ivs-player");
 
-                    <
-                    script >
-                        var player = videojs('videoPlayer');
-                    player.play();
+            <
+            script >
+                var player = videojs('videoPlayer');
+            player.play();
     </script>
     <div class="video-section">
         <video id="video" controls autoplay></video>

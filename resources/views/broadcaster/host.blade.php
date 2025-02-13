@@ -16,82 +16,146 @@
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" /> -->
     <style>
-    html {
-        margin: 0px;
-    }
+        html {
+            margin: 0px;
+        }
 
-    #local-media video {
-        max-height: 700px;
-        width: 100%;
-    }
+        #local-media video {
+            max-height: 700px;
+            width: 100%;
+        }
 
-    .flex {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        align-items: center;
-    }
+        .flex {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
 
-    .w-100 {
-        width: 100%;
-    }
+        .w-100 {
+            width: 100%;
+        }
 
-    .static-controls {
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        bottom: 45px;
-        / top: 50%;/ text-align: center;
-    }
+        .static-controls {
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            bottom: 45px;
+            / top: 50%;/ text-align: center;
+        }
 
-    .relative {
-        position: relative;
-    }
+        .relative {
+            position: relative;
+        }
 
-    .text-center {
-        text-align: center;
-    }
+        .text-center {
+            text-align: center;
+        }
 
-    button#mic-control svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
+        button#mic-control svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
 
-    button#camera-control svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
+        button#camera-control svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
 
-    button#camera-control {
-        background: #ea7427;
-        border: 1px solid #000;
-    }
+        button#camera-control {
+            background: #ea7427;
+            border: 1px solid #000;
+        }
 
-    button#mic-control {
-        border: 1px solid #000;
-    }
+        button#mic-control {
+            border: 1px solid #000;
+        }
 
-    div#local-controls button {
-        margin: 0;
-        border-radius: 100px;
-    }
+        div#local-controls button {
+            margin: 0;
+            border-radius: 100px;
+        }
 
-    button#join-button svg,
-    button#leave-button svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
+        button#join-button svg,
+        button#leave-button svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
+
+        .link-box {
+            display: flex;
+            align-items: center;
+            background: #f1f3f4;
+            border-radius: 8px;
+            border: 1px solid #d1d1d1;
+            width: 100%;
+            max-width: 50%;
+        }
+
+        .link-box input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            cursor: default;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            color: #007bff;
+        }
+
+
+        .copy-message {
+            position: absolute;
+            top: 30px;
+            left: 55%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+            animation: fadeOut 0.2s ease-in-out 1.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container-fluid custom_frame">
+        <div class="copy-container">
+            <span class="copy-message" id="copy-message">Link copied!</span>
+
+            <div class="link-box">
+                <input type="text" id="participant-link" value="{{ $fullUrl }}" readonly>
+                <button class="copy-btn" onclick="copyToClipboard()"> 📋 </button>
+            </div>
+        </div>
+
+        <p>Live Participants: <span id="participant-count">0</span></p>
+        <ul id="participant-list"></ul>
+
         <div class="row">
             <div class="column">
                 <label for="video-devices">Select Camera</label>
@@ -173,6 +237,49 @@
     <script src="/js/helpers.js"></script>
     <script src="/js/media-devices.js"></script>
     <script src="/js/stages-simpel.js"></script>
+
+    <script>
+        function fetchLiveParticipants() {
+            fetch(`/ivs/live-participants/{{ $stageArn }}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('participant-count').innerText = data.count;
+                    let list = document.getElementById('participant-list');
+                    list.innerHTML = "";
+                    data.participants.forEach(user => {
+                        let li = document.createElement("li");
+                        li.textContent = user;
+                        list.appendChild(li);
+                    });
+                })
+                .catch(error => console.error("Error fetching live participants:", error));
+        }
+
+        setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
+    </script>
+
+
+    <script>
+         function copyToClipboard() {
+        let inputField = document.getElementById("participant-link");
+        navigator.clipboard.writeText(inputField.value).then(() => {
+            let copyMessage = document.getElementById("copy-message");
+            copyMessage.style.display = "block";  // Show message
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                copyMessage.style.display = "none";
+            }, 5000);
+        }).catch(err => {
+            console.error("Copy failed: ", err);
+        });
+    }
+
+    // Attach event listener AFTER the function is defined
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+    });
+    </script>
 </body>
 
 </html>

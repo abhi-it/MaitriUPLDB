@@ -15,83 +15,93 @@
     .card-str p {
         font-size: 18px;
     }
+
+    
+   
+    .link-box {
+        display: flex;
+        align-items: center;
+        background: #f1f3f4;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #d1d1d1;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .link-box input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        font-size: 16px;
+        outline: none;
+        cursor: default;
+    }
+
+    .copy-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .copy-btn:hover {
+        color: #007bff;
+    }
+
+    .copy-message {
+        position: absolute;
+        top: 75px;
+        left: 84%;
+        transform: translateX(-50%);
+        background: #4caf50;
+        color: white;
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: 14px;
+        display: none;
+        animation: fadeOut 0.2s ease-in-out 1.5s forwards;
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
+
 </style>
 
-<div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:600px;">
-    <h3 class="text-center fw-bold m-4">Meeting Details</h3>
+<div x-data="" class="container main-div" style="background-color:white; height: 100%; min-height:600px;">
+    <h3 class="text-center fw-bold m-4">Broadcasting Details</h3>
     @if(!empty($data[0]))
-    <div class="card card-str">
-        <p>Id : <span>{{ $data[0]['channel_name'] }}</span></p>
-        <p>Participant's Joining Link :</p>
-        {{--<p>
-            <span class="d-block" id="participant-link" ><a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}"
-                    target="_blank">
-                    {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
-                </a></span>
-        </p>--}}
+        <div class="card card-str">
+           {{--<p>Id : <span>{{ $data[0]['channel_name'] }}</span></p>--}}
+            <p>Share Your Broadcasting Link</p>
+            <p>Copy this link and share it with the people.</p> 
+            <div class="copy-container">
+                <span class="copy-message" id="copy-message">Link copied!</span>
 
-        <p>
-            <span class="d-block" id="participant-link">
-                <a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" target="_blank">
-                    {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
-                </a>
-            </span>
-            <button onclick="copyToClipboard()" style="background: none; border: none; cursor: pointer;">
-                📋
-            </button>
-        </p>
+                <div class="link-box">
+                    <input type="text" id="participant-link" value="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" readonly>
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        📋
+                    </button>
+                </div>
+            </div>
 
-        <form method="GET" class="text-right" target="_blank" action="{{ route('ivs_latency') }}">
-            <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
-            <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
-            <button type="submit" class="btn btn-primary">Stream</button>
-        </form>
-    </div>
+            <form method="GET" class="text-right" target="_blank" action="{{ route('ivs_latency') }}">
+                <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
+                <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
+                <input type="hidden" name="playback_url" value="{{ $data[0]['playback_url'] }}">
+                <button type="submit" class="btn btn-primary" style="margin-top:15px">Start Streaming</button>
+            </form>
+        </div>
     @else
-    <p>No record found..</p>
+        <p>No record found..</p>
     @endif
-
-    <table id="myTable202" class="table table-striped  table-responsive table-bordered d-none">
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>ID</th>
-                <th>Participant's Joining Link</th>
-                <th>Start Live Streaming</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!empty($data[0]))
-            @php $i = 1; @endphp
-
-            <tr>
-                <td>{{ $i }}</td>
-                <td>{{ $data[0]['channel_name'] }}</td>
-                {{-- <td>{{ $data[0]['playback_url'] }}</td>--}}
-                <td>
-                    <a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" target="_blank">
-                        {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
-                    </a>
-                </td>
-
-                <td>
-                    <form method="GET" action="{{ route('ivs_latency') }}">
-                        <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
-                        <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
-                        <button type="submit" class="btn btn-primary">Stream</button>
-                    </form>
-                </td>
-            </tr>
-            @php $i++; @endphp
-            @else
-            <tr>
-                <td colspan="6" style="color:red;">No record found..</td>
-            </tr>
-            @endif
-
-        </tbody>
-    </table>
 </div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -101,11 +111,17 @@
 
 <script>
     function copyToClipboard() {
-        var link = document.getElementById("participant-link").innerText.trim();
-        navigator.clipboard.writeText(link).then(() => {
-            alert("Link copied to clipboard!");
+        var inputField = document.getElementById("participant-link");
+        var message = document.getElementById("copy-message");
+        // inputField.select();
+        // inputField.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(inputField.value).then(() => {
+            message.style.display = "block";
+            setTimeout(() => {
+                message.style.display = "none";
+            }, 1000);
         }).catch(err => {
-            console.error("Failed to copy: ", err);
+            console.error("Copy failed: ", err);
         });
     }
 </script>
@@ -124,3 +140,4 @@
 
 
 @endsection
+

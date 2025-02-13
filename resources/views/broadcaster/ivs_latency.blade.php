@@ -54,6 +54,58 @@
       background: #ff2323;
       border: 1px solid #000;
     }
+
+    .link-box {
+        display: flex;
+        align-items: center;
+        background: #f1f3f4;
+        border-radius: 8px;
+        border: 1px solid #d1d1d1;
+        width: 100%;
+        max-width: 50%;
+    }
+
+    .link-box input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        font-size: 16px;
+        outline: none;
+        cursor: default;
+    }
+
+    .copy-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .copy-btn:hover {
+        color: #007bff;
+    }
+
+
+    .copy-message {
+        position: absolute;
+        top: 75px;
+        left: 84%;
+        transform: translateX(-50%);
+        background: #4caf50;
+        color: white;
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: 14px;
+        display: none;
+        animation: fadeOut 0.2s ease-in-out 1.5s forwards;
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
   </style>
 </head>
 
@@ -65,6 +117,29 @@
   </header>
 
   <hr />
+  <section class="container">
+    {{-- <label for="broadcaster-link">Joining Link</label> --}}
+      <div class="copy-container">
+          <span class="copy-message" id="copy-message">Link copied!</span>
+
+          <div class="link-box">
+              <input type="text" id="participant-link" value="{{ $fullUrl }}" readonly>
+              <button class="copy-btn" onclick="copyToClipboard()"> 📋 </button>
+          </div>
+      </div>
+
+      <div class="copy-container">
+    <span class="copy-message" id="copy-message" style="display: none;">Link copied!</span>
+
+</div>
+
+      <button id="rejoin-btn" onclick="rejoinStream()" 
+          style="display: none; margin-top: 15px; background-color: #dc3545; 
+          color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Rejoin Broadcast
+      </button>
+    
+  </section>
 
   <section class="container">
     <h3 id="error"></h3>
@@ -74,21 +149,21 @@
     <canvas id="preview"></canvas>
   </section>
 
-  <section class="container">
-    <label for="video-devices">Select Webcam</label>
-    <select disabled id="video-devices">
-      <option selected disabled>Choose Option</option>
-    </select>
-
-    <label for="audio-devices">Select Microphone</label>
-    <select disabled id="audio-devices">
-      <option selected disabled>Choose Option</option>
-    </select>
-
-    <label for="stream-config">Select Channel Config</label>
-      <select disabled id="stream-config">
+   <section class="container">
+      <label for="video-devices">Select Webcam</label>
+      <select disabled id="video-devices">
         <option selected disabled>Choose Option</option>
       </select>
+
+      <label for="audio-devices">Select Microphone</label>
+      <select disabled id="audio-devices">
+        <option selected disabled>Choose Option</option>
+      </select>
+
+      <label for="stream-config">Select Channel Config</label>
+        <select disabled id="stream-config">
+          <option selected disabled>Choose Option</option>
+        </select>
     </section>
 
   <section class="container" style="display: none;">
@@ -107,40 +182,7 @@
       Broadcast</button>
     <button class="button rounded-30 stop-control" id="stop" disabled onclick="stopBroadcast()">Stop Broadcast</button>
   </section>
-
-  <section class="container">
-    <!-- Joining Link (For Broadcaster) -->
-    <label for="broadcaster-link">Joining Link</label>
-    <div style="display: flex; gap: 10px; align-items: center;">
-        <input type="text" id="broadcaster-link" value="{{ $fullUrl ?? '' }}" readonly style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
-        <button onclick="copyToClipboard('broadcaster-link')" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Copy
-        </button>
-    </div>
-
-    <!-- Participant Link (Readonly + Copy) -->
-    <label for="participant-link">Participant Link</label>
-    <div style="display: flex; gap: 10px; align-items: center;">
-        <input type="text" id="participant-link" value="{{ $participantUrl ?? '' }}" readonly style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
-        <button onclick="copyToClipboard('participant-link')" style="padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Copy
-        </button>
-    </div>
-
-    <!-- Rejoin Button (Hidden Initially) -->
-    <button id="rejoin-btn" onclick="rejoinStream()" style="display: none; margin-top: 15px; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        Rejoin Broadcast
-    </button>
-</section>
-
   <hr />
-
-  <!-- Data table -->
-  <section class="container">
-    <table id="data">
-      <tbody></tbody>
-    </table>
-  </section>
 
   <script>
     // Possible configurations
@@ -465,49 +507,55 @@
 
     init();
 
-</script>
+  </script>
 
 <script>
-    function copyToClipboard(elementId) {
-        var inputField = document.getElementById(elementId);
-        inputField.select();
-        inputField.setSelectionRange(0, 99999);
+
+    function copyToClipboard() {
+        let inputField = document.getElementById("participant-link");
         navigator.clipboard.writeText(inputField.value).then(() => {
-            alert("Link copied!");
+            let copyMessage = document.getElementById("copy-message");
+            copyMessage.style.display = "block";  // Show message
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                copyMessage.style.display = "none";
+            }, 5000);
         }).catch(err => {
             console.error("Copy failed: ", err);
         });
     }
 
-    function checkStreamStatus() {
-        setInterval(() => {
-            var isDisconnected = Math.random() < 0.2; 
-            if (isDisconnected) {
-                document.getElementById("rejoin-btn").style.display = "block";
-            }
-        }, 5000);
+    // Attach event listener AFTER the function is defined
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+    });
+  
+    function checkBroadcastStatus() {
+        fetch(`{{ url('/ivs/check-status') }}/${encodeURIComponent(channelArn)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.is_live) {
+                    broadcastStarted = true;
+                }
+            })
+            .catch(error => console.error("Error checking broadcast status:", error));
     }
+
+    window.addEventListener("offline", function () {
+        if (broadcastStarted) {
+            document.getElementById("rejoin-btn").style.display = "block";
+        }
+    });
 
     function rejoinStream() {
         location.reload(); 
     }
 
-    checkStreamStatus(); 
+    checkBroadcastStatus();
+
 </script>
 
-
-<script>
-    function copyToClipboard() {
-        var inputField = document.getElementById("ingest-endpoint");
-        inputField.select();
-        inputField.setSelectionRange(0, 99999); // For mobile devices
-        navigator.clipboard.writeText(inputField.value).then(() => {
-            alert("Link copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy: ", err);
-        });
-    }
-</script>
 </body>
 
 </html>
