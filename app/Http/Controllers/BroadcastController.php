@@ -192,7 +192,7 @@ class BroadcastController extends Controller
             // $token = $data['token'];
 
             $token = $request->token ?? null;
-            $fullUrl = route('start_webinar', ['token' => $token]);
+            $fullUrl = route('join_webinar', ['token' => $stageArn]);
 
             return view('broadcaster.host', compact('token', 'fullUrl','stageArn'));
         } catch (\Exception $e) {
@@ -257,7 +257,7 @@ class BroadcastController extends Controller
 
     public function join_webinar(Request $request)
     {
-        $stageArn = $request->stageArn;
+        $stageArn = $request->token;
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }

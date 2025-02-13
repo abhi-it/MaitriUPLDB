@@ -23,8 +23,19 @@
         #local-media video {
             max-height: 700px;
             width: 100%;
+            object-fit: cover;
         }
-
+        #local-media {
+            padding: 0;
+            max-width: 99%;
+            margin: 0px auto;
+            display: block;
+        }
+        #local-media video {
+            max-height: calc(100vh - 165px);
+            width: 100%;
+            object-fit: cover;
+        }
         .flex {
             display: flex;
             justify-content: center;
@@ -94,7 +105,8 @@
             border-radius: 8px;
             border: 1px solid #d1d1d1;
             width: 100%;
-            max-width: 50%;
+            /* max-width: 50%; */
+            max-height: 38px;
         }
 
         .link-box input {
@@ -104,6 +116,8 @@
             font-size: 16px;
             outline: none;
             cursor: default;
+            margin-bottom: 0px;
+            max-height: 38px;
         }
 
         .copy-btn {
@@ -112,6 +126,9 @@
             cursor: pointer;
             font-size: 18px;
             margin-left: 10px;
+            padding: 0;
+            margin-right: 9px;
+            margin-top: 7px;
         }
 
         .copy-btn:hover {
@@ -132,11 +149,44 @@
             display: none;
             animation: fadeOut 0.2s ease-in-out 1.5s forwards;
         }
-
+        .video_wrap P {
+            position: absolute;
+            right: 26px;
+            top: 19px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+        }
         @keyframes fadeOut {
             to {
                 opacity: 0;
             }
+        }
+        button#leave-button {
+            width: 100%;
+            background: #cd3c3c;
+            border: 1px solid #cd3c3c;
+        }
+        .video_wrap P:before {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 5px;
+            background: #F44336;
+            border-radius: 100%;
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translate(0%, -50%);
+        }
+        button#join-button {
+            width: 100%;
+        }
+        button.copy-btn:hover {
+            background: transparent;
+        }
+        .video_wrap {
+            position: relative;
         }
     </style>
 </head>
@@ -144,16 +194,7 @@
 <body>
 
     <div class="container-fluid custom_frame">
-        <div class="copy-container">
-            <span class="copy-message" id="copy-message">Link copied!</span>
-
-            <div class="link-box">
-                <input type="text" id="participant-link" value="{{ $fullUrl }}" readonly>
-                <button class="copy-btn" onclick="copyToClipboard()"> 📋 </button>
-            </div>
-        </div>
-
-        <p>Live Participants: <span id="participant-count">0</span></p>
+        
         <ul id="participant-list"></ul>
 
         <div class="row">
@@ -175,8 +216,18 @@
                     <option selected disabled>Choose Option</option>
                 </select>
             </div>--}}
+            <div class="column">
+               <label>&nbsp;</label>
+               <div class="copy-container">
+                    <span class="copy-message" id="copy-message">Link copied!</span>
 
-
+                    <div class="link-box">
+                        <input type="text" id="participant-link" value="{{ $fullUrl }}" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard()"> 📋 </button>
+                    </div>
+                </div>
+            </div>  
+            
             <div class="column" style="display:none;">
                 <label for="token">Participant Token</label>
                 <input type="text" id="token" name="token" value={{$token}} />
@@ -189,7 +240,7 @@
                         <path fill-rule="evenodd"
                             d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z" />
                     </svg>
-                    Join Broadcast</button>
+                    Start Broadcast</button>
 
                 <button class="button" style="margin: auto;" id="leave-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -199,13 +250,17 @@
                         <path fill-rule="evenodd"
                             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                     </svg>
-                    Leave Broadcast</button>
+                    Stop Broadcast</button>
             </div>
         </div>
 
         <div class="row local-container">
             <div class="w-100 relative">
-                <div class="column" id="local-media"></div>
+               <div class="video_wrap">
+                    <p>Live Participants: <span id="participant-count">0</span></p>
+                    <div class="column" id="local-media"></div>
+               </div> 
+                
                 <!-- <div class="col-md-12 flex"> -->
                 <div class="static-controls hidden" id="local-controls">
                     <button class="button" id="mic-control">
@@ -303,7 +358,7 @@
             function stopCamera() {
                 if (localStream) {
                     localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
-                    localMediaContainer.innerHTML = "<p>Camera Stopped</p>"; // Indicate camera is off
+                    localMediaContainer.innerHTML = ""; // Indicate camera is off <p>Camera Stopped</p>
                     localStream = null;
                 }
             }
