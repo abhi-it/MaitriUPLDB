@@ -956,19 +956,12 @@
                             @if (Route::has('login'))
                             @auth
 
-                            @if (auth()->user()->user_type == 'Broadcaster')
-                            <li class="nav-item {{ request()->is('broadcaster-dashboard') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('/broadcaster-dashboard') }}">
-                                    <span>BroadCast Dashboard</span>
-                                </a>
-                            </li>
-                            @else
+
                             <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
                                     <span data-hi="डैशबोर्ड" data-en="Dashboard"></span>
                                 </a>
                             </li>
-                            @endif
 
                             @if (auth()->user()->user_type == 'User')
                             <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
