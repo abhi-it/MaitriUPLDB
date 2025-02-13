@@ -210,17 +210,12 @@
                     <option selected disabled>Choose Option</option>
                 </select>
             </div>
-            {{--<div class="column">
-                <label for="audio-devices">Select Microphone</label>
-                <select disabled id="audio-devices">
-                    <option selected disabled>Choose Option</option>
-                </select>
-            </div>--}}
+           
             <div class="column">
-               <label>&nbsp;</label>
+            <label for="token">Share your Broadcasting Link</label>
+
                <div class="copy-container">
                     <span class="copy-message" id="copy-message">Link copied!</span>
-
                     <div class="link-box">
                         <input type="text" id="participant-link" value="{{ $fullUrl }}" readonly>
                         <button class="copy-btn" onclick="copyToClipboard()"> 📋 </button>
