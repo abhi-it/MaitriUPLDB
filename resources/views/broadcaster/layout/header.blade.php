@@ -195,7 +195,7 @@
                 </div>
             </div>
         </div>
-        <!-- <nav class="navbar navbar-expand-xl m-0 p-0">
+        <nav class="navbar navbar-expand-xl m-0 p-0">
             <div class="container-fluid justify-content-end">
                 <button class="navbar-toggler my-1 bg-white py-1 px-2" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
@@ -217,14 +217,18 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-                            @endauth
                             @endif
+                            @endauth
                             @endif
                         </ul>
                     </div>
                 </div>
             </div>
-        </nav> -->
+        </nav>
+
+
+
+
     </header>
 
     <div>
