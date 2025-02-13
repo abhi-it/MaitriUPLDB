@@ -320,7 +320,7 @@
         setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
     </script>
 
-    <!-- <script>
+    <script>
             document.addEventListener("DOMContentLoaded", function () {
             const localMediaContainer = document.getElementById("local-media");
             const joinButton = document.getElementById("join-button");
@@ -415,7 +415,7 @@
             localControls.classList.add("hidden");
         });
 
-    </script>  -->
+    </script> 
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
