@@ -151,7 +151,7 @@
         }
         .video_wrap P {
             position: absolute;
-            right: 26px;
+            right: 62px;
             top: 19px;
             color: #ffffff;
             font-weight: 600;
@@ -258,7 +258,7 @@
             <div class="w-100 relative">
                <div class="video_wrap">
                 <div id="partcipantCount" style="display:none">
-                    <p>Live Participants: <span id="participant-count" style="display: none;">0</span></p>
+                    <p>Live Participants: <span id="participant-count">0</span></p>
                 </div>
                     <div class="column" id="local-media" ></div>
                </div> 
@@ -320,7 +320,7 @@
         setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
     </script>
 
-    <script>
+    <!-- <script>
             document.addEventListener("DOMContentLoaded", function () {
             const localMediaContainer = document.getElementById("local-media");
             const joinButton = document.getElementById("join-button");
@@ -330,7 +330,7 @@
             const cameraControl = document.getElementById("camera-control");
 
             let localStream = null;
-            let micEnabled = true;
+            let micEnabled = false;
             let cameraEnabled = true;
 
             if (!localMediaContainer) {
@@ -415,35 +415,35 @@
             localControls.classList.add("hidden");
         });
 
-    </script> 
+    </script>  -->
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const joinButton = document.getElementById("join-button");
-        const leaveButton = document.getElementById("leave-button");
+        document.addEventListener("DOMContentLoaded", function () {
+            const joinButton = document.getElementById("join-button");
+            const leaveButton = document.getElementById("leave-button");
 
-        leaveButton.style.display = "none";
+            leaveButton.style.display = "none";
 
-        joinButton.addEventListener("click", function () {
-            startBroadcast(); 
-            joinButton.style.display = "none"; 
-            leaveButton.style.display = "block"; 
+            joinButton.addEventListener("click", function () {
+                startBroadcast(); 
+                joinButton.style.display = "none"; 
+                leaveButton.style.display = "block"; 
+            });
+
+            leaveButton.addEventListener("click", function () {
+                stopBroadcast();
+                leaveButton.style.display = "none"; 
+                joinButton.style.display = "block"; 
+            });
+
+            function startBroadcast() {
+                console.log("Broadcast started");
+            }
+
+            function stopBroadcast() {
+                console.log("Broadcast stopped");
+            }
         });
-
-        leaveButton.addEventListener("click", function () {
-            stopBroadcast();
-            leaveButton.style.display = "none"; 
-            joinButton.style.display = "block"; 
-        });
-
-        function startBroadcast() {
-            console.log("Broadcast started");
-        }
-
-        function stopBroadcast() {
-            console.log("Broadcast stopped");
-        }
-    });
 
     </script>
 

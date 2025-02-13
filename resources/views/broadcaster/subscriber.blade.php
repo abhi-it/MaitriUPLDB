@@ -57,7 +57,7 @@
         }
 
         .video-container {
-            max-width: 910px;
+            max-width: 95%;
             margin: 0 auto;
 
             position: relative;
@@ -76,6 +76,8 @@
             display: block;
             border: 2px solid #000;
             border-radius: 8px;
+            max-height: calc(100vh - 97px);
+            object-fit: cover;
         }
 
         #leave-button {
@@ -96,6 +98,7 @@
         button#mic-control {
             background: #ea7327;
             border: 1px solid #ea7327;
+            display: none;
         }
 
         .container-box {
@@ -176,23 +179,21 @@
                     <label for="token" style="display: none;">Token</label>
                     <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
                     <!-- <button class="button" id="join-button">Join</button> -->
-                    <button class="button" style="display:none;" id="leave-button">
+                    {{--<button class="button" style="display:none;" id="leave-button">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                         Leave</button>
-                    <button class="button" id="mic-control">
+                    <button class="button" id="mic-control">Mute</button>--}}
 
-                        Mute
+                    <button class="button" style="display:none;" id="leave-button">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> Leave
                     </button>
+                    <button class="button" style="display:none;" id="mic-control"><i class="fa fa-microphone-slash" aria-hidden="true"></i>  Mute</button>
                 </div>
                 <div id="remote-media"></div>
             </div>
         </div>
-
-
-
-
-
     </div>
+
     <script src="/js/subscriber.js"></script>
     <script src="/js/media-devices.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -203,7 +204,22 @@
                 $('#remote-media').empty();
             })
         });
+
     </script>
+
+<script>
+    document.getElementById("join-button").addEventListener("click", function() {
+        this.style.display = "none"; // Hide Join button
+        document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
+        document.getElementById("mic-control").style.display = "inline-block"; // Show Mute button
+    });
+
+    document.getElementById("leave-button").addEventListener("click", function() {
+        this.style.display = "none"; // Hide Leave button
+        document.getElementById("mic-control").style.display = "none"; // Hide Mute button
+        document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
+    });
+</script>
 </body>
 
 </html>
