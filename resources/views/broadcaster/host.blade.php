@@ -105,6 +105,12 @@
                     <option selected disabled>Choose Option</option>
                 </select>
             </div>
+            <div class="column">
+                <label for="audio-devices">Select Microphone</label>
+                <select disabled id="audio-devices">
+                    <option selected disabled>Choose Option</option>
+                </select>
+            </div>
 
 
             <div class="column" style="display:none;">

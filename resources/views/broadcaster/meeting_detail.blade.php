@@ -1,5 +1,6 @@
 @extends('broadcaster.layout.header')
 @section('content')
+
 <style>
     .card-str {
         padding: 30px;
@@ -15,17 +16,29 @@
         font-size: 18px;
     }
 </style>
+
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:600px;">
     <h3 class="text-center fw-bold m-4">Meeting Details</h3>
     @if(!empty($data[0]))
     <div class="card card-str">
         <p>Id : <span>{{ $data[0]['channel_name'] }}</span></p>
         <p>Participant's Joining Link :</p>
-        <p>
-            <span class="d-block"><a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}"
+        {{--<p>
+            <span class="d-block" id="participant-link" ><a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}"
                     target="_blank">
                     {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
                 </a></span>
+        </p>--}}
+
+        <p>
+            <span class="d-block" id="participant-link">
+                <a href="{{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}" target="_blank">
+                    {{ route('ivs_playback', ['url' => $data[0]['playback_url']]) }}
+                </a>
+            </span>
+            <button onclick="copyToClipboard()" style="background: none; border: none; cursor: pointer;">
+                📋
+            </button>
         </p>
 
         <form method="GET" class="text-right" target="_blank" action="{{ route('ivs_latency') }}">
@@ -48,9 +61,6 @@
             </tr>
         </thead>
         <tbody>
-
-
-
             @if(!empty($data[0]))
             @php $i = 1; @endphp
 
@@ -88,6 +98,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function copyToClipboard() {
+        var link = document.getElementById("participant-link").innerText.trim();
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Link copied to clipboard!");
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+    }
+</script>
+
 <script>
     $(document).on("click", ".show-more", function () {
         let fullToken = $(this).data("token");

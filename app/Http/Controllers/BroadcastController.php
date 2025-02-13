@@ -23,16 +23,26 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            $client = new IvsRealTimeClient([
+            // $client = new IvsRealTimeClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+            // ]);
+
+            $ivsClient = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
-            $result = $client->listStages();
+            $result = $ivsClient->listStages();
+        
             return $result['stages'] ?? [];
     
         } catch (AwsException $e) {
@@ -59,12 +69,21 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
+            // $client = new IvsRealTimeClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+            // ]);
+
             $client = new IvsRealTimeClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
 
@@ -95,6 +114,7 @@ class BroadcastController extends Controller
         }
 
         $data = $this->createPublisherToken($stageArn);
+      
         return view('broadcaster.broadcaster', compact('data','stageArn'));
     }
 
@@ -170,7 +190,6 @@ class BroadcastController extends Controller
             // $token = $data['token'];
 
             $token = $request->token;
-
             return view('broadcaster.host', compact('token'));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -252,8 +271,10 @@ class BroadcastController extends Controller
     {
         $stream_key = $request->stream_key;
         $ingest_endpoint = $request->ingest_endpoint;
+        $playbackUrl = $request->playbackUrl;
+        $fullUrl = route('ivs_playback', ['url' => urlencode($playbackUrl)]);
 
-        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint'));
+        return view('broadcaster.ivs_latency', compact('stream_key','ingest_endpoint','fullUrl'));
     }
 
     public function add_channel()
@@ -308,22 +329,24 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            // $ivsClient = new IvsClient([
-            //     'version' => 'latest',
-            //     'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
-            //     'credentials' => [
-            //         'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
-            //         'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-            //     ],
-            // ]);
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
+
+            // $ivsClient = new IvsClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+            // ]);
+
             $result = $ivsClient->listChannels([]);
             $channels = $result['channels'];
             $data = [];
@@ -357,23 +380,23 @@ class BroadcastController extends Controller
             $awsSecret = config('services.aws.secret');
             $awsRegion = config('services.aws.region');
 
-            // $ivsClient = new IvsClient([
-            //     'version' => 'latest',
-            //     'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
-            //     'credentials' => [
-            //         'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
-            //         'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-            //     ],
-            // ]);
-
             $ivsClient = new IvsClient([
                 'version' => 'latest',
-                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
                 'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
             ]);
+
+            // $ivsClient = new IvsClient([
+            //     'version' => 'latest',
+            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+            //     'credentials' => [
+            //         'key' => env('AWS_ACCESS_KEY_ID'),
+            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            //     ],
+            // ]);
 
             $result = $ivsClient->listChannels([]);
             $channels = $result['channels'];
