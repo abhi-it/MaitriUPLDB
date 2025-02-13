@@ -169,12 +169,12 @@
                     <option selected disabled>Choose Option</option>
                 </select>
             </div>
-            <div class="column">
+            {{--<div class="column">
                 <label for="audio-devices">Select Microphone</label>
                 <select disabled id="audio-devices">
                     <option selected disabled>Choose Option</option>
                 </select>
-            </div>
+            </div>--}}
 
 
             <div class="column" style="display:none;">
@@ -189,7 +189,8 @@
                         <path fill-rule="evenodd"
                             d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z" />
                     </svg>
-                    Join Stage</button>
+                    Join Broadcast</button>
+
                 <button class="button" style="margin: auto;" id="leave-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
@@ -198,7 +199,7 @@
                         <path fill-rule="evenodd"
                             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                     </svg>
-                    Leave Stage</button>
+                    Leave Broadcast</button>
             </div>
         </div>
 
@@ -236,7 +237,7 @@
 
     <script src="/js/helpers.js"></script>
     <script src="/js/media-devices.js"></script>
-    <script src="/js/stages-simpel.js"></script>
+    <script src="/js/stages-simple.js"></script>
 
     <script>
         function fetchLiveParticipants() {
@@ -258,27 +259,120 @@
         setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
     </script>
 
+    <!-- <script>
+        let stream; // Global stream variable
+        async function startCamera() {
+            try {
+                // Request access to video and audio
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
+
+                // Display the video stream in a new video element
+                const videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                videoElement.autoplay = true;
+                videoElement.muted = true; // Mute to prevent feedback
+
+                const localMediaContainer = document.getElementById('local-media');
+                localMediaContainer.innerHTML = ''; // Clear previous content
+                localMediaContainer.appendChild(videoElement);
+
+                // Enable the device selection dropdowns
+                document.getElementById('video-devices').disabled = false;
+                document.getElementById('audio-devices').disabled = false;
+
+                // Populate the device lists
+                await listDevices();
+            } catch (error) {
+                console.error('Error accessing camera/microphone:', error);
+            }
+        }
+
+        // Function to list available video and audio devices
+        async function listDevices() {
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoSelect = document.getElementById('video-devices');
+                const audioSelect = document.getElementById('audio-devices');
+
+                videoSelect.innerHTML = '<option selected disabled>Choose Camera</option>';
+                audioSelect.innerHTML = '<option selected disabled>Choose Microphone</option>';
+
+                devices.forEach(device => {
+                    if (device.kind === 'videoinput') {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.textContent = device.label || `Camera ${videoSelect.length}`;
+                        videoSelect.appendChild(option);
+                    }
+                    if (device.kind === 'audioinput') {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.textContent = device.label || `Microphone ${audioSelect.length}`;
+                        audioSelect.appendChild(option);
+                    }
+                });
+            } catch (error) {
+                console.error('Error listing devices:', error);
+            }
+        }
+
+        // Start the camera automatically when the page loads
+        window.onload = startCamera;
+    </script>  -->
 
     <script>
-         function copyToClipboard() {
-        let inputField = document.getElementById("participant-link");
-        navigator.clipboard.writeText(inputField.value).then(() => {
-            let copyMessage = document.getElementById("copy-message");
-            copyMessage.style.display = "block";  // Show message
+        document.addEventListener("DOMContentLoaded", function () {
+        const joinButton = document.getElementById("join-button");
+        const leaveButton = document.getElementById("leave-button");
 
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                copyMessage.style.display = "none";
-            }, 5000);
-        }).catch(err => {
-            console.error("Copy failed: ", err);
+        leaveButton.style.display = "none";
+
+        joinButton.addEventListener("click", function () {
+            startBroadcast(); 
+            joinButton.style.display = "none"; 
+            leaveButton.style.display = "block"; 
         });
-    }
 
-    // Attach event listener AFTER the function is defined
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+        leaveButton.addEventListener("click", function () {
+            stopBroadcast();
+            leaveButton.style.display = "none"; 
+            joinButton.style.display = "block"; 
+        });
+
+        function startBroadcast() {
+            console.log("Broadcast started");
+        }
+
+        function stopBroadcast() {
+            console.log("Broadcast stopped");
+        }
     });
+
+    </script>
+
+    <script>
+        function copyToClipboard() {
+            let inputField = document.getElementById("participant-link");
+            navigator.clipboard.writeText(inputField.value).then(() => {
+                let copyMessage = document.getElementById("copy-message");
+                copyMessage.style.display = "block";  // Show message
+
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    copyMessage.style.display = "none";
+                }, 5000);
+            }).catch(err => {
+                console.error("Copy failed: ", err);
+            });
+        }
+
+        // Attach event listener AFTER the function is defined
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+        });
     </script>
 </body>
 
