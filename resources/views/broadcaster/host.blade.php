@@ -169,12 +169,12 @@
                     <option selected disabled>Choose Option</option>
                 </select>
             </div>
-            <div class="column">
+            {{--<div class="column">
                 <label for="audio-devices">Select Microphone</label>
                 <select disabled id="audio-devices">
                     <option selected disabled>Choose Option</option>
                 </select>
-            </div>
+            </div>--}}
 
 
             <div class="column" style="display:none;">
@@ -189,7 +189,8 @@
                         <path fill-rule="evenodd"
                             d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z" />
                     </svg>
-                    Join Stage</button>
+                    Join Broadcast</button>
+
                 <button class="button" style="margin: auto;" id="leave-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
@@ -198,7 +199,7 @@
                         <path fill-rule="evenodd"
                             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                     </svg>
-                    Leave Stage</button>
+                    Leave Broadcast</button>
             </div>
         </div>
 
@@ -236,7 +237,7 @@
 
     <script src="/js/helpers.js"></script>
     <script src="/js/media-devices.js"></script>
-    <script src="/js/stages-simpel.js"></script>
+    <script src="/js/stages-simple.js"></script>
 
     <script>
         function fetchLiveParticipants() {
@@ -258,27 +259,153 @@
         setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
     </script>
 
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const localMediaContainer = document.getElementById("local-media");
+            const joinButton = document.getElementById("join-button");
+            const leaveButton = document.getElementById("leave-button");
+            const localControls = document.getElementById("local-controls");
+            const micControl = document.getElementById("mic-control");
+            const cameraControl = document.getElementById("camera-control");
+
+            let localStream = null;
+            let micEnabled = true;
+            let cameraEnabled = true;
+
+            if (!localMediaContainer) {
+                console.error("local-media container not found!");
+                return;
+            }
+
+            // Start camera when page loads
+            startCamera();
+
+            function startCamera() {
+                navigator.mediaDevices
+                    .getUserMedia({ video: true, audio: true })
+                    .then((stream) => {
+                        localStream = stream; 
+
+                        const videoElement = document.createElement("video");
+                        videoElement.srcObject = stream;
+                        videoElement.autoplay = true;
+                        videoElement.playsInline = true;
+                        videoElement.style.width = "100%";
+
+                        localMediaContainer.innerHTML = "";
+                        localMediaContainer.appendChild(videoElement);
+                    })
+                    .catch((error) => {
+                        console.error("Error accessing camera:", error);
+                    });
+            }
+
+            function stopCamera() {
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
+                    localMediaContainer.innerHTML = "<p>Camera Stopped</p>"; // Indicate camera is off
+                    localStream = null;
+                }
+            }
+
+            function showControls() {
+                localControls.classList.remove("hidden");
+            }
+
+            function hideControls() {
+                localControls.classList.add("hidden");
+            }
+
+            micControl.addEventListener("click", function () {
+                if (localStream) {
+                    localStream.getAudioTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        micEnabled = track.enabled;
+                        micControl.innerHTML = micEnabled ? "Mute Mic" : "Unmute Mic";
+                    });
+                }
+            });
+
+            cameraControl.addEventListener("click", function () {
+                if (localStream) {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        cameraEnabled = track.enabled;
+                        cameraControl.innerHTML = cameraEnabled ? "Mute Camera" : "Unmute Camera";
+                    });
+                }
+            });
+
+            joinButton.addEventListener("click", function () {
+                stopCamera();
+                joinButton.style.display = "none"; // Hide the join button
+                leaveButton.style.display = "block"; // Show the leave button
+                showControls(); // Show Mic & Camera Controls
+            });
+
+            leaveButton.addEventListener("click", function () {
+                startCamera();
+                joinButton.style.display = "block"; // Show the join button
+                leaveButton.style.display = "none"; // Hide the leave button
+                hideControls(); // Hide Mic & Camera Controls
+            });
+
+            leaveButton.style.display = "none";
+            localControls.classList.add("hidden");
+        });
+
+    </script> 
 
     <script>
-         function copyToClipboard() {
-        let inputField = document.getElementById("participant-link");
-        navigator.clipboard.writeText(inputField.value).then(() => {
-            let copyMessage = document.getElementById("copy-message");
-            copyMessage.style.display = "block";  // Show message
+        document.addEventListener("DOMContentLoaded", function () {
+        const joinButton = document.getElementById("join-button");
+        const leaveButton = document.getElementById("leave-button");
 
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                copyMessage.style.display = "none";
-            }, 5000);
-        }).catch(err => {
-            console.error("Copy failed: ", err);
+        leaveButton.style.display = "none";
+
+        joinButton.addEventListener("click", function () {
+            startBroadcast(); 
+            joinButton.style.display = "none"; 
+            leaveButton.style.display = "block"; 
         });
-    }
 
-    // Attach event listener AFTER the function is defined
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+        leaveButton.addEventListener("click", function () {
+            stopBroadcast();
+            leaveButton.style.display = "none"; 
+            joinButton.style.display = "block"; 
+        });
+
+        function startBroadcast() {
+            console.log("Broadcast started");
+        }
+
+        function stopBroadcast() {
+            console.log("Broadcast stopped");
+        }
     });
+
+    </script>
+
+    <script>
+        function copyToClipboard() {
+            let inputField = document.getElementById("participant-link");
+            navigator.clipboard.writeText(inputField.value).then(() => {
+                let copyMessage = document.getElementById("copy-message");
+                copyMessage.style.display = "block";  // Show message
+
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    copyMessage.style.display = "none";
+                }, 5000);
+            }).catch(err => {
+                console.error("Copy failed: ", err);
+            });
+        }
+
+        // Attach event listener AFTER the function is defined
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+        });
     </script>
 </body>
 
