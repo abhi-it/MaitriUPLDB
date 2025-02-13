@@ -30,6 +30,7 @@
                         <form method="GET" action="{{ route('ivs_latency') }}">
                             <input type="hidden" name="stream_key" value="{{ $data[0]['stream_key'] }}">
                             <input type="hidden" name="ingest_endpoint" value="{{ $data[0]['ingest_endpoint'] }}">
+                            <input type="hidden" name="playbackUrl" value="{{ $data[0]['playback_url'] }}">
                             <button type="submit" class="btn btn-primary">Stream</button>
                         </form>
                     </td>
