@@ -85,6 +85,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+              
             ]);
 
             $result = $client->createParticipantToken([
@@ -106,15 +107,12 @@ class BroadcastController extends Controller
     public function addBroadcaster(Request $request)
     {
         $stages = $this->listIvsStages();
-
-        dd($stages);
         $stageArn = $stages[0]['arn'];
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
 
         $data = $this->createPublisherToken($stageArn);
-      
         return view('broadcaster.broadcaster', compact('data','stageArn'));
     }
 
