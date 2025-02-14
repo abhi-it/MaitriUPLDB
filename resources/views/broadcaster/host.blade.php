@@ -262,7 +262,7 @@
         <div class="row local-container">
             <div class="w-100 relative">
                 <div class="video_wrap">
-                    <div id="partcipantCount" style="display:none">
+                    <div id="partcipantCount">
                         <p>लाइव प्रतिभागी: <span id="participant-count">0</span></p>
                     </div>
                     <div class="column" id="local-media"></div>
@@ -310,10 +310,10 @@
 
     <script>
         function fetchLiveParticipants() {
-            fetch(`/api/ivs/live-participants?stageArn=${stage.arn}`)
+            fetch(`/ivs/live-participants?stageArn=${stage.arn}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (broadcastStarted && participantCount === 0) {
+                    if (participantCount === 0) {
                         participantCount = data.count;
                         updateParticipantCount();
                     }
