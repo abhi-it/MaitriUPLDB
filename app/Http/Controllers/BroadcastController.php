@@ -530,7 +530,7 @@ class BroadcastController extends Controller
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
 
-        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
         $awsKey = config('services.aws.key');
         $awsSecret = config('services.aws.secret');
         $awsRegion = config('services.aws.region');
