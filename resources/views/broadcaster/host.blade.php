@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Amazon IVS Real-Time Streaming Web Sample (HTML and JavaScript)</title>
+    <title>Amazon IVS Real-Time Streaming</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
@@ -16,197 +16,195 @@
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" /> -->
     <style>
-    html {
-        margin: 0px;
-    }
-
-    #local-media video {
-        max-height: 700px;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    #local-media {
-        padding: 0;
-        max-width: 99%;
-        margin: 0px auto;
-        display: block;
-    }
-
-    #local-media video {
-        max-height: calc(100vh - 165px);
-        width: 100%;
-        object-fit: cover;
-    }
-
-    .flex {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        align-items: center;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .static-controls {
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        bottom: 45px;
-        / top: 50%;/ text-align: center;
-    }
-
-    .relative {
-        position: relative;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    button#mic-control svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
-
-    button#camera-control svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
-
-    button#camera-control {
-        background: #ea7427;
-        border: 1px solid #000;
-    }
-
-    button#mic-control {
-        border: 1px solid #000;
-    }
-
-    div#local-controls button {
-        margin: 0;
-        border-radius: 100px;
-    }
-
-    button#join-button svg,
-    button#leave-button svg {
-        position: relative;
-        top: 3px;
-        margin-right: 6px;
-    }
-
-    .link-box {
-        display: flex;
-        align-items: center;
-        background: #f1f3f4;
-        border-radius: 8px;
-        border: 1px solid #d1d1d1;
-        width: 100%;
-        /* max-width: 50%; */
-        max-height: 38px;
-    }
-
-    .link-box input {
-        border: none;
-        background: transparent;
-        width: 100%;
-        font-size: 16px;
-        outline: none;
-        cursor: default;
-        margin-bottom: 0px;
-        max-height: 38px;
-    }
-
-    .copy-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 18px;
-        margin-left: 10px;
-        padding: 0;
-        margin-right: 9px;
-        margin-top: 7px;
-    }
-
-    .copy-btn:hover {
-        color: #007bff;
-    }
-
-
-    .copy-message {
-        position: absolute;
-        top: 30px;
-        left: 55%;
-        transform: translateX(-50%);
-        background: #4caf50;
-        color: white;
-        padding: 2px 5px;
-        border-radius: 5px;
-        font-size: 14px;
-        display: none;
-        animation: fadeOut 0.2s ease-in-out 1.5s forwards;
-    }
-
-    .video_wrap P {
-        position: absolute;
-        right: 62px;
-        top: 19px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 14px;
-    }
-
-    @keyframes fadeOut {
-        to {
-            opacity: 0;
+        html {
+            margin: 0px;
         }
-    }
 
-    button#leave-button {
-        width: 100%;
-        background: #cd3c3c;
-        border: 1px solid #cd3c3c;
-    }
+        #local-media video {
+            max-height: 700px;
+            width: 100%;
+            object-fit: cover;
+        }
 
-    .video_wrap P:before {
-        content: "";
-        display: block;
-        width: 5px;
-        height: 5px;
-        background: #F44336;
-        border-radius: 100%;
-        position: absolute;
-        left: -15px;
-        top: 50%;
-        transform: translate(0%, -50%);
-    }
+        #local-media {
+            padding: 0;
+            max-width: 99%;
+            margin: 0px auto;
+            display: block;
+        }
 
-    button#join-button {
-        width: 100%;
-    }
+        #local-media video {
+            max-height: calc(100vh - 165px);
+            width: 100%;
+            object-fit: cover;
+        }
 
-    button.copy-btn:hover {
-        background: transparent;
-    }
+        .flex {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
 
-    .video_wrap {
-        position: relative;
-    }
+        .w-100 {
+            width: 100%;
+        }
+
+        .static-controls {
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            bottom: 45px;
+            / top: 50%;/ text-align: center;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        button#mic-control svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
+
+        button#camera-control svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
+
+        button#camera-control {
+            background: #ea7427;
+            border: 1px solid #000;
+        }
+
+        button#mic-control {
+            border: 1px solid #000;
+        }
+
+        div#local-controls button {
+            margin: 0;
+            border-radius: 100px;
+        }
+
+        button#join-button svg,
+        button#leave-button svg {
+            position: relative;
+            top: 3px;
+            margin-right: 6px;
+        }
+
+        .link-box {
+            display: flex;
+            align-items: center;
+            background: #f1f3f4;
+            border-radius: 8px;
+            border: 1px solid #d1d1d1;
+            width: 100%;
+            /* max-width: 50%; */
+            max-height: 38px;
+        }
+
+        .link-box input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            cursor: default;
+            margin-bottom: 0px;
+            max-height: 38px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10px;
+            padding: 0;
+            margin-right: 9px;
+            margin-top: 7px;
+        }
+
+        .copy-btn:hover {
+            color: #007bff;
+        }
+
+
+        .copy-message {
+            position: absolute;
+            top: 30px;
+            left: 55%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+            animation: fadeOut 0.2s ease-in-out 1.5s forwards;
+        }
+
+        .video_wrap P {
+            position: absolute;
+            right: 62px;
+            top: 19px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        button#leave-button {
+            width: 100%;
+            background: #cd3c3c;
+            border: 1px solid #cd3c3c;
+        }
+
+        .video_wrap P:before {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 5px;
+            background: #F44336;
+            border-radius: 100%;
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translate(0%, -50%);
+        }
+
+        button#join-button {
+            width: 100%;
+        }
+
+        button.copy-btn:hover {
+            background: transparent;
+        }
+
+        .video_wrap {
+            position: relative;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container-fluid custom_frame">
-
         <ul id="participant-list"></ul>
-    
         <div class="row">
             <div class="column">
                 <label for="video-devices">कैमरा चुनें</label>
@@ -267,13 +265,6 @@
                     </div>
                     <div class="column" id="local-media"></div>
                 </div>
-
-               <div class="video_wrap">
-                   <div id="partcipantCount" style="display:none">
-                        <p>Live Participants: <span id="participant-count">0</span></p>
-                    </div>
-                    <div class="column" id="local-media" ></div>
-               </div> 
                 
                 <!-- <div class="col-md-12 flex"> -->
                 <div class="static-controls hidden" id="local-controls">
@@ -307,174 +298,196 @@
     <script src="/js/helpers.js"></script>
     <script src="/js/media-devices.js"></script>
     <script src="/js/stages-simple.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        function fetchLiveParticipants() {
-            fetch(`/ivs/live-participants?stageArn=${stage.arn}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (participantCount === 0) {
-                        participantCount = data.count;
-                        updateParticipantCount();
+        $(document).ready(function () {
+            var stageArn = "{{ $stageArn }}"; 
+
+            function fetchParticipantCount() {
+                $.ajax({
+                    url: "{{ route('ivs.participants') }}",
+                    method: "GET",
+                    data: { stageArn: stageArn }, 
+                    success: function (response) {
+                        if (response.count !== undefined) {
+                            var adjustedCount = Math.max(response.count - 1, 0); 
+                            $("#participant-count").text(adjustedCount);
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
                     }
-                })
-                .catch(error => console.error("Error fetching live participants:", error));
-        }
+                });
+            }
 
-        setInterval(fetchLiveParticipants, 3000);
-
+            setInterval(fetchParticipantCount, 5000);
+            fetchParticipantCount(); 
+        });
     </script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const localMediaContainer = document.getElementById("local-media");
-        const joinButton = document.getElementById("join-button");
-        const leaveButton = document.getElementById("leave-button");
-        const localControls = document.getElementById("local-controls");
-        const micControl = document.getElementById("mic-control");
-        const cameraControl = document.getElementById("camera-control");
-
-        let localStream = null;
-        let micEnabled = false;
-        let cameraEnabled = true;
-
-        if (!localMediaContainer) {
-            console.error("local-media container not found!");
-            return;
-        }
-
-        // Start camera when page loads
-        startCamera();
-
-        function startCamera() {
-            navigator.mediaDevices
-                .getUserMedia({
-                    video: true,
-                    audio: true
-                })
-                .then((stream) => {
-                    localStream = stream;
-
-                    const videoElement = document.createElement("video");
-                    videoElement.srcObject = stream;
-                    videoElement.autoplay = true;
-                    videoElement.playsInline = true;
-                    videoElement.style.width = "100%";
-
-                    localMediaContainer.innerHTML = "";
-                    localMediaContainer.appendChild(videoElement);
-                })
-                .catch((error) => {
-                    console.error("Error accessing camera:", error);
-                });
-        }
-
-        function stopCamera() {
-            if (localStream) {
-                localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
-                localMediaContainer.innerHTML = ""; // Indicate camera is off <p>Camera Stopped</p>
-                localStream = null;
-            }
-        }
-
-        function showControls() {
-            localControls.classList.remove("hidden");
-        }
-
-        function hideControls() {
-            localControls.classList.add("hidden");
-        }
-
-        micControl.addEventListener("click", function() {
-            if (localStream) {
-                localStream.getAudioTracks().forEach(track => {
-                    track.enabled = !track.enabled;
-                    micEnabled = track.enabled;
-                    micControl.innerHTML = micEnabled ? "माइक म्यूट करें" : "माइक अनम्यूट करें";
-                });
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("partcipantCount").style.display = "none";
+           
+            const joinButton = document.getElementById("join-button");
+            joinButton.addEventListener("click", function () {
+                document.getElementById("partcipantCount").style.display = "block";
+            });
         });
+    </script>
 
-        cameraControl.addEventListener("click", function() {
-            if (localStream) {
-                localStream.getVideoTracks().forEach(track => {
-                    track.enabled = !track.enabled;
-                    cameraEnabled = track.enabled;
-                    cameraControl.innerHTML = cameraEnabled ? "कैमरा बंद करें" :
-                        "कैमरा चालू करें";
-                });
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const localMediaContainer = document.getElementById("local-media");
+            const joinButton = document.getElementById("join-button");
+            const leaveButton = document.getElementById("leave-button");
+            const localControls = document.getElementById("local-controls");
+            const micControl = document.getElementById("mic-control");
+            const cameraControl = document.getElementById("camera-control");
+
+            let localStream = null;
+            let micEnabled = false;
+            let cameraEnabled = true;
+
+            if (!localMediaContainer) {
+                console.error("local-media container not found!");
+                return;
             }
-        });
 
-        joinButton.addEventListener("click", function() {
-            stopCamera();
-            joinButton.style.display = "none"; // Hide the join button
-            leaveButton.style.display = "block"; // Show the leave button
-            showControls(); // Show Mic & Camera Controls
-        });
-
-        leaveButton.addEventListener("click", function() {
+            // Start camera when page loads
             startCamera();
-            joinButton.style.display = "block"; // Show the join button
-            leaveButton.style.display = "none"; // Hide the leave button
-            hideControls(); // Hide Mic & Camera Controls
-        });
 
-        leaveButton.style.display = "none";
-        localControls.classList.add("hidden");
-    });
-    </script>
+            function startCamera() {
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: true,
+                        audio: true
+                    })
+                    .then((stream) => {
+                        localStream = stream;
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const joinButton = document.getElementById("join-button");
-        const leaveButton = document.getElementById("leave-button");
+                        const videoElement = document.createElement("video");
+                        videoElement.srcObject = stream;
+                        videoElement.autoplay = true;
+                        videoElement.playsInline = true;
+                        videoElement.style.width = "100%";
 
-        leaveButton.style.display = "none";
+                        localMediaContainer.innerHTML = "";
+                        localMediaContainer.appendChild(videoElement);
+                    })
+                    .catch((error) => {
+                        console.error("Error accessing camera:", error);
+                    });
+            }
 
-        joinButton.addEventListener("click", function() {
-            startBroadcast();
-            joinButton.style.display = "none";
-            leaveButton.style.display = "block";
-        });
+            function stopCamera() {
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
+                    localMediaContainer.innerHTML = ""; // Indicate camera is off <p>Camera Stopped</p>
+                    localStream = null;
+                }
+            }
 
-        leaveButton.addEventListener("click", function() {
-            stopBroadcast();
+            function showControls() {
+                localControls.classList.remove("hidden");
+            }
+
+            function hideControls() {
+                localControls.classList.add("hidden");
+            }
+
+            micControl.addEventListener("click", function() {
+                if (localStream) {
+                    localStream.getAudioTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        micEnabled = track.enabled;
+                        micControl.innerHTML = micEnabled ? "माइक म्यूट करें" : "माइक अनम्यूट करें";
+                    });
+                }
+            });
+
+            cameraControl.addEventListener("click", function() {
+                if (localStream) {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.enabled = !track.enabled;
+                        cameraEnabled = track.enabled;
+                        cameraControl.innerHTML = cameraEnabled ? "कैमरा बंद करें" :
+                            "कैमरा चालू करें";
+                    });
+                }
+            });
+
+            joinButton.addEventListener("click", function() {
+                stopCamera();
+                joinButton.style.display = "none"; // Hide the join button
+                leaveButton.style.display = "block"; // Show the leave button
+                showControls(); // Show Mic & Camera Controls
+            });
+
+            leaveButton.addEventListener("click", function() {
+                startCamera();
+                joinButton.style.display = "block"; // Show the join button
+                leaveButton.style.display = "none"; // Hide the leave button
+                hideControls(); // Hide Mic & Camera Controls
+            });
+
             leaveButton.style.display = "none";
-            joinButton.style.display = "block";
+            localControls.classList.add("hidden");
         });
-
-        function startBroadcast() {
-            console.log("Broadcast started");
-        }
-
-        function stopBroadcast() {
-            console.log("Broadcast stopped");
-        }
-    });
     </script>
 
     <script>
-    function copyToClipboard() {
-        let inputField = document.getElementById("participant-link");
-        navigator.clipboard.writeText(inputField.value).then(() => {
-            let copyMessage = document.getElementById("copy-message");
-            copyMessage.style.display = "block"; // Show message
+        document.addEventListener("DOMContentLoaded", function() {
+            const joinButton = document.getElementById("join-button");
+            const leaveButton = document.getElementById("leave-button");
 
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                copyMessage.style.display = "none";
-            }, 5000);
-        }).catch(err => {
-            console.error("Copy failed: ", err);
+            leaveButton.style.display = "none";
+
+            joinButton.addEventListener("click", function() {
+                startBroadcast();
+                joinButton.style.display = "none";
+                leaveButton.style.display = "block";
+            });
+
+            leaveButton.addEventListener("click", function() {
+                stopBroadcast();
+                leaveButton.style.display = "none";
+                joinButton.style.display = "block";
+            });
+
+            function startBroadcast() {
+                console.log("Broadcast started");
+            }
+
+            function stopBroadcast() {
+                console.log("Broadcast stopped");
+            }
         });
-    }
-
-    // Attach event listener AFTER the function is defined
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
-    });
     </script>
+
+    <script>
+        function copyToClipboard() {
+            let inputField = document.getElementById("participant-link");
+                navigator.clipboard.writeText(inputField.value).then(() => {
+                    let copyMessage = document.getElementById("copy-message");
+                    copyMessage.style.display = "block"; // Show message
+
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        copyMessage.style.display = "none";
+                    }, 5000);
+                }).catch(err => {
+                    console.error("Copy failed: ", err);
+                });
+            }
+
+        // Attach event listener AFTER the function is defined
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+        });
+    </script>
+
 </body>
 
 </html>

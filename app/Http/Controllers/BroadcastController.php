@@ -521,95 +521,58 @@ class BroadcastController extends Controller
         return view('broadcaster.meeting_detail');
     }
 
-
     //LIve participants Count
-    public function getLiveParticipants(Request $request)
-    {
-        try {
-            $stageArn = $request->query('stageArn'); 
-
-            if (!$stageArn) {
-                return response()->json(['error' => 'Stage ARN is required.'], 400);
-            }
-
-            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
-            $awsKey = config('services.aws.key');
-            $awsSecret = config('services.aws.secret');
-            $awsRegion = config('services.aws.region');
-
-            $ivsClient = new IvsClient([
-                'version' => 'latest',
-                'region' => 'ap-south-1',  //env('AWS_IVS_REGION', 'ap-south-1'),
-                'credentials' => [
-                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-                ],
-            ]);
-
-            $response = $ivsClient->listStageSessions(['stageArn' => $stageArn]);
-            Log::info('IVS Response:', $response->toArray());
-            $participants = $response['stageSessions'] ?? [];
-
-            $participantNames = [];
-            foreach ($participants as $session) {
-                if (isset($session['participantToken'])) {
-                    $participantNames[] = $session['participantToken'];
-                }
-            }
-
-            return response()->json([
-                'count' => count($participantNames),
-                'participants' => $participantNames
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch participants.'], 500);
-        }
-    }
-
-
-    public function checkBroadcastStatus(Request $request)
+    public function getLiveParticipantsCount(Request $request)
     {
         $stageArn = $request->query('stageArn'); 
-        if (!$stageArn) {
-            return response()->json(['error' => 'Stage ARN is required.'], 400);
-        }
-    
-        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
-            $awsKey = config('services.aws.key');
-            $awsSecret = config('services.aws.secret');
-            $awsRegion = config('services.aws.region');
 
-            $ivsClient = new IvsClient([
-                'version' => 'latest',
-                'region' => $awsRegion,  
-                'credentials' => [
-                    'key' => $awsKey, 
-                    'secret' => $awsSecret ,  
-                ],
-            ]);
-    
+        if (!$stageArn) {
+            return response()->json(['error' => 'Stage ARN is required'], 400);
+        }
+
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+        $awsKey = config('services.aws.key');
+        $awsSecret = config('services.aws.secret');
+        $awsRegion = config('services.aws.region');
+
+        $ivsClient = new IvsRealTimeClient([
+            'version' => 'latest',
+            'region' => 'ap-south-1',  
+            'credentials' => [
+                'key' => $awsKey, 
+                'secret' => $awsSecret ,  
+            ],
+        ]);
+
         try {
-            $response = $ivsClient->listStageSessions(['stageArn' => $stageArn]);
-            $participants = $response['stageSessions'] ?? [];
-            
-            $isLive = false;
-            foreach ($participants as $session) {
-                if ($session['participantToken'] && $session['participantToken'] === 'PUBLISHER') {
-                    $isLive = true;
-                    break;
-                }
-            }
-    
-            return response()->json([
-                'isLive' => $isLive,
-                'message' => $isLive ? 'Broadcast is live.' : 'Broadcast has not started yet.'
+            $sessionResult = $ivsClient->listStageSessions([
+                'stageArn' => $stageArn
             ]);
+
+            if (empty($sessionResult['stageSessions'])) {
+                return response()->json(['count' => 0]);
+            }
+
+            $latestSession = $sessionResult['stageSessions'][0];
+            $sessionId = $latestSession['sessionId'];
+
+            $participantsResult = $ivsClient->listParticipants([
+                'stageArn' => $stageArn,
+                'sessionId' => $sessionId
+            ]);
+
+            $connectedParticipants = array_filter($participantsResult['participants'], function ($participant) {
+                return $participant['state'] === 'CONNECTED';
+            });
+
+            return response()->json(['count' => count($connectedParticipants)]);
+        } catch (\Aws\Exception\AwsException $e) {
+            return response()->json(['error' => $e->getAwsErrorMessage()], 500);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to check broadcast status.'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     
-
-
 
 }
