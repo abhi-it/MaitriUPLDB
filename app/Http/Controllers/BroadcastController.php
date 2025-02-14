@@ -7,6 +7,7 @@ use App\Models\API\Role;
 use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
 use Aws\Ivs\IvsClient;
+use Illuminate\Support\Facades\Log;
 
 class BroadcastController extends Controller
 {
@@ -496,7 +497,6 @@ class BroadcastController extends Controller
 
 
     //Playback URL
-
     //get
     public function playback(Request $request)
     {
@@ -522,8 +522,8 @@ class BroadcastController extends Controller
     }
 
 
-    //Count
-    public function getLiveParticipants($stageArn)
+    //LIve participants Count
+    public function getLiveParticipants11($stageArn)
     {
         try {
             require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
@@ -571,6 +571,93 @@ class BroadcastController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getLiveParticipants(Request $request)
+    {
+        try {
+            $stageArn = $request->query('stageArn'); 
+
+            if (!$stageArn) {
+                return response()->json(['error' => 'Stage ARN is required.'], 400);
+            }
+
+            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+            $awsKey = config('services.aws.key');
+            $awsSecret = config('services.aws.secret');
+            $awsRegion = config('services.aws.region');
+
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => 'ap-south-1',  //env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
+                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+
+            $response = $ivsClient->listStageSessions(['stageArn' => $stageArn]);
+            Log::info('IVS Response:', $response->toArray());
+            $participants = $response['stageSessions'] ?? [];
+
+            $participantNames = [];
+            foreach ($participants as $session) {
+                if (isset($session['participantToken'])) {
+                    $participantNames[] = $session['participantToken'];
+                }
+            }
+
+            return response()->json([
+                'count' => count($participantNames),
+                'participants' => $participantNames
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch participants.'], 500);
+        }
+    }
+
+
+    public function checkBroadcastStatus(Request $request)
+    {
+        $stageArn = $request->query('stageArn'); 
+        if (!$stageArn) {
+            return response()->json(['error' => 'Stage ARN is required.'], 400);
+        }
+    
+        require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
+            $awsKey = config('services.aws.key');
+            $awsSecret = config('services.aws.secret');
+            $awsRegion = config('services.aws.region');
+
+            $ivsClient = new IvsClient([
+                'version' => 'latest',
+                'region' => $awsRegion,  
+                'credentials' => [
+                    'key' => $awsKey, 
+                    'secret' => $awsSecret ,  
+                ],
+            ]);
+    
+        try {
+            $response = $ivsClient->listStageSessions(['stageArn' => $stageArn]);
+            $participants = $response['stageSessions'] ?? [];
+            
+            $isLive = false;
+            foreach ($participants as $session) {
+                if ($session['participantToken'] && $session['participantToken'] === 'PUBLISHER') {
+                    $isLive = true;
+                    break;
+                }
+            }
+    
+            return response()->json([
+                'isLive' => $isLive,
+                'message' => $isLive ? 'Broadcast is live.' : 'Broadcast has not started yet.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to check broadcast status.'], 500);
+        }
+    }
+    
 
 
 

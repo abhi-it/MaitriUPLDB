@@ -196,7 +196,7 @@
     <div class="container-fluid custom_frame">
         
         <ul id="participant-list"></ul>
-
+    
         <div class="row">
             <div class="column">
                 <label for="video-devices">Select Camera</label>
@@ -252,9 +252,9 @@
         <div class="row local-container">
             <div class="w-100 relative">
                <div class="video_wrap">
-                <div id="partcipantCount" style="display:none">
-                    <p>Live Participants: <span id="participant-count">0</span></p>
-                </div>
+                   <div id="partcipantCount" style="display:none">
+                        <p>Live Participants: <span id="participant-count">0</span></p>
+                    </div>
                     <div class="column" id="local-media" ></div>
                </div> 
                 
@@ -292,27 +292,27 @@
     <script src="/js/stages-simple.js"></script>
 
     <script>
-        document.getElementById("join-button").addEventListener("click", function() {
-            document.getElementById("partcipantCount").style.display = "block";
+        let stageArn = "{{ $stageArn }}"; 
+        let participantCountDiv = document.getElementById("participant-info");
+
+        document.getElementById("join-button").addEventListener("click", function () {
+            participantCountDiv.style.display = "block";
+            fetchLiveParticipants(); 
         });
 
         function fetchLiveParticipants() {
-            fetch(`/ivs/live-participants/{{ $stageArn }}`)
+            fetch(`/ivs/live-participants?stageArn=${stage.arn}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('participant-count').innerText = data.count;
-                    let list = document.getElementById('participant-list');
-                    list.innerHTML = "";
-                    data.participants.forEach(user => {
-                        let li = document.createElement("li");
-                        li.textContent = user;
-                        list.appendChild(li);
-                    });
+                    if (broadcastStarted && participantCount === 0) {
+                        participantCount = data.count;
+                        updateParticipantCount();
+                    }
                 })
                 .catch(error => console.error("Error fetching live participants:", error));
         }
 
-        setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
+        setInterval(fetchLiveParticipants, 3000);
     </script>
 
     <script>

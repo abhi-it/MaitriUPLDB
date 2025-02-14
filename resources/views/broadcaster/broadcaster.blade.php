@@ -71,6 +71,7 @@
     }
 </style>
 
+
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:600px;">
     <h3 class="text-center fw-bold m-4">Broadcaster Details</h3>
     @if(count($data)>0)
@@ -88,7 +89,7 @@
                 <span class="copy-message" id="copy-message">Link copied!</span>
 
                 <div class="link-box">
-                    <input type="text" id="participant-link" value="{{ route('join_webinar', ['stageArn' => $stageArn]) }}" readonly>
+                    <input type="text" id="participant-link" value="{{ route('join_webinar', ['token' => $stageArn]) }}" readonly>
                     <button class="copy-btn" onclick="copyToClipboard()">
                         📋
                     </button>
