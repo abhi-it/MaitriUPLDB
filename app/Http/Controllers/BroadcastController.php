@@ -523,55 +523,6 @@ class BroadcastController extends Controller
 
 
     //LIve participants Count
-    public function getLiveParticipants11($stageArn)
-    {
-        try {
-            require_once base_path('vendor/aws/aws-sdk-php/src/IVS/IVSClient.php');
-            $awsKey = config('services.aws.key');
-            $awsSecret = config('services.aws.secret');
-            $awsRegion = config('services.aws.region');
-
-            $ivsClient = new IvsClient([
-                'version' => 'latest',
-                'region' => $awsRegion,  //env('AWS_IVS_REGION', 'ap-south-1'),
-                'credentials' => [
-                    'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
-                    'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-                ],
-            ]);
-
-            // $ivsClient = new IvsClient([
-            //     'version' => 'latest',
-            //     'region' => env('AWS_IVS_REGION', 'ap-south-1'),
-            //     'credentials' => [
-            //         'key' => env('AWS_ACCESS_KEY_ID'),
-            //         'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            //     ],
-            // ]);
-
-            $result = $ivsClient->listStageSessions([
-                'stageArn' => $stageArn,
-            ]);
-
-            $participantCount = 0;
-            $participants = [];
-
-            if (!empty($result['stageSessions'])) {
-                foreach ($result['stageSessions'] as $session) {
-                    $participantCount += count($session['participantIds']);
-                    $participants = array_merge($participants, $session['participantIds']);
-                }
-            }
-
-            return response()->json([
-                'count' => $participantCount,
-                'participants' => $participants,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
     public function getLiveParticipants(Request $request)
     {
         try {
