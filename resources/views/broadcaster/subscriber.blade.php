@@ -188,8 +188,8 @@
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                         वेबिनार छोड़ें
                     </button>
-                    <button class="button" style="display:none;" id="mic-control"><i class="fa fa-volume-up"></i> आवाज़
-                        बंद करना</button>
+                    <button class="button" style="display:none;" id="mic-control"><i class="fa fa-volume-up"></i>
+                        आवाज चालू करें</button>
                 </div>
                 <div id="remote-media"></div>
             </div>
