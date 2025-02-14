@@ -166,9 +166,6 @@
                     प्रतीक्षा करें या बाद में पुनः प्रयास करें।</p>
 
                 <div class="row"></div>
-                <div id="broadcast-status" style="display: none; color: red; font-weight: bold;">
-                    Broadcast has not started yet.
-                </div>
             </div>
 
             <!-- Local Participant -->
@@ -180,11 +177,6 @@
                     <label for="token" style="display: none;">Token</label>
                     <input type="text" id="token" name="token" value="{{$token}}" style="display: none;" />
                     <!-- <button class="button" id="join-button">Join</button> -->
-                    {{--<button class="button" style="display:none;" id="leave-button">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Leave</button>
-                    <button class="button" id="mic-control">Mute</button>--}}
-
                     <button class="button" style="display:none;" id="leave-button">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                         वेबिनार छोड़ें
@@ -203,14 +195,68 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('#leave-button').click(function() {
-            $('#remote-media').empty();
-        })
-    });
+        $(document).ready(function() {
+            $('#leave-button').click(function() {
+                $('#remote-media').empty();
+            })
+        });
     </script>
 
     <script>
+<<<<<<< HEAD
+        document.getElementById("join-button").addEventListener("click", function() {
+            this.style.display = "none"; // Hide Join button
+            setTimeout(() => {
+                document.getElementById("mic-control").style.display = "inline-block"; 
+                document.getElementById("leave-button").style.display = "inline-block";
+            }, 5000); // Delay for 5 seconds
+        });
+
+        document.getElementById("leave-button").style.display = "none";
+        document.getElementById("mic-control").style.display = "none";
+
+        document.getElementById("leave-button").addEventListener("click", function() {
+            this.style.display = "none"; // Hide Leave button
+            document.getElementById("mic-control").style.display = "none"; 
+            document.getElementById("join-button").style.display = "inline-block"; 
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const participantCountDiv = document.getElementById("partcipantCount");
+            const participantCountSpan = document.getElementById("participant-count");
+            const joinButton = document.getElementById("join-button");
+            const stageArn = "{{ $stageArn }}"; 
+
+            participantCountDiv.style.display = "none";
+
+            joinButton.addEventListener("click", function () {
+                participantCountDiv.style.display = "block";
+                startFetchingParticipants();
+            });
+
+            async function fetchLiveParticipants() {
+                try {
+                    const response = await fetch(`/ivs/live-participants?stageArn=${stageArn}`);
+                    const data = await response.json();
+
+                    if (data.count !== undefined) {
+                        participantCountSpan.innerText = data.count;
+                    }
+                } catch (error) {
+                    console.error("Error fetching participant count:", error);
+                }
+            }
+
+            function startFetchingParticipants() {
+                fetchLiveParticipants(); 
+
+                setInterval(fetchLiveParticipants, 5000);
+            }
+        });
+=======
     document.getElementById("join-button").addEventListener("click", function() {
         this.style.display = "none"; // Hide Join button
         document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
@@ -222,8 +268,8 @@
         document.getElementById("mic-control").style.display = "none"; // Hide Mute button
         document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
     });
+>>>>>>> 473c25d887d1476567844a0999f6f3b9d89dbd90
     </script>
 
 </body>
-
 </html>
