@@ -206,7 +206,7 @@
     <div class="container-fluid custom_frame">
 
         <ul id="participant-list"></ul>
-
+    
         <div class="row">
             <div class="column">
                 <label for="video-devices">कैमरा चुनें</label>
@@ -268,6 +268,13 @@
                     <div class="column" id="local-media"></div>
                 </div>
 
+               <div class="video_wrap">
+                   <div id="partcipantCount" style="display:none">
+                        <p>Live Participants: <span id="participant-count">0</span></p>
+                    </div>
+                    <div class="column" id="local-media" ></div>
+               </div> 
+                
                 <!-- <div class="col-md-12 flex"> -->
                 <div class="static-controls hidden" id="local-controls">
                     <button class="button" id="mic-control">
@@ -305,6 +312,13 @@
     document.getElementById("join-button").addEventListener("click", function() {
         document.getElementById("partcipantCount").style.display = "block";
     });
+        let stageArn = "{{ $stageArn }}"; 
+        let participantCountDiv = document.getElementById("participant-info");
+
+        document.getElementById("join-button").addEventListener("click", function () {
+            participantCountDiv.style.display = "block";
+            fetchLiveParticipants(); 
+        });
 
     function fetchLiveParticipants() {
         fetch(`/ivs/live-participants/{{ $stageArn }}`)
@@ -321,8 +335,20 @@
             })
             .catch(error => console.error("Error fetching live participants:", error));
     }
+        function fetchLiveParticipants() {
+            fetch(`/ivs/live-participants?stageArn=${stage.arn}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (broadcastStarted && participantCount === 0) {
+                        participantCount = data.count;
+                        updateParticipantCount();
+                    }
+                })
+                .catch(error => console.error("Error fetching live participants:", error));
+        }
 
     setInterval(fetchLiveParticipants, 5000); // Update every 5 seconds
+        setInterval(fetchLiveParticipants, 3000);
     </script>
 
     <script>

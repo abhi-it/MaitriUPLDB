@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
-    <title>IVS Real-Time Streaming - Basic Sample</title>
+    <title>IVS Real-Time Streaming</title>
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
     <style>
@@ -159,20 +158,16 @@
         <div class="container-box ">
             <div class="card-item">
                 <h3 class="text-center">राष्ट्रीय गोकुल मिशन वेबिनार - लाइव स्ट्रीम</h3>
-
-                <center> <button class="button" id="join-button">वेबिनार में शामिल हों</button> </center>
-
-                <!-- Setup Controls -->
-                <div class="row">
-
-
+                <center> <button class="button" id="join-button">Join</button> </center>
+                <div class="row"></div>
+                <div id="broadcast-status" style="display: none; color: red; font-weight: bold;">
+                    Broadcast has not started yet.
                 </div>
-
             </div>
+
             <!-- Local Participant -->
             <!-- <div class="local-container" >
-            <div id="local-media"></div>
-        </div> -->
+            <div id="local-media"></div></div> -->
             <!-- Remote Participants -->
             <div class="flex-full video-container relative">
                 <div class="columns">
@@ -191,6 +186,7 @@
                     <button class="button" style="display:none;" id="mic-control"><i class="fa fa-volume-up"></i> आवाज़
                         बंद करें</button>
                 </div>
+               
                 <div id="remote-media"></div>
             </div>
         </div>
@@ -209,18 +205,19 @@
     </script>
 
     <script>
-    document.getElementById("join-button").addEventListener("click", function() {
-        this.style.display = "none"; // Hide Join button
-        document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
-        document.getElementById("mic-control").style.display = "inline-block"; // Show Mute button
-    });
+        document.getElementById("join-button").addEventListener("click", function() {
+            this.style.display = "none"; // Hide Join button
+            document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
+            document.getElementById("mic-control").style.display = "inline-block"; // Show Mute button
+        });
 
-    document.getElementById("leave-button").addEventListener("click", function() {
-        this.style.display = "none"; // Hide Leave button
-        document.getElementById("mic-control").style.display = "none"; // Hide Mute button
-        document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
-    });
+        document.getElementById("leave-button").addEventListener("click", function() {
+            this.style.display = "none"; // Hide Leave button
+            document.getElementById("mic-control").style.display = "none"; // Hide Mute button
+            document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
+        });
     </script>
+
 </body>
 
 </html>

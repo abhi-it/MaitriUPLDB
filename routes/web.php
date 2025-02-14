@@ -566,3 +566,8 @@ Route::post('/ivs/play/back', [BroadcastController::class, 'ivsPlayback'])->name
 
 //Participant Count
 Route::get('/ivs/live-participants/{stageArn}', [BroadcastController::class, 'getLiveParticipants']);
+
+//Check broadcast status
+Route::get('/ivs/broadcast-status', [BroadcastController::class, 'checkBroadcastStatus']);
+
+Route::get('/ivs/live-participants', [BroadcastController::class, 'getLiveParticipants']);
