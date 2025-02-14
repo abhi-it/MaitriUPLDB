@@ -37,6 +37,7 @@
     }
 
     .columns {
+        text-align: center;
         justify-content: center;
         width: 100%;
         display: flex;
@@ -158,7 +159,12 @@
         <div class="container-box ">
             <div class="card-item">
                 <h3 class="text-center">राष्ट्रीय गोकुल मिशन वेबिनार - लाइव स्ट्रीम</h3>
-                <center> <button class="button" id="join-button">Join</button> </center>
+                <p class="text-center mt-3" id="hide-msg">सीधे वेबिनार में शामिल होने के लिए नीचे दिए गए बटन पर क्लिक
+                    करें!</p>
+                <center> <button class="button" id="join-button">वेबिनार में शामिल हों</button> </center>
+                <p class="text-center mt-3" id="error-msg">कोई सक्रिय प्रसारण नहीं मिला। कृपया वेबिनार शुरू होने की
+                    प्रतीक्षा करें या बाद में पुनः प्रयास करें।</p>
+
                 <div class="row"></div>
             </div>
 
@@ -167,9 +173,9 @@
             <div id="local-media"></div></div> -->
             <!-- Remote Participants -->
             <div class="flex-full video-container relative">
-                <div class="columns">
+                <div class="columns" id="mute_leave_btn">
                     <label for="token" style="display: none;">Token</label>
-                    <input type="text" id="token" name="token" value={{$token}} style="display: none;" />
+                    <input type="text" id="token" name="token" value="{{$token}}" style="display: none;" />
                     <!-- <button class="button" id="join-button">Join</button> -->
                     <button class="button" style="display:none;" id="leave-button">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -178,7 +184,7 @@
                     <button class="button" style="display:none;" id="mic-control"><i class="fa fa-volume-up"></i> आवाज़
                         बंद करें</button>
                 </div>
-               
+
                 <div id="remote-media"></div>
             </div>
         </div>
@@ -197,6 +203,7 @@
     </script>
 
     <script>
+<<<<<<< HEAD
         document.getElementById("join-button").addEventListener("click", function() {
             this.style.display = "none"; // Hide Join button
             setTimeout(() => {
@@ -249,6 +256,19 @@
                 setInterval(fetchLiveParticipants, 5000);
             }
         });
+=======
+    document.getElementById("join-button").addEventListener("click", function() {
+        this.style.display = "none"; // Hide Join button
+        document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
+        document.getElementById("mic-control").style.display = "inline-block"; // Show Mute button
+    });
+
+    document.getElementById("leave-button").addEventListener("click", function() {
+        this.style.display = "none"; // Hide Leave button
+        document.getElementById("mic-control").style.display = "none"; // Hide Mute button
+        document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
+    });
+>>>>>>> 473c25d887d1476567844a0999f6f3b9d89dbd90
     </script>
 
 </body>
