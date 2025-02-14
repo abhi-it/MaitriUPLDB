@@ -11,145 +11,145 @@
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
     <style>
-        html,
-        body {}
+    html,
+    body {}
 
-        .participant-container {
-            position: relative;
-            margin: auto;
-            width: 100%;
-        }
+    .participant-container {
+        position: relative;
+        margin: auto;
+        width: 100%;
+    }
 
-        .participant-container span {
-            position: absolute;
-            display: inline-block;
-            top: 0;
-            right: 0;
-            color: #fff;
-            font-size: 200%;
-            background: rgba(0, 0, 0, 0.5);
-            font-size: 1.2rem;
-        }
+    .participant-container span {
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-size: 200%;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 1.2rem;
+    }
 
-        .participant-container video {
-            width: 100%;
-            max-height: 700px;
-        }
+    .participant-container video {
+        width: 100%;
+        max-height: 700px;
+    }
 
-        .columns {
-            justify-content: center;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            position: absolute;
-            bottom: 30px;
-            z-index: 9;
-        }
+    .columns {
+        justify-content: center;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: absolute;
+        bottom: 30px;
+        z-index: 9;
+    }
 
-        .custom_frame {
-            border-radius: 7px;
-            padding: 23px 32px;
-            padding-bottom: 17px;
-            background: rgb(234 115 39 / 8%);
+    .custom_frame {
+        border-radius: 7px;
+        padding: 23px 32px;
+        padding-bottom: 17px;
+        background: rgb(234 115 39 / 8%);
 
-        }
+    }
 
-        .video-container {
-            max-width: 95%;
-            margin: 0 auto;
+    .video-container {
+        max-width: 95%;
+        margin: 0 auto;
 
-            position: relative;
-        }
+        position: relative;
+    }
 
-        .text-center {
-            text-align: center;
-        }
+    .text-center {
+        text-align: center;
+    }
 
-        hr {
-            margin: 2rem 0;
-        }
+    hr {
+        margin: 2rem 0;
+    }
 
-        #remote-media video {
-            width: 100%;
-            display: block;
-            border: 2px solid #000;
-            border-radius: 8px;
-            max-height: calc(100vh - 97px);
-            object-fit: cover;
-        }
+    #remote-media video {
+        width: 100%;
+        display: block;
+        border: 2px solid #000;
+        border-radius: 8px;
+        max-height: calc(100vh - 97px);
+        object-fit: cover;
+    }
 
-        #leave-button {
-            background: #ff2323;
-            border: 1px solid #ff2323;
-        }
+    #leave-button {
+        background: #ff2323;
+        border: 1px solid #ff2323;
+    }
 
-        #join-button {
-            background: #8803fc;
-            border: 1px solid #8803fc;
-        }
+    #join-button {
+        background: #8803fc;
+        border: 1px solid #8803fc;
+    }
 
-        .column button {
+    .column button {
 
-            width: 100%;
-        }
+        width: 100%;
+    }
 
-        button#mic-control {
-            background: #ea7327;
-            border: 1px solid #ea7327;
-            display: none;
-        }
+    button#mic-control {
+        background: #ea7327;
+        border: 1px solid #ea7327;
+        display: none;
+    }
 
-        .container-box {
-            height: calc(100vh - 60px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+    .container-box {
+        height: calc(100vh - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
-        .card-item {
-            background: transparent;
-            width: 100%;
-            max-width: 910px;
-            margin: 0 auto;
+    .card-item {
+        background: transparent;
+        width: 100%;
+        max-width: 910px;
+        margin: 0 auto;
 
-        }
+    }
 
-        .local-container {
-            flex: 1 1 0%;
-        }
+    .local-container {
+        flex: 1 1 0%;
+    }
 
-        .card-item h3 {
-            font-size: 32px;
-            color: black;
-            font-weight: 600;
-            margin: 0;
-        }
+    .card-item h3 {
+        font-size: 32px;
+        color: black;
+        font-weight: 600;
+        margin: 0;
+    }
 
-        center {
-            margin-top: 30px;
-        }
+    center {
+        margin-top: 30px;
+    }
 
-        .flex-full {
+    .flex-full {
 
-            width: 100%;
-        }
+        width: 100%;
+    }
 
-        .button i {
-            font-size: 14px;
-        }
+    .button i {
+        font-size: 14px;
+    }
 
-        .button {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            border-radius: 30px;
-        }
+    .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 30px;
+    }
 
-        .relative {
-            position: relative;
-        }
+    .relative {
+        position: relative;
+    }
     </style>
 </head>
 
@@ -180,9 +180,11 @@
                     <button class="button" id="mic-control">Mute</button>--}}
 
                     <button class="button" style="display:none;" id="leave-button">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i> Leave
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        वेबिनार छोड़ें
                     </button>
-                    <button class="button" style="display:none;" id="mic-control"><i class="fa fa-microphone-slash" aria-hidden="true"></i>  Mute</button>
+                    <button class="button" style="display:none;" id="mic-control"><i class="fa fa-volume-up"></i> आवाज़
+                        बंद करें</button>
                 </div>
                
                 <div id="remote-media"></div>
@@ -195,12 +197,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#leave-button').click(function () {
-                $('#remote-media').empty();
-            })
-        });
-
+    $(document).ready(function() {
+        $('#leave-button').click(function() {
+            $('#remote-media').empty();
+        })
+    });
     </script>
 
     <script>
