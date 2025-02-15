@@ -42,6 +42,10 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
+
+
+
     Route::get('getProfile',  [FarmerController::class, 'getProfile']);
     Route::get('view-service-request', [FarmerController::class, 'getServiceRequest'])->name('view-service-request');
     Route::post('service-request', [FarmerController::class, 'getServiceFrom'])->name('service-request');
@@ -87,8 +91,3 @@ Route::get('/ivs-getPublishersList', [IVSBroadCastController::class, 'getPublish
 //IVS LATENCY
 Route::get('/ivs-streamInfo', [LatencyController::class, 'streamData']);
 Route::post('/ivs-createChannel', [LatencyController::class, 'createChannel']);
-
-
-
-
-
