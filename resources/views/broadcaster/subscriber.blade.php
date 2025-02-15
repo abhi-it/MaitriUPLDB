@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
     <title>IVS Real-Time Streaming</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://web-broadcast.live-video.net/1.20.0/amazon-ivs-web-broadcast.js"></script>
 
     <style>
@@ -151,6 +153,15 @@
     .relative {
         position: relative;
     }
+
+    #loader {
+        display: none;
+    }
+
+    .spinner-border {
+        margin-top: 5px;
+        margin-left: 10px;
+    }
     </style>
 </head>
 
@@ -159,13 +170,24 @@
         <div class="container-box ">
             <div class="card-item">
                 <h3 class="text-center">राष्ट्रीय गोकुल मिशन वेबिनार - लाइव स्ट्रीम</h3>
-                <p class="text-center mt-3" id="hide-msg">सीधे वेबिनार में शामिल होने के लिए नीचे दिए गए बटन पर क्लिक
+                <p class="text-center mt-3 fs-5" id="hide-msg">सीधे वेबिनार में शामिल होने के लिए नीचे दिए गए बटन पर
+                    क्लिक
                     करें!</p>
-                <center> <button class="button" id="join-button">वेबिनार में शामिल हों</button> </center>
-                <p class="text-center mt-3" id="error-msg">कोई सक्रिय प्रसारण नहीं मिला। कृपया वेबिनार शुरू होने की
+                <center>
+                    <button class="button" id="join-button">
+                        वेबिनार में शामिल हों
+                        <div class="spinner-border" id="loader" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>
+                </center>
+                <p class="text-center mt-3 fs-5" id="error-msg">कोई सक्रिय प्रसारण नहीं मिला। कृपया वेबिनार शुरू होने की
                     प्रतीक्षा करें या बाद में पुनः प्रयास करें।</p>
 
                 <div class="row"></div>
+                <div id="broadcast-status" style="display: none; color: red; font-weight: bold;">
+                    Broadcast has not started yet.
+                </div>
             </div>
 
             <!-- Local Participant -->
@@ -195,81 +217,56 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#leave-button').click(function() {
-                $('#remote-media').empty();
-            })
-        });
+    $(document).ready(function() {
+        $('#leave-button').click(function() {
+            $('#remote-media').empty();
+        })
+    });
     </script>
 
     <script>
-<<<<<<< HEAD
-        document.getElementById("join-button").addEventListener("click", function() {
-            this.style.display = "none"; // Hide Join button
-            setTimeout(() => {
-                document.getElementById("mic-control").style.display = "inline-block"; 
-                document.getElementById("leave-button").style.display = "inline-block";
-            }, 5000); // Delay for 5 seconds
-        });
-
-        document.getElementById("leave-button").style.display = "none";
-        document.getElementById("mic-control").style.display = "none";
-
-        document.getElementById("leave-button").addEventListener("click", function() {
-            this.style.display = "none"; // Hide Leave button
-            document.getElementById("mic-control").style.display = "none"; 
-            document.getElementById("join-button").style.display = "inline-block"; 
-        });
-
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const participantCountDiv = document.getElementById("partcipantCount");
-            const participantCountSpan = document.getElementById("participant-count");
-            const joinButton = document.getElementById("join-button");
-            const stageArn = "{{ $stageArn }}"; 
-
-            participantCountDiv.style.display = "none";
-
-            joinButton.addEventListener("click", function () {
-                participantCountDiv.style.display = "block";
-                startFetchingParticipants();
-            });
-
-            async function fetchLiveParticipants() {
-                try {
-                    const response = await fetch(`/ivs/live-participants?stageArn=${stageArn}`);
-                    const data = await response.json();
-
-                    if (data.count !== undefined) {
-                        participantCountSpan.innerText = data.count;
-                    }
-                } catch (error) {
-                    console.error("Error fetching participant count:", error);
-                }
-            }
-
-            function startFetchingParticipants() {
-                fetchLiveParticipants(); 
-
-                setInterval(fetchLiveParticipants, 5000);
-            }
-        });
-=======
     document.getElementById("join-button").addEventListener("click", function() {
         this.style.display = "none"; // Hide Join button
-        document.getElementById("leave-button").style.display = "inline-block"; // Show Leave button
-        document.getElementById("mic-control").style.display = "inline-block"; // Show Mute button
+        setTimeout(() => {
+            document.getElementById("mic-control").style.display = "inline-block";
+            document.getElementById("leave-button").style.display = "inline-block";
+        }, 5000); // Delay for 5 seconds
     });
+
+    document.getElementById("leave-button").style.display = "none";
+    document.getElementById("mic-control").style.display = "none";
 
     document.getElementById("leave-button").addEventListener("click", function() {
         this.style.display = "none"; // Hide Leave button
-        document.getElementById("mic-control").style.display = "none"; // Hide Mute button
-        document.getElementById("join-button").style.display = "inline-block"; // Show Join button again
+        document.getElementById("mic-control").style.display = "none";
+        document.getElementById("join-button").style.display = "inline-block";
     });
->>>>>>> 473c25d887d1476567844a0999f6f3b9d89dbd90
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const participantCountSpan = document.getElementById("participant-count");
+        const joinButton = document.getElementById("join-button");
+        const stageArn = "{{ $stageArn }}";
+
+
+        async function fetchLiveParticipants() {
+            try {
+                const response = await fetch(`/ivs/live-participants?stageArn=${stageArn}`);
+                const data = await response.json();
+
+                if (data.count !== undefined) {
+                    participantCountSpan.innerText = data.count;
+                }
+            } catch (error) {
+                console.error("Error fetching participant count:", error);
+            }
+        }
+
+    });
     </script>
 
 </body>
+
 </html>
