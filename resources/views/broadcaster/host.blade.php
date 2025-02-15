@@ -346,20 +346,6 @@
     </script>
 
     <script>
-    window.addEventListener("offline", () => {
-        var errorMsg = document.getElementById("error-msg");
-        console.log("Host internet connection lost!");
-        errorMsg.style.display = "block";
-        stopCamera();
-    });
-
-    // Detect internet connection restore
-    window.addEventListener("online", () => {
-        var errorMsg = document.getElementById("error-msg");
-        errorMsg.style.display = "none";
-        startCamera();
-    });
-
     document.addEventListener("DOMContentLoaded", function() {
         const localMediaContainer = document.getElementById("local-media");
         const joinButton = document.getElementById("join-button");
@@ -410,6 +396,21 @@
                 localStream = null;
             }
         }
+
+        window.addEventListener("offline", () => {
+            var errorMsg = document.getElementById("error-msg");
+            console.log("Host internet connection lost!");
+            errorMsg.style.display = "block";
+            stopCamera();
+        });
+
+        // Detect internet connection restore
+        window.addEventListener("online", () => {
+            var errorMsg = document.getElementById("error-msg");
+            errorMsg.style.display = "none";
+            startCamera();
+        });
+
 
         function showControls() {
             localControls.classList.remove("hidden");
