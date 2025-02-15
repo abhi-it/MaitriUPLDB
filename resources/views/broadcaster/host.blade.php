@@ -401,14 +401,14 @@
             var errorMsg = document.getElementById("error-msg");
             console.log("Host internet connection lost!");
             errorMsg.style.display = "block";
-            stopCamera();
+            // stopCamera();
         });
 
         // Detect internet connection restore
         window.addEventListener("online", () => {
             var errorMsg = document.getElementById("error-msg");
             errorMsg.style.display = "none";
-            startCamera();
+            // startCamera();
         });
 
 
