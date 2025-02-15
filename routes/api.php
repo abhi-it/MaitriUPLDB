@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('otp-verify', [AuthController::class, 'otpVerify'])->name('otp-verify');
 
+    Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
     //Registration
     Route::get('getAllBlock', [RegistrationController::class, 'getAllBlock'])->name('getAllBlock');
     Route::get('mandal_list', [RegistrationController::class, 'mandal_list'])->name('mandal_list');
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
+    
 
 
 
