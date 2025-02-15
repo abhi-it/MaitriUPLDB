@@ -261,7 +261,7 @@
             </div>
         </div>
 
-        <p class="text-center" id="error-msg">Internet connection lost. Trying to reconnect...</p>
+        <p class="text-center" id="error-msg">इंटरनेट कनेक्शन टूट गया. पुनः कनेक्ट करने का प्रयास किया जा रहा है...</p>
 
         <div class="row local-container">
             <div class="w-100 relative">
