@@ -346,6 +346,43 @@
     </script>
 
     <script>
+    // New Code f change camera Start
+    async function changeCamera() {
+        const videoDevicesList = document.getElementById("video-devices");
+        const selectedDeviceId = videoDevicesList.value;
+
+        if (!selectedDeviceId) {
+            console.error("No camera selected!");
+            return;
+        }
+
+        // Stop the previous camera stream if it exists
+        if (localCamera) {
+            localCamera.getTracks().forEach(track => track.stop());
+        }
+
+        try {
+            // Get the new camera stream
+            localCamera = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    deviceId: {
+                        exact: selectedDeviceId
+                    }
+                }
+            });
+
+            cameraStageStream = new LocalStageStream(localCamera.getVideoTracks()[0]);
+
+            console.log("Camera switched successfully!");
+        } catch (error) {
+            console.error("Error switching camera:", error);
+        }
+    }
+    document.getElementById("video-devices").addEventListener("change", changeCamera);
+    // New Code f change camera Start
+
+
+
     document.addEventListener("DOMContentLoaded", function() {
         const localMediaContainer = document.getElementById("local-media");
         const joinButton = document.getElementById("join-button");
