@@ -522,19 +522,6 @@ Route::post("zonestoreadd", [ZoneStockController::class, 'zoneStoreData'])->name
 
 Route::get('gallery-page', [CVOOfficerController::class, 'gallery'])->name('gallery-page');
 
-// Route::get('test', function () {
-
-//     $data = DB::table('settings')
-//     ->where('id', 2) // Assuming you want to update the record with id 2
-//     ->update([
-//         'start_date' => date('Y-m-d', strtotime('10-10-2023')),
-//         'end_date' => date('Y-m-d', strtotime('25-10-2023')),
-//     ]);
-
-
-//     dd($data);
-// });
-
 Route::get('/latest-record-year', function(){
     $year = optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
 dd($year);
@@ -566,3 +553,16 @@ Route::post('/ivs/play/back', [BroadcastController::class, 'ivsPlayback'])->name
 
 //Participant Count
 Route::get('/ivs/live-participants', [BroadcastController::class, 'getLiveParticipantsCount'])->name('ivs.participants');
+
+//  New Code
+Route::get('/stage/create/{id?}', [BroadcastController::class, 'createStage'])->name('stage.create');
+Route::post('/stage/store', [BroadcastController::class, 'createIvsStage'])->name('webinars.store');
+Route::post('/stage/update/{id}', [BroadcastController::class, 'updateIvsStage'])->name('stage.update');
+Route::get('/admin/webinars', [BroadcastController::class, 'listIvsStage'])->name('admin.webinars.index');
+
+
+Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars.index');
+Route::get('/webinars/{id}/edit', [WebinarController::class, 'edit'])->name('webinars.edit');
+Route::put('/webinars/{id}', [WebinarController::class, 'update'])->name('webinars.update');
+Route::delete('/webinars/{id}', [WebinarController::class, 'destroy'])->name('webinars.destroy');
+Route::get('/webinars/{id}/join', [WebinarController::class, 'join'])->name('webinars.join');
