@@ -210,17 +210,23 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1">
-                            @if (Route::has('login'))
-                            @auth
-                            @if (auth()->user()->user_type == 'Broadcaster')
+
                             <li class="nav-item {{ request()->is('broadcaster-dashboard') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/broadcaster-dashboard') }}">
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-                            @endif
-                            @endauth
-                            @endif
+                            <li class="nav-item {{ request()->is('stage/create') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('stage/create') }}">
+                                    <span>Create Stage</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('admin/webinars') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin/webinars') }}">
+                                    <span>Stage List's</span>
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>

@@ -8,6 +8,8 @@ use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
 use Aws\Ivs\IvsClient;
 use Illuminate\Support\Facades\Log;
+use App\Models\Webinar;
+use Aws\EventBridge\EventBridgeClient;
 
 class BroadcastController extends Controller
 {
@@ -40,6 +42,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+                
             ]);
 
             $result = $ivsClient->listStages();
@@ -60,6 +63,170 @@ class BroadcastController extends Controller
         $stages = $this->listIvsStages();
         return view('broadcaster.stages', compact('stages'));
     }
+
+
+    // Schedule Code Start 
+    public function createOrUpdateSchedule($stageId, $time, $stage_arn){
+        try {
+            require_once base_path('vendor/aws/aws-sdk-php/src/EventBridge/EventBridgeClient.php');
+            $scheduler = new EventBridgeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+                
+           
+            ]);
+
+            $ruleName = "stage-schedule-{$stageId}";
+            // $targetArn = "arn:aws:events:" . env('AWS_IVS_REGION', 'ap-south-1') . ":{$this->awsAccountId}:event-bus/default";
+
+            // Check if schedule exists
+            if ($this->scheduleExists($ruleName)) {
+                return $this->updateSchedule($ruleName, $time);
+            } else {
+                return $this->createSchedule($ruleName, $time, $stage_arn);
+            }
+        } catch (\Exception $e) {
+            Log::error("Error in scheduling stage: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function scheduleExists($ruleName) {
+        try {
+            // echo 'hello ='.$ruleName;exit;
+            require_once base_path('vendor/aws/aws-sdk-php/src/EventBridge/EventBridgeClient.php');
+            $scheduler = new EventBridgeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+                
+            ]);
+            $data = $scheduler->getSchedule(['Name' => $ruleName]);
+          
+
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function createSchedule($ruleName, $time, $targetArn) {
+        try {
+            $this->client->createSchedule([
+                'Name'              => $ruleName,
+                'ScheduleExpression'=> "at({$time})",
+                'FlexibleTimeWindow'=> ['Mode' => 'OFF'],
+                'Target' => [
+                    'Arn' => $targetArn,
+                    'RoleArn' => "arn:aws:iam::{$this->awsAccountId}:role/EventBridgeSchedulerRole",
+                    'Input' => json_encode(['stage_id' => $ruleName])
+                ],
+            ]);
+
+            Log::info("Scheduled new stage: {$ruleName} at {$time}");
+            return true;
+        } catch (\Exception $e) {
+            Log::error("Error creating schedule: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateSchedule($ruleName, $time)
+    {
+        try {
+            $scheduler = new EventBridgeClient([
+                'version' => 'latest',
+                'region' => env('AWS_IVS_REGION', 'ap-south-1'),
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+            ]);
+            $scheduler->updateSchedule([
+                'Name'              => $ruleName,
+                'ScheduleExpression'=> "at({$time})",
+                'FlexibleTimeWindow'=> ['Mode' => 'OFF'],
+            ]);
+
+            Log::info("Updated schedule: {$ruleName} to new time: {$time}");
+            return true;
+        } catch (\Exception $e) {
+            Log::error("Error updating schedule: " . $e->getMessage());
+            return false;
+        }
+    }
+    // Schedule Code End
+
+
+    public function listIvsStage(){
+        $stages =  Webinar::orderBy('id', 'desc')->get();
+        return view('admin.webinars.index', compact('stages'));
+    }
+
+    public function createStage($id = null) {
+        $stage = $id ? Webinar::findOrFail($id) : new Webinar();
+        return view('admin.webinars.create', compact('stage'));
+    }
+
+    public function createIvsStage(Request $request) {
+        try {
+            require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
+            $awsKey = config('services.aws.key');
+            $awsSecret = config('services.aws.secret');
+            $awsRegion = config('services.aws.region');
+            $client = new IvsRealTimeClient([
+                'version' => 'latest',
+                'region' => $awsRegion,
+                'credentials' => [
+                    'key' => $awsKey,
+                    'secret' => $awsSecret ,
+                ],
+                
+            ]);
+            $stageName = $request->stage_name;
+
+            $result = $client->createStage([
+                'name' => $stageName, 
+            ]);
+
+            $webinar = Webinar::create([
+                'title'        => $stageName,
+                'description'  => $request->description,
+                'scheduled_at' => $request->scheduled_at,
+                'stage_arn'  => $result['stage']['arn'],
+            ]);
+
+            return redirect('/admin/webinars')->with('success','Stage created successfully.');
+          
+        } catch (AwsException $e) {
+            return ['error' => $e->getAwsErrorMessage()];
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function updateIvsStage(Request $request, $id){
+        $stage = Webinar::findOrFail($id);
+        $stage->title = $request->stage_name;
+        $stage->description = $request->description;
+        $stage->scheduled_at = $request->scheduled_at;
+
+        $stageId = $request->stage_name;
+        $scheduledTime = $request->scheduled_at;
+        // $updateSchedule = $this->createOrUpdateSchedule($stageId, $scheduledTime, $stage->stage_arn);
+        // exit;
+
+        $stage->update();
+        return redirect()->route('stage.create', $id)->with('success', 'Stage Updated Successfully');
+    } 
 
     //Add broadcaster
     public function createPublisherToken($stageArn)
@@ -87,6 +254,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+                
             ]);
 
             $result = $client->createParticipantToken([
@@ -237,6 +405,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+                
             ]);
 
 
@@ -414,6 +583,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+                
             ]);
 
             // $ivsClient = new IvsClient([
@@ -541,6 +711,9 @@ class BroadcastController extends Controller
             'credentials' => [
                 'key' => $awsKey, 
                 'secret' => $awsSecret ,  
+            ],
+            'http' => [
+                'verify' => false,
             ],
         ]);
 
