@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h3 class="text-center mt-3">Webinar List's</h3>
+    <h3 class="text-center mt-3">Webinar's</h3>
 
     <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Webinar</a>
 
@@ -15,6 +15,7 @@
                 <th>Webinar Description</th>
                 <th>Scheduled At</th>
                 <th>Re-Schedule</th>
+                <th>Created Date</th>
                 <!-- <th>Start</th> -->
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                     <span>Not Available</span>
                     @endif
                 </td>
+                <td>{{ $webinar->created_at ?? '' }}</td>
                 <!-- <td>
                     @if($webinar->stage_arn)
                     <a href="{{ $webinar->stage_arn }}" target="_blank">Join</a>
