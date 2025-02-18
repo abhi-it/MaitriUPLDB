@@ -3,46 +3,48 @@
 @section('content')
 
 <div class="container">
-    <h3 class="text-center mt-3">Stage List's</h3>
+    <h3 class="text-center mt-3">Webinar List's</h3>
 
-    <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Stage</a>
+    <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Webinar</a>
 
     <table border="1" class="table table-striped mt-3">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Stage Title</th>
-                <th>Stage Description</th>
+                <th>Webinar Title</th>
+                <th>Webinar Description</th>
                 <th>Scheduled At</th>
-                <th>Stage arn</th>
-                <th>Schedule</th>
-                <th>Join URL</th>
+                <th>Re-Schedule</th>
+                <!-- <th>Start</th> -->
             </tr>
         </thead>
         <tbody>
-            @if(count($stages) > 0)
-            @foreach($stages as $stage)
+            @if(count($webinars) > 0)
+            @php $i=1 @endphp
+            @foreach($webinars as $webinar)
             <tr>
-                <td>{{ $stage->id }}</td>
-                <td>{{ $stage->title }}</td>
-                <td>{{ $stage->description ?? '' }}</td>
-                <td>{{ $stage->scheduled_at ?? '' }}</td>
-                <td>{{ $stage->stage_arn ?? '' }}</td>
+                <td>{{ $i }}</td>
+                <td>{{ $webinar->title }}</td>
+                <td>{{ $webinar->description ?? '' }}</td>
+                <td>{{ $webinar->scheduled_at ?? '' }}</td>
+                <!-- <td>{{ $webinar->stage_arn ?? '' }}</td> -->
                 <td>
-                    @if($stage->id)
-                    <a href="{{ route('stage.create', ['id' => $stage->id]) }}" class="btn btn-primary">Schedule</a>
+                    @if($webinar->id)
+                    <a href="{{ route('stage.create', ['id' => $webinar->id]) }}"
+                        class="btn btn-primary btn-sm">Re-Schedule</a>
                     @else
                     <span>Not Available</span>
                     @endif
                 </td>
-                <td>
-                    @if($stage->stage_arn)
-                    <a href="{{ $stage->stage_arnarn }}" target="_blank">Join</a>
+                <!-- <td>
+                    @if($webinar->stage_arn)
+                    <a href="{{ $webinar->stage_arn }}" target="_blank">Join</a>
                     @else
                     <span>Not Started</span>
                     @endif
-                </td>
+                </td> -->
             </tr>
+            @php $i++ @endphp
             @endforeach
             @else
             <tr>
