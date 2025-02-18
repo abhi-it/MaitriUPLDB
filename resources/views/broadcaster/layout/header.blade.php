@@ -216,14 +216,9 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is('stage/create') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('stage/create') }}">
-                                    <span>Create Stage</span>
-                                </a>
-                            </li>
                             <li class="nav-item {{ request()->is('admin/webinars') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('admin/webinars') }}">
-                                    <span>Stage List's</span>
+                                    <span>Webinar List's</span>
                                 </a>
                             </li>
 
