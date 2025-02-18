@@ -19,9 +19,9 @@
             </tr>
         </thead>
         <tbody>
-            @if(count($webinars) > 0)
+            @if(count($stages) > 0)
             @php $i=1 @endphp
-            @foreach($webinars as $webinar)
+            @foreach($stages as $webinar)
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $webinar->title }}</td>
