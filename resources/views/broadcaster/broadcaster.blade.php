@@ -96,14 +96,21 @@
                 </button>
             </div>
         </div>
-        <p class="text-center mt-3">Do't have go live credits </p>
+        <!-- <p class="text-center mt-3">Do't have go live credits </p> -->
 
-        <form method="GET" class="text-right" target="_black"
+        <!-- <form method="GET" class="text-right" target="_black"
             action="{{ route('start_webinar', ['stageArn' => $data['participantToken']['token']]) }}">
             @csrf
             <input type="hidden" name="stageArn" value="{{ $stageArn }}">
             <input type="hidden" name="token" value="{{ $data['participantToken']['token'] }}">
-            <button type="submit" class="btn btn-primary" disabled>Start Live Streaming</button>
+            <button type="submit" class="btn btn-primary">Start Live Streaming</button>
+        </form> -->
+
+        <form id="startWebinarForm" class="text-right">
+            @csrf
+            <input type="hidden" id="stageArn" name="stageArn" value="{{ $stageArn }}">
+            <input type="hidden" id="token" name="token" value="{{ $data['participantToken']['token'] }}">
+            <button type="submit" id="startWebinarBtn" class="btn btn-primary">Start Live Streaming</button>
         </form>
 
     </div>
@@ -117,6 +124,60 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(document).ready(function() {
+    $("#startWebinarForm").on("submit", function(e) {
+        e.preventDefault();
+
+        var baseUrl = window.location.origin;
+        var routePath = "/start-webinar";
+        var stageArn = $("#stageArn").val();
+        var token = $("#token").val();
+        var csrfToken = encodeURIComponent("{{ csrf_token() }}"); // Laravel CSRF token
+
+        var checkLiveMode = 'off';
+
+        var requestUrl =
+            `${baseUrl}${routePath}?_token=${csrfToken}&stageArn=${stageArn}&token=${token}`;
+
+        if (checkLiveMode == 'off') {
+            Swal.fire({
+                icon: "warning",
+                title: "Live Streaming Unavailable",
+                text: "Don't have go live credits",
+                confirmButtonText: "OK"
+            });
+            return false;
+        } else {
+            window.open(requestUrl, '_blank');
+        }
+
+        // var formData = {
+        //     stageArn: $("#stageArn").val(),
+        //     token: $("#token").val(),
+        //     _token: "{{ csrf_token() }}"
+        // };
+
+        // $.ajax({
+        //     url: "{{ route('start_webinar') }}",
+        //     type: "GET",
+        //     data: formData,
+        //     success: function(response) {
+        //         window.location.href = "start-webinar";
+        //         // alert("Webinar started successfully!");
+        //         // console.log(response);
+        //         // $("#startWebinarBtn").prop("disabled",true); 
+        //     },
+        //     error: function(xhr, status, error) {
+        //         alert("Error starting webinar: " + xhr.responseText);
+        //         console.error(error);
+        //     }
+        // });
+    });
+});
+</script>
+
 <script>
 function copyToClipboard() {
     var inputField = document.getElementById("participant-link");
