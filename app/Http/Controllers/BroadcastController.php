@@ -649,14 +649,19 @@ class BroadcastController extends Controller
                 return $participant['state'] === 'CONNECTED';
             });
 
-            $broadcastDetail = Broadcastdetails::where('stage_arn', $stageArn)->first();
-            if ($broadcastDetail) {
-                $count = max(count($connectedParticipants) - 1, 0);
-                $broadcastDetail->update([
-                    'participant_count' => $count,
-                    'updated_at' => now(),
-                ]);
+            if (is_countable($connectedParticipants) && count($connectedParticipants) > 0) {
+                $broadcastDetail = Broadcastdetails::firstWhere('stage_arn', $stageArn);
+                
+                if ($broadcastDetail) {
+                    $count = max(count($connectedParticipants) - 1, 0);
+                    
+                    $broadcastDetail->update([
+                        'participant_count' => $count,
+                        'updated_at' => now(),
+                    ]);
+                }
             }
+            
 
             return response()->json(['count' => count($connectedParticipants)]);
         } catch (\Aws\Exception\AwsException $e) {
