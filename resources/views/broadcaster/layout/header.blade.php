@@ -218,7 +218,7 @@
                             </li>
                             <li class="nav-item {{ request()->is('admin/webinars') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('admin/webinars') }}">
-                                    <span>Webinar's</span>
+                                    <span>Webinars</span>
                                 </a>
                             </li>
 
