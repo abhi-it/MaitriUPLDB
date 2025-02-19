@@ -93,16 +93,17 @@ class BroadcastController extends Controller
                     'key' => $awsKey,
                     'secret' => $awsSecret ,
                 ],
-                 
             ]);
             $stageName = $request->stage_name;
+            $newStageName = str_replace(' ', '-', $stageName);
 
             $result = $client->createStage([
-                'name' => $stageName, 
+                'name' => $newStageName, 
             ]);
 
             $webinar = Webinar::create([
                 'title'        => $stageName,
+                'convertTitle' => $newStageName,
                 'description'  => $request->description,
                 'scheduled_at' => $request->scheduled_at,
                 'stage_arn'  => $result['stage']['arn'],
@@ -110,7 +111,7 @@ class BroadcastController extends Controller
             return redirect('/admin/webinars')->with('success','Stage created successfully.');
           
         } catch (AwsException $e) {
-            return ['error' => $e->getAwsErrorMessage()];
+            return ['error' => $e->getMessage()];
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
