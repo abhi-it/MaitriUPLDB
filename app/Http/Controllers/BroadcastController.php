@@ -70,8 +70,6 @@ class BroadcastController extends Controller
 
     public function listIvsStage(){
         $stages =  Webinar::orderBy('id', 'desc')->get();
-        // require_once base_path('vendor/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php');
-        // $stages = $this->listIvsStages();
         return view('admin.webinars.index', compact('stages'));
     }
 
@@ -126,9 +124,6 @@ class BroadcastController extends Controller
 
         $stageId = $request->stage_name;
         $scheduledTime = $request->scheduled_at;
-        
-        exit;
-
         $stage->update();
         return redirect()->route('stage.create', $id)->with('success', 'Stage Updated Successfully');
     } 
