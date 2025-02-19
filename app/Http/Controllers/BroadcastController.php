@@ -651,8 +651,9 @@ class BroadcastController extends Controller
 
             $broadcastDetail = Broadcastdetails::where('stage_arn', $stageArn)->first();
             if ($broadcastDetail) {
+                $count = max(count($connectedParticipants) - 1, 0);
                 $broadcastDetail->update([
-                    'participant_count' => count($connectedParticipants),
+                    'participant_count' => $count,
                     'updated_at' => now(),
                 ]);
             }
