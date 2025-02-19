@@ -152,26 +152,6 @@ $(document).ready(function() {
             window.open(requestUrl, '_blank');
         }
 
-        // var formData = {
-        //     stageArn: $("#stageArn").val(),
-        //     token: $("#token").val(),
-        //     _token: "{{ csrf_token() }}"
-        // };
-        // $.ajax({
-        //     url: "{{ route('start_webinar') }}",
-        //     type: "GET",
-        //     data: formData,
-        //     success: function(response) {
-        //         window.location.href = "start-webinar";
-        //         // alert("Webinar started successfully!");
-        //         // console.log(response);
-        //         // $("#startWebinarBtn").prop("disabled",true); 
-        //     },
-        //     error: function(xhr, status, error) {
-        //         alert("Error starting webinar: " + xhr.responseText);
-        //         console.error(error);
-        //     }
-        // });
     });
 });
 </script>
