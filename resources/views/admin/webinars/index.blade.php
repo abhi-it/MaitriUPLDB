@@ -2,6 +2,55 @@
 
 @section('content')
 
+<style>
+.link-box {
+    display: flex;
+    align-items: center;
+    background: #f1f3f4;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.link-box input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+    cursor: default;
+
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.copy-btn:hover {
+    color: #007bff;
+}
+
+.copy-message {
+    position: absolute;
+    top: 75px;
+    left: 84%;
+    transform: translateX(-50%);
+    background: #4caf50;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: none;
+    animation: fadeOut 0.2s ease-in-out 1.5s forwards;
+}
+</style>
 <div class="container">
     <h3 class="text-center mt-3">Webinars</h3>
 
@@ -14,6 +63,7 @@
                 <th>Webinar Title</th>
                 <th>Webinar Description</th>
                 <th>Scheduled At</th>
+                <th>Share Like</th>
                 <th>Re-Schedule</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -25,20 +75,29 @@
             @foreach($stages as $webinar)
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $webinar->title }}</td>
-                <td>{{ $webinar->description ?? 'N\A' }}</td>
-                <td>{{ $webinar->scheduled_at ?? 'N\A' }}</td>
-                <!-- <td>{{ $webinar->stage_arn ?? '' }}</td> -->
+                <td>{{ $webinar['title'] }}</td>
+                <td>{{ $webinar['description'] ?? 'N\A' }}</td>
+                <td>{{ $webinar['scheduled_at'] ?? 'N\A' }}</td>
+                <td>
+                    <span class="copy-message" id="copy-message">Link copied!</span>
+                    <div class="link-box">
+                        <input type="text" disabled id="participant-link" class="participant-link"
+                            value="{{ route('join_webinar', ['token' => $webinar['stage_arn']]) }}" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard()">
+                            📋
+                        </button>
+                    </div>
+                </td>
                 <td>
                     @php
                     date_default_timezone_set('Asia/Kolkata');
                     $currentTimestamp = time();
-                    $scheduledTimestamp = $webinar->scheduled_at ? strtotime($webinar->scheduled_at) : null;
+                    $scheduledTimestamp = $webinar['scheduled_at'] ? strtotime($webinar['scheduled_at']) : null;
                     @endphp
 
                     @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
-                    <a href="{{ route('stage.create', ['id' => $webinar->id]) }}"
-                        class="btn btn-primary btn-sm">{{ $webinar->scheduled_at ? 'Re-Scheduled' : 'Scheduled' }}</a>
+                    <a href="{{ route('stage.create', ['id' => $webinar['id'] ]) }}"
+                        class="btn btn-primary btn-sm">{{ $webinar['scheduled_at'] ? 'Re-Scheduled' : 'Scheduled' }}</a>
                     @else
                     <span>N/A</span>
                     @endif
@@ -47,7 +106,7 @@
                 <td>{{ $webinar->created_at ?? '' }}</td>
                 <td>
                     @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
-                    <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar->stage_arn }}" class="btn btn-primary"
+                    <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar['stage_arn'] }}" class="btn btn-primary"
                         target="_blank">Start Webinar</a>
                     @else
                     <button type="button" class="btn btn-success">Webinar Done</button>
@@ -64,5 +123,44 @@
         </tbody>
     </table>
 </div>
+
+<script src="/js/sweetalert-upldb.js"></script>
+<script src="/js/jquery-min-upldb.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- <script>
+$(document).ready(function() {
+    $('.copy-btn').click(function() {
+        var inputField = $('.participant-link'); // Corrected selector
+        var inputValue = inputField.val(); // Get input value
+
+        if (inputValue) {
+            navigator.clipboard.writeText(inputValue).then(() => {
+                $('.copy-message').fadeIn(300).delay(1000).fadeOut(300);
+            }).catch(err => {
+                console.error("Copy failed: ", err);
+            });
+        } else {
+            console.error("Input field is empty or not found.");
+        }
+    });
+});
+</script> -->
+
+<script>
+function copyToClipboard() {
+    var inputField = document.getElementById("participant-link");
+    var message = document.getElementById("copy-message");
+    // inputField.select();
+    // inputField.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(inputField.value).then(() => {
+        message.style.display = "block";
+        setTimeout(() => {
+            message.style.display = "none";
+        }, 1000);
+    }).catch(err => {
+        console.error("Copy failed: ", err);
+    });
+}
+</script>
 
 @endsection
