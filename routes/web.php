@@ -528,7 +528,7 @@ dd($year);
 });
 
 Route::get("stageList", [BroadcastController::class, 'stageList'])->name('stageList');
-Route::get('/ivs/broadcaster', [BroadcastController::class, 'addBroadcaster'])->name('addBroadcaster');
+Route::get('/ivs/broadcaster/{id?}', [BroadcastController::class, 'addBroadcaster'])->name('addBroadcaster');
 Route::post('/broadcaster/details', [BroadcastController::class, 'view_details'])->name('view-details');
 Route::get('/broadcaster/list', [BroadcastController::class, 'broadcasterList'])->name('broadcasterList');
 
