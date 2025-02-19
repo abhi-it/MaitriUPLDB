@@ -96,6 +96,7 @@
                 </button>
             </div>
         </div>
+        <p class="text-center mt-3">Do't have go live credits </p>
 
         <form method="GET" class="text-right" target="_black"
             action="{{ route('start_webinar', ['stageArn' => $data['participantToken']['token']]) }}">
