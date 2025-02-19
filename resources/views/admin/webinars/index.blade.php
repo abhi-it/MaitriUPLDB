@@ -16,7 +16,7 @@
                 <th>Scheduled At</th>
                 <th>Re-Schedule</th>
                 <th>Created Date</th>
-                <!-- <th>Start</th> -->
+                <th>Start Webinar</th>
             </tr>
         </thead>
         <tbody>
@@ -38,13 +38,14 @@
                     @endif
                 </td>
                 <td>{{ $webinar->created_at ?? '' }}</td>
-                <!-- <td>
+                <td>
                     @if($webinar->stage_arn)
-                    <a href="{{ $webinar->stage_arn }}" target="_blank">Join</a>
+                    <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar->stage_arn }}" class="btn btn-primary"
+                        target="_blank">Start</a>
                     @else
                     <span>Not Started</span>
                     @endif
-                </td> -->
+                </td>
             </tr>
             @php $i++ @endphp
             @endforeach

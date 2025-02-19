@@ -93,6 +93,7 @@ class BroadcastController extends Controller
                     'key' => $awsKey,
                     'secret' => $awsSecret ,
                 ],
+                 
             ]);
             $stageName = $request->stage_name;
             $newStageName = str_replace(' ', '-', $stageName);
@@ -183,7 +184,9 @@ class BroadcastController extends Controller
         if (!$stages) {
             return redirect()->back()->with('error', 'Stage ARN not found. Check your keys');
         }
-        $stageArn = $stages[0]['arn'];
+        $stages_arn = $request->stgArn; 
+        $stageArn = ($stages_arn) ? $stages_arn : $stages[0]['arn'];
+
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
