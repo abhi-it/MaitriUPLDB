@@ -147,7 +147,7 @@ class FarmerController extends Controller
         }
         if ($user) {
             $userData = FarmerUser::where('id', $user->id)->first();
-            $isFilled = !empty($userData->name) && !empty($userData->email) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
+            $isFilled = !empty($userData->name) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
             $check_profile = $isFilled ? 'completed' : 'not_completed';
             $user['profileDone'] = $check_profile;
             return $this->successResponse('Get User Profile Successfully',200,$user);
