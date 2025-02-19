@@ -45,8 +45,6 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
-                 
-                
             ]);
 
             $result = $ivsClient->listStages();
@@ -69,7 +67,23 @@ class BroadcastController extends Controller
 
 
     public function listIvsStage(){
-        $stages =  Webinar::orderBy('id', 'desc')->get();
+        $webinar =  Webinar::orderBy('id', 'desc')->get();
+        $stages = [];
+        foreach($webinar as $stage){
+            $stageArn = $stage->stage_arn;
+            $data = $this->createPublisherToken($stageArn);
+            $stages[] = [
+                'id' => $stage->id,
+                'title' => $stage->title,
+                'description' => $stage->description,
+                'scheduled_at' => $stage->scheduled_at,
+                'stage_arn' => $stage->stage_arn,
+                'created_at' => $stage->created_at,
+                'data' => $data
+            ];
+        }
+
+        // echo '<pre>';print_r($stages);exit;
         return view('admin.webinars.index', compact('stages'));
     }
 
@@ -91,7 +105,6 @@ class BroadcastController extends Controller
                     'key' => $awsKey,
                     'secret' => $awsSecret ,
                 ],
-                 
             ]);
             $stageName = $request->stage_name;
             $newStageName = str_replace(' ', '-', $stageName);
@@ -153,8 +166,6 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
-                 
-                
             ]);
 
             $result = $client->createParticipantToken([
