@@ -27,7 +27,7 @@
                 <div class="col-sm-6 m-auto">
                     <label>Schedule Date & Time:</label>
                     <input type="datetime-local" value="{{ old('scheduled_at', $stage->scheduled_at) }}"
-                        class="form-control" name="scheduled_at" required>
+                        class="form-control" name="scheduled_at">
                 </div>
             </div>
 

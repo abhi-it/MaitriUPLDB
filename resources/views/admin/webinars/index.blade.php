@@ -16,7 +16,7 @@
                 <th>Scheduled At</th>
                 <th>Re-Schedule</th>
                 <th>Created Date</th>
-                <th>Start Webinar</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -26,24 +26,31 @@
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $webinar->title }}</td>
-                <td>{{ $webinar->description ?? '' }}</td>
-                <td>{{ $webinar->scheduled_at ?? '' }}</td>
+                <td>{{ $webinar->description ?? 'N\A' }}</td>
+                <td>{{ $webinar->scheduled_at ?? 'N\A' }}</td>
                 <!-- <td>{{ $webinar->stage_arn ?? '' }}</td> -->
                 <td>
-                    @if($webinar->id)
+                    @php
+                    date_default_timezone_set('Asia/Kolkata');
+                    $currentTimestamp = time();
+                    $scheduledTimestamp = $webinar->scheduled_at ? strtotime($webinar->scheduled_at) : null;
+                    @endphp
+
+                    @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
                     <a href="{{ route('stage.create', ['id' => $webinar->id]) }}"
-                        class="btn btn-primary btn-sm">Re-Schedule</a>
+                        class="btn btn-primary btn-sm">{{ $webinar->scheduled_at ? 'Re-Scheduled' : 'Scheduled' }}</a>
                     @else
-                    <span>Not Available</span>
+                    <span>N/A</span>
                     @endif
                 </td>
+
                 <td>{{ $webinar->created_at ?? '' }}</td>
                 <td>
-                    @if($webinar->stage_arn)
+                    @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
                     <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar->stage_arn }}" class="btn btn-primary"
-                        target="_blank">Start</a>
+                        target="_blank">Start Webinar</a>
                     @else
-                    <span>Not Started</span>
+                    <button type="button" class="btn btn-success">Webinar Done</button>
                     @endif
                 </td>
             </tr>
