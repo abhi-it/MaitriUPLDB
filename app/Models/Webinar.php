@@ -12,6 +12,7 @@ class Webinar extends Model
 
     protected $fillable = [
         'title',
+        'convertTitle',
         'description',
         'scheduled_at',
         'stage_arn',
