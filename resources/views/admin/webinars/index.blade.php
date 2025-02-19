@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h3 class="text-center mt-3">Webinar's</h3>
+    <h3 class="text-center mt-3">Webinars</h3>
 
     <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Webinar</a>
 
