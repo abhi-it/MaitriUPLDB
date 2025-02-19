@@ -96,8 +96,8 @@
                 </button>
             </div>
         </div>
-        <!-- <p class="text-center mt-3">Do't have go live credits </p> -->
 
+        <!-- <p class="text-center mt-3">Do't have go live credits </p> -->
         <!-- <form method="GET" class="text-right" target="_black"
             action="{{ route('start_webinar', ['stageArn' => $data['participantToken']['token']]) }}">
             @csrf
@@ -158,7 +158,6 @@ $(document).ready(function() {
         //     token: $("#token").val(),
         //     _token: "{{ csrf_token() }}"
         // };
-
         // $.ajax({
         //     url: "{{ route('start_webinar') }}",
         //     type: "GET",
