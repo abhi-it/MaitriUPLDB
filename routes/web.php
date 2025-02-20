@@ -556,8 +556,8 @@ Route::get('/ivs/live-participants', [BroadcastController::class, 'getLivePartic
 
 //  New Code
 Route::get('/stage/create/{id?}', [BroadcastController::class, 'createStage'])->name('stage.create');
-Route::post('/stage/store', [BroadcastController::class, 'createIvsStage'])->name('webinars.store');
-Route::post('/stage/update/{id}', [BroadcastController::class, 'updateIvsStage'])->name('stage.update');
+Route::post('/stage/store', [WebinarController::class, 'createIvsStage'])->name('webinars.store');
+Route::post('/stage/update/{id}', [WebinarController::class, 'updateIvsStage'])->name('stage.update');
 Route::get('/admin/webinars', [BroadcastController::class, 'listIvsStage'])->name('admin.webinars.index');
 
 
