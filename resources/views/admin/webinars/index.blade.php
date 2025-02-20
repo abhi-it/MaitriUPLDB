@@ -56,6 +56,7 @@
 
     <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Webinar</a>
 
+    <span class="copy-message" id="copy-message">Link copied!</span>
     <table border="1" class="table table-striped mt-3">
         <thead>
             <tr>
@@ -79,11 +80,11 @@
                 <td>{{ $webinar['description'] ?? 'N\A' }}</td>
                 <td>{{ $webinar['scheduled_at'] ?? 'N\A' }}</td>
                 <td>
-                    <span class="copy-message" id="copy-message">Link copied!</span>
                     <div class="link-box">
                         <input type="text" disabled id="participant-link" class="participant-link"
                             value="{{ route('join_webinar', ['token' => $webinar['stage_arn']]) }}" readonly>
-                        <button class="copy-btn" onclick="copyToClipboard()">
+                        <button class="copy-btn"
+                            data-url="{{ route('join_webinar', ['token' => $webinar['stage_arn']]) }}">
                             📋
                         </button>
                     </div>
@@ -147,20 +148,20 @@ $(document).ready(function() {
 </script> -->
 
 <script>
-function copyToClipboard() {
-    var inputField = document.getElementById("participant-link");
-    var message = document.getElementById("copy-message");
-    // inputField.select();
-    // inputField.setSelectionRange(0, 99999); // For mobile devices
-    navigator.clipboard.writeText(inputField.value).then(() => {
-        message.style.display = "block";
-        setTimeout(() => {
-            message.style.display = "none";
-        }, 1000);
-    }).catch(err => {
-        console.error("Copy failed: ", err);
-    });
-}
+$(document).ready(function() {
+    jQuery('.copy-btn').click(function() {
+        var copyUrl = $(this).data('url');
+        if (copyUrl) {
+            navigator.clipboard.writeText(copyUrl).then(() => {
+                $('.copy-message').fadeIn(300).delay(1000).fadeOut(300);
+            }).catch(err => {
+                console.error("Copy failed: ", err);
+            });
+        } else {
+            console.error("Input field is empty or not found.");
+        }
+    })
+});
 </script>
 
 @endsection
