@@ -16,5 +16,6 @@ class Webinar extends Model
         'description',
         'scheduled_at',
         'stage_arn',
+        'local_arn',
     ];
 }

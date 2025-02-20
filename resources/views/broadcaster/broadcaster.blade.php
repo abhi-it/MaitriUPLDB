@@ -90,7 +90,9 @@
 
             <div class="link-box">
                 <input type="text" disabled id="participant-link"
-                    value="{{ route('join_webinar', ['token' => $stageArn]) }}" readonly>
+                    value="{{ route('join_webinar', !empty($get_local_arn) ? [$get_local_arn] : ['token' => $stageArn]) }}"
+                    readonly>
+
                 <button class="copy-btn" disabled onclick="copyToClipboard()">
                     📋
                 </button>
@@ -101,6 +103,7 @@
         <!-- <form method="GET" class="text-right" target="_black"
             action="{{ route('start_webinar', ['stageArn' => $data['participantToken']['token']]) }}">
             @csrf
+            <input type="hidden" id="localArn" name="localArn" value="{{ $get_local_arn }}">
             <input type="hidden" name="stageArn" value="{{ $stageArn }}">
             <input type="hidden" name="token" value="{{ $data['participantToken']['token'] }}">
             <button type="submit" class="btn btn-primary">Start Live Streaming</button>
@@ -108,6 +111,7 @@
 
         <form id="startWebinarForm" class="text-right">
             @csrf
+            <input type="hidden" id="localArn" name="localArn" value="{{ $get_local_arn }}">
             <input type="hidden" id="stageArn" name="stageArn" value="{{ $stageArn }}">
             <input type="hidden" id="token" name="token" value="{{ $data['participantToken']['token'] }}">
             <button type="submit" id="startWebinarBtn" class="btn btn-primary">Start Live Streaming</button>
@@ -131,13 +135,14 @@ $(document).ready(function() {
         var baseUrl = window.location.origin;
         var routePath = "/start-webinar";
         var stageArn = $("#stageArn").val();
+        var localArn = $("#localArn").val();
         var token = $("#token").val();
         var csrfToken = encodeURIComponent("{{ csrf_token() }}"); // Laravel CSRF token
 
         var checkLiveMode = 'off';
 
         var requestUrl =
-            `${baseUrl}${routePath}?_token=${csrfToken}&stageArn=${stageArn}&token=${token}`;
+            `${baseUrl}${routePath}?_token=${csrfToken}&stageArn=${localArn}&token=${token}`;
 
         if (checkLiveMode == 'off') {
             Swal.fire({

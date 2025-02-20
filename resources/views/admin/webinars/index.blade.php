@@ -54,19 +54,23 @@
 <div class="container">
     <h3 class="text-center mt-3">Webinars</h3>
 
-    <a href="{{ route('stage.create') }}" class="btn btn-primary">Create New Webinar</a>
+    <div class="add-webinar justify-content-md-end">
+
+        <a href="{{ route('stage.create') }}" class="btn btn-primary">Create Webinar</a>
+    </div>
 
     <span class="copy-message" id="copy-message">Link copied!</span>
+
     <table border="1" class="table table-striped mt-3">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Webinar Title</th>
-                <th>Webinar Description</th>
+                <th>Title</th>
+                <th>Description</th>
                 <th>Scheduled At</th>
-                <th>Share Like</th>
+                <th>Created At</th>
+                <th>Share Link</th>
                 <th>Re-Schedule</th>
-                <th>Created Date</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -79,16 +83,17 @@
                 <td>{{ $webinar['title'] }}</td>
                 <td>{{ $webinar['description'] ?? 'N\A' }}</td>
                 <td>{{ $webinar['scheduled_at'] ?? 'N\A' }}</td>
+                <td>{{ $webinar['created_at'] ?? '' }}</td>
                 <td>
                     <div class="link-box">
                         <input type="text" disabled id="participant-link" class="participant-link"
-                            value="{{ route('join_webinar', ['token' => $webinar['stage_arn']]) }}" readonly>
-                        <button class="copy-btn"
-                            data-url="{{ route('join_webinar', ['token' => $webinar['stage_arn']]) }}">
+                            value="{{ route('join_webinar', [$webinar['local_arn']]) }}" readonly>
+                        <button class="copy-btn" data-url="{{ route('join_webinar', [$webinar['local_arn']]) }}">
                             📋
                         </button>
                     </div>
                 </td>
+
                 <td>
                     @php
                     date_default_timezone_set('Asia/Kolkata');
@@ -104,10 +109,10 @@
                     @endif
                 </td>
 
-                <td>{{ $webinar['created_at'] ?? '' }}</td>
+
                 <td>
                     @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
-                    <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar['stage_arn'] }}" class="btn btn-primary"
+                    <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar['local_arn'] }}" class="btn btn-primary"
                         target="_blank">Start Webinar</a>
                     @else
                     <button type="button" class="btn btn-success">Webinar Done</button>

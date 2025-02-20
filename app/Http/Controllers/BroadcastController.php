@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Models\API\Role;
 use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
@@ -13,6 +13,8 @@ use App\Models\Broadcastdetails;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Scheduler\SchedulerClient;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Request;
 
 class BroadcastController extends Controller
 {
@@ -67,24 +69,23 @@ class BroadcastController extends Controller
 
 
     public function listIvsStage(){
-        $webinar =  Webinar::orderBy('id', 'desc')->get();
+        $webinar =  Webinar::orderBy('id', 'desc')->paginate(10);
         $stages = [];
         foreach($webinar as $stage){
             $stageArn = $stage->stage_arn;
             $data = $this->createPublisherToken($stageArn);
             $stages[] = [
-                'id' => $stage->id,
-                'title' => $stage->title,
-                'description' => $stage->description,
-                'scheduled_at' => $stage->scheduled_at,
-                'stage_arn' => $stage->stage_arn,
-                'created_at' => $stage->created_at,
-                'data' => $data
+                'id'            => $stage->id,
+                'title'         => $stage->title,
+                'description'   => $stage->description,
+                'scheduled_at'  => $stage->scheduled_at,
+                'stage_arn'     => $stage->stage_arn,
+                'local_arn'     => $stage->local_arn,
+                'created_at'    => $stage->created_at,
+                'data'          => $data
             ];
         }
-
-        // echo '<pre>';print_r($stages);exit;
-        return view('admin.webinars.index', compact('stages'));
+        return view('admin.webinars.index', compact('stages','webinar'));
     }
 
     public function createStage($id = null) {
@@ -113,12 +114,14 @@ class BroadcastController extends Controller
                 'name' => $newStageName, 
             ]);
 
+            $local_arn = Str::random(32);
             $webinar = Webinar::create([
-                'title'        => $stageName,
-                'convertTitle' => $newStageName,
-                'description'  => $request->description,
-                'scheduled_at' => $request->scheduled_at,
-                'stage_arn'  => $result['stage']['arn'],
+                'title'         => $stageName,
+                'convertTitle'  => $newStageName,
+                'description'   => $request->description,
+                'scheduled_at'  => $request->scheduled_at,
+                'stage_arn'     => $result['stage']['arn'],
+                'local_arn'     => Str::random(32),
             ]);
             return redirect('/admin/webinars')->with('success','Stage created successfully.');
           
@@ -134,7 +137,6 @@ class BroadcastController extends Controller
         $stage->title = $request->stage_name;
         $stage->description = $request->description;
         $stage->scheduled_at = $request->scheduled_at;
-
         $stageId = $request->stage_name;
         $scheduledTime = $request->scheduled_at;
         $stage->update();
@@ -190,15 +192,20 @@ class BroadcastController extends Controller
         if (!$stages) {
             return redirect()->back()->with('error', 'Stage ARN not found. Check your keys');
         }
-        $stages_arn = $request->stgArn; 
-        $stageArn = ($stages_arn) ? $stages_arn : $stages[0]['arn'];
-
+        $local_arn = request()->query('stgArn');
+        $get_local_arn = ''; 
+        $stages_arn = ''; 
+        if($local_arn){
+            $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
+            $get_local_arn = $getLocalToken->local_arn;
+            $stages_arn = $getLocalToken->stage_arn;
+        }
+        $stageArn = ($stages_arn != '') ? $stages_arn : $stages[0]['arn'];
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
-
         $data = $this->createPublisherToken($stageArn);
-        return view('broadcaster.broadcaster', compact('data','stageArn'));
+        return view('broadcaster.broadcaster', compact('data','stageArn','get_local_arn'));
     }
 
     public function getPublishersList($stageArn)
@@ -276,13 +283,27 @@ class BroadcastController extends Controller
     public function start_webinar(Request $request)
     {
         try {
-            $stageArn = $request->stageArn;
+            $local_arn = request()->query('localArn');
+            
+            $get_local_arn = ''; 
+            $stageArn = ''; 
+            if($local_arn){
+                $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
+                if($getLocalToken){
+                    $get_local_arn = $getLocalToken->local_arn;
+                    $stageArn = $getLocalToken->stage_arn;
+                }else{
+                    $stageArn = request()->query('stageArn');
+                }
+            }else{
+                $stageArn = request()->query('stageArn');
+            }
             // $data = $this->createPublisherToken($stageArn);
             // $token = $data['token'];
 
             $token = $request->token ?? null;
-            $fullUrl = route('join_webinar', ['token' => $stageArn]);
-
+            $fullUrl = route('join_webinar', !empty($get_local_arn) ? [$get_local_arn] : ['token' => $stageArn]);
+            
             $broadcastDetail = Broadcastdetails::where('stage_arn', $stageArn)->first();
             if ($broadcastDetail) {
                 $broadcastDetail->update([
@@ -329,7 +350,6 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
-                
             ]);
 
 
@@ -370,16 +390,28 @@ class BroadcastController extends Controller
 
     public function join_webinar(Request $request)
     {
-        $stageArn = $request->token;
-        if (!$stageArn) {
+        $local_arn = Request::segment(count(Request::segments()));
+        if (!$local_arn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
 
+        $get_local_arn = ''; 
+        $stageArn = ''; 
+        if($local_arn){
+            $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
+            if($getLocalToken){
+                $get_local_arn = $getLocalToken->local_arn;
+                $stageArn = $getLocalToken->stage_arn;
+            }
+        }else{
+            $stageArn = $request->token; 
+        }
+        
         $response = $this->createSubscriberToken($stageArn);
-        $data = json_decode($response->getContent(), true);  
+        $data = json_decode($response->getContent(), true);
         $token = $data['subscriber_token']['token'] ?? null;
 
-        return view('broadcaster.subscriber', compact('stageArn','token'));
+        return view('broadcaster.subscriber', compact('stageArn','token', 'get_local_arn'));
     }
 
 
@@ -618,7 +650,20 @@ class BroadcastController extends Controller
     //LIve participants Count
     public function getLiveParticipantsCount(Request $request)
     {
-        $stageArn = $request->query('stageArn'); 
+        $local_arn = request()->query('localArn');
+        $get_local_arn = ''; 
+        $stageArn = ''; 
+        if($local_arn){
+            $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
+            if($getLocalToken){
+                $get_local_arn = $getLocalToken->local_arn;
+                $stageArn = $getLocalToken->stage_arn;
+            }else{
+                $stageArn = request()->query('stageArn');
+            }
+        }else{
+            $stageArn = request()->query('stageArn');
+        }
 
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
