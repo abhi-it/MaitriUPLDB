@@ -103,7 +103,7 @@
                     @endif
                 </td>
 
-                <td>{{ $webinar->created_at ?? '' }}</td>
+                <td>{{ $webinar['created_at'] ?? '' }}</td>
                 <td>
                     @if($scheduledTimestamp && $scheduledTimestamp > $currentTimestamp)
                     <a href="{{ url('') }}/ivs/broadcaster/?stgArn={{ $webinar['stage_arn'] }}" class="btn btn-primary"
