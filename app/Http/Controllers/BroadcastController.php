@@ -47,6 +47,9 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
+                'http' => [
+                    'verify' => false,
+                ],
             ]);
 
             $result = $ivsClient->listStages();
@@ -119,6 +122,9 @@ class BroadcastController extends Controller
                 'credentials' => [
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+                'http' => [
+                    'verify' => false,
                 ],
             ]);
 
@@ -273,7 +279,7 @@ class BroadcastController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
+    }  
 
     //Subscribers
     public function createSubscriberToken($stageArn)
@@ -301,6 +307,9 @@ class BroadcastController extends Controller
                 'credentials' => [
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
+                ],
+                'http' => [
+                    'verify' => false,
                 ],
             ]);
 
@@ -340,31 +349,7 @@ class BroadcastController extends Controller
         return view('broadcaster.viewers', compact('originalData','stageArn'));
     }
 
-    public function join_webinar(Request $request)
-    {
-        $local_arn = Request::segment(count(Request::segments()));
-        if (!$local_arn) {
-            return response()->json(['error' => 'Stage ARN is required'], 400);
-        }
-
-        $get_local_arn = ''; 
-        $stageArn = ''; 
-        if($local_arn){
-            $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
-            if($getLocalToken){
-                $get_local_arn = $getLocalToken->local_arn;
-                $stageArn = $getLocalToken->stage_arn;
-            }
-        }else{
-            $stageArn = $request->token; 
-        }
-        
-        $response = $this->createSubscriberToken($stageArn);
-        $data = json_decode($response->getContent(), true);
-        $token = $data['subscriber_token']['token'] ?? null;
-
-        return view('broadcaster.subscriber', compact('stageArn','token', 'get_local_arn'));
-    }
+   
 
 
     //---------------------------latency-------------------------------//
