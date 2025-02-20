@@ -536,7 +536,7 @@ Route::get('/start-webinar',[BroadcastController::class, 'start_webinar'])->name
 
 //subscriber
 Route::get('/add-subscribers',[BroadcastController::class, 'generateSubscriberToken'])->name('generateSubscriberToken');
-Route::get('/join-webinar/{id?}',[BroadcastController::class, 'join_webinar'])->name('join_webinar');
+Route::get('/join-webinar/{id?}',[WebinarController::class, 'join_webinar'])->name('join_webinar');
 
 
 //IVS-LATENCY
@@ -566,3 +566,5 @@ Route::get('/webinars/{id}/edit', [WebinarController::class, 'edit'])->name('web
 Route::put('/webinars/{id}', [WebinarController::class, 'update'])->name('webinars.update');
 Route::delete('/webinars/{id}', [WebinarController::class, 'destroy'])->name('webinars.destroy');
 Route::get('/webinars/{id}/join', [WebinarController::class, 'join'])->name('webinars.join');
+
+Route::get('/get-recording', [WebinarController::class, 'get_recording'])->name('webinars.recording');
