@@ -121,7 +121,7 @@ class BroadcastController extends Controller
                 'description'   => $request->description,
                 'scheduled_at'  => $request->scheduled_at,
                 'stage_arn'     => $result['stage']['arn'],
-                'local_arn'     => $local_arn,
+                'local_arn'     => Str::random(32),
             ]);
             return redirect('/admin/webinars')->with('success','Stage created successfully.');
           
