@@ -1,10 +1,10 @@
 @extends('zonesMenu')
 @section('content')
 <style>
-    .errorclass{
-        font-size: 8px;
-        color: red;
-    }
+.errorclass {
+    font-size: 8px;
+    color: red;
+}
 </style>
 <div class="container main-div py-5" style="background-color:white;">
     @if(session()->has('success'))
@@ -28,6 +28,7 @@
             <tr>
                 <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
                 <th><span data-hi="वीर्य" data-en="Semen"></span></th>
+                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
                 <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
                 <th><span data-hi="बैनर" data-en="Banner"></span></th>
                 <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
@@ -42,7 +43,7 @@
         </thead>
         <tbody id="avaiable_data">
             <tr>
-                <td colspan="12" class="text-center" style="color:red;">Please select any AI Center</td>
+                <td colspan="13" class="text-center" style="color:red;">Please select any AI Center</td>
             </tr>
         </tbody>
     </table>
@@ -83,11 +84,11 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span>
-                    <span id="errorDemand" class="errorclass"></span> 
+                    <span id="errorDemand" class="errorclass"></span>
                 </label>
-                <input name="demand_section" id="demand_section" data-filed_type="demand_section" type="text" class="form-control"
-                    data-placeholder-hi="तरल नाइट्रोजन (लीटर में)" data-placeholder-en="Liquid Nitrogen (in Litre)"
-                    autofocus>
+                <input name="demand_section" id="demand_section" data-filed_type="demand_section" type="text"
+                    class="form-control" data-placeholder-hi="तरल नाइट्रोजन (लीटर में)"
+                    data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
@@ -210,11 +211,18 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
-                    <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
-                    <span id="errorBanner" class="errorclass"></span> 
+                    <span data-hi="वीर्य स्ट्रॉस मात्रा" data-en="Semen Straws Quantity"></span>
                 </label>
-                <input name="banner" min="0" id="banner" type="number" data-filed_type="banner" class="form-control" data-placeholder-hi="बैनर"
-                    data-placeholder-en="Banner" autofocus>
+                <input name="semen_straws" id="semen_straws" min="1" type="number" class="form-control"
+                    data-placeholder-hi="वीर्य स्ट्रॉस मात्रा" data-placeholder-en="Semen Straws Quantity" autofocus>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">
+                    <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
+                    <span id="errorBanner" class="errorclass"></span>
+                </label>
+                <input name="banner" min="0" id="banner" type="number" data-filed_type="banner" class="form-control"
+                    data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
@@ -238,13 +246,14 @@
                     <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span>
                     <span id="errorPamphlet" class="errorclass"></span>
                 </label>
-                <input name="pamphlet" min="0" id="pamphlet" type="number" data-filed_type="pamphlet" class="form-control"
-                    data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                <input name="pamphlet" min="0" id="pamphlet" type="number" data-filed_type="pamphlet"
+                    class="form-control" data-placeholder-hi="पैम्फलेट (संख्या में)"
+                    data-placeholder-en="Pamphlet(In Numbers)" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
-                    <span id="errorAiKit" class="errorclass"></span> 
+                    <span id="errorAiKit" class="errorclass"></span>
                 </label>
                 <input name="ai_kit" min="0" id="ai_kit" type="number" data-filed_type="ai_kit" class="form-control"
                     data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
@@ -252,10 +261,11 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span>
-                    <span id="errorContainer" class="errorclass"></span> 
+                    <span id="errorContainer" class="errorclass"></span>
                 </label>
-                <input name="container" min="0" id="container" data-filed_type="container" type="number" class="form-control"
-                    data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
+                <input name="container" min="0" id="container" data-filed_type="container" type="number"
+                    class="form-control" data-placeholder-hi="कंटेनर(संख्या में)"
+                    data-placeholder-en="Container(In Numbers)" autofocus>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
@@ -335,7 +345,7 @@ $(document).ready(function() {
                 var html = '';
                 if (result.remainingStock && result.type === 'maitri' && Object.keys(result
                         .remainingStock).length > 0) {
-                            $('input, select').prop('disabled', false);
+                    $('input, select').prop('disabled', false);
                     var remainingStock = result.remainingStock;
 
                     $('#aiCenter_id').val(aiCenterID);
@@ -343,6 +353,7 @@ $(document).ready(function() {
                     html += '<tr>';
                     html += '<td>' + (remainingStock.demand_section || '') + '</td>';
                     html += '<td>' + (remainingStock.semen || '') + '</td>';
+                    html += '<td>' + (remainingStock.semen_straws || '') + '</td>';
                     html += '<td>' + (remainingStock.semen_type || '') + '</td>';
                     html += '<td>' + (remainingStock.banner || '') + '</td>';
                     html += '<td>' + (remainingStock.dangler || '') + '</td>';
@@ -361,7 +372,7 @@ $(document).ready(function() {
                     $('select').not(':first').prop('disabled', true);
                     html += '<tr>';
                     html +=
-                        '<td colspan="12" class="text-center" style="color:red;">No data found</td>';
+                        '<td colspan="13" class="text-center" style="color:red;">No data found</td>';
                     html += '</tr>';
                     $('#avaiable_data').append(html);
                 }
@@ -417,49 +428,49 @@ $(document).ready(function() {
         checkRemainingStock(user_id, type, demand);
     });
 
-    $('#banner').keyup(function(){
+    $('#banner').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    $('#dangler').keyup(function(){
+    $('#dangler').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    $('#standee').keyup(function(){
+    $('#standee').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    $('#pamphlet').keyup(function(){
+    $('#pamphlet').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    $('#ai_kit').keyup(function(){
+    $('#ai_kit').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    $('#container').keyup(function(){
+    $('#container').keyup(function() {
         var user_id = $('#aiCenter_id').val();
         var banner = $(this).val();
         var type = $(this).data('filed_type');
         checkRemainingStock(user_id, type, banner);
     })
 
-    function checkRemainingStock(user_id, type, field_value){
+    function checkRemainingStock(user_id, type, field_value) {
         $.ajax({
             url: '/check-stock-limit',
             method: 'GET',
@@ -471,7 +482,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 $('.errorclass').html('');
-               
+
 
                 if (type === 'demand_section' && response.demand) {
                     $('#errorDemand').html('( ' + response.demand + ' )');
@@ -494,10 +505,10 @@ $(document).ready(function() {
                 } else if (type === 'container' && response.container) {
                     $('#errorContainer').html('( ' + response.container + ' )');
                     $('.buttonWizard').prop('disabled', true);
-                }else{
+                } else {
                     $('.buttonWizard').prop('disabled', false);
                 }
-                
+
             },
             error: function(xhr) {
                 console.error(xhr.responseText);
