@@ -14,6 +14,7 @@ class Zonestock extends Model
         'breed_type',
         'supply_date',
         'semen' ,
+        'semen_straws',
         'semen_type' ,
         'banner' ,
         'dangler'  ,
