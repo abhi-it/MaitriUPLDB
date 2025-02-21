@@ -15,6 +15,7 @@ class RemainingStock extends Model
         'breed_type',
         'demand_section',
         'semen' ,
+        'semen_straws',
         'semen_type' ,
         'banner' ,
         'dangler'  ,

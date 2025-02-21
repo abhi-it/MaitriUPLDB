@@ -175,6 +175,14 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
+                    <span data-hi="वीर्य स्ट्रॉस मात्रा" data-en="Semen Straws Quantity"></span>
+                </label>
+                <input name="semen_straws" id="semen_straws" min="1" type="number" class="form-control"
+                    data-placeholder-hi="वीर्य स्ट्रॉस मात्रा" data-placeholder-en="Semen Straws Quantity" autofocus>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">
                     <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
                 </label>
                 <input name="banner" id="banner" type="number" class="form-control" data-placeholder-hi="बैनर"
