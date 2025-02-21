@@ -27,6 +27,7 @@
                 <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
                 <th><span data-hi="वीर्य" data-en="Semen"></span></th>
                 <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
+                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
                 <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
                 <th><span data-hi="बैनर" data-en="Banner"></span></th>
                 <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
@@ -44,7 +45,7 @@
 
             @if(count($districtStock) == 0)
             <tr>
-                <td colspan="15" class="text-center">No Record Found</td>
+                <td colspan="18" class="text-center">No Record Found</td>
             </tr>
             @endif
 
@@ -58,6 +59,7 @@
                         data-en="{{ $stockDistrict->division_name_eng }}"></span></td>
                 <td>{{ $stockDistrict->demand_section }}</td>
                 <td>{{ $stockDistrict->semen }}</td>
+                <td>{{ $stockDistrict->semen_straws }}</td>
                 <td>{{ $stockDistrict->semen_straws }}</td>
                 <td>{{ $stockDistrict->semen_type }}</td>
                 <td>{{ $stockDistrict->banner }}</td>

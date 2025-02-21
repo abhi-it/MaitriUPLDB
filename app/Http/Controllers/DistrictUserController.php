@@ -51,8 +51,12 @@ class DistrictUserController extends Controller{
     public function districtStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
-        // $divisionStock = RemainingStock::where('user_id', $user_id)->get();
+        if($inventoryIds){
+            $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+            // $divisionStock = RemainingStock::where('user_id', $user_id)->get();
+        }else{
+            $divisionStock = [];
+        }
         return view('districtstock.districtdetails', compact('divisionStock'));
     }
 
@@ -93,23 +97,33 @@ class DistrictUserController extends Controller{
         $division_id = $getData['division_id'];
         $district_id = $getData['district_id'];
         $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
-        $zone_id = $deoUser['zone_id'];
-        $zoneName = Zone::where('id', $zone_id)->first();
-
+        
+        if($deoUser){
+            $zone_id = $deoUser['zone_id'];
+            $zoneName = Zone::where('id', $zone_id)->first();
+    
+    
+            /*$aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
+                        ->where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
+                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
+                        ->groupBy('center_name')
+                        ->get();*/
+            
+          
+    
+            $districtInventory = RemainingStock::where('user_id', $user_id)->get();
+        }else{
+            $zone_id = '';
+            $districtInventory = [];
+        }
+        
         $districtName = Districts::where('id', $getData['district_id'])->first();
         $divisionName = Divisions::where('id', $getData['division_id'])->first();
-
-        /*$aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
-                    ->where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
-                    ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
-                    ->groupBy('center_name')
-                    ->get();*/
-        
         $aiCenters = Latestaicenter::where('division_id', $divisionName['id'])
-                    ->where('district_id', $districtName['id'])
-                    ->get();
+        ->where('district_id', $districtName['id'])
+        ->get();
+       
 
-        $districtInventory = RemainingStock::where('user_id', $user_id)->get();
         return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
     }
 
@@ -216,6 +230,7 @@ class DistrictUserController extends Controller{
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
                 'semen'                 => $request->semen,
+                'semen_straws'          => $request->semen_straws,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
                 'dangler'               => $request->dangler,
@@ -249,6 +264,7 @@ class DistrictUserController extends Controller{
                 'breed'              => $request->breed,
                 'breed_type'         => $breedType,
                 'semen'              => $request->semen,
+                'semen_straws'          => $request->semen_straws,
                 'semen_type'         => $request->semen_type,
                 'banner'             => $request->banner,
                 'dangler'            => $request->dangler,
