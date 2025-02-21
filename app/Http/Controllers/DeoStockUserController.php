@@ -98,24 +98,29 @@ class DeoStockUserController extends Controller
     public function deoStockDetaikls(){
         $user_id = Auth::user()->id;
         $deoUser = DeoUser::where('user_id', $user_id)->first();
-        $division_id = $deoUser['division_id'];
-        $district_id = $deoUser['district_id'];
-        $getAiCenters = Latestaicenter::where('division_id', $division_id)
-                    ->where('district_id', $district_id)
-                    ->get();
-                    
-        $inventoryData = [];
-        $deoStock = [];
-        foreach ($getAiCenters as $aiCenter) {
-            $aiCenterUserId = $aiCenter['id'];
-            $inventoryIds = InventoryMap::where('user_id', $aiCenterUserId)->first();
-            $deoStockData = RemainingStock::where('user_id', $aiCenterUserId)->first();
-            if ($inventoryIds ) {
-                $inventoryData[] = $inventoryIds;
+        if($deoUser){
+            $division_id = $deoUser['division_id'];
+            $district_id = $deoUser['district_id'];
+            $getAiCenters = Latestaicenter::where('division_id', $division_id)
+                        ->where('district_id', $district_id)
+                        ->get();
+                        
+            $inventoryData = [];
+            $deoStock = [];
+            foreach ($getAiCenters as $aiCenter) {
+                $aiCenterUserId = $aiCenter['id'];
+                $inventoryIds = InventoryMap::where('user_id', $aiCenterUserId)->first();
+                $deoStockData = RemainingStock::where('user_id', $aiCenterUserId)->first();
+                if ($inventoryIds ) {
+                    $inventoryData[] = $inventoryIds;
+                }
+                if ($deoStockData ) {
+                    $deoStock[] = $deoStockData;
+                }
             }
-            if ($deoStockData ) {
-                $deoStock[] = $deoStockData;
-            }
+        }else{
+            $deoStock = [];
+            $inventoryData = [];
         }
         return view('deostock.deodetails', compact('deoStock', 'inventoryData'));
     }
@@ -312,6 +317,7 @@ class DeoStockUserController extends Controller
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
                 'semen'                 => $request->semen,
+                'semen_straws'          => $request->semen_straws,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
                 'dangler'               => $request->dangler,
