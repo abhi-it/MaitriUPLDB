@@ -532,11 +532,11 @@ Route::get('/ivs/broadcaster/{id?}', [BroadcastController::class, 'addBroadcaste
 Route::post('/broadcaster/details', [BroadcastController::class, 'view_details'])->name('view-details');
 Route::get('/broadcaster/list', [BroadcastController::class, 'broadcasterList'])->name('broadcasterList');
 
-Route::get('/start-webinar',[WebinarController::class, 'start_webinar'])->name('start_webinar');
+Route::get('/start-webinar',[BroadcastController::class, 'start_webinar'])->name('start_webinar');
 
 //subscriber
 Route::get('/add-subscribers',[BroadcastController::class, 'generateSubscriberToken'])->name('generateSubscriberToken');
-Route::get('/join-webinar/{id?}',[WebinarController::class, 'join_webinar'])->name('join_webinar');
+Route::get('/join-webinar/{id?}',[BroadcastController::class, 'join_webinar'])->name('join_webinar');
 
 
 //IVS-LATENCY

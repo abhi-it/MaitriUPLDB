@@ -90,7 +90,7 @@
 
             <div class="link-box">
                 <input type="text" disabled id="participant-link"
-                    value="{{ route('join_webinar', !empty($get_local_arn) ? [$get_local_arn] : ['token' => $stageArn]) }}"
+                    value="{{ route('join_webinar', !empty($get_local_arn) ? ['token' => $get_local_arn] : ['token' => $stageArn]) }}"
                     readonly>
 
                 <button class="copy-btn" disabled onclick="copyToClipboard()">

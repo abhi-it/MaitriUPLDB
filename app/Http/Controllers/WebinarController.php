@@ -74,35 +74,6 @@ class WebinarController extends Controller
         return redirect()->route('stage.create', $id)->with('success', 'Stage Updated Successfully');
     }
 
-    public function join_webinar(Request $request)
-    {
-        // $local_arn = Request::segment(count(Request::segments()));
-        // if (!$local_arn) {
-        //     return response()->json(['error' => 'Stage ARN is required'], 400);
-        // }
-
-        $checkArn = $request->token ? $request->token : $local_arn;
-        $local_arn  = '';
-        $get_local_arn = ''; 
-        $stageArn = ''; 
-        if($local_arn){
-            $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
-            if($getLocalToken){
-                $get_local_arn = $getLocalToken->local_arn;
-                $stageArn = $getLocalToken->stage_arn;
-            }
-        }else{
-            $stageArn = $request->token; 
-        }
-        
-      
-
-        $response = $this->createSubscriberToken($stageArn);
-        $data = json_decode($response->getContent(), true);
-        $token = $data['subscriber_token']['token'] ?? null;
-        return view('broadcaster.subscriber', compact('stageArn','token', 'get_local_arn'));
-    }
-
     public function get_recording() {
         try {
             require_once base_path('vendor/aws/aws-sdk-php/src/S3/S3Client.php');
@@ -185,47 +156,6 @@ class WebinarController extends Controller
     }
 
 
-    public function start_webinar(Request $request)
-    {
-        try {
-            $local_arn = request()->query('localArn');
-            
-            $get_local_arn = ''; 
-            $stageArn = ''; 
-            if($local_arn){
-                $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
-                if($getLocalToken){
-                    $get_local_arn = $getLocalToken->local_arn;
-                    $stageArn = $getLocalToken->stage_arn;
-                }else{
-                    $stageArn = request()->query('stageArn');
-                }
-            }else{
-                $stageArn = request()->query('stageArn');
-            }
-            // $data = $this->createPublisherToken($stageArn);
-            // $token = $data['token'];
-
-            $token = $request->token ?? null;
-            $fullUrl = route('join_webinar', !empty($get_local_arn) ? [$get_local_arn] : ['token' => $stageArn]);
-            
-            $broadcastDetail = Broadcastdetails::where('stage_arn', $stageArn)->first();
-            if ($broadcastDetail) {
-                $broadcastDetail->update([
-                    'updated_at' => now(),
-                ]);
-            } else {
-                $host_id = Auth::user()->id;
-                Broadcastdetails::create([
-                    'host_id' => $host_id,
-                    'stage_arn' => $stageArn,
-                ]);
-            }
-
-            return view('broadcaster.host', compact('token', 'fullUrl','stageArn'));
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }  
+   
 
 }
