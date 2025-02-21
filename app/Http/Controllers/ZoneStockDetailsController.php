@@ -27,8 +27,12 @@ class ZoneStockDetailsController extends Controller
     public function zoneStockDetails(){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
-        // $zoneStock = RemainingStock::where('user_id', $user_id)->get();
+        if($inventoryIds){
+            $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
+            // $zoneStock = RemainingStock::where('user_id', $user_id)->get();
+        }else{
+            $zoneStock = [];
+        }
         return view('zonedetails.zonedetails', compact('zoneStock'));
   
     }
@@ -166,6 +170,7 @@ class ZoneStockDetailsController extends Controller
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
                 'semen'                 => $request->semen,
+                'semen_straws'          => $request->semen_straws,
                 'semen_type'            => $request->semen_type,
                 'banner'                => $request->banner,
                 'dangler'               => $request->dangler,
@@ -197,6 +202,7 @@ class ZoneStockDetailsController extends Controller
                 'breed'                 => $request->breed,
                 'breed_type'            => $breedType,
                 'semen'              => $request->semen,
+                'semen_straws'          => $request->semen_straws,
                 'semen_type'         => $request->semen_type,
                 'banner'             => $request->banner,
                 'dangler'            => $request->dangler,
