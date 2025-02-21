@@ -191,53 +191,48 @@ class DistrictUserController extends Controller{
                 $deoTableId = $result['id'];
             }
          
-            $bullIds = implode(',',$request->bull_ids);
-            $breedType = null;
-            if( $request->semen == 'catle'){
-                switch ($request->breed) {
-                    case 'swadeshi':
-                        $request->validate([
-                            'breedType1' => 'required|string',
-                        ]);
-                        $breedType = $request->breedType1;
-                        break;
+            $breedType = [];
+            $semens = $request->semen;
+            $breeds = $request->breed;
+            if($semens > 0){
+                foreach($semens as $key => $semen){
+                    
+                    if( $semen == 'catle'){
+                        if($breeds[$key] == 'swadeshi'){
+                            $breedType = $request->breedType1;
+                        }else if($breeds[$key] == 'hybrids-crossbred'){
+                            $breedType = $request->breedType2;
+                        }else if($breeds[$key] == 'videshi'){
+                            $breedType = $request->breedType3;
+                        }
 
-                    case 'hybrids-crossbred':
-                        $request->validate([
-                            'breedType2' => 'required|string',
-                        ]);
-                        $breedType = $request->breedType2;
-                        break;
-
-                    case 'videshi':
-                        $request->validate([
-                            'breedType3' => 'required|string',
-                        ]);
-                        $breedType = $request->breedType3;
-                        break;
-
-                    default:
-                        return back()->withErrors(['breed' => 'Invalid breed selection.']);
+                    }else if($semen == 'buffalo'){
+                        $breedType = $request->breedType4;
+                    }else if($semen == 'goat'){
+                        $breedType = $request->breedType5;
+                    }
                 }
-            }else if($request->semen == 'buffalo'){
-                $breedType = $request->breedType4;
-            }else if($request->semen == 'goat'){
-                $breedType = $request->breedType5;
             }
             
             $inventory  = new Zonestock([
                 'demand_section'        => $request->demand_section,
-                'breed'                 => $request->breed,
-                'breed_type'            => $breedType,
-                'semen'                 => $request->semen,
-                'semen_straws'          => $request->semen_straws,
-                'semen_type'            => $request->semen_type,
+                // 'breed'                 => $request->breed,
+                // 'breed_type'            => $breedType,
+                // 'semen'                 => $request->semen,
+                // 'semen_straws'          => $request->semen_straws,
+                // 'semen_type'            => $request->semen_type,
+                // 'bull_ids'              => $bullIds,
+                'semen'                 => implode(',', $request->semen),
+                'breed'                 => implode(',', $request->breed),
+                'breed_type'            => implode(',', $breedType),
+                'semen_type'            => implode(',', $request->semen_type),
+                'semen_straws'          => implode(',', $request->semen_straws),
+                'bull_ids'              => implode(',', $request->bull_id),
                 'banner'                => $request->banner,
                 'dangler'               => $request->dangler,
                 'standee'               => $request->standee,
                 'pamphlet'              => $request->pamphlet,
                 'ai_kit'                => $request->ai_kit,
-                'bull_ids'              => $bullIds,
                 'container_capacity'    =>$request->container_capacity,
                 'container'             => $request->container,
                 'scheme'                => $request->scheme,
@@ -261,20 +256,26 @@ class DistrictUserController extends Controller{
             $data = [
                 'user_id'            => $aiCenter_id,
                 'demand_section'     => $request->demand_section,
-                'breed'              => $request->breed,
-                'breed_type'         => $breedType,
-                'semen'              => $request->semen,
-                'semen_straws'          => $request->semen_straws,
-                'semen_type'         => $request->semen_type,
-                'banner'             => $request->banner,
-                'dangler'            => $request->dangler,
-                'standee'            => $request->standee,
-                'pamphlet'           => $request->pamphlet,
-                'ai_kit'             => $request->ai_kit,
-                'bull_ids'           => $bullIds,
-                'container_capacity' => $request->container_capacity,
-                'container'          => $request->container,
-                'scheme'             => $request->scheme,
+                // 'breed'              => $request->breed,
+                // 'breed_type'         => $breedType,
+                // 'semen'              => $request->semen,
+                // 'semen_straws'       => $request->semen_straws,
+                // 'semen_type'         => $request->semen_type,
+                // 'bull_ids'           => $bullIds,
+                'semen'                 => implode(',', $request->semen),
+                'breed'                 => implode(',', $request->breed),
+                'breed_type'            => implode(',', $breedType),
+                'semen_type'            => implode(',', $request->semen_type),
+                'semen_straws'          => implode(',', $request->semen_straws),
+                'bull_ids'              => implode(',', $request->bull_id),
+                'banner'                => $request->banner,
+                'dangler'               => $request->dangler,
+                'standee'               => $request->standee,
+                'pamphlet'              => $request->pamphlet,
+                'ai_kit'                => $request->ai_kit,
+                'container_capacity'    => $request->container_capacity,
+                'container'             => $request->container,
+                'scheme'                => $request->scheme,
             ];
             RemainingStock::create($data);
 
