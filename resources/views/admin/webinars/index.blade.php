@@ -87,8 +87,9 @@
                 <td>
                     <div class="link-box">
                         <input type="text" disabled id="participant-link" class="participant-link"
-                            value="{{ route('join_webinar', [$webinar['local_arn']]) }}" readonly>
-                        <button class="copy-btn" data-url="{{ route('join_webinar', [$webinar['local_arn']]) }}">
+                            value="{{ route('join_webinar', ['token' => $webinar['local_arn']]) }}" readonly>
+                        <button class="copy-btn"
+                            data-url="{{ route('join_webinar', ['token' => $webinar['local_arn']]) }}">
                             📋
                         </button>
                     </div>

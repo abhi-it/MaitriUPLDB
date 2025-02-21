@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use App\Models\API\Role;
 use Aws\IvsRealTime\IvsRealTimeClient;
 use Aws\Exception\AwsException;
@@ -14,13 +14,88 @@ use Aws\EventBridge\EventBridgeClient;
 use Aws\Scheduler\SchedulerClient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 
 class BroadcastController extends Controller
 {
     public function dashboard(){
         return view('broadcaster.dashboard');
     }
+
+    // New Code Start
+    public function start_webinar(Request $request)
+    {
+        try {
+            $local_arn = $request->localArn;
+            
+            $get_local_arn = ''; 
+            $stageArn = ''; 
+            if($local_arn){
+                $getLocalToken = Webinar::where('local_arn', 'LIKE', $local_arn)->first();
+                if($getLocalToken){
+                    $get_local_arn = $getLocalToken->local_arn;
+                    $stageArn = $getLocalToken->stage_arn;
+                }else{
+                    $stageArn = $request->stageArn;
+                }
+            }else{
+                $stageArn = $request->stageArn;
+            }
+            // $data = $this->createPublisherToken($stageArn);
+            // $token = $data['token'];
+
+            $token = $request->token ?? null;
+            $fullUrl = route('join_webinar', !empty($get_local_arn) ? ['token' => $get_local_arn] : ['token' => $stageArn]);
+            
+            $broadcastDetail = Broadcastdetails::where('stage_arn', $stageArn)->first();
+            if ($broadcastDetail) {
+                $broadcastDetail->update([
+                    'updated_at' => now(),
+                ]);
+            } else {
+                $host_id = Auth::user()->id;
+                Broadcastdetails::create([
+                    'host_id' => $host_id,
+                    'stage_arn' => $stageArn,
+                ]);
+            }
+            return view('broadcaster.host', compact('token', 'fullUrl','stageArn'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }  
+
+    public function join_webinar(Request $request)
+    {
+        // $local_arn = Request::segment(count(Request::segments()));
+        // if (!$local_arn) {
+        //     return response()->json(['error' => 'Stage ARN is required'], 400);
+        // }
+        $token = $request->token;
+        $get_local_arn = '';
+        if($token){
+            $getLocalToken = Webinar::where('local_arn', 'LIKE', $token)->first();
+            if($getLocalToken){
+                $get_local_arn = $getLocalToken->local_arn;
+                $stageArn = $getLocalToken->stage_arn;
+            }else{
+                $stageArn = $request->token; 
+            }
+        }else{
+            $stageArn = $request->token; 
+        }
+
+        $response = $this->createSubscriberToken($stageArn);
+        $data = json_decode($response->getContent(), true);
+        $token = $data['subscriber_token']['token'] ?? null;
+
+        return view('broadcaster.subscriber', compact('stageArn','token', 'get_local_arn'));
+    }
+   
+    // New code end
+
+
+
 
     //Stages List
     public function listIvsStages()
@@ -150,7 +225,7 @@ class BroadcastController extends Controller
         if (!$stages) {
             return redirect()->back()->with('error', 'Stage ARN not found. Check your keys');
         }
-        $local_arn = request()->query('stgArn');
+        $local_arn = $request->stgArn;
         $get_local_arn = ''; 
         $stages_arn = ''; 
         if($local_arn){
@@ -162,6 +237,7 @@ class BroadcastController extends Controller
         if (!$stageArn) {
             return response()->json(['error' => 'Stage ARN is required'], 400);
         }
+
         $data = $this->createPublisherToken($stageArn);
         return view('broadcaster.broadcaster', compact('data','stageArn','get_local_arn'));
     }
