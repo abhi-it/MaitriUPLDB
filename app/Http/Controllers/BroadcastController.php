@@ -122,9 +122,6 @@ class BroadcastController extends Controller
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
                 ],
-                'http' => [
-                    'verify' => false,
-                ],
             ]);
 
             $result = $ivsClient->listStages();
@@ -197,10 +194,7 @@ class BroadcastController extends Controller
                 'credentials' => [
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-                ],
-                'http' => [
-                    'verify' => false,
-                ],
+                ]
             ]);
 
             $result = $client->createParticipantToken([
@@ -340,9 +334,6 @@ class BroadcastController extends Controller
                 'credentials' => [
                     'key' => $awsKey, //env('AWS_ACCESS_KEY_ID'),
                     'secret' => $awsSecret ,  //env('AWS_SECRET_ACCESS_KEY'),
-                ],
-                'http' => [
-                    'verify' => false,
                 ],
             ]);
 
