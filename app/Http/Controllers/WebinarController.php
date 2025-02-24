@@ -110,9 +110,9 @@ class WebinarController extends Controller
                 'key' => $awsKey,
                 'secret' => $awsSecret ,
             ],
-            'http' => [
-                'verify' => false,
-            ],
+            // 'http' => [
+            //     'verify' => false,
+            // ],
         ]);
 
         $bucket = env('AWS_BUCKET');
