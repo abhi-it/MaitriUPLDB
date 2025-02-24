@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\FarmerUser;
 use App\Models\API\Servicerequest;
 use App\Traits\FormatResponseTrait;
+use App\Models\Animalinformation;
 
 class AuthController extends Controller
 {
@@ -89,6 +90,9 @@ class AuthController extends Controller
                 $token = JWTAuth::fromUser($farmer);
                 $isFilled = !empty($farmer->name) && !empty($farmer->gender) && !empty($farmer->pincode) && !empty($farmer->MobileNumber) && !empty($farmer->post_office) && !empty($farmer->block) && !empty($farmer->tehsil);
                 $check_profile = $isFilled ? 'completed' : 'not_completed';
+                $checkAnimal = Animalinformation::where('user_id', $farmer->id)->get();
+                $status = ($checkAnimal->count() < 0) ? 'completed' : 'not_completed';
+                $farmer['checkAnimal'] = $status;
                 $farmer['profileDone'] = $check_profile;
                 $data = [
                     'token'     => $token,

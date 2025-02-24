@@ -149,7 +149,14 @@ class FarmerController extends Controller
             $userData = FarmerUser::where('id', $user->id)->first();
             $isFilled = !empty($userData->name) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
             $check_profile = $isFilled ? 'completed' : 'not_completed';
+            
+            $checkAnimal = Animalinformation::where('user_id', $user->id)->get();
+            $status = ($checkAnimal->count() < 0) ? 'completed' : 'not_completed';
+
+            // dd($status);
+
             $user['profileDone'] = $check_profile;
+            $user['checkAnimal'] = $status;
             return $this->successResponse('Get User Profile Successfully',200,$user);
         }else{
             return $this->errorResponse($e->getMessage(), 500);
