@@ -151,7 +151,7 @@ class FarmerController extends Controller
             $check_profile = $isFilled ? 'completed' : 'not_completed';
             
             $checkAnimal = Animalinformation::where('user_id', $user->id)->get();
-            $status = ($checkAnimal->count() < 0) ? 'completed' : 'not_completed';
+            $status = ($checkAnimal->count() > 0) ? 'completed' : 'not_completed';
 
             // dd($status);
 
