@@ -1238,7 +1238,6 @@
                                     </a>
                                 </div>
                             </li>
-                            <!-- Admin Stock Form Menu Start -->
 
                             <li
                                 class="nav-item dropdown {{ (request()->is('event-news') || request()->is('daily-dashboard')) ? 'active' : '' }}">
@@ -1257,6 +1256,16 @@
                                 </div>
                             </li>
 
+                            <!-- <li class="nav-item  {{ request()->is('zone-district-mapping') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('zone-district-mapping') }}">
+                                    <span data-hi="क्षेत्र जिला" data-en="Zone District"></span></a>
+                            </li> -->
+
+                            @endif
+
+                            <!-- Admin Stock Form Menu End -->
+                            @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director' ||
+                            auth()->user()->user_type == 'DFS')
                             <li
                                 class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -1290,19 +1299,15 @@
                                     </a>
                                 </div>
                             </li>
+                            <!-- Admin Stock Form Menu Start -->
+                            @endif
 
+                            @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
                             <li class="nav-item  {{ request()->is('operator-id') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('operator-id') }}">
                                     <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span></a>
                             </li>
-
-                            <!-- <li class="nav-item  {{ request()->is('zone-district-mapping') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('zone-district-mapping') }}">
-                                    <span data-hi="क्षेत्र जिला" data-en="Zone District"></span></a>
-                            </li> -->
-                            <!-- Admin Stock Form Menu End -->
                             @endif
-
 
                             @if(auth()->user()->user_type == 'District Officer')
                             <!-- <li class="nav-item ">

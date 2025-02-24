@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\IVSBroadCastController;
 use App\Http\Controllers\Api\LatencyController;
+use App\Http\Controllers\WebinarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Farmer
 Route::prefix('v1')->group(function () {
+    Route::post('/api-upload-video', [WebinarController::class, 'uploadIvsStream'])->name('uploadIvs');
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('otp-verify', [AuthController::class, 'otpVerify'])->name('otp-verify');
 

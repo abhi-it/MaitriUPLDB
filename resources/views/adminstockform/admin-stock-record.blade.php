@@ -64,7 +64,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="14" class="text-center" style="color:red;">No record found..</td>
+                <td colspan="15" class="text-center" style="color:red;">No record found..</td>
             </tr>
             @endif
 

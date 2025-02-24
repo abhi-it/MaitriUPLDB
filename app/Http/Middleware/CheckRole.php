@@ -55,6 +55,15 @@ class CheckRole
 	private function userAccessRole()
     {
         return [
+            'DFS' => [
+                'dashboard',
+                'admin-stock-form',
+                'admin-inventory-record',
+                'admin-stock-save-data',
+                'inventory',
+                'saveInentorrData',
+                'admin-distributed-record',
+            ],
             'broadcaster' => [
                 'host',
                 'subscribers',

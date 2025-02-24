@@ -83,6 +83,8 @@ class LoginController extends Controller
                 return redirect("maitri-dashboard");
             }else if(Auth::user()->role_id==11){
                 return redirect("broadcaster-dashboard");
+            }else if(Auth::user()->role_id==12){
+                return redirect("dashboard");
             }else{
                 return redirect("dashboard");
             }
