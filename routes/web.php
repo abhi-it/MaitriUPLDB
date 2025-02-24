@@ -567,4 +567,4 @@ Route::put('/webinars/{id}', [WebinarController::class, 'update'])->name('webina
 Route::delete('/webinars/{id}', [WebinarController::class, 'destroy'])->name('webinars.destroy');
 Route::get('/webinars/{id}/join', [WebinarController::class, 'join'])->name('webinars.join');
 
-Route::get('/get-recording', [WebinarController::class, 'get_recording'])->name('webinars.recording');
+Route::post('/upload-video', [WebinarController::class, 'uploadIvsStream'])->name('webinars.uploadIvs');
