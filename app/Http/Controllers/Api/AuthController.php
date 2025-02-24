@@ -87,7 +87,7 @@ class AuthController extends Controller
             $mairti = User::where('MobileNumber', $request->mobileNumber)->where('otp_login', $request->otp)->first();
             if ($farmer) {
                 $token = JWTAuth::fromUser($farmer);
-                $isFilled = !empty($farmer->name) && !empty($farmer->email) && !empty($farmer->gender) && !empty($farmer->pincode) && !empty($farmer->MobileNumber) && !empty($farmer->post_office) && !empty($farmer->block) && !empty($farmer->tehsil);
+                $isFilled = !empty($farmer->name) && !empty($farmer->gender) && !empty($farmer->pincode) && !empty($farmer->MobileNumber) && !empty($farmer->post_office) && !empty($farmer->block) && !empty($farmer->tehsil);
                 $check_profile = $isFilled ? 'completed' : 'not_completed';
                 $farmer['profileDone'] = $check_profile;
                 $data = [
