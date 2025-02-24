@@ -78,7 +78,6 @@ class FarmerController extends Controller
         $data = $request->json()->all();
 
         $validator = Validator::make($data, [
-            '*.user_id' => 'required|integer|exists:users,id',
             '*.animal_type' => 'required|string|in:cow,buffalo,goat',
             '*.breeds' => 'required|string',
             '*.cattale_no' => 'required|integer',
