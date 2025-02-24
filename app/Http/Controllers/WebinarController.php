@@ -75,7 +75,7 @@ class WebinarController extends Controller
         return redirect()->route('stage.create', $id)->with('success', 'Stage Updated Successfully');
     }
 
-    public function uploadIvsStream(){
+    public function uploadIvsStream(Request $request){
         $request->validate([
             'video' => 'required|file|mimes:webm,mp4|max:51200', // Max 50MB
         ]);
