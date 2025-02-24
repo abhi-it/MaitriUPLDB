@@ -84,9 +84,7 @@ class WebinarController extends Controller
         if (!$request->hasFile('video')) {
             return response()->json(['error' => 'No video file received'], 400);
         }
-    
         $file = $request->file('video');
-       
 
         if (!$file->isValid()) {
             return response()->json(['error' => 'Invalid video file'], 400);

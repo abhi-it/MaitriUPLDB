@@ -50,11 +50,17 @@
     display: none;
     animation: fadeOut 0.2s ease-in-out 1.5s forwards;
 }
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #eceeef;
+    font-weight: 400;
+}
 </style>
 <div class="container">
     <h3 class="text-center mt-3">Webinars</h3>
 
-    <div class="add-webinar justify-content-md-end">
+    <div class="add-webinar justify-content-md-end text-end">
 
         <a href="{{ route('stage.create') }}" class="btn btn-primary">Create Webinar</a>
     </div>
