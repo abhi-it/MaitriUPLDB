@@ -74,22 +74,103 @@ class WebinarController extends Controller
         $stage->update();
         return redirect()->route('stage.create', $id)->with('success', 'Stage Updated Successfully');
     }
-
-    public function uploadIvsStream(Request $request){
+    
+    public function uploadIvsStream(Request $request)
+    {
         $request->validate([
             'video' => 'required|file|mimes:webm,mp4|max:51200', // Max 50MB
         ]);
-
+    
+        if (!$request->hasFile('video')) {
+            return response()->json(['error' => 'No video file received'], 400);
+        }
+    
         $file = $request->file('video');
-        $filename = 'recordings/' . time() . '.webm';
+       
 
-        // Upload to S3
-        Storage::disk('s3')->put($filename, file_get_contents($file), 'public');
-
-        return response()->json([
-            'message' => 'Video uploaded successfully!',
-            'url' => Storage::disk('s3')->url($filename)
+        if (!$file->isValid()) {
+            return response()->json(['error' => 'Invalid video file'], 400);
+        }
+    
+        $originalFilename = $file->getClientOriginalName();
+        $filePath = $file->getPathname();
+        $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . '_' . time() . '.' . $file->getClientOriginalExtension();
+        
+        // AWS S3 Client
+        require_once base_path('vendor/aws/aws-sdk-php/src/S3/S3Client.php');
+        $awsKey = config('services.aws.key');
+        $awsSecret = config('services.aws.secret');
+        $awsRegion = config('services.aws.region');
+        $bucket = config('services.aws.awsBucket');
+        
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => $awsKey,
+                'secret' => $awsSecret ,
+            ],
+            'http' => [
+                'verify' => false,
+            ],
         ]);
+
+        $bucket = env('AWS_BUCKET');
+        try {
+            // Step 1: Initialize Multipart Upload
+            $result = $s3->createMultipartUpload([
+                'Bucket' => $bucket,
+                'Key'    => $filename,
+                'ACL'    => 'public-read', // or 'private'
+                'ContentType' => $file->getMimeType(),
+            ]);
+            
+            $uploadId = $result['UploadId'];
+            $partSize = 5 * 1024 * 1024; // 5MB
+            $parts = [];
+            $handle = fopen($filePath, 'rb');
+            $partNumber = 1;
+
+            // Step 2: Upload Parts
+            while (!feof($handle)) {
+                $data = fread($handle, $partSize);
+                
+                $uploadResult = $s3->uploadPart([
+                    'Bucket'     => $bucket,
+                    'Key'        => $filename,
+                    'UploadId'   => $uploadId,
+                    'PartNumber' => $partNumber,
+                    'Body'       => $data,
+                ]);
+
+                $parts[] = [
+                    'PartNumber' => $partNumber,
+                    'ETag'       => $uploadResult['ETag'],
+                ];
+
+                $partNumber++;
+            }
+
+            fclose($handle);
+
+            // Step 3: Complete the Multipart Upload
+            $result = $s3->completeMultipartUpload([
+                'Bucket'   => $bucket,
+                'Key'      => $filename,
+                'UploadId' => $uploadId,
+                'MultipartUpload' => ['Parts' => $parts],
+            ]);
+
+            return response()->json([
+                'message' => 'Upload successful',
+                'file_url' => $result['Location'],
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Upload failed: ' . $e->getMessage(),
+            ], 500);
+        }
     }
    
 
