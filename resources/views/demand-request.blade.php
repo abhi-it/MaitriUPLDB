@@ -198,7 +198,7 @@ form#loginForm p span {
                         </label>
                         <select name="semen[]" id="semen" class="form-control" required autofocus>
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                            <option value="catle" data-hi="गाय" data-en="Cattle"></option>
+                            <option value="cow" data-hi="गाय" data-en="Cattle"></option>
                             <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                             <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                         </select>
@@ -426,7 +426,7 @@ $('.demand-request-add-btn').click(function() {
                     </label>\
                     <select name="semen[]" id="semen" required class="form-control" autofocus>\
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
-                        <option value="catle" data-hi="गाय" data-en="Cattle"></option>\
+                        <option value="cow" data-hi="गाय" data-en="Cattle"></option>\
                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>\
                         <option value="goat" data-hi="बकरी" data-en="Goat"></option>\
                     </select>\

@@ -109,7 +109,7 @@
                         </label>
                         <select name="semen[]" class="form-control semen-select">
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                            <option value="catle" data-hi="गाय" data-en="Cow"></option>
+                            <option value="cow" data-hi="गाय" data-en="Cow"></option>
                             <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                             <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                         </select>

@@ -17,6 +17,61 @@
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
+    <form method="GET" action="{{ route('admin-distributed-record') }}" class="mb-4">
+        <div class="row">
+            <!-- <div class="col-md-3">
+                <label>Bull ID:</label>
+                <input type="text" name="bull_id" class="form-control" value="{{ request('bull_id') }}">
+            </div> -->
+            <div class="col-md-3">
+                <label>Role:</label>
+                <select name="role" class="form-control">
+                    <option value="">Select Role</option>
+                    <option value="Superadmin" {{ request('role') == 'Superadmin' ? 'selected' : '' }}>Super Admin
+                    </option>
+                    <option value="DFS" {{ request('role') == 'DFS' ? 'selected' : '' }}>DFS</option>
+                    <option value="Zone" {{ request('role') == 'Zone' ? 'selected' : '' }}>Zone</option>
+                    <option value="District" {{ request('role') == 'District' ? 'selected' : '' }}>District</option>
+                    <option value="DEO" {{ request('role') == 'DEO' ? 'selected' : '' }}>DEO</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Breed:</label>
+                <select name="breed" class="form-control">
+                    <option value="">Select Breed</option>
+                    <option value="swadeshi" {{ request('breed') == 'swadeshi' ? 'selected' : '' }}>
+                        Swadeshi</option>
+                    <option value="hybrids-crossbred" {{ request('breed') == 'hybrids-crossbred' ? 'selected' : '' }}>
+                        Hybrids -
+                        Crossbred</option>
+                    <option value="videshi" {{ request('breed') == 'videshi' ? 'selected' : '' }}>Videshi</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Species:</label>
+                <select name="semen" class="form-control">
+                    <option value="">Select Species</option>
+                    <option value="cow" {{ request('semen') == 'cow' ? 'selected' : '' }}>
+                        Cow</option>
+                    <option value="buffalo" {{ request('semen') == 'buffalo' ? 'selected' : '' }}>Buffalo</option>
+                    <option value="goat" {{ request('semen') == 'goat' ? 'selected' : '' }}>Goat</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Semen Type:</label>
+                <select name="semen_type" class="form-control">
+                    <option value="">Select Semen</option>
+                    <option value="conventional" {{ request('semen_type') == 'conventional' ? 'selected' : '' }}>
+                        Conventional</option>
+                    <option value="sexed" {{ request('semen_type') == 'sexed' ? 'selected' : '' }}>Sexed</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{{ route('admin-distributed-record') }}" class="btn btn-secondary">Reset</a>
+    </form>
+
     <table id="my-new-table" class="display table table-striped table-responsive table-bordered" width="100%">
         <thead>
             <tr>
@@ -42,9 +97,8 @@
         </thead>
         <tbody>
             @if(count($zoneStock) > 0)
-            @foreach ($zoneStock as $stockZone)
             @php $i = 1; @endphp
-            @foreach($stockZone as $zoneUser)
+            @foreach ($zoneStock as $zoneUser)
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $zoneUser->FirstName }}</td>
@@ -65,13 +119,8 @@
                 <td>{{ $zoneUser->bull_ids }}</td>
                 <td>{{ $zoneUser->created_at }}</td>
             </tr>
-            @endforeach
             @php $i++ @endphp
             @endforeach
-            @else
-            <tr>
-                <td colspan="18" class="text-center" style="color:red;">No record found..</td>
-            </tr>
             @endif
 
         </tbody>
@@ -95,6 +144,9 @@ $(document).ready(function() {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [

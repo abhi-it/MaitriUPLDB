@@ -63,6 +63,17 @@ class CheckRole
                 'inventory',
                 'saveInentorrData',
                 'admin-distributed-record',
+                
+                'check-zone-user',
+                'changePasswordIndex',
+                'changePassword',
+                'demand-requests-list',
+                'latest-updates',
+                'candidateNotJoined',
+                'avedan',
+                'totalAvedan',
+                'approvedAvedan',
+                'rejectedAvedan',
             ],
             'broadcaster' => [
                 'host',
@@ -330,6 +341,13 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'view-dfs',
+                'create-dfs',
+                'save-dfs-data',
+                'dfs-edit',
+                'dfs-update',
+                'dfs-destroy',
+
                 'admin-update-status',
                 'admin-delete-request',
                 'get-farmer-request',
