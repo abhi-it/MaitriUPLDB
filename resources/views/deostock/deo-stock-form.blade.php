@@ -508,7 +508,7 @@ $(document).ready(function() {
 
         parentDiv.find('.catle-options, .buffalo-options, .goat-options').addClass('d-none');
 
-        if (selectedValue === 'catle') {
+        if (selectedValue === 'cow') {
             parentDiv.find('.catle-options').removeClass('d-none');
         } else if (selectedValue === 'buffalo') {
             parentDiv.find('.buffalo-options').removeClass('d-none');
