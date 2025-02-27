@@ -17,6 +17,62 @@
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
+    <form method="GET" action="{{ route('show-zone-stock-record') }}" class="mb-4">
+        <div class="row">
+            <!-- <div class="col-md-3">
+                <label>Bull ID:</label>
+                <input type="text" name="bull_id" class="form-control" value="{{ request('bull_id') }}">
+            </div> -->
+            <div class="col-md-3">
+                <label>District:</label>
+                <select name="district" class="form-control">
+                    <option value="">Select District</option>
+                    @foreach($districts as $district )
+                    <option value="{{ $district->id }}" data-hi="{{ $district->name_hindi }}"
+                        data-en="{{ $district->name_eng }}"
+                        {{ request('district') == $district->id ? 'selected' : '' }}>
+                    </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label>Breed:</label>
+                <select name="breed" class="form-control">
+                    <option value="">Select Breed</option>
+                    <option value="swadeshi" {{ request('breed') == 'swadeshi' ? 'selected' : '' }}>
+                        Swadeshi</option>
+                    <option value="hybrids-crossbred" {{ request('breed') == 'hybrids-crossbred' ? 'selected' : '' }}>
+                        Hybrids -
+                        Crossbred</option>
+                    <option value="videshi" {{ request('breed') == 'videshi' ? 'selected' : '' }}>Videshi</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Species:</label>
+                <select name="semen" class="form-control">
+                    <option value="">Select Species</option>
+                    <option value="cow" {{ request('semen') == 'cow' ? 'selected' : '' }}>
+                        Cow</option>
+                    <option value="buffalo" {{ request('semen') == 'buffalo' ? 'selected' : '' }}>Buffalo</option>
+                    <option value="goat" {{ request('semen') == 'goat' ? 'selected' : '' }}>Goat</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Semen Type:</label>
+                <select name="semen_type" class="form-control">
+                    <option value="">Select Semen</option>
+                    <option value="conventional" {{ request('semen_type') == 'conventional' ? 'selected' : '' }}>
+                        Conventional</option>
+                    <option value="sexed" {{ request('semen_type') == 'sexed' ? 'selected' : '' }}>Sexed</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{{ route('show-zone-stock-record') }}" class="btn btn-secondary">Reset</a>
+    </form>
     <table id="my-new-table" class="table table-striped  table-responsive table-bordered">
         <thead>
             <tr>
@@ -40,20 +96,12 @@
             </tr>
         </thead>
         <tbody>
-            @if(count($zoneStock) == 0)
-            <tr>
-                <td colspan="15" class="text-center">No Record Found</td>
-            </tr>
-            @endif
-
-
             @php $i = 1; @endphp
             @foreach ($zoneStock as $key => $stockZone)
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $stockZone->user_name }}</td>
-                <td><span data-hi="{{ $stockZone->division_name_hindi }}"
-                        data-en="{{ $stockZone->division_name_eng }}"></span></td>
+                <td>{{ $stockZone->name }}</td>
+                <td><span data-hi="{{ $stockZone->name_hindi }}" data-en="{{ $stockZone->name_eng }}"></span></td>
                 <td>{{ $stockZone->demand_section }}</td>
                 <td>{{ $stockZone->semen }}</td>
                 <td>{{ $semen_straws->semen_straws ?? 'N\A' }}</td>
@@ -98,6 +146,9 @@ $(document).ready(function() {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [

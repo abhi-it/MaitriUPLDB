@@ -508,27 +508,41 @@ class AdminInventoryController extends Controller
 
     public function adminDkistributedRecord(Request $request){
         $user = Auth::user();
-        $allowedRoles = ['Superadmin', 'DFS', 'Zone', 'District', 'DEO'];
-        $users = User::whereIn('role', $allowedRoles)->pluck('id');
-    
-        if ($users) {
-            $inventoryQuery = InventoryMap::whereIn('assign_user_id', $users);
-            
-            if ($request->filled('role')) {
-                $selectedRoleUsers = User::where('role', $request->role)->pluck('id');
-                $inventoryQuery->whereIn('assign_user_id', $selectedRoleUsers);
+        $zones = Zone::all();
+        if($user->role == 'DFS'){
+            $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
+            $query = DB::table('inventory_map_user')
+                    ->join('zone_stock_details', 'zone_stock_details.id', '=', 'inventory_map_user.inventory_id')
+                    ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                    ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
+                    ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+                    ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
+                    ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+        }else{
+            $allowedRoles = ['DFS', 'zone', 'district', 'DEO'];
+            $users = User::whereIn('role', $allowedRoles)->pluck('id');
+           
+            if ($users) {
+                $inventoryQuery = InventoryMap::whereIn('assign_user_id', $users);
+                if ($request->filled('role')) {
+                    $selectedRoleUsers = User::where('role', $request->role)->pluck('id');
+                    $inventoryQuery->whereIn('assign_user_id', $selectedRoleUsers);
+                }
+                $inventoryIds = $inventoryQuery->pluck('assign_user_id');
             }
-            $inventoryIds = $inventoryQuery->pluck('inventory_id');
+            $query = DB::table('inventory_map_user')
+                ->leftJoin('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+                ->leftJoin('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                ->leftJoin('users', 'users.id', '=', 'inventory_map_user.user_id')
+                ->leftJoin('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+                ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+                ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*','districts.*')
+                ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
         }
-    
-        $query = DB::table('inventory_map_user')
-            ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-            ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-            ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
-            ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
-            ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
-            ->whereIn('inventory_map_user.inventory_id', $inventoryIds);
-    
+            
+        if ($request->filled('zone')) {
+            $query->where('inventory_map_user.zone_id', 'LIKE', "%{$request->zone}%");
+        }
         if ($request->filled('bull_id')) {
             $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
         }
@@ -539,11 +553,11 @@ class AdminInventoryController extends Controller
             $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
         }
         if ($request->filled('semen_type')) {
-            $query->where('zone_stock_details.semen_type', "%{$request->semen_type}%");
+            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
         }
     
         $zoneStock = $query->get();
-        return view('adminstockform.admin-distributed-record', compact('zoneStock'));
+        return view('adminstockform.admin-distributed-record', compact('zoneStock','zones'));
     }
 
     public function adminStockDataSave(Request $request){

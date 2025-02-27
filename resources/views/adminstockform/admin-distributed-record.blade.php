@@ -23,18 +23,32 @@
                 <label>Bull ID:</label>
                 <input type="text" name="bull_id" class="form-control" value="{{ request('bull_id') }}">
             </div> -->
+            @if(Auth::user()->role == 'Superadmin')
             <div class="col-md-3">
                 <label>Role:</label>
                 <select name="role" class="form-control">
                     <option value="">Select Role</option>
-                    <option value="Superadmin" {{ request('role') == 'Superadmin' ? 'selected' : '' }}>Super Admin
-                    </option>
                     <option value="DFS" {{ request('role') == 'DFS' ? 'selected' : '' }}>DFS</option>
-                    <option value="Zone" {{ request('role') == 'Zone' ? 'selected' : '' }}>Zone</option>
-                    <option value="District" {{ request('role') == 'District' ? 'selected' : '' }}>District</option>
+                    <option value="zone" {{ request('role') == 'zone' ? 'selected' : '' }}>Zone</option>
+                    <option value="district" {{ request('role') == 'district' ? 'selected' : '' }}>District</option>
                     <option value="DEO" {{ request('role') == 'DEO' ? 'selected' : '' }}>DEO</option>
                 </select>
             </div>
+            @endif
+            @if(Auth::user()->role == 'DFS')
+            <div class="col-md-3">
+                <label>Zone:</label>
+                <select name="zone" class="form-control">
+                    <option value="">Select Zone</option>
+                    @foreach($zones as $zone)
+                    <option value="{{ $zone->id }}" data-en="{{ $zone->name_en }}" data-hi="{{ $zone->name_hi }}"
+                        {{ request('zone') == $zone->id ? 'selected' : '' }}>
+                        {{ $zone->name_en }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
             <div class="col-md-3">
                 <label>Breed:</label>
                 <select name="breed" class="form-control">
@@ -77,7 +91,12 @@
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
                 <th><span data-hi="उपयोगकर्ता नाम" data-en="UserName"></span></th>
+                @if(Auth::user()->role == 'DFS')
                 <th><span data-hi="क्षेत्र" data-en="Zone"></span></th>
+                @endif
+                @if(Auth::user()->role == 'Superadmin')
+                <th><span data-hi="क्षेत्र" data-en="DFS/Zone/District/DEO"></span></th>
+                @endif
                 <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
                 <th><span data-hi="LN2 आपूर्ति तिथि" data-en="LN2 Supply Date"></span></th>
                 <th><span data-hi="वीर्य" data-en="Semen"></span></th>
@@ -102,7 +121,8 @@
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $zoneUser->FirstName }}</td>
-                <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
+                <td><span data-hi="{{ $zoneUser->name_hi ?? $zoneUser->name_hindi }}"
+                        data-en="{{ $zoneUser->name_en ?? $zoneUser->name_eng }}"></span></td>
                 <td>{{ $zoneUser->demand_section }}</td>
                 <td>{{ $zoneUser->supply_date ? $zoneUser->supply_date : 'N/A' }}</td>
                 <td>{{ $zoneUser->semen }}</td>
