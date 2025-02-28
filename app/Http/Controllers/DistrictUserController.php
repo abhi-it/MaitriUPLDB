@@ -60,36 +60,89 @@ class DistrictUserController extends Controller{
         return view('districtstock.districtdetails', compact('divisionStock'));
     }
 
-    public function districtShowRecord(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-        $districtStock = [];
-        foreach($inventoryIds as $inventory){
-            $division_User_id = $inventory['user_id'];
-            $inventory_id = $inventory['inventory_id'];
-            $results = DB::table('inventory_map_user')
-                        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-                        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->select('zone_stock_details.*', 'deo_users.*')
-                        ->where(['inventory_map_user.user_id' => $division_User_id, 'inventory_map_user.assign_user_id' => $user_id])
-                        ->get();
+    // public function districtShowRecord(){
+    //     $user_id = Auth::user()->id;
+    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
+    //     $districtStock = [];
+    //     foreach($inventoryIds as $inventory){
+    //         $division_User_id = $inventory['user_id'];
+    //         $inventory_id = $inventory['inventory_id'];
+    //         $results = DB::table('inventory_map_user')
+    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+    //                     ->select('zone_stock_details.*', 'deo_users.*')
+    //                     ->where(['inventory_map_user.user_id' => $division_User_id, 'inventory_map_user.assign_user_id' => $user_id])
+    //                     ->get();
 
-            foreach($results as $result){
-                $division_id = $result->division_id;
-                $user_id = $result->user_id;
-                $divisonData = Divisions::where('id', $division_id)->first();
-                $userData = User::where('id', $user_id)->first();
-                if ($divisonData) {
-                    $result->user_name = $userData['FirstName'] . ' ' . $userData['LastName'];
-                    $result->division_name_eng = $divisonData['name_eng'];
-                    $result->division_name_hindi = $divisonData['name_hindi'];
-                    $districtStock[] = $result;
-                }
-            }
+    //         foreach($results as $result){
+    //             $division_id = $result->division_id;
+    //             $user_id = $result->user_id;
+    //             $divisonData = Divisions::where('id', $division_id)->first();
+    //             $userData = User::where('id', $user_id)->first();
+    //             if ($divisonData) {
+    //                 $result->user_name = $userData['name'];
+    //                 $result->division_name_eng = $divisonData['name_eng'];
+    //                 $result->division_name_hindi = $divisonData['name_hindi'];
+    //                 $districtStock[] = $result;
+    //             }
+    //         }
+    //     }
+    //     return view('districtstock.district-stock-record', compact('districtStock'));
+    // }
+
+    // <!-------- New Code Start --------->
+    public function districtShowRecord(Request $request){
+        $user = Auth::user();
+        $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
+        $query = DB::table('inventory_map_user')
+        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+        ->join('users as ai1', 'ai1.id', '=', 'inventory_map_user.user_id')
+        ->join('users', 'users.district_id', '=', 'ai1.district_id')
+        ->join('aicenter_latest', 'aicenter_latest.id', '=', 'inventory_map_user.aicenter_id')
+        ->join('districts', 'districts.id', '=', 'users.district_id')
+        ->select(
+            'zone_stock_details.*', 
+            'deo_users.*', 
+            'users.*', 
+            'districts.*',
+            'ai1.*',
+            'aicenter_latest.*'
+            
+        )
+        ->where('users.role', 'deo')
+        ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+    
+            
+        if ($request->filled('aicenter')) {
+            $query->where('inventory_map_user.user_id', 'LIKE', "%{$request->aicenter}%");
         }
-
-        return view('districtstock.district-stock-record', compact('districtStock'));
+        if ($request->filled('bull_id')) {
+            $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
+        }
+        if ($request->filled('breed')) {
+            $query->where('zone_stock_details.breed', 'LIKE', "%{$request->breed}%");
+        }
+        if ($request->filled('semen')) {
+            $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
+        }
+        if ($request->filled('semen_type')) {
+            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
+        }
+    
+        $districtStock = $query->get();
+        // echo '<pre>';print_r($districtStock);exit;
+        // dd($query->toSql(), $query->getBindings());
+        
+        $getData = User::where('id', $user->id)->first();
+        $aiCenters = Latestaicenter::where('division_id', $getData['division_id'])
+                                    ->where('district_id', $getData['district_id'])
+                                    ->get();
+       
+        
+        return view('districtstock.district-stock-record', compact('districtStock', 'aiCenters'));
     }
+    // <!-------- Code End --------------->
 
     public function districtStockForm(){
         $user_id = Auth::user()->id;
@@ -190,7 +243,14 @@ class DistrictUserController extends Controller{
                 $result = DeoUser::where(['user_id' => $getUserId,'zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->first();
                 $deoTableId = $result['id'];
             }
-         
+            
+            $aicenter_User_id = DB::table('aicenter_latest')
+                ->join('users', 'users.district_id', '=', 'aicenter_latest.district_id')
+                ->select('users.id')
+                ->where('users.role', 'deo')
+                ->where('aicenter_latest.id', $aiCenter_id)
+                ->first();
+            
             $breedType = [];
             $semens = $request->semen;
             $breeds = $request->breed;
@@ -254,7 +314,7 @@ class DistrictUserController extends Controller{
             }
 
             $data = [
-                'user_id'            => $aiCenter_id,
+                'user_id'            => $aicenter_User_id->id,
                 'demand_section'     => $request->demand_section,
                 // 'breed'              => $request->breed,
                 // 'breed_type'         => $breedType,
@@ -282,9 +342,10 @@ class DistrictUserController extends Controller{
 
             InventoryMap::create([
                 'assign_user_id' => $assign_user_id,
-                'user_id' => $aiCenter_id,
+                'user_id' => $aicenter_User_id->id,
                 'inventory_id' => $inventory->id,
-                'deo_id' => $deoTableId
+                'deo_id' => $deoTableId,
+                'aicenter_id' => $aiCenter_id
             ]);
 
             return redirect()->back()->with('success','Stock data submitted successfully!');

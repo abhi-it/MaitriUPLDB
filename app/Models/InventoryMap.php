@@ -14,6 +14,7 @@ class InventoryMap extends Model
         'inventory_id',
         'deo_id',
         'maitri_id',
+        'aicenter_id'
     ];
     protected $table = 'inventory_map_user';
 

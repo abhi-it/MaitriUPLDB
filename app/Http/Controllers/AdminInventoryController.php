@@ -519,7 +519,7 @@ class AdminInventoryController extends Controller
                     ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
                     ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
         }else{
-            $allowedRoles = ['DFS', 'zone', 'district', 'DEO'];
+            $allowedRoles = ['DFS', 'zone', 'district', 'deo'];
             $users = User::whereIn('role', $allowedRoles)->pluck('id');
            
             if ($users) {
@@ -536,8 +536,22 @@ class AdminInventoryController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'inventory_map_user.user_id')
                 ->leftJoin('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
                 ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
-                ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*','districts.*')
+                ->leftJoin('aicenter_latest as ai1', 'ai1.id', '=', 'inventory_map_user.user_id')
+                ->leftJoin('aicenter_latest', 'aicenter_latest.id', '=', 'inventory_map_user.aicenter_id')
+                ->select('aicenter_latest.*','ai1.*','zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*','districts.*')
                 ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+                
+            // $query = DB::table('inventory_map_user')
+            //         ->leftJoin('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+            //         ->leftJoin('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+            //         ->leftJoin('aicenter_latest as ai1', 'ai1.id', '=', 'inventory_map_user.user_id') // First aicenter_latest join
+            //         ->leftJoin('users', 'users.id', '=', 'inventory_map_user.user_id')
+            //         ->leftJoin('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+            //         ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+            //         // ->leftJoin('users as u2', 'u2.district_id', '=', 'ai1.district_id')
+            //         ->select( 'zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*', 'districts.*', 'ai1.*')
+            //         ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+
         }
             
         if ($request->filled('zone')) {
@@ -557,6 +571,7 @@ class AdminInventoryController extends Controller
         }
     
         $zoneStock = $query->get();
+        // echo '<pre>';print_r($zoneStock);exit;
         return view('adminstockform.admin-distributed-record', compact('zoneStock','zones'));
     }
 
