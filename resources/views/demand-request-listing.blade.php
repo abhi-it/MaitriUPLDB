@@ -17,7 +17,7 @@
                 @csrf
 
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="inputEmail4" class="fw-bold">सेलेक्ट जनपद </label>
                         <select class="form-control" name="id" id="id">
                             <option value="">Select Janpad</option>
@@ -28,6 +28,18 @@
                             </option>
                             @endforeach
                             @endif
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail4" class="fw-bold">AIT Center</label>
+                        <select class="form-control" name="ait_center" id="ait_center">
+                            <option value="">Select AIT Center</option>
+                            @foreach($institute as $val)
+                            <option value="{{$val->name}}" data-hi="{{$val->name}}" data-en="{{$val->name_en}}"
+                                {{ request()->get('ait_center') == $val->name ? 'selected' : '' }}>
+                            </option>
+                            @endforeach
+
                         </select>
                     </div>
                     <div class="form-group col-md-3 search__button">

@@ -24,6 +24,7 @@ use App\Http\Controllers\ZoneDistrictController;
 use App\Http\Controllers\GeoLocationUpdateController;
 use App\Http\Controllers\BroadcastController; 
 use App\Http\Controllers\WebinarController;
+use App\Http\Controllers\DfsController;
 
 
 
@@ -342,6 +343,15 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("deo-save-stock-data", [DeoStockUserController::class, 'deoSaveStockData'])->name('deo-save-stock-data');
     Route::post("deo-request-save-form-data", [DeoStockUserController::class, 'deoRequestSaveData'])->name('deo-request-save-form-data');
 
+    // <-------- DFS ----------->
+    Route::get("view-dfs", [DfsController::class, 'viewDfs'])->name('view-dfs');
+    Route::get("create-dfs", [DfsController::class, 'createDfs'])->name('create-dfs');
+    Route::post("save-dfs-data", [DfsController::class, 'saveDfsData'])->name('save-dfs-data');
+    Route::get('/dfs/{id}/edit', [DfsController::class, 'edit'])->name('dfs-edit');
+    Route::post('/dfs/{id}', [DfsController::class, 'update'])->name('dfs-update');
+    Route::delete('/dfs/{id}', [DfsController::class, 'destroy'])->name('dfs-destroy');
+    
+    // <-------- DFS ----------->
     
     
 

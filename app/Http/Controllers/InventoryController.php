@@ -83,13 +83,12 @@ class InventoryController extends Controller
                 $deoTableId = DeoUser::where(['user_id' => $result['id']])->first();
                 $user_id = $result['id'];
             }
-
             $breedType = [];
             $semens = $request->semen;
             $breeds = $request->breed;
             if($semens > 0){
                 foreach($semens as $key => $semen){
-                    if( $semen == 'catle'){
+                    if( $semen == 'cow'){
                         if($breeds[$key] == 'swadeshi'){
                             $breedType = $request->breedType1;
                         }else if($breeds[$key] == 'hybrids-crossbred'){

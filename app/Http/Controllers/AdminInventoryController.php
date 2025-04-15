@@ -399,7 +399,7 @@ class AdminInventoryController extends Controller
         }
     }
 
-    public function adminStockRecord(){
+    public function adminStockRecord(Request $request){
         $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where(['assign_user_id' => $user_id, 'user_id' => $user_id])->get();
         // $adminInventory = RemainingStock::where('user_id', $user_id)->get();
@@ -411,6 +411,44 @@ class AdminInventoryController extends Controller
         }
         return view('adminstockform.admin-stock-record', compact('adminInventory'));
     }
+
+
+    // public function adminStockRecord(Request $request){
+    //     $user = Auth::user();
+    //     $allowedRoles = ['Superadmin', 'DFS', 'Zone', 'District', 'DEO'];
+    //     $users = User::whereIn('role', $allowedRoles)->pluck('id');
+
+    //     if ($users) {
+    //         $inventoryQuery = InventoryMap::whereIn('assign_user_id', $users);
+            
+    //         if ($request->filled('role')) {
+    //             $selectedRoleUsers = User::where('role', $request->role)->pluck('id');
+    //             $inventoryQuery->whereIn('assign_user_id', $selectedRoleUsers);
+    //         }
+    //         $inventoryIds = $inventoryQuery->pluck('inventory_id');
+    //     } 
+
+    //     $query = Zonestock::whereIn('id', $inventoryIds);
+        
+    //     if ($request->filled('bull_id')) {
+    //         $query->where('bull_ids', 'LIKE', "%{$request->bull_id}%");
+    //     }
+    //     if ($request->filled('breed')) {
+    //         $query->where('breed', 'LIKE', "%{$request->breed}%");
+    //     }
+    //     if ($request->filled('semen')) {
+    //         $query->where('semen', 'LIKE', "%{$request->semen}%");
+    //     }
+    //     if ($request->filled('semen_type')) {
+    //         $query->where('semen_type', $request->semen_type);
+    //     }
+    
+    //     $adminInventory = $query->get();
+        
+    //     return view('adminstockform.admin-stock-record', compact('adminInventory'));
+    // }
+    
+    
 
     public function checkZoneUser(Request $request){
         if($request->user_id != '' && $request->zdd_id != '' && $request->type == 'zone'){
@@ -443,25 +481,98 @@ class AdminInventoryController extends Controller
         
     }
 
-    public function adminDkistributedRecord(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-        $zoneStock = [];
-        foreach($inventoryIds as $inventory){
-            $district_User_id = $inventory['user_id'];
-            $inventory_id = $inventory['inventory_id'];
-            $results = DB::table('inventory_map_user')
-                        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-                        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
-                        ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
-                        ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
-                        ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
-                        ->get();
+    // public function adminDkistributedRecord(){
+    //     $user_id = Auth::user()->id;
+    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
 
-            $zoneStock[] = $results;
+    //     $zoneStock = [];
+    //     foreach($inventoryIds as $inventory){
+    //         $district_User_id = $inventory['user_id'];
+    //         $inventory_id = $inventory['inventory_id'];
+    //         $results = DB::table('inventory_map_user')
+    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+    //                     ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
+    //                     ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+    //                     ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
+    //                     ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
+    //                     ->get();
+
+    //         $zoneStock[] = $results;
+    //     }
+
+        
+
+    //     return view('adminstockform.admin-distributed-record', compact('zoneStock'));
+    // }
+
+    public function adminDkistributedRecord(Request $request){
+        $user = Auth::user();
+        $zones = Zone::all();
+        if($user->role == 'DFS'){
+            $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
+            $query = DB::table('inventory_map_user')
+                    ->join('zone_stock_details', 'zone_stock_details.id', '=', 'inventory_map_user.inventory_id')
+                    ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                    ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
+                    ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+                    ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
+                    ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+        }else{
+            $allowedRoles = ['DFS', 'zone', 'district', 'deo'];
+            $users = User::whereIn('role', $allowedRoles)->pluck('id');
+           
+            if ($users) {
+                $inventoryQuery = InventoryMap::whereIn('assign_user_id', $users);
+                if ($request->filled('role')) {
+                    $selectedRoleUsers = User::where('role', $request->role)->pluck('id');
+                    $inventoryQuery->whereIn('assign_user_id', $selectedRoleUsers);
+                }
+                $inventoryIds = $inventoryQuery->pluck('assign_user_id');
+            }
+            $query = DB::table('inventory_map_user')
+                ->leftJoin('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+                ->leftJoin('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                ->leftJoin('users', 'users.id', '=', 'inventory_map_user.user_id')
+                ->leftJoin('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+                ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+                ->leftJoin('aicenter_latest as ai1', 'ai1.id', '=', 'inventory_map_user.user_id')
+                ->leftJoin('aicenter_latest', 'aicenter_latest.id', '=', 'inventory_map_user.aicenter_id')
+                ->select('aicenter_latest.*','ai1.*','zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*','districts.*')
+                ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+                
+            // $query = DB::table('inventory_map_user')
+            //         ->leftJoin('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+            //         ->leftJoin('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+            //         ->leftJoin('aicenter_latest as ai1', 'ai1.id', '=', 'inventory_map_user.user_id') // First aicenter_latest join
+            //         ->leftJoin('users', 'users.id', '=', 'inventory_map_user.user_id')
+            //         ->leftJoin('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
+            //         ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+            //         // ->leftJoin('users as u2', 'u2.district_id', '=', 'ai1.district_id')
+            //         ->select( 'zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*', 'districts.*', 'ai1.*')
+            //         ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+
         }
-        return view('adminstockform.admin-distributed-record', compact('zoneStock'));
+            
+        if ($request->filled('zone')) {
+            $query->where('inventory_map_user.zone_id', 'LIKE', "%{$request->zone}%");
+        }
+        if ($request->filled('bull_id')) {
+            $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
+        }
+        if ($request->filled('breed')) {
+            $query->where('zone_stock_details.breed', 'LIKE', "%{$request->breed}%");
+        }
+        if ($request->filled('semen')) {
+            $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
+        }
+        if ($request->filled('semen_type')) {
+            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
+        }
+    
+        $zoneStock = $query->get();
+        // echo '<pre>';print_r($zoneStock);exit;
+        return view('adminstockform.admin-distributed-record', compact('zoneStock','zones'));
     }
 
     public function adminStockDataSave(Request $request){

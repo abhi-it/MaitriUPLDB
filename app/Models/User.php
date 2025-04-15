@@ -46,7 +46,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function district()
     {
-        return $this->belongsTo(Districts::class, 'district_id', 'id');
+        return $this->belongsTo(Districts::class, 'district_id');
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Divisions::class, 'division_id');
     }
 
     public function getDeoUser()

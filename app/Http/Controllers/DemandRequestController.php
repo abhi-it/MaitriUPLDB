@@ -166,15 +166,21 @@ class DemandRequestController extends Controller{
 
     public function demandRequestsListing(Request $request){
         $district   = Districts::get();
+        $institute  = Institute::get();
         $query = DemandRequest::orderBy('id', 'DESC');
         if (!empty($request->input('id'))) {
             $query->where(function ($q) use ($request) {
                 $q->where(['district'=>$request->input('id')]);
             });
         }
+        if (!empty($request->input('ait_center'))) {
+            $query->where(function ($q) use ($request) {
+                $q->where(['training_center_id'=>$request->input('ait_center')]);
+            });
+        }
         $data  = $query->orderBy('id', 'DESC')->paginate(50);
         $items = $data->appends(request()->except('page'));
-        return view('demand-request-listing',['data'=>$data,'district'=>$district,'items'=>$items]);
+        return view('demand-request-listing',['data'=>$data,'district'=>$district,'items'=>$items, 'institute' => $institute]);
     }
 
     public function deleteDemandRequests(Request $request){

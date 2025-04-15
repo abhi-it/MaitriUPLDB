@@ -17,12 +17,86 @@
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
+    <form method="GET" action="{{ route('admin-distributed-record') }}" class="mb-4">
+        <div class="row">
+            <!-- <div class="col-md-3">
+                <label>Bull ID:</label>
+                <input type="text" name="bull_id" class="form-control" value="{{ request('bull_id') }}">
+            </div> -->
+            @if(Auth::user()->role == 'Superadmin')
+            <div class="col-md-3">
+                <label>Role:</label>
+                <select name="role" class="form-control">
+                    <option value="">Select Role</option>
+                    <option value="DFS" {{ request('role') == 'DFS' ? 'selected' : '' }}>DFS</option>
+                    <option value="zone" {{ request('role') == 'zone' ? 'selected' : '' }}>Zone</option>
+                    <option value="district" {{ request('role') == 'district' ? 'selected' : '' }}>District</option>
+                    <option value="DEO" {{ request('role') == 'DEO' ? 'selected' : '' }}>DEO</option>
+                </select>
+            </div>
+            @endif
+            @if(Auth::user()->role == 'DFS')
+            <div class="col-md-3">
+                <label>Zone:</label>
+                <select name="zone" class="form-control">
+                    <option value="">Select Zone</option>
+                    @foreach($zones as $zone)
+                    <option value="{{ $zone->id }}" data-en="{{ $zone->name_en }}" data-hi="{{ $zone->name_hi }}"
+                        {{ request('zone') == $zone->id ? 'selected' : '' }}>
+                        {{ $zone->name_en }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
+            <div class="col-md-3">
+                <label>Breed:</label>
+                <select name="breed" class="form-control">
+                    <option value="">Select Breed</option>
+                    <option value="swadeshi" {{ request('breed') == 'swadeshi' ? 'selected' : '' }}>
+                        Swadeshi</option>
+                    <option value="hybrids-crossbred" {{ request('breed') == 'hybrids-crossbred' ? 'selected' : '' }}>
+                        Hybrids -
+                        Crossbred</option>
+                    <option value="videshi" {{ request('breed') == 'videshi' ? 'selected' : '' }}>Videshi</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Species:</label>
+                <select name="semen" class="form-control">
+                    <option value="">Select Species</option>
+                    <option value="cow" {{ request('semen') == 'cow' ? 'selected' : '' }}>
+                        Cow</option>
+                    <option value="buffalo" {{ request('semen') == 'buffalo' ? 'selected' : '' }}>Buffalo</option>
+                    <option value="goat" {{ request('semen') == 'goat' ? 'selected' : '' }}>Goat</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Semen Type:</label>
+                <select name="semen_type" class="form-control">
+                    <option value="">Select Semen</option>
+                    <option value="conventional" {{ request('semen_type') == 'conventional' ? 'selected' : '' }}>
+                        Conventional</option>
+                    <option value="sexed" {{ request('semen_type') == 'sexed' ? 'selected' : '' }}>Sexed</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{{ route('admin-distributed-record') }}" class="btn btn-secondary">Reset</a>
+    </form>
+
     <table id="my-new-table" class="display table table-striped table-responsive table-bordered" width="100%">
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
                 <th><span data-hi="उपयोगकर्ता नाम" data-en="UserName"></span></th>
+                @if(Auth::user()->role == 'DFS')
                 <th><span data-hi="क्षेत्र" data-en="Zone"></span></th>
+                @endif
+                @if(Auth::user()->role == 'Superadmin')
+                <th><span data-hi="क्षेत्र" data-en="DFS/Zone/District/DEO"></span></th>
+                @endif
                 <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
                 <th><span data-hi="LN2 आपूर्ति तिथि" data-en="LN2 Supply Date"></span></th>
                 <th><span data-hi="वीर्य" data-en="Semen"></span></th>
@@ -42,13 +116,13 @@
         </thead>
         <tbody>
             @if(count($zoneStock) > 0)
-            @foreach ($zoneStock as $stockZone)
             @php $i = 1; @endphp
-            @foreach($stockZone as $zoneUser)
+            @foreach ($zoneStock as $zoneUser)
             <tr>
                 <td>{{ $i }}</td>
                 <td>{{ $zoneUser->FirstName }}</td>
-                <td><span data-hi="{{ $zoneUser->name_hi }}" data-en="{{ $zoneUser->name_en }}"></span></td>
+                <td><span data-hi="{{ $zoneUser->name_hi ?? $zoneUser->name_hindi }}"
+                        data-en="{{ $zoneUser->name_en ?? $zoneUser->name_eng }}"></span></td>
                 <td>{{ $zoneUser->demand_section }}</td>
                 <td>{{ $zoneUser->supply_date ? $zoneUser->supply_date : 'N/A' }}</td>
                 <td>{{ $zoneUser->semen }}</td>
@@ -65,13 +139,8 @@
                 <td>{{ $zoneUser->bull_ids }}</td>
                 <td>{{ $zoneUser->created_at }}</td>
             </tr>
-            @endforeach
             @php $i++ @endphp
             @endforeach
-            @else
-            <tr>
-                <td colspan="18" class="text-center" style="color:red;">No record found..</td>
-            </tr>
             @endif
 
         </tbody>
@@ -95,6 +164,9 @@ $(document).ready(function() {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [

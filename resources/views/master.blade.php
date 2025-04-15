@@ -1303,6 +1303,10 @@
                             @endif
 
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
+                            <li class="nav-item  {{ request()->is('view-dfs') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('view-dfs') }}">
+                                    <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span></a>
+                            </li>
                             <li class="nav-item  {{ request()->is('operator-id') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('operator-id') }}">
                                     <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span></a>

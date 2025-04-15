@@ -88,6 +88,9 @@ $(document).ready(function() {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [

@@ -58,10 +58,6 @@
                 <td>{{ $stockZone['created_at'] }}</td>
             </tr>
             @endforeach
-            @else
-            <tr>
-                <td colspan="15" class="text-center">No Record Found...</td>
-            </tr>
             @endif
 
 
@@ -88,6 +84,9 @@ $(document).ready(function() {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [

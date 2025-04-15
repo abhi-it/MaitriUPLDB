@@ -47,7 +47,7 @@
                     </label> 
                     <select name="semen" id="semen" class="form-control" autofocus="">
                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                        <option value="catle" data-hi="गाय" data-en="Cattle"></option>
+                        <option value="cow" data-hi="गाय" data-en="Cattle"></option>
                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                         <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                     </select>

@@ -73,39 +73,79 @@ class ZoneStockDetailsController extends Controller
     }
 
 
-    public function zoneShowStockRecord(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-        DB::enableQueryLog();
-        $zoneStock = [];
-        foreach($inventoryIds as $inventory){
-            $district_User_id = $inventory['user_id'];
-            $inventory_id = $inventory['inventory_id'];
+    // public function zoneShowStockRecord(){
+    //     $user_id = Auth::user()->id;
+    //     $zone_id = Auth::user()->zone_id;
+    //     $divisionIds = Divisions::where('zone_id', $zone_id)->pluck('id');
+    //     $districts = Districts::whereIn('division_id', $divisionIds)->get();
+        
+    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
+    //     $zoneStock = [];
+    //     foreach($inventoryIds as $inventory){
+    //         $district_User_id = $inventory['user_id'];
+    //         $inventory_id = $inventory['inventory_id'];
 
 
-            $results = DB::table('inventory_map_user')
-                        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-                        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->select('zone_stock_details.*', 'deo_users.*')
-                        ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
-                        ->get();
+    //         $results = DB::table('inventory_map_user')
+    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+    //                     ->select('zone_stock_details.*', 'deo_users.*')
+    //                     ->where(['inventory_map_user.assign_user_id' => $user_id])
+    //                     ->get();
 
-            foreach($results as $result){
-                $district_id = $result->district_id;
-                $user_id = $result->user_id;
-                $districtData = Districts::where('id', $district_id)->first();
-                $userData = User::where('id', $user_id)->first();
-                if ($districtData) {
-                    $result->user_name = $userData['FirstName'];
-                    $result->division_name_eng = $districtData['name_eng'];
-                    $result->division_name_hindi = $districtData['name_hindi'];
-                    $zoneStock[] = $result;
-                }
-            }
+    //         foreach($results as $result){
+    //             $district_id = $result->district_id;
+    //             $user_id = $result->user_id;
+    //             $districtData = Districts::where('id', $district_id)->first();
+    //             $userData = User::where('id', $user_id)->first();
+    //             if ($districtData) {
+    //                 $result->user_name = $userData['FirstName'];
+    //                 $result->division_name_eng = $districtData['name_eng'];
+    //                 $result->division_name_hindi = $districtData['name_hindi'];
+    //                 $zoneStock[] = $result;
+    //             }
+    //         }
+    //     }
+
+    //     return view('zonedetails.zone-stock-record', compact('zoneStock', 'districts'));
+    // }
+
+    public function zoneShowStockRecord(Request $request){
+        $user = Auth::user();
+        $zones = Zone::all();
+        $zone_id = $user->zone_id;
+        $divisionIds = Divisions::where('zone_id', $zone_id)->pluck('id');
+        $districts = Districts::whereIn('division_id', $divisionIds)->get();
+
+        $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
+        $query = DB::table('inventory_map_user')
+            ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+            ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+            ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
+            ->join('districts', 'districts.id', '=', 'users.district_id')
+            ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'districts.*')
+            ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+            
+        if ($request->filled('district')) {
+            $query->where('users.district_id', 'LIKE', "%{$request->district}%");
         }
-
-        return view('zonedetails.zone-stock-record', compact('zoneStock'));
+        if ($request->filled('bull_id')) {
+            $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
+        }
+        if ($request->filled('breed')) {
+            $query->where('zone_stock_details.breed', 'LIKE', "%{$request->breed}%");
+        }
+        if ($request->filled('semen')) {
+            $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
+        }
+        if ($request->filled('semen_type')) {
+            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
+        }
+    
+        $zoneStock = $query->get();
+        return view('zonedetails.zone-stock-record', compact('zoneStock','districts'));
     }
+
 
     public function saveZoneDivisionStockForm(Request $request){
         

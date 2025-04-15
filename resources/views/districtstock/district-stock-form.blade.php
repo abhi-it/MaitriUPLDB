@@ -117,7 +117,7 @@
                         </label>
                         <select name="semen[]" class="form-control semen-select">
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                            <option value="catle" data-hi="गाय" data-en="Cow"></option>
+                            <option value="cow" data-hi="गाय" data-en="Cow"></option>
                             <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
                             <option value="goat" data-hi="बकरी" data-en="Goat"></option>
                         </select>
@@ -351,7 +351,7 @@ $(document).ready(function() {
 
         parentDiv.find('.catle-options, .buffalo-options, .goat-options').addClass('d-none');
 
-        if (selectedValue === 'catle') {
+        if (selectedValue === 'cow') {
             parentDiv.find('.catle-options').removeClass('d-none');
         } else if (selectedValue === 'buffalo') {
             parentDiv.find('.buffalo-options').removeClass('d-none');
