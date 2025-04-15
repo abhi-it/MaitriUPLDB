@@ -105,19 +105,21 @@ class DeoStockUserController extends Controller
                         ->where('district_id', $district_id)
                         ->get();
                         
+            
+            $deoStock = InventoryMap::with('zoneStockDetails')->where('user_id', $user_id)->get();
             $inventoryData = [];
-            $deoStock = [];
-            foreach ($getAiCenters as $aiCenter) {
-                $aiCenterUserId = $aiCenter['id'];
-                $inventoryIds = InventoryMap::where('user_id', $aiCenterUserId)->first();
-                $deoStockData = RemainingStock::where('user_id', $aiCenterUserId)->first();
-                if ($inventoryIds ) {
-                    $inventoryData[] = $inventoryIds;
-                }
-                if ($deoStockData ) {
-                    $deoStock[] = $deoStockData;
-                }
-            }
+            // $deoStock = [];
+            // foreach ($getAiCenters as $aiCenter) {
+            //     $aiCenterUserId = $aiCenter['id'];
+            //     $inventoryIds = InventoryMap::where('user_id', $aiCenterUserId)->first();
+            //     $deoStockData = RemainingStock::where('user_id', $aiCenterUserId)->first();
+            //     if ($inventoryIds ) {
+            //         $inventoryData[] = $inventoryIds;
+            //     }
+            //     if ($deoStockData ) {
+            //         $deoStock[] = $deoStockData;
+            //     }
+            // }
         }else{
             $deoStock = [];
             $inventoryData = [];
