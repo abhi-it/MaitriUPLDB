@@ -280,7 +280,7 @@
         <!------Summary Page End---------------->
         <div class="row">
             <div class="mb-4 mt-4 text-center">
-                <button type="submit" class="btn btn-primary submit buttonWizard">
+                <button type="submit" id="data_submit" class="btn btn-primary submit buttonWizard">
                     <span data-en="Submit" data-hi="सबमिट"></span>
                 </button>
             </div>
@@ -349,6 +349,7 @@ $(document).ready(function() {
                     html += '</tr>';
 
                     $('#avaiable_data').append(html);
+                    $('#data_submit').prop('disabled', false);
                 } else {
 
                     $('input').prop('disabled', true);
@@ -359,6 +360,7 @@ $(document).ready(function() {
                     html += '</tr>';
                     $('#avaiable_data').append(html);
                     $('#select_aicenter').prop('disabled', false);
+                    $('#data_submit').prop('disabled', true);
                 }
 
 
