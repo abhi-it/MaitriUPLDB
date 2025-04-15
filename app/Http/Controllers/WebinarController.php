@@ -119,7 +119,7 @@ class WebinarController extends Controller
             $result = $s3->createMultipartUpload([
                 'Bucket' => $bucket,
                 'Key'    => $filename,
-                'ACL'    => 'public-read', // or 'private'
+                // 'ACL'    => 'public-read', // or 'private'
                 'ContentType' => $file->getMimeType(),
             ]);
             

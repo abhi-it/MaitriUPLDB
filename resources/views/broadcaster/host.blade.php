@@ -305,6 +305,111 @@
     <script src="/js/stages-simple.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1309.0.min.js"></script>
+    <script>
+    // AWS configuration
+    AWS.config.update({
+        accessKeyId: 'AKIAV7JDSE4JDI7UC5WL',
+        secretAccessKey: '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',
+        region: 'ap-south-1',
+    });
+
+    // let mediaRecorder;
+    let recordedChunks = [];
+    let stream;
+
+
+    const startButton = document.getElementById('join-button');
+    const stopButton = document.getElementById('leave-button');
+
+    startButton.addEventListener('click', () => {
+        startRecording();
+    });
+
+    stopButton.addEventListener('click', () => {
+        stopRecording();
+    });
+
+    function startRecording() {
+        navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            })
+            .then(s => {
+                stream = s;
+
+                // Display video stream in a video element
+                const videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                videoElement.play();
+                document.body.appendChild(videoElement);
+
+                // Set up the media recorder
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = event => {
+                    recordedChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    // Create video blob after recording
+                    const videoBlob = new Blob(recordedChunks, {
+                        type: 'video/webm'
+                    });
+                    const videoUrl = URL.createObjectURL(videoBlob);
+                    console.log('Video URL:', videoUrl);
+
+                    // Upload the video to S3
+                    uploadToS3(videoBlob);
+                };
+
+                // Start recording
+                mediaRecorder.start();
+
+                // Disable the start button and enable the stop button
+                startButton.disabled = true;
+                stopButton.disabled = false;
+
+                console.log('Recording started');
+            })
+            .catch(error => console.error('Error accessing audio/video media', error));
+    }
+
+    // Function to stop the recording
+    function stopRecording() {
+        mediaRecorder.stop();
+        stream.getTracks().forEach(track => track.stop()); // Stop all tracks after recording
+
+        // Disable the stop button and enable the start button
+        stopButton.disabled = true;
+        startButton.disabled = false;
+
+        console.log('Recording stopped');
+    }
+
+    // Function to upload video to S3
+    function uploadToS3(mediaBlob) {
+        const s3 = new AWS.S3();
+
+        const params = {
+            Bucket: 'ivs-stage-archive-jam',
+            Key: `videos/${Date.now()}.webm`,
+            Body: mediaBlob,
+            ContentType: 'video/webm',
+            ACL: 'public-read', // Set to 'private' if you want it to be private
+        };
+
+        s3.upload(params, (err, data) => {
+            if (err) {
+                console.error('Error uploading video', err);
+            } else {
+                console.log('Video uploaded successfully', data.Location);
+            }
+        });
+    }
+    </script>
+
     <script>
     $(document).ready(function() {
         var stageArn = "{{ $stageArn }}";

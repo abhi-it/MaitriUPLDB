@@ -277,10 +277,11 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img src="{{ asset('assets/images/niraj-ceo.jpeg')}}" />
+                                <img src="{{ asset('assets/images/pramod-ceo.png')}}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
-                                            <span data-hi="डॉ. नीरज गुप्ता" data-en="Dr. Neeraj Gupta"></span>
+                                            <span data-hi="डॉ. प्रमोद कुमार सिंह"
+                                                data-en="Dr. Pramod Kumar Singh"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
                                             <span data-hi="सीईओ यूपीएलडीबी, उ.प्र." data-en="C.E.O UPLDB, U.P."></span>
@@ -424,8 +425,8 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                     </div>
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
-                            <img class="w-100" src="{{ asset('assets/images/niraj-ceo.jpeg')}}" />
-                            <span data-hi="डॉ. नीरज गुप्ता" data-en="Dr. Neeraj Gupta"></span>
+                            <img class="w-100" src="{{ asset('assets/images/pramod-ceo.png')}}" />
+                            <span data-hi="डॉ. प्रमोद कुमार सिंह" data-en="Dr. Pramod Kumar Singh"></span>
                             <span></span>
                         </div>
                     </div>
@@ -476,7 +477,8 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
             <div class="flex-box-counter">
 
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="विदेशी और संकर नस्ल के गाय" data-en="Exotic & Crossbred Cattle"></span></h2>
+                    <h2 class="fw-bold"><span data-hi="विदेशी और संकर नस्ल के गाय"
+                            data-en="Exotic & Crossbred Cattle"></span></h2>
                     <p class="text-center text-white fs-4 cattle counter">6122628</p>
                 </div>
                 <div class="flex-box-inner">
@@ -641,18 +643,18 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
         <div class="row home_sec-new">
 
             @foreach($events->take(6) as $event)
-                <div class="col-lg-4 mt-3 position-relative">
-                    <img src="{{ asset($event->front_image) }}" width="100%" alt="">
-                    <div class="position-absolute home_sec-content">
-                        <h6>
-                            <span data-hi="{{ Str::limit($event->title_hindi, 100) }}"
-                                data-en="{{ Str::limit($event->title, 100) }}"> </span>
-                        </h6>
-                        <a href="{{route('eventdetails')}}">
-                            <span data-hi="सभी देखें" data-en="View All"> </span>
-                        </a>
-                    </div>
+            <div class="col-lg-4 mt-3 position-relative">
+                <img src="{{ asset($event->front_image) }}" width="100%" alt="">
+                <div class="position-absolute home_sec-content">
+                    <h6>
+                        <span data-hi="{{ Str::limit($event->title_hindi, 100) }}"
+                            data-en="{{ Str::limit($event->title, 100) }}"> </span>
+                    </h6>
+                    <a href="{{route('eventdetails')}}">
+                        <span data-hi="सभी देखें" data-en="View All"> </span>
+                    </a>
                 </div>
+            </div>
             @endforeach
         </div>
     </div>
