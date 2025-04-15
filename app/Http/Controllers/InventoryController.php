@@ -79,7 +79,7 @@ class InventoryController extends Controller
         
             $zone_id = $request->select_zone;
             if($zone_id != ''){
-                $result = User::where(['zone_id' => $zone_id])->first(); 
+                $result = User::where(['zone_id' => $zone_id])->where('district_id', 0)->where('division_id', 0)->first(); 
                 $deoTableId = DeoUser::where(['user_id' => $result['id']])->first();
                 $user_id = $result['id'];
             }
