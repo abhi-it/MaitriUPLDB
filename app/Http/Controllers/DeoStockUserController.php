@@ -125,33 +125,72 @@ class DeoStockUserController extends Controller
         return view('deostock.deodetails', compact('deoStock', 'inventoryData'));
     }
 
-    public function deoStockRecord(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-        $deoStock = [];
-        foreach($inventoryIds as $inventory){
-            $division_User_id = $inventory['user_id'];
-            $inventory_id = $inventory['inventory_id'];
-            $results = DB::table('inventory_map_user')
-                        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-                        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-                        ->join('maitries', 'maitries.id', '=', 'inventory_map_user.maitri_id')
-                        ->select('zone_stock_details.*', 'deo_users.*', 'maitries.*')
-                        ->where(['inventory_map_user.assign_user_id' => $user_id])
-                        ->get();
+    // public function deoStockRecord(){
+    //     $user_id = Auth::user()->id;
+    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
+    //     $deoStock = [];
+    //     foreach($inventoryIds as $inventory){
+    //         $division_User_id = $inventory['user_id'];
+    //         $inventory_id = $inventory['inventory_id'];
+    //         $results = DB::table('inventory_map_user')
+    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+    //                     ->join('maitries', 'maitries.id', '=', 'inventory_map_user.maitri_id')
+    //                     ->select('zone_stock_details.*', 'deo_users.*', 'maitries.*')
+    //                     ->where(['inventory_map_user.assign_user_id' => $user_id])
+    //                     ->get();
 
-            foreach($results as $result){
-                $maitri_id = $result->id;
-                $userData = Maitri::where('id', $maitri_id)->first();
-                if ($userData) {
-                    $result->user_name = $userData['maitri_name'];
-                    $result->maitri_mobile_no = $userData['maitri_mobile_no'];
-                    $deoStock[] = $result;
-                }
-            }
+    //         foreach($results as $result){
+    //             $maitri_id = $result->id;
+    //             $userData = Maitri::where('id', $maitri_id)->first();
+    //             if ($userData) {
+    //                 $result->user_name = $userData['maitri_name'];
+    //                 $result->maitri_mobile_no = $userData['maitri_mobile_no'];
+    //                 $deoStock[] = $result;
+    //             }
+    //         }
+    //     }
+
+    //     return view('deostock.deo-stock-record', compact('deoStock'));
+    // }
+
+    public function deoStockRecord(Request $request){
+        $user = Auth::user();
+        $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
+        $query = DB::table('inventory_map_user')
+                ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
+                ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
+                ->join('maitries', 'maitries.id', '=', 'inventory_map_user.maitri_id')
+                ->select('zone_stock_details.*', 'deo_users.*', 'maitries.*')
+                ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
+    
+        
+        // if ($request->filled('aicenter')) {
+        //     $query->where('inventory_map_user.aicenter', 'LIKE', "%{$request->aicenter}%");
+        // }
+        if ($request->filled('select_maitri')) {
+            $query->where('maitries.id', 'LIKE', "%{$request->select_maitri}%");
         }
-
-        return view('deostock.deo-stock-record', compact('deoStock'));
+        if ($request->filled('bull_id')) {
+            $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
+        }
+        if ($request->filled('breed')) {
+            $query->where('zone_stock_details.breed', 'LIKE', "%{$request->breed}%");
+        }
+        if ($request->filled('semen')) {
+            $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
+        }
+        if ($request->filled('semen_type')) {
+            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
+        }
+    
+        $deoStock = $query->get();
+        // echo '<pre>';print_r($deoStock);exit;
+        $getData = User::where('id', $user->id)->first();
+        $aiCenters = Latestaicenter::where('division_id', $getData['division_id'])
+                    ->where('district_id', $getData['district_id'])
+                    ->get();
+        return view('deostock.deo-stock-record', compact('deoStock','aiCenters', 'getData'));
     }
 
     public function deoRequestDataForm(){

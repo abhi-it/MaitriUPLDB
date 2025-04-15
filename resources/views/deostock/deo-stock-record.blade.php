@@ -17,6 +17,64 @@
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
+    <form method="GET" action="{{ route('deo-show-stock-record') }}" class="mb-4">
+        <div class="row">
+            <input type="hidden" name="district_id" id="district_id" value="{{ $getData->district_id }}">
+            <input type="hidden" name="division_id" id="division_id" value="{{ $getData->division_id }}">
+            <div class="col-md-6">
+                <label>AI Center:</label>
+                <select name="aicenter" id="select_aicenter" class="form-control">
+                    <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
+                    @foreach($aiCenters as $aiCenterName)
+                    <option value="{{ $aiCenterName['id'] }}">
+                        {{ $aiCenterName['aicenter'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail4"> <span data-hi="मैत्री चुनें" data-en="Select Maitri"></span> </label>
+                <select name="select_maitri" id="select_maitri" class="form-control">
+                    <option value="" data-hi="मैत्री चुनें" data-en="Select Maitri"></option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Breed:</label>
+                <select name="breed" class="form-control">
+                    <option value="">Select Breed</option>
+                    <option value="swadeshi" {{ request('breed') == 'swadeshi' ? 'selected' : '' }}>
+                        Swadeshi</option>
+                    <option value="hybrids-crossbred" {{ request('breed') == 'hybrids-crossbred' ? 'selected' : '' }}>
+                        Hybrids -
+                        Crossbred</option>
+                    <option value="videshi" {{ request('breed') == 'videshi' ? 'selected' : '' }}>Videshi</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Species:</label>
+                <select name="semen" class="form-control">
+                    <option value="">Select Species</option>
+                    <option value="cow" {{ request('semen') == 'cow' ? 'selected' : '' }}>
+                        Cow</option>
+                    <option value="buffalo" {{ request('semen') == 'buffalo' ? 'selected' : '' }}>Buffalo</option>
+                    <option value="goat" {{ request('semen') == 'goat' ? 'selected' : '' }}>Goat</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Semen Type:</label>
+                <select name="semen_type" class="form-control">
+                    <option value="">Select Semen</option>
+                    <option value="conventional" {{ request('semen_type') == 'conventional' ? 'selected' : '' }}>
+                        Conventional</option>
+                    <option value="sexed" {{ request('semen_type') == 'sexed' ? 'selected' : '' }}>Sexed</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{{ route('deo-show-stock-record') }}" class="btn btn-secondary">Reset</a>
+    </form>
+
     <table id="my-new-table" class="table table-striped  table-responsive table-bordered">
         <thead>
             <tr>
@@ -41,19 +99,11 @@
         </thead>
         <tbody>
 
-            @if(count($deoStock) == 0)
-            <tr>
-                <td colspan="16" class="text-center">No Record Found</td>
-            </tr>
-            @endif
-
-
-
             @php $i = 1; @endphp
             @foreach ($deoStock as $key => $stockdeo)
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $stockdeo->user_name }}</td>
+                <td>{{ $stockdeo->maitri_name }}</td>
                 <td>{{ $stockdeo->maitri_mobile_no }}</td>
                 <td>{{ $stockdeo->demand_section }}</td>
                 <td>{{ $stockdeo->semen }}</td>
@@ -95,11 +145,76 @@
 
 <script>
 $(document).ready(function() {
+
+
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    var selectedMaitri = getUrlParameter('select_maitri');
+    var selectedAICenter = getUrlParameter('aicenter');
+
+    console.log("URL Params - AI Center:", selectedAICenter, "Maitri:", selectedMaitri);
+
+    if (selectedAICenter) {
+        $('#select_aicenter').val(selectedAICenter).trigger('change');
+    }
+
+    $('#select_aicenter').change(function() {
+        var aiCenterID = $(this).val();
+        console.log("AI Center Changed: ", aiCenterID);
+
+        if (!aiCenterID) return;
+        $.ajax({
+            type: "GET",
+            url: "{{ route('search-maitri-data') }}",
+            dataType: 'json',
+            data: {
+                id: aiCenterID,
+                district: $('#district_id').val(),
+                division: $('#division_id').val(),
+            },
+            success: function(result) {
+                $('#select_maitri').empty();
+                if (result.success && result.type === 'maitri' && result.success !== '') {
+                    const $selectMaitri = $('#select_maitri');
+                    $selectMaitri.empty().append('<option value="">Select Maitri</option>');
+
+                    $.each(result.success, function(index, maitri) {
+                        $selectMaitri.append(
+                            $('<option></option>')
+                            .val(maitri.id)
+                            .text(
+                                `Name: ${maitri.maitri_name} (Num: ${maitri.maitri_mobile_no}, Bharat Pashudhan Id: ${maitri.any_bharat_id})`
+                            )
+                        );
+                    });
+
+                    if (selectedMaitri) {
+                        $selectMaitri.val(selectedMaitri).trigger('change');
+                    }
+                } else {
+                    $('#select_maitri').append(
+                        $('<option></option>').text('No Maitri available').prop(
+                            'disabled', true)
+                    );
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching data: " + error);
+            }
+        });
+    })
+
     $('#my-new-table').DataTable({
         lengthMenu: [
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+        language: {
+            emptyTable: "No records found..."
+        },
         pageLength: 10,
         dom: 'lBfrtip',
         buttons: [
