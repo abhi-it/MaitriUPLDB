@@ -34,6 +34,7 @@ class DeoStockUserController extends Controller
     }
 
     public function searchMaitriData(Request $request){
+        $user_id = Auth::user()->id;
         $aiCentername   = $request->id;
         $district       = $request->district;
         $division       = $request->division;
@@ -42,7 +43,7 @@ class DeoStockUserController extends Controller
         //                     ->where('mandal_name', 'LIKE', '%'.$division.'%')
         //                     ->where('janpad_name', 'LIKE', '%'.$district.'%')
         //                     ->where('center_name', 'LIKE', $aiCentername)->get();
-        $remainingStock = RemainingStock::where('user_id', $aiCentername)->first();
+        $remainingStock = RemainingStock::where('user_id', $user_id)->first();
         $getMaitrisData     = Aicentermapping::where('aiCenter_id', $aiCentername)->get();
         $getMaitris = [];
         foreach($getMaitrisData as $data){
