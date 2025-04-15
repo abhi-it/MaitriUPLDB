@@ -303,6 +303,9 @@ $(document).ready(function() {
                 division: division,
             },
             success: function(result) {
+
+                console.log(result);
+
                 $('#avaiable_data').empty();
                 $('#select_maitri').empty();
                 if (result.success && result.type === 'maitri' && result.success != '') {
@@ -325,7 +328,7 @@ $(document).ready(function() {
                 if (result.remainingStock && result.type === 'maitri' && Object.keys(result
                         .remainingStock).length > 0) {
                     $('input, select').prop('disabled', false);
-                    var remainingStock = result.remainingStock;
+                    var remainingStock = result.remainingStock.zone_stock_details;
 
                     $('#aiCenter_id').val(aiCenterID);
 
@@ -347,6 +350,7 @@ $(document).ready(function() {
 
                     $('#avaiable_data').append(html);
                 } else {
+
                     $('input').prop('disabled', true);
                     $('select').not(':first').prop('disabled', true);
                     html += '<tr>';
@@ -354,6 +358,7 @@ $(document).ready(function() {
                         '<td colspan="13" class="text-center" style="color:red;">No data found</td>';
                     html += '</tr>';
                     $('#avaiable_data').append(html);
+                    $('#select_aicenter').prop('disabled', false);
                 }
 
 
