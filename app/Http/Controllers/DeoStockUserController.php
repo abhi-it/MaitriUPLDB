@@ -43,7 +43,13 @@ class DeoStockUserController extends Controller
         //                     ->where('mandal_name', 'LIKE', '%'.$division.'%')
         //                     ->where('janpad_name', 'LIKE', '%'.$district.'%')
         //                     ->where('center_name', 'LIKE', $aiCentername)->get();
-        $remainingStock = RemainingStock::where('user_id', $user_id)->first();
+
+        // $remainingStock = RemainingStock::where('user_id', $user_id)->first();
+
+        $remainingStock = InventoryMap::with('zoneStockDetails')->where(['user_id' => $user_id, 'aicenter_id' => $aiCentername])->first();
+        
+        // echo '<pre>';print_r($remainingStock);exit;
+
         $getMaitrisData     = Aicentermapping::where('aiCenter_id', $aiCentername)->get();
         $getMaitris = [];
         foreach($getMaitrisData as $data){
