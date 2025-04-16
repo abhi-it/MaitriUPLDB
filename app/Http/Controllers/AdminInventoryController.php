@@ -32,7 +32,8 @@ use App\Models\API\Servicerequest;
 
 class AdminInventoryController extends Controller
 {
-    public function getFarmerRequest(Request $request){
+    public function getFarmerRequest(Request $request)
+    {
         $district = Districts::get();
         $query = Servicerequest::with(['user', 'maitri', 'user.district']) ->orderBy('id', 'desc');; 
         if (!empty($request->input('district_id'))) {
@@ -44,6 +45,7 @@ class AdminInventoryController extends Controller
         $data = $query->paginate(10);
 
         $getMaitri = User::where('role', 'Maitri')->get();
+        
         return view('farmardata.farmer-request-list', [
             'data' => $data,
             'district' => $district,

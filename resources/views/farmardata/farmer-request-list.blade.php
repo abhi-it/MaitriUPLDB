@@ -66,7 +66,7 @@
         </thead>
         <tbody>
             @if(count($data))
-            @foreach($data as$key=> $row)
+            @foreach($data as $key=> $row)
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$row->user->name  }}</td>
@@ -97,8 +97,8 @@
                 @endif
                 <td>
                     <button type="button" class="btn custom-btn btn-primary changeStatus btn-sm" data-id="{{$row->id}}"
-                        data-farmer="{{$row->user->name}}" data-status="{{$row->status}}"
-                        data-mairtiId="{{$row->maitri->id}}" data-service="{{$row->service_name}}">
+                        data-farmer="{{$row->user->name}}" data-status="{{$row->status}}" data-mairtiId=""
+                        data-service="{{$row->service_name}}">
                         Change Status
                     </button>
                 </td>
