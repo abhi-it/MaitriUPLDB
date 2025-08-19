@@ -220,6 +220,32 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
                             @endif
                         </ul>
                     </marquee>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+              <div class="user-detail">
+                <img src="{{ asset('assets/images/sm.jpeg')}}" />
+                <div>
+                  <p class="m-0 text-center"><b>
+                  <span data-hi="श्री धर्मपाल सिंह" data-en="Shri Dharampal Singh"></span>
+                  </b></p>
+                  <p class="m-0 text-center lh-1"><small>
+                  <span data-hi="माननीय मंत्री डेयरी विकास विभाग, पशुपालन, उत्तर प्रदेश।" data-en="Hon`ble Minister Dairy Development Dept., Animal Husbandry,U.P."></span>
+                  </small></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+              <div class="user-detail">
+                <img src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
+                <div>
+                  <p class="m-0 text-center"><b>
+                    <span data-hi="श्री मित कुमार घोष, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
+                  </b></p>
+                  <p class="m-0 text-center lh-1"><small>
+                    <span data-hi="प्रमुख सचिव / पशुधन" data-en="Principal Secretary/ Livestock"></span>
+                  </small></p>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -376,6 +402,7 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="row user-list-section align-items-center justify-content-center g-3 mb-5">
             <div class="col-xl-10">
                 <div class="row align-items-center g-3 flex-column-reverse flex-md-row">
@@ -393,6 +420,26 @@ $latest = App\Models\Latestupdate::whereStatus(1)->get();
                                 <span
                                     data-hi="हमारा उद्देश्य नियमित और निरंतर आधार पर सभी स्तरों पर कौशल और व्यावसायिक क्षमता को बढ़ाने के लिए मौजूदा सुविधाओं का आधुनिकीकरण और उन्नयन करना है। पशुधन के प्रजनन और विकास तथा उनकी उत्पादकता से संबंधित संस्थागत ढांचे को समग्र रूप से मजबूत बनाने में राज्य सरकार को सलाह और सहायता देना, तथा राज्य भर में पशुधन प्रजनन बुनियादी ढांचे पर पहले से किए गए निवेश पर अधिकतम लाभ प्राप्त करने के लिए नई संस्थाओं की स्थापना में सहायता करना। उत्पादकता वृद्धि और उद्यम संवर्धन के लिए तकनीकी सहायता प्रदान करना। देशी नस्लों के संरक्षण और आनुवंशिक उन्नयन के लिए पहल को बढ़ावा देना। जैव विविधता और आनुवंशिक संसाधनों के संरक्षण और आर्थिक महत्व के पशुधन की देशी नस्लों के विकास और वाणिज्यिक दोहन में राष्ट्रीय प्रयास में सहायता करना। प्रजनन क्षेत्र में बोर्ड के लिए विकास गतिविधियों को बढ़ावा देना और वित्तपोषित करना।"
                                     data-en="We aim to Modernize and upgrade existing facilities to enhance skills and professional competence at
+=======
+      </div>
+    </div>
+
+    <div class="row user-list-section align-items-center justify-content-center g-3 mb-5">
+      <div class="col-xl-10">
+        <div class="row align-items-center g-3 flex-column-reverse flex-md-row">
+          <div class="col-xl-3 col-lg-6">
+            <div class="author-section">
+              <img class="w-100" src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
+              <span data-hi="श्री के रविंद्र नायक, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
+            </div>
+          </div>
+          <div class="col-xl-9 col-lg-6">
+            <h3 class="fw-bold mb-3 logo-title">
+            <span data-hi="प्रमुख सचिव / पशुधन" data-en="Principal Secretary/ Livestock"></span>
+           </h3>
+            <p><i>
+            <span data-hi="हमारा उद्देश्य नियमित और निरंतर आधार पर सभी स्तरों पर कौशल और व्यावसायिक क्षमता को बढ़ाने के लिए मौजूदा सुविधाओं का आधुनिकीकरण और उन्नयन करना है। पशुधन के प्रजनन और विकास तथा उनकी उत्पादकता से संबंधित संस्थागत ढांचे को समग्र रूप से मजबूत बनाने में राज्य सरकार को सलाह और सहायता देना, तथा राज्य भर में पशुधन प्रजनन बुनियादी ढांचे पर पहले से किए गए निवेश पर अधिकतम लाभ प्राप्त करने के लिए नई संस्थाओं की स्थापना में सहायता करना। उत्पादकता वृद्धि और उद्यम संवर्धन के लिए तकनीकी सहायता प्रदान करना। देशी नस्लों के संरक्षण और आनुवंशिक उन्नयन के लिए पहल को बढ़ावा देना। जैव विविधता और आनुवंशिक संसाधनों के संरक्षण और आर्थिक महत्व के पशुधन की देशी नस्लों के विकास और वाणिज्यिक दोहन में राष्ट्रीय प्रयास में सहायता करना। प्रजनन क्षेत्र में बोर्ड के लिए विकास गतिविधियों को बढ़ावा देना और वित्तपोषित करना।" data-en="We aim to Modernize and upgrade existing facilities to enhance skills and professional competence at
+>>>>>>> f61513b85667e8bf912639dd02c4f0d7d1e9f445
                 all levels on a regular and continuing basis. Advise and assist the State Govt. in overall strengthening
                 of the institutional setup dealing with breeding and development of livestock, and their productivity,
                 and help in establishing new institutions to maximize returns on investments already made on livestock

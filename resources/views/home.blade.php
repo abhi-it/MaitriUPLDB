@@ -262,11 +262,11 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img src="{{ asset('assets/images/ravindra.jpeg')}}" />
+                                <img src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
-                                            <span data-hi="श्री के रविंद्र नायक, आई०ए०एस"
-                                                data-en="Shri K. Ravinder Naik, IAS"></span>
+                                            <span data-hi="श्री अमित कुमार घोष, आई०ए०एस"
+                                                data-en="Shri Amit Kumar Ghosh, IAS"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
                                             <span data-hi="प्रमुख सचिव / पशुधन"
@@ -379,13 +379,14 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                 </div>
             </div>
         </div>
+
         <div class="row user-list-section align-items-center justify-content-center g-3 mb-5">
             <div class="col-xl-10">
                 <div class="row align-items-center g-3 flex-column-reverse flex-md-row">
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
-                            <img class="w-100" src="{{ asset('assets/images/ravindra.jpeg')}}" />
-                            <span data-hi="श्री के रविंद्र नायक, आई०ए०एस" data-en="Shri K. Ravindra Naik, IAS"></span>
+                            <img class="w-100" src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
+                            <span data-hi="श्री के रविंद्र नायक, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-6">
