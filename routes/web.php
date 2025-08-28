@@ -118,7 +118,8 @@ Route::get('/lakshya', [App\Http\Controllers\HomeController::class, 'lakshya'])-
 Route::get('/yojna', [App\Http\Controllers\HomeController::class, 'yojna'])->name('yojna');
 Route::get('/term-condition', [App\Http\Controllers\HomeController::class, 'termCondition'])->name('termCondition');
 Route::get('/avedan-karein', [App\Http\Controllers\HomeController::class, 'avedanKarein'])->name('avedanKarein');
-
+//For testing
+Route::get("testing-avedan", [App\Http\Controllers\HomeController::class, 'testing_avedan']);
 
 Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'eventDetails'])->name('eventdetails');
 
@@ -126,8 +127,6 @@ Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'event
 Route::resource('application-form', AvedanController::class);
 Route::post("getTempData", [AvedanController::class, 'getTempData']);
 
-//For tsting
-Route::get("applicationTesting", [AvedanController::class, 'applicationTesting']);
 
 Route::get('/getAllBlocks', [AvedanController::class, 'getAllBlocks'])->name('getAllBlocks');
 Route::get('/getAllGramPanchayat', [AvedanController::class, 'getAllGramPanchayat'])->name('getAllGramPanchayat');

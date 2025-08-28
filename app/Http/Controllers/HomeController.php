@@ -115,6 +115,27 @@ class HomeController extends Controller
 		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage'));
 	}
 
+	public function testing_avedan()
+	{
+		date_default_timezone_set("Asia/Kolkata");
+		$result = Setting::find(2);
+		$start_date = \Carbon\Carbon::parse($result->start_date, 'Asia/Kolkata')->format('Y-m-d');
+		$end_date = \Carbon\Carbon::parse($result->end_date, 'Asia/Kolkata')->format('Y-m-d');
+		$current_date = \Carbon\Carbon::parse(now())->format('Y-m-d h:i:s');;
+		$expireTime = \Carbon\Carbon::createFromFormat('Y-m-d', $result->end_date, 'Asia/Kolkata')->setTime(23, 59, 59);
+		$currentDateTime = \Carbon\Carbon::parse(now('Asia/Kolkata'))->format('Y-m-d h:i:s');
+
+		// if ($expireTime->gte($currentDateTime)) {
+			$avedanStart = 1;
+			$messsage =  '';
+		// } else {
+		// 	$avedanStart = 0;
+		// 	$result = Setting::find(2);
+		// 	$messsage =  'Submition of Application has been expired..';
+		// }
+		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage'));
+	}
+
 	public function applicationStatus()
 	{
 		return view('applicationStatus');
