@@ -127,7 +127,7 @@ Route::resource('application-form', AvedanController::class);
 Route::post("getTempData", [AvedanController::class, 'getTempData']);
 
 //For tsting
-Route::post("applicationTesting", [AvedanController::class, 'applicationTesting']);
+Route::get("applicationTesting", [AvedanController::class, 'applicationTesting']);
 
 Route::get('/getAllBlocks', [AvedanController::class, 'getAllBlocks'])->name('getAllBlocks');
 Route::get('/getAllGramPanchayat', [AvedanController::class, 'getAllGramPanchayat'])->name('getAllGramPanchayat');
