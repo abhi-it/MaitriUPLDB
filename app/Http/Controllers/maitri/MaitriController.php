@@ -67,6 +67,7 @@ class MaitriController extends Controller{
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'MobileNumber'    => 'required|string|max:15',
+            'AlternateMobile' => 'required|string|max:15',
             'district_id'     => 'required|string',
             'division_id'     => 'nullable|integer',
             'gram_panchayat'  => 'nullable|string|max:255',
@@ -91,6 +92,7 @@ class MaitriController extends Controller{
         $mairtiUser->pincode        = $request->pincode;
         $mairtiUser->block          = $request->block;
         $mairtiUser->tehsil         = $request->tehsil;
+        $mairtiUser->AlternateMobile         = $request->AlternateMobile;
         $mairtiUser->save();
         return redirect('/maitri-details')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }

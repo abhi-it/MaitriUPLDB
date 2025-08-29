@@ -115,6 +115,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/about-us', [App\Http\Controllers\HomeController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/yogyata', [App\Http\Controllers\HomeController::class, 'yogyata'])->name('yogyata');
 Route::get('/lakshya', [App\Http\Controllers\HomeController::class, 'lakshya'])->name('lakshya');
+Route::get('/lakshya_data', [App\Http\Controllers\HomeController::class, 'lakshya_data'])->name('lakshya_data');
 Route::get('/yojna', [App\Http\Controllers\HomeController::class, 'yojna'])->name('yojna');
 Route::get('/term-condition', [App\Http\Controllers\HomeController::class, 'termCondition'])->name('termCondition');
 Route::get('/avedan-karein', [App\Http\Controllers\HomeController::class, 'avedanKarein'])->name('avedanKarein');
@@ -149,6 +150,9 @@ Route::get('/broad-cast-login',[App\Http\Controllers\Auth\LoginController::class
 Route::get('/farmer-login',[App\Http\Controllers\Auth\LoginController::class, 'farmerlogin'])->name('farmer-login');
 
 Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
+Route::get('/search',[App\Http\Controllers\HomeController::class, 'search'])->name('search');
+
+
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
