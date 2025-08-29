@@ -252,9 +252,9 @@
                         <input type="text" class="form-control" id="mother" name="mother" placeholder="माता का नाम"
                             autocomplete="off" value="{{ $result->mother }}">
                     </div>
-
+  
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"><span data-hi="लिंग" data-en="Female"> </span>  </label> <span class="text-danger">*</span>
+                        <label for="inputEmail4"><span data-hi="लिंग" data-en="Gender"> </span>  </label> <span class="text-danger">*</span>
                         <select class="form-control" name="gender" id="gender">
                             <option value="">चुने</option>
                             <option value="पुरुष" {{ $result->gender == 'पुरुष' ? 'selected' : '' }}>पुरुष</option>
