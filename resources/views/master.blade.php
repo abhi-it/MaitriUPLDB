@@ -133,6 +133,60 @@
     header .navbar li.nav-item.active a.nav-link {
         color: #292b2c !important
     }
+
+
+    .glow-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    /* padding: var(--badge-padding); */
+    /* border-radius: var(--badge-radius); */
+    /* background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.05)); */
+    position: relative;
+    isolation: isolate; /* keeps glow contained visually */
+    cursor: default;
+    user-select: none;
+  }
+
+  /* The visible pill */
+  .glow-badge__pill {
+  
+  background-color: #18191f;
+  color: #fff;
+  /* box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+    2px 2px 10px #00000080, 2px 2px 3px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080; */
+  border-radius: 29px;
+  padding: 1px 8px;
+  margin: 0 0px;
+  animation: animate 3s linear infinite;
+  text-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
+    0 0 200px #0072ff;
+    font-size: 11px;
+  }
+.glow_badge__pill{
+     animation-delay: 0.1s;
+}
+
+@keyframes animate {
+  0% {
+  background-color: #000000;
+  }
+25% {
+     background-color: #ff0000;
+  }
+  50% {
+     background-color: #0400ff;
+  }
+   75% {
+     background-color: #004d11;
+  }
+  100% {
+   background-color: #57009eff;
+  }
+}
+
     </style>
 
     <script>
@@ -1343,7 +1397,13 @@
 
                             <li class="nav-item {{ request()->is('avedan-karein') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('avedan-karein') }}">
-                                    <span data-hi="आवेदन" data-en="Applications"></span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="glow-badge p-0">
+                                            <!-- <span class="glow-dot" aria-hidden="true"></span> -->
+                                            <span class="glow-badge__pill glowing" role="status" aria-label="New content">New</span>
+                                        </span>
+                                        <span data-hi="आवेदन" data-en="Applications"></span>
+                                    </div>
                                 </a>
                             </li>
 

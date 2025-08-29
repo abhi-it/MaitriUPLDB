@@ -114,6 +114,9 @@ class HomeController extends Controller
 		$expireTime = \Carbon\Carbon::createFromFormat('Y-m-d', $result->end_date, 'Asia/Kolkata')->setTime(23, 59, 59);
 		$currentDateTime = \Carbon\Carbon::parse(now('Asia/Kolkata'))->format('Y-m-d h:i:s');
 
+		$year = Carbon::now()->year;
+		$totalAvedan = Avedan::whereYear('created_at', $year)->count();
+
 		if ($expireTime->gte($currentDateTime)) {
 			$avedanStart = 1;
 			$messsage =  '';
@@ -122,7 +125,7 @@ class HomeController extends Controller
 			$result = Setting::find(2);
 			$messsage =  'Submition of Application has been expired..';
 		}
-		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage'));
+		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage', 'totalAvedan'));
 	}
 
 	public function applicationStatus()

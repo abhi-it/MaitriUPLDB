@@ -511,6 +511,7 @@ Route::get("hierarchy-chart", [App\Http\Controllers\DemandRequestController::cla
 Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
 Route::get("get-all-district", [DemandRequestController::class, 'getDistrictAll'])->name('get-all-district');
 Route::get("get-all-tehsil", [DemandRequestController::class, 'getTehsilAll'])->name('get-all-tehsil');
+Route::get("get-all-tehsil-new", [DemandRequestController::class, 'getTehsilAllNew'])->name('get-all-tehsil-new');
 Route::get("get-all-block", [DemandRequestController::class, 'getBlockAll'])->name('get-all-block');
 Route::get("get-all-aicenter", [DemandRequestController::class, 'getAiCenterAll'])->name('get-all-aicenter');
 

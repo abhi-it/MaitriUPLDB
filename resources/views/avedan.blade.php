@@ -252,9 +252,9 @@
                         <input type="text" class="form-control" id="mother" name="mother" placeholder="माता का नाम"
                             autocomplete="off" value="{{ $result->mother }}">
                     </div>
-
+  
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"><span data-hi="लिंग" data-en="Female"> </span>  </label> <span class="text-danger">*</span>
+                        <label for="inputEmail4"><span data-hi="लिंग" data-en="Gender"> </span>  </label> <span class="text-danger">*</span>
                         <select class="form-control" name="gender" id="gender">
                             <option value="">चुने</option>
                             <option value="पुरुष" {{ $result->gender == 'पुरुष' ? 'selected' : '' }}>पुरुष</option>
@@ -288,12 +288,27 @@
                     </div>
 
 
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="दूरभाष / मोबाइल नंबर" data-en="Telephone / Mobile Number"> </span> </label> <span class="text-danger">*</span>
                         <input maxlength="10" type="text" class="form-control" name="mobile" id="mobile"
                             placeholder="दूरभाष / मोबाइल नंबर" autocomplete="off" value="{{ $result->mobile }}"
                             onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                    </div> -->
+                    
+                    <!-- 29 Aug 2025 Add two field option -->
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4"> <span data-hi="प्राथमिक फोन नंबर" data-en="Primary Phone number"> </span> </label> <span class="text-danger">*</span>
+                        <input maxlength="10" type="text" class="form-control" name="mobile" id="mobile"
+                        placeholder="प्राथमिक फोन नंबर" autocomplete="off" value="{{ $result->mobile }}"
+                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                     </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4"> <span data-hi="वैकल्पिक मोबाइल फोन संख्या" data-en="Alternate Mobile Phone Number"> </span> </label>
+                        <input maxlength="10" type="text" class="form-control" name="alternet_mobile" id="alternet_mobile"
+                        placeholder="वैकल्पिक मोबाइल फोन संख्या" autocomplete="off" value="{{ $result->alternet_mobile }}"
+                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                    </div>
+                    <!-- 29 Aug 2025 Add two field option End-->
 
                     <div class="form-group col-md-6">
                         <label for="inputEmail4"><span data-hi="श्रेणी" data-en="Category"> </span> </label> <span class="text-danger">*</span>
@@ -349,7 +364,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="जनपद" data-en="Janpad"> </span> </label> <span class="text-danger">*</span>
                         <select class="form-control" name="janpad" id="janpad">
                             <option value="">जनपद चुनें </option>
@@ -359,9 +374,40 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div> -->
+
+
+
+                    <!--  {{ $result->district_id == $row->id ? 'selected' : '' }}-->
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label>
+                        <select name="janpad" id="janpad" class="form-control" autofocus>
+                            <option value="">जनपद चुनें </option>
+                            @foreach ($districts as $row)
+                                <option value="{{ $row->id }}">{{ $row->name_hindi }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group col-md-6">
+                        <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> </label>
+                        <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus required>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
+                        <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड"
+                            autofocus>
+
+                        </select>
+                    </div>
+                    <!--  -->
+
+
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="तहसील" data-en="Tehsil"> </span>  </label> <span class="text-danger">*</span>
                             <select class="form-control" name="tehsil" id="tehsil">
                                
@@ -375,15 +421,25 @@
                                
                             </select>
                     
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-6">
                         <label ><span data-hi="ग्राम पंचायत का नाम" data-en="Name of Gram Panchayat"> </span> </label> 
-                                <select class="form-control" name="gram_panchayat_name" id="gram_panchayat_name">
-                               
-                               </select>
+                            <select class="form-control" name="gram_panchayat_name" id="gram_panchayat_name">
+                            
+                            </select>
                     </div>
                     
+                    <!-- 29 Aug 2025 Add filed to Gram Panchayat -->
+                     <div class="form-group col-md-6">
+                        <label >
+                            <span data-hi="ग्राम पंचायत से संबंधित निकटतम पशु चिकित्सालय" data-en="Gram Panchayat Nearest Veterinary Hospital"> </span>
+                        </label> 
+                        <input type="text" class="form-control" name="gram_panchayat_hospital" id="gram_panchayat_hospital"
+                            placeholder="ग्राम पंचायत से संबंधित निकटतम पशु चिकित्सालय" autocomplete="off" value="{{ $result->gram_panchayat_hospital }}">
+                    </div>
+                     <!-- 29 Aug 2025 Add filed to Gram Panchayat -->
+
                     <div class="form-group col-md-6">
                         <label >
                             <span data-hi="पत्र - व्यवहार का पता" data-en="Postal address"> </span>
@@ -400,12 +456,14 @@
                             </select>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <!-- 29 Aug 2025 Comment the code -->
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="एआई सेंटर (पशु चिकित्सा अस्पताल / एलईओ सेंटर)" data-en="AI Centre (Veterinary Hospital / LEO Center)"> </span></label>
                             <select class="form-control" name="ai_center" id="ai_center">
                                
                             </select>
-                    </div>
+                    </div> -->
+
                     <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="पिनकोड" data-en="Pincode"> </span>  </label> <span class="text-danger">*</span>
                         <input maxlength="6" type="text" class="form-control" name="pincode" id="pincode"
@@ -1283,77 +1341,201 @@
     </div>
     <script>
         $(document).ready(function() {
+
             $('#janpad').change(function() {
-                var val = $("#janpad option:selected").val();
-                var text = $("#janpad option:selected").text();
-                console.log('val',val,'text',text)
-                if(val){
-                    $.ajax({
-                        type: "GET",
-                        url: "getAllBlocks",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": val,
-                            "text":text,
-                        },
-                        cache: false,
-                        success: function(data) {
-                            console.log('data',data)
-                            var blocks = data.blocks;
-                            var postoffice = data.postoffice;
-                            var ai_center  =data.ai_center;
-                            var tehsil    =  data.tehsil;
-                            $('#vikas_khand').prop('disabled', false);
-                            $('#vikas_khand').empty();
-                            $('#post_office').prop('disabled', false);
-                            $('#post_office').empty();
-                            $('#ai_center').prop('disabled', false);
-                            $('#ai_center').empty();
-                            $('#tehsil').prop('disabled', false);
-                            $('#tehsil').empty();
-                            if(blocks.length>0){
-                                $('#vikas_khand').append($("<option>-विकास खण्ड चुनें-</option>"));
-                                blocks.forEach(item => {
-                                    $('#vikas_khand').append('<option value="'+item.block_name+'">' + item.block_name + '</option>')
+                $('#vikas_khand').prop('disabled', false);
+                $('#vikas_khand').empty();
+                $('#ai_center').prop('disabled', false);
+                $('#ai_center').empty();
+                $('#tehsil').prop('disabled', false);
+                $('#tehsil').empty();
+                 $('#post_office').empty();
+            
+                // var mandal = $("#district option:selected").text();
+                var janpad = $("#janpad option:selected").text();
+                var janpad_id = $("#janpad option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    url: "get-all-tehsil-new",
+                    data: {
+                        // "mandal": mandal,
+                        "janpad": janpad,
+                        "janpad_id": janpad_id,
+                    },
+                    cache: false,
+                    success: function(data) {
+                        var getTehsil = data.data;
+                        var gramPanchayat = data.gram_panchayat;
+                        if (getTehsil && getTehsil.length > 0) {
+                            $('#tehsil').append(`<option value="">Select Tehsil</option>`);
+                            getTehsil.forEach(item => {
+                                if (item.tehsil && item.tehsil.trim() !== '') {
+                                    $('#tehsil').append(
+                                        `<option value="${item.tehsil}">${item.tehsil}</option>`);
+                                }
+                            });
+
+                            if(gramPanchayat && gramPanchayat.length > 0){
+                                $('#post_office').append(`<option value="">Select Post Office</option>`);
+                                gramPanchayat.forEach(item => {
+                                    if (item.post_office && item.post_office.trim() !== '') {
+                                        $('#post_office').append(
+                                            `<option value="${item.post_office}">${item.post_office}</option>`);
+                                    }
                                 });
                             }else{
-                                $('#vikas_khand').append($("<option value=''>-Data not found.-</option>"));
+                                $('#post_office').append('<option value="">No Record</option>');
                             }
 
-                            if(postoffice.length>0){
-                                $('#post_office').append($("<option value=''>-पोस्ट ऑफिस चुनें-</option>"));
-                                postoffice.forEach(item => {
-                                    $('#post_office').append('<option value="'+item.post_office+'">' + item.post_office + '</option>')
-                                });
-                            }else{
-                                $('#post_office').append($("<option value=''>-Data not found.-</option>"));
-                            }
-                            if(ai_center.length>0){
-                                $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
-                                ai_center.forEach(item => {
-                                    $('#ai_center').append('<option value="'+item.name+'">' + item.name + '</option>')
-                                });
-                            }else{
-                                $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
-                            }
-                            if(tehsil.length>0){
-                                $('#tehsil').append($("<option value=''>-तहसील चुनें-</option>"));
-                                tehsil.forEach(item => {
-                                    $('#tehsil').append('<option value="'+item.tehsil+'">' + item.tehsil + '</option>')
-                                });
-                            }else{
-                                $('#tehsil').append($("<option value=''>-Data not found.-</option>"));
-                            }
+                        } else {
+                            $('#tehsil').append('<option value="">-Data not found.-</option>');
                         }
-                    });
-                }
+                    }
+                });
             });
+            
+            $('#tehsil').change(function() {
+                $('#vikas_khand').prop('disabled', false);
+                $('#vikas_khand').empty();
+                $('#ai_center').prop('disabled', false);
+                $('#ai_center').empty();
+                var tehsil = $(this).val();
+                var mandal = $("#district option:selected").text();
+                var janpad = $("#mandal option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    url: "get-all-block",
+                    data: {
+                        "tehsil": tehsil,
+                        "mandal": mandal,
+                        "janpad": janpad,
+                    },
+                    cache: false,
+                    success: function(data) {
+                        var getBlock = data.data;
+                        if (getBlock && getBlock.length > 0) {
+                            $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
+                            getBlock.forEach(item => {
+                                if (item.block && item.block.trim() !== '') {
+                                    $('#vikas_khand').append(
+                                        `<option value="${item.block}">${item.block}</option>`);
+                                }
+                            });
+                        } else {
+                            $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+                        }
+                    }
+                });
+            });
+            
+            // $('#vikas_khand').change(function() {
+            //     $('#ai_center').prop('disabled', false);
+            //     var block = $(this).val();
+            //     var tehsil = $('#tehsil').val();
+            //     var mandal = $("#district option:selected").text();
+            //     var janpad = $("#mandal option:selected").val();
+            //     $('#ai_center').empty();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "get-all-aicenter",
+            //         data: {
+            //             "block": block,
+            //             "tehsil": tehsil,
+            //             "mandal": mandal,
+            //             "janpad": janpad,
+            //         },
+            //         cache: false,
+            //         success: function(data) {
+            //             var getAiCenter = data.data;
+            //             if (getAiCenter && getAiCenter.length > 0) {
+            //                 $('#ai_center').append(`<option value="">Select AI Center</option>`);
+            //                 getAiCenter.forEach(item => {
+            //                     if (item.center_name && item.center_name.trim() !== '') {
+            //                         $('#ai_center').append(
+            //                             `<option value="${item.center_name}">${item.center_name}</option>`
+            //                         );
+            //                     }
+            //                 });
+            //             } else {
+            //                 $('#ai_center').append('<option value="">-Data not found.-</option>');
+            //             }
+            //         }
+            //     });
+            // });
+
+            // $('#janpad').change(function() {
+            //     var val = $("#janpad option:selected").val();
+            //     var text = $("#janpad option:selected").text();
+            //     console.log('val',val,'text',text)
+            //     if(val){
+            //         $.ajax({
+            //             type: "GET",
+            //             url: "getAllBlocks",
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             data: {
+            //                 "_token": "{{ csrf_token() }}",
+            //                 "id": val,
+            //                 "text":text,
+            //             },
+            //             cache: false,
+            //             success: function(data) {
+            //                 console.log('data',data)
+            //                 var blocks = data.blocks;
+            //                 var postoffice = data.postoffice;
+            //                 var ai_center  =data.ai_center;
+            //                 var tehsil    =  data.tehsil;
+            //                 $('#vikas_khand').prop('disabled', false);
+            //                 $('#vikas_khand').empty();
+            //                 $('#post_office').prop('disabled', false);
+            //                 $('#post_office').empty();
+            //                 $('#ai_center').prop('disabled', false);
+            //                 $('#ai_center').empty();
+            //                 $('#tehsil').prop('disabled', false);
+            //                 $('#tehsil').empty();
+            //                 if(blocks.length>0){
+            //                     $('#vikas_khand').append($("<option>-विकास खण्ड चुनें-</option>"));
+            //                     blocks.forEach(item => {
+            //                         $('#vikas_khand').append('<option value="'+item.block_name+'">' + item.block_name + '</option>')
+            //                     });
+            //                 }else{
+            //                     $('#vikas_khand').append($("<option value=''>-Data not found.-</option>"));
+            //                 }
+
+            //                 if(postoffice.length>0){
+            //                     $('#post_office').append($("<option value=''>-पोस्ट ऑफिस चुनें-</option>"));
+            //                     postoffice.forEach(item => {
+            //                         $('#post_office').append('<option value="'+item.post_office+'">' + item.post_office + '</option>')
+            //                     });
+            //                 }else{
+            //                     $('#post_office').append($("<option value=''>-Data not found.-</option>"));
+            //                 }
+            //                 if(ai_center.length>0){
+            //                     $('#ai_center').append($("<option value=''>-एआई सेंटर चुनें-</option>"));
+            //                     ai_center.forEach(item => {
+            //                         $('#ai_center').append('<option value="'+item.name+'">' + item.name + '</option>')
+            //                     });
+            //                 }else{
+            //                     $('#ai_center').append($("<option value=''>-Data not found.-</option>"));
+            //                 }
+            //                 if(tehsil.length>0){
+            //                     $('#tehsil').append($("<option value=''>-तहसील चुनें-</option>"));
+            //                     tehsil.forEach(item => {
+            //                         $('#tehsil').append('<option value="'+item.tehsil+'">' + item.tehsil + '</option>')
+            //                     });
+            //                 }else{
+            //                     $('#tehsil').append($("<option value=''>-Data not found.-</option>"));
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
 
             $('#vikas_khand').change(function() {
                 var val = $("#vikas_khand option:selected").val();
+                var name = $("#vikas_khand option:selected").val();
+                var janpad_id = $("#janpad option:selected").val();
                 console.log('vikas_khand',val)
                 if(val){
                     $.ajax({
@@ -1364,7 +1546,9 @@
                         },
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            "id": val
+                            "id": val,
+                            "janpad_id": janpad_id,
+                            "name": name,
                         },
                         cache: false,
                         success: function(data) {

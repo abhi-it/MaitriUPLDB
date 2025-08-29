@@ -84,7 +84,7 @@
                         <th><span data-hi="अभ्यर्थी का स्वत: मूल्यांकन अंक"
                                 data-en="Candidate's Self-Assessment Marks"></span>
                         </th>
-                        <th> <span data-hi="दिनांक" data-en="Date"></span> </th>
+                        <th> <span data-hi="आवेदन दिनांक" data-en="Avedan Date"></span> </th>
                         <th> <span data-hi="देखें" data-en="View"></span> </th>
                         <th><span data-hi="स्थिति" data-en="Status"></span> </th>
                     </tr>
