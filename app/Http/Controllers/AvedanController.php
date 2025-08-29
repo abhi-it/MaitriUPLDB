@@ -73,6 +73,57 @@ class AvedanController extends Controller
         return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
     }
 
+    public function test()
+    {
+		/*-----------Start Check Start Avedan----------------------*/
+        
+		date_default_timezone_set("Asia/Kolkata");
+		$result = Setting::find(2);
+		$start_date = \Carbon\Carbon::parse($result->start_date)->format('Y-m-d');
+		$end_date = \Carbon\Carbon::parse($result->end_date)->format('Y-m-d');
+		$current_date = \Carbon\Carbon::parse(now())->format('Y-m-d h:i:s'); ;
+		$expireTime = date('Y-m-d h:i:s', strtotime($end_date. ' + 18 hours')); 
+		$expireDateTime = strtotime($expireTime);
+		$currentDateTime = strtotime($current_date);
+		
+        $avedanStart = 1;
+		// if($currentDateTime<=$expireDateTime)
+		// {
+			
+		// }
+        // else{
+			
+		// 	return redirect('/avedan-karein');
+		// }
+		
+		/*-----------End Check Start Avedan----------------------*/
+		
+		
+		// if(\Session::has('applicationNumber'))
+		// {
+		// 	$applicationNumber = \Session::get('applicationNumber');
+		// 	$result = Avedantemps::where('applicationNumber', '=', $applicationNumber)->first();
+		// 	//echo '<pre>';print_r($result);exit;
+		// }else{
+			
+		// 	$result = new Avedantemps();
+		// }
+		
+		// if(empty($result))
+		// {
+		// 	$result = new Avedantemps();
+		// }
+
+		//echo '<pre>';print_r($result);exit;
+		
+		$setting = Setting::find(1);
+		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
+		//echo '<pre>';print_r($setting->start_date);exit;
+		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+        $banks      =  Banks::get();
+        return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -119,7 +119,7 @@ Route::get('/yojna', [App\Http\Controllers\HomeController::class, 'yojna'])->nam
 Route::get('/term-condition', [App\Http\Controllers\HomeController::class, 'termCondition'])->name('termCondition');
 Route::get('/avedan-karein', [App\Http\Controllers\HomeController::class, 'avedanKarein'])->name('avedanKarein');
 //For testing
-Route::get("testing-avedan", [App\Http\Controllers\HomeController::class, 'testing_avedan']);
+Route::get("testing-avedan", [AvedanController::class, 'test']);
 
 Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'eventDetails'])->name('eventdetails');
 
