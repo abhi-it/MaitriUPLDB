@@ -233,7 +233,7 @@ class AvedanController extends Controller
 		Avedantemps::updateOrCreate([
 		'applicationNumber'   => $applicationNumber,
 		],[
-			'applicationNumber' => $applicationNumber,
+			'applicationNumber' => $applicationNumber, 
 			't_and_c' => $request->get('tc'),
             'applicant_name' => $request->get('applicant_name'),
             'fname' => $request->get('fname'),
@@ -251,6 +251,7 @@ class AvedanController extends Controller
             'gram_panchayat_name' => $request->get('gram_panchayat_name'),
             'vikas_khand' => $request->get('vikas_khand'),
             'district_id' => $request->get('janpad'),
+            'gram_panchayat_hospital' => $request->get('gram_panchayat_hospital'),
             'letter_address' => $request->get('letter_address'),
             'email' => $request->get('email'),
             'applicant_photo' => $applicant_photo,
@@ -613,6 +614,7 @@ class AvedanController extends Controller
             'email' => $request->get('email'),
             'applicant_photo' => $applicant_photo,
             'signature' => $signature,
+            'gram_panchayat_hospital' => $request->get('gram_panchayat_hospital'),
             'high_board_name' => $request->get('high_board_name'),
             'high_passing_year' => $request->get('high_passing_year'),
             'high_marks' => $request->get('high_marks'),
