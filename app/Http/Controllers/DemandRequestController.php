@@ -12,6 +12,7 @@ use App\Models\Institute;
 use App\Helpers\TranslateTextHelper;
 use App\Models\DemandRequest;
 use App\Exports\DemandRequestExport;
+use App\Models\Postoffice;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -60,6 +61,25 @@ class DemandRequestController extends Controller{
                         ->get();
         return \Response::json(['status'=>'success','message'=>'Get all tehsil successfully!','data'=>$getTeshil],200);
     }
+
+
+    public function getTehsilAllNew(Request $request){
+        // $mandal = $request->mandal;
+        $janpad = $request->janpad;
+        $janpad_id = $request->janpad_id;
+        $getTeshil =  Manganurodhdata::select('tehsil')
+                        // ->where('mandal_name', 'LIKE', $mandal)
+                        ->where('janpad_name', 'LIKE', $janpad)
+                        ->where('status', 0)
+                        ->groupBy('tehsil')
+                        ->get();
+        
+        $postoffice = Postoffice::where(['dis_id'=> $janpad_id])->get();
+        
+        
+        return \Response::json(['status'=>'success','message'=>'Get all tehsil successfully!','data'=>$getTeshil, 'gram_panchayat' => $postoffice],200);
+    }
+
 
     public function getBlockAll(Request $request){
         $tehsil = $request->tehsil;

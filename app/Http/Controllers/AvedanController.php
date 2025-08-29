@@ -240,6 +240,7 @@ class AvedanController extends Controller
             'mother' => $request->get('mother'),
             'dob' => $dob,
             'mobile' => $request->get('mobile'),
+            'alternet_mobile' => $request->get('alternet_mobile'),
 			'gender' => $request->get('gender'),
 			'address_type' => $request->get('address_type'),
 			'post_office' => $request->get('post_office'),
@@ -312,36 +313,37 @@ class AvedanController extends Controller
 		/*-------Start Validation here----------------------------*/
         
         $request->validate([
-            'applicant_name' => 'required',
-            'fname' => 'required',
-            'mother' => 'required',
-            'dob' => 'required',
-            'mobile' => 'required',
-			'gender' => 'required',
-			'address_type' => 'required',
-			'pincode' => 'required',
-            'category' => 'required',
-            'permanent_address' => 'required',
-            'permanent_address_proof' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            'vikas_khand' => 'required',
+            'applicant_name'            => 'required',
+            'fname'                     => 'required',
+            'mother'                    => 'required',
+            'dob'                       => 'required',
+            'mobile'                    => 'required',
+			'gender'                    => 'required',
+			'address_type'              => 'required',
+			'pincode'                   => 'required',
+            'category'                  => 'required',
+            'permanent_address'         => 'required',
+            'permanent_address_proof'   => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'vikas_khand'               => 'required',
             'janpad' => 'required',
             //'email' => 'required',
-            'applicant_photo' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:20000',
-            'signature' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:20000',
+            'applicant_photo' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'signature' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
             'high_board_name' => 'required',
             'high_passing_year' => 'required',
             'high_marks' => 'required',
             'high_total_marks' => 'required',
-            //'high_percentage' => 'required',
-            'high_marksheet' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            //'high_certificate' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            //'inter_board_name' => 'required',
-            //'inter_passing_year' => 'required',
-            //'inter_marks' => 'required',
-            //'inter_total_marks' => 'required',
-            //'inter_percentage' => 'required',
-            //'inter_marksheet' => 'required',
-            //'inter_certificate' => 'required',
+            'high_percentage' => 'required',
+            'high_marksheet' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'high_certificate' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
+
+            'inter_board_name' => 'required',
+            'inter_passing_year' => 'required',
+            'inter_marks' => 'required',
+            'inter_total_marks' => 'required',
+            'inter_percentage' => 'required',
+            'inter_marksheet' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
+            'inter_certificate' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
             'training_adopted' => 'required',
             //'training_certificate' => 'required',
             //'training_certificate_period_in_month' => 'required',
@@ -350,12 +352,12 @@ class AvedanController extends Controller
             //'AIkit' => 'required',
             //'id_upload' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
             //'caste_certificate' => 'required',
-            //'health_certificate' => 'required',
+            'health_certificate' => 'required',
             'nationality' => 'required',
-            'graduation_marksheet' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            'graduation_certificate' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            'postgraduation_marksheet' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
-            'postgraduation_certificate' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
+            'graduation_marksheet' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'graduation_certificate' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'postgraduation_marksheet' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
+            'postgraduation_certificate' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
 
             ], [
                 'applicant_name.required' => 'आवेदक का नाम डालिये',
@@ -372,12 +374,25 @@ class AvedanController extends Controller
                 'pincode.required' => 'पिनकोड डालिये',
                 'applicant_photo.required' => 'आवेदक की फोटो अपलोड कीजिए',
                 'signature.required' => 'आवेदक का हस्ताक्षर अपलोड कीजिए',
+
                 'high_board_name.required' => 'बोर्ड का नाम डालिये',
                 'high_passing_year.required' => 'उत्तीर्ण वर्ष डालिये',
                 'high_marks.required' => 'प्राप्तांक डालिये',
                 'high_total_marks.required' => 'पूर्णांक डालिये',
                 'high_marksheet.required' => 'हाई स्कूल अंकतालिका अपलोड करें',
                 'high_certificate.required' => 'हाई स्कूल प्रमाण-पत्र अपलोड करें',
+
+                'inter_board_name.required' => 'बोर्ड का नाम डालिये',
+                'inter_passing_year.required' => 'उत्तीर्ण वर्ष डालिये',
+                'inter_marks.required' => 'प्राप्तांक डालिये',
+                'inter_total_marks.required' => 'पूर्णांक डालिये',
+                'inter_marksheet.required' => 'हाई स्कूल अंकतालिका अपलोड करें',
+                'inter_certificate.required' => 'हाई स्कूल प्रमाण-पत्र अपलोड करें',
+
+
+                'health_certificate.required' => 'स्वस्थता प्रमाणपत्र अपलोड करें',
+
+
                 'training_adopted.required' => 'यदि पूर्व में प्राइवेट कृत्रिम गर्भाधान कार्यकर्त्ता के सम्बन्ध मै प्रशिक्षण प्राप्त किया है तो योजनान्तर्गत जारी प्रमाण-पत्र चुनें',
                 //'id_upload.required' => 'जाति प्रमाण अपलोड कीजिए',
                 'nationality.required' => 'राष्ट्रीयता चुनें',
@@ -582,6 +597,7 @@ class AvedanController extends Controller
             'mother' => $request->get('mother'),
             'dob' => date('Y-m-d', strtotime($request->get('dob'))),
             'mobile' => $request->get('mobile'),
+            'alternet_mobile' => $request->get('alternet_mobile'),
 			'gender' => $request->get('gender'),
 			'address_type' => $request->get('address_type'),
 			'post_office' => $request->get('post_office'),
@@ -751,8 +767,10 @@ class AvedanController extends Controller
     }
 
     public function getAllGramPanchayat(Request $request){
-        $id    = Block::where(['block_name'=>$request->id])->select('id')->pluck('id')->first();
-        $data  = Grampanchayat::where(['block_id'=>$id])->get();
+        $id    = Block::where(['block_hindi'=> $request->name ])->select('id')->pluck('id')->first();
+
+
+        $data  = Grampanchayat::where(['dis_id'=>$request->janpad_id])->get();
         return $data;
 
     }
