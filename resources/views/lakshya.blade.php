@@ -5,9 +5,9 @@ use App\Models\Districts;
 @endphp
 <div class="container main-div py-5" style="background-color:white; height: 100%;">
     <!--First row Start -->
-	<h3 style="margin-top:10px;text-align: center; font-weight:bold;">Target</h3>
+	<h3 style="margin-top:10px;text-align: center; font-weight:bold;"><span data-hi="लक्ष्य" data-en="Target"></span></h3>
  <h4 style="margin-top:10px;text-align: center; font-weight:bold;">
-	<span data-hi="राष्ट्रीय गोकुल मिशन अंतर्गत मैत्री प्रशिक्षण हेतु जनपदवार लक्ष्य" data-en="District wise target for maitri training under National Gokul Mission"></span>
+	<span data-hi="जिला प्रशासकों द्वारा ज़िलेवार चयनित मैत्री" data-en="Districtwise Selected Maitris by District Admins"></span>
  	<br><br> </h4>
 @if(session()->get('success'))
   <div class="alert alert-success">
