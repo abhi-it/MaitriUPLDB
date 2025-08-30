@@ -41,6 +41,7 @@ class FarmerController extends Controller{
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'MobileNumber'    => 'required|string|max:15',
+            'AlternateMobile' => 'required|string|max:15',
             'district_id'     => 'required|string',
             'division_id'     => 'nullable|integer',
             'animal_type'     => 'nullable|array',
@@ -69,6 +70,7 @@ class FarmerController extends Controller{
         $user->pincode        = $request->pincode;
         $user->block          = $request->block;
         $user->tehsil         = $request->tehsil;
+        $mairtiUser->AlternateMobile   = $request->AlternateMobile;
         $user->save();
 
         $uid = $user->id;

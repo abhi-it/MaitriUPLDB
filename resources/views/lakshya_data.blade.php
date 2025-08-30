@@ -8,7 +8,7 @@ use App\Models\Districts;
 	<h3 style="margin-top:10px;text-align: center; font-weight:bold;">Target</h3>
  <h4 style="margin-top:10px;text-align: center; font-weight:bold;">
 	<span data-hi="राष्ट्रीय गोकुल मिशन अंतर्गत मैत्री प्रशिक्षण हेतु जनपदवार लक्ष्य" data-en="District wise target for maitri training under National Gokul Mission"></span>
- 	<br><br> </h4>
+ 	<br><br> <span>Year - {{ $year }} </span></h4>
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  
@@ -16,45 +16,6 @@ use App\Models\Districts;
 @endif
 
 <div class="row">
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2025 - 2026</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2025-2026']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	 <div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2024 - 2025</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2024-2025']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2023 - 2024</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2023-2024']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2022 - 2023</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2022-2023']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!------Summary Page Start---------------->
-{{--<div class="row">
 		<table class="table table-striped  table-responsive table-bordered">
 			<thead>
 		<tr>
@@ -112,7 +73,7 @@ use App\Models\Districts;
 		</tr>
 		</tbody>
 		</table>
-</div>--}}
+</div>
 <!------Summary Page End---------------->
      
         

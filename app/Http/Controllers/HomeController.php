@@ -8,6 +8,7 @@ use App\Models\Content;
 use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\Avedan;
+use App\Models\User;
 use App\Models\Rejectcomment;
 use File;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\SemanrRquests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class HomeController extends Controller
 {
@@ -54,6 +56,14 @@ class HomeController extends Controller
 	{
 		$divisions = Divisions::orderBy('name_eng', 'ASC')->get();
 		return view('lakshya', compact('divisions'));
+	}
+
+	public function lakshya_data(Request $request)
+	{
+		$year = $request->input('year');
+		$divisions = Divisions::orderBy('name_eng', 'ASC')->get();
+
+		return view('lakshya_data', compact('divisions', 'year'));
 	}
 
 	public function yojna()
@@ -307,4 +317,59 @@ class HomeController extends Controller
 		return view('upload-shapatpatra');
 
 	}
+
+	public function search(Request $request)
+	{
+		$query = $request->get('q');
+
+		if (!$query) {
+			return redirect()->back()->with('error', 'Please enter a search term');
+		}
+
+		$user = Auth::user();
+
+		$allRoutes = collect(\Route::getRoutes())->map(function ($route) {
+			return [
+				'uri'        => $route->uri(),
+				'name'       => $route->getName(),
+				'methods'    => $route->methods(),
+				'action'     => $route->getActionName(),
+				'middleware' => $route->gatherMiddleware(),
+				'prefix'     => $route->getPrefix(),
+			];
+		})->filter(function ($route) {
+			return !str_starts_with($route['uri'], 'api');
+		});
+
+		$matchedRoutes = $allRoutes->filter(function ($route) use ($query) {
+			return in_array('GET', $route['methods']) &&
+				!preg_match('/\{.*\}/', $route['uri']) && 
+				(
+					str_contains(strtolower($route['uri']), strtolower($query)) ||
+					str_contains(strtolower($route['name'] ?? ''), strtolower($query))
+				);
+		});
+
+		if (!$user) {
+			$matchedRoutes = $matchedRoutes->filter(function ($route) {
+				return !collect($route['middleware'])->contains(function ($m) {
+					return str_contains($m, 'auth');
+				});
+			});
+		}
+
+		$results = $matchedRoutes->map(function ($route) {
+			return [
+				'title'   => ucfirst(str_replace(['-', '/'], ' ', $route['uri'])),
+				'excerpt' => "Accessible page",
+				'link'    => url($route['uri']),
+			];
+		});
+
+		return view('search', [
+			'query'   => $query,
+			'results' => $results
+		]);
+	}
+
 }

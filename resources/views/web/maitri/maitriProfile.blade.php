@@ -70,6 +70,14 @@
                     </div>
 
                     <div class="form-group col-md-4">
+                        <label for="AlternateMobile">
+                            <span>वैकल्पिक मोबाइल नंबर</span>
+                        </label>
+                        <input type="number" class="form-control" required id="AlternateMobile" name="AlternateMobile"
+                            value="{{ $data->AlternateMobile ?? '' }}" placeholder="वैकल्पिक मोबाइल नंबर" autocomplete="off">
+                    </div>
+
+                    <div class="form-group col-md-4">
                         <label for="gender"> <span>लिंग</span></label>
                         <select class="form-control" name="gender" required id="gender">
                             <option value="">एक का चयन करें</option>
