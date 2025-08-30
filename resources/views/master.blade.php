@@ -422,6 +422,7 @@
                     maxlength: 10,
 
                 },
+                address_number: "required",
                 address_type: "required",
                 // post_office: "required",
                 pincode: "required",
@@ -430,6 +431,10 @@
                 // gram_panchayat_name: "required",
                 vikas_khand: "required",
                 janpad: "required",
+                bank_name: "required",
+                account_number: "required",
+                ifsc_code: "required",
+                pfms: "required",
                 // letter_address: "required",
                 high_board_name: "required",
                 high_passing_year: "required",
@@ -451,6 +456,7 @@
 
 
                 "permanent_address_proof": {
+                    required: true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
                     checkFileSize: 2097152,
                 },
@@ -505,6 +511,7 @@
                 },
 
                 "training_certificate": {
+                    required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
                     checkFileSize: 2097152,
                 },
