@@ -358,7 +358,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="स्थायी पता का प्रमाण-पत्र अपलोड करें " data-en="Upload Certificate of Permanent Address"> </span>
                        </label> <small
-                            style="color:red;">Note: JPG, JPEG, PNG files only (Max. 100 KB)</small>
+                            style="color:red;">Note: JPG, JPEG, PNG files only (Max. 2 MB)</small>
                         <input type="file" class="form-control" name="permanent_address_proof"
                             id="permanent_address_proof" autocomplete="off">
                     </div>
@@ -380,7 +380,7 @@
 
                     <!--  {{ $result->district_id == $row->id ? 'selected' : '' }}-->
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> </label>
+                        <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> <span class="text-danger">*</span></label>
                         <select name="janpad" id="janpad" class="form-control" autofocus>
                             <option value="">जनपद चुनें </option>
                             @foreach ($districts as $row)
@@ -391,14 +391,14 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> </label>
+                        <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> <span class="text-danger">*</span></label>
                         <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus required>
 
                         </select>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> </label>
+                        <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> <span class="text-danger">*</span></label>
                         <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड"
                             autofocus>
 
@@ -478,14 +478,14 @@
                     <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="आवेदक की फोटो" data-en="Applicant's photo"> </span> 
                          </label> <span class="text-danger">*</span> <small
-                            style="color:red;">Note: JPG, JPEG, PNG files only (Max. 20 KB)</small>
+                            style="color:red;">Note: JPG, JPEG, PNG files only (Max. 2 MB)</small>
                         <input type="file" class="form-control" name="applicant_photo" id="applicant_photo"
                             placeholder="आवेदक की फोटो">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="inputPassword4"><span data-hi="आवेदक का हस्ताक्षर" data-en="Applicant's Signature"> </span>   </label> <span class="text-danger">*</span> <small
-                            style="color:red;">Note: JPG, JPEG, PNG only (Max. 20 KB)</small>
+                            style="color:red;">Note: JPG, JPEG, PNG only (Max. 2 MB)</small>
                         <input type="file" class="form-control" name="signature" id="signature"
                             placeholder="आवेदक  का हस्ताक्षर">
                     </div>
@@ -497,7 +497,7 @@
                 <h3><span data-hi="शैक्षिक योग्यता व अन्य विवरण" data-en="Educational Qualification and other details"> </span> 
                     <div class=" pull-right">
                         <small style="color:red;font-size:10px;margin-right: 200px;">Note: JPG, JPEG, PNG files only (Max.
-                            100 KB)</small>
+                            2 MB)</small>
                     </div>
                 </h3>
                 <div class="">
@@ -544,7 +544,7 @@
                             </tr>
 
                             <tr>
-                                <td> <span data-hi="इंटरमीडिएट (विज्ञान वर्ग)" data-en="Intermediate(Science Stream)"> </span>    </td>
+                                <td> <span data-hi="इंटरमीडिएट (विज्ञान वर्ग)" data-en="Intermediate(Science Stream)"> </span> <span class="text-danger">*</span>   </td>
                                 <td>
                                 <input type="text" class="form-control"
                             name="inter_board_name" id="inter_board_name" placeholder="बोर्ड का नाम"
@@ -832,7 +832,7 @@
                         <label for="inputEmail4"><span data-hi="राज्य / केंद्र सरकार द्वारा मान्यता प्राप्त संस्थान से यदि पूर्व में
                             कृत्रिम गर्भाधान के प्रशिक्षण का प्रमाण-पत्र प्राप्त किया हो (प्रमाण - पत्र अपलोड करें)" data-en="If previously obtained certificate of training in artificial insemination from an institute recognized by State / Central Government (Upload certificate)"> </span>   
                         </label>
-                        <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 100 KB)</small>
+                        <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 2 MB)</small>
                         <input type="file" class="form-control" name="training_certificate"
                             id="training_certificate">
                     </div>
@@ -908,15 +908,15 @@
                         <span data-hi="वोटर आई डी कार्ड / आधार कार्ड / पैन कार्ड आदि अन्य फोटो युक्त आईडी जो  निर्वाचन आयोग से अनुमन्य है, में से कोई एक अपलोड करें" data-en="Upload any one of the Voter ID Card / Aadhar Card / PAN Card etc. other photo ID as permitted by the Election Commission"> </span>    
                        </label> <span
                             class="text-danger">*</span> <small style="color:red;">Note: JPG, JPEG, PNG files only (Max.
-                            100 KB)</small>
+                            2 MB)</small>
                         <input type="file" class="form-control" name="id_upload" id="id_upload">
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">
                         <span data-hi="जाति (अनुसूचित जाति) श्रेणी हेतु न्याय अधिकारी द्वारा जारी प्रमाण - पत्र अपलोड करें" data-en="Upload certificate issued by judicial officer for caste (SC) category"> </span>  
-                        </label> <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 100
-                            KB)</small>
+                        </label> <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 2
+                            MB)</small>
                         <input type="file" class="form-control" name="caste_certificate" id="caste_certificate">
                     </div>
 
