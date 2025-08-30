@@ -315,9 +315,7 @@
                     return false;
                 }
             }
-
             return true;
-
         }, "Enter valid marks");
 
 
@@ -424,6 +422,7 @@
                     maxlength: 10,
 
                 },
+                address_number: "required",
                 address_type: "required",
                 // post_office: "required",
                 pincode: "required",
@@ -432,6 +431,10 @@
                 // gram_panchayat_name: "required",
                 vikas_khand: "required",
                 janpad: "required",
+                bank_name: "required",
+                account_number: "required",
+                ifsc_code: "required",
+                pfms: "required",
                 // letter_address: "required",
                 high_board_name: "required",
                 high_passing_year: "required",
@@ -441,71 +444,92 @@
                 },
                 high_total_marks: "required",
                 high_percentage: "required",
+
+                inter_board_name: "required",
+                inter_passing_year: "required",
+                "inter_marks": {
+                    required: true,
+                    verifyInterMarks: true,
+                },
+                inter_total_marks: "required",
+                inter_percentage: "required",
+
+
                 "permanent_address_proof": {
+                    required: true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "applicant_photo": {
                     required: true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 20000,
+                    checkFileSize20KB: 2097152,
                 },
                 "signature": {
                     required: true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 20000,
+                    checkFileSize20KB: 2097152,
                 },
                 "high_marksheet": {
                     required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "high_certificate": {
                     required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
 
                 "inter_marksheet": {
+                    required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152, //100000
                 },
                 "inter_certificate": {
+                    required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
 
                 "graduation_marksheet": {
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "graduation_certificate": {
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
 
                 "postgraduation_marksheet": {
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "postgraduation_certificate": {
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
 
                 "training_certificate": {
+                    required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "id_upload": {
                     required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
+                },
+                "health_certificate": {
+                    required: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 2097152,
                 },
                 "caste_certificate": {
+                    required: true,
                     checkCategory: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 nationality: "required",
                 declaration: "required",
@@ -573,45 +597,50 @@
                 high_marks: "required",
                 high_total_marks: "required",
                 high_percentage: "required",
-                //inter_board_name: "required",
-                //inter_passing_year: "required",
-                //inter_marks: "required",
-                //inter_total_marks: "required",
-                //inter_percentage: "required",
+                inter_board_name: "required",
+                inter_passing_year: "required",
+                inter_marks: "required",
+                inter_total_marks: "required",
+                inter_percentage: "required",
                 "training_certificate": {
                     //required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "id_upload": {
                     //required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
+                },
+                "health_certificate": {
+                    // required: true,
+                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 2097152,
                 },
                 "caste_certificate": {
-                    //required:true,
+                    // required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "high_marksheet": {
                     //required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "high_certificate": {
                     //required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "inter_marksheet": {
                     //required:true,
                     extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 100000,
+                    checkFileSize: 2097152,
                 },
                 "inter_certificate": {
                     //required:true,
-                    //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    //checkFileSize: 100000,
+                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                    checkFileSize: 2097152,
                 },
                 nationality: "required",
                 is_approved: "required",
