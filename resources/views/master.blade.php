@@ -974,9 +974,11 @@
                                     </h6>
                                 </div>
                             </div>
-                            <div class="kumbhlogo">
+                            
+                            {{--<div class="kumbhlogo">
                                 <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
-                            </div>
+                            </div>--}}
+                           
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
@@ -984,11 +986,17 @@
                             <span>Helpline - <a href="tel:1800-309-1938">1800-309-1938</a></span>
                             <span>Email ID - <a href="mailto:upldbte@gmail.com">upldbte@gmail.com </a></span>
                         </div>
-                        <form class="d-flex mt-3" role="search">
+                        {{--<form class="d-flex mt-3" role="search">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-primary" type="submit">
                                 Search</button>
+                        </form> --}}
+
+                        <form class="d-flex mt-3" role="search" action="{{ route('search') }}" method="GET">
+                            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request('q') }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -1617,7 +1625,7 @@
                         <h5>
                             <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>
                         </h5>
-                        <a href="#"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
+                        <a href="https://play.google.com/store/apps/details?id=com.epashu.in"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
                                 width="120px" alt=""></a>
                     </div>
                 </div>

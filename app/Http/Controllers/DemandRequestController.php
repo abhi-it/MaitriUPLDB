@@ -14,11 +14,18 @@ use App\Models\DemandRequest;
 use App\Exports\DemandRequestExport;
 use App\Models\Postoffice;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class DemandRequestController extends Controller{
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        if(!$user) {
+            return redirect("login");
+        }
         $division   = Divisions::get();
         $institute  = Institute::get();
         return view('demand-request',['division'=>$division,'institute'=>$institute]);

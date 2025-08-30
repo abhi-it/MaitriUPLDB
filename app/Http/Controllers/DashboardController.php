@@ -41,7 +41,10 @@ class DashboardController extends Controller
             // Validation failed, handle the error (e.g., return an error response)
             return response()->json(['errors' => $validator->errors()], 400);
         }
-        $this->sessionYear =  optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
+        // $this->sessionYear =  optional(\App\Models\Avedan::latest()->first())->created_at->format('Y');
+        $this->sessionYear = \App\Models\Avedan::latest()->first()?->created_at?->format('Y')
+        ?? now()->format('Y');
+
         // if($request->year){
         //     dd("Hello");
         // }

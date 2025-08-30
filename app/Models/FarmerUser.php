@@ -23,7 +23,7 @@ class FarmerUser extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name','email', 
         'password','user_type','role','gender','pincode','gram_panchayat','post_office','block','tehsil','milk_day','animal_type','otp_login',
-        'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no'
+        'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no','AternateMobile'
     ];
 
     /**
