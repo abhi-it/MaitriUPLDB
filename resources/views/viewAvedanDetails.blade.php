@@ -54,6 +54,11 @@
         <div class="tab1">
             <h3 class="mb-3 fw-bold">आवेदक का विवरण </h3>
             <div class="row formone">
+                @if(!empty($coments))
+                <div class="alert alert-danger btn btn-danger" >
+                     {{ $coments->comments }}
+                </div>
+                @endif
 
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">आवेदक का नाम </label> : {{ $result->applicant_name }}
