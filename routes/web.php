@@ -25,6 +25,7 @@ use App\Http\Controllers\GeoLocationUpdateController;
 use App\Http\Controllers\BroadcastController; 
 use App\Http\Controllers\WebinarController;
 use App\Http\Controllers\DfsController;
+use App\Http\Controllers\VideoGalleryController;
 
 
 
@@ -151,6 +152,14 @@ Route::get('/farmer-login',[App\Http\Controllers\Auth\LoginController::class, 'f
 
 Route::get('/subscribers',[WebinarController::class, 'subscribers'])->name('subscribers');
 Route::get('/search',[App\Http\Controllers\HomeController::class, 'search'])->name('search');
+
+//Video Gallery
+Route::get('/video-gallery', [VideoGalleryController::class, 'index'])->name('video-gallery');
+Route::get('/add-video-gallery', [VideoGalleryController::class, 'create'])->name('add-video-gallery');
+Route::post('/save-video-gallery', [VideoGalleryController::class, 'store'])->name('save-video-gallery');
+Route::get('/edit-video-gallery/{id}', [VideoGalleryController::class, 'edit'])->name('edit-video-gallery');
+Route::post('/update-video-gallery/{id}', [VideoGalleryController::class, 'update'])->name('update-video-gallery');
+Route::post('/delete-video-gallery/{id}', [VideoGalleryController::class, 'delete'])->name('delete-video-gallery');
 
 
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
