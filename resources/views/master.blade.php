@@ -920,6 +920,9 @@
                             <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
                                 <i class="ri-youtube-line ri-lg"></i>
                             </a>
+                            <a href="{{ route('video-gallery') }}">
+                                <i class="ri-question-line ri-lg"></i>
+                            </a>
                         </span>
                         <span class="middle-line">|</span>
                         @if (Route::has('login'))
@@ -1240,6 +1243,11 @@
                             <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
                                     <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
+                                <a class="nav-link" href="{{ url('demandRequests') }}">
+                                    <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('demand-requests-list') ? 'active' : '' }}">
