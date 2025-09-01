@@ -77,8 +77,8 @@ text-transform: uppercase;
 letter-spacing: .8px;
 color: var(--glow);
 text-shadow:
-0 0 6px var(--glow),
-0 0 12px var(--glow),
+0 0 0px var(--glow),
+0 0 1px var(--glow),
 0 0 20px rgb(234 115 40 / 60%), 
 0 0 36px rgb(234 115 40 / 41%);
 animation: glow-pulse 2.2s ease-in-out infinite;
