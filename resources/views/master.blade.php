@@ -376,16 +376,18 @@
         // new
 
 
-        // $.validator.addMethod("checkDOB", function(value, element) {
-        //     var userinput = document.getElementById("dob").value;
-        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-        //     if (age >= 18) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        //     return true;
-        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+        $.validator.addMethod("checkDOB", function (value, element) {
+            var userinput = document.getElementById("dob").value;
+            var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+
+            // Check if age is between 18 and 40 (inclusive)
+            if (age >= 18 && age <= 40) {
+                return true;
+            }
+            return false;
+
+        }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए"");
+
 
         // $.validator.addMethod("checkDOB", function(value, element) {
         //     var userinput = $(element).val();
@@ -393,12 +395,12 @@
         //     return age >= 18;
         // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
 
-        $.validator.addMethod("checkDOB", function(value, element) {
-            var userinput = $(element).val();
-            var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-            return age >= 18 || age <= 40;
+        // $.validator.addMethod("checkDOB", function(value, element) {
+        //     var userinput = $(element).val();
+        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+        //     return age >= 18 || age <= 40;
 
-        }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
+        // }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
 
 
 
