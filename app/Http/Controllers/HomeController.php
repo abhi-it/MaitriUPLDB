@@ -140,26 +140,32 @@ class HomeController extends Controller
 	{
 		date_default_timezone_set("Asia/Kolkata");
 		$result = Setting::find(2);
-		$start_date = \Carbon\Carbon::parse($result->start_date, 'Asia/Kolkata')->format('Y-m-d');
-		$end_date = \Carbon\Carbon::parse($result->end_date, 'Asia/Kolkata')->format('Y-m-d');
-		$current_date = \Carbon\Carbon::parse(now())->format('Y-m-d h:i:s');;
-		$expireTime = \Carbon\Carbon::createFromFormat('Y-m-d', $result->end_date, 'Asia/Kolkata')->setTime(23, 59, 59);
-		$currentDateTime = \Carbon\Carbon::parse(now('Asia/Kolkata'))->format('Y-m-d h:i:s');
 
-		$year = Carbon::now()->year;
+		$start_date = \Carbon\Carbon::parse($result->start_date, 'Asia/Kolkata')->startOfDay();
+		$end_date = \Carbon\Carbon::parse($result->end_date, 'Asia/Kolkata')->endOfDay();
+		$currentDateTime = \Carbon\Carbon::now('Asia/Kolkata');
+
+		$year = \Carbon\Carbon::now()->year;
 		$totalAvedan = Avedan::whereYear('created_at', $year)->count();
 
-		if ($expireTime->gte($currentDateTime)) {
-			$avedanStart = 1;
-			$messsage =  '';
-		} else {
+		if ($currentDateTime->lt($start_date)) {
+
 			$avedanStart = 0;
-			$result = Setting::find(2);
-			// $messsage =  'Submition of Application has been expired..';
-			$messsage =  'Submition of Application will start from: 03-09-2025';
-			$himesssage =  'आवेदन जमा करने की प्रक्रिया शुरू होगी: 03-09-2025';
+			$messsage = 'Submition of Application will start from: ' . $start_date->format('d-m-Y');
+			$himesssage = 'आवेदन जमा करने की प्रक्रिया शुरू होगी: ' . $start_date->format('d-m-Y');
+		} elseif ($currentDateTime->between($start_date, $end_date)) {
+
+			$avedanStart = 1;
+			$messsage = 'Click here to apply';
+			$himesssage = 'आवेदन करने के लिए यहाँ क्लिक करें';
+		} else {
+
+			$avedanStart = 0;
+			$messsage = 'Submition of Application has been expired..';
+			$himesssage = 'आवेदन जमा करने की प्रक्रिया समाप्त हो चुकी है।';
 		}
-		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage', 'totalAvedan', 'himesssage'));
+
+		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage', 'himesssage', 'totalAvedan'));
 	}
 
 	public function applicationStatus()
