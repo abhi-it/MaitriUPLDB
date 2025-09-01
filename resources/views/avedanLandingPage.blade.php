@@ -156,7 +156,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
                <h3><span data-hi="आवेदन करने के लिए यहाँ क्लिक करें" data-en="Click here to apply"></h3>
             </a>
 			   @else
-						@if($messsage='')
+						@if($messsage !='')
 						<h3 style="color:red;" data-hi="{{$messsage}}" data-en="{{$messsage}}"></h3>
 						@else
 						<h3 style="color:red;">
