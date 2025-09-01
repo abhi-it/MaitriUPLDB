@@ -20,7 +20,7 @@
     <h3 class="text-center fw-bold m-4">
         <span data-hi="आवेदन फॉर्म के लिए सही डेटा" data-en="Correct Data for avedan form"></span>
     </h3>
-    <form method="GET" action="{{ route('correctdata-get') }}" class="row g-2 mb-3">
+    <!-- <form method="GET" action="{{ route('correctdata-get') }}" class="row g-2 mb-3">
         <div class="col-md-3">
             <select name="mandal_name" class="form-select">
                 <option value="" selected>-- Select Mandal --</option>
@@ -65,6 +65,41 @@
 
         <div class="col-md-3 d-flex">
             <button type="submit" class="btn btn-primary me-2">Filter</button>
+            <a href="{{ route('correctdata-get') }}" class="btn btn-secondary">Reset</a>
+        </div>
+    </form> -->
+
+    <form method="GET" action="{{ route('correctdata-get') }}" class="mb-4 row g-3">
+        <div class="col-md-3">
+            <label>Mandal</label>
+            <select name="mandal_name" id="filter_mandal" class="form-select">
+                <option value="">Select Mandal</option>
+                @foreach($mandalNames as $mandal)
+                    @if(!empty($mandal))
+                        <option value="{{ $mandal }}" {{ $selectedMandal == $mandal ? 'selected' : '' }}>
+                            {{ $mandal }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label>Janpad</label>
+            <select name="janpad_name" id="filter_janpad" class="form-select">
+                <option value="">Select Janpad</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label>Tehsil</label>
+            <select name="tehsil" id="filter_tehsil" class="form-select">
+                <option value="">Select Tehsil</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <button class="btn btn-primary mt-4">Search</button>
             <a href="{{ route('correctdata-get') }}" class="btn btn-secondary">Reset</a>
         </div>
     </form>
@@ -234,17 +269,33 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-   
-    $('#mandal_name').change(function() {
+$(document).ready(function () {
+    @if(request('mandal_name'))
+        $('#filter_mandal').val("{{ request('mandal_name') }}").trigger('change');
+
+        setTimeout(function () {
+            $('#janpad_name').val("{{ request('janpad_name') }}").trigger('change');
+        }, 500);
+
+        setTimeout(function () {
+            $('#tehsil').val("{{ request('tehsil') }}").trigger('change');
+        }, 1000);
+    @endif
+});
+</script>
+
+<script>
+
+    $('#mandal_name, #filter_mandal').change(function() {
         var mandal_name = $(this).val();
-        
+        console.log("hello = ",mandal_name);
         if (mandal_name) {
             $.ajax({
                 url: '/get-janpad-names',
                 type: 'GET',
                 data: { mandal_name: mandal_name },
                 success: function(response) {
-                    var janpadSelect = $('#janpad_name');
+                    var janpadSelect = $('#janpad_name, #filter_janpad');
                     janpadSelect.empty();
                     janpadSelect.append('<option value="">Select Janpad</option>');
                     $.each(response, function(index, value) {
@@ -253,12 +304,12 @@
                 }
             });
         } else {
-            $('#janpad_name').empty().append('<option value="">Select Janpad</option>');
+            $('#janpad_name, #filter_janpad').empty().append('<option value="">Select Janpad</option>');
         }
     });
 
-    $('#janpad_name').change(function() {
-        var mandal_name = $('#mandal_name').val();
+    $('#janpad_name, #filter_janpad').change(function() {
+        var mandal_name = $('#mandal_name, #filter_mandal').val();
         var janpad_name = $(this).val();
 
         if (mandal_name && janpad_name) {
@@ -267,7 +318,7 @@
                 type: 'GET',
                 data: { mandal_name: mandal_name, janpad_name: janpad_name },
                 success: function(response) {
-                    var tehsilSelect = $('#tehsil');
+                    var tehsilSelect = $('#tehsil, #filter_tehsil');
                     tehsilSelect.empty();
                     tehsilSelect.append('<option value="">Select Tehsil</option>');
                     $.each(response, function(index, value) {
@@ -276,7 +327,7 @@
                 }
             });
         } else {
-             $('#tehsil').empty().append('<option value="">Select Tehsil</option>');
+             $('#tehsil, #filter_tehsil').empty().append('<option value="">Select Tehsil</option>');
         }
     });
 
@@ -412,6 +463,7 @@
 
 <script>
     $(document).on('click', '.edit-btn', function () {
+      
         let id = $(this).data('id');
         let mandal = $(this).data('mandal');
         let janpad = $(this).data('janpad');

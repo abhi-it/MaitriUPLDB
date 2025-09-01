@@ -52,8 +52,25 @@ font-weight: 600;
 letter-spacing: .2px;
 color: #000;
 }
-
-
+.pill .img-container{
+   width: 30px;
+   height:30px;
+   display: block;
+}
+.pill img{
+   width: 30px;
+    scale: 1;
+       animation: scales 1s linear infinite;
+}
+@keyframes scales {
+   to{
+      scale: 0.8
+   }
+   from{
+      /* opacity: 1; */
+        scale: 1
+   }
+}
 .dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--glow); box-shadow: 0 0 0 .15rem rgba(253,216,53,.25); }
 
 
@@ -94,22 +111,40 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 <div id="maitri-marquee" class="marquee-bar" aria-live="polite" data-deadline="{{ $deadline }}" data-applicants="{{ $totalAvedan }}">
    <div class="marquee-track">
       <div class="marquee-content">
-         <span class="pill">
+        
+        <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="आवेदन बंद होने वाले हैं:" data-en="Applications Closing In:"></span>
-            <span class="countdown" id="countdown-a"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
          </span>
-         <span class="pill" data-hi="अपना अवेदान आज ही यहां जमा करें maitriupldb.in" data-en="Submit your Avedan today at maitriupldb.in"></span>
-         <span class="pill" data-hi="आखिरी दिन तक इंतजार मत करे!" data-en="Don’t wait till the last day!"></span>
+
+         <span class="pill" >
+            <span class="img-contaner">
+            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            </span>
+            <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
+            <span class="countdown" id="countdown-a"></span>
+             <span class="img-contaner">
+            <span data-hi="दिन शेष हैं" data-en="days left"></span>
+            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+         </span>
       </div>
       <div class="marquee-content" aria-hidden="true">
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="आवेदन बंद होने वाले हैं:" data-en="Applications Closing In:"></span>
-            <span class="countdown" id="countdown-b"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
          </span>
-         <span class="pill" data-hi="अपना अवेदान आज ही यहां जमा करें maitriupldb.in" data-en="Submit your Avedan today at maitriupldb.in"></span>
-         <span class="pill" data-hi="आखिरी दिन तक इंतजार मत करे!" data-en="Don’t wait till the last day!"></span>
+        
+         <span class="pill" >
+            <span class="img-contaner">
+            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            </span>
+            <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
+            <span class="countdown" id="countdown-b"></span>
+             <span class="img-contaner">
+            <span data-hi="दिन शेष हैं" data-en="days left"></span>
+            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+         </span>
+          </span>
       </div>
    </div>
 </div>
@@ -157,12 +192,11 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             </a>
 			   @else
 						@if($messsage !='')
-						<h3 style="color:red; 222" data-hi="आवेदन जमा करने की समय सीमा समाप्त हो गई है" data-en="{{$messsage}}"></h3>
+						<h3 style="color:red;" data-hi="{{$himesssage}}" data-en="{{$messsage}}"></h3>
 						@else
-                     <h3 style="color:red; 1111" >
-                     <span data-hi="आवेदन" data-en="Application">   
+                     <h3 style="color:red;" >
+                     <span data-hi="आवेदन जमा करने की प्रक्रिया शुरू होगी" data-en="Submition of Application will start from">   
                      {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
-                     <span data-hi="से प्रारम्भ होंगे |"  data-en="will start from.">   
                      </h3>
 						@endif
 				@endif

@@ -33,7 +33,12 @@ class CorrectDataController extends Controller
        
         $mandalNames = Correctdata::groupBy('mandal_name')->pluck('mandal_name');
         $janpadNames = Correctdata::groupBy('janpad_name')->pluck('janpad_name');
-        return view('correctdata.index', compact('data', 'mandalNames', 'janpadNames', 'mandals', 'janpads', 'tehsils'));
+        return view('correctdata.index', compact('data', 'mandalNames', 'janpadNames', 'mandals', 'janpads', 'tehsils'))
+            ->with([
+                'selectedMandal' => $request->mandal_name,
+                'selectedJanpad' => $request->janpad_name,
+                'selectedTehsil' => $request->tehsil,
+            ]);;
     }
 
     public function store(Request $request)
