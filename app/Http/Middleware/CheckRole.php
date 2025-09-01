@@ -177,6 +177,16 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'correctdata-get',
+                'correctdata-store',
+                'correctdata-update',
+                'correctdata-destroy',
+                'correctdata-getJanpadNames',
+                'correctdata-getBlockNames',
+                'correctdata-getTehsilNames',
+                'correctdata-storeNewBlock',
+                'correctdata-storeNewTehsil',
+
                 'admin-update-status',
                 'admin-delete-request',
                 'get-farmer-request',
@@ -341,6 +351,16 @@ class CheckRole
             ],
 
             'Superadmin' => [
+                'correctdata-get',
+                'correctdata-store',
+                'correctdata-update',
+                'correctdata-destroy',
+                'correctdata-getJanpadNames',
+                'correctdata-getBlockNames',
+                'correctdata-getTehsilNames',
+                'correctdata-storeNewBlock',
+                'correctdata-storeNewTehsil',
+
                 'view-dfs',
                 'create-dfs',
                 'save-dfs-data',
