@@ -385,7 +385,7 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
                             <img class="w-100" src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
-                            <span data-hi="श्री के रविंद्र नायक, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
+                            <span data-hi="श्री अमित कुमार घोष, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-6">

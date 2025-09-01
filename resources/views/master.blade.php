@@ -795,11 +795,8 @@
                         $(".loader").hide();
                         //alert(response);
                     }
-
                 });
             }
-
-
         });
 
         $('#myTable').DataTable({
