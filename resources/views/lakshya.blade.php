@@ -8,53 +8,49 @@ use App\Models\Districts;
 	<h3 style="margin-top:10px;text-align: center; font-weight:bold;"><span data-hi="लक्ष्य" data-en="Target"></span></h3>
  <h4 style="margin-top:10px;text-align: center; font-weight:bold;">
 	<span data-hi="जिला प्रशासकों द्वारा ज़िलेवार चयनित मैत्री" data-en="Districtwise Selected Maitris by District Admins"></span>
- 	<br><br> </h4>
+ 	<br><br> <span>Year - {{ $year }} </span></h4>
+
+	@if(Auth::user() && Auth::user()->role == 'Superadmin')
+	<div class="row mt-3 mb-2">
+		<div class="col-md-12 text-end">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
+				Upload CSV/Excel
+			</button>
+		</div>
+	</div>
+
+	<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="importModalLabel">Import Data</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form action="{{ route('districts.import') }}" method="POST" enctype="multipart/form-data">
+						@csrf
+						<div class="form-group mb-3">
+							<label for="file">Choose File</label>
+							<input type="file" name="file" class="form-control" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Import</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	@endif
+
+
 @if(session()->get('success'))
   <div class="alert alert-success">
       {{ session()->get('success') }}  
   </div>
 @endif
 
-<div class="row">
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2025 - 2026</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2025-2026']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	 <div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2024 - 2025</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2024-2025']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2023 - 2024</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2023-2024']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-		<div class="card text-center">
-			<div class="card-body">
-				<h5 class="card-title">Year 2022 - 2023</h5>
-				<a href="{{ route('lakshya_data', ['year' => '2022-2023']) }}" class="btn btn-primary">View</a>
-			</div>
-		</div>
-	</div>
-</div>
-
 <!------Summary Page Start---------------->
-{{--<div class="row">
+<div class="row">
 		<table class="table table-striped  table-responsive table-bordered">
 			<thead>
 		<tr>
@@ -77,27 +73,25 @@ use App\Models\Districts;
 		$obc=0;
 		?>
 		@foreach($divisions AS $div)
-		<?php $district = Districts::where('division_id','=',$div->id)->where('status','=',1)->get();
-		
-		?>
-		@foreach($district AS $row)
-		<?php 
-		$general+=$row->general_target; 
-		$obc+=$row->obc_target; 
-		$sc+=$row->sc_target;
-		$st+=$row->st_target;  
-		?>
-		<tr>
-			<td><?php echo $i++;?></td>
-			<td>{{$div->name_hindi}}</td>
-			<td>{{$row->name_hindi}}</td>
-			<td>*{{$row->general_target}}</td>
-			<td>*{{$row->obc_target}}</td>
-			<td>*{{$row->sc_target}}</td>
-			<td>*{{$row->st_target}}</td>
-			<td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td>
-		</tr>
-		@endforeach
+			<?php $district = Districts::where('division_id','=', $div->id)->where('status','=',1)->where('year','=', $year)->get(); ?>
+			@foreach($district AS $row)
+			<?php 
+				$general+=$row->general_target; 
+				$obc+=$row->obc_target; 
+				$sc+=$row->sc_target;
+				$st+=$row->st_target;  
+			?>
+			<tr>
+				<td><?php echo $i++;?></td>
+				<td>{{$div->name_hindi}}</td>
+				<td>{{$row->name_hindi}}</td>
+				<td>*{{$row->general_target}}</td>
+				<td>*{{$row->obc_target}}</td>
+				<td>*{{$row->sc_target}}</td>
+				<td>*{{$row->st_target}}</td>
+				<td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td>
+			</tr>
+			@endforeach
 		
 		@endforeach
 		<tr style="font-weight:bold;">
@@ -112,9 +106,52 @@ use App\Models\Districts;
 		</tr>
 		</tbody>
 		</table>
-</div>--}}
+</div>
 <!------Summary Page End---------------->
+
+<div class="row mt-5">
+    @foreach($years as $yr)
+        @if($yr !== $year) {{-- show only other years --}}
+            <div class="col-sm-4 mt-3 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Year {{ $yr }}</h5>
+                        <a href="{{ route('lakshya', ['year' => $yr]) }}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
+</div>
      
+	{{--<div class="row">
+		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
+			<div class="card text-center">
+				<div class="card-body">
+					<h5 class="card-title">Year 2024 - 2025</h5>
+					<a href="{{ route('lakshya_data', ['year' => '2024-2025']) }}" class="btn btn-primary">View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
+			<div class="card text-center">
+				<div class="card-body">
+					<h5 class="card-title">Year 2023 - 2024</h5>
+					<a href="{{ route('lakshya_data', ['year' => '2023-2024']) }}" class="btn btn-primary">View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
+			<div class="card text-center">
+				<div class="card-body">
+					<h5 class="card-title">Year 2022 - 2023</h5>
+					<a href="{{ route('lakshya_data', ['year' => '2022-2023']) }}" class="btn btn-primary">View</a>
+				</div>
+			</div>
+		</div>
+	</div>--}}
         
 		<div><span style="color:red;font-weight:600; font-size:18px;text-align: left;">
 			<span data-hi="नोट:- संख्या समय / परिस्थिति अनुसार परिवर्तनीय है" data-en="Note:- Number is changeable according to time / situation"></span>	

@@ -946,8 +946,10 @@
                             <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
                                 <i class="ri-youtube-line ri-lg"></i>
                             </a>
+                             <span class="middle-line">|</span>
                             <a href="{{ route('video-gallery') }}">
                                 <i class="ri-question-line ri-lg"></i>
+                                <span class="text-black" data-hi="सहायता केंद्र" data-en="Help Center"></span>
                             </a>
                         </span>
                         <span class="middle-line">|</span>
