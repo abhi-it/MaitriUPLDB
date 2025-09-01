@@ -1338,7 +1338,7 @@
                                         <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('correctdata') }}">
-                                        <span data-hi="मांग अनुरोध" data-en="Mang Anurodh"></span>
+                                        <span data-hi="सही डेटा" data-en="Correct Data"></span>
                                     </a>
 
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
@@ -1455,26 +1455,27 @@
                                     </div>
                                 </a>
                             </li>
-                            <!-- Hide 01 Sep 2025 -->
-                            <!-- <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('lakshya') }}">
-                                    <span data-hi="स्वरोजगारी मैत्री की संख्या"
-                                        data-en="Number of self-employed maitri"></span>
-                                </a>
-                            </li> -->
-                            <!-- Hide 01 Sep 2025 -->
-
                             <li class="nav-item {{ request()->is('application-status') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('application-status') }}">
                                     <span data-hi="आवेदन की स्थिति जानिए"
                                         data-en="Know the status of your application"></span>
                                 </a>
                             </li>
+                            
                             <li class="nav-item {{ request()->is('downloads') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('downloads') }}">
                                     <span data-hi="डाउनलोड" data-en="Downlaod"></span>
                                 </a>
                             </li>
+                           
+                            <!-- Hide 01 Sep 2025 -->
+                            <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('lakshya') }}">
+                                    <span data-hi="स्वरोजगारी मैत्री की संख्या"
+                                        data-en="Number of self-employed maitri"></span>
+                                </a>
+                            </li>
+                            <!-- Hide 01 Sep 2025 -->
                             <!-- Hide 01 Sep 2025 -->
                             <!-- <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                                 <a class="nav-link" href="{{ url('demandRequests') }}">
@@ -1512,7 +1513,7 @@
                                 <span data-hi="रिफ्रेशर प्रशिक्षण फॉर्म" data-en="Refresher Training Form"></span>
                             </a>
                             </li> -->
-                            
+
                             <!-- Hide 01 Sep 2025 -->
                             <!-- <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('zonestockform') }}">

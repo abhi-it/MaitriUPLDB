@@ -711,7 +711,8 @@ class DashboardController extends Controller
                     ->get();
             return \Excel::download(new ExportAvedan($data), 'rejected-avedan.xlsx');
         } else {
-            $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
+             $query->leftJoin('rejectcomments', 'avedans.id', '=', 'rejectcomments.application_id');
+            $results = $query->whereYear('avedans.created_at', $this->sessionYear)->paginate(50);
             return view('viewRejectedAvedan', compact('results', 'heading'))->with('year', $this->sessionYear);
         }
     }
