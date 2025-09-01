@@ -63,14 +63,15 @@ class HomeController extends Controller
 	public function lakshya(Request $request)
 	{
 		$year = $request->year;
-		$currentYear = date('Y');
+
+		$currentYear = date('Y') - 1;  
 		$latestYear = $currentYear . '-' . ($currentYear + 1);
 
 		$years = [
 			$latestYear,
 			($currentYear - 1) . '-' . $currentYear,
 			($currentYear - 2) . '-' . ($currentYear - 1),
-			($currentYear - 3) . '-' . ($currentYear - 2),
+			// ($currentYear - 3) . '-' . ($currentYear - 2),
 		];
 
 		$year = $year ?? $latestYear;
@@ -78,6 +79,7 @@ class HomeController extends Controller
 
 		return view('lakshya', compact('divisions', 'year', 'years'));
 	}
+
 
 	public function import(Request $request)
     {

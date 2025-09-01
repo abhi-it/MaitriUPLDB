@@ -27,8 +27,7 @@ class DistrictsImport implements ToModel, WithHeadingRow
 
         $data = [];
         foreach ($years as $year => $target) {
-            // sanitize target: only allow numbers, else default 0
-            $target = is_numeric($target) ? (int) $target : 0;
+             $target = is_numeric($target) ? (int) $target : 0;
 
             $data[] = new Districts([
                 'name_eng'       => $row[3] ?? null,  
