@@ -412,6 +412,20 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post('admin-delete-request', [App\Http\Controllers\AdminInventoryController::class, 'farmerDeleteRequest'])->name('admin-delete-request');
     Route::get('get-farmer-request', [App\Http\Controllers\AdminInventoryController::class, 'getFarmerRequest'])->name('get-farmer-request');
     
+    //Correct data for avedan form "district, teshil, block"
+   
+    Route::get('/correctdata', [App\Http\Controllers\CorrectDataController::class, 'index'])->name('correctdata-get');
+    Route::post('/correctdata', [App\Http\Controllers\CorrectDataController::class, 'store'])->name('correctdata-store');
+    Route::put('/correctdata/{id}', [App\Http\Controllers\CorrectDataController::class, 'update'])->name('correctdata-update');
+    Route::delete('/correctdata/{id}', [App\Http\Controllers\CorrectDataController::class, 'destroy'])->name('correctdata-destroy');
+    Route::get('/get-janpad-names', [App\Http\Controllers\CorrectDataController::class, 'getJanpadNames'])->name('correctdata-getJanpadNames');
+    Route::get('/get-block-names', [App\Http\Controllers\CorrectDataController::class, 'getBlockNames'])->name('correctdata-getBlockNames');
+    Route::get('/get-tehsil-names', [App\Http\Controllers\CorrectDataController::class, 'getTehsilNames'])->name('correctdata-getTehsilNames');
+    Route::post('/store-new-block', [App\Http\Controllers\CorrectDataController::class, 'storeNewBlock'])->name('correctdata-storeNewBlock');
+    Route::post('/store-new-tehsil', [App\Http\Controllers\CorrectDataController::class, 'storeNewTehsil'])->name('correctdata-storeNewTehsil');
+    
+
+
     Route::post('save-events-data/{id?}', [App\Http\Controllers\AdminInventoryController::class, 'storeOrUpdate'])->name('save-events-data');
 
     Route::get('/events/{id}/edit', [App\Http\Controllers\AdminInventoryController::class, 'createOrEdit'])->name('edit-event');
