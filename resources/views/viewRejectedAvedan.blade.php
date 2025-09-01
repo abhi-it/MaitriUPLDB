@@ -54,6 +54,7 @@
                 <th>आवेदक का नाम</th>
                 <th>अभ्यर्थी का स्वत: मूल्यांकन अंक</th>
                 <th>प्रशिक्षणोपरांत ए. आई. किट तथा बायोलोजिकल कन्टेनर प्राप्त किये गये है</th>
+                <th>अस्वीकार आवेदन का विवरण</th>
                 <th>आवेदन दिनांक</th>
                 <th>देखें</th>
                 <th>स्थिति</th>
@@ -74,6 +75,7 @@
                 <td>{{$row->applicant_name}}</td>
                 <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$topper_number}}</a></td>
                 <td>{{$row->AIkit}}</td>
+                <td>{{ $row->comments }}</td>
                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y')}}</td>
                 <td>
                     <a href="{{url('view-Avedan-details')}}/{{$row->id}}">विवरण देखें</a>
