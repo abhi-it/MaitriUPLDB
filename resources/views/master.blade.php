@@ -387,11 +387,18 @@
         //     return true;
         // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
 
+        // $.validator.addMethod("checkDOB", function(value, element) {
+        //     var userinput = $(element).val();
+        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+        //     return age >= 18;
+        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
         $.validator.addMethod("checkDOB", function(value, element) {
             var userinput = $(element).val();
             var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-            return age >= 18;
-        }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+            return age >= 18 || age <= 40;
+
+        }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
 
 
 
@@ -1326,6 +1333,10 @@
                                     <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
                                         <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
                                     </a>
+                                    <a class="dropdown-item" href="{{ url('correctdata') }}">
+                                        <span data-hi="मांग अनुरोध" data-en="Mang Anurodh"></span>
+                                    </a>
+
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a> -->

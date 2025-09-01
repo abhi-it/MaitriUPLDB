@@ -268,7 +268,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail4"><span data-hi="जन्म तिथि (हाई स्कूल प्रमाण-पत्र के अनुसार)" data-en="Date of Birth (As per High School Certificate)"> </span>  </label> 
                         <span class="text-danger">* 
-                            <span data-hi="( न्यूनतम उम्र 18 वर्ष होनी चाहिये )" data-en="(Minimum age should be 18 years)"> </span> 
+                            <span data-hi="( न्यूनतम उम्र 18 वर्ष एवं अधिकतम 40 वर्ष होनी चाहिये )" data-en="(Minimum age should be 18 years and maximum age should be 40 years)"> </span> 
                         </span>
                         <?php
                        
@@ -425,9 +425,9 @@
 
                     <div class="form-group col-md-6">
                         <label ><span data-hi="ग्राम पंचायत का नाम" data-en="Name of Gram Panchayat"> </span> </label> 
-                            <select class="form-control" name="gram_panchayat_name" id="gram_panchayat_name">
-                            
-                            </select>
+                            <!-- <select class="form-control" name="gram_panchayat_name" id="gram_panchayat_name">
+                            </select> -->
+                            <input type="text" name="gram_panchayat_name" class="form-control" id="gram_panchayat_name" placeholder="ग्राम पंचायत का नाम">
                     </div>
                     
                     <!-- 29 Aug 2025 Add filed to Gram Panchayat -->
@@ -450,10 +450,9 @@
 
                     <div class="form-group col-md-6">
                         <label ><span data-hi="पोस्ट ऑफिस" data-en="Post Office"> </span>  </label> 
-                        
-                            <select class="form-control" name="post_office" id="post_office">
-                               
-                            </select>
+                            <!-- <select class="form-control" name="post_office" id="post_office"> 
+                            </select> -->
+                            <input type="text" name="post_office" class="form-control" id="post_office" placeholder="पोस्ट ऑफिस">
                     </div>
 
                     <!-- 29 Aug 2025 Comment the code -->
@@ -1375,17 +1374,17 @@
                                 }
                             });
 
-                            if(gramPanchayat && gramPanchayat.length > 0){
-                                $('#post_office').append(`<option value="">Select Post Office</option>`);
-                                gramPanchayat.forEach(item => {
-                                    if (item.post_office && item.post_office.trim() !== '') {
-                                        $('#post_office').append(
-                                            `<option value="${item.post_office}">${item.post_office}</option>`);
-                                    }
-                                });
-                            }else{
-                                $('#post_office').append('<option value="">No Record</option>');
-                            }
+                            // if(gramPanchayat && gramPanchayat.length > 0){
+                            //     $('#post_office').append(`<option value="">Select Post Office</option>`);
+                            //     gramPanchayat.forEach(item => {
+                            //         if (item.post_office && item.post_office.trim() !== '') {
+                            //             $('#post_office').append(
+                            //                 `<option value="${item.post_office}">${item.post_office}</option>`);
+                            //         }
+                            //     });
+                            // }else{
+                            //     $('#post_office').append('<option value="">No Record</option>');
+                            // }
 
                         } else {
                             $('#tehsil').append('<option value="">-Data not found.-</option>');
@@ -1552,17 +1551,17 @@
                         },
                         cache: false,
                         success: function(data) {
-                            $('#gram_panchayat_name').prop('disabled', false);
-                            $('#gram_panchayat_name').empty();
-                            if(data.length>0){
-                                console.log('data',data)
-                                $('#gram_panchayat_name').append($("<option value=''>-ग्राम पंचायत चुनें-</option>"));
-                                data.forEach(item => {
-                                    $('#gram_panchayat_name').append('<option value="'+item.gram_panchayat+'">' + item.gram_panchayat + '</option>')
-                                });
-                            }else{
-                                $('#gram_panchayat_name').append($("<option value=''>-Data not found.-</option>"));
-                            }
+                            // $('#gram_panchayat_name').prop('disabled', false);
+                            // $('#gram_panchayat_name').empty();
+                            // if(data.length>0){
+                            //     console.log('data',data)
+                            //     $('#gram_panchayat_name').append($("<option value=''>-ग्राम पंचायत चुनें-</option>"));
+                            //     data.forEach(item => {
+                            //         $('#gram_panchayat_name').append('<option value="'+item.gram_panchayat+'">' + item.gram_panchayat + '</option>')
+                            //     });
+                            // }else{
+                            //     $('#gram_panchayat_name').append($("<option value=''>-Data not found.-</option>"));
+                            // }
                         }
                     });
                 }
