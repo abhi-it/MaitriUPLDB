@@ -109,10 +109,10 @@ use App\Models\Districts;
 </div>
 <!------Summary Page End---------------->
 
-<div class="row mt-5">
+{{--<div class="row mt-5">
     @foreach($years as $yr)
         @if($yr !== $year) 
-            <div class="col-sm-6 mt-3 mb-3">
+            <div class="col-sm-4 mt-3 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">Year {{ $yr }}</h5>
@@ -122,36 +122,7 @@ use App\Models\Districts;
             </div>
         @endif
     @endforeach
-</div>
-     
-	{{--<div class="row">
-		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-			<div class="card text-center">
-				<div class="card-body">
-					<h5 class="card-title">Year 2024 - 2025</h5>
-					<a href="{{ route('lakshya_data', ['year' => '2024-2025']) }}" class="btn btn-primary">View</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-			<div class="card text-center">
-				<div class="card-body">
-					<h5 class="card-title">Year 2023 - 2024</h5>
-					<a href="{{ route('lakshya_data', ['year' => '2023-2024']) }}" class="btn btn-primary">View</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-sm-3 mt-md-5 mb-md-5 mt-3 mb-3">
-			<div class="card text-center">
-				<div class="card-body">
-					<h5 class="card-title">Year 2022 - 2023</h5>
-					<a href="{{ route('lakshya_data', ['year' => '2022-2023']) }}" class="btn btn-primary">View</a>
-				</div>
-			</div>
-		</div>
-	</div>--}}
+</div>--}}
         
 		<div><span style="color:red;font-weight:600; font-size:18px;text-align: left;">
 			<span data-hi="नोट:- संख्या समय / परिस्थिति अनुसार परिवर्तनीय है" data-en="Note:- Number is changeable according to time / situation"></span>	
