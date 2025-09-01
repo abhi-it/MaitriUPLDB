@@ -1329,6 +1329,10 @@
                                     <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
                                         <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
                                     </a>
+                                    <a class="dropdown-item" href="{{ url('correctdata') }}">
+                                        <span data-hi="मांग अनुरोध" data-en="Mang Anurodh"></span>
+                                    </a>
+
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a> -->
