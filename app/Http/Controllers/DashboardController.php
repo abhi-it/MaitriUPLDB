@@ -682,6 +682,7 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             $data = $query->leftJoin('districts', 'avedans.district_id', '=', 'districts.id')
+                    ->leftJoin('rejectcomments', 'avedans.id', '=', 'rejectcomments.application_id')
                     ->select(
                         'avedans.applicationNumber', 
                         'avedans.applicant_name', 
@@ -702,7 +703,8 @@ class DashboardController extends Controller
                         'avedans.high_percentage', 
                         'avedans.inter_marks', 
                         'avedans.inter_total_marks', 
-                        'avedans.inter_percentage' // Removed trailing comma here
+                        'avedans.inter_percentage',
+                        'rejectcomments.comments'
                     )
                     ->whereYear('avedans.created_at', $this->sessionYear)
                     ->orderBy('avedans.id', 'DESC')
