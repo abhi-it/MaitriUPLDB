@@ -83,7 +83,7 @@ use App\Models\Districts;
 			?>
 			<tr>
 				<td><?php echo $i++;?></td>
-				<td>{{$row->name_hindi}}</td>
+				<td>{{$div->name_hindi}}</td>
 				<td>{{$row->name_hindi}}</td>
 				<td>*{{$row->general_target}}</td>
 				<td>*{{$row->obc_target}}</td>
