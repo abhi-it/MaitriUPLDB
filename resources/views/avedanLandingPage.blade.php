@@ -77,8 +77,8 @@ text-transform: uppercase;
 letter-spacing: .8px;
 color: var(--glow);
 text-shadow:
-0 0 6px var(--glow),
-0 0 12px var(--glow),
+0 0 0px var(--glow),
+0 0 1px var(--glow),
 0 0 20px rgb(234 115 40 / 60%), 
 0 0 36px rgb(234 115 40 / 41%);
 animation: glow-pulse 2.2s ease-in-out infinite;
@@ -92,37 +92,38 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 @endphp
 <!-- Maquee Code Start -->
 <div id="maitri-marquee" class="marquee-bar" aria-live="polite" data-deadline="{{ $deadline }}" data-applicants="{{ $totalAvedan }}">
-<div class="marquee-track">
-<div class="marquee-content">
-<span class="pill"><span class="dot" aria-hidden="true"></span>Applications Closing In: <span class="countdown" id="countdown-a"></span></span>
-<span class="pill">Submit your Avedan today at <strong>maitriupldb.in</strong></span>
-<span class="pill">Don’t wait till the last day!</span>
-</div>
-<div class="marquee-content" aria-hidden="true">
-<!-- duplicate content for seamless loop -->
-<span class="pill"><span class="dot" aria-hidden="true"></span>Applications Closing In: <span class="countdown" id="countdown-b"></span></span>
-<span class="pill">Submit your Avedan today at <strong>maitriupldb.in</strong></span>
-<span class="pill">Don’t wait till the last day!</span>
-</div>
-</div>
+   <div class="marquee-track">
+      <div class="marquee-content">
+         <span class="pill">
+            <span class="dot" ></span> 
+            <span aria-hidden="true" data-hi="आवेदन बंद होने वाले हैं:" data-en="Applications Closing In:"></span>
+            <span class="countdown" id="countdown-a"></span>
+         </span>
+         <span class="pill" data-hi="अपना अवेदान आज ही यहां जमा करें maitriupldb.in" data-en="Submit your Avedan today at maitriupldb.in"></span>
+         <span class="pill" data-hi="आखिरी दिन तक इंतजार मत करे!" data-en="Don’t wait till the last day!"></span>
+      </div>
+      <div class="marquee-content" aria-hidden="true">
+         <span class="pill">
+            <span class="dot" ></span> 
+            <span aria-hidden="true" data-hi="आवेदन बंद होने वाले हैं:" data-en="Applications Closing In:"></span>
+            <span class="countdown" id="countdown-b"></span>
+         </span>
+         <span class="pill" data-hi="अपना अवेदान आज ही यहां जमा करें maitriupldb.in" data-en="Submit your Avedan today at maitriupldb.in"></span>
+         <span class="pill" data-hi="आखिरी दिन तक इंतजार मत करे!" data-en="Don’t wait till the last day!"></span>
+      </div>
+   </div>
 </div>
 
 
 <div class="glow-wrap">
-<div class="glow-sign" role="status" aria-live="polite">
-<span class="label">Number of Applicants: </span>
-<span class="glow-number" id="applicants-count">0</span>
-</div>
+   <div class="glow-sign" role="status" aria-live="polite">
+      <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
+      <span class="glow-number" id="applicants-count">0</span>
+   </div>
 </div>
 <!-- Maquee Code End -->
 <div class="container main-div py-5" >
     <!--First row Start -->
-	 
-
-
-
-
-
     <h3 class="text-center fw-bold m-4">
    <span data-hi="आवेदन - पत्र" data-en="Application letter"></span>
  </h3>
@@ -155,14 +156,14 @@ animation: glow-pulse 2.2s ease-in-out infinite;
                <h3><span data-hi="आवेदन करने के लिए यहाँ क्लिक करें" data-en="Click here to apply"></h3>
             </a>
 			   @else
-						@if($messsage!='')
-						<h3 style="color:red;">{{$messsage}}</h3>
+						@if($messsage !='')
+						<h3 style="color:red; 222" data-hi="आवेदन जमा करने की समय सीमा समाप्त हो गई है" data-en="{{$messsage}}"></h3>
 						@else
-						<h3 style="color:red;">
-                  <span data-hi="आवेदन" data-en="Application">   
-                   {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
-                   <span data-hi="से प्रारम्भ होंगे |"  data-en="will start from.">   
-                  </h3>
+                     <h3 style="color:red; 1111" >
+                     <span data-hi="आवेदन" data-en="Application">   
+                     {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
+                     <span data-hi="से प्रारम्भ होंगे |"  data-en="will start from.">   
+                     </h3>
 						@endif
 				@endif
 			   
