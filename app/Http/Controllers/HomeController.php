@@ -157,9 +157,11 @@ class HomeController extends Controller
 		} else {
 			$avedanStart = 0;
 			$result = Setting::find(2);
-			$messsage =  'Submition of Application has been expired..';
+			// $messsage =  'Submition of Application has been expired..';
+			$messsage =  'Submition of Application will start from: 03-09-2025';
+			$himesssage =  'आवेदन जमा करने की प्रक्रिया शुरू होगी: 03-09-2025';
 		}
-		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage', 'totalAvedan'));
+		return view('avedanLandingPage', compact('result', 'avedanStart', 'messsage', 'totalAvedan', 'himesssage'));
 	}
 
 	public function applicationStatus()
