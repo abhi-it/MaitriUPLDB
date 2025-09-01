@@ -9,35 +9,43 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class DistrictsImport implements ToModel, WithHeadingRow
 {
-    public function model(array $row)
+   public function model(array $row)
     {
-        $division = Divisions::where('name_eng', $row['division'])
-                        ->orWhere('name_hindi', $row['division'])
-                        ->first();
-                        
-        $exists = Districts::where(function ($query) use ($row) {
-                            $query->where('name_eng', $row['name_eng'])
-                                ->orWhere('name_hindi', $row['name_hindi']);
-                        })
-                        ->where('year', $row['year'])
-                        ->exists();
-
-        if ($exists) {
-            return null; 
+        if ($row[0] === 'S. NO.' || empty($row[1])) {
+            return null;
         }
 
-        return new Districts([
-            'name_eng'       => $row['name_eng'],
-            'name_hindi'     => $row['name_hindi'],
-            'division_id'    => $division ? $division->id : null, 
-            'general_target' => $row['general_target'] ?? 0,
-            'obc_target'     => $row['obc_target'] ?? 0,
-            'sc_target'      => $row['sc_target'] ?? 0,
-            'st_target'      => $row['st_target'] ?? 0,
-            'status'         => $row['status'] ?? 1,
-            'latt'           => $row['latt'] ?? null,
-            'long'           => $row['long'] ?? null,
-            'year'           => $row['year'] ?? null,
-        ]);
+        $division = Divisions::where('name_eng', $row[1]) 
+                            ->orWhere('name_hindi', $row[1])
+                            ->first();
+
+        $years = [
+            '2022-2023' => $row[4] ?? 0, 
+            '2023-2024' => $row[5] ?? 0, 
+            '2024-2025' => $row[6] ?? 0, 
+        ];
+
+        $data = [];
+        foreach ($years as $year => $target) {
+             $target = is_numeric($target) ? (int) $target : 0;
+
+            $data[] = new Districts([
+                'name_eng'       => $row[3] ?? null,  
+                'name_hindi'     => $row[3] ?? null,
+                'division_id'    => $division?->id,
+                'general_target' => $target,
+                'obc_target'     => 0,
+                'sc_target'      => 0,
+                'st_target'      => 0,
+                'status'         => 1,
+                'latt'           => null,
+                'long'           => null,
+                'year'           => $year,
+            ]);
+        }
+
+        return $data;
     }
+
+
 }

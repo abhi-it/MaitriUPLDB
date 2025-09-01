@@ -111,8 +111,8 @@ use App\Models\Districts;
 
 <div class="row mt-5">
     @foreach($years as $yr)
-        @if($yr !== $year) {{-- show only other years --}}
-            <div class="col-sm-4 mt-3 mb-3">
+        @if($yr !== $year) 
+            <div class="col-sm-6 mt-3 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">Year {{ $yr }}</h5>
