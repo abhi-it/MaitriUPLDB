@@ -1455,13 +1455,15 @@
                                     </div>
                                 </a>
                             </li>
-
-                            <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
+                            <!-- Hide 01 Sep 2025 -->
+                            <!-- <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('lakshya') }}">
                                     <span data-hi="स्वरोजगारी मैत्री की संख्या"
                                         data-en="Number of self-employed maitri"></span>
                                 </a>
-                            </li>
+                            </li> -->
+                            <!-- Hide 01 Sep 2025 -->
+
                             <li class="nav-item {{ request()->is('application-status') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('application-status') }}">
                                     <span data-hi="आवेदन की स्थिति जानिए"
@@ -1473,7 +1475,8 @@
                                     <span data-hi="डाउनलोड" data-en="Downlaod"></span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
+                            <!-- Hide 01 Sep 2025 -->
+                            <!-- <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                                 <a class="nav-link" href="{{ url('demandRequests') }}">
                                     <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                                 </a>
@@ -1487,27 +1490,37 @@
                                 <a class="nav-link" href="{{ url('hierarchy-chart') }}">
                                     <span data-hi="पदानुक्रम चार्ट" data-en="Hierarchy Chart"></span>
                                 </a>
-                            </li>
+                            </li> -->
+                            <!-- Hide 01 Sep 2025 -->
+
                             <!-- <li class="nav-item ">
                             <a class="nav-link" href="{{ url('maitri-register') }}">
                                 <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri (Animal Friend) Registration"></span>
                             </a>
-                        </li> -->
-                            <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
+                            </li> -->
+
+                            <!-- Hide 01 Sep 2025 -->
+                            <!-- <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('farmer-register') }}">
                                     <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Registration"></span>
                                 </a>
-                            </li>
+                            </li> -->
+                            <!-- Hide 01 Sep 2025 -->
+
                             <!-- <li class="nav-item ">
                             <a class="nav-link" href="{{ url('refresher-training') }}">
                                 <span data-hi="रिफ्रेशर प्रशिक्षण फॉर्म" data-en="Refresher Training Form"></span>
                             </a>
-                        </li> -->
-                            <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
+                            </li> -->
+                            
+                            <!-- Hide 01 Sep 2025 -->
+                            <!-- <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('zonestockform') }}">
                                     <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zone Stock Form"></span>
                                 </a>
-                            </li>
+                            </li> -->
+                            <!-- Hide 01 Sep 2025 -->
+
                             @endauth
                             @endif
                         </ul>
