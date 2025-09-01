@@ -157,13 +157,13 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             </a>
 			   @else
 						@if($messsage !='')
-						<h3 style="color:red;" data-hi="{{$messsage}}" data-en="{{$messsage}}"></h3>
+						<h3 style="color:red; 222" data-hi="आवेदन जमा करने की समय सीमा समाप्त हो गई है" data-en="{{$messsage}}"></h3>
 						@else
-						<h3 style="color:red;">
-                  <span data-hi="आवेदन" data-en="Application">   
-                   {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
-                   <span data-hi="से प्रारम्भ होंगे |"  data-en="will start from.">   
-                  </h3>
+                     <h3 style="color:red; 1111" >
+                     <span data-hi="आवेदन" data-en="Application">   
+                     {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
+                     <span data-hi="से प्रारम्भ होंगे |"  data-en="will start from.">   
+                     </h3>
 						@endif
 				@endif
 			   
