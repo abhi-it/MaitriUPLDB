@@ -20,6 +20,55 @@
     <h3 class="text-center fw-bold m-4">
         <span data-hi="आवेदन फॉर्म के लिए सही डेटा" data-en="Correct Data for avedan form"></span>
     </h3>
+    <form method="GET" action="{{ route('correctdata-get') }}" class="row g-2 mb-3">
+        <div class="col-md-3">
+            <select name="mandal_name" class="form-select">
+                <option value="" selected>-- Select Mandal --</option>
+                @foreach($mandals as $m)
+                    @if(!empty($m->mandal_name))
+                        <option value="{{ $m->mandal_name }}" 
+                            {{ request('mandal_name') == $m->mandal_name ? 'selected' : '' }}>
+                            {{ $m->mandal_name }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="janpad_name" class="form-select">
+                <option value="" selected>-- Select Janpad --</option>
+                @foreach($janpads as $j)
+                    @if(!empty($j->janpad_name))
+                        <option value="{{ $j->janpad_name }}" 
+                            {{ request('janpad_name') == $j->janpad_name ? 'selected' : '' }}>
+                            {{ $j->janpad_name }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="tehsil" class="form-select">
+                <option value="" selected>-- Select Tehsil --</option>
+                @foreach($tehsils as $t)
+                    @if(!empty($t->tehsil))
+                        <option value="{{ $t->tehsil }}" 
+                            {{ request('tehsil') == $t->tehsil ? 'selected' : '' }}>
+                            {{ $t->tehsil }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3 d-flex">
+            <button type="submit" class="btn btn-primary me-2">Filter</button>
+            <a href="{{ route('correctdata-get') }}" class="btn btn-secondary">Reset</a>
+        </div>
+    </form>
+
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">Add New Data</button>
     <table class="table table-striped  table-responsive table-bordered">
         <thead>
@@ -33,26 +82,26 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $item)
+            @foreach ($data as $key => $item)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $key+1 }}</td>
                     <td>{{ $item->mandal_name }}</td>
                     <td>{{ $item->janpad_name }}</td>
-                    <td>{{ $item->block }}</td>
                     <td>{{ $item->tehsil }}</td>
+                    <td>{{ $item->block }}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" 
+                        <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editModal" 
                                 data-id="{{ $item->id }}"
-                                data-mandal_name="{{ $item->mandal_name }}"
-                                data-janpad_name="{{ $item->janpad_name }}"
-                                data-block="{{ $item->block }}"
-                                data-tehsil="{{ $item->tehsil }}">
+                                data-mandal="{{ $item->mandal_name }}"
+                                data-janpad="{{ $item->janpad_name }}"
+                                data-tehsil="{{ $item->tehsil }}"
+                                data-block="{{ $item->block }}">
                             Edit
                         </button>
-                        <form action="{{ route('correctdata-destroy', $item->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('correctdata-destroy', $item->id) }}" method="POST" class="d-inline delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="button" class="btn btn-danger btn-sm delete-btn">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -80,7 +129,9 @@
                             <select class="form-select mandal_name" id="mandal_name" name="mandal_name" required>
                                 <option value="">Select Mandal</option>
                                 @foreach ($mandalNames as $mandal)
+                                    @if(!empty($mandal))
                                     <option value="{{ $mandal }}">{{ $mandal }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -90,19 +141,39 @@
                                 <option value="">Select Janpad</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="tehsil" class="form-label">Tehsil</label>
-                            <select class="form-select tehsil" id="tehsil" name="tehsil" required>
-                                <option value="">Select Tehsil</option>
-                            </select>
-                            <button type="button" class="btn btn-link" id="addNewTehsilBtn">Add New Tehsil</button>
+                        <div class="mb-3" id="tehsil-wrapper">
+                            <div id="tehsil-select-wrapper">
+                                <label for="">Tehsil</label>
+                                <select class="form-select" id="tehsil" name="tehsil">
+                                    <option value="">Select Tehsil</option>
+                                </select>
+                            </div>
+
+                            <div id="tehsil-input-wrapper" style="display:none;">
+                                <label for="">Tehsil</label>
+                                <input type="text" name="new_tehsil" id="tehsil-input" class="form-control" placeholder="Enter new Tehsil">
+                            </div>
+
+                            <button type="button" id="toggle-tehsil" class="btn btn-sm btn-outline-primary mt-2">
+                                Add New Tehsil
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <label for="block" class="form-label">Block</label>
-                            <select class="form-select block" id="block" name="block" required>
-                                <option value="">Select Block</option>
-                            </select>
-                            <button type="button" class="btn btn-link" id="addNewBlockBtn">Add New Block</button>
+                        <div class="mb-3" id="block-wrapper">
+                            <div id="block-select-wrapper">
+                                <label for="">Block</label>
+                                <select class="form-select block" id="block" name="block">
+                                    <option value="">Select Block</option>
+                                </select>
+                            </div>
+
+                            <div id="block-input-wrapper" style="display:none;">
+                                <label for="">Block</label>
+                                <input type="text" name="new_block" id="block-input" class="form-control" placeholder="Enter new Block">
+                            </div>
+
+                            <button type="button" id="toggle-block" class="btn btn-sm btn-outline-primary mt-2">
+                                Add New Block
+                            </button>
                         </div>
                     
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -160,6 +231,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
    
     $('#mandal_name').change(function() {
@@ -338,21 +411,84 @@
 </script>
 
 <script>
-    $('#editModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); 
-        var id = button.data('id');
-        var mandal_name = button.data('mandal_name');
-        var janpad_name = button.data('janpad_name');
-        var block = button.data('block');
-        var tehsil = button.data('tehsil');
-        
-        var modal = $(this);
-        modal.find('#editForm').attr('action', '/correctdata/' + id);
-        modal.find('#edit_mandal_name').val(mandal_name);
-        modal.find('#edit_janpad_name').val(janpad_name);
-        modal.find('#edit_block').val(block);
-        modal.find('#edit_tehsil').val(tehsil);
+    $(document).on('click', '.edit-btn', function () {
+        let id = $(this).data('id');
+        let mandal = $(this).data('mandal');
+        let janpad = $(this).data('janpad');
+        let tehsil = $(this).data('tehsil');
+        let block = $(this).data('block');
+
+        $('#editForm').attr('action', '/correctdata/' + id);
+
+        $('#edit_mandal_name').val(mandal).trigger('change');
+        setTimeout(function() {
+            $('#edit_janpad_name').val(janpad).trigger('change');
+        }, 500);
+
+        setTimeout(function() {
+            $('#edit_tehsil').val(tehsil).trigger('change');
+        }, 1000);
+
+        setTimeout(function() {
+            $('#edit_block').val(block);
+        }, 1500);
+
+        $('#editModal').modal('show');
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        $(document).on('click', '.delete-btn', function (e) {
+            e.preventDefault();
+            let form = $(this).closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This record will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
     });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function setupToggle(toggleId, selectWrapperId, inputWrapperId, selectId, inputId, labelSelect, labelInput) {
+        const toggleBtn = document.getElementById(toggleId);
+        const selectWrapper = document.getElementById(selectWrapperId);
+        const inputWrapper = document.getElementById(inputWrapperId);
+        const select = document.getElementById(selectId);
+        const input = document.getElementById(inputId);
+
+        toggleBtn.addEventListener("click", function () {
+            if (selectWrapper.style.display !== "none") {
+                selectWrapper.style.display = "none";
+                inputWrapper.style.display = "block";
+                select.removeAttribute("name");
+                input.setAttribute("name", select.getAttribute("id").replace("-select", ""));
+                toggleBtn.textContent = labelSelect;
+            } else {
+                inputWrapper.style.display = "none";
+                selectWrapper.style.display = "block";
+                input.removeAttribute("name");
+                select.setAttribute("name", select.getAttribute("id").replace("-select", ""));
+                toggleBtn.textContent = labelInput;
+            }
+        });
+    }
+
+    setupToggle("toggle-tehsil", "tehsil-select-wrapper", "tehsil-input-wrapper", "tehsil", "tehsil-input", "Choose Existing Tehsil", "Add New Tehsil");
+    setupToggle("toggle-block", "block-select-wrapper", "block-input-wrapper", "block", "block-input", "Choose Existing Block", "Add New Block");
+});
+</script>
+
 
 @endsection
