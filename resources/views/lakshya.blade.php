@@ -63,7 +63,7 @@ use App\Models\Districts;
 				</tr>
 				<tr>
 				<th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
-				<th><span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC"></span></th>--}}
+				<th><span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC"></span></th>
 				<th><span data-hi="अनुसूचित जाति की संख्या" data-en="Scheduled Caste Category"></span></th>
 				<th><span data-hi="अनुसूचित जनजाति की संख्या" data-en="Scheduled Tribe Category"></span></th>
 
