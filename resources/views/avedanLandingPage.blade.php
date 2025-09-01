@@ -119,13 +119,13 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 
          <span class="pill" >
             <span class="img-contaner">
-            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
             <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
             <span class="countdown" id="countdown-a"></span>
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
-            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            <img src="{{ asset('images/start_image.png') }}" alt="">
          </span>
       </div>
       <div class="marquee-content" aria-hidden="true">
@@ -136,13 +136,13 @@ animation: glow-pulse 2.2s ease-in-out infinite;
         
          <span class="pill" >
             <span class="img-contaner">
-            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
             <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
             <span class="countdown" id="countdown-b"></span>
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
-            <img src="http://127.0.0.1:8000/images/start_image.png" alt="">
+            <img src="{{ asset('images/start_image.png') }}" alt="">
          </span>
           </span>
       </div>
