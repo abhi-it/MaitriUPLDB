@@ -36,6 +36,9 @@
 					<th style="font-size:15px"> <span data-hi="डाउनलोड" data-en="Download"></span>  </th>
 				</tr>
 				<tr>
+					<td colspan="3" class="text-center">No new download document</td>
+				</tr>
+				<!-- <tr>
 					<td>01</td>
 					<td> <span data-hi="शपथ - पत्र" data-en="Affidavit"></span>  </td>
 					<td style="width:05%">
@@ -56,7 +59,7 @@
 						</a>
 						</center>
 					</td>
-				</tr>
+				</tr> -->
 			</table>
 		</div>
 	</div>
