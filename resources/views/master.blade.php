@@ -1338,7 +1338,7 @@
                                         <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('correctdata') }}">
-                                        <span data-hi="मांग अनुरोध" data-en="Mang Anurodh"></span>
+                                        <span data-hi="सही डेटा" data-en="Correct Data"></span>
                                     </a>
 
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
