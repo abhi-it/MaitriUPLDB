@@ -184,25 +184,24 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             : </label> {{\Carbon\Carbon::parse($result->end_date)->format('d/m/Y')}}
         </div>
         
-        <div class="col-12 col-md-12"><!--{{url('application-form')}}-->
-           <label for="inputPassword4" style="font-weight:bold;">
-			   @if($avedanStart)
-			   <a class="nav-link" href="{{url('application-form')}}">
-               <h3><span data-hi="आवेदन करने के लिए यहाँ क्लिक करें" data-en="Click here to apply"></h3>
-            </a>
-			   @else
-						@if($messsage !='')
-						<h3 style="color:red;" data-hi="{{$himesssage}}" data-en="{{$messsage}}"></h3>
-						@else
-                     <h3 style="color:red;" >
-                     <span data-hi="आवेदन जमा करने की प्रक्रिया शुरू होगी" data-en="Submition of Application will start from">   
-                     {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
+        <div class="col-12 col-md-12">
+            <label for="inputPassword4" style="font-weight:bold;">
+
+               @if($avedanStart) 
+                     {{-- Active: Show Apply Link --}}
+                     <a class="nav-link" href="{{ url('application-form') }}">
+                        <h3>
+                           <span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span>
+                        </h3>
+                     </a>
+               @else
+                     {{-- Before start OR After expiry --}}
+                     <h3 style="color:red;">
+                        <span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span>
                      </h3>
-						@endif
-				@endif
-			   
-			   </label>
-        </div>
+               @endif
+            </label>
+         </div>
     </div>
   </div> 
         
