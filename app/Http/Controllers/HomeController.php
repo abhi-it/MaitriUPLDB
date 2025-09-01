@@ -9,6 +9,7 @@ use App\Models\Divisions;
 use App\Models\Districts;
 use App\Models\Avedan;
 use App\Models\User;
+use App\Imports\DistrictsImport;
 use App\Models\Rejectcomment;
 use File;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ use App\Models\SemanrRquests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Excel;
 
 class HomeController extends Controller
 {
@@ -52,11 +54,41 @@ class HomeController extends Controller
 		return view('yogyata');
 	}
 
-	public function lakshya()
+	public function lakshya_old()
 	{
 		$divisions = Divisions::orderBy('name_eng', 'ASC')->get();
 		return view('lakshya', compact('divisions'));
 	}
+
+	public function lakshya(Request $request)
+	{
+		$year = $request->year;
+		$currentYear = date('Y');
+		$latestYear = $currentYear . '-' . ($currentYear + 1);
+
+		$years = [
+			$latestYear,
+			($currentYear - 1) . '-' . $currentYear,
+			($currentYear - 2) . '-' . ($currentYear - 1),
+			($currentYear - 3) . '-' . ($currentYear - 2),
+		];
+
+		$year = $year ?? $latestYear;
+		$divisions = Divisions::orderBy('name_eng', 'ASC')->get();
+
+		return view('lakshya', compact('divisions', 'year', 'years'));
+	}
+
+	public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+
+        Excel::import(new DistrictsImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data imported successfully!');
+    }
 
 	public function lakshya_data(Request $request)
 	{

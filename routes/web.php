@@ -122,6 +122,7 @@ Route::get('/term-condition', [App\Http\Controllers\HomeController::class, 'term
 Route::get('/avedan-karein', [App\Http\Controllers\HomeController::class, 'avedanKarein'])->name('avedanKarein');
 //For testing
 Route::get("testing-avedan", [AvedanController::class, 'test']);
+Route::post('/districts/import', [App\Http\Controllers\HomeController::class, 'import'])->name('districts.import');
 
 Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'eventDetails'])->name('eventdetails');
 
