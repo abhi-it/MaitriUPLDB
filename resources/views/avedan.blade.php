@@ -206,8 +206,9 @@
 <!-- Checkbox below PDF -->
 <div style="margin-top:10px; text-align:center;">
  <span class="text-danger">*</span>
-                        <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}
-                            value="1"><label for="inputEmail4"> <span data-hi="अगर आप सहमत हैं तो चिन्हित करें" data-en="Mark if you agree"> </span> </label>
+ <span data-hi=" अगर आप सहमत हैं तो चिन्हित करें" data-en=" Mark if you agree"> </span> </label>
+                        <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}value="1"><label for="inputEmail4"> 
+                             
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
