@@ -192,7 +192,13 @@
                 <div class="row">
 
                     <div class="form-group col-md-12" style="font-size: 16px;">
-                        <h5><b>
+
+                    <iframe src="{{ asset('documents/terms-and-conditions-2025-09-02.pdf') }}" 
+                            width="100%" 
+                            height="800px" 
+                            style="border:none;">
+                    </iframe>
+                        <!-- <h5><b>
                         <span data-hi="राष्ट्रीय गोकुल मिशन अन्तर्गत कृत्रिम गर्भाधान आच्छादन बढ़ाने हेतु स्वरोजगारी मैत्री की
                                     स्थापना नियम-शर्तें निम्न प्रकार हैं-" data-en="To increase the artificial insemination coverage under National Gokul Mission, the rules and conditions for setting up Swarojgari Maitri are as follows-"></span></b></h5>
                         <br><b>1:- <span data-hi="योग्यता" data-en="Ability"></span>   : </b><br>
@@ -219,7 +225,7 @@
 
                         <span style="color:Red">
                         <span data-hi="नोट :- उ.प्र. पशुधन विकास परिषद द्वारा जनपदवार चयन किए जाने वाले स्वरोजगारी मैत्री (मल्टी परपज ए.आई. टेक्निशियन इन रूरल इंडिया) की संख्या पोर्टल पर उपलब्ध है।" data-en="Note:- The number of self-employed Maitri (Multi Purpose AI Technician in Rural India) selected district-wise by the UP Pashudhan Vikas Parishad is available on the portal."></span>
-                        </span>
+                        </span> -->
                     </div>
 
                     <div class="form-group col-md-6">
