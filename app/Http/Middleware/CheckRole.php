@@ -177,6 +177,11 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'download-document',
+                'documents-store',
+                'documents-update',
+                'documents-destroy',
+                
                 'correctdata-get',
                 'correctdata-store',
                 'correctdata-update',
@@ -351,6 +356,12 @@ class CheckRole
             ],
 
             'Superadmin' => [
+
+                'download-document',
+                'documents-store',
+                'documents-update',
+                'documents-destroy',
+
                 'correctdata-get',
                 'correctdata-store',
                 'correctdata-update',

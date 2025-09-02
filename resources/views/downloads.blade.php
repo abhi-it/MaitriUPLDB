@@ -35,31 +35,25 @@
 					<th style="font-size:15px"><span data-hi="दस्तावेज़ का शीर्षक" data-en="Title of Documents"></span></th>
 					<th style="font-size:15px"> <span data-hi="डाउनलोड" data-en="Download"></span>  </th>
 				</tr>
-				<tr>
-					<td colspan="3" class="text-center">No new download document</td>
-				</tr>
-				<!-- <tr>
-					<td>01</td>
-					<td> <span data-hi="शपथ - पत्र" data-en="Affidavit"></span>  </td>
-					<td style="width:05%">
-						<center>
-						<a href="{{url('downloadFile', 'Shapath Patra 2024-25.pdf')}}" target="_blank">
-							<img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;">
-						</a>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>02</td>
-					<td> <span data-hi="नियम शर्त शपथ पत्र" data-en="Terms and Conditions Affidavit"></span>  </td>
-					<td style="width:05%">
-						<center>
-						<a href="{{url('downloadFile', 'niyam_sharte_file.pdf')}}" target="_blank">
-							<img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;">
-						</a>
-						</center>
-					</td>
-				</tr> -->
+				@if($documents->count() > 0)
+                @foreach($documents as $index => $doc)
+					<tr>
+						<td>{{ $index+1 }}</td>
+						<td><span data-hi="{{ $doc->title_hindi }}" data-en="{{ $doc->title }}"></span></td>
+						<td style="width:05%">
+							<center>
+							<a href="{{ asset($doc->file_path) }}" target="_blank">
+								<img src="{{ asset('')}}images/dnl.gif" style="width:30px;height:30px;    margin-top: -8px;">
+							</a>
+							</center>
+						</td>
+					</tr>
+					@endforeach
+				@else
+					<tr>
+						<td colspan="3" class="text-center text-muted">No documents found</td>
+					</tr>
+				@endif
 			</table>
 		</div>
 	</div>

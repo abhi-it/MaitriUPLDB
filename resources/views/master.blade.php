@@ -1340,6 +1340,9 @@
                                     <a class="dropdown-item" href="{{ url('correctdata') }}">
                                         <span data-hi="सही डेटा" data-en="Correct Data"></span>
                                     </a>
+                                    <a class="dropdown-item" href="{{ url('download-document') }}">
+                                        <span data-hi="दस्तावेज़ डाउनलोड" data-en="Download Document"></span>
+                                    </a>
 
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
