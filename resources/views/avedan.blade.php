@@ -199,7 +199,17 @@
                             style="border:none;">
                     </iframe> -->
 
-                    <div id="pdf-viewer" style="width:100%; height:800px;"></div>
+                    <div id="pdf-container" style="width:100%; padding-bottom:20px;">
+    <div id="pdf-viewer" style="display:flex; justify-content:center;"></div>
+</div>
+
+<!-- Checkbox below PDF -->
+<div style="margin-top:10px; text-align:center;">
+    <label>
+        <input type="checkbox" name="accept_terms">
+        I accept the terms and conditions
+    </label>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
@@ -208,7 +218,7 @@
     const loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then(function(pdf) {
         pdf.getPage(1).then(function(page) {
-            const scale = 0.7; // 50% zoom
+            const scale = 0.8; // 🔎 80% zoom
             const viewport = page.getViewport({ scale: scale });
 
             const canvas = document.createElement('canvas');
@@ -223,9 +233,13 @@
                 viewport: viewport
             };
             page.render(renderContext);
+
+            // ✅ Adjust container height so PDF fits neatly
+            document.getElementById('pdf-container').style.height = (viewport.height + 40) + "px"; 
         });
     });
 </script>
+
 
                         <!-- <h5><b>
                         <span data-hi="राष्ट्रीय गोकुल मिशन अन्तर्गत कृत्रिम गर्भाधान आच्छादन बढ़ाने हेतु स्वरोजगारी मैत्री की
