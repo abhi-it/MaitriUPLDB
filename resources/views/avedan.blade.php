@@ -188,7 +188,7 @@
             <hr>
 
             <div class="tab">
-                <h3><span data-hi="नियम एवं शर्तें" data-en="Terms and conditions"></span>      </h3>
+                <!-- <h3><span data-hi="नियम एवं शर्तें" data-en="Terms and conditions"></span>      </h3> -->
                 <div class="row">
 
                     <div class="form-group col-md-12" style="font-size: 16px;">
@@ -198,6 +198,35 @@
                             height="800px" 
                             style="border:none;">
                     </iframe>
+
+                    <div id="pdf-viewer" style="width:100%; height:800px;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    const url = "{{ asset('documents/terms-and-conditions-2025-09-02.pdf') }}";
+
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+            const scale = 0.5; // 50% zoom
+            const viewport = page.getViewport({ scale: scale });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            document.getElementById('pdf-viewer').appendChild(canvas);
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            page.render(renderContext);
+        });
+    });
+</script>
+
                         <!-- <h5><b>
                         <span data-hi="राष्ट्रीय गोकुल मिशन अन्तर्गत कृत्रिम गर्भाधान आच्छादन बढ़ाने हेतु स्वरोजगारी मैत्री की
                                     स्थापना नियम-शर्तें निम्न प्रकार हैं-" data-en="To increase the artificial insemination coverage under National Gokul Mission, the rules and conditions for setting up Swarojgari Maitri are as follows-"></span></b></h5>
