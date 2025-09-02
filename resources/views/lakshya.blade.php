@@ -59,7 +59,7 @@ use App\Models\Districts;
 				<th colspan="2"><span data-hi="सामान्य घटक" data-en="General Component"></span></th>
 				<th><span data-hi="अनुसूचित जाति घटक" data-en="SCSP Component"></span></th>
 				<th><span data-hi="अनुसूचित जनजाति घटक" data-en="TSP Component"></span></th>
-				<th rowspan="2"><span data-hi="योग" data-en="Total"></span></th>
+				<th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th>
 				</tr>
 				<tr>
 				<th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
