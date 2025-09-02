@@ -70,9 +70,6 @@ class AvedanController extends Controller
 		//echo '<pre>';print_r($setting->start_date);exit;
 		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
         $banks      =  Banks::get();
-
-        echo '<pre>';print_r($districts);exit;
-
         return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
     }
 
