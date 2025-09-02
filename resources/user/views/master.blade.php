@@ -1162,12 +1162,12 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('lakshya') }}">
                                     <span data-hi="स्वरोजगारी मैत्री की संख्या"
                                         data-en="Number of self-employed maitri"></span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('application-status') }}">
                                     <span data-hi="आवेदन की स्थिति जानिए"
