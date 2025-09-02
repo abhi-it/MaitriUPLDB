@@ -283,7 +283,8 @@
                     janpadSelect.empty();
                     janpadSelect.append('<option value="">Select Janpad</option>');
                     $.each(response, function(index, value) {
-                        if(value != null || value != ''){
+                        console.log('value=', value);
+                        if(value != 'null' || value != null){
                             janpadSelect.append('<option value="' + value + '">' + value + '</option>');
                         }
                     });
@@ -401,7 +402,9 @@
                         janpadSelect.empty();
                         janpadSelect.append('<option value="">Select Janpad</option>');
                         $.each(response, function(index, value) {
-                            janpadSelect.append('<option value="' + value + '">' + value + '</option>');
+                            if(value != null || value != ''){
+                                janpadSelect.append('<option value="' + value + '">' + value + '</option>');
+                            }
                         });
                     }
                 });
