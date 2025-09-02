@@ -192,12 +192,12 @@
                 <div class="row">
 
                     <div class="form-group col-md-12" style="font-size: 16px;">
-
+<!-- 
                     <iframe src="{{ asset('documents/terms-and-conditions-2025-09-02.pdf') }}" 
                             width="100%" 
                             height="800px" 
                             style="border:none;">
-                    </iframe>
+                    </iframe> -->
 
                     <div id="pdf-viewer" style="width:100%; height:800px;"></div>
 
@@ -208,7 +208,7 @@
     const loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then(function(pdf) {
         pdf.getPage(1).then(function(page) {
-            const scale = 0.5; // 50% zoom
+            const scale = 0.7; // 50% zoom
             const viewport = page.getViewport({ scale: scale });
 
             const canvas = document.createElement('canvas');
