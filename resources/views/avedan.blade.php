@@ -213,7 +213,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-    const url = "{{ asset('documents/terms-and-conditions-2025-09-02.pdf') }}";
+    const url = "{{ asset('documents/terms_n_condition.pdf') }}";
 
     const loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then(function(pdf) {
