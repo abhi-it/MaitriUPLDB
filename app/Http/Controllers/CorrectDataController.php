@@ -55,9 +55,10 @@ class CorrectDataController extends Controller
         $block  = $request->filled('new_block') ? $request->new_block : $request->block;
         $tehsil = $request->filled('new_tehsil') ? $request->new_tehsil : $request->tehsil;
 
-        if (!$block || !$tehsil) {
-            return back()->withErrors(['block' => 'Block and Tehsil are required.'])->withInput();
-        }
+        // if (!$block || !$tehsil) {
+        //     return back()->withErrors(['block' => 'Block and Tehsil are required.'])->withInput();
+        // }
+        
         Correctdata::create([
             'mandal_name' => $request->mandal_name,
             'janpad_name' => $request->janpad_name,
