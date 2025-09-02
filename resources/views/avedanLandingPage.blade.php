@@ -30,13 +30,15 @@ gap: 2rem;
 white-space: nowrap;
 padding: .6rem 1rem;
 /* Scrolling animation */
-animation: marquee-scroll 22s linear infinite;
+/* animation: marquee-scroll 22s linear infinite; */
+animation: marquee-scroll 8s linear infinite;
 }
 
 
 @keyframes marquee-scroll {
 from { transform: translateX(0); }
 to { transform: translateX(-50%); }
+/* to { transform: translateX(-100%); } */
 }
 
 
@@ -101,7 +103,52 @@ text-shadow:
 animation: glow-pulse 2.2s ease-in-out infinite;
 }
 
-
+.main-div {
+   position: relative;
+}
+.star-cards {
+   clip-path: polygon(50% 0%, 71% 23%, 98% 35%, 84% 61%, 79% 91%, 50% 83%, 21% 91%, 16% 60%, 2% 35%, 29% 23%);
+   background: #ea7327;
+   height: 300px;
+   width: 300px;
+   padding: 5rem;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   color: #fff;
+   font-size: 15px;
+   animation: scales 1s linear infinite;
+}
+.star-cards.star-card-left {
+   position: absolute;
+   left:0;
+   animation: scales1 1s linear infinite;
+}
+@keyframes scales1 {
+   100% {
+      scale: 0.8;
+   }
+   0% {
+      /* opacity: 1; */
+      scale: 1;
+   }
+}
+.star-cards.star-card-right {
+   position: absolute;
+   right:0;
+   animation: scales2 1s linear infinite;
+}
+@keyframes scales2 {
+   0% {
+      scale: 0.8;
+   }
+   100% {
+      /* opacity: 1; */
+      scale: 1;
+   }
+}
 </style>
 
 @php
@@ -117,15 +164,19 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
          </span>
 
-         <span class="pill" >
+         <!-- <span class="pill" >
             <span class="img-contaner">
             <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
             <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
-            <span class="countdown" id="countdown-a"></span>
+           
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
             <img src="{{ asset('images/start_image.png') }}" alt="">
+         </span> -->
+         <span class="pill">
+            <span class="dot" ></span> 
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
          </span>
       </div>
       <div class="marquee-content" aria-hidden="true">
@@ -133,18 +184,22 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             <span class="dot" ></span> 
             <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
          </span>
+         <span class="pill">
+            <span class="dot" ></span> 
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
+         </span>
         
-         <span class="pill" >
+         <!-- <span class="pill" >
             <span class="img-contaner">
             <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
             <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
-            <span class="countdown" id="countdown-b"></span>
+            
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
             <img src="{{ asset('images/start_image.png') }}" alt="">
          </span>
-          </span>
+         </span> -->
       </div>
    </div>
 </div>
@@ -158,6 +213,14 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 </div>
 <!-- Maquee Code End -->
 <div class="container main-div py-5" >
+   <div class="star-cards star-card-left">
+         मैत्री अवदान के लिए केवल:
+          <span class="countdown" id="countdown-a"></span>
+         दिन शेष हैं 
+   </div>
+   <div class="star-cards star-card-right">
+        अब तक कुल आवेदन: <span class="glow-number" id="applicants-count-new">0</span>
+   </div>
     <!--First row Start -->
     <h3 class="text-center fw-bold m-4">
    <span data-hi="आवेदन - पत्र" data-en="Application letter"></span>
@@ -253,11 +316,14 @@ tick();
 
 // --- Applicants number (manual or programmatic) ---
 const countEl = document.getElementById('applicants-count');
+const countNew = document.getElementById('applicants-count-new');
 function setApplicants(n) {
 const num = Number(n) || 0;
 countEl.textContent = num.toLocaleString('en-IN');
+countNew.textContent = num.toLocaleString('en-IN');
 }
 if (countEl) setApplicants(applicantsInitial);
+if (countNew) setApplicants(applicantsInitial);
 
 
 // OPTIONAL: If you have a global number or endpoint, you can update dynamically.
