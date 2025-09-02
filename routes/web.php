@@ -429,7 +429,11 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post('/store-new-block', [App\Http\Controllers\CorrectDataController::class, 'storeNewBlock'])->name('correctdata-storeNewBlock');
     Route::post('/store-new-tehsil', [App\Http\Controllers\CorrectDataController::class, 'storeNewTehsil'])->name('correctdata-storeNewTehsil');
     
-
+    // Download Document Url
+    Route::get('/download-document', [App\Http\Controllers\DownloadDocumentController::class, 'index'])->name('download-document');
+    Route::post('/documents/store', [App\Http\Controllers\DownloadDocumentController::class, 'store'])->name('documents-store');
+    Route::post('/documents/update/{id}', [App\Http\Controllers\DownloadDocumentController::class, 'update'])->name('documents-update');
+    Route::delete('/documents/delete/{id}', [App\Http\Controllers\DownloadDocumentController::class, 'destroy'])->name('documents-destroy');
 
     Route::post('save-events-data/{id?}', [App\Http\Controllers\AdminInventoryController::class, 'storeOrUpdate'])->name('save-events-data');
 

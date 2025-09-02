@@ -19,6 +19,7 @@ use App\Models\SemanrRquests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\Document;
 use Excel;
 
 class HomeController extends Controller
@@ -251,7 +252,8 @@ class HomeController extends Controller
 
 	public function downloads()
 	{
-		return view('downloads');
+		$documents = Document::all();
+		return view('downloads', compact('documents'));
 	}
 
 	public function addSemanForm(){
