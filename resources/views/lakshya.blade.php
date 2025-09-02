@@ -4,10 +4,9 @@
 use App\Models\Districts;
 @endphp
 <div class="container main-div py-5" style="background-color:white; height: 100%;">
-    <!--First row Start -->
-	<h3 style="margin-top:10px;text-align: center; font-weight:bold;"><span data-hi="लक्ष्य" data-en="Target"></span></h3>
+
  <h4 style="margin-top:10px;text-align: center; font-weight:bold;">
-	<span data-hi="जिला प्रशासकों द्वारा ज़िलेवार चयनित मैत्री" data-en="Districtwise Selected Maitris by District Admins"></span>
+	<span data-hi="जिला अनुसार लक्ष्य" data-en="Districtwise Target"></span>
  	<br><br> <span>Year - {{ $year }} </span></h4>
 
 	@if(Auth::user() && Auth::user()->role == 'Superadmin')
@@ -53,17 +52,23 @@ use App\Models\Districts;
 <div class="row">
 		<table class="table table-striped  table-responsive table-bordered">
 			<thead>
-		<tr>
-			<th> <span data-hi=" क्रं सं" data-en="S. No."></span></th>
-			<th> <span data-hi="मण्डल" data-en="Mandal"></span> </th>
-			<th> <span data-hi="जनपद" data-en="janpad"></span> </th>
-			<th> <span data-hi="सामान्य  वर्ग की संख्या" data-en="General No."></span> </th>
-			<th> <span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC No."></span> </th>
-			<th> <span data-hi="अनुसूचित जाति की संख्या" data-en="Number of scheduled castes"></span></th>
-			<th> <span data-hi=" अनुसूचित जनजाति की संख्या" data-en="Number of Scheduled Tribes"></span></th>
-			<th> <span data-hi="योग" data-en="Total"></span> </th>
+				<tr>
+				<th rowspan="2"><span data-hi=" क्रं सं" data-en="S. No."></span></th>
+				<th rowspan="2"><span data-hi="मण्डल" data-en="Mandal"></span></th>
+				<th rowspan="2"><span data-hi="जनपद" data-en="Janpad"></span></th>
+				<th colspan="2"><span data-hi="सामान्य घटक" data-en="General Component"></span></th>
+				<th><span data-hi="अनुसूचित जाति घटक" data-en="SCSP Component"></span></th>
+				<th><span data-hi="अनुसूचित जनजाति घटक" data-en="TSP Component"></span></th>
+				<th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th>
+				</tr>
+				<tr>
+				<th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
+				<th><span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC"></span></th>
+				<th><span data-hi="अनुसूचित जाति की संख्या" data-en="Scheduled Caste Category"></span></th>
+				<th><span data-hi="अनुसूचित जनजाति की संख्या" data-en="Scheduled Tribe Category"></span></th>
+
+				</tr>
 			</thead>
-		</tr>
 		<tbody>
 		<?php 
 		$i=1; 
