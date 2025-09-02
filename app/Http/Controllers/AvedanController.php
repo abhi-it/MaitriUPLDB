@@ -68,7 +68,7 @@ class AvedanController extends Controller
 		$setting = Setting::find(1);
 		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
 		//echo '<pre>';print_r($setting->start_date);exit;
-		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+		$districts = Districts::where('status', '=', 1)->whereNull('year')->orderBy('name_eng', 'ASC')->get();
         $banks      =  Banks::get();
         return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
     }
@@ -119,7 +119,7 @@ class AvedanController extends Controller
 		$setting = Setting::find(1);
 		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
 		//echo '<pre>';print_r($setting->start_date);exit;
-		$districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+		$districts = Districts::where('status', '=', 1)->whereNull('year')->orderBy('name_eng', 'ASC')->get();
         $banks      =  Banks::get();
         return view('avedan', compact('districts', 'result', 'ageCalcultedFrom','banks'));
     }
