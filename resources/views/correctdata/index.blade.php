@@ -298,7 +298,9 @@ $(document).ready(function () {
                     janpadSelect.empty();
                     janpadSelect.append('<option value="">Select Janpad</option>');
                     $.each(response, function(index, value) {
-                        janpadSelect.append('<option value="' + value + '">' + value + '</option>');
+                        if(value != null || value != ''){
+                            janpadSelect.append('<option value="' + value + '">' + value + '</option>');
+                        }
                     });
                 }
             });
@@ -308,8 +310,14 @@ $(document).ready(function () {
     });
 
     $('#janpad_name, #filter_janpad').change(function() {
-        var mandal_name = $('#mandal_name, #filter_mandal').val();
+        var mandal_name = $('#filter_mandal').val();
+        if(mandal_name == ''){
+            var mandal_name = $('#mandal_name').val();
+        }
         var janpad_name = $(this).val();
+
+        console.log("mandal_name =",mandal_name);
+        console.log("janpad_name =",janpad_name);
 
         if (mandal_name && janpad_name) {
             $.ajax({
