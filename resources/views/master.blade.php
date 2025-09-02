@@ -1472,12 +1472,12 @@
                             </li>
                            
                             <!-- Hide 01 Sep 2025 -->
-                            <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
+                            <!-- <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('lakshya') }}">
                                     <span data-hi="स्वरोजगारी मैत्री की संख्या"
                                         data-en="Number of self-employed maitri"></span>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- Hide 01 Sep 2025 -->
                             <!-- Hide 01 Sep 2025 -->
                             <!-- <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
