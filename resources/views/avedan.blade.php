@@ -205,10 +205,9 @@
 
 <!-- Checkbox below PDF -->
 <div style="margin-top:10px; text-align:center;">
-    <label>
-        <input type="checkbox" name="accept_terms">
-        I accept the terms and conditions
-    </label>
+ <span class="text-danger">*</span>
+                        <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}
+                            value="1"><label for="inputEmail4"> <span data-hi="अगर आप सहमत हैं तो चिन्हित करें" data-en="Mark if you agree"> </span> </label>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -271,11 +270,11 @@
                         </span> -->
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="अगर आप सहमत हैं तो चिन्हित करें" data-en="Mark if you agree"> </span> </label> <span class="text-danger">*</span>
                         <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}
                             value="1">
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
