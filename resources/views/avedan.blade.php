@@ -375,11 +375,10 @@
                             @endforeach
                         </select>
                     </div> -->
-
-
-
                     <!--  {{ $result->district_id == $row->id ? 'selected' : '' }}-->
-                    <div class="form-group col-md-6">
+                       
+                    <!-- Previous Code Comment -->
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="ज़िला" data-en="District"></span> <span class="text-danger">*</span></label>
                         <select name="janpad" id="janpad" class="form-control" autofocus>
                             <option value="">जनपद चुनें </option>
@@ -389,22 +388,49 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span> <span class="text-danger">*</span></label>
                         <select name="tehsil" id="tehsil" class="form-control" placeholder="तहसील" autofocus required>
 
                         </select>
                     </div>
-
                     <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> <span class="text-danger">*</span></label>
                         <select name="vikas_khand" id="vikas_khand" class="form-control" required placeholder="विकास खण्ड"
                             autofocus>
 
                         </select>
+                    </div> -->
+                    <!-- Previous Code Comment -->
+
+                    <!-- New code Here 02 Sep 2025 -->
+                    <div class="form-group col-md-6">
+                        <label for="janpad_name" class="form-label"><span data-hi="ज़िला" data-en="District"></span> <span class="text-danger">*</span></label>
+                        <select class="form-select janpad_name" id="janpad_name" name="janpad">
+                            <option value="" data-hi="जनपद चुनें" data-en="Select District"> </option>
+                            @foreach ($districts as $row)
+                                <option value="{{ $row->id }}" data-hindi_name="{{ $row->name_hindi }}">{{ $row->name_hindi }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <!--  -->
+                    <div class="form-group col-md-6" id="tehsil-wrapper">
+                        <div id="tehsil-select-wrapper">
+                            <label for=""><span data-hi="तहसील" data-en="Tehsil"></span> <span class="text-danger">*</span></label>
+                            <select class="form-select" id="tehsil" name="tehsil">
+                                <option value="" data-hi="तहसील चुनें" data-en="Select Tehsil"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" id="block-wrapper">
+                        <div id="block-select-wrapper">
+                            <label for=""><span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> <span class="text-danger">*</span></label>
+                            <select class="form-select block" id="vikas_khand" name="vikas_khand">
+                                <option value="" data-hi="विकास खंड चुनें" data-en="Select Vikas Khand"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- New code Here 02 Sep 2025 -->
 
 
                     <!-- <div class="form-group col-md-6">
@@ -1341,91 +1367,138 @@
     <script>
         $(document).ready(function() {
 
-            $('#janpad').change(function() {
-                $('#vikas_khand').prop('disabled', false);
-                $('#vikas_khand').empty();
-                $('#ai_center').prop('disabled', false);
-                $('#ai_center').empty();
-                $('#tehsil').prop('disabled', false);
-                $('#tehsil').empty();
-                 $('#post_office').empty();
-            
-                // var mandal = $("#district option:selected").text();
-                var janpad = $("#janpad option:selected").text();
-                var janpad_id = $("#janpad option:selected").val();
-                $.ajax({
-                    type: "GET",
-                    url: "get-all-tehsil-new",
-                    data: {
-                        // "mandal": mandal,
-                        "janpad": janpad,
-                        "janpad_id": janpad_id,
-                    },
-                    cache: false,
-                    success: function(data) {
-                        var getTehsil = data.data;
-                        var gramPanchayat = data.gram_panchayat;
-                        if (getTehsil && getTehsil.length > 0) {
-                            $('#tehsil').append(`<option value="">Select Tehsil</option>`);
-                            getTehsil.forEach(item => {
-                                if (item.tehsil && item.tehsil.trim() !== '') {
-                                    $('#tehsil').append(
-                                        `<option value="${item.tehsil}">${item.tehsil}</option>`);
+            $('#janpad_name').change(function() {
+                var janpad_name = $(this).find(':selected').data('hindi_name'); 
+
+                if (janpad_name) {
+                    $.ajax({
+                        url: '/get-tehsil',
+                        type: 'GET',
+                        data: { janpad_name: janpad_name },
+                        success: function(response) {
+                            var tehsilSelect = $('#tehsil');
+                            tehsilSelect.empty();
+                            tehsilSelect.append('<option value="">Select Tehsil</option>');
+                            $.each(response, function(index, value) {
+                                if(value != null || value != ''){
+                                    tehsilSelect.append('<option value="' + value + '">' + value + '</option>');
                                 }
                             });
-
-                            // if(gramPanchayat && gramPanchayat.length > 0){
-                            //     $('#post_office').append(`<option value="">Select Post Office</option>`);
-                            //     gramPanchayat.forEach(item => {
-                            //         if (item.post_office && item.post_office.trim() !== '') {
-                            //             $('#post_office').append(
-                            //                 `<option value="${item.post_office}">${item.post_office}</option>`);
-                            //         }
-                            //     });
-                            // }else{
-                            //     $('#post_office').append('<option value="">No Record</option>');
-                            // }
-
-                        } else {
-                            $('#tehsil').append('<option value="">-Data not found.-</option>');
                         }
-                    }
-                });
+                    });
+                } else {
+                    $('#tehsil').empty().append('<option value="">Select Tehsil</option>');
+                }
             });
-            
+
             $('#tehsil').change(function() {
-                $('#vikas_khand').prop('disabled', false);
-                $('#vikas_khand').empty();
-                $('#ai_center').prop('disabled', false);
-                $('#ai_center').empty();
-                var tehsil = $(this).val();
-                var mandal = $("#district option:selected").text();
-                var janpad = $("#mandal option:selected").val();
-                $.ajax({
-                    type: "GET",
-                    url: "get-all-block",
-                    data: {
-                        "tehsil": tehsil,
-                        "mandal": mandal,
-                        "janpad": janpad,
-                    },
-                    cache: false,
-                    success: function(data) {
-                        var getBlock = data.data;
-                        if (getBlock && getBlock.length > 0) {
-                            $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
-                            getBlock.forEach(item => {
-                                if (item.block && item.block.trim() !== '') {
-                                    $('#vikas_khand').append(
-                                        `<option value="${item.block}">${item.block}</option>`);
-                                }
+                var janpad_name = $('#janpad_name').find(':selected').data('hindi_name');
+                var block = $(this).val();
+                
+                if ( janpad_name && block ) {
+                    $.ajax({
+                        url: '/get-block',
+                        type: 'GET',
+                        data: { janpad_name: janpad_name, block: block },
+                        success: function(response) {
+                            var blockSelect =  $('#vikas_khand');
+                            blockSelect.empty();
+                            blockSelect.append('<option value="">Select Vikas Khand</option>');
+                            $.each(response, function(index, value) {
+                                blockSelect.append('<option value="' + value + '">' + value + '</option>');
                             });
-                        } else {
-                            $('#vikas_khand').append('<option value="">-Data not found.-</option>');
                         }
-                    }
-                });
+                    });
+                } else {
+                    $('#vikas_khand').empty().append('<option value="">Select Vikas Khand</option>');
+                }
             });
+
+            // $('#janpad').change(function() {
+            //     $('#vikas_khand').prop('disabled', false);
+            //     $('#vikas_khand').empty();
+            //     $('#ai_center').prop('disabled', false);
+            //     $('#ai_center').empty();
+            //     $('#tehsil').prop('disabled', false);
+            //     $('#tehsil').empty();
+            //      $('#post_office').empty();
+            
+            //     // var mandal = $("#district option:selected").text();
+            //     var janpad = $("#janpad option:selected").text();
+            //     var janpad_id = $("#janpad option:selected").val();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "get-all-tehsil-new",
+            //         data: {
+            //             // "mandal": mandal,
+            //             "janpad": janpad,
+            //             "janpad_id": janpad_id,
+            //         },
+            //         cache: false,
+            //         success: function(data) {
+            //             var getTehsil = data.data;
+            //             var gramPanchayat = data.gram_panchayat;
+            //             if (getTehsil && getTehsil.length > 0) {
+            //                 $('#tehsil').append(`<option value="">Select Tehsil</option>`);
+            //                 getTehsil.forEach(item => {
+            //                     if (item.tehsil && item.tehsil.trim() !== '') {
+            //                         $('#tehsil').append(
+            //                             `<option value="${item.tehsil}">${item.tehsil}</option>`);
+            //                     }
+            //                 });
+
+            //                 // if(gramPanchayat && gramPanchayat.length > 0){
+            //                 //     $('#post_office').append(`<option value="">Select Post Office</option>`);
+            //                 //     gramPanchayat.forEach(item => {
+            //                 //         if (item.post_office && item.post_office.trim() !== '') {
+            //                 //             $('#post_office').append(
+            //                 //                 `<option value="${item.post_office}">${item.post_office}</option>`);
+            //                 //         }
+            //                 //     });
+            //                 // }else{
+            //                 //     $('#post_office').append('<option value="">No Record</option>');
+            //                 // }
+
+            //             } else {
+            //                 $('#tehsil').append('<option value="">-Data not found.-</option>');
+            //             }
+            //         }
+            //     });
+            // });
+            
+            // $('#tehsil').change(function() {
+            //     $('#vikas_khand').prop('disabled', false);
+            //     $('#vikas_khand').empty();
+            //     $('#ai_center').prop('disabled', false);
+            //     $('#ai_center').empty();
+            //     var tehsil = $(this).val();
+            //     var mandal = $("#district option:selected").text();
+            //     var janpad = $("#mandal option:selected").val();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "get-all-block",
+            //         data: {
+            //             "tehsil": tehsil,
+            //             "mandal": mandal,
+            //             "janpad": janpad,
+            //         },
+            //         cache: false,
+            //         success: function(data) {
+            //             var getBlock = data.data;
+            //             if (getBlock && getBlock.length > 0) {
+            //                 $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
+            //                 getBlock.forEach(item => {
+            //                     if (item.block && item.block.trim() !== '') {
+            //                         $('#vikas_khand').append(
+            //                             `<option value="${item.block}">${item.block}</option>`);
+            //                     }
+            //                 });
+            //             } else {
+            //                 $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+            //             }
+            //         }
+            //     });
+            // });
             
             // $('#vikas_khand').change(function() {
             //     $('#ai_center').prop('disabled', false);
@@ -1531,41 +1604,41 @@
             //     }
             // });
 
-            $('#vikas_khand').change(function() {
-                var val = $("#vikas_khand option:selected").val();
-                var name = $("#vikas_khand option:selected").val();
-                var janpad_id = $("#janpad option:selected").val();
-                console.log('vikas_khand',val)
-                if(val){
-                    $.ajax({
-                        type: "GET",
-                        url: "getAllGramPanchayat",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": val,
-                            "janpad_id": janpad_id,
-                            "name": name,
-                        },
-                        cache: false,
-                        success: function(data) {
-                            // $('#gram_panchayat_name').prop('disabled', false);
-                            // $('#gram_panchayat_name').empty();
-                            // if(data.length>0){
-                            //     console.log('data',data)
-                            //     $('#gram_panchayat_name').append($("<option value=''>-ग्राम पंचायत चुनें-</option>"));
-                            //     data.forEach(item => {
-                            //         $('#gram_panchayat_name').append('<option value="'+item.gram_panchayat+'">' + item.gram_panchayat + '</option>')
-                            //     });
-                            // }else{
-                            //     $('#gram_panchayat_name').append($("<option value=''>-Data not found.-</option>"));
-                            // }
-                        }
-                    });
-                }
-            });
+            // $('#vikas_khand').change(function() {
+            //     var val = $("#vikas_khand option:selected").val();
+            //     var name = $("#vikas_khand option:selected").val();
+            //     var janpad_id = $("#janpad option:selected").val();
+            //     console.log('vikas_khand',val)
+            //     if(val){
+            //         $.ajax({
+            //             type: "GET",
+            //             url: "getAllGramPanchayat",
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             data: {
+            //                 "_token": "{{ csrf_token() }}",
+            //                 "id": val,
+            //                 "janpad_id": janpad_id,
+            //                 "name": name,
+            //             },
+            //             cache: false,
+            //             success: function(data) {
+            //                 // $('#gram_panchayat_name').prop('disabled', false);
+            //                 // $('#gram_panchayat_name').empty();
+            //                 // if(data.length>0){
+            //                 //     console.log('data',data)
+            //                 //     $('#gram_panchayat_name').append($("<option value=''>-ग्राम पंचायत चुनें-</option>"));
+            //                 //     data.forEach(item => {
+            //                 //         $('#gram_panchayat_name').append('<option value="'+item.gram_panchayat+'">' + item.gram_panchayat + '</option>')
+            //                 //     });
+            //                 // }else{
+            //                 //     $('#gram_panchayat_name').append($("<option value=''>-Data not found.-</option>"));
+            //                 // }
+            //             }
+            //         });
+            //     }
+            // });
 
             $('#applicant_photo').change(function(event) {
                 var tmppath = URL.createObjectURL(event.target.files[0]);

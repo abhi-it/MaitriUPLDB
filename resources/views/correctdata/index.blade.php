@@ -288,7 +288,6 @@ $(document).ready(function () {
 
     $('#mandal_name, #filter_mandal').change(function() {
         var mandal_name = $(this).val();
-        console.log("hello = ",mandal_name);
         if (mandal_name) {
             $.ajax({
                 url: '/get-janpad-names',

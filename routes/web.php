@@ -127,6 +127,10 @@ Route::post('/districts/import', [App\Http\Controllers\HomeController::class, 'i
 Route::get('/event-details', [App\Http\Controllers\HomeController::class, 'eventDetails'])->name('eventdetails');
 
 
+Route::get('/get-tehsil', [App\Http\Controllers\CorrectDataController::class, 'getTehsil']);
+Route::get('/get-block', [App\Http\Controllers\CorrectDataController::class, 'getBlock']);
+
+
 Route::resource('application-form', AvedanController::class);
 Route::post("getTempData", [AvedanController::class, 'getTempData']);
 
