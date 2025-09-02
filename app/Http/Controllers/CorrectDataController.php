@@ -67,7 +67,6 @@ class CorrectDataController extends Controller
         return back()->with('success', 'Data added successfully');
     }
 
-
     public function edit($id)
     {
         $data = Correctdata::find($id);
@@ -112,7 +111,6 @@ class CorrectDataController extends Controller
         return response()->json($tehsilNames);
     }
 
-
     public function getBlockNames(Request $request)
     {
         $blockNames = Correctdata::where('mandal_name', $request->mandal_name)
@@ -146,4 +144,27 @@ class CorrectDataController extends Controller
 
         return response()->json(['message' => 'Block added successfully']);
     }
+
+
+    // Avedan Form Data 
+    public function getTehsil(Request $request)
+    {
+        $tehsilNames = Correctdata::where('janpad_name', $request->janpad_name)
+                                  ->groupBy('tehsil')
+                                  ->pluck('tehsil');
+        return response()->json($tehsilNames);
+    }
+
+    public function getBlock(Request $request)
+    {
+        $blockNames = Correctdata::where('janpad_name', $request->janpad_name)
+                                ->where('tehsil', $request->block)
+                                ->groupBy('block')
+                                ->pluck('block');
+
+        return response()->json($blockNames);
+    }
+
+
+
 }
