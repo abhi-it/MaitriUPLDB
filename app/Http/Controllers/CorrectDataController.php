@@ -58,7 +58,7 @@ class CorrectDataController extends Controller
         // if (!$block || !$tehsil) {
         //     return back()->withErrors(['block' => 'Block and Tehsil are required.'])->withInput();
         // }
-        
+
         Correctdata::create([
             'mandal_name' => $request->mandal_name,
             'janpad_name' => $request->janpad_name,
@@ -77,13 +77,25 @@ class CorrectDataController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'mandal_name' => 'required',
-            'janpad_name' => 'required',
-            'block' => 'required',
-            'tehsil' => 'required',
+            'mandal_name' => 'required|string',
+            'janpad_name' => 'required|string',
+            'block' => 'nullable|string',
+            'new_block' => 'nullable|string',
+            'tehsil' => 'nullable|string',
+            'new_tehsil' => 'nullable|string',
         ]);
-        $data = Correctdata::find($id);
-        $data->update($request->all());
+
+        $block = $request->filled('new_block') ? $request->new_block : $request->block;
+        $tehsil = $request->filled('new_tehsil') ? $request->new_tehsil : $request->tehsil;
+
+        $correctdata = Correctdata::findOrFail($id);
+        $correctdata->update([
+            'mandal_name' => $request->mandal_name,
+            'janpad_name' => $request->janpad_name,
+            'block' => $block,
+            'tehsil' => $tehsil,
+        ]);
+
         return back()->with('success', 'Data updated successfully');
     }
 

@@ -20,54 +20,6 @@
     <h3 class="text-center fw-bold m-4">
         <span data-hi="आवेदन फॉर्म के लिए सही डेटा" data-en="Correct Data for avedan form"></span>
     </h3>
-    <!-- <form method="GET" action="{{ route('correctdata-get') }}" class="row g-2 mb-3">
-        <div class="col-md-3">
-            <select name="mandal_name" class="form-select">
-                <option value="" selected>-- Select Mandal --</option>
-                @foreach($mandals as $m)
-                    @if(!empty($m->mandal_name))
-                        <option value="{{ $m->mandal_name }}" 
-                            {{ request('mandal_name') == $m->mandal_name ? 'selected' : '' }}>
-                            {{ $m->mandal_name }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-3">
-            <select name="janpad_name" class="form-select">
-                <option value="" selected>-- Select Janpad --</option>
-                @foreach($janpads as $j)
-                    @if(!empty($j->janpad_name))
-                        <option value="{{ $j->janpad_name }}" 
-                            {{ request('janpad_name') == $j->janpad_name ? 'selected' : '' }}>
-                            {{ $j->janpad_name }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-3">
-            <select name="tehsil" class="form-select">
-                <option value="" selected>-- Select Tehsil --</option>
-                @foreach($tehsils as $t)
-                    @if(!empty($t->tehsil))
-                        <option value="{{ $t->tehsil }}" 
-                            {{ request('tehsil') == $t->tehsil ? 'selected' : '' }}>
-                            {{ $t->tehsil }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-3 d-flex">
-            <button type="submit" class="btn btn-primary me-2">Filter</button>
-            <a href="{{ route('correctdata-get') }}" class="btn btn-secondary">Reset</a>
-        </div>
-    </form> -->
 
     <form method="GET" action="{{ route('correctdata-get') }}" class="mb-4 row g-3">
         <div class="col-md-3">
@@ -98,9 +50,9 @@
             </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <button class="btn btn-primary mt-4">Search</button>
-            <a href="{{ route('correctdata-get') }}" class="btn btn-secondary">Reset</a>
+            <a href="{{ route('correctdata-get') }}" class="btn btn-secondary mt-4">Reset</a>
         </div>
     </form>
 
@@ -143,10 +95,11 @@
             @endforeach
         </tbody>
     </table>
-    <!-- Pagination Links -->
+
     <div class="d-flex justify-content-center">
         {{ $data->links() }}
     </div>
+
     <!-- Create Modal -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -245,7 +198,7 @@
                                 <option value="">Select Janpad</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="tehsil" class="form-label">Tehsil</label>
                             <select class="form-select" id="edit_tehsil" name="tehsil" required>
                                 <option value="">Select Tehsil</option>
@@ -256,7 +209,40 @@
                             <select class="form-select" id="edit_block" name="block" required>
                                 <option value="">Select Block</option>
                             </select>
+                        </div> -->
+
+                        {{-- Tehsil --}}
+                        <div class="mb-3" id="edit-tehsil-wrapper">
+                            <div id="edit-tehsil-select-wrapper">
+                                <label>Tehsil</label>
+                                <select class="form-select" id="edit_tehsil" name="tehsil">
+                                    <option value="">Select Tehsil</option>
+                                </select>
+                            </div>
+                            <div id="edit-tehsil-input-wrapper" style="display:none;">
+                                <label>Tehsil</label>
+                                <input type="text" name="new_tehsil" id="edit_tehsil_input" placeholder="Enter new tehsil" class="form-control">
+                            </div>
+                            <button type="button" id="toggle-edit-tehsil" class="btn btn-sm btn-outline-primary mt-2">Add New Tehsil</button>
                         </div>
+
+                        {{-- Block --}}
+                        <div class="mb-3" id="edit-block-wrapper">
+                            <div id="edit-block-select-wrapper">
+                                <label>Block</label>
+                                <select class="form-select" id="edit_block" name="block">
+                                    <option value="">Select Block</option>
+                                </select>
+                            </div>
+                            <div id="edit-block-input-wrapper" style="display:none;">
+                                <label>Block</label>
+                                <input type="text" name="new_block" id="edit_block_input" placeholder="Enter new block" class="form-control">
+                            </div>
+                            <button type="button" id="toggle-edit-block" class="btn btn-sm btn-outline-primary mt-2">Add New Block</button>
+                        </div>
+
+
+
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>
@@ -269,23 +255,22 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-$(document).ready(function () {
-    @if(request('mandal_name'))
-        $('#filter_mandal').val("{{ request('mandal_name') }}").trigger('change');
+    $(document).ready(function () {
+        @if(request('mandal_name'))
+            $('#filter_mandal').val("{{ request('mandal_name') }}").trigger('change');
 
-        setTimeout(function () {
-            $('#janpad_name').val("{{ request('janpad_name') }}").trigger('change');
-        }, 500);
+            setTimeout(function () {
+                $('#janpad_name').val("{{ request('janpad_name') }}").trigger('change');
+            }, 500);
 
-        setTimeout(function () {
-            $('#tehsil').val("{{ request('tehsil') }}").trigger('change');
-        }, 1000);
-    @endif
-});
+            setTimeout(function () {
+                $('#tehsil').val("{{ request('tehsil') }}").trigger('change');
+            }, 1000);
+        @endif
+    });
 </script>
 
 <script>
-
     $('#mandal_name, #filter_mandal').change(function() {
         var mandal_name = $(this).val();
         if (mandal_name) {
@@ -302,6 +287,11 @@ $(document).ready(function () {
                             janpadSelect.append('<option value="' + value + '">' + value + '</option>');
                         }
                     });
+                    var selectedJanpad = "{{ request('janpad_name') }}";
+                    console.log(selectedJanpad);
+                    if (selectedJanpad) {
+                        janpadSelect.val(selectedJanpad);
+                    }
                 }
             });
         } else {
@@ -316,9 +306,6 @@ $(document).ready(function () {
         }
         var janpad_name = $(this).val();
 
-        console.log("mandal_name =",mandal_name);
-        console.log("janpad_name =",janpad_name);
-
         if (mandal_name && janpad_name) {
             $.ajax({
                 url: '/get-tehsil-names',
@@ -331,6 +318,11 @@ $(document).ready(function () {
                     $.each(response, function(index, value) {
                         tehsilSelect.append('<option value="' + value + '">' + value + '</option>');
                     });
+
+                    var selectedTeshil = "{{ request('tehsil') }}";
+                    if (selectedTeshil) {
+                        tehsilSelect.val(selectedTeshil);
+                    }
                 }
             });
         } else {
@@ -395,7 +387,6 @@ $(document).ready(function () {
 </script>
 
 <script>
-
     $(document).ready(function(){
         $('#edit_mandal_name').change(function() {
             var mandal_name = $(this).val();
@@ -469,6 +460,34 @@ $(document).ready(function () {
 </script>
 
 <script>
+    $('#toggle-edit-tehsil').on('click', function () {
+        $('#edit-tehsil-select-wrapper, #edit-tehsil-input-wrapper').toggle();
+
+        if ($('#edit-tehsil-input-wrapper').is(':visible')) {
+            $(this).text('Choose Existing Tehsil');
+            $('#edit_tehsil').prop('disabled', true);
+            $('#edit_tehsil_input').prop('disabled', false);
+        } else {
+            $(this).text('Add New Tehsil');
+            $('#edit_tehsil').prop('disabled', false);
+            $('#edit_tehsil_input').prop('disabled', true);
+        }
+    });
+
+    // Block toggle
+    $('#toggle-edit-block').on('click', function () {
+        $('#edit-block-select-wrapper, #edit-block-input-wrapper').toggle();
+
+        if ($('#edit-block-input-wrapper').is(':visible')) {
+            $(this).text('Choose Existing Block');
+            $('#edit_block').prop('disabled', true);
+            $('#edit_block_input').prop('disabled', false);
+        } else {
+            $(this).text('Add New Block');
+            $('#edit_block').prop('disabled', false);
+            $('#edit_block_input').prop('disabled', true);
+        }
+    });
     $(document).on('click', '.edit-btn', function () {
       
         let id = $(this).data('id');
@@ -480,6 +499,7 @@ $(document).ready(function () {
         $('#editForm').attr('action', '/correctdata/' + id);
 
         $('#edit_mandal_name').val(mandal).trigger('change');
+
         setTimeout(function() {
             $('#edit_janpad_name').val(janpad).trigger('change');
         }, 500);
