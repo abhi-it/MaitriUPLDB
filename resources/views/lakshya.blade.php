@@ -56,60 +56,60 @@ use App\Models\Districts;
 				<th rowspan="2"><span data-hi=" क्रं सं" data-en="S. No."></span></th>
 				<th rowspan="2"><span data-hi="मण्डल" data-en="Mandal"></span></th>
 				<th rowspan="2"><span data-hi="जनपद" data-en="Janpad"></span></th>
-				<th colspan="2"><span data-hi="सामान्य घटक" data-en="General Component"></span></th>
-				<th><span data-hi="अनुसूचित जाति घटक" data-en="SCSP Component"></span></th>
-				<th><span data-hi="अनुसूचित जनजाति घटक" data-en="TSP Component"></span></th>
-				<th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th>
+				<th rowspan="0"><span data-hi="सामान्य घटक" data-en="General Component"></span></th>
+				<th ><span data-hi="अनुसूचित जाति घटक" data-en="SCSP Component"></span></th>
+				<th ><span data-hi="अनुसूचित जनजाति घटक" data-en="TSP Component"></span></th>
+				<!-- <th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th> -->
 				</tr>
 				<tr>
-				<th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
-				<th><span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC"></span></th>
+				<!-- <th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
+				<th><span data-hi="अन्य पिछड़ा वर्ग की संख्या" data-en="OBC"></span></th> -->
 				<th><span data-hi="अनुसूचित जाति की संख्या" data-en="Scheduled Caste Category"></span></th>
 				<th><span data-hi="अनुसूचित जनजाति की संख्या" data-en="Scheduled Tribe Category"></span></th>
 
 				</tr>
 			</thead>
-		<tbody>
-		<?php 
-		$i=1; 
-		$general=0;
-		$sc=0;
-		$st=0;
-		$obc=0;
-		?>
-		@foreach($divisions AS $div)
-			<?php $district = Districts::where('division_id','=', $div->id)->where('status','=',1)->where('year','=', $year)->get(); ?>
-			@foreach($district AS $row)
-			<?php 
-				$general+=$row->general_target; 
-				$obc+=$row->obc_target; 
-				$sc+=$row->sc_target;
-				$st+=$row->st_target;  
-			?>
-			<tr>
-				<td><?php echo $i++;?></td>
-				<td>{{$div->name_hindi}}</td>
-				<td>{{$row->name_hindi}}</td>
-				<td>*{{$row->general_target}}</td>
-				<td>*{{$row->obc_target}}</td>
-				<td>*{{$row->sc_target}}</td>
-				<td>*{{$row->st_target}}</td>
-				<td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td>
-			</tr>
-			@endforeach
-		
-		@endforeach
-		<tr style="font-weight:bold;">
-			<td></td>
-			<td></td>
-			<td> <span data-hi="योग" data-en="Total"></span> </td>
-			<td>{{$general}}</td>
-			<td>{{$obc}}</td>
-			<td>{{$sc}}</td>
-			<td>{{$st}}</td>
-			<td>{{$general+$obc+$sc+$st}}</td>
-		</tr>
-		</tbody>
+			<tbody>
+				<?php 
+				$i=1; 
+				$general=0;
+				$sc=0;
+				$st=0;
+				$obc=0;
+				?>
+				@foreach($divisions AS $div)
+					<?php $district = Districts::where('division_id','=', $div->id)->where('status','=',1)->where('year','=', $year)->get(); ?>
+					@foreach($district AS $row)
+					<?php 
+						$general+=$row->general_target; 
+						$obc+=$row->obc_target; 
+						$sc+=$row->sc_target;
+						$st+=$row->st_target;  
+					?>
+					<tr>
+						<td><?php echo $i++;?></td>
+						<td>{{$div->name_hindi}}</td>
+						<td>{{$row->name_hindi}}</td>
+						<td>*{{$row->general_target}}</td>
+						<!-- <td>*{{$row->obc_target}}</td> -->
+						<td>*{{$row->sc_target}}</td>
+						<td>*{{$row->st_target}}</td>
+						<!-- <td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td> -->
+					</tr>
+					@endforeach
+				
+				@endforeach
+				<tr style="font-weight:bold;">
+					<td></td>
+					<td></td>
+					<td> <span data-hi="योग" data-en="Total"></span> </td>
+					<td>{{$general}}</td>
+					<!-- <td>{{$obc}}</td> -->
+					<td>{{$sc}}</td>
+					<td>{{$st}}</td>
+					<!-- <td>{{$general+$obc+$sc+$st}}</td> -->
+				</tr>
+			</tbody>
 		</table>
 </div>
 <!------Summary Page End---------------->
