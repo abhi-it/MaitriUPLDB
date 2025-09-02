@@ -438,7 +438,7 @@
                 gender: "required",
                 permanent_address: "required",
                 // gram_panchayat_name: "required",
-                vikas_khand: "required",
+                // vikas_khand: "required",
                 janpad: "required",
                 bank_name: "required",
                 account_number: "required",

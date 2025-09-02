@@ -415,7 +415,7 @@
                     </div>
                     <div class="form-group col-md-6" id="tehsil-wrapper">
                         <div id="tehsil-select-wrapper">
-                            <label for=""><span data-hi="तहसील" data-en="Tehsil"></span> <span class="text-danger">*</span></label>
+                            <label for=""><span data-hi="तहसील" data-en="Tehsil"></span></label>
                             <select class="form-select" id="tehsil" name="tehsil">
                                 <option value="" data-hi="तहसील चुनें" data-en="Select Tehsil"></option>
                             </select>
@@ -423,7 +423,7 @@
                     </div>
                     <div class="form-group col-md-6" id="block-wrapper">
                         <div id="block-select-wrapper">
-                            <label for=""><span data-hi="विकास खण्ड" data-en="Vikas Khand"></span> <span class="text-danger">*</span></label>
+                            <label for=""><span data-hi="विकास खण्ड" data-en="Vikas Khand"></span></label>
                             <select class="form-select block" id="vikas_khand" name="vikas_khand">
                                 <option value="" data-hi="विकास खंड चुनें" data-en="Select Vikas Khand"></option>
                             </select>
