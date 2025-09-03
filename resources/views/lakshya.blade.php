@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 @php
-use App\Models\Districts;
+use App\Models\Lakshya;
 @endphp
 <div class="container main-div py-5" style="background-color:white; height: 100%;">
 
@@ -59,7 +59,7 @@ use App\Models\Districts;
 				<th rowspan="0"><span data-hi="सामान्य घटक" data-en="General Component"></span></th>
 				<th ><span data-hi="अनुसूचित जाति घटक" data-en="SCSP Component"></span></th>
 				<th ><span data-hi="अनुसूचित जनजाति घटक" data-en="TSP Component"></span></th>
-				<!-- <th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th> -->
+				<th rowspan="2"><span data-hi="योग" data-en="Total Target"></span></th>
 				</tr>
 				<tr>
 				<!-- <th><span data-hi="सामान्य  वर्ग की संख्या" data-en="General"></span></th>
@@ -78,7 +78,7 @@ use App\Models\Districts;
 				$obc=0;
 				?>
 				@foreach($divisions AS $div)
-					<?php $district = Districts::where('division_id','=', $div->id)->where('status','=',1)->where('year','=', $year)->get(); ?>
+					<?php $district = Lakshya::where('division_id','=', $div->id)->where('status','=',1)->where('year','=', $year)->get(); ?>
 					@foreach($district AS $row)
 					<?php 
 						$general+=$row->general_target; 
@@ -94,6 +94,7 @@ use App\Models\Districts;
 						<!-- <td>*{{$row->obc_target}}</td> -->
 						<td>*{{$row->sc_target}}</td>
 						<td>*{{$row->st_target}}</td>
+						<td>* - {{$row->general_target + $row->sc_target + $row->st_target}}</td>
 						<!-- <td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td> -->
 					</tr>
 					@endforeach
@@ -107,6 +108,7 @@ use App\Models\Districts;
 					<!-- <td>{{$obc}}</td> -->
 					<td>{{$sc}}</td>
 					<td>{{$st}}</td>
+					<td>{{$general+$sc+$st}}</td>
 					<!-- <td>{{$general+$obc+$sc+$st}}</td> -->
 				</tr>
 			</tbody>
