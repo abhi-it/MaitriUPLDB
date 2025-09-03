@@ -188,11 +188,60 @@
             <hr>
 
             <div class="tab">
-                <h3><span data-hi="नियम एवं शर्तें" data-en="Terms and conditions"></span>      </h3>
+                <!-- <h3><span data-hi="नियम एवं शर्तें" data-en="Terms and conditions"></span>      </h3> -->
                 <div class="row">
 
                     <div class="form-group col-md-12" style="font-size: 16px;">
-                        <h5><b>
+<!-- 
+                    <iframe src="{{ asset('documents/terms-and-conditions-2025-09-02.pdf') }}" 
+                            width="100%" 
+                            height="800px" 
+                            style="border:none;">
+                    </iframe> -->
+
+                    <div id="pdf-container" style="width:100%; padding-bottom:20px;">
+    <div id="pdf-viewer" style="display:flex; justify-content:center;"></div>
+</div>
+
+<!-- Checkbox below PDF -->
+<div style="margin-top:10px; text-align:center;">
+ <span class="text-danger">*</span>
+ <span data-hi=" अगर आप सहमत हैं तो चिन्हित करें" data-en=" Mark if you agree"> </span> </label>
+                        <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}value="1"><label for="inputEmail4"> 
+                             
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    const url = "{{ asset('documents/terms_n_condition.pdf') }}";
+
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+            const scale = 0.8; // 🔎 80% zoom
+            const viewport = page.getViewport({ scale: scale });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            document.getElementById('pdf-viewer').appendChild(canvas);
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            page.render(renderContext);
+
+            // ✅ Adjust container height so PDF fits neatly
+            document.getElementById('pdf-container').style.height = (viewport.height + 40) + "px"; 
+        });
+    });
+</script>
+
+
+                        <!-- <h5><b>
                         <span data-hi="राष्ट्रीय गोकुल मिशन अन्तर्गत कृत्रिम गर्भाधान आच्छादन बढ़ाने हेतु स्वरोजगारी मैत्री की
                                     स्थापना नियम-शर्तें निम्न प्रकार हैं-" data-en="To increase the artificial insemination coverage under National Gokul Mission, the rules and conditions for setting up Swarojgari Maitri are as follows-"></span></b></h5>
                         <br><b>1:- <span data-hi="योग्यता" data-en="Ability"></span>   : </b><br>
@@ -219,14 +268,14 @@
 
                         <span style="color:Red">
                         <span data-hi="नोट :- उ.प्र. पशुधन विकास परिषद द्वारा जनपदवार चयन किए जाने वाले स्वरोजगारी मैत्री (मल्टी परपज ए.आई. टेक्निशियन इन रूरल इंडिया) की संख्या पोर्टल पर उपलब्ध है।" data-en="Note:- The number of self-employed Maitri (Multi Purpose AI Technician in Rural India) selected district-wise by the UP Pashudhan Vikas Parishad is available on the portal."></span>
-                        </span>
+                        </span> -->
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputEmail4"> <span data-hi="अगर आप सहमत हैं तो चिन्हित करें" data-en="Mark if you agree"> </span> </label> <span class="text-danger">*</span>
                         <input type="checkbox" name="tc" id="tc" {{ $result->t_and_c == '1' ? 'checked' : '' }}
                             value="1">
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
