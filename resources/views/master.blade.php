@@ -341,15 +341,11 @@
             var day = $("#training_certificate_period_in_days")[0].selectedIndex;
             var name = $('#caste_certificate').val().split('\\').pop();
             caste_certificate_name = name.split('.')[0];
-
-            if (caste_certificate_name == '' && (category == 3 || category == 4)) {
-
+         
+            if (caste_certificate_name == '' && (category == 2 || category == 3 || category == 4)) {
                 return false;
-
             } else {
-
                 return true;
-
             }
 
         }, "Please upload caste certificate");
@@ -443,7 +439,7 @@
                 bank_name: "required",
                 account_number: "required",
                 ifsc_code: "required",
-                pfms: "required",
+                // pfms: "required",
                 // letter_address: "required",
                 high_board_name: "required",
                 high_passing_year: "required",
@@ -535,7 +531,7 @@
                     checkFileSize: 2097152,
                 },
                 "caste_certificate": {
-                    required: true,
+                    // required: true,
                     checkCategory: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
                     checkFileSize: 2097152,
