@@ -222,7 +222,7 @@ class DashboardController extends Controller
             });
         }
 
-        $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+        $districts = Districts::where('status', '=', 1)->whereNull('year')->orderBy('name_eng', 'ASC')->get();
 
         $heading = 'नये आवेदन मैत्री';
         $statusButtonApprovedRejectedShow = 0;
