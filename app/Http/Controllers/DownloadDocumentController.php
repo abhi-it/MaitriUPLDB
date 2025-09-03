@@ -17,6 +17,7 @@ class DownloadDocumentController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'title_hindi' => 'required|string|max:255',
             'file'  => 'required|mimes:pdf,doc,docx,jpg,png|max:10240'
         ]);
         
@@ -37,6 +38,7 @@ class DownloadDocumentController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:255',
+            'title_hindi' => 'required|string|max:255',
             'file'  => 'nullable|mimes:pdf,doc,docx,jpg,png|max:10240'
         ]);
 
