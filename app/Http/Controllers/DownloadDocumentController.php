@@ -26,6 +26,7 @@ class DownloadDocumentController extends Controller
 
         Document::create([
             'title' => $request->title,
+            'title_hindi' => $request->title_hindi,
             'file_path' => 'documents/' . $fileName
         ]);
 
@@ -53,6 +54,7 @@ class DownloadDocumentController extends Controller
         }
 
         $document->title = $request->title;
+        $document->title_hindi = $request->title_hindi;
         $document->save();
 
         return back()->with('success', 'Document updated successfully');
