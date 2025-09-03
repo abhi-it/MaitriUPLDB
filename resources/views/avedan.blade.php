@@ -996,7 +996,7 @@
 
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">
-                        <span data-hi=" राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण - पत्र अपलोड करें" data-en="Upload health certificate issued by government medical officer"> </span>  
+                        <span data-hi=" राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण - पत्र अपलोड करें (यह केवल सत्यापन के समय ही आवश्यक है)" data-en="Upload health certificate issued by government medical officer (This is only necessary at the time of verification.)"> </span>  
                        </label>
                      
                         <input type="file" class="form-control" name="health_certificate" id="health_certificate">
