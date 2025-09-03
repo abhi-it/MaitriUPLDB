@@ -530,7 +530,7 @@
                     checkFileSize: 2097152,
                 },
                 "health_certificate": {
-                    required: true,
+                    // required: true,
                     extension: "png|PNG|jpg|JPG|jpeg|JPEG",
                     checkFileSize: 2097152,
                 },
