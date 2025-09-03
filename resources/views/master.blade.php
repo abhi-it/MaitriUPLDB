@@ -203,8 +203,8 @@
             dateFormat: 'dd-mm-yy',
             changeYear: true,
             changeMonth: true,
-            minDate: '03-09-1985', // Use 'dd-mm-yy' format
-            maxDate: '03-09-2007', // Use 'dd-mm-yy' format
+            minDate: '31-08-1985', // Use 'dd-mm-yy' format
+            maxDate: '31-08-2007', // Use 'dd-mm-yy' format
             onSelect: function() {
                 $(this).valid();
             }
