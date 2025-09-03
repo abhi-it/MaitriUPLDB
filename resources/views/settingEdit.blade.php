@@ -24,7 +24,7 @@
 				  </div>
 				</div>
 				</div>
-				@if($data->id!=1)
+				
 				<div class="form-group col-md-12">
 				<div class="row">
 				  <label for="inputEmail4" class="col-md-4 col-form-label text-md-right">अंतिम तिथि  </label>
@@ -33,7 +33,7 @@
 				  </div>
 				</div>
 				</div>
-				@endif
+				
 
 				<div class="row">
 			    <div class="form-group col-md-8 offset-md-4">

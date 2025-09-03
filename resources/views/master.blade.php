@@ -188,9 +188,15 @@
 }
 
     </style>
-
+    @php
+    use App\Models\Setting;
+    $settings = Setting::first();
+    @endphp
     <script>
     $(document).ready(function() {
+        var minDate = "{{ \Carbon\Carbon::parse($settings->start_date)->format('d-m-Y') }}";
+        var maxDate = "{{ \Carbon\Carbon::parse($settings->end_date)->format('d-m-Y') }}";
+
         var currentDate = new Date();
         var currentYear = currentDate.getFullYear();
         var currentMonth = currentDate.getMonth() + 1;
@@ -203,8 +209,8 @@
             dateFormat: 'dd-mm-yy',
             changeYear: true,
             changeMonth: true,
-            minDate: '31-08-1985', // Use 'dd-mm-yy' format
-            maxDate: '31-08-2007', // Use 'dd-mm-yy' format
+            minDate: minDate, // Use 'dd-mm-yy' format
+            maxDate: maxDate, // Use 'dd-mm-yy' format
             onSelect: function() {
                 $(this).valid();
             }
@@ -221,14 +227,14 @@
             dateFormat: 'dd-mm-yy',
             changeMonth: true,
             changeYear: true,
-            yearRange: "-0:+1",
+            // yearRange: "-0:+1",
         });
 
         $("#end_date").datepicker({
             dateFormat: 'dd-mm-yy',
             changeMonth: true,
             changeYear: true,
-            yearRange: "+0:+1",
+            // yearRange: "+0:+1",
         });
 
     });

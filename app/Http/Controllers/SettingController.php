@@ -79,10 +79,10 @@ class SettingController extends Controller
     {
 		//echo '<pre>';print_r($setting->id);exit;
         $setting->start_date =  \Carbon\Carbon::parse($request->get('start_date'))->format('Y-m-d');
-        if($setting->id!=1)
+        // if($setting->id!=1)
 			$setting->end_date =  \Carbon\Carbon::parse($request->get('end_date'))->format('Y-m-d');
-        else
-			$setting->end_date = null;
+        // else
+			// $setting->end_date = null;
         $setting->save();
         return redirect('/setting')->with('success', 'Setting updated successfully!');
     }
