@@ -1064,7 +1064,8 @@
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">
                         <span data-hi="पीएफएमएस " data-en="PFMS"></span>    
-                        </label> <span class="text-danger">*</span>
+                        </label> 
+                        <!-- <span class="text-danger">*</span> -->
                         <input type="text" class="form-control" id="pfms" name="pfms"
                             placeholder="पीएफएमएस" autocomplete="off" value="{{ $result->pfms }}">
                     </div>
