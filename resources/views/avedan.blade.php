@@ -988,7 +988,7 @@
 
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">
-                        <span data-hi="जाति (अनुसूचित जाति) श्रेणी हेतु न्याय अधिकारी द्वारा जारी प्रमाण - पत्र अपलोड करें" data-en="Upload certificate issued by judicial officer for caste (SC) category"> </span>  
+                        <span data-hi="जाति (अनुसूचित जाति) श्रेणी हेतु न्याय अधिकारी द्वारा जारी प्रमाण - पत्र अपलोड करें" data-en="Upload certificate issued by judicial officer for caste (SC, ST) category"> </span>  
                         </label> <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 2
                             MB)</small>
                         <input type="file" class="form-control" name="caste_certificate" id="caste_certificate">
