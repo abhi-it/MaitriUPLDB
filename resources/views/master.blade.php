@@ -348,7 +348,7 @@
             var name = $('#caste_certificate').val().split('\\').pop();
             caste_certificate_name = name.split('.')[0];
          
-            if (caste_certificate_name == '' && (category == 2 || category == 3 || category == 4)) {
+            if (caste_certificate_name == '' && (category == 3 || category == 4)) {
                 return false;
             } else {
                 return true;
