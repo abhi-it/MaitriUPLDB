@@ -16,4 +16,9 @@ class Divisions extends Model
         'long',
         'place_id',
     ];
+
+    public function districts()
+    {
+        return $this->hasMany(Districts::class, 'division_id', 'id');
+    }
 }

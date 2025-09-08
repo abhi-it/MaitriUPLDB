@@ -26,6 +26,10 @@
                     class="btn btn-primary mb-2"></a>
                 <a href="{{ route('deo-user-step1') }}" data-hi="डीईओ आईडी बनाएं" data-en="Create DEO ID"
                     class="btn btn-primary mb-2"></a>
+
+                <a href="{{ route('all-cvo') }}" data-hi="सारे सीवीओ" data-en="All CVO's Details"
+                    class="btn btn-primary mb-2"></a>
+
             </div>
         </div>
     </div>

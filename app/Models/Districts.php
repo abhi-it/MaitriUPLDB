@@ -20,4 +20,15 @@ class Districts extends Model
     {
         return $this->hasMany(MaitriDetail::class, 'district_id');
     }
+
+
+    public function division()
+    {
+        return $this->belongsTo(Divisions::class, 'division_id', 'id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'district_id', 'id');
+    }
 }

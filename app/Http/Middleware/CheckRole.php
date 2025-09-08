@@ -181,6 +181,7 @@ class CheckRole
                 'documents-store',
                 'documents-update',
                 'documents-destroy',
+                'all-cvo',
                 
                 'correctdata-get',
                 'correctdata-store',
@@ -361,6 +362,7 @@ class CheckRole
                 'documents-store',
                 'documents-update',
                 'documents-destroy',
+                'all-cvo',
 
                 'correctdata-get',
                 'correctdata-store',
