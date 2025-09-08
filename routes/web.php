@@ -479,6 +479,10 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("edit-user/{id}/edit", [App\Http\Controllers\OperatorIdController::class, 'editUser'])->name('edit-user');
     Route::post("update-user", [App\Http\Controllers\OperatorIdController::class, 'updateUser'])->name('update-user');
     Route::delete("user-delete/{id}", [App\Http\Controllers\OperatorIdController::class, 'userDelete'])->name('user-delete');
+
+    //All CVO's Details
+    Route::get("all-cvo", [App\Http\Controllers\OperatorIdController::class, 'allCvo'])->name('all-cvo');
+
     
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');

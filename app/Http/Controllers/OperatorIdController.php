@@ -101,4 +101,10 @@ class OperatorIdController extends Controller
         DeoUser::where('user_id', $id)->delete();
         return redirect()->back()->with('success', 'User deleted successfully!');
     }
+
+    public function allCvo()
+    {
+        $getCvos = User::with(['district', 'division'])->where('user_type', 'District Officer')->get();
+        return view('operatorId.allcvo', compact('getCvos'));
+    }
 }

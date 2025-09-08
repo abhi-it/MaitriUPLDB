@@ -1741,12 +1741,12 @@
                                 <span data-hi="आवेदन" data-en="Applications"></span>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('lakshya') }}">
                                 <span data-hi="स्वरोजगारी मैत्री (पशु मित्र) की संख्या"
                                     data-en="Number of Swarozgari Maitri (Animal Friends)"></span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{ url('application-status') }}">
                                 <span data-hi="आवेदन की स्थिति जानिए"
@@ -1758,11 +1758,11 @@
                                 <span data-hi="डाउनलोड" data-en="Download"></span>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('demandRequests') }}">
                                 <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
 
 
@@ -1778,11 +1778,11 @@
                             <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri Registration"></span>
                     </a>
                     </li> -->
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('farmer-register') }}">
                                 <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
                             </a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
