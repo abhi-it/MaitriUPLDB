@@ -218,7 +218,7 @@
     const loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then(function(pdf) {
         pdf.getPage(1).then(function(page) {
-            const scale = 0.8; // 🔎 80% zoom
+            const scale = 0.6; // 🔎 80% zoom
             const viewport = page.getViewport({ scale: scale });
 
             const canvas = document.createElement('canvas');

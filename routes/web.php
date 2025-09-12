@@ -93,7 +93,9 @@ Route::get('/routeClear', function () {
 /*------------------------------------------------*/
 
 Route::get('/', function () {
-    return view('home');
+    $result = App\Models\Setting::find(2);
+	$end_date = \Carbon\Carbon::parse($result->end_date, 'Asia/Kolkata')->endOfDay();
+    return view('home', compact('end_date'));
 });
 
 Route::get('changeLang', [LangController::class, 'change'])->name('changeLang');
