@@ -248,7 +248,7 @@ color: #000;
                 <div class="marquee-content">
                     <span class="pill">
                         <span class="dot" ></span> 
-                        <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
+                        <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं आवेदन करे" data-en="Apply yourself for Maitri"></span>
                     </span>
             
                     <span class="pill">

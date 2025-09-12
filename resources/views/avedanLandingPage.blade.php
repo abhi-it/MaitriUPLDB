@@ -216,7 +216,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             <span class="img-contaner">
             <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
-            <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
+            <span aria-hidden="true" data-hi="मैत्री आवेदन के लिए केवल:" data-en="Only for Maitri Application:"></span>
            
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
@@ -224,24 +224,24 @@ animation: glow-pulse 2.2s ease-in-out infinite;
          </span> -->
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं आवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
       </div>
       <div class="marquee-content" aria-hidden="true">
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं आवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं आवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
         
          <!-- <span class="pill" >
             <span class="img-contaner">
             <img src="{{ asset('images/start_image.png') }}" alt="">
             </span>
-            <span aria-hidden="true" data-hi="मैत्री अवदान के लिए केवल:" data-en="Only for Maitri Application:"></span>
+            <span aria-hidden="true" data-hi="मैत्री आवेदन के लिए केवल:" data-en="Only for Maitri Application:"></span>
             
              <span class="img-contaner">
             <span data-hi="दिन शेष हैं" data-en="days left"></span>
@@ -272,7 +272,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 <!-- Maquee Code End -->
 <div class="container main-div py-5" >
    <div class="star-cards star-card-left">
-         मैत्री अवदान के लिए केवल:
+         मैत्री आवेदन के लिए केवल:
           <span class="countdown" id="countdown-a"></span>
          दिन शेष हैं 
    </div>
@@ -301,7 +301,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
         </div>
         <div class="col-12 col-md-12">
           <span class="glow-badge p-0">
-                           <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="New"></span>
+                           <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="नया" data-en="New"></span>
                         </span>
            <label for="inputPassword4" style="font-weight:bold;">
            <span data-hi="आवेदन करने की अंतिम तिथि" data-en="Last date for application">
