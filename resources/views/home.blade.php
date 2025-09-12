@@ -258,7 +258,7 @@ color: #000;
                     <span class="pill">
                         <span class="dot" ></span> 
                         <span aria-hidden="true" data-hi='आवेदन करने के लिए' data-en='Click on the'></span>
-                        <a href="https://maitriupldb.in/"><span aria-hidden="true" data-hi="आवेदन पृष्ठ" data-en="application menu"></span></a>
+                        <a href="https://maitriupldb.in/avedan-karein"><span aria-hidden="true" data-hi="आवेदन पृष्ठ" data-en="application menu"></span></a>
                         <span aria-hidden="true" data-hi='पर क्लिक करें' data-en='to apply'>
                     </span>
                     

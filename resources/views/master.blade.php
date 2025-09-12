@@ -1454,7 +1454,7 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="glow-badge p-0">
                                             <!-- <span class="glow-dot" aria-hidden="true"></span> -->
-                                            <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="Now"></span>
+                                            <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="New"></span>
                                         </span>
                                         <span data-hi="आवेदन" data-en="Application"></span>
                                     </div>
