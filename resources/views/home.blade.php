@@ -19,6 +19,13 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
 
 
 <style>
+    :root {
+--brand-bg: #0b3d91; /* Deep blue */
+--brand-accent: #fdd835; /* Amber */
+--brand-text: #ffffff;
+--glow: #ea7328; /* Neon green */
+}
+
 .swiper-container {
     width: 100%;
     overflow: hidden;
@@ -153,13 +160,112 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
     text-decoration: none;
     color: #fff !important;
 }
+
+/* === Marquee Bar === */
+.marquee-bar {
+position: relative;
+width: 100%;
+background: linear-gradient(90deg, #a6dafa, #a6dafa 65%);
+color: var(--brand-text);
+overflow: hidden;
+border-bottom: 2px solid rgba(255,255,255,.2);
+}
+
+
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  white-space: nowrap;
+  padding: .6rem 1rem;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+
+
+/* @keyframes marquee-scroll {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+/* to { transform: translateX(-100%); } 
+} */
+
+
+@keyframes marquee-scroll {
+  from { transform: translateX(100%); }  /* start fully on the right */
+  to   { transform: translateX(-100%); } /* move completely to the left */
+}
+
+
+.pill {
+display: inline-flex;
+align-items: center;
+gap: .5rem;
+background: rgba(255,255,255,.08);
+border: 1px solid rgba(255,255,255,.15);
+padding: .35rem .8rem;
+border-radius: 999px;
+font-weight: 600;
+letter-spacing: .2px;
+color: #000;
+}
+.pill .img-container{
+   width: 30px;
+   height:30px;
+   display: block;
+}
+.pill img{
+   width: 30px;
+    scale: 1;
+       animation: scales 1s linear infinite;
+}
+@keyframes scales {
+   to{
+      scale: 0.8
+   }
+   from{
+      /* opacity: 1; */
+        scale: 1
+   }
+}
+.dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--glow); box-shadow: 0 0 0 .15rem rgba(253,216,53,.25); }
+
+
+.countdown { font-variant-numeric: tabular-nums; }
+
+
+/* Duplicate the track content to create an infinite loop illusion */
+.marquee-content { display: inline-flex; align-items: center; gap: 2rem; padding-right: 2rem; }
 </style>
 
 
 @extends('master')
 @section('content')
 <section>
+
     <div class="container-fluid p-0">
+         <div id="maitri-marquee" class="marquee-bar" aria-live="polite" data-deadline="2025-09-17T23:59:59+05:30" data-applicants="100">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span class="pill">
+                        <span class="dot" ></span> 
+                        <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
+                    </span>
+            
+                    <span class="pill">
+                        <span class="dot" ></span> 
+                        <span aria-hidden="true" data-hi="अब आवेदन करने की अंतिम तिथि {{\Carbon\Carbon::parse($end_date)->format('d/m/Y')}}" data-en="The last date to apply is {{\Carbon\Carbon::parse($end_date)->format('d/m/Y')}}"></span>
+                    </span>
+                    <span class="pill">
+                        <span class="dot" ></span> 
+                        <span aria-hidden="true" data-hi='आवेदन करने के लिए' data-en='Click on the'></span>
+                        <a href="https://maitriupldb.in/"><span aria-hidden="true" data-hi="आवेदन पृष्ठ" data-en="application menu"></span></a>
+                        <span aria-hidden="true" data-hi='पर क्लिक करें' data-en='to apply'>
+                    </span>
+                    
+                
+                </div>
+            </div>
+        </div>
         <div class="row m-0">
             <div class="col-lg-12 p-0">
                 <div id="home-slider" class="carousel slide">
@@ -185,6 +291,73 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
         </div>
     </div>
 </section>
+
+<script>
+(function () {
+const root = document.getElementById('maitri-marquee');
+const deadlineStr = root?.getAttribute('data-deadline');
+const applicantsInitial = root?.getAttribute('data-applicants');
+
+
+// --- Countdown logic ---
+const deadline = deadlineStr ? new Date(deadlineStr) : null;
+const outA = document.getElementById('countdown-a');
+const outB = document.getElementById('countdown-b');
+
+
+function formatDDHHMMSS(ms) {
+if (ms <= 0) return '00d : 00h : 00m : 00s';
+const sec = Math.floor(ms / 1000);
+const days = Math.floor(sec / 86400);
+const hours = Math.floor((sec % 86400) / 3600);
+const minutes = Math.floor((sec % 3600) / 60);
+const seconds = sec % 60;
+const pad = n => String(n).padStart(2, '0');
+return `${days}d : ${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
+}
+
+
+function tick() {
+const now = new Date();
+const diff = deadline ? (deadline.getTime() - now.getTime()) : 0;
+const txt = formatDDHHMMSS(diff);
+if (outA) outA.textContent = txt;
+if (outB) outB.textContent = txt;
+if (diff <= 0) clearInterval(timer);
+}
+
+
+const timer = setInterval(tick, 1000);
+tick();
+
+
+// --- Applicants number (manual or programmatic) ---
+const countEl = document.getElementById('applicants-count');
+const countNew = document.getElementById('applicants-count-new');
+function setApplicants(n) {
+const num = Number(n) || 0;
+countEl.textContent = num.toLocaleString('en-IN');
+countNew.textContent = num.toLocaleString('en-IN');
+}
+if (countEl) setApplicants(applicantsInitial);
+if (countNew) setApplicants(applicantsInitial);
+
+
+// OPTIONAL: If you have a global number or endpoint, you can update dynamically.
+// Example 1: update via global JS value set elsewhere: window.MAITRI_APPLICANTS_COUNT
+if (typeof window.MAITRI_APPLICANTS_COUNT !== 'undefined') {
+setApplicants(window.MAITRI_APPLICANTS_COUNT);
+}
+
+
+// Example 2: fetch from an API endpoint that returns { count: 12345 }
+// Uncomment and set the correct URL:
+// fetch('/api/applicants-count')
+// .then(r => r.json())
+// .then(data => setApplicants(data.count))
+// .catch(() => {});
+})();
+</script>
 
 <section class="py-4">
     <div class="container">

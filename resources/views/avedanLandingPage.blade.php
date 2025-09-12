@@ -149,6 +149,15 @@ animation: glow-pulse 2.2s ease-in-out infinite;
       scale: 1;
    }
 }
+.star-card-center{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box-card{
+    height: 400px;
+    width: 400px;
+}
 </style>
 
 @php
@@ -161,7 +170,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
         
         <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
 
          <!-- <span class="pill" >
@@ -176,17 +185,17 @@ animation: glow-pulse 2.2s ease-in-out infinite;
          </span> -->
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
       </div>
       <div class="marquee-content" aria-hidden="true">
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
          <span class="pill">
             <span class="dot" ></span> 
-            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitr"></span>
+            <span aria-hidden="true" data-hi="मैत्री हेतु स्वयं अवेदन करे" data-en="Apply yourself for Maitri"></span>
          </span>
         
          <!-- <span class="pill" >
@@ -209,6 +218,16 @@ animation: glow-pulse 2.2s ease-in-out infinite;
    <div class="glow-sign" role="status" aria-live="polite">
       <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
       <span class="glow-number" id="applicants-count">0</span>
+   </div>
+</div>
+<div class="star-card-center">
+   <div class="star-cards box-card">
+      <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
+      <span class="glow-number" id="applicants-count">0</span>
+      <span data-hi="न्यूनतम शैक्षिक योग्यता" data-en="Minimum educational qualification" class="fw-bold"></span>
+      <span data-hi="इंटरमीडिएट उत्तीर्ण" data-en="Passed Intermediate" class="fw-bold fs-4"></span>
+      <small data-hi="जीव विज्ञान के लिए वरीयता" data-en="Preference for Biology"></small>
+         
    </div>
 </div>
 <!-- Maquee Code End -->
@@ -254,7 +273,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
                      {{-- Active: Show Apply Link --}}
                      <a class="nav-link" href="{{ url('application-form') }}">
                         <h3>
-                           <span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span>
+                           <button class="btn btn-primary"><span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span></button>
                         </h3>
                      </a>
                @else
