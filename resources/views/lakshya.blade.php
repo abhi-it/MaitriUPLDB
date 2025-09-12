@@ -87,16 +87,16 @@ use App\Models\Lakshya;
 						$st+=$row->st_target;  
 					?>
 					<tr>
-						<td><?php echo $i++;?></td>
-						<td>{{$div->name_hindi}}</td>
-						<td>{{$row->name_hindi}}</td>
-						<td>*{{$row->general_target}}</td>
-						<!-- <td>*{{$row->obc_target}}</td> -->
-						<td>*{{$row->sc_target}}</td>
-						<td>*{{$row->st_target}}</td>
-						<td>* - {{$row->general_target + $row->sc_target + $row->st_target}}</td>
-						<!-- <td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td> -->
-					</tr>
+                        <td><?php echo $i++;?></td>
+                        <td>{{$div->name_hindi}}</td>
+                        <td>{{$row->name_hindi}}</td>
+                        <td>*{{round($row->general_target)}}</td>
+                        <!-- <td>*{{$row->obc_target}}</td> -->
+                        <td>*{{round($row->sc_target)}}</td>
+                        <td>*{{round($row->st_target)}}</td>
+                        <td>* - {{$row->general_target + $row->sc_target + $row->st_target}}</td>
+                        <!-- <td>* - {{$row->general_target + $row->obc_target + $row->sc_target + $row->st_target}}</td> -->
+                    </tr>
 					@endforeach
 				
 				@endforeach
