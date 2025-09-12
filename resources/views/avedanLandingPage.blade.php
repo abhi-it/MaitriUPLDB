@@ -302,7 +302,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
         </div>
         <div class="col-12 col-md-12">
           <span class="glow-badge p-0">
-                           <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="नया" data-en="New"></span>
+                           <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="Now"></span>
                         </span>
            <label for="inputPassword4" style="font-weight:bold;">
            <span data-hi="आवेदन करने की अंतिम तिथि" data-en="Last date for application">
