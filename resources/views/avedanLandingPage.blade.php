@@ -158,6 +158,45 @@ animation: glow-pulse 2.2s ease-in-out infinite;
     height: 400px;
     width: 400px;
 }
+
+
+.glow-badge__pill {
+  
+  background-color: #18191f;
+  color: #fff;
+  /* box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+    2px 2px 10px #00000080, 2px 2px 3px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080; */
+  border-radius: 29px;
+  padding: 1px 8px;
+  margin: 0 0px;
+  animation: animate 3s linear infinite;
+  text-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
+    0 0 200px #0072ff;
+    font-size: 11px;
+  }
+.glow_badge__pill{
+     animation-delay: 0.1s;
+}
+
+@keyframes animate {
+  0% {
+  background-color: #000000;
+  }
+25% {
+     background-color: #ff0000;
+  }
+  50% {
+     background-color: #0400ff;
+  }
+   75% {
+     background-color: #004d11;
+  }
+  100% {
+   background-color: #57009eff;
+  }
+}
 </style>
 
 @php
@@ -222,8 +261,8 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 </div> -->
 <div class="star-card-center">
    <div class="star-cards box-card">
-      <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
-      <span class="glow-number" id="applicants-count">0</span>
+      <!-- <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
+      <span class="glow-number" id="applicants-count">0</span> -->
       <span data-hi="न्यूनतम शैक्षिक योग्यता" data-en="Minimum educational qualification" class="fw-bold"></span>
       <span data-hi="इंटरमीडिएट उत्तीर्ण" data-en="Passed Intermediate" class="fw-bold fs-4"></span>
       <small data-hi="जीव विज्ञान के लिए वरीयता" data-en="Preference for Biology"></small>
@@ -238,7 +277,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
          दिन शेष हैं 
    </div>
    <div class="star-cards star-card-right">
-        अब तक कुल आवेदन: <span class="glow-number" id="applicants-count-new">0</span>
+        अब तक कुल आवेदन: <span class="glow-number" id="applicants-count">0</span>
    </div>
     <!--First row Start -->
     <h3 class="text-center fw-bold m-4">
@@ -261,6 +300,9 @@ animation: glow-pulse 2.2s ease-in-out infinite;
             : </label>   {{\Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}
         </div>
         <div class="col-12 col-md-12">
+          <span class="glow-badge p-0">
+                           <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="New"></span>
+                        </span>
            <label for="inputPassword4" style="font-weight:bold;">
            <span data-hi="आवेदन करने की अंतिम तिथि" data-en="Last date for application">
             : </label> {{\Carbon\Carbon::parse($result->end_date)->format('d/m/Y')}}
@@ -271,6 +313,7 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 
                @if($avedanStart) 
                      {{-- Active: Show Apply Link --}}
+                       
                      <a class="nav-link" href="{{ url('application-form') }}">
                         <h3>
                            <button class="btn btn-primary"><span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span></button>
