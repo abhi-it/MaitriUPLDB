@@ -1456,7 +1456,7 @@
                                             <!-- <span class="glow-dot" aria-hidden="true"></span> -->
                                             <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="Now"></span>
                                         </span>
-                                        <span data-hi="आवेदन" data-en="Applications"></span>
+                                        <span data-hi="आवेदन" data-en="Application"></span>
                                     </div>
                                 </a>
                             </li>
