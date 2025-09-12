@@ -272,12 +272,13 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 <!-- Maquee Code End -->
 <div class="container main-div py-5" >
    <div class="star-cards star-card-left">
-         मैत्री आवेदन के लिए केवल:
-          <span class="countdown" id="countdown-a"></span>
-         दिन शेष हैं 
+         <span data-hi="मैत्री आवेदन के लिए केवल:" data-en="For Maitri Application Only"></span>
+         <span class="countdown" id="countdown-a"></span>
+         <span data-hi="दिन शेष हैं" data-en="days left"></span>
+         
    </div>
    <div class="star-cards star-card-right">
-        अब तक कुल आवेदन: <span class="glow-number" id="applicants-count">0</span>
+        <span data-hi="अब तक कुल आवेदन:" data-en="Total applications:"></span> <span class="glow-number" id="applicants-count">0</span>
    </div>
     <!--First row Start -->
     <h3 class="text-center fw-bold m-4">
