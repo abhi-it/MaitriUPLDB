@@ -214,12 +214,12 @@ animation: glow-pulse 2.2s ease-in-out infinite;
 </div>
 
 
-<div class="glow-wrap">
+<!-- <div class="glow-wrap">
    <div class="glow-sign" role="status" aria-live="polite">
       <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
       <span class="glow-number" id="applicants-count">0</span>
    </div>
-</div>
+</div> -->
 <div class="star-card-center">
    <div class="star-cards box-card">
       <span class="label" data-hi="आवेदकों की संख्या" data-en="Number of Applicants:"> </span>
