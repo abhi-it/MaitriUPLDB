@@ -1418,7 +1418,7 @@
                             <!-- Admin Stock Form Menu Start -->
                             @endif
 
-                            @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
+                            @if(auth()->user()->user_type == 'Admin')
                             <li class="nav-item  {{ request()->is('view-dfs') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('view-dfs') }}">
                                     <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span></a>
