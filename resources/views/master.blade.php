@@ -1284,7 +1284,24 @@
                                     <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
+                             <li
+                                class="nav-item dropdown {{ request()->is('demandRequests') || request()->is('demand-requests-list') ? 'active' : '' }}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" key="SCHEME">
+                                    <span data-hi="मांग अनुरोध"
+                                        data-en="Demand Request"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url('demandRequests') }}">
+                                        <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('demand-requests-list') }}">
+                                        <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                                 <a class="nav-link" href="{{ url('demandRequests') }}">
                                     <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                                 </a>
@@ -1293,7 +1310,7 @@
                                 <a class="nav-link" href="{{ url('demand-requests-list') }}">
                                     <span data-hi="मांग अनुरोध सूची" data-en="Demand Request List"></span>
                                 </a>
-                            </li>
+                            </li> -->
 
                             <li class="nav-item {{ request()->is('latest-updates') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('latest-updates') }}">
@@ -1315,7 +1332,7 @@
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
                             <li
-                                class="nav-item dropdown {{ request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
+                                class="nav-item dropdown {{ request()->is('view-dfs') || request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें"
@@ -1346,6 +1363,10 @@
                                         <span data-hi="दस्तावेज़ डाउनलोड" data-en="Download Document"></span>
                                     </a>
 
+                                  
+                                    <a class="dropdown-item" href="{{ url('view-dfs') }}">
+                                    <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span></a>
+                          
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a> -->
@@ -1419,10 +1440,6 @@
                             @endif
 
                             @if(auth()->user()->user_type == 'Admin')
-                            <li class="nav-item  {{ request()->is('view-dfs') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('view-dfs') }}">
-                                    <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span></a>
-                            </li>
                             <li class="nav-item  {{ request()->is('operator-id') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('operator-id') }}">
                                     <span data-hi="ऑपरेटर आईडी प्रबंधन" data-en="Operator ID Management"></span></a>
