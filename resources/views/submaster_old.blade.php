@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -1006,12 +1006,9 @@
 
 
                     </div>
-                   
+
                     <div class="tp-right" style="float: right;">
-                      <select class="switchlang">
-                            <option value="hi"> Hindi </option>
-                            <option value="en"> English</option>
-                        </select>
+
 
                         @if (Route::has('login'))
                         <span>
@@ -1086,15 +1083,9 @@
                                     <a class="nav-link" href="{{ url('/request-list') }}">सेवा अनुरोध सूची </a>
                                 </li>
                                 <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('demandRequests') }}">
-                                    मांग अनुरोध
-                                </a>
-                                </li>
-                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/monthly-report') }}">मासिक प्रगति रिपोर्ट
                                         (एमपीआर) </a>
                                 </li>
-                                
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/maitri-details') }}">प्रोफ़ाइल अद्यतन</a>
                                 </li>
@@ -1278,78 +1269,28 @@
     <button class="common_top_scroll__cuiN4 top-btn">
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
     </button>
-   
-<script>
-        let topBtn = document.querySelector(".top-btn");
+    <script>
+    let topBtn = document.querySelector(".top-btn");
 
-        topBtn.onclick = () => window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    topBtn.onclick = () => window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-        window.onscroll = () => topBtn.style.opacity = window.scrollY > 500 ? 1 : 0;
+    window.onscroll = () => topBtn.style.opacity = window.scrollY > 500 ? 1 : 0;
 
-        var defaultlang = "hi";
-        var ls = localStorage.getItem("selectedProject");
-        if (ls) {
-            $(".switchlang").val(ls).change();
-            switchLang(ls);
-        } else {
-            switchLang(defaultlang);
+    function loadlang() {
+        var lng = document.getElementById("langselector").value;
+        var cnt = document.getElementById("contents");
+        switch (lng) {
+            case "en":
+                cnt.src = "https://jsfiddle.net/q2nw8o35/";
+                break;
+            case "hi":
+                cnt.src = "https://jsfiddle.net/jmn8c9tj/";
+                break;
         }
-
-        function switchLang(lang) {
-            document.body.classList.remove("trans_english");
-            if (lang === 'en') {
-                document.body.classList.add("trans_english");
-            }
-            $("[data-" + lang + "]").text(function(i, e) {
-                return $(this).data(lang);
-            });
-
-            $("select").each(function() {
-                $(this).find("option").each(function() {
-                    var value = $(this).data(lang);
-                    if (value !== undefined) {
-                        $(this).text(value);
-                    }
-                });
-            });
-            $("[data-placeholder-" + lang + "]").each(function() {
-                var placeholder = $(this).data("placeholder-" + lang);
-                if (placeholder !== undefined) {
-                    $(this).attr("placeholder", placeholder);
-                }
-            });
-        }
-        // function switchLang(lang){
-        //     document.body.classList.remove("trans_english");
-        //     if(lang=='en'){
-        //         document.body.classList.add("trans_english");
-        //     }
-        //     $("[data-" + lang + "]").text(function(i, e) {
-
-        //         return $(this).data(lang);
-        //     });
-        // }
-        $('.switchlang').change(function() {
-            var lang = $(".switchlang option:selected").val();
-            localStorage.setItem("selectedProject", lang);
-            switchLang(lang)
-        });
-
-        function loadlang() {
-            var lng = document.getElementById("langselector").value;
-            var cnt = document.getElementById("contents");
-            switch (lng) {
-                case "en":
-                    cnt.src = "https://jsfiddle.net/q2nw8o35/";
-                    break;
-                case "hi":
-                    cnt.src = "https://jsfiddle.net/jmn8c9tj/";
-                    break;
-            }
-        }
+    }
     </script>
 
     <style type="text/css">
@@ -1417,7 +1358,6 @@
             </div>
         </div>
     </div>
-    
     @stack('body-scripts')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
@@ -1426,14 +1366,6 @@
         localStorage.removeItem('maitri');
         localStorage.removeItem('farmer');
     });
-
-    
-    </script>
-    <script type="text/javascript">
-        var url = "{{ route('changeLang') }}";
-        $(".changeLang").change(function() {
-            window.location.href = url + "?lang=" + $(this).val();
-        });
     </script>
 </body>
 

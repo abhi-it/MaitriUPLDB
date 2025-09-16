@@ -29,6 +29,12 @@
                 <td>टीकाकरण</td>
                 @elseif($row->service_name == 'pregnancy_diagnosis')
                 <td>गर्भावस्था निदान</td>
+                @elseif($row->service_name == 'artificial_insemination')
+                <td>कृत्रिम गर्भाधान</td>
+                @elseif($row->service_name == 'livestock_insurance')
+                <td>पशुधन बीमा</td>
+                @elseif($row->service_name == 'calving')
+                <td>बछड़ा जनन</td>
                 @else
                 <td>--</td>
                 @endif
