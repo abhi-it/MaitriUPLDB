@@ -62,6 +62,9 @@
                             <option value="animal_insurance">पशु बीमा</option>
                             <option value="vaccination">टीकाकरण</option>
                             <option value="pregnancy_diagnosis">गर्भावस्था निदान</option>
+                            <option value="artificial_insemination">कृत्रिम गर्भाधान</option>
+                            <option value="livestock_insurance">पशुधन बीमा</option>
+                            <option value="calving">बछड़ा जनन</option>
                         </select>
                     </div>
                     <!-- <div class="form-group col-md-12" id="maiti-div">

@@ -55,62 +55,64 @@
                 <th>जोड़ी गई तिथि</th>
             </tr>
         </thead>
-        <tbody>
-        <tbody>
-            @if(count($data))
-            @foreach($data as$key=> $row)
+      <tbody>
+    @if(count($data))
+        @foreach($data as $key => $row)
             <tr>
-                <td>{{$key+1}}</td>
-                <td>{{$row->user->name}}</td>
-                @if($row->service_name=='frozen_semen_ai')
-                    <td>Frozen Semen AI</td>
-                @elseif($row->service_name=='sex_semen_ai')
-                    <td>Sex Sorted Semen AI</td>
-                @elseif($row->service_name=='ivf_embryo')
-                    <td>IVF Embryo</td>
-                @elseif($row->service_name=='health_medical_checkip')
-                    <td>Helath/Medical Checkup</td>
-                @elseif($row->service_name=='animal_insurance')
-                    <td>Animal Insurance</td>
-                @elseif($row->service_name=='vaccination')
-                    <td>Vaccination</td>
-                @elseif($row->service_name=='pregnancy_diagnosis')
-                    <td>Pregnancy Diagnosis</td>
-                @endif
-                <td>{{$row->request_message}}</td>
-                <td>  
-                    @php
-                        $color = ''; 
-                        $name  = '';
-                        if ($row->status == 1) {
-                            $color = "btn btn-primary";
-                            $name  = "New";
-                        } elseif ($row->status == 2) {
-                            $color = "btn btn-warning";
-                            $name   = "Waiting";
-                        } elseif ($row->status == 3) {
-                            $color = "btn btn-danger";
-                            $name  = "Decline";
-                        } elseif ($row->status == 0) {
-                            $color = "btn btn-success";
-                            $name = "Accept";
-                        }
-                    @endphp
-                        <button class="{{$color}}">{{$name}} </button>
+                <td>{{ $key+1 }}</td>
+                <td>{{ $row->user->name }}</td>
                 
+                <td>
+                    @switch($row->service_name)
+                        @case('frozen_semen_ai')
+                            Frozen Semen AI
+                            @break
+                        @case('sex_semen_ai')
+                            Sex Sorted Semen AI
+                            @break
+                        @case('ivf_embryo')
+                            IVF Embryo
+                            @break
+                        @case('health_medical_checkup') 
+                            Health/Medical Checkup
+                            @break
+                        @case('animal_insurance')
+                            Animal Insurance
+                            @break
+                        @case('vaccination')
+                            Vaccination
+                            @break
+                        @case('pregnancy_diagnosis')
+                            Pregnancy Diagnosis
+                            @break
+                        @default
+                            -
+                    @endswitch
                 </td>
-                <td> {{date('M Do', strtotime($row->created_at))}}</td>
-            
+
+                <td>{{ $row->request_message }}</td>
+                <td>
+                    @php
+                        $statusMap = [
+                            1 => ['btn btn-primary', 'New'],
+                            2 => ['btn btn-warning', 'Waiting'],
+                            3 => ['btn btn-danger', 'Decline'],
+                            0 => ['btn btn-success', 'Accept'],
+                        ];
+                        [$color, $name] = $statusMap[$row->status] ?? ['btn btn-secondary', 'Unknown'];
+                    @endphp
+                    <button class="{{ $color }}">{{ $name }}</button>
+                </td>
+                <td>{{ date('M jS Y', strtotime($row->created_at)) }}</td>
             </tr>
-            @endforeach
-            @else
-            <tr>
-                <td colspan="5" style="color:red;">No records..</td>
-            </tr>
-            @endif
-        </tbody>
-        
-        </tbody>
+        @endforeach
+    @else
+        <tr>
+            <td colspan="6" style="color:red;">No records..</td>
+        </tr>
+    @endif
+</tbody>
+
     </table>
 </div>
 

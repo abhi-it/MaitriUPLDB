@@ -130,9 +130,14 @@ class FarmerController extends Controller{
 
     public function addFarmerRequests(Request $request){
         $validator = Validator::make($request->all(),[
-            'user_id'  => [ 'required'],
-            // 'maitri_id' => [ 'required'],
-        ]);
+                'user_id'  => [ 'required'],
+                'request_message' => ['required', 'max:1500'],
+                // 'maitri_id' => [ 'required'],
+            ],
+            [
+                'request_message.max'      => 'संदेश अधिकतम 250 शब्दों तक ही हो सकता है।',
+            ]
+        );
         if($validator->fails()){
             $errors = $validator->errors();
             foreach($errors->all() as $key => $value){
@@ -198,7 +203,7 @@ class FarmerController extends Controller{
         $user  =  Auth::user()->id;
         $validator = Validator::make($request->all(),[
             'type'  => [ 'required'],
-            'file'  => [ 'required'],
+            'file' => ['required', 'file', 'max:2048'],
         ]);
        
         if($validator->fails()){
