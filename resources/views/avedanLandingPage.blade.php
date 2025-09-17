@@ -403,19 +403,16 @@ $deadline = \Carbon\Carbon::parse($result->end_date)->endOfDay()->format('Y-m-d\
                   <label for="inputPassword4" style="font-weight:bold;">
 
                      @if($avedanStart)
-                     {{-- Active: Show Apply Link --}}
-
-                     <a class="nav-link" href="{{ url('application-form') }}">
-                           <h3>
-                              <button class="btn btn-primary"><span data-hi="{{ $himesssage }}"
-                                       data-en="{{ $messsage }}"></span></button>
-                           </h3>
-                     </a>
+                        <a class="nav-link" href="{{ url('application-form') }}">
+                            <h3>
+                                <button class="btn btn-primary"><span data-hi="{{ $himesssage }}"
+                                        data-en="{{ $messsage }}"></span></button>
+                            </h3>
+                        </a>
                      @else
-                     {{-- Before start OR After expiry --}}
-                     <h3 style="color:red;">
-                           <span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span>
-                     </h3>
+                        <h3 style="color:red;">
+                            <span data-hi="{{ $himesssage }}" data-en="{{ $messsage }}"></span>
+                        </h3>
                      @endif
                   </label>
                </div>
