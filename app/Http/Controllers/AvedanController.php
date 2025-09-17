@@ -29,21 +29,18 @@ class AvedanController extends Controller
         
 		date_default_timezone_set("Asia/Kolkata");
 		$result = Setting::find(2);
-		$start_date = \Carbon\Carbon::parse($result->start_date)->format('Y-m-d');
-		$end_date = \Carbon\Carbon::parse($result->end_date)->format('Y-m-d');
-		$current_date = \Carbon\Carbon::parse(now())->format('Y-m-d h:i:s'); ;
-		$expireTime = date('Y-m-d h:i:s', strtotime($end_date. ' + 18 hours')); 
-		$expireDateTime = strtotime($expireTime);
-		$currentDateTime = strtotime($current_date);
-		
+		$start_date   = Carbon::parse($result->start_date);
+        $end_date     = Carbon::parse($result->end_date);
+        $current_date = Carbon::now();
+
+        $expireDateTime = $end_date->copy()->addDay()->startOfDay();
         $avedanStart = 1;
-		if($currentDateTime<=$expireDateTime)
-		{
-			
-		}else{
-			
-			return redirect('/avedan-karein');
-		}
+
+        if ($current_date->lessThanOrEqualTo($expireDateTime)) {
+
+        } else {
+            return redirect('/avedan-karein');
+        }
 		
 		/*-----------End Check Start Avedan----------------------*/
 		
