@@ -447,14 +447,19 @@
                         @endif
                     </div>
                 </div>
+                            
 
+                @php
+                    $today = now()->toDateString(); 
+                    $districtOfficerStartDate = '2025-09-19';
+                @endphp
 
                 <!-----Then Display these buttons-->
                 @if ($waitingButtonShow != 1)
                     <!-----Then Display these buttons-->
                     <!-- @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'District Officer') -->
                     <div class="row mb-5 mt-4">
-                    @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
+                    @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin' ||  (auth()->user()->user_type == 'District Officer' && $today >= $districtOfficerStartDate))
                         @if ($result->is_approved == 0 || $result->is_approved == 2 ||  $result->is_approved == 3 || $result->is_approved == 4)
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/1" class="btn btn-primary w-100"> स्वीकार </a>
