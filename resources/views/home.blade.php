@@ -881,22 +881,22 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                             data-en="Photo Gallery"></span> </a> </h5>
                 <div class="row m-0">
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery1.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image1.jpg')}}" />
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery2.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image2.jpg')}}" />
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery3.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image3.jpg')}}" />
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery4.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image4.jpg')}}" />
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery5.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image5.jpg')}}" />
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12 p-2">
-                        <img class="ftr-img" src="{{ asset('gallery/gallery6.jpeg')}}" />
+                        <img class="ftr-img" src="{{ asset('gallery/image6.jpg')}}" />
                     </div>
                 </div>
             </div>
@@ -1250,40 +1250,40 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                     data-en="Gallery"></span> </a> </h2>
         <div class="row">
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery7.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image1.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery8.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image2.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery9.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image3.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery10.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image4.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery11.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image5.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery12.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image6.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery13.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image7.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery14.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image8.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery15.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image9.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery16.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image10.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery17.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image11.jpg')}}" alt="..." class="gallery-item">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2">
-                <img src="{{ asset('gallery/gallery18.jpeg')}}" alt="..." class="gallery-item">
+                <img src="{{ asset('gallery/image12.jpg')}}" alt="..." class="gallery-item">
             </div>
 
         </div>
