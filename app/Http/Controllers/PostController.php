@@ -61,12 +61,8 @@ class PostController extends Controller
         $data = $request->only('hindi_title', 'eng_title');
 
         if ($request->hasFile('image')) {
-            if ($post->image && file_exists(public_path('assets/images/'.$post->image))) {
-                unlink(public_path('upload_documents/'.$post->image));
-            }
-
             $filename = time().'_'.$request->image->getClientOriginalName();
-            $request->image->move(public_path('assets/images'), $filename);
+            $request->image->move(public_path('upload_documents'), $filename);
             $data['image'] = $filename;
         }
 
