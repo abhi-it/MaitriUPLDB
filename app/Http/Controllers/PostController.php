@@ -27,12 +27,8 @@ class PostController extends Controller
             'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // ✅ Delete all old records
         $oldPosts = Post::all();
         foreach ($oldPosts as $old) {
-            if ($old->image && file_exists(public_path('uploads/'.$old->image))) {
-                unlink(public_path('uploads/'.$old->image));
-            }
             $old->delete();
         }
 
@@ -40,7 +36,7 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = time().'_'.$request->image->getClientOriginalName();
-            $request->image->move(public_path('assets/images'), $filename); // ✅ new path
+            $request->image->move(public_path('upload_documents'), $filename);
             $data['image'] = $filename;
         }
 
@@ -66,7 +62,7 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             if ($post->image && file_exists(public_path('assets/images/'.$post->image))) {
-                unlink(public_path('assets/images/'.$post->image));
+                unlink(public_path('upload_documents/'.$post->image));
             }
 
             $filename = time().'_'.$request->image->getClientOriginalName();

@@ -31,7 +31,7 @@
                 <td>{{ $post->hindi_title }}</td>
                 <td>
                     @if($post->image)
-                    <img src="{{ asset('assets/images/'.$post->image) }}" width="80">
+                    <img src="{{ asset('upload_documents/'.$post->image) }}" width="80">
                     @endif
                 </td>
                 <td>
