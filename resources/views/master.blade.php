@@ -1332,7 +1332,7 @@
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
                             <li
-                                class="nav-item dropdown {{ request()->is('view-dfs') || request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
+                                class="nav-item dropdown {{ request()->is('posts') || request()->is('view-dfs') || request()->is('farmers-data') || request()->is('all-aicenter-geo-location') || (request()->is('all-maitri-geo-location') || request()->is('placed-candidates') || request()->is('import-aicenter')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="नियुक्त उम्मीदवार और मैत्री GEO स्थान अपडेट करें"
@@ -1362,10 +1362,14 @@
                                     <a class="dropdown-item" href="{{ url('download-document') }}">
                                         <span data-hi="दस्तावेज़ डाउनलोड" data-en="Download Document"></span>
                                     </a>
-
                                   
                                     <a class="dropdown-item" href="{{ url('view-dfs') }}">
-                                    <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span></a>
+                                        <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ url('posts') }}">
+                                        <span data-hi="फोटो बदलें" data-en="Chnage Photo"></span>
+                                    </a>
                           
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
