@@ -177,6 +177,13 @@ class CheckRole
                 'delete-updates',
             ],
             'Admin' => [
+                'posts.index',
+                'posts.create',
+                'posts.store',
+                'posts.edit',
+                'posts.update',
+                'posts.destroy',
+
                 'download-document',
                 'documents-store',
                 'documents-update',
@@ -357,6 +364,13 @@ class CheckRole
             ],
 
             'Superadmin' => [
+
+                'posts.index',
+                'posts.create',
+                'posts.store',
+                'posts.edit',
+                'posts.update',
+                'posts.destroy',
 
                 'download-document',
                 'documents-store',

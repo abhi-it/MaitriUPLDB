@@ -26,6 +26,7 @@ use App\Http\Controllers\BroadcastController;
 use App\Http\Controllers\WebinarController;
 use App\Http\Controllers\DfsController;
 use App\Http\Controllers\VideoGalleryController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -170,6 +171,17 @@ Route::post('/delete-video-gallery/{id}', [VideoGalleryController::class, 'delet
 
 
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
+
+
+
+
+    // Add pist route
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     /*-------------------CVO, Director and Super Admin Start-----------------------------------------------------------------------------------*/
     Route::resource('institute', App\Http\Controllers\InstituteController::class);

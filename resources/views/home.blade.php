@@ -358,7 +358,9 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 // .catch(() => {});
 })();
 </script>
-
+ @php
+    $post = \App\Models\Post::latest()->first();
+@endphp
 <section class="py-4">
     <div class="container">
         <div class="row g-3">
@@ -435,11 +437,12 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
+                                <img src="{{ $post->image ? asset('uploads/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
-                                            <span data-hi="श्री अमित कुमार घोष, आई०ए०एस"
-                                                data-en="Shri Amit Kumar Ghosh, IAS"></span>
+                                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम' }}"
+                                                data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram' }}">
+                                            </span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
                                             <span data-hi="प्रमुख सचिव / पशुधन"
@@ -558,8 +561,10 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                 <div class="row align-items-center g-3 flex-column-reverse flex-md-row">
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
-                            <img class="w-100" src="{{ asset('assets/images/Amit_Ghosh.jpg')}}" />
-                            <span data-hi="श्री अमित कुमार घोष, आई०ए०एस" data-en="Shri Amit Kumar Ghosh, IAS"></span>
+                            <img src="{{ $post->image ? asset('uploads/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
+                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम' }}"
+                                data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram' }}">
+                            </span>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-6">
