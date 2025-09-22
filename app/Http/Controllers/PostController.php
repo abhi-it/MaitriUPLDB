@@ -40,7 +40,7 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = time().'_'.$request->image->getClientOriginalName();
-            $request->image->move(public_path('uploads'), $filename);
+            $request->image->move(public_path('assets/images'), $filename); // ✅ new path
             $data['image'] = $filename;
         }
 
@@ -65,12 +65,12 @@ class PostController extends Controller
         $data = $request->only('hindi_title', 'eng_title');
 
         if ($request->hasFile('image')) {
-            // delete old image if exists
-            if ($post->image && file_exists(public_path('uploads/'.$post->image))) {
-                unlink(public_path('uploads/'.$post->image));
+            if ($post->image && file_exists(public_path('assets/images/'.$post->image))) {
+                unlink(public_path('assets/images/'.$post->image));
             }
+
             $filename = time().'_'.$request->image->getClientOriginalName();
-            $request->image->move(public_path('uploads'), $filename);
+            $request->image->move(public_path('assets/images'), $filename);
             $data['image'] = $filename;
         }
 

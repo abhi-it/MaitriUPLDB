@@ -18,8 +18,8 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Hindi Title</th>
                 <th>English Title</th>
+                <th>Hindi Title</th>
                 <th>Image</th>
                 <th width="150">Actions</th>
             </tr>
@@ -27,11 +27,11 @@
         <tbody>
             @forelse($posts as $post)
             <tr>
-                <td>{{ $post->hindi_title }}</td>
                 <td>{{ $post->eng_title }}</td>
+                <td>{{ $post->hindi_title }}</td>
                 <td>
                     @if($post->image)
-                    <img src="{{ asset('uploads/'.$post->image) }}" width="80">
+                    <img src="{{ asset('assets/images/'.$post->image) }}" width="80">
                     @endif
                 </td>
                 <td>

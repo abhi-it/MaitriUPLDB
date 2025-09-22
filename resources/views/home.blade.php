@@ -437,11 +437,11 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img src="{{ asset('assets/images/Mukesh_Kumar.jpg')}}" />
+                                <img src="{{ $post->image ? asset('assets/images/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
-                                            <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस"
-                                                data-en="Shri Mukesh Kumar Meshram, I.A.S"></span>
+                                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम, आई.ए.एस' }}"
+                                                data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
                                             <span data-hi="प्रमुख सचिव / पशुधन"
@@ -560,8 +560,8 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                 <div class="row align-items-center g-3 flex-column-reverse flex-md-row">
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
-                            <img class="w-100" src="{{ asset('assets/images/Mukesh_Kumar.jpg')}}" />
-                            <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस" data-en="Shri Mukesh Kumar Meshram, I.A.S"></span>
+                            <img class="w-100" src="{{ $post->image ? asset('assets/images/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
+                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम, आई.ए.एस' }}" data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-6">
