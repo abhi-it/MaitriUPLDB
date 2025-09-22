@@ -116,7 +116,7 @@ function openEditModal(id, hindi_title, eng_title, image) {
     document.getElementById("preview").style.display = "none";
 
     if (image) {
-        document.getElementById("oldImage").src = "/uploads/" + image;
+        document.getElementById("oldImage").src = "/upload_documents/" + image;
         document.getElementById("oldImage").style.display = "block";
     } else {
         document.getElementById("oldImage").style.display = "none";
