@@ -9,6 +9,7 @@ use App\Models\Avedan;
 use App\Models\Rejectcomment;
 use App\Models\Verificationcomment;
 use App\Models\Districts;
+use App\Models\Lakshya;
 use App\Models\Institute;
 use App\Models\User;
 use App\Exports\AvedanExport;
@@ -1805,7 +1806,8 @@ class DashboardController extends Controller
         $districtID = auth()->user()->district_id;
 
         $result = Avedan::find($id);
-        $target = Districts::find($districtID);
+        // $target = Districts::find($districtID);
+        $target = Lakshya::find($districtID);
 
         // switch ($result->category) {
         //     case 'जनरल':
