@@ -1359,6 +1359,7 @@ class DashboardController extends Controller
 
     public function waitingList($year, $id, $export = null) // SC + ST List will display here
     {
+        $this->sessionYear = $year ? $year : $this->sessionYear;
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
@@ -1398,7 +1399,7 @@ class DashboardController extends Controller
         // }
 
        
-         $sessionYear = $this->sessionYear;
+        $sessionYear = $this->sessionYear;
         if ($export !== null) {
             $data = $results->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
