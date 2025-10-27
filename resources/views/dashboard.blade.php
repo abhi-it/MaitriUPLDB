@@ -172,7 +172,7 @@ $show = false;
                     <a href="#" class="btn btn-primary">View</a>
                     @else
                     <h5 class="card-title">{{ $waitingList }}</h5>
-                    <a href="{{ url('waiting-list') }}/1" class="btn btn-primary">View</a>
+                    <a href="{{ url('waiting-list') }}/{{ $sessionYear }}/1" class="btn btn-primary">View</a>
                     @endif
 
                 </div>

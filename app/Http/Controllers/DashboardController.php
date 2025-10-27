@@ -73,7 +73,8 @@ class DashboardController extends Controller
             }
 
             $approvedApplication = Avedan::where('is_approved', '=', 1)->whereYear('created_at', $this->sessionYear)->count();
-            $rejectedApplication = Avedan::where('is_approved', '=', 2)->whereYear('created_at', $this->sessionYear)->count();
+            // $rejectedApplication = Avedan::where('is_approved', '=', 2)->whereYear('created_at', $this->sessionYear)->count();
+            $rejectedApplication = Avedan::where('is_approved', 2)->whereYear('avedans.created_at', $this->sessionYear)->leftJoin('rejectcomments', 'avedans.id', '=', 'rejectcomments.application_id')->count();
             $waitingList = Avedan::where('is_approved', '=', 3)->whereYear('created_at', $this->sessionYear)->count();
             $generalList = Avedan::whereIn('category', ["जनरल", "ओ बी सी"])->where('is_approved', '=', 4)->whereYear('created_at', $this->sessionYear)->count();
             $SClist = Avedan::whereIn('category', ["एस सी"])->where('is_approved', '=', 4)->whereYear('created_at', $this->sessionYear)->count();
@@ -651,10 +652,9 @@ class DashboardController extends Controller
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
-        //echo '<pre>';print_r($user);exit;
 
         if ($user_type == 'Director') { //Director
-
+            
             $query = Avedan::where('is_approved', '=', 2)->orderBy('avedans.id', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
 
@@ -903,17 +903,17 @@ class DashboardController extends Controller
         if ($user_type == 'Director') { //Director
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल"])
+                ->whereIn('category', ['जनरल', 'ओ बी सी'])
                 ->orderBy('topper_number', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल"])
+                ->whereIn('category', ['जनरल', 'ओ बी सी'])
                 ->orderBy('topper_number', 'DESC');
         } else { //CVO
 
             $query = Avedan::where('is_approved', '=', 4)
-                ->whereIn('category', ["जनरल"])
+                ->whereIn('category', ['जनरल', 'ओ बी सी'])
                 ->where('district_id', '=', $districtID)
                 ->orderBy('topper_number', 'DESC');
         }
@@ -1357,56 +1357,47 @@ class DashboardController extends Controller
     }
 
 
-    public function waitingList($id, $export = null) // SC + ST List will display here
+    public function waitingList($year, $id, $export = null) // SC + ST List will display here
     {
         $user = auth()->user();
         $user_type = $user->user_type;
         $districtID = auth()->user()->district_id;
 
-        if ($id == 1) { //General + OBC Waiting List
+        if ($id == 1 && $user_type == 'Director' ||  $user_type == 'Admin') {  //Director || Admin  Waiting List
+            $results = Avedan::where('is_approved', '=', 3)->whereYear('created_at', $year)->get();
+            $waitingCount = Avedan::where('is_approved', '=', 3)->whereYear('created_at', $year)->count();
+            $heading = 'अभ्यर्थियों की प्रतीक्षा सूची ( आवेदन : '.$waitingCount.')';
 
+        }else{ // CVO
             $results = Avedan::where('is_approved', '=', 3)
-                ->whereIn('category', ["जनरल"])
                 ->where('district_id', '=', $districtID)
-                ->whereYear('created_at', $this->sessionYear)
+                ->whereYear('created_at', $year)
                 ->orderBy('topper_number', 'DESC')
                 ->get();
-
-            $heading = 'सामान्य वर्ग अभ्यर्थियों की प्रतीक्षा सूची';
-        } else if ($id == 2) { //General + OBC Waiting List
-
-            $results = Avedan::where('is_approved', '=', 3)
-                ->whereIn('category', ["ओ बी सी"])
-                ->where('district_id', '=', $districtID)
-                ->whereYear('created_at', $this->sessionYear)
-                ->orderBy('topper_number', 'DESC')
-                ->get();
-
-            $heading = 'अन्य पिछड़ा वर्ग अभ्यर्थियों की प्रतीक्षा सूची';
-        } 
-        
-        
-        else if ($id == 3) { //SC Waiting List
-
-            $results = Avedan::where('is_approved', '=', 3)
-                ->whereIn('category', ["एस सी"])
-                ->where('district_id', '=', $districtID)
-                ->whereYear('created_at', $this->sessionYear)
-                ->orderBy('topper_number', 'DESC')
-                ->get();
-
-            $heading = 'अनुसूचित जाति अभ्यर्थियों की प्रतीक्षा सूची';
-        } else { //ST Waiting List
-
-            $results = Avedan::where('is_approved', '=', 3)->with('district')
-                ->whereIn('category', ["एस टी"])
-                ->where('district_id', '=', $districtID)
-                ->whereYear('created_at', $this->sessionYear)
-                ->orderBy('topper_number', 'DESC')
-                ->get();
-
-            $heading = 'अनुसूचित जनजाति अभ्यर्थियों की प्रतीक्षा सूची';
         }
+
+        // else if ($id == 3) { //SC Waiting List
+        //     $results = Avedan::where('is_approved', '=', 3)
+        //         ->whereIn('category', ["एस सी"])
+        //         // ->where('district_id', '=', $districtID)
+        //         ->whereYear('created_at', $this->sessionYear)
+        //         ->orderBy('topper_number', 'DESC')
+        //         ->get();
+
+        //     $heading = 'अनुसूचित जाति अभ्यर्थियों की प्रतीक्षा सूची';
+        // } else { //ST Waiting List
+
+        //     $results = Avedan::where('is_approved', '=', 3)
+        //         ->whereIn('category', ["एस टी"])
+        //         // ->where('district_id', '=', $districtID)
+        //         ->whereYear('created_at', $this->sessionYear)
+        //         ->orderBy('topper_number', 'DESC')
+        //         ->get();
+
+        //     $heading = 'अनुसूचित जनजाति अभ्यर्थियों की प्रतीक्षा सूची';
+        // }
+
+       
 
         if ($export !== null) {
             $data = $results->map(function ($item) {
