@@ -1398,7 +1398,7 @@ class DashboardController extends Controller
         // }
 
        
-
+         $sessionYear = $this->sessionYear;
         if ($export !== null) {
             $data = $results->map(function ($item) {
                 $high_percentage    = $item->high_percentage;
@@ -1433,7 +1433,7 @@ class DashboardController extends Controller
             });
             return \Excel::download(new ExportAvedan($data), 'waiting-list.xlsx');
         } else {
-            return view('viewAvedanWaiting', compact('results', 'heading'))->with('exportId', $id);
+            return view('viewAvedanWaiting', compact('results', 'heading', 'sessionYear'))->with('exportId', $id);
         }
     }
 
