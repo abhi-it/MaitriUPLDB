@@ -364,7 +364,8 @@ class CheckRole
             ],
 
             'Superadmin' => [
-
+                'waitingList',
+                'waitingAvedanFullDetails',
                 'posts.index',
                 'posts.create',
                 'posts.store',

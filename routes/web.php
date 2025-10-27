@@ -212,7 +212,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("obc-list/{year?}", [App\Http\Controllers\DashboardController::class, 'obcList'])->name('obcList');
     Route::get("sc-list/{year?}", [App\Http\Controllers\DashboardController::class, 'scList'])->name('scList');
     Route::get("st-list/{year?}", [App\Http\Controllers\DashboardController::class, 'stList'])->name('stList');
-    Route::get("waiting-list/{id}/{export?}", [App\Http\Controllers\DashboardController::class, 'waitingList'])->name('waitingList');
+    Route::get("waiting-list/{year}/{id}/{export?}", [App\Http\Controllers\DashboardController::class, 'waitingList'])->name('waitingList');
     Route::get("edit-avedan/{id}", [App\Http\Controllers\DashboardController::class, 'editAvedan'])->name('editAvedan');
     Route::post("avedanUpdated/{id}", [App\Http\Controllers\DashboardController::class, 'avedanUpdated'])->name('avedanUpdated');
     Route::get("merit-list/{category}/{export?}", [App\Http\Controllers\DashboardController::class, 'meritList'])->name('meritList');
