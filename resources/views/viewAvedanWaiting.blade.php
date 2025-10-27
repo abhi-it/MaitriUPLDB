@@ -1,10 +1,19 @@
 @extends('master')
 @section('content')
+@php
+$show = false;
+@endphp
+
+@if ($sessionYear == date('Y'))
+@php
+$show = false;
+@endphp
+@endif
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
 <h3 class="text-center fw-bold m-4">
     {{$heading}}
     @if (isset($exportId))
-    <a href="{{ route('waitingList',[2024,$exportId,true]) }}" class="btn btn-secondary btn-export float-right">डाउनलोड एक्ससेल</a>
+    <a href="{{ route('waitingList',[$sessionYear,$exportId,true]) }}" class="btn btn-secondary btn-export float-right">डाउनलोड एक्ससेल</a>
     @endif
 </h3>
 <table id="myTable" class="table table-striped  table-responsive table-bordered">
