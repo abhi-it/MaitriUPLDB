@@ -1685,7 +1685,7 @@
                     </p>
                     <p class="mb-0">
                         <span data-hi="बीमा" data-en="Insurance"></span>
-                        - pashubeemaupldb@gmail.com
+                        - upldb.rmli@gmail.com
                     </p>
                     <p class="mb-0">
                         <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>
