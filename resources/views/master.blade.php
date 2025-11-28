@@ -45,147 +45,147 @@
     <link href="{{ asset('') }}css/jquery-ui.css" rel="stylesheet" type="text/css">
     <script src="{{ asset('') }}js/jquery-ui.js" type="text/javascript"></script>
     <style>
-    /* ---f--- */
-    .footer_parent {
-        background-color: #f93;
-        color: #000;
-        padding-top: 7rem;
-        margin-top: 9rem
-    }
+        /* ---f--- */
+        .footer_parent {
+            background-color: #f93;
+            color: #000;
+            padding-top: 7rem;
+            margin-top: 9rem
+        }
 
-    .footer_top_footer__u_0LC {
-        background: #a6dafa;
-        color: #000;
-        width: 80%;
-        padding: 1rem 2rem;
-        border-radius: 1rem;
-        box-shadow: 2px 2px 5px 0 #2b2b2b;
-        margin: -220px auto 0;
-    }
-
-    @media (max-width: 768px) {
         .footer_top_footer__u_0LC {
-            padding: 1rem !important;
-            width: 90% !important;
+            background: #a6dafa;
+            color: #000;
+            width: 80%;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 2px 2px 5px 0 #2b2b2b;
+            margin: -220px auto 0;
         }
 
-        .footer_top_footer__u_0LC P {
-            text-align: left;
+        @media (max-width: 768px) {
+            .footer_top_footer__u_0LC {
+                padding: 1rem !important;
+                width: 90% !important;
+            }
+
+            .footer_top_footer__u_0LC P {
+                text-align: left;
+            }
         }
-    }
 
-    .footer_footer__O h3 {
-        border-bottom: 2px solid #e47302;
-        padding-bottom: 5px
-    }
+        .footer_footer__O h3 {
+            border-bottom: 2px solid #e47302;
+            padding-bottom: 5px
+        }
 
-    .footer_footer__O a {
-        text-decoration: none;
-        color: #fff !important;
-    }
+        .footer_footer__O a {
+            text-decoration: none;
+            color: #fff !important;
+        }
 
-    .footer_footer__O ul li:not(:last-child) {
-        border-bottom: 1px solid #ffffff42
-    }
+        .footer_footer__O ul li:not(:last-child) {
+            border-bottom: 1px solid #ffffff42
+        }
 
-    .footer_rightContent {
-        background-color: #e47302;
+        .footer_rightContent {
+            background-color: #e47302;
+            color: #fff;
+        }
+
+        .footer_rightContent span {
+            padding: .15rem .5rem;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            background: #000;
+        }
+
+        .footer_footer__O a:hover {
+            text-decoration: none;
+            color: #fff !important;
+        }
+
+        .footer--list li a {
+            color: #fff !important;
+        }
+
+        .footer--list li:before {
+            border-right: 2px solid #fff !important;
+            border-bottom: 2px solid #fff !important;
+        }
+
+        .footer--heading {
+            color: #fff !important;
+        }
+
+        #error_b02bbc85a30c7c9a99711a8a93df17b315b95524 {
+            display: none !important;
+        }
+
+        .footer-counter a {
+            pointer-events: none;
+        }
+
+        .dropdown-toggle {
+            white-space: normal;
+        }
+
+        header .navbar li.nav-item.active a.nav-link {
+            color: #292b2c !important
+        }
+
+
+        .glow-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            /* padding: var(--badge-padding); */
+            /* border-radius: var(--badge-radius); */
+            /* background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.05)); */
+            position: relative;
+            isolation: isolate; /* keeps glow contained visually */
+            cursor: default;
+            user-select: none;
+        }
+
+        /* The visible pill */
+        .glow-badge__pill {
+        
+        background-color: #18191f;
         color: #fff;
-    }
+        /* box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+            2px 2px 10px #00000080, 2px 2px 3px #00000080, inset 2px 2px 10px #00000080,
+            inset 2px 2px 10px #00000080, inset 2px 2px 10px #00000080,
+            inset 2px 2px 10px #00000080; */
+        border-radius: 29px;
+        padding: 1px 8px;
+        margin: 0 0px;
+        animation: animate 3s linear infinite;
+        text-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
+            0 0 200px #0072ff;
+            font-size: 11px;
+        }
+        .glow_badge__pill{
+            animation-delay: 0.1s;
+        }
 
-    .footer_rightContent span {
-        padding: .15rem .5rem;
-        font-size: 1.2rem;
-        letter-spacing: 3px;
-        background: #000;
-    }
-
-    .footer_footer__O a:hover {
-        text-decoration: none;
-        color: #fff !important;
-    }
-
-    .footer--list li a {
-        color: #fff !important;
-    }
-
-    .footer--list li:before {
-        border-right: 2px solid #fff !important;
-        border-bottom: 2px solid #fff !important;
-    }
-
-    .footer--heading {
-        color: #fff !important;
-    }
-
-    #error_b02bbc85a30c7c9a99711a8a93df17b315b95524 {
-        display: none !important;
-    }
-
-    .footer-counter a {
-        pointer-events: none;
-    }
-
-    .dropdown-toggle {
-        white-space: normal;
-    }
-
-    header .navbar li.nav-item.active a.nav-link {
-        color: #292b2c !important
-    }
-
-
-    .glow-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    /* padding: var(--badge-padding); */
-    /* border-radius: var(--badge-radius); */
-    /* background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.05)); */
-    position: relative;
-    isolation: isolate; /* keeps glow contained visually */
-    cursor: default;
-    user-select: none;
-  }
-
-  /* The visible pill */
-  .glow-badge__pill {
-  
-  background-color: #18191f;
-  color: #fff;
-  /* box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
-    2px 2px 10px #00000080, 2px 2px 3px #00000080, inset 2px 2px 10px #00000080,
-    inset 2px 2px 10px #00000080, inset 2px 2px 10px #00000080,
-    inset 2px 2px 10px #00000080; */
-  border-radius: 29px;
-  padding: 1px 8px;
-  margin: 0 0px;
-  animation: animate 3s linear infinite;
-  text-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
-    0 0 200px #0072ff;
-    font-size: 11px;
-  }
-.glow_badge__pill{
-     animation-delay: 0.1s;
-}
-
-@keyframes animate {
-  0% {
-  background-color: #000000;
-  }
-25% {
-     background-color: #ff0000;
-  }
-  50% {
-     background-color: #0400ff;
-  }
-   75% {
-     background-color: #004d11;
-  }
-  100% {
-   background-color: #57009eff;
-  }
-}
+        @keyframes animate {
+        0% {
+        background-color: #000000;
+        }
+        25% {
+            background-color: #ff0000;
+        }
+        50% {
+            background-color: #0400ff;
+        }
+        75% {
+            background-color: #004d11;
+        }
+        100% {
+        background-color: #57009eff;
+        }
+        }
 
     </style>
     @php
@@ -193,695 +193,695 @@
     $settings = Setting::first();
     @endphp
     <script>
-    $(document).ready(function() {
-        var minDate = "{{ \Carbon\Carbon::parse($settings->start_date)->format('d-m-Y') }}";
-        var maxDate = "{{ \Carbon\Carbon::parse($settings->end_date)->format('d-m-Y') }}";
+        $(document).ready(function() {
+            var minDate = "{{ \Carbon\Carbon::parse($settings->start_date)->format('d-m-Y') }}";
+            var maxDate = "{{ \Carbon\Carbon::parse($settings->end_date)->format('d-m-Y') }}";
 
-        var currentDate = new Date();
-        var currentYear = currentDate.getFullYear();
-        var currentMonth = currentDate.getMonth() + 1;
-        var previousDate = new Date(currentYear, 8, 30);
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth() + 1;
+            var previousDate = new Date(currentYear, 8, 30);
 
-        var previousDateFormatted = ("0" + previousDate.getDate()).slice(-2) + "-" + ("0" + (previousDate
-            .getMonth() + 1)).slice(-2) + "-" + currentYear;
+            var previousDateFormatted = ("0" + previousDate.getDate()).slice(-2) + "-" + ("0" + (previousDate
+                .getMonth() + 1)).slice(-2) + "-" + currentYear;
 
-        $("#dob").datepicker({
-            dateFormat: 'dd-mm-yy',
-            changeYear: true,
-            changeMonth: true,
-            minDate: minDate, // Use 'dd-mm-yy' format
-            maxDate: maxDate, // Use 'dd-mm-yy' format
-            onSelect: function() {
-                $(this).valid();
-            }
+            $("#dob").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeYear: true,
+                changeMonth: true,
+                minDate: minDate, // Use 'dd-mm-yy' format
+                maxDate: maxDate, // Use 'dd-mm-yy' format
+                onSelect: function() {
+                    $(this).valid();
+                }
+            });
+
+
+            $("#date").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true
+            });
+
+            $("#start_date").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                // yearRange: "-0:+1",
+            });
+
+            $("#end_date").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                // yearRange: "+0:+1",
+            });
+
         });
-
-
-        $("#date").datepicker({
-            dateFormat: 'dd-mm-yy',
-            changeMonth: true,
-            changeYear: true
-        });
-
-        $("#start_date").datepicker({
-            dateFormat: 'dd-mm-yy',
-            changeMonth: true,
-            changeYear: true,
-            // yearRange: "-0:+1",
-        });
-
-        $("#end_date").datepicker({
-            dateFormat: 'dd-mm-yy',
-            changeMonth: true,
-            changeYear: true,
-            // yearRange: "+0:+1",
-        });
-
-    });
     </script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $.validator.addMethod('date', function(value, element, param) {
-            return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
-        }, 'Please enter a valid date!');
-        $.validator.addMethod('month', function(value, element, param) {
-            return (value != 0) && (value <= 12) && (value == parseInt(value, 10));
-        }, 'Please enter a valid month!');
-        $.validator.addMethod('year', function(value, element, param) {
-            return (value != 0) && (value >= 1900) && (value == parseInt(value, 10));
-        }, 'Please enter a valid year not less than 1900!');
-        $.validator.addMethod('username', function(value, element, param) {
-            var nameRegex = /^[a-zA-Z0-9]+$/;
-            return value.match(nameRegex);
-        }, 'Only a-z, A-Z, 0-9 characters are allowed');
-        $.validator.addMethod("checkFileSize", function(value, element, param) {
-            if (value != '') {
+        $(document).ready(function() {
+            $.validator.addMethod('date', function(value, element, param) {
+                return (value != 0) && (value <= 31) && (value == parseInt(value, 10));
+            }, 'Please enter a valid date!');
+            $.validator.addMethod('month', function(value, element, param) {
+                return (value != 0) && (value <= 12) && (value == parseInt(value, 10));
+            }, 'Please enter a valid month!');
+            $.validator.addMethod('year', function(value, element, param) {
+                return (value != 0) && (value >= 1900) && (value == parseInt(value, 10));
+            }, 'Please enter a valid year not less than 1900!');
+            $.validator.addMethod('username', function(value, element, param) {
+                var nameRegex = /^[a-zA-Z0-9]+$/;
+                return value.match(nameRegex);
+            }, 'Only a-z, A-Z, 0-9 characters are allowed');
+            $.validator.addMethod("checkFileSize", function(value, element, param) {
+                if (value != '') {
 
-                FileSize = element.files[0].size;
+                    FileSize = element.files[0].size;
 
-                if (FileSize > param)
-                    return false;
-                return true;
-            } else {
-                return true;
-            }
-        }, "File size must be less than or equal to 100 KB.");
+                    if (FileSize > param)
+                        return false;
+                    return true;
+                } else {
+                    return true;
+                }
+            }, "File size must be less than or equal to 100 KB.");
 
-        $.validator.addMethod("checkFileSize20KB", function(value, element, param) {
+            $.validator.addMethod("checkFileSize20KB", function(value, element, param) {
 
-            if (value != '') {
-                FileSize = element.files[0].size;
+                if (value != '') {
+                    FileSize = element.files[0].size;
 
-                if (FileSize > param)
-                    return false;
-                return true;
-            } else {
-                return true;
-            }
-        }, "File size must be less than or equal to 20 KB.");
+                    if (FileSize > param)
+                        return false;
+                    return true;
+                } else {
+                    return true;
+                }
+            }, "File size must be less than or equal to 20 KB.");
 
-        $.validator.addMethod("uploadTrainingCertificate", function(value, element) {
+            $.validator.addMethod("uploadTrainingCertificate", function(value, element) {
 
-            var month = $("#training_certificate_period_in_month")[0].selectedIndex;
-            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-            var name = $('#training_certificate').val().split('\\').pop();
-            training_certificate_name = name.split('.')[0];
+                var month = $("#training_certificate_period_in_month")[0].selectedIndex;
+                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+                var name = $('#training_certificate').val().split('\\').pop();
+                training_certificate_name = name.split('.')[0];
 
 
-            if (training_certificate_name == '' && (month >= 1 || day >= 1)) {
-                return false;
-            }
-
-            return true;
-
-        }, "Please upload training certificate");
-
-        $.validator.addMethod("selectMonthORday", function(value, element) {
-
-            var month = $("#training_certificate_period_in_month")[0].selectedIndex;
-            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-            var name = $('#training_certificate').val().split('\\').pop();
-            training_certificate_name = name.split('.')[0];
-
-            if (training_certificate_name != '' && (month < 1 && day < 1)) {
-                return false;
-            }
-
-            return true;
-
-        }, "Please select month or day");
-
-        $.validator.addMethod("verifyHighSchoolMarks", function(value, element) {
-
-            var high_marks = $("#high_marks").val();
-            var high_total_marks = $("#high_total_marks").val();
-
-            if (high_marks != '' && high_total_marks != '') {
-                if (parseInt(high_marks) > parseInt(high_total_marks)) {
+                if (training_certificate_name == '' && (month >= 1 || day >= 1)) {
                     return false;
                 }
-            }
-            return true;
-        }, "Enter valid marks");
 
+                return true;
 
-        $.validator.addMethod("verifyInterMarks", function(value, element) {
+            }, "Please upload training certificate");
 
-            var inter_marks = $("#inter_marks").val();
-            var inter_total_marks = $("#inter_total_marks").val();
+            $.validator.addMethod("selectMonthORday", function(value, element) {
 
-            if (inter_marks != '' && inter_total_marks != '') {
-                if (parseInt(inter_marks) > parseInt(inter_total_marks)) {
+                var month = $("#training_certificate_period_in_month")[0].selectedIndex;
+                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+                var name = $('#training_certificate').val().split('\\').pop();
+                training_certificate_name = name.split('.')[0];
+
+                if (training_certificate_name != '' && (month < 1 && day < 1)) {
                     return false;
                 }
-            }
 
-            return true;
-
-        }, "Enter valid marks");
-
-
-        $.validator.addMethod("checkCategory", function(value, element) {
-
-            var category = $("#category")[0].selectedIndex;
-            var day = $("#training_certificate_period_in_days")[0].selectedIndex;
-            var name = $('#caste_certificate').val().split('\\').pop();
-            caste_certificate_name = name.split('.')[0];
-         
-            if (caste_certificate_name == '' && (category == 3 || category == 4)) {
-                return false;
-            } else {
                 return true;
-            }
 
-        }, "Please upload caste certificate");
+            }, "Please select month or day");
 
+            $.validator.addMethod("verifyHighSchoolMarks", function(value, element) {
 
+                var high_marks = $("#high_marks").val();
+                var high_total_marks = $("#high_total_marks").val();
 
-        // $.validator.addMethod("checkDOB", function(value, element) {
-
-        //     var userinput = document.getElementById("dob").value;
-        //     var dob = new Date(userinput);
-        //     var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
-        //     var age_dt = new Date(month_diff);
-        //     var year = age_dt.getUTCFullYear();
-        //     var age = Math.abs(year - 1970);
-
-        //     if (age < 18) {
-        //         return false
-        //         ;
-        //     }
-        //     return true;
-        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
-
-
-        // new
-
-
-        $.validator.addMethod("checkDOB", function (value, element) {
-            var userinput = document.getElementById("dob").value;
-            var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-
-            // Check if age is between 18 and 40 (inclusive)
-            if (age >= 18 && age <= 40) {
-                return true;
-            }
-            return false;
-
-        }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
-
-
-        // $.validator.addMethod("checkDOB", function(value, element) {
-        //     var userinput = $(element).val();
-        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-        //     return age >= 18;
-        // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
-
-        // $.validator.addMethod("checkDOB", function(value, element) {
-        //     var userinput = $(element).val();
-        //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
-        //     return age >= 18 || age <= 40;
-
-        // }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
-
-
-
-        /*---------Add Avedan From Validations Start-----------------------------*/
-        var val = {
-            // Specify validation rules
-            rules: {
-                "training_certificate_period_in_month": {
-                    uploadTrainingCertificate: true,
-                    selectMonthORday: true,
-                },
-                "dob": {
-                    required: true,
-                    checkDOB: true,
-                },
-                applicant_name: "required",
-                yojna_name_for_training: "required",
-                AIkit: "required",
-                coption: "required",
-                tc: "required",
-                category: "required",
-                fname: "required",
-                mother: "required",
-                mobile: {
-                    required: true,
-                    number: true,
-                    minlength: 10,
-                    maxlength: 10,
-
-                },
-                address_number: "required",
-                address_type: "required",
-                // post_office: "required",
-                pincode: "required",
-                gender: "required",
-                permanent_address: "required",
-                // gram_panchayat_name: "required",
-                // vikas_khand: "required",
-                janpad: "required",
-                bank_name: "required",
-                account_number: "required",
-                ifsc_code: "required",
-                // pfms: "required",
-                // letter_address: "required",
-                high_board_name: "required",
-                high_passing_year: "required",
-                "high_marks": {
-                    required: true,
-                    verifyHighSchoolMarks: true,
-                },
-                high_total_marks: "required",
-                high_percentage: "required",
-
-                inter_board_name: "required",
-                inter_passing_year: "required",
-                "inter_marks": {
-                    required: true,
-                    verifyInterMarks: true,
-                },
-                inter_total_marks: "required",
-                inter_percentage: "required",
-
-
-                "permanent_address_proof": {
-                    required: true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "applicant_photo": {
-                    required: true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 2097152,
-                },
-                "signature": {
-                    required: true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 2097152,
-                },
-                "high_marksheet": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "high_certificate": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-
-                "inter_marksheet": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152, //100000
-                },
-                "inter_certificate": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-
-                "graduation_marksheet": {
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "graduation_certificate": {
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-
-                "postgraduation_marksheet": {
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "postgraduation_certificate": {
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-
-                "training_certificate": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "id_upload": {
-                    required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "health_certificate": {
-                    // required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "caste_certificate": {
-                    // required: true,
-                    checkCategory: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                nationality: "required",
-                declaration: "required",
-            },
-
-        }
-        $("#myForm").multiStepForm({
-            // defaultStep:0,
-            beforeSubmit: function(form, submit) {
-                console.log("called before submiting the form");
-                console.log(form);
-                console.log(submit);
-            },
-            validations: val,
-        }).navigateTo(0);
-        /*---------Add Avedan From Validations End-------------------------------*/
-
-
-
-        /*---------Edit Avedan From Validations Start-----------------------------*/
-        var valAvedanEdit = {
-            // Specify validation rules
-            rules: {
-                applicant_name: "required",
-                category: "required",
-                fname: "required",
-                /*email: {
-                    required: true,
-                    email: true
-                },*/
-                mobile: {
-                    required: true,
-                    number: true,
-                    minlength: 10,
-                    maxlength: 10,
-
-                },
-                dob: "required",
-                address_type: "required",
-                post_office: "required",
-                pincode: "required",
-                gender: "required",
-                permanent_address: "required",
-                "permanent_address_proof": {
-                    //required:true,
-                    //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    //checkFileSize: 100000,
-                },
-                gram_panchayat_name: "required",
-                vikas_khand: "required",
-                janpad: "required",
-                letter_address: "required",
-                "applicant_photo": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 20000,
-                },
-                "signature": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize20KB: 20000,
-                },
-                high_board_name: "required",
-                high_passing_year: "required",
-                high_marks: "required",
-                high_total_marks: "required",
-                high_percentage: "required",
-                inter_board_name: "required",
-                inter_passing_year: "required",
-                inter_marks: "required",
-                inter_total_marks: "required",
-                inter_percentage: "required",
-                "training_certificate": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "id_upload": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "health_certificate": {
-                    // required: true,
-                    extension: "png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "caste_certificate": {
-                    // required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "high_marksheet": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "high_certificate": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "inter_marksheet": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                "inter_certificate": {
-                    //required:true,
-                    extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
-                    checkFileSize: 2097152,
-                },
-                nationality: "required",
-                is_approved: "required",
-                //training_certificate_period_in_month: "required",
-                //training_certificate_period_in_days: "required",
-            },
-
-        }
-        $("#avedanEdit").multiStepForm({
-            // defaultStep:0,
-            beforeSubmit: function(form, submit) {
-                console.log("called before submiting the form");
-                console.log(form);
-                console.log(submit);
-            },
-            validations: valAvedanEdit,
-        }).navigateTo(0);
-        /*---------Edit Avedan From Validations End-------------------------------*/
-
-
-
-    });
-
-    (function($) {
-        $.fn.multiStepForm = function(args) {
-            if (args === null || typeof args !== 'object' || $.isArray(args))
-                throw " : Called with Invalid argument";
-            var form = this;
-            var tabs = form.find('.tab');
-            var steps = form.find('.step');
-            steps.each(function(i, e) {
-                $(e).on('click', function(ev) {});
-            });
-            form.navigateTo = function(i) {
-                /*index*/
-                /*Mark the current section with the class 'current'*/
-                tabs.removeClass('current').eq(i).addClass('current');
-                // Show only the navigation buttons that make sense for the current section:
-                form.find('.previous').toggle(i > 0);
-                atTheEnd = i >= tabs.length - 1;
-                form.find('.next').toggle(!atTheEnd);
-                // console.log('atTheEnd='+atTheEnd);
-                form.find('.submit').toggle(atTheEnd);
-                fixStepIndicator(curIndex());
-                return form;
-            }
-
-            function curIndex() {
-                /*Return the current index by looking at which section has the class 'current'*/
-                return tabs.index(tabs.filter('.current'));
-            }
-
-            function fixStepIndicator(n) {
-                steps.each(function(i, e) {
-                    i == n ? $(e).addClass('active') : $(e).removeClass('active');
-                });
-            }
-            /* Previous button is easy, just go back */
-            form.find('.previous').click(function() {
-                form.navigateTo(curIndex() - 1);
-            });
-
-            /* Next button goes forward iff current block validates */
-            form.find('.next').click(function() {
-
-                if ('validations' in args && typeof args.validations === 'object' && !$.isArray(args
-                        .validations)) {
-                    if (!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args
-                            .noValidate)) {
-                        form.validate(args.validations);
-                        if (form.valid() == true) {
-                            form.navigateTo(curIndex() + 1);
-
-
-                            /*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
-                            //var form_data = $(this).parents('form').serialize();
-                            var form_data = new FormData($(this).closest('#myForm').get(0));
-                            //alert(form_data);
-                            //var colage = $('[name="colage"]').val();
-                            //var spichelest = $('[name="spichelest"]').val();
-                            //alert($('[name="yojna_name_for_training"]').val());
-                            $.ajax({
-                                url: 'getTempData',
-                                method: "POST",
-                                data: form_data,
-                                success: function(data) {
-                                    //console.log(data);
-                                },
-                                cache: false,
-                                contentType: false,
-                                processData: false
-                            });
-                            /*-------------------End Call Ajax Here to Save Data on each next button-------------*/
-                            /*Start Getting Declaration Data------------------------*/
-                            $('#applicant_named').html($('#applicant_name').val());
-                            $('#fnamed').html($('#fname').val());
-                            $('#janpad_gram').html($('#janpad').find('option:selected').text());
-                            $('#gram_panchayat_named').html($('#gram_panchayat_name').val());
-                            $('#vikas_khandd').html($('#vikas_khand').val());
-                            $('#janpadd').html($('#janpad').find('option:selected').text());
-                            $('#janpaddD').html($('#janpad').find('option:selected').text());
-                            /*Start Getting Declaration Data------------------------*/
-
-                            return true;
-                        }
+                if (high_marks != '' && high_total_marks != '') {
+                    if (parseInt(high_marks) > parseInt(high_total_marks)) {
                         return false;
                     }
                 }
-                form.navigateTo(curIndex() + 1);
-            });
-            form.find('.submit').on('click', function(e) {
-                if (typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
-                    args.beforeSubmit(form, this);
-                /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/
-                if (typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args
-                        .submit)) {
-                    $('#finalSubmit').hide();
-                    $('#loader').show();
-                    form.submit();
+                return true;
+            }, "Enter valid marks");
+
+
+            $.validator.addMethod("verifyInterMarks", function(value, element) {
+
+                var inter_marks = $("#inter_marks").val();
+                var inter_total_marks = $("#inter_total_marks").val();
+
+                if (inter_marks != '' && inter_total_marks != '') {
+                    if (parseInt(inter_marks) > parseInt(inter_total_marks)) {
+                        return false;
+                    }
+                }
+
+                return true;
+
+            }, "Enter valid marks");
+
+
+            $.validator.addMethod("checkCategory", function(value, element) {
+
+                var category = $("#category")[0].selectedIndex;
+                var day = $("#training_certificate_period_in_days")[0].selectedIndex;
+                var name = $('#caste_certificate').val().split('\\').pop();
+                caste_certificate_name = name.split('.')[0];
+            
+                if (caste_certificate_name == '' && (category == 3 || category == 4)) {
+                    return false;
+                } else {
+                    return true;
+                }
+
+            }, "Please upload caste certificate");
+
+
+
+            // $.validator.addMethod("checkDOB", function(value, element) {
+
+            //     var userinput = document.getElementById("dob").value;
+            //     var dob = new Date(userinput);
+            //     var month_diff = new Date('{{ @$ageCalcultedFrom }}') - dob.getTime();
+            //     var age_dt = new Date(month_diff);
+            //     var year = age_dt.getUTCFullYear();
+            //     var age = Math.abs(year - 1970);
+
+            //     if (age < 18) {
+            //         return false
+            //         ;
+            //     }
+            //     return true;
+            // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+
+            // new
+
+
+            $.validator.addMethod("checkDOB", function (value, element) {
+                var userinput = document.getElementById("dob").value;
+                var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+
+                // Check if age is between 18 and 40 (inclusive)
+                if (age >= 18 && age <= 40) {
+                    return true;
+                }
+                return false;
+
+            }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
+
+
+            // $.validator.addMethod("checkDOB", function(value, element) {
+            //     var userinput = $(element).val();
+            //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+            //     return age >= 18;
+            // }, "आप पात्र नहीं हैं! आयु न्यूनतम 18 वर्ष होनी चाहिए");
+
+            // $.validator.addMethod("checkDOB", function(value, element) {
+            //     var userinput = $(element).val();
+            //     var age = moment().diff(moment(userinput, 'DD-MM-YYYY'), 'years');
+            //     return age >= 18 || age <= 40;
+
+            // }, "आप पात्र नहीं हैं! आयु 18 वर्ष से 40 वर्ष के बीच होनी चाहिए");
+
+
+
+            /*---------Add Avedan From Validations Start-----------------------------*/
+            var val = {
+                // Specify validation rules
+                rules: {
+                    "training_certificate_period_in_month": {
+                        uploadTrainingCertificate: true,
+                        selectMonthORday: true,
+                    },
+                    "dob": {
+                        required: true,
+                        checkDOB: true,
+                    },
+                    applicant_name: "required",
+                    yojna_name_for_training: "required",
+                    AIkit: "required",
+                    coption: "required",
+                    tc: "required",
+                    category: "required",
+                    fname: "required",
+                    mother: "required",
+                    mobile: {
+                        required: true,
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10,
+
+                    },
+                    address_number: "required",
+                    address_type: "required",
+                    // post_office: "required",
+                    pincode: "required",
+                    gender: "required",
+                    permanent_address: "required",
+                    // gram_panchayat_name: "required",
+                    // vikas_khand: "required",
+                    janpad: "required",
+                    bank_name: "required",
+                    account_number: "required",
+                    ifsc_code: "required",
+                    // pfms: "required",
+                    // letter_address: "required",
+                    high_board_name: "required",
+                    high_passing_year: "required",
+                    "high_marks": {
+                        required: true,
+                        verifyHighSchoolMarks: true,
+                    },
+                    high_total_marks: "required",
+                    high_percentage: "required",
+
+                    inter_board_name: "required",
+                    inter_passing_year: "required",
+                    "inter_marks": {
+                        required: true,
+                        verifyInterMarks: true,
+                    },
+                    inter_total_marks: "required",
+                    inter_percentage: "required",
+
+
+                    "permanent_address_proof": {
+                        required: true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "applicant_photo": {
+                        required: true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize20KB: 2097152,
+                    },
+                    "signature": {
+                        required: true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize20KB: 2097152,
+                    },
+                    "high_marksheet": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "high_certificate": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+
+                    "inter_marksheet": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152, //100000
+                    },
+                    "inter_certificate": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+
+                    "graduation_marksheet": {
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "graduation_certificate": {
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+
+                    "postgraduation_marksheet": {
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "postgraduation_certificate": {
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+
+                    "training_certificate": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "id_upload": {
+                        required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "health_certificate": {
+                        // required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "caste_certificate": {
+                        // required: true,
+                        checkCategory: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    nationality: "required",
+                    declaration: "required",
+                },
+
+            }
+            $("#myForm").multiStepForm({
+                // defaultStep:0,
+                beforeSubmit: function(form, submit) {
+                    console.log("called before submiting the form");
+                    console.log(form);
+                    console.log(submit);
+                },
+                validations: val,
+            }).navigateTo(0);
+            /*---------Add Avedan From Validations End-------------------------------*/
+
+
+
+            /*---------Edit Avedan From Validations Start-----------------------------*/
+            var valAvedanEdit = {
+                // Specify validation rules
+                rules: {
+                    applicant_name: "required",
+                    category: "required",
+                    fname: "required",
+                    /*email: {
+                        required: true,
+                        email: true
+                    },*/
+                    mobile: {
+                        required: true,
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10,
+
+                    },
+                    dob: "required",
+                    address_type: "required",
+                    post_office: "required",
+                    pincode: "required",
+                    gender: "required",
+                    permanent_address: "required",
+                    "permanent_address_proof": {
+                        //required:true,
+                        //extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        //checkFileSize: 100000,
+                    },
+                    gram_panchayat_name: "required",
+                    vikas_khand: "required",
+                    janpad: "required",
+                    letter_address: "required",
+                    "applicant_photo": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize20KB: 20000,
+                    },
+                    "signature": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize20KB: 20000,
+                    },
+                    high_board_name: "required",
+                    high_passing_year: "required",
+                    high_marks: "required",
+                    high_total_marks: "required",
+                    high_percentage: "required",
+                    inter_board_name: "required",
+                    inter_passing_year: "required",
+                    inter_marks: "required",
+                    inter_total_marks: "required",
+                    inter_percentage: "required",
+                    "training_certificate": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "id_upload": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "health_certificate": {
+                        // required: true,
+                        extension: "png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "caste_certificate": {
+                        // required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "high_marksheet": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "high_certificate": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "inter_marksheet": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    "inter_certificate": {
+                        //required:true,
+                        extension: "pdf|PDF|png|PNG|jpg|JPG|jpeg|JPEG",
+                        checkFileSize: 2097152,
+                    },
+                    nationality: "required",
+                    is_approved: "required",
+                    //training_certificate_period_in_month: "required",
+                    //training_certificate_period_in_days: "required",
+                },
+
+            }
+            $("#avedanEdit").multiStepForm({
+                // defaultStep:0,
+                beforeSubmit: function(form, submit) {
+                    console.log("called before submiting the form");
+                    console.log(form);
+                    console.log(submit);
+                },
+                validations: valAvedanEdit,
+            }).navigateTo(0);
+            /*---------Edit Avedan From Validations End-------------------------------*/
+
+
+
+        });
+
+        (function($) {
+            $.fn.multiStepForm = function(args) {
+                if (args === null || typeof args !== 'object' || $.isArray(args))
+                    throw " : Called with Invalid argument";
+                var form = this;
+                var tabs = form.find('.tab');
+                var steps = form.find('.step');
+                steps.each(function(i, e) {
+                    $(e).on('click', function(ev) {});
+                });
+                form.navigateTo = function(i) {
+                    /*index*/
+                    /*Mark the current section with the class 'current'*/
+                    tabs.removeClass('current').eq(i).addClass('current');
+                    // Show only the navigation buttons that make sense for the current section:
+                    form.find('.previous').toggle(i > 0);
+                    atTheEnd = i >= tabs.length - 1;
+                    form.find('.next').toggle(!atTheEnd);
+                    // console.log('atTheEnd='+atTheEnd);
+                    form.find('.submit').toggle(atTheEnd);
+                    fixStepIndicator(curIndex());
+                    return form;
+                }
+
+                function curIndex() {
+                    /*Return the current index by looking at which section has the class 'current'*/
+                    return tabs.index(tabs.filter('.current'));
+                }
+
+                function fixStepIndicator(n) {
+                    steps.each(function(i, e) {
+                        i == n ? $(e).addClass('active') : $(e).removeClass('active');
+                    });
+                }
+                /* Previous button is easy, just go back */
+                form.find('.previous').click(function() {
+                    form.navigateTo(curIndex() - 1);
+                });
+
+                /* Next button goes forward iff current block validates */
+                form.find('.next').click(function() {
+
+                    if ('validations' in args && typeof args.validations === 'object' && !$.isArray(args
+                            .validations)) {
+                        if (!('noValidate' in args) || (typeof args.noValidate === 'boolean' && !args
+                                .noValidate)) {
+                            form.validate(args.validations);
+                            if (form.valid() == true) {
+                                form.navigateTo(curIndex() + 1);
+
+
+                                /*-------------------Start Call Ajax Here to Save Data on each next button-------------*/
+                                //var form_data = $(this).parents('form').serialize();
+                                var form_data = new FormData($(this).closest('#myForm').get(0));
+                                //alert(form_data);
+                                //var colage = $('[name="colage"]').val();
+                                //var spichelest = $('[name="spichelest"]').val();
+                                //alert($('[name="yojna_name_for_training"]').val());
+                                $.ajax({
+                                    url: 'getTempData',
+                                    method: "POST",
+                                    data: form_data,
+                                    success: function(data) {
+                                        //console.log(data);
+                                    },
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false
+                                });
+                                /*-------------------End Call Ajax Here to Save Data on each next button-------------*/
+                                /*Start Getting Declaration Data------------------------*/
+                                $('#applicant_named').html($('#applicant_name').val());
+                                $('#fnamed').html($('#fname').val());
+                                $('#janpad_gram').html($('#janpad').find('option:selected').text());
+                                $('#gram_panchayat_named').html($('#gram_panchayat_name').val());
+                                $('#vikas_khandd').html($('#vikas_khand').val());
+                                $('#janpadd').html($('#janpad').find('option:selected').text());
+                                $('#janpaddD').html($('#janpad').find('option:selected').text());
+                                /*Start Getting Declaration Data------------------------*/
+
+                                return true;
+                            }
+                            return false;
+                        }
+                    }
+                    form.navigateTo(curIndex() + 1);
+                });
+                form.find('.submit').on('click', function(e) {
+                    if (typeof args.beforeSubmit !== 'undefined' && typeof args.beforeSubmit !== 'function')
+                        args.beforeSubmit(form, this);
+                    /*check if args.submit is set false if not then form.submit is not gonna run, if not set then will run by default*/
+                    if (typeof args.submit === 'undefined' || (typeof args.submit === 'boolean' && args
+                            .submit)) {
+                        $('#finalSubmit').hide();
+                        $('#loader').show();
+                        form.submit();
+                    }
+                    return form;
+                });
+                /*By default navigate to the tab 0, if it is being set using defaultStep property*/
+                typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
+                form.noValidate = function() {
+
                 }
                 return form;
-            });
-            /*By default navigate to the tab 0, if it is being set using defaultStep property*/
-            typeof args.defaultStep === 'number' ? form.navigateTo(args.defaultStep) : null;
-            form.noValidate = function() {
-
-            }
-            return form;
-        };
-    }(jQuery));
+            };
+        }(jQuery));
     </script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#district_id, #caste').change(function() {
-            var district_id = $("#district_id").val();
-            var category = $("#caste").val();
-            var institute_id = $("#instituteID").val();
+        $(document).ready(function() {
+            $('#district_id, #caste').change(function() {
+                var district_id = $("#district_id").val();
+                var category = $("#caste").val();
+                var institute_id = $("#instituteID").val();
 
 
-            if (district_id != '' && category != '') {
-                $("#responseID").html('');
-                $(".loader").show();
+                if (district_id != '' && category != '') {
+                    $("#responseID").html('');
+                    $(".loader").show();
 
-                $.ajax({ //create an ajax request to display.php
-                    type: "GET",
-                    url: "{{ url('/getAvedanData') }}?district_id=" + district_id +
-                        '&category=' + category + '&institute_id=' + institute_id,
-                    //dataType: "text",
-                    success: function(response) {
+                    $.ajax({ //create an ajax request to display.php
+                        type: "GET",
+                        url: "{{ url('/getAvedanData') }}?district_id=" + district_id +
+                            '&category=' + category + '&institute_id=' + institute_id,
+                        //dataType: "text",
+                        success: function(response) {
 
-                        $("#responseID").html(response);
-                        $(".loader").hide();
-                        //alert(response);
-                    }
-                });
-            }
+                            $("#responseID").html(response);
+                            $(".loader").hide();
+                            //alert(response);
+                        }
+                    });
+                }
+            });
+
+            $('#myTable').DataTable({
+                "pageLength": 25,
+                "ordering": false,
+                "oLanguage": {
+                    "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
+                    "sLengthMenu": "देखें  _MENU_ आवेदन",
+                    "sSearch": "आवेदन को खोजें :",
+                    "infoEmpty": "कोई आवेदन नहीं है",
+
+                },
+                "language": {
+                    "emptyTable": "कोई आवेदन नहीं है"
+                }
+            });
+
+
+            $('#instituteTable').DataTable({
+                "pageLength": 25,
+                "ordering": false,
+                "oLanguage": {
+                    "sInfo": "कुल संस्थान :  _TOTAL_",
+                    "sLengthMenu": "देखें  _MENU_ संस्थान",
+                    "sSearch": "संस्थान को खोजें :",
+                    "infoEmpty": "कोई संस्थान नहीं है",
+
+                },
+                "language": {
+                    "emptyTable": "कोई संस्थान नहीं है"
+                }
+            });
+
         });
 
-        $('#myTable').DataTable({
-            "pageLength": 25,
-            "ordering": false,
-            "oLanguage": {
-                "sInfo": "कुल आवेदन मैत्री :  _TOTAL_",
-                "sLengthMenu": "देखें  _MENU_ आवेदन",
-                "sSearch": "आवेदन को खोजें :",
-                "infoEmpty": "कोई आवेदन नहीं है",
 
-            },
-            "language": {
-                "emptyTable": "कोई आवेदन नहीं है"
-            }
-        });
+        function viewCalculation(id) {
+            //$("#responseID").html('');
+            //$(".loader").show();
+            $('#myModel').modal('show');
 
+            $.ajax({ //create an ajax request to display.php
+                type: "GET",
+                url: "{{ url('/viewCalculation') }}/" + id,
+                //dataType: "text",
+                success: function(response) {
+                    console.log('response', response)
 
-        $('#instituteTable').DataTable({
-            "pageLength": 25,
-            "ordering": false,
-            "oLanguage": {
-                "sInfo": "कुल संस्थान :  _TOTAL_",
-                "sLengthMenu": "देखें  _MENU_ संस्थान",
-                "sSearch": "संस्थान को खोजें :",
-                "infoEmpty": "कोई संस्थान नहीं है",
+                    $("#responseID").html(response);
+                    //$('#myModel').modal('hide')
+                    //console.log(response);
+                }
+            });
 
-            },
-            "language": {
-                "emptyTable": "कोई संस्थान नहीं है"
-            }
-        });
+        }
 
-    });
+        function closemodal() {
+            $('#myModel').modal('hide');
+        }
 
+        function changeStatus(id, join_status) {
+            $("#responseID" + id).html('');
+            $(".loader").show();
 
-    function viewCalculation(id) {
-        //$("#responseID").html('');
-        //$(".loader").show();
-        $('#myModel').modal('show');
-
-        $.ajax({ //create an ajax request to display.php
-            type: "GET",
-            url: "{{ url('/viewCalculation') }}/" + id,
-            //dataType: "text",
-            success: function(response) {
-                console.log('response', response)
-
-                $("#responseID").html(response);
-                //$('#myModel').modal('hide')
-                //console.log(response);
-            }
-        });
-
-    }
-
-    function closemodal() {
-        $('#myModel').modal('hide');
-    }
-
-    function changeStatus(id, join_status) {
-        $("#responseID" + id).html('');
-        $(".loader").show();
-
-        $.ajax({
-            type: "GET",
-            url: "{{ url('/changeStatus') }}/" + id + '/' + join_status,
-            success: function(response) {
-                $("#responseID" + id).html(response);
-                console.log(response);
-                $(".loader").hide();
-            }
-        });
-    }
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/changeStatus') }}/" + id + '/' + join_status,
+                success: function(response) {
+                    $("#responseID" + id).html(response);
+                    console.log(response);
+                    $(".loader").hide();
+                }
+            });
+        }
     </script>
 </head>
 
@@ -986,6 +986,7 @@
                 </div>
             </div>
         </div>
+       
         <div class="logo-header">
             <div class="container py-3">
                 <div class="row g-3 align-items-center">
@@ -1204,22 +1205,25 @@
                             </li>
 
                             @if (auth()->user()->user_type == 'District Officer')
+                                @php
+                                    $year = request()->segment(2) ?? date('Y');
+                                @endphp
                             <li class="nav-item dropdown {{ request()->is('waiting-list') ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/1">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $year }}/1">
                                         <span data-hi="सामान्य वर्ग" data-en="General"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/2">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $year }}/2">
                                         <span data-hi="अन्य पिछड़ा वर्ग" data-en="OBC"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/3">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $year }}/3">
                                         <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/4">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $year }}/4">
                                         <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                     </a>
                                 </div>

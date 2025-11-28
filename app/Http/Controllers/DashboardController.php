@@ -1375,6 +1375,9 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $year)
                 ->orderBy('topper_number', 'DESC')
                 ->get();
+
+            $waitingCount = Avedan::where('is_approved', '=', 3)->whereYear('created_at', $year)->count();
+            $heading = 'अभ्यर्थियों की प्रतीक्षा सूची ( आवेदन : '.$waitingCount.')';
         }
 
         // else if ($id == 3) { //SC Waiting List

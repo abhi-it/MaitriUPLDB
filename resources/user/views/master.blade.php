@@ -1062,19 +1062,30 @@
                             </li>
 
                             @if (auth()->user()->user_type == 'District Officer')
+
+                                @php
+                                $show = false;
+                                @endphp
+
+                                @if ($sessionYear == date('Y'))
+                                @php
+                                $show = false;
+                                @endphp
+                                @endif
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" key="SCHEME">
                                     <span data-hi="प्रतीक्षा सूची" data-en="Waiting List"></span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/1">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $sessionYear }}/1">
                                         <span data-hi="सामान्य / अन्य पिछड़ा वर्ग" data-en="General/OBC"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/2">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $sessionYear }}/2">
                                         <span data-hi="अनुसूचित जाति" data-en="Scheduled Caste"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/3">
+                                    <a class="dropdown-item" href="{{ url('waiting-list') }}/{{ $sessionYear }}/3">
                                         <span data-hi="अनुसूचित जनजाति" data-en="Scheduled Tribe"></span>
                                     </a>
                                 </div>

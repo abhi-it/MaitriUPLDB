@@ -180,11 +180,14 @@ button:hover {
 		</div>
 		  
         </div>
-
+		@php
+			$year = date('Y');
+		@endphp
         <div style="overflow:auto;margin-bottom:20px;">
             <div style="margin-top: 5px;" id="finalSubmit">
                 <button type="submit" class="btn btn-primary submit">चयनित एवं अपलोड</button> 
                 <a href="javascript:void(0)" class="btn btn-danger" style="margin-left:20px;" data-toggle="modal" data-target="#exampleModalCenter">अचयनित/अस्वीकार</a>
+                <a href="{{ url('waiting-list') }}/{{ $year }}/1" class="btn btn-primary" style="margin-left:20px;">प्रतीक्षा सूची</a>
             </div>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;" id="loader"> </span>
             
