@@ -170,7 +170,7 @@ button:hover {
 				<div class="row" style="padding-top:30px;">
 				<div class="form-group col-md-6">
 				  <label for="inputEmail4">राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वास्थ्य प्रमाण - पत्र अपलोड करें</label> <!--span class="text-danger">*</span> <small style="color:red;">Note: JPG, JPEG, PNG files only (Max. 100 KB)</small-->
-				  <input type="file" class="form-control" name="health_certificate" id="health_certificate">
+				  <input type="file" class="form-control" name="health_certificate" id="health_certificate" required>
 				  @if($result->health_certificate!='')
 					<a href="{{ asset('')}}upload_documents/{{$result->health_certificate}}" target="_blank">View</a>
 				  @else
