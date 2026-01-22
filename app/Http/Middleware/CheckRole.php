@@ -57,7 +57,7 @@ class CheckRole
         return [
             'DFS' => [
                 'dashboard',
-                'admin-stock-form',
+                // 'admin-stock-form',
                 'admin-inventory-record',
                 'admin-stock-save-data',
                 'inventory',
@@ -189,6 +189,7 @@ class CheckRole
                 'documents-update',
                 'documents-destroy',
                 'all-cvo',
+                'admin-stock-form',
                 
                 'correctdata-get',
                 'correctdata-store',
@@ -365,6 +366,7 @@ class CheckRole
 
             'Superadmin' => [
                 'waitingList',
+                'admin-stock-form',
                 'waitingAvedanFullDetails',
                 'posts.index',
                 'posts.create',

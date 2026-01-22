@@ -39,11 +39,16 @@
         {{ session()->get('success') }}
     </div>
     @endif
+    @php
+    $hideAdmin = request()->query('hideAdmin', false);
+    @endphp
     <div class="radio-option">
+         @if(!$hideAdmin)
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="checkOption" id="admin" value="admin" checked>
             <label class="form-check-label" for="inlineRadio1">Admin</label>
         </div>
+          @endif
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="checkOption" id="farmerMairti" value="farmerMairti">
             <label class="form-check-label" for="inlineRadio2">Maitri</label>

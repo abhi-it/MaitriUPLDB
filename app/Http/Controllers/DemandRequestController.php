@@ -23,8 +23,8 @@ class DemandRequestController extends Controller{
     public function index(Request $request)
     {
         $user = Auth::user();
-        if(!$user) {
-            return redirect("login");
+       if (!$user) {
+            return redirect()->route('login', ['hideAdmin' => true]);
         }
         $division   = Divisions::get();
         $institute  = Institute::get();

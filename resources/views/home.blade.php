@@ -235,6 +235,12 @@ color: #000;
 
 /* Duplicate the track content to create an infinite loop illusion */
 .marquee-content { display: inline-flex; align-items: center; gap: 2rem; padding-right: 2rem; }
+
+.carousel-inner img {
+    width: 100%;
+    height: 600px; /* 60% of viewport height */
+    object-fit: cover;
+}
 </style>
 
 
@@ -243,7 +249,7 @@ color: #000;
 <section>
 
     <div class="container-fluid p-0">
-         <div id="maitri-marquee" class="marquee-bar" aria-live="polite" data-deadline="2025-09-17T23:59:59+05:30" data-applicants="100">
+         <!-- <div id="maitri-marquee" class="marquee-bar" aria-live="polite" data-deadline="2025-09-17T23:59:59+05:30" data-applicants="100">
             <div class="marquee-track">
                 <div class="marquee-content">
                     <span class="pill">
@@ -265,23 +271,99 @@ color: #000;
                 
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row m-0">
             <div class="col-lg-12 p-0">
-                <div id="home-slider" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#home-slider" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#home-slider" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                    </div>
+                   <div id="home-slider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="3"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="4"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="5"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="6"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="7"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="8"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="9"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="10"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="11"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="12"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="13"></button>
+                    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="14"></button>
+		    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="15"></button>
+		    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="16"></button>
+		    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="17"></button>
+		    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="18"></button>
+		    <button type="button" data-bs-target="#home-slider" data-bs-slide-to="19"></button>
+                    <!-- <button type="button" data-bs-target="#home-slider" data-bs-slide-to="15"></button> -->
+                </div>
+
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{ asset('assets/images/banner1.jpg')}}" alt="First slide">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner12.png')}}" alt="First slide" >
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('assets/images/banner2.jpg')}}" alt="Second slide">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner2.png')}}" alt="Second slide">
                         </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner3.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner4.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner5.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner6.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner7.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner8.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner9.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner10.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner11.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner16.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner13.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner14.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/banner15.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/bannerulb.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/bannerulb2.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/bannerulb3.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/bannerulb4.png')}}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="{{ asset('assets/images/bannerulb5.png')}}" alt="Second slide">
+                        </div>
+
+                        <!-- <div class="carousel-item">
+                            <img class="d-block w-100" src="{{ asset('assets/images/banner16.png')}}" alt="Second slide">
+                        </div> -->
                         <!-- <div class="carousel-item">
                   <img class="d-block w-100" src="{{ asset('assets/images/banner3.jpg')}}" alt="Third slide">
                 </div> -->
@@ -498,9 +580,9 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
 
                     </p>
-                    <button class="btn btn-primary">
-                        <span data-hi="और देखें" data-en="View more"></span>
-                    </button>
+                    <a href="{{route('aboutUs')}}" class="btn btn-primary">
+                        <span data-hi="और देखें" data-en="View more"> </span>
+                    </a>
                 </div>
             </div>
             <div class="col-xl-4">
@@ -534,9 +616,9 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                         </h3>
                         <p><i>
                                 <span
-                                    data-hi="बोर्ड का उद्देश्य उत्तराखंड राज्य के पूरे क्षेत्र में पशुधन (गाय और भैंस) के प्रजनन और प्रबंधन में सुधार के लिए व्यवहार्य गतिविधियों को प्रोत्साहित करना, बढ़ावा देना और कार्यान्वित करना होगा, ताकि उनके उत्पादन और उत्पादकता में वृद्धि हो सके। राष्ट्रीय और अंतर्राष्ट्रीय अनुसंधान सेटअप के साथ संबंध स्थापित करना और पशुधन के लिए एक अनुसंधान सहायता कार्यक्रम का आयोजन करना, जिससे दक्षता में सुधार हो और लागत में कमी आए। पशुधन उत्पादन, उत्पादकता और पशुधन उत्पादों के सभी पहलुओं पर अध्ययन और सर्वेक्षण करना; भारतीय पशुधन उद्योग के बढ़ते वैश्वीकरण के लिए उन्नत सूचना प्रौद्योगिकी द्वारा एक गतिशील डेटाबेस और प्रबंधन सूचना प्रणाली के लिए सूचना और डेटा उत्पन्न करना।"
+                                    data-hi="बोर्ड का उद्देश्य उत्तर प्रदेश राज्य के पूरे क्षेत्र में पशुधन (गाय और भैंस) के प्रजनन और प्रबंधन में सुधार के लिए व्यवहार्य गतिविधियों को प्रोत्साहित करना, बढ़ावा देना और कार्यान्वित करना होगा, ताकि उनके उत्पादन और उत्पादकता में वृद्धि हो सके। राष्ट्रीय और अंतर्राष्ट्रीय अनुसंधान सेटअप के साथ संबंध स्थापित करना और पशुधन के लिए एक अनुसंधान सहायता कार्यक्रम का आयोजन करना, जिससे दक्षता में सुधार हो और लागत में कमी आए। पशुधन उत्पादन, उत्पादकता और पशुधन उत्पादों के सभी पहलुओं पर अध्ययन और सर्वेक्षण करना; भारतीय पशुधन उद्योग के बढ़ते वैश्वीकरण के लिए उन्नत सूचना प्रौद्योगिकी द्वारा एक गतिशील डेटाबेस और प्रबंधन सूचना प्रणाली के लिए सूचना और डेटा उत्पन्न करना।"
                                     data-en="“The board's objective shall be to encourage, promote, and carry out viable, activities to improve the breeding and management of livestock (cattle and buffaloes) to enhance their production and productivity
-                throughout the territory of the State of Uttarakhand. Establish linkage with national and international
+                throughout the territory of the State of Uttar Pradesh. Establish linkage with national and international
                 research setup, and orchestrate a research support program for livestock leading to improved efficiency
                 and cost reduction. Conduct studies and surveys on all aspects of livestock production, productivity,
                 and livestock products; generate information and data leading to a dynamic database and management
@@ -653,28 +735,28 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
             <div class="flex-box-counter">
 
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="विदेशी और संकर नस्ल के गाय"
-                            data-en="Exotic & Crossbred Cattle"></span></h2>
-                    <p class="text-center text-white fs-4 cattle counter">6122628</p>
+                    <h2 class="fw-bold"><span data-hi="प्रजनन योग्य स्वदेशी मवेशी"
+                            data-en="Breedable Indigenous Cattle"></span></h2>
+                    <p class="text-center text-white fs-4 cattle counter">5870793</p>
                 </div>
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="देशी गाय" data-en="Indigenous Cattle"></span></h2>
-                    <p class="text-center text-white fs-4 cattle counter">12897013</p>
+                    <h2 class="fw-bold"><span data-hi="प्रजनन योग्य विदेशी और संकर नस्ल के मवेशी" data-en="Breedable Exotic and Crossbred Cattle"></span></h2>
+                    <p class="text-center text-white fs-4 cattle counter">3065354</p>
 
                 </div>
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="भैंस" data-en="Buffalo"></span></h2>
-                    <p class="text-center text-white fs-4 cattle counter">33016785</p>
+                    <h2 class="fw-bold"><span data-hi="कुल मवेशी" data-en="Total Cattle"></span></h2>
+                    <p class="text-center text-white fs-4 cattle counter">8936147</p>
 
                 </div>
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="बकरी" data-en="Goat"></span></h2>
-                    <p class="text-center text-white fs-4 cattle counter">14480025</p>
+                    <h2 class="fw-bold"><span data-hi="प्रजनन योग्य भैंस" data-en="Breedable Buffalo"></span></h2>
+                    <p class="text-center text-white fs-4 cattle counter">15311970</p>
 
                 </div>
                 <div class="flex-box-inner">
-                    <h2 class="fw-bold"><span data-hi="घोड़ा" data-en="Horse"></span></h2>
-                    <p class="text-center text-white fs-4 cattle counter">104000</p>
+                    <h2 class="fw-bold"><span data-hi="कुल प्रजनन योग्य बोवाइन आबादी" data-en="Total Breedable Bovine Population"></span></h2>
+                    <p class="text-center text-white fs-4 cattle counter">24248117</p>
 
                 </div>
             </div>
@@ -838,26 +920,38 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 <section class="py-5 my-3 counter-section">
     <div class="container">
         <div class="d-flex mb-5 flex-column align-items-center justify-content-center text-white text-center">
-            <h2 class="fw-bold"> <span data-hi="मैत्री जनसंख्या उत्तर प्रदेश"
-                    data-en="Maitri Population Uttar Pradesh"></span> </h2>
+            <h2 class="fw-bold"> <span data-hi="मैत्री "
+                    data-en="Maitri "></span> </h2>
         </div>
         <div class="row g-3">
-            <div class="col-lg-4 p-2">
+            <div class="col-lg-3 p-2">
                 <div class="text-center">
                     <h2 class="fw-bold logo-title">2021 - 2022</h2>
                     <p class="text-center text-white fs-4 cattle counter">1182</p>
                 </div>
             </div>
-            <div class="col-lg-4 p-2">
+            <div class="col-lg-2 p-2">
                 <div class="text-center">
                     <h2 class="fw-bold logo-title">2022 - 2023</h2>
                     <p class="text-center text-white fs-4 counter">1755</p>
                 </div>
             </div>
-            <div class="col-lg-4 p-2">
+            <div class="col-lg-2 p-2">
                 <div class="text-center">
                     <h2 class="fw-bold logo-title">2023 - 2024</h2>
-                    <p class="text-center text-white fs-4 counter">1897</p>
+                    <p class="text-center text-white fs-4 counter">1898</p>
+                </div>
+            </div>
+            <div class="col-lg-2 p-2">
+                <div class="text-center">
+                    <h2 class="fw-bold logo-title">2024 - 2025</h2>
+                    <p class="text-center text-white fs-4 counter">2465</p>
+                </div>
+            </div>
+            <div class="col-lg-3 p-2">
+                <div class="text-center">
+                    <h2 class="fw-bold logo-title">2025 - 2026</h2>
+                    <p class="text-center text-white fs-4 counter">1580</p>
                 </div>
             </div>
             <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 col-6 p-2">
@@ -978,8 +1072,8 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
     <div class="container">
         <div class="row">
             <h2 class="fs-3 fw-bold text-center">
-                <span data-hi="कृत्रिम गर्भाधान प्रशिक्षण केंद्र"
-                    data-en="Artificial Insemination Training Centers"></span>
+                <span data-hi="यूपीएलडीबी संस्थान"
+                    data-en="UPLDB Institutions"></span>
             </h2>
 
             <div class="col-lg-6">
@@ -1189,6 +1283,8 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
 <section class="py-4">
     <div class="container">
+         <h2 class="fs-3 fw-bold text-center mb-3 pb-3"><span data-hi="उपयोगी वेबसाइटें"
+                    data-en="Useful Websites"></span></h2>
         <div class="row">
             <div class="logo-swiper-container">
                 <div class="swiper-wrapper">
@@ -1250,8 +1346,8 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
 <section class="py-4">
     <div class="container">
-        <h2 class="fs-3 fw-bold text-center mb-3"> <a href="{{route('gallery-page')}}"> <span data-hi="गैलरी"
-                    data-en="Gallery"></span> </a> </h2>
+        <h2 class="fs-3 fw-bold text-center mb-3"> <a href="{{route('gallery-page')}}"> <span data-hi="संगृहीत तस्वीरें"
+                    data-en="Compiled Pictures"></span> </a> </h2>
         <div class="row">
             <div class="col-md-3 col-lg-3 col-xl-2">
                 <img src="{{ asset('gallery/image1.jpg')}}" alt="..." class="gallery-item">

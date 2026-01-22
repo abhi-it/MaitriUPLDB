@@ -19,6 +19,7 @@
     <script src="{{ asset('js/bgcolor.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/account.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="{{ asset('js/additional-methods.min.js?ver=1.0') }}" type="text/javascript"></script>
     <script type="text/javascript"
         src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyABHXJPN6L8-6nqf4uUekwdoQBPeHLYe60') }}&callback=initMap">
@@ -131,7 +132,13 @@
         }
 
         header .navbar li.nav-item.active a.nav-link {
-            color: #292b2c !important
+            color: #292b2c !important;
+            /* font-size: 16px; */
+
+        }
+
+        .nav-link span{
+            font-size: 13px;
         }
 
 
@@ -186,6 +193,77 @@
         background-color: #57009eff;
         }
         }
+       .social-sidebar {
+        position: fixed;
+        top: 50%; 
+        left: 0;   
+        transform: translateY(-50%); 
+        display: flex;
+        flex-direction: column;
+        z-index: 999; 
+        }
+
+        .social-sidebar a {
+        text-decoration: none;
+        color: #fff !important;
+        padding: 15px;
+        font-family: sans-serif;
+        text-align: center;
+        transition: 0.3s;
+        width: 50px;
+        }
+
+       
+        .facebook { background: #3b5998; }
+        .twitter { background: #313131; }
+        .whatsapp { background:#25d366; }
+         .youtube { background: #A80600; }
+       
+        .social-sidebar a:hover {
+        width: 70px; 
+        padding-left: 30px;
+        }
+        .site-footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.footer-content {
+ display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap:10px;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.footer-qr{
+    width: 100px;
+    height: 100px;
+}
+.footer-qr img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blink-counter {
+    font-size: 48px;      /* Big size */
+    font-weight: 800;     /* Bold text */
+    color: red;            /* Color you like */
+    /* animation: blink 1s infinite; Blinking animation */
+}
+
+/* Blinking keyframes */
+/* @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+} */
 
     </style>
     @php
@@ -941,28 +1019,29 @@
                             <option value="en"> English</option>
                         </select>
                         <span class="middle-line">|</span>
+
                         <span class="social-icon">
-                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
+                            <a href="https://x.com/upldblko" target="_blank">
                                 <i class="ri-twitter-x-line ri-lg"></i>
                             </a>
-                            <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board"
+                            <a href="https://whatsapp.com/channel/0029VaOIfj0KAwEp5IGccZ3v"
                                 target="_blank">
-                                <i class="ri-linkedin-line ri-lg"></i>
+                                <i class="ri-whatsapp-fill ri-lg"></i>
                             </a>
                             <!-- <i class="ri-instagram-line ri-lg"></i> -->
                             <a target="_blank"
-                                href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
+                                href="https://www.facebook.com/profile.php?id=61554910544850">
                                 <i class="ri-facebook-circle-line ri-lg"></i>
                             </a>
-                            <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
+                            <a href="https://www.youtube.com/@UPLDB_Official/" target="_blank">
                                 <i class="ri-youtube-line ri-lg"></i>
                             </a>
-                             <span class="middle-line">|</span>
+                             <!-- <span class="middle-line">|</span>
                             <a href="{{ route('video-gallery') }}">
                                 <i class="ri-question-line ri-lg"></i>
                                 <span class="text-black" data-hi="सहायता केंद्र" data-en="Help Center"></span>
                             </a>
-                        </span>
+                        </span> -->
                         <span class="middle-line">|</span>
                         @if (Route::has('login'))
                         <span>
@@ -1473,13 +1552,18 @@
                                     <span data-hi="मुख्य पृष्ठ" data-en="Main Page"></span>
                                     <span class="sr-only">(current)</span></a>
                             </li>
+                            <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('/about-us') }}" key="ABOUT US">
+                                    <span data-hi="हमारे बारे में" data-en="About Us"></span>
+                                    <span class="sr-only">(current)</span></a>
+                            </li>
 
                             <li class="nav-item {{ request()->is('avedan-karein') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('avedan-karein') }}">
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="glow-badge p-0">
                                             <!-- <span class="glow-dot" aria-hidden="true"></span> -->
-                                            <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="Now"></span>
+                                            <!-- <span class="glow-badge__pill glowing" role="status" aria-label="New content" data-hi="अब" data-en="Now"></span> -->
                                         </span>
                                         <span data-hi="आवेदन" data-en="Application"></span>
                                     </div>
@@ -1499,15 +1583,15 @@
                             </li>
                            
                             <!-- Hide 01 Sep 2025 -->
-                            <!-- <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('lakshya') }}">
                                     <span data-hi="स्वरोजगारी मैत्री की संख्या"
                                         data-en="Number of self-employed maitri"></span>
                                 </a>
-                            </li> -->
+                            </li>
                             <!-- Hide 01 Sep 2025 -->
                             <!-- Hide 01 Sep 2025 -->
-                            <!-- <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
+                            <li class="nav-item {{ request()->is('demandRequests') ? 'active' : '' }} ">
                                 <a class="nav-link" href="{{ url('demandRequests') }}">
                                     <span data-hi="मांग अनुरोध" data-en="Demand Requests"></span>
                                 </a>
@@ -1517,7 +1601,7 @@
                                     <span data-hi="गाय और भैंस" data-en="Cattle & Buffalo"></span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is('hierarchy-chart') ? 'active' : '' }} ">
+                            <!-- <li class="nav-item {{ request()->is('hierarchy-chart') ? 'active' : '' }} ">
                                 <a class="nav-link" href="{{ url('hierarchy-chart') }}">
                                     <span data-hi="पदानुक्रम चार्ट" data-en="Hierarchy Chart"></span>
                                 </a>
@@ -1531,11 +1615,11 @@
                             </li> -->
 
                             <!-- Hide 01 Sep 2025 -->
-                            <!-- <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('farmer-register') }}">
                                     <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Registration"></span>
                                 </a>
-                            </li> -->
+                            </li>
                             <!-- Hide 01 Sep 2025 -->
 
                             <!-- <li class="nav-item ">
@@ -1545,11 +1629,11 @@
                             </li> -->
 
                             <!-- Hide 01 Sep 2025 -->
-                            <!-- <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->is('zonestockform') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('zonestockform') }}">
                                     <span data-hi="ज़ोन स्टॉक फॉर्म" data-en="Zone Stock Form"></span>
                                 </a>
-                            </li> -->
+                            </li>
                             <!-- Hide 01 Sep 2025 -->
 
                             @endauth
@@ -1658,6 +1742,14 @@
         <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> © Rashtriya Gokul Mission All rights reserved</p>
       </div> -->
     <!-- </footer> -->
+
+  <div class="social-sidebar">
+  <a href="https://www.facebook.com/profile.php?id=61554910544850" class="facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="https://x.com/upldblko" class="twitter"><i class="fab fa-x-twitter"></i></a>
+  <a href="https://whatsapp.com/channel/0029VaOIfj0KAwEp5IGccZ3v" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://www.youtube.com/@UPLDB_Official/" class="youtube"><i class="fab fa-youtube"></i></a>
+</div>
+
     <footer class="position-relative">
         @if (Route::has('login'))
         @auth
@@ -1675,14 +1767,15 @@
                     <h5><i class="fa fa-envelope"></i>
                         <span data-hi="ईमेल करें" data-en="Email Us"></span>
                     </h5>
-                    <p class="mb-0">
+                      <p class="mb-0">
+                        <span data-hi="यूपीएलडीबी अधिकारी" data-en="UPLDB Official"></span>
+                        - upldb@rediffmail.com
+                    </p>
+                    <!-- <p class="mb-0">
                         <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span>
                         - upldbte@gmail.com
                     </p>
-                    <p class="mb-0">
-                        <span data-hi="शिकायत सेल" data-en="Grievance Cell"></span>
-                        - upldbmaitri@gmail.com
-                    </p>
+                  
                     <p class="mb-0">
                         <span data-hi="बीमा" data-en="Insurance"></span>
                         - upldb.rmli@gmail.com
@@ -1690,7 +1783,7 @@
                     <p class="mb-0">
                         <span data-hi="सेक्स्ड सीमेन" data-en="Sexed Semen"></span>
                         - upldbss@gmail.com
-                    </p>
+                    </p> -->
                 </div>
                 <div class="col-lg-4">
                     <h5><i class="fa fa-phone"></i>
@@ -1718,11 +1811,20 @@
                         <h5>
                             <span data-hi="ऐप डाउनलोड करें" data-en="Download App"></span>
                         </h5>
+                        <div>
                         <a href="https://play.google.com/store/apps/details?id=com.epashu.in"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
-                                width="120px" alt=""></a>
+                                width="80px" alt="" style="margin-right:10px;"></a>
+                        <a href="https://play.google.com/store/apps/details?id=up.in.hiblcattle"><img src="{{ asset('assets/images/hbl.png') }}"
+                                width="80px" alt="" style="margin-right:10px;"></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.farmerpashudhan.production"><img src="{{ asset('assets/images/1962.png') }}"
+                                width="80px" alt="" style="margin-right:10px;"></a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+          
+
             <div class="row align-items-top gap-5 px-2 mx-0 pt-4 pb-3 footer_footer__O">
                 <div class="col-lg-3 align-items-top text-center">
                     <img src="https://maitriupldb.in/assets/images/upldb-logo.png" alt="" width="150">
@@ -1732,19 +1834,20 @@
                     </span>
                     <div class="social-links d-flex justify-content-center gap-3 mt-lg-3  mt-md-4 mt-3 ">
 
-                        <a href="https://x.com/i/flow/login?redirect_after_login=%2Fupldblko" target="_blank">
+                        <a href="https://x.com/upldblko" target="_blank">
                             <span> <i class="ri-twitter-x-line ri-lg"></i></span>
                         </a>
                         <a target="_blank"
-                            href="https://www.facebook.com/people/Uttar-Pradesh-Livestock-Development-Board/61554910544850/">
+                            href="https://www.facebook.com/profile.php?id=61554910544850">
                             <span> <i class="ri-facebook-circle-line ri-lg"></i></span>
                         </a>
 
-                        <a href="https://www.linkedin.com/company/uttar-pradesh-livestock-development-board"
+                        <a href="https://whatsapp.com/channel/0029VaOIfj0KAwEp5IGccZ3v"
                             target="_blank">
-                            <span><i class="ri-linkedin-line ri-lg"></i></span>
+                            <i class="ri-whatsapp-fill ri-lg"></i>
+
                         </a>
-                        <a href="https://www.youtube.com/@uplivestockdevelopmentboard" target="_blank">
+                        <a href="https://www.youtube.com/@UPLDB_Official/" target="_blank">
                             <span><i class="ri-youtube-line ri-lg"></i> </span>
                         </a>
 
@@ -1803,11 +1906,11 @@
                             <span data-hi="मैत्री (पशु मित्र) पंजीकरण" data-en="Maitri Registration"></span>
                     </a>
                     </li> -->
-                        <!-- <li>
+                        <li>
                             <a href="{{ url('farmer-register') }}">
-                                <span data-hi="पशुपालक पंजीकरण" data-en="Livestock Registration"></span>
+                                <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Registration"></span>
                             </a>
-                        </li> -->
+                        </li>
 
                     </ul>
                 </div>
@@ -1824,15 +1927,33 @@
                     </ul>
                 </div>
             </div>
+            <div class="footer-content">
+                    <div class="footer-qr">
+                    <img src="{{ asset('assets/images/UPLDB_Facebook_Page_QRCode.png') }}" alt="...">
+                    </div>
+                     <div class="footer-qr">
+                    <img src="{{ asset('assets/images/UPLDB_Twitter_Profile_QRCode.png') }}" alt="...">
+                    </div>
+                     <div class="footer-qr">
+                    <img src="{{ asset('assets/images/UPLDB_Website_QRCode.png') }}" alt="...">
+                    </div>
+                     <div class="footer-qr">
+                    <img src="{{ asset('assets/images/UPLDB_WhatsApp_Channel_QRCode.png') }}" alt="...">
+                    </div>
+                    <div class="footer-qr">
+                    <img src="{{ asset('assets/images/UPLDB_YouTube_Channel_QRCode.png') }}" alt="...">
+                    </div>
+                </div>
         </div>
         @endauth
         @endif
         <div class="copy-right py-2 text-center copyright-text footer-counter">
-            <a href='https://www.free-counters.org/'>www.free-Counter.org</a>
-            <script type='text/javascript'
-                src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
-            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5">
-            </script>
+           <!-- Visitor Counter Container -->
+           <span class="blink-counter fw-bold">
+            <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=b02bbc85a30c7c9a99711a8a93df17b315b95524'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1223947/t/5"></script>
+        </span>
+
 
             <p class="text-center m-0"><?php echo date('Y'); ?>-<?php echo date('Y', strtotime('+1 year')); ?> ©
                 <span data-hi="राष्ट्रीय गोकुल मिशन सर्वाधिकार सुरक्षित"
@@ -1950,6 +2071,21 @@
         window.location.href = url + "?lang=" + $(this).val();
     });
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll("a[href]");
+
+    links.forEach(link => {
+        const url = new URL(link.href, window.location.origin);
+
+        if (url.origin !== window.location.origin) {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        }
+    });
+});
+</script>
+
 </body>
 
 </html>

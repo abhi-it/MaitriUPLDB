@@ -40,13 +40,13 @@ class VideoGalleryController extends Controller
         $video->type  = $request->type;
         $video->description  = $request->description;
 
-       if ($request->hasFile('file')) {
-            $file     = $request->file('file');
-            $filename = time() . '_' . $file->getClientOriginalName();
+        if ($request->hasFile('file')) {
+                $file     = $request->file('file');
+                $filename = time() . '_' . $file->getClientOriginalName();
 
-            $file->move(public_path('video_gallery'), $filename);
-            $video->url = 'video_gallery/' . $filename;
-        }
+                $file->move(public_path('video_gallery'), $filename);
+                $video->url = 'video_gallery/' . $filename;
+            }
 
         $video->save();
 
