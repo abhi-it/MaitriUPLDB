@@ -15,6 +15,11 @@ class Zone extends Model
         'name_hi',
         'name_en',
     ];
+
+    public function zoneStocks()
+    {
+        return $this->hasMany(ZoneStock::class, 'zone_id');
+    }
 }
 
 
