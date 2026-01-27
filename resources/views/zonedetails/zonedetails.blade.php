@@ -8,60 +8,45 @@
     gap: 10px;
 }
 
-@media screen and (min-width: 1024px) {
-    .table-responsive {
-        display: block !important;
-    }
-}
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span> </h3>
 
-    <table id="my-new-table" class="table table-striped  table-responsive table-bordered" width="100%">
+    <table id="my-new-table" class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
-                <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
+                <th><span data-hi="Item" data-en="Item"></span></th>
+                <th><span data-hi="Quantity" data-en="Quantity"></span></th>
             </tr>
         </thead>
         <tbody>
-            @if(count($zoneStock) > 0)
-            @foreach ($zoneStock as $key => $stockZone)
+            <?php //echo "<pre>"; print_r($finalStocks->toArray()); exit; ?>
+            @if(count($finalStocks) > 0)
+            @foreach ($finalStocks as  $stockAdmin)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $stockZone['demand_section'] }}</td>
-                <td>{{ $stockZone['semen'] }}</td>
-                <td>{{ $stockZone['semen_straws'] }}</td>
-                <td>{{ $stockZone['semen_type'] }}</td>
-                <td>{{ $stockZone['banner'] }}</td>
-                <td>{{ $stockZone['dangler'] }}</td>
-                <td>{{ $stockZone['standee'] }}</td>
-                <td>{{ $stockZone['pamphlet'] }}</td>
-                <td>{{ $stockZone['ai_kit'] }}</td>
-                <td>{{ $stockZone['container'] }}</td>
-                <td>{{ $stockZone['container_capacity'] }}</td>
-                <td>{{ $stockZone['scheme'] }}</td>
-                <td>{{ $stockZone['bull_ids'] }}</td>
-                <td>{{ $stockZone['created_at'] }}</td>
+                <td>
+                    <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
+                        <b>{{ $stockAdmin['item_name'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
+                        <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
+                        <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
+                        <input type="hidden" id="{{$stockAdmin['item_type']}}_{{$stockAdmin['species_semen']}}_{{$stockAdmin['breed_type']}}_{{$stockAdmin['breed']}}_{{$stockAdmin['bull_id']}}" value="{{$stockAdmin['remaining_qty']}}">
+                    <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
+                        {{ $stockAdmin['item_name'] }} - ({{ $stockAdmin['container_capacity'] }})
+                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}_{{$stockAdmin['container_capacity']}}" value="{{$stockAdmin['remaining_qty']}}">
+                    <?php } else { ?>
+                        {{ $stockAdmin['item_name'] }}
+                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}" value="{{$stockAdmin['remaining_qty']}}">
+                    <?php } ?>
+                </td>
+
+                <td>{{ $stockAdmin['remaining_qty'] }}</td>
+
             </tr>
             @endforeach
             @endif
-
-
-
         </tbody>
     </table>
 </div>

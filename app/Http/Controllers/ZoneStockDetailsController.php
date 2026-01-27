@@ -20,20 +20,30 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Services\InventoryDistributionService;
 
 
 class ZoneStockDetailsController extends Controller
 {
     public function zoneStockDetails(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        if($inventoryIds){
-            $zoneStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
-            // $zoneStock = RemainingStock::where('user_id', $user_id)->get();
-        }else{
-            $zoneStock = [];
-        }
-        return view('zonedetails.zonedetails', compact('zoneStock'));
+
+        $user = Auth::user();
+
+        // Get raw stock
+        $zoneStocks = Zonestock::where(['location' => 'zone', 'zone_id' => $user->zone_id])->get();
+        $districtStocks = Zonestock::where('location', 'district')->get();
+        // Aggregated stocks
+        $InventoryDistributionService = new InventoryDistributionService();
+        $finalAdminStocks = $InventoryDistributionService->aggregateStocks($zoneStocks);
+        $finalZoneStocks  = $InventoryDistributionService->aggregateStocks($districtStocks);
+
+        //Remaining stock after zone distribution
+        $finalStocks = $InventoryDistributionService->subtractStocks($finalAdminStocks, $finalZoneStocks);
+
+        // Debug if needed
+        //echo "<pre>"; print_r($finalStocks->toArray()); exit;
+
+        return view('zonedetails.zonedetails', compact('finalStocks'));
   
     }
 

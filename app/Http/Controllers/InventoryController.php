@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\Zonestock;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Services\InventoryDistributionService;
 
 class InventoryController extends Controller
 {
@@ -32,112 +33,17 @@ class InventoryController extends Controller
         $adminStocks = Zonestock::where('location', 'head_office')->get();
         $zoneStocks = Zonestock::where('location', 'zone')->get();
         // Aggregated stocks
-        $finalAdminStocks = $this->aggregateStocks($adminStocks);
-        $finalZoneStocks  = $this->aggregateStocks($zoneStocks);
+        $InventoryDistributionService = new InventoryDistributionService();
+        $finalAdminStocks = $InventoryDistributionService->aggregateStocks($adminStocks);
+        $finalZoneStocks  = $InventoryDistributionService->aggregateStocks($zoneStocks);
 
         //Remaining stock after zone distribution
-        $finalStocks = $this->subtractStocks($finalAdminStocks, $finalZoneStocks);
+        $finalStocks = $InventoryDistributionService->subtractStocks($finalAdminStocks, $finalZoneStocks);
 
         // Debug if needed
         //echo "<pre>"; print_r($finalStocks->toArray()); exit;
 
         return view('inventory.zone-stock-form', compact('zones', 'user_id', 'finalStocks'));
-    }
-
-    private function aggregateStocks($stocks)
-    {
-        return $stocks
-            ->groupBy(function ($row) {
-
-                switch ($row->item_type) {
-
-                    case 'species_semen':
-                        return implode('|', [
-                            $row->item_type,
-                            $row->species_semen,
-                            $row->breed_type,
-                            $row->breed,
-                            $row->semen_type,
-                            $row->bull_id,
-                        ]);
-
-                    case 'container':
-                        return implode('|', [
-                            $row->item_type,
-                            $row->container_capacity,
-                        ]);
-
-                    default:
-                        return $row->item_type;
-                }
-            })
-            ->map(function ($items) {
-
-                $first = $items->first();
-
-                return [
-                    'item_type'          => $first->item_type,
-                    'item_name'          => $first->item,
-                    'species_semen'      => $first->species_semen,
-                    'breed_type'         => $first->breed_type,
-                    'breed'              => $first->breed,
-                    'semen_type'         => $first->semen_type,
-                    'bull_id'            => $first->bull_id,
-                    'container_capacity' => $first->container_capacity,
-                    'total_qty'          => $items->sum('quantity'),
-                ];
-            })
-            ->values();
-    }
-
-    private function subtractStocks($adminStocks, $zoneStocks)
-    {
-        // Index zone stocks by unique key
-        $zoneIndex = $zoneStocks->mapWithKeys(function ($item) {
-            return [
-                $this->stockKey($item) => $item['total_qty']
-            ];
-        });
-
-        // Subtract quantities
-        return $adminStocks->map(function ($adminItem) use ($zoneIndex) {
-
-            $key = $this->stockKey($adminItem);
-
-            $zoneQty = $zoneIndex[$key] ?? 0;
-
-            $adminItem['remaining_qty'] = max(
-                0,
-                $adminItem['total_qty'] - $zoneQty
-            );
-
-            return $adminItem;
-        });
-    }
-
-    private function stockKey($row)
-    {
-        switch ($row['item_type']) {
-
-            case 'species_semen':
-                return implode('|', [
-                    $row['item_type'],
-                    $row['species_semen'],
-                    $row['breed_type'],
-                    $row['breed'],
-                    $row['semen_type'],
-                    $row['bull_id'],
-                ]);
-
-            case 'container':
-                return implode('|', [
-                    $row['item_type'],
-                    $row['container_capacity'],
-                ]);
-
-            default:
-                return $row['item_type'];
-        }
     }
 
     public function saveDistributedFormData(Request $request)
