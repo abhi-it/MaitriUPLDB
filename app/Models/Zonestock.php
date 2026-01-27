@@ -8,23 +8,21 @@ class Zonestock extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'demand_section',
-        'dsf_station',
-        'breed',
+        'user_id',
+        'zone_id',
+        'location',
+        'dfs_station',
+        'item_type',
+        'item',
+        'species_semen',
         'breed_type',
-        'supply_date',
-        'semen' ,
-        'semen_straws',
-        'semen_type' ,
-        'banner' ,
-        'dangler'  ,
-        'standee'  ,
-        'pamphlet'  ,
-        'ai_kit'  ,
-        'container' ,
-        'scheme' ,
-        'bull_ids',
+        'breed',
+        'semen_type',
+        'bull_id',
         'container_capacity',
+        'quantity',
+        'scheme',
+        'supply_date',
     ];
     protected $table = 'zone_stock_details';
 

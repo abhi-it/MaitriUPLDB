@@ -23,6 +23,291 @@ class InventoryController extends Controller
         return view('inventory.zone-stock-form', compact('zones', 'adminInventory','user_id'));
     }
 
+    public function distributedForm()
+    {
+        $user_id = Auth::user()->id;
+        $zones   = Zone::all();
+
+        // Get raw stock
+        $adminStocks = Zonestock::where('location', 'head_office')->get();
+        $zoneStocks = Zonestock::where('location', 'zone')->get();
+        // Aggregated stocks
+        $finalAdminStocks = $this->aggregateStocks($adminStocks);
+        $finalZoneStocks  = $this->aggregateStocks($zoneStocks);
+
+        //Remaining stock after zone distribution
+        $finalStocks = $this->subtractStocks($finalAdminStocks, $finalZoneStocks);
+
+        // Debug if needed
+        //echo "<pre>"; print_r($finalStocks->toArray()); exit;
+
+        return view('inventory.zone-stock-form', compact('zones', 'user_id', 'finalStocks'));
+    }
+
+    private function aggregateStocks($stocks)
+    {
+        return $stocks
+            ->groupBy(function ($row) {
+
+                switch ($row->item_type) {
+
+                    case 'species_semen':
+                        return implode('|', [
+                            $row->item_type,
+                            $row->species_semen,
+                            $row->breed_type,
+                            $row->breed,
+                            $row->semen_type,
+                            $row->bull_id,
+                        ]);
+
+                    case 'container':
+                        return implode('|', [
+                            $row->item_type,
+                            $row->container_capacity,
+                        ]);
+
+                    default:
+                        return $row->item_type;
+                }
+            })
+            ->map(function ($items) {
+
+                $first = $items->first();
+
+                return [
+                    'item_type'          => $first->item_type,
+                    'item_name'          => $first->item,
+                    'species_semen'      => $first->species_semen,
+                    'breed_type'         => $first->breed_type,
+                    'breed'              => $first->breed,
+                    'semen_type'         => $first->semen_type,
+                    'bull_id'            => $first->bull_id,
+                    'container_capacity' => $first->container_capacity,
+                    'total_qty'          => $items->sum('quantity'),
+                ];
+            })
+            ->values();
+    }
+
+    private function subtractStocks($adminStocks, $zoneStocks)
+    {
+        // Index zone stocks by unique key
+        $zoneIndex = $zoneStocks->mapWithKeys(function ($item) {
+            return [
+                $this->stockKey($item) => $item['total_qty']
+            ];
+        });
+
+        // Subtract quantities
+        return $adminStocks->map(function ($adminItem) use ($zoneIndex) {
+
+            $key = $this->stockKey($adminItem);
+
+            $zoneQty = $zoneIndex[$key] ?? 0;
+
+            $adminItem['remaining_qty'] = max(
+                0,
+                $adminItem['total_qty'] - $zoneQty
+            );
+
+            return $adminItem;
+        });
+    }
+
+    private function stockKey($row)
+    {
+        switch ($row['item_type']) {
+
+            case 'species_semen':
+                return implode('|', [
+                    $row['item_type'],
+                    $row['species_semen'],
+                    $row['breed_type'],
+                    $row['breed'],
+                    $row['semen_type'],
+                    $row['bull_id'],
+                ]);
+
+            case 'container':
+                return implode('|', [
+                    $row['item_type'],
+                    $row['container_capacity'],
+                ]);
+
+            default:
+                return $row['item_type'];
+        }
+    }
+
+    public function saveDistributedFormData(Request $request)
+    {
+        //echo '<pre>';print_r($request->all()); exit;
+        $user_id = Auth::user()->id;
+
+        $liquid_nitrogen_qty    = $request->liquid_nitrogen;
+        $semens                 = $request->semen; //[]
+        $breedType              = $request->breedType; //[]
+        $breed                  = $request->breed; //[]
+        $semen_type             = $request->semen_type; //[]
+        $bull_id                = $request->bull_id; //[]
+        $semen_straws           = $request->semen_straws; //[] quantity
+
+        $banner_qty             = $request->banner;
+        $dangler_qty            = $request->dangler;
+        $standee_qty            = $request->standee;
+        $pamphlet_qty           = $request->pamphlet;
+        $ai_kit_qty             = $request->ai_kit;
+        $container_capacity     = $request->container_capacity; //[]
+        $container_qty          = $request->container_qty; //[]
+        $scheme                 = $request->scheme;
+        $zone_id                = $request->select_zone;
+        $supply_date            = $request->supply_date;
+
+        if ($liquid_nitrogen_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+                'item_type'    => 'liquid_nitrogen',
+                'item'         => 'Liquid Nitrogen',
+                'quantity'     => $liquid_nitrogen_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'     => $user_id,
+                    'zone_id'     => $zone_id,
+                    'location'    => 'zone',
+                    'supply_date' => $supply_date,
+
+                    'item_type'              => 'species_semen',
+                    'item'                   => 'Species Semen',
+                    'species_semen'          => $semen,
+                    'breed_type'             => $breedType[$key],
+                    'breed'                  => $breed[$key],
+                    'semen_type'             => $semen_type[$key],
+                    'bull_id'                => $bull_id[$key],
+                    'quantity'               => $semen_straws[$key],
+                    'scheme'                 => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        if ($banner_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'banner',
+                'item'        => 'Banner',
+                'quantity'    => $banner_qty,
+                'scheme'      => $scheme,
+            ];
+
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($dangler_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'dangler_chart',
+                'item'        => 'Dangler Chart',
+                'quantity'    => $dangler_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($standee_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'standee',
+                'item'        => 'Standee',
+                'quantity'    => $standee_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($pamphlet_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'pamphlet',
+                'item'        => 'Pamphlet',
+                'quantity'    => $pamphlet_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($ai_kit_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'location'    => 'zone',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'ai_kit',
+                'item'        => 'AI Kit',
+                'quantity'    => $ai_kit_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($container_capacity){
+            foreach($container_capacity as $key => $capacity){
+                $inventoryData = [
+                    'user_id'     => $user_id,
+                    'zone_id'     => $zone_id,
+                    'location'    => 'zone',
+                    'supply_date' => $supply_date,
+
+                    'item_type'           => 'container',
+                    'item'                => 'Container',
+                    'container_capacity'  => $capacity,
+                    'quantity'            => $container_qty[$key],
+                    'scheme'              => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        return redirect()->back()->with('success','Stock data distributed successfully!');
+
+    }
+
+
     public function checkStockLimit(){
         $user_id = $_REQUEST['user_id'];
         $type = $_REQUEST['type'];

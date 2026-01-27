@@ -526,7 +526,9 @@ class CheckRole
                 'getallLiveStockData',
 
                 'inventory',
+                'distributed-form',
                 'saveInentorrData',
+                'saveDistributedFormData',
                 'get-all-zone-district',
                 'operator-id',
                 'deo-user-step1',

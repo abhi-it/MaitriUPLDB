@@ -403,6 +403,15 @@ class AdminInventoryController extends Controller
 
     public function adminStockRecord(Request $request){
         $user_id = Auth::user()->id;
+        $adminInventory = Zonestock::all();
+
+        //echo "<pre>";print_r($adminInventory->toArray());exit;
+        
+        return view('adminstockform.admin-stock-record', compact('adminInventory'));
+    }
+
+    public function adminStockRecord1(Request $request){
+        $user_id = Auth::user()->id;
         $inventoryIds = InventoryMap::where(['assign_user_id' => $user_id, 'user_id' => $user_id])->get();
         // $adminInventory = RemainingStock::where('user_id', $user_id)->get();
 
@@ -578,6 +587,155 @@ class AdminInventoryController extends Controller
     }
 
     public function adminStockDataSave(Request $request){
+        //echo '<pre>';print_r($request->all()); exit;
+        $user_id = Auth::user()->id;
+
+        $liquid_nitrogen_qty    = $request->liquid_nitrogen;
+        $semens                 = $request->semen; //[]
+        $breedType              = $request->breedType; //[]
+        $breed                  = $request->breed; //[]
+        $semen_type             = $request->semen_type; //[]
+        $bull_id                = $request->bull_id; //[]
+        $semen_straws           = $request->semen_straws; //[] quantity
+
+        $banner_qty             = $request->banner;
+        $dangler_qty            = $request->dangler;
+        $standee_qty            = $request->standee;
+        $pamphlet_qty           = $request->pamphlet;
+        $ai_kit_qty             = $request->ai_kit;
+        $container_capacity     = $request->container_capacity; //[]
+        $container_qty          = $request->container_qty; //[]
+        $scheme                 = $request->scheme;
+
+        if ($liquid_nitrogen_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'liquid_nitrogen',
+                'item'        => 'Liquid Nitrogen',
+                'quantity'    => $liquid_nitrogen_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'    => $user_id,
+                    'location' => 'head_office',
+                    'dfs_station'            => $request->dfs_station,
+                    'item_type'              => 'species_semen',
+                    'item'                   => 'Species Semen',
+                    'species_semen'          => $semen,
+                    'breed_type'             => $breedType[$key],
+                    'breed'                  => $breed[$key],
+                    'semen_type'             => $semen_type[$key],
+                    'bull_id'                => $bull_id[$key],
+                    'quantity'               => $semen_straws[$key],
+                    'scheme'                 => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        if ($banner_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'banner',
+                'item'        => 'Banner',
+                'quantity'    => $banner_qty,
+                'scheme'      => $scheme,
+            ];
+
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($dangler_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'dangler_chart',
+                'item'        => 'Dangler Chart',
+                'quantity'    => $dangler_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($standee_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'standee',
+                'item'        => 'Standee',
+                'quantity'    => $standee_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($pamphlet_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'pamphlet',
+                'item'        => 'Pamphlet',
+                'quantity'    => $pamphlet_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($ai_kit_qty) {
+            $inventoryData = [
+                'user_id'    => $user_id,
+                'location' => 'head_office',
+                'dfs_station' => $request->dfs_station,
+                'item_type'   => 'ai_kit',
+                'item'        => 'AI Kit',
+                'quantity'    => $ai_kit_qty,
+                'scheme'      => $scheme,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($container_capacity){
+            foreach($container_capacity as $key => $capacity){
+                $inventoryData = [
+                    'user_id'             => $user_id,
+                    'location'       => 'head_office',
+                    'dfs_station'         => $request->dfs_station,
+                    'item_type'           => 'container',
+                    'item'                => 'Container',
+                    'container_capacity'  => $capacity,
+                    'quantity'            => $container_qty[$key],
+                    'scheme'              => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+        
+        return redirect()->back()->with('success','Stock data submitted successfully!');
+    }
+
+    public function adminStockDataSave1(Request $request){
            
         $breedType = [];
         $semens = $request->semen;

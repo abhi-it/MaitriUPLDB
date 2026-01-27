@@ -46,6 +46,12 @@
     <link href="{{ asset('') }}css/jquery-ui.css" rel="stylesheet" type="text/css">
     <script src="{{ asset('') }}js/jquery-ui.js" type="text/javascript"></script>
     <style>
+        @media (min-width: 1200px) {
+            .container {
+                padding-left: 35px;
+                padding-right: 35px;
+            }
+        }
         /* ---f--- */
         .footer_parent {
             background-color: #f93;
@@ -1515,8 +1521,8 @@
                                 </a>
                                 <div class="dropdown-menu">
 
-                                    <a class="dropdown-item" href="{{ url('inventory') }}">
-                                        <span data-hi="वस्तुसूची" data-en="Inventory"></span>
+                                    <a class="dropdown-item" href="{{ url('distributed-form') }}">
+                                        <span data-hi="वितरण प्रपत्र" data-en="Distributed Form"></span>
                                     </a>
                                     <a class="dropdown-item" href="{{ url('admin-distributed-record') }}">
                                         <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Distributed Record"></span>

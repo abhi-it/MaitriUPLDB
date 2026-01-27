@@ -7,17 +7,49 @@
     align-items: flex-end;
     gap: 10px;
 }
-
-@media screen and (min-width: 1024px) {
-    .table-responsive {
-        display: block !important;
-    }
-}
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड"
             data-en="Admin Inventory Record"></span> </h3>
-
+    
+    <table id="my-new-table" class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th><span data-hi="S.No" data-en="S.No"></span></th>
+                <th><span data-hi="DFS Station" data-en="DFS Station"></span></th>
+                <th><span data-hi="Item" data-en="Item"></span></th>
+                <th><span data-hi="Quantity" data-en="Quantity"></span></th>
+                <th><span data-hi="Scheme" data-en="Scheme"></span></th>
+                <th><span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(count($adminInventory) > 0)
+            @foreach ($adminInventory as $key => $stockAdmin)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $stockAdmin->dfs_station }}</td>
+                <td>
+                    <?php if ($stockAdmin->item_type == 'species_semen') { ?>
+                        <b>{{ $stockAdmin->item }} :</b> {{ $stockAdmin->species_semen }} <br>
+                        <b>Bread Type :</b> {{ $stockAdmin->breed_type }} <br>
+                        <b>Bread :</b> {{ $stockAdmin->breed }} <br>
+                        <b>Bull ID:</b> {{ $stockAdmin->bull_id }}
+                    <?php } else if ($stockAdmin->item_type == 'container') { ?>
+                        {{ $stockAdmin->item }} - ({{ $stockAdmin->container_capacity }})
+                    <?php } else { ?>
+                        {{ $stockAdmin->item }}
+                    <?php } ?>
+                </td>
+                <td>{{ $stockAdmin->quantity }}</td>
+                <td>{{ $stockAdmin->scheme }}</td>
+                <td>{{ $stockAdmin->created_at }}</td>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>        
+    <?php /*
     <table id="my-new-table" class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
@@ -64,6 +96,7 @@
             @endif
         </tbody>
     </table>
+    */ ?>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
@@ -103,46 +136,16 @@ $(document).ready(function() {
                 title: "S.No"
             },
             {
-                title: "Liquid Nitrogen"
+                title: "DFS Station"
             },
             {
-                title: "Breed"
+                title: "Item"
             },
             {
-                title: "Semen"
-            },
-            {
-                title: "Semen Straws"
-            },
-            {
-                title: "Semen Type"
-            },
-            {
-                title: "Banner"
-            },
-            {
-                title: "Dangler"
-            },
-            {
-                title: "Standee"
-            },
-            {
-                title: "Pamphlet"
-            },
-            {
-                title: "AI Kit"
-            },
-            {
-                title: "Container"
-            },
-            {
-                title: "Container Capacity"
+                title: "Quantity"
             },
             {
                 title: "Scheme"
-            },
-            {
-                title: "Bull ID Details"
             },
             {
                 title: "Creation Date"

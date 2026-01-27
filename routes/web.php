@@ -483,6 +483,9 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     
 
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
+    Route::get("distributed-form", [App\Http\Controllers\InventoryController::class, 'distributedForm'])->name('distributed-form');
+    Route::post("saveDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDistributedFormData'])->name('saveDistributedFormData');
+
     Route::get("check-stock-limit", [App\Http\Controllers\InventoryController::class, 'checkStockLimit'])->name('check-stock-limit');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
     
