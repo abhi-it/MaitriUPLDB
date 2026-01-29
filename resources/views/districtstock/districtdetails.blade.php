@@ -8,67 +8,47 @@
     gap: 10px;
 }
 
-@media screen and (min-width: 1024px) {
-    .table-responsive {
-        display: block !important;
-    }
-}
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरण स्टॉक विवरण" data-en="Distribution Stock Details"></span>
     </h3>
 
-    <table id="my-new-table" class="table table-striped  table-responsive table-bordered">
+    <table id="my-new-table" class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
-                <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
+                <th><span data-hi="Item" data-en="Item"></span></th>
+                <th><span data-hi="Quantity" data-en="Quantity"></span></th>
+                <th><span data-hi="Supply Date" data-en="Supply Date"></span></th>
             </tr>
         </thead>
         <tbody>
-
-            @php $i = 1; @endphp
-            @foreach ($divisionStock as $key => $stockDivision)
+            <?php //echo "<pre>"; print_r($zoneStocks->toArray()); exit; ?>
+            @if(count($districtStocks) > 0)
+            @foreach ($districtStocks as  $stock)
             <tr>
-                <td>{{ $i }}</td>
-                <td>{{ $stockDivision['demand_section'] }}</td>
-                <td>{{ $stockDivision['semen'] }}</td>
-                <td>{{ $stockDivision['semen_straws'] }}</td>
-                <td>{{ $stockDivision['semen_type'] }}</td>
-                <td>{{ $stockDivision['banner'] }}</td>
-                <td>{{ $stockDivision['dangler'] }}</td>
-                <td>{{ $stockDivision['standee'] }}</td>
-                <td>{{ $stockDivision['pamphlet'] }}</td>
-                <td>{{ $stockDivision['ai_kit'] }}</td>
-                <td>{{ $stockDivision['container'] }}</td>
-                <td>{{ $stockDivision['container_capacity'] }}</td>
-                <td>{{ $stockDivision['scheme'] }}</td>
-                <td>{{ $stockDivision['bull_ids'] }}</td>
-                <td>{{ $stockDivision['created_at'] }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>
+                    <?php if ($stock['item_type'] == 'species_semen') { ?>
+                        <b>{{ $stock['item'] }} :</b> {{ $stock['species_semen'] }} <br>
+                        <b>Bread Type :</b> {{ $stock['breed_type'] }} <br>
+                        <b>Bread :</b> {{ $stock['breed'] }} <br>
+                        <b>Bull ID:</b> {{ $stock['bull_id'] }}
+                    <?php } else if ($stock['item_type'] == 'container') { ?>
+                        {{ $stock['item'] }} - ({{ $stock['container_capacity'] }})
+                    <?php } else { ?>
+                        {{ $stock['item'] }}
+                    <?php } ?>
+                </td>
+
+                <td>{{ $stock['quantity'] }}</td>
+                <td>{{ $stock['supply_date'] }}</td>
+
             </tr>
-            @php $i++ @endphp
             @endforeach
-
-
+            @endif
         </tbody>
     </table>
-
-    <div class="row">
-
-    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!-- DataTables JS -->

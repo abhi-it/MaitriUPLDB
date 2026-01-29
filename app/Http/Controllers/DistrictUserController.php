@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Helpers\TranslateTextHelper; 
 use DB;
+use App\Services\InventoryDistributionService;
 
 class DistrictUserController extends Controller{
 
@@ -49,135 +50,238 @@ class DistrictUserController extends Controller{
     }
 
     public function districtStockDetails(){
-        $user_id = Auth::user()->id;
-        $inventoryIds = InventoryMap::where('user_id', $user_id)->first();
-        if($inventoryIds){
-            $divisionStock = Zonestock::where('id', $inventoryIds['inventory_id'])->get();
-            // $divisionStock = RemainingStock::where('user_id', $user_id)->get();
-        }else{
-            $divisionStock = [];
-        }
-        return view('districtstock.districtdetails', compact('divisionStock'));
-    }
-
-    // public function districtShowRecord(){
-    //     $user_id = Auth::user()->id;
-    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-    //     $districtStock = [];
-    //     foreach($inventoryIds as $inventory){
-    //         $division_User_id = $inventory['user_id'];
-    //         $inventory_id = $inventory['inventory_id'];
-    //         $results = DB::table('inventory_map_user')
-    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-    //                     ->select('zone_stock_details.*', 'deo_users.*')
-    //                     ->where(['inventory_map_user.user_id' => $division_User_id, 'inventory_map_user.assign_user_id' => $user_id])
-    //                     ->get();
-
-    //         foreach($results as $result){
-    //             $division_id = $result->division_id;
-    //             $user_id = $result->user_id;
-    //             $divisonData = Divisions::where('id', $division_id)->first();
-    //             $userData = User::where('id', $user_id)->first();
-    //             if ($divisonData) {
-    //                 $result->user_name = $userData['name'];
-    //                 $result->division_name_eng = $divisonData['name_eng'];
-    //                 $result->division_name_hindi = $divisonData['name_hindi'];
-    //                 $districtStock[] = $result;
-    //             }
-    //         }
-    //     }
-    //     return view('districtstock.district-stock-record', compact('districtStock'));
-    // }
-
-    // <!-------- New Code Start --------->
-    public function districtShowRecord(Request $request){
         $user = Auth::user();
-        $inventoryIds = InventoryMap::where('assign_user_id', $user->id)->pluck('assign_user_id');
-        $query = DB::table('inventory_map_user')
-        ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-        ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-        ->join('users as ai1', 'ai1.id', '=', 'inventory_map_user.user_id')
-        ->join('users', 'users.district_id', '=', 'ai1.district_id')
-        ->join('aicenter_latest', 'aicenter_latest.id', '=', 'inventory_map_user.aicenter_id')
-        ->join('districts', 'districts.id', '=', 'users.district_id')
-        ->select(
-            'zone_stock_details.*', 
-            'deo_users.*', 
-            'users.*', 
-            'districts.*',
-            'ai1.*',
-            'aicenter_latest.*'
-            
-        )
-        ->where('users.role', 'deo')
-        ->whereIn('inventory_map_user.assign_user_id', $inventoryIds);
-    
-            
-        if ($request->filled('aicenter')) {
-            $query->where('inventory_map_user.user_id', 'LIKE', "%{$request->aicenter}%");
-        }
-        if ($request->filled('bull_id')) {
-            $query->where('zone_stock_details.bull_ids', 'LIKE', "%{$request->bull_id}%");
-        }
-        if ($request->filled('breed')) {
-            $query->where('zone_stock_details.breed', 'LIKE', "%{$request->breed}%");
-        }
-        if ($request->filled('semen')) {
-            $query->where('zone_stock_details.semen', 'LIKE', "%{$request->semen}%");
-        }
-        if ($request->filled('semen_type')) {
-            $query->where('zone_stock_details.semen_type','LIKE', "%{$request->semen_type}%");
-        }
-    
-        $districtStock = $query->get();
-        // echo '<pre>';print_r($districtStock);exit;
-        // dd($query->toSql(), $query->getBindings());
+        //echo "<pre>"; print_r($user); exit;
+        $user_id = Auth::user()->id;
+        // get zone from division id
+        $division = Divisions::where('id', $user['division_id'])->first();
+        $zone_id = $division->zone_id;
+        $district_id = $user->district_id;
         
-        $getData = User::where('id', $user->id)->first();
-        $aiCenters = Latestaicenter::where('division_id', $getData['division_id'])
-                                    ->where('district_id', $getData['district_id'])
-                                    ->get();
-       
+        $districtStocks = Zonestock::where(['location' => 'district', 'zone_id' => $zone_id, 'district_id' => $district_id])->get();
+        //echo "<pre>"; print_r($districtStocks->toArray()); exit;
         
-        return view('districtstock.district-stock-record', compact('districtStock', 'aiCenters'));
+        return view('districtstock.districtdetails', compact('districtStocks'));
     }
-    // <!-------- Code End --------------->
 
     public function districtStockForm(){
+        $user = Auth::user();
         $user_id = Auth::user()->id;
-        $getData = User::where('id', $user_id)->first();
-        $division_id = $getData['division_id'];
-        $district_id = $getData['district_id'];
-        $deoUser = DeoUser::where(['division_id' => $division_id, 'district_id' => $district_id ])->first();
-        
-        if($deoUser){
-            $zone_id = $deoUser['zone_id'];
-            $zoneName = Zone::where('id', $zone_id)->first();
-    
-    
-            /*$aiCenters = Manganurodhdata::selectRaw('center_name, MAX(id) as id, MAX(mandal_name) as mandal_name, MAX(janpad_name) as janpad_name')
-                        ->where('mandal_name', 'LIKE', '%'.$divisionName['name_hindi'].'%')
-                        ->where('janpad_name', 'LIKE', '%'.$districtName['name_hindi'].'%')
-                        ->groupBy('center_name')
-                        ->get();*/
-            
-          
-    
-            $districtInventory = RemainingStock::where('user_id', $user_id)->get();
-        }else{
-            $zone_id = '';
-            $districtInventory = [];
-        }
-        
-        $districtName = Districts::where('id', $getData['district_id'])->first();
-        $divisionName = Divisions::where('id', $getData['division_id'])->first();
-        $aiCenters = Latestaicenter::where('division_id', $divisionName['id'])
-        ->where('district_id', $districtName['id'])
-        ->get();
-       
+        //echo "<pre>"; print_r($user); exit;
+        $division_id = $user['division_id'];
+        $district_id = $user['district_id'];
 
-        return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'districtInventory'));
+        $division = Divisions::where('id', $division_id)->first();
+        $zone_id = $division['zone_id'];
+        
+        $aiCenters = Latestaicenter::where('division_id', $division_id)
+        ->where('district_id', $district_id)
+        ->get();
+
+        // Get raw stock
+        $districtStocks = Zonestock::where(['location' => 'district', 'zone_id' => $zone_id, 'district_id' => $district_id])->get();
+        $aiCenterStocks = Zonestock::where(['location' => 'ai_center', 'zone_id' => $zone_id, 'district_id' => $district_id])->get();
+
+        // Aggregated stocks
+        $InventoryDistributionService = new InventoryDistributionService();
+        $finalAdminStocks = $InventoryDistributionService->aggregateStocks($districtStocks);
+        $finalZoneStocks  = $InventoryDistributionService->aggregateStocks($aiCenterStocks);
+
+        //Remaining stock after zone distribution
+        $finalStocks = $InventoryDistributionService->subtractStocks($finalAdminStocks, $finalZoneStocks);
+        //echo "<pre>"; print_r($finalStocks->toArray()); exit;
+
+        return view('districtstock.district-stock-form', compact('aiCenters', 'zone_id', 'user_id', 'division_id', 'district_id', 'finalStocks'));
+    }
+
+    public function districtSaveStockData(Request $request){
+        //echo '<pre>';print_r($request->all()); exit;
+        $user_id = Auth::user()->id;
+
+        $liquid_nitrogen_qty    = $request->liquid_nitrogen;
+        $semens                 = $request->semen; //[]
+        $breedType              = $request->breedType; //[]
+        $breed                  = $request->breed; //[]
+        $semen_type             = $request->semen_type; //[]
+        $bull_id                = $request->bull_id; //[]
+        $semen_straws           = $request->semen_straws; //[] quantity
+
+        $banner_qty             = $request->banner;
+        $dangler_qty            = $request->dangler;
+        $standee_qty            = $request->standee;
+        $pamphlet_qty           = $request->pamphlet;
+        $ai_kit_qty             = $request->ai_kit;
+
+        $container_capacity     = $request->container_capacity; //[]
+        $container_qty          = $request->container_qty; //[]
+
+        $zone_id                = $request->zone_id;
+        $district_id            = $request->district_id;
+        $ai_center_id           = $request->select_aiCenter;
+        $supply_date            = $request->supply_date;
+
+        if ($liquid_nitrogen_qty) {
+            $inventoryData = [
+                'user_id'      => $user_id,
+                'zone_id'      => $zone_id,
+                'district_id'  => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date'  => $supply_date,
+                'item_type'    => 'liquid_nitrogen',
+                'item'         => 'Liquid Nitrogen',
+                'quantity'     => $liquid_nitrogen_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'     => $user_id,
+                    'zone_id'     => $zone_id,
+                    'district_id' => $district_id,
+                    'ai_center_id' => $ai_center_id,
+                    'location'     => 'ai_center',
+                    'supply_date' => $supply_date,
+
+                    'item_type'              => 'species_semen',
+                    'item'                   => 'Species Semen',
+                    'species_semen'          => $semen,
+                    'breed_type'             => $breedType[$key],
+                    'breed'                  => $breed[$key],
+                    'semen_type'             => $semen_type[$key],
+                    'bull_id'                => $bull_id[$key],
+                    'quantity'               => $semen_straws[$key],
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        if ($banner_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'district_id' => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'banner',
+                'item'        => 'Banner',
+                'quantity'    => $banner_qty,
+            ];
+
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($dangler_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'district_id' => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'dangler_chart',
+                'item'        => 'Dangler Chart',
+                'quantity'    => $dangler_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($standee_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'district_id' => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'standee',
+                'item'        => 'Standee',
+                'quantity'    => $standee_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($pamphlet_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'district_id' => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'pamphlet',
+                'item'        => 'Pamphlet',
+                'quantity'    => $pamphlet_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if ($ai_kit_qty) {
+            $inventoryData = [
+                'user_id'     => $user_id,
+                'zone_id'     => $zone_id,
+                'district_id' => $district_id,
+                'ai_center_id' => $ai_center_id,
+                'location'     => 'ai_center',
+                'supply_date' => $supply_date,
+
+                'item_type'   => 'ai_kit',
+                'item'        => 'AI Kit',
+                'quantity'    => $ai_kit_qty,
+            ];
+            $inventory  = new Zonestock($inventoryData);
+            $inventory->save();
+        }
+
+        if($container_capacity){
+            foreach($container_capacity as $key => $capacity){
+                $inventoryData = [
+                    'user_id'     => $user_id,
+                    'zone_id'     => $zone_id,
+                    'district_id' => $district_id,
+                    'ai_center_id' => $ai_center_id,
+                    'location'     => 'ai_center',
+                    'supply_date' => $supply_date,
+
+                    'item_type'           => 'container',
+                    'item'                => 'Container',
+                    'container_capacity'  => $capacity,
+                    'quantity'            => $container_qty[$key],
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        return redirect()->back()->with('success','Stock data submitted successfully!');
+    }
+
+    public function districtShowRecord(Request $request){
+        $user = Auth::user();
+        // get zone from division id
+        $division = Divisions::where('id', $user['division_id'])->first();
+        $zone_id = $division->zone_id;
+        $district_id = $user->district_id;
+        
+        $distDistributedRecord = Zonestock::with('aiCenter')->where(['location' => 'ai_center', 'zone_id' => $zone_id, 'district_id' => $district_id])->get();
+        //echo '<pre>';print_r($distDistributedRecord);exit;
+        
+        return view('districtstock.district-stock-record', compact('distDistributedRecord'));
     }
 
     function engtohindi($val){
@@ -217,139 +321,6 @@ class DistrictUserController extends Controller{
                         ->get();
 
         return response()->json(['aicenter' => $aiCenters]);
-    }
-
-    public function districtSaveStockData(Request $request){
-        $validator = Validator::make($request->all(),[
-            'demand_section'  => [ 'required'],
-            'semen' => [ 'required'],
-            'semen_type' => [ 'required'],
-        ]);
-        if($validator->fails()){
-            $errors = $validator->errors();
-            foreach($errors->all() as $key => $value){
-                 return redirect()->back()->with('error',ucfirst($value));
-            }
-        }else{
-            $getUserId      = $request->getUserId;
-            $zone_id        = $request->zone_id;
-            $division_id    = $request->division_id;
-            $district_id    = $request->district_id;
-            $district_id    = $request->district_id;
-            $aiCenter_id    = $request->select_aiCenter;
-
-            if($aiCenter_id != ''){
-                // $result = DeoUser::where(['zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id, 'block_id' => $block_id, 'aicenters_id' => $select_aiCenter])->first();
-                $result = DeoUser::where(['user_id' => $getUserId,'zone_id' => $zone_id, 'division_id' => $division_id, 'district_id' => $district_id])->first();
-                $deoTableId = $result['id'];
-            }
-            
-            $aicenter_User_id = DB::table('aicenter_latest')
-                ->join('users', 'users.district_id', '=', 'aicenter_latest.district_id')
-                ->select('users.id')
-                ->where('users.role', 'deo')
-                ->where('aicenter_latest.id', $aiCenter_id)
-                ->first();
-            
-            $breedType = [];
-            $semens = $request->semen;
-            $breeds = $request->breed;
-            if($semens > 0){
-                foreach($semens as $key => $semen){
-                    
-                    if( $semen == 'catle'){
-                        if($breeds[$key] == 'swadeshi'){
-                            $breedType = $request->breedType1;
-                        }else if($breeds[$key] == 'hybrids-crossbred'){
-                            $breedType = $request->breedType2;
-                        }else if($breeds[$key] == 'videshi'){
-                            $breedType = $request->breedType3;
-                        }
-
-                    }else if($semen == 'buffalo'){
-                        $breedType = $request->breedType4;
-                    }else if($semen == 'goat'){
-                        $breedType = $request->breedType5;
-                    }
-                }
-            }
-            
-            $inventory  = new Zonestock([
-                'demand_section'        => $request->demand_section,
-                // 'breed'                 => $request->breed,
-                // 'breed_type'            => $breedType,
-                // 'semen'                 => $request->semen,
-                // 'semen_straws'          => $request->semen_straws,
-                // 'semen_type'            => $request->semen_type,
-                // 'bull_ids'              => $bullIds,
-                'semen'                 => implode(',', $request->semen),
-                'breed'                 => implode(',', $request->breed),
-                'breed_type'            => implode(',', $breedType),
-                'semen_type'            => implode(',', $request->semen_type),
-                'semen_straws'          => implode(',', $request->semen_straws),
-                'bull_ids'              => implode(',', $request->bull_id),
-                'banner'                => $request->banner,
-                'dangler'               => $request->dangler,
-                'standee'               => $request->standee,
-                'pamphlet'              => $request->pamphlet,
-                'ai_kit'                => $request->ai_kit,
-                'container_capacity'    =>$request->container_capacity,
-                'container'             => $request->container,
-                'scheme'                => $request->scheme,
-            ]);
-
-            $inventory->save();
-            $assign_user_id = Auth::user()->id;
-
-            $remainingStock = RemainingStock::where('user_id', $assign_user_id)->first();
-            if ($remainingStock) {
-                $remainingStock->demand_section = intval($remainingStock->demand_section) - intval($request->demand_section);
-                $remainingStock->banner = intval($remainingStock->banner) - intval($request->banner);
-                $remainingStock->dangler = intval($remainingStock->dangler) - intval($request->dangler);
-                $remainingStock->standee = intval($remainingStock->standee) - intval($request->standee);
-                $remainingStock->pamphlet = intval($remainingStock->pamphlet) - intval($request->pamphlet);
-                $remainingStock->ai_kit = intval($remainingStock->ai_kit) - intval($request->ai_kit);
-                $remainingStock->container = intval($remainingStock->container) - intval($request->container);
-                $remainingStock->save();
-            }
-
-            $data = [
-                'user_id'            => $aicenter_User_id->id,
-                'demand_section'     => $request->demand_section,
-                // 'breed'              => $request->breed,
-                // 'breed_type'         => $breedType,
-                // 'semen'              => $request->semen,
-                // 'semen_straws'       => $request->semen_straws,
-                // 'semen_type'         => $request->semen_type,
-                // 'bull_ids'           => $bullIds,
-                'semen'                 => implode(',', $request->semen),
-                'breed'                 => implode(',', $request->breed),
-                'breed_type'            => implode(',', $breedType),
-                'semen_type'            => implode(',', $request->semen_type),
-                'semen_straws'          => implode(',', $request->semen_straws),
-                'bull_ids'              => implode(',', $request->bull_id),
-                'banner'                => $request->banner,
-                'dangler'               => $request->dangler,
-                'standee'               => $request->standee,
-                'pamphlet'              => $request->pamphlet,
-                'ai_kit'                => $request->ai_kit,
-                'container_capacity'    => $request->container_capacity,
-                'container'             => $request->container,
-                'scheme'                => $request->scheme,
-            ];
-            RemainingStock::create($data);
-
-
-            InventoryMap::create([
-                'assign_user_id' => $assign_user_id,
-                'user_id' => $aicenter_User_id->id,
-                'inventory_id' => $inventory->id,
-                'deo_id' => $deoTableId,
-                'aicenter_id' => $aiCenter_id
-            ]);
-
-            return redirect()->back()->with('success','Stock data submitted successfully!');
-        }
     }
 
     public function storeDistrictData(Request $request){

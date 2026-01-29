@@ -10,6 +10,8 @@ class Zonestock extends Model
     protected $fillable = [
         'user_id',
         'zone_id',
+        'district_id',
+        'ai_center_id',
         'location',
         'dfs_station',
         'item_type',
@@ -34,5 +36,15 @@ class Zonestock extends Model
     public function zone()
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(Districts::class, 'district_id');
+    }
+
+    public function aiCenter()
+    {
+        return $this->belongsTo(Latestaicenter::class, 'ai_center_id');
     }
 }

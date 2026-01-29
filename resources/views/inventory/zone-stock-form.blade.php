@@ -44,13 +44,28 @@
                         <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
                         <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
                         <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
-                        <input type="hidden" id="{{$stockAdmin['item_type']}}_{{$stockAdmin['species_semen']}}_{{$stockAdmin['breed_type']}}_{{$stockAdmin['breed']}}_{{$stockAdmin['bull_id']}}" value="{{$stockAdmin['remaining_qty']}}">
+                        <input type="hidden" 
+                            class="stock-item"
+                            data-type="species_semen"
+                            data-semen="{{ $stockAdmin['species_semen'] }}"
+                            data-breedtype="{{ $stockAdmin['breed_type'] }}"
+                            data-breed="{{ $stockAdmin['breed'] }}"
+                            data-bull="{{ $stockAdmin['bull_id'] }}"
+                            value="{{$stockAdmin['remaining_qty']}}">
+
                     <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
                         {{ $stockAdmin['item_name'] }} - ({{ $stockAdmin['container_capacity'] }})
-                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}_{{$stockAdmin['container_capacity']}}" value="{{$stockAdmin['remaining_qty']}}">
+                        <input type="hidden" 
+                            class="stock-item"
+                            data-type="container"
+                            data-capacity="{{ $stockAdmin['container_capacity'] }}"
+                            value="{{$stockAdmin['remaining_qty']}}">
                     <?php } else { ?>
                         {{ $stockAdmin['item_name'] }}
-                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}" value="{{$stockAdmin['remaining_qty']}}">
+                        <input type="hidden"
+                            class="stock-item"
+                            data-type="{{ $stockAdmin['item_type'] }}"
+                            value="{{ $stockAdmin['remaining_qty'] }}">
                     <?php } ?>
                 </td>
 
@@ -61,55 +76,6 @@
             @endif
         </tbody>
     </table>
-
-    <?php /*
-    <table class="table table-striped  table-responsive table-bordered">
-        <thead>
-            <tr>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @if(count($adminInventory)>0)
-            @foreach ($adminInventory as $key => $stockAdmin)
-            <tr>
-                <td>{{ $stockAdmin->demand_section; }}</td>
-                <td>{{ $stockAdmin->semen }}</td>
-                <td>{{ $stockAdmin->semen_straws ?? 'N\A' }}</td>
-                <td>{{ $stockAdmin->semen_type }}</td>
-                <td>{{ $stockAdmin->banner }}</td>
-                <td>{{ $stockAdmin->dangler }}</td>
-                <td>{{ $stockAdmin->standee }}</td>
-                <td>{{ $stockAdmin->pamphlet }}</td>
-                <td>{{ $stockAdmin->ai_kit }}</td>
-                <td>{{ $stockAdmin->container }}</td>
-                <td>{{ $stockAdmin->container_capacity }}</td>
-                <td>{{ $stockAdmin->scheme }}</td>
-                <td>{{ $stockAdmin->bull_ids }}</td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td colspan="13" class="text-center" style="color:red;">No record found..</td>
-            </tr>
-            @endif
-
-        </tbody>
-    </table>
-    */ ?>
     <h3 class="text-center fw-bold m-4">
         <span data-hi="वितरण प्रपत्र" data-en="Distribution form"></span>
     </h3>
@@ -135,7 +101,6 @@
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="LN2 आपूर्ति तिथि" data-en="LN2 Supply Date"></span>
-                    <span id="errorDemand" class="errorclass"></span>
                 </label>
                 <input name="supply_date" id="selectDate_supply" data-filed_type="selectDate_supply" type="date"
                     class="form-control" autofocus>
@@ -144,16 +109,16 @@
             <div class="form-group col-md-12">
                 <label for="inputEmail4">
                     <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span>
-                    <span id="errorDemand" class="errorclass"></span>
                 </label>
-                <input name="liquid_nitrogen" id="liquid_nitrogen" data-filed_type="demand_section" type="text"
+                <small id="liquid_nitrogen_msg" style="color:red"></small>
+                <input name="liquid_nitrogen" id="dist_liquid_nitrogen" data-filed_type="demand_section" type="text"
                     class="form-control" data-placeholder-hi="तरल नाइट्रोजन (लीटर में)"
-                    data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
+                    data-placeholder-en="Liquid Nitrogen (in Litre)" onkeyup="validateSimpleStock(this, 'liquid_nitrogen')">
             </div>
             
 
-            <!-- New Functionlity Added -->
-            <div class="form-group col-md-12 pt-4 main_div_block" style="background: #eee;"> <!-- clone this on click add more -->
+            <!-- Semen Functionlity with add more -->
+            <div class="form-group col-md-12 pt-4 main_div_block" style="background: #eee;">
                 <div class="row"> 
                     <div class="form-group col-md-4">
                         <label>
@@ -214,37 +179,39 @@
                 <label for="inputEmail4">
                     <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
                 </label>
-                <input name="banner" id="banner" type="number" class="form-control" data-placeholder-hi="बैनर"
-                    data-placeholder-en="Banner" autofocus>
+                <input name="banner" id="dist_banner" type="number" class="form-control" data-placeholder-hi="बैनर"
+                    data-placeholder-en="Banner" onkeyup="validateSimpleStock(this, 'banner')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span>
                 </label>
-                <input name="dangler" id="dangler" type="number" class="form-control"
+                <input name="dangler" id="dist_dangler" type="number" class="form-control"
                     data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)"
-                    autofocus>
+                    onkeyup="validateSimpleStock(this, 'dangler_chart')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span>
                 </label>
-                <input name="standee" id="standee" type="number" class="form-control"
-                    data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
+                <input name="standee" id="dist_standee" type="number" class="form-control"
+                    data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" onkeyup="validateSimpleStock(this, 'standee')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span>
                 </label>
-                <input name="pamphlet" id="pamphlet" type="number" class="form-control"
-                    data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                <small id="pamphlet_msg" style="color:red"></small>
+                <input name="pamphlet" id="dist_pamphlet" type="number" class="form-control"
+                    data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" onkeyup="validateSimpleStock(this, 'pamphlet')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
                 </label>
-                <input name="ai_kit" id="ai_kit" type="number" class="form-control"
-                    data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
+                <small id="ai_kit_msg" style="color:red"></small>
+                <input name="ai_kit" id="dist_ai_kit" type="number" class="form-control"
+                    data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " onkeyup="validateSimpleStock(this, 'ai_kit')">
             </div>
             
             <div class="form-group col-md-12 pt-4 container_div_block" style="background: #eee;">
@@ -284,21 +251,6 @@
             <div class="form-group col-md-12 text-center">
                 <span class="add btn btn-primary btn-sm container-demand-add-btn">Add More</span>
             </div>
-
-            <?php /*
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="योजना" data-en="Scheme"></span>
-                </label>
-                <select name="scheme" id="scheme" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
-                    <option value="Livestock Insurance" data-en="Livestock Insurance" data-hi="पशुधन बीमा"></option>
-                    <option value="Sexed Semen" data-en="Sexed Semen" data-hi="वर्गीकृत वीर्य"></option>
-                    <option value="AI" data-en="AI" data-hi="ए आई"></option>
-                    <option value="Rashtriya Krishi Vikas Yojna" data-hi="राष्ट्रीय कृषि विकास योजना"
-                        data-en="Rashtriya Krishi Vikas Yojna"></option>
-                </select>
-            </div> */ ?>
         </div>
         <!------Summary Page End---------------->
         <div class="row">
@@ -366,8 +318,18 @@ $(document).ready(function() {
 
     // REMOVE
     $(document).on('click', '.demand-request-remove-btn', function () {
-        $(this).closest('.main_div_block').remove();
+
+        const $block = $(this).closest('.main_div_block');
+        const index = $('.main_div_block').index($block);
+
+        delete validationState['semen_' + index];
+        delete validationState['duplicate_' + index];
+
+        $block.remove();
         fieldCount--;
+
+        reindexSemenValidation();
+        updateSubmitButton();
     });
 
     $(document).on('change', '.semen-select', function () {
@@ -470,6 +432,27 @@ $(document).ready(function() {
         switchLang($('.switchlang').val());
     });
 
+    function reindexSemenValidation() {
+        const newState = {};
+
+        $('.main_div_block').each(function (newIndex) {
+
+            if (validationState['semen_' + newIndex] !== undefined) {
+                newState['semen_' + newIndex] = validationState['semen_' + newIndex];
+            }
+
+            if (validationState['duplicate_' + newIndex] !== undefined) {
+                newState['duplicate_' + newIndex] = validationState['duplicate_' + newIndex];
+            }
+
+        });
+
+        Object.keys(validationState).forEach(k => delete validationState[k]);
+        Object.assign(validationState, newState);
+
+        checkDuplicateSemenRows();
+    }
+
 
     // ================= CONTAINER ADD MORE =================
 
@@ -521,14 +504,254 @@ $(document).ready(function() {
 
     // REMOVE container
     $(document).on('click', '.container-remove-btn', function () {
-        $(this).closest('.container_div_block').remove();
+
+        const $block = $(this).closest('.container_div_block');
+        const index = $('.container_div_block').index($block);
+
+        // remove validation keys related to this row
+        delete validationState['container_' + index];
+        delete validationState['duplicate_container_' + index];
+
+        $block.remove();
         containerCount--;
+
+        // re-run validation to refresh indexes
+        reindexContainerValidation();
+        updateSubmitButton();
     });
 
     //================ end ==========================
     
 
 });
+
+
+const validationState = {};
+
+function validateSimpleStock(input, type) {
+
+    const qty = parseInt(input.value || 0);
+
+    const stock = parseInt(
+        document.querySelector(`.stock-item[data-type="${type}"]`)?.value || 0
+    );
+
+    const key = type;
+
+    if (qty > stock) {
+        showError(input, "Invalid Quantity");
+        validationState[key] = false;
+    } else {
+        clearError(input);
+        validationState[key] = true;
+    }
+
+    updateSubmitButton();
+}
+
+
+function showError(input, msg) {
+    let el = input.nextElementSibling;
+    if (!el || !el.classList.contains('errorclass')) {
+        el = document.createElement('div');
+        el.className = 'errorclass';
+        input.after(el);
+    }
+    el.innerText = msg;
+}
+
+function clearError(input) {
+    const el = input.nextElementSibling;
+    if (el && el.classList.contains('errorclass')) {
+        el.innerText = '';
+    }
+}
+
+function updateSubmitButton() {
+    const valid = Object.values(validationState).every(v => v === true);
+    document.querySelector('.buttonWizard').disabled = !valid;
+}
+
+// ================= SEMEN STOCK VALIDATION =================
+$(document).on('input change', '.main_div_block input[name="semen_straws[]"]', function () {
+
+    const $block = $(this).closest('.main_div_block');
+
+    const semen     = $block.find('.semen-select').val();
+    const breedType = $block.find('.breed-type-select').val();
+    const breed     = $block.find('.breed-select').val();
+    const bull      = $block.find('input[name="bull_id[]"]').val();
+    const qty       = parseInt(this.value || 0);
+
+    const key = 'semen_' + $('.main_div_block').index($block);
+
+    // find matching stock
+    const stockEl = document.querySelector(
+        `.stock-item[data-type="species_semen"][data-semen="${semen}"][data-breedtype="${breedType}"][data-breed="${breed}"][data-bull="${bull}"]`
+    );
+
+    if (!stockEl) {
+        showError(this, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+        if (qty > stock) {
+            showError(this, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(this);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+});
+
+// ================= CONTAINER STOCK VALIDATION =================
+$(document).on('input change', '.container-qty', function () {
+
+    const $block = $(this).closest('.container_div_block');
+    const capacity = $block.find('.container-capacity').val();
+    const qty = parseInt(this.value || 0);
+
+    const key = 'container_' + $('.container_div_block').index($block);
+
+    const stockEl = document.querySelector(
+        `.stock-item[data-type="container"][data-capacity="${capacity}"]`
+    );
+
+    if (!stockEl) {
+        showError(this, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+        if (qty > stock) {
+            showError(this, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(this);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+});
+
+// ================= DUPLICATE SEMEN COMBINATION CHECK =================
+
+$(document).on('change input', 
+    '.main_div_block .semen-select, .main_div_block .breed-type-select, .main_div_block .breed-select, .main_div_block input[name="bull_id[]"], .main_div_block input[name="semen_straws[]"]', 
+    function () {
+        checkDuplicateSemenRows();
+});
+function checkDuplicateSemenRows() {
+
+    const seen = {};
+
+    $('.main_div_block').each(function (index) {
+
+        const $block = $(this);
+        const semen     = $block.find('.semen-select').val();
+        const breedType = $block.find('.breed-type-select').val();
+        const breed     = $block.find('.breed-select').val();
+        const bull      = $block.find('input[name="bull_id[]"]').val();
+        const qtyInput  = $block.find('input[name="semen_straws[]"]')[0];
+
+        const key = 'duplicate_' + index;
+
+        if (!semen || !breedType || !breed || !bull) {
+            validationState[key] = true;
+            return;
+        }
+
+        const comboKey = `${semen}|${breedType}|${breed}|${bull}`;
+
+        if (seen[comboKey]) {
+            showDuplicateError(qtyInput, "Duplicate entry not allowed");
+            validationState[key] = false;
+        } else {
+            clearDuplicateError(qtyInput);
+            validationState[key] = true;
+            seen[comboKey] = true;
+        }
+
+    });
+
+    updateSubmitButton();
+}
+
+function showDuplicateError(input, msg) {
+    let el = input.parentNode.querySelector('.duplicate-error');
+    if (!el) {
+        el = document.createElement('div');
+        el.className = 'errorclass duplicate-error';
+        input.after(el);
+    }
+    el.innerText = msg;
+}
+
+function clearDuplicateError(input) {
+    const el = input.parentNode.querySelector('.duplicate-error');
+    if (el) el.remove();
+}
+
+
+// ================= DUPLICATE CONTAINER CHECK =================
+$(document).on('change input', '.container-capacity, .container-qty', function () {
+    checkDuplicateContainers();
+});
+function checkDuplicateContainers() {
+
+    const seen = {};
+
+    $('.container_div_block').each(function (index) {
+
+        const $block = $(this);
+        const capacity = $block.find('.container-capacity').val();
+        const qtyInput = $block.find('.container-qty')[0];
+
+        const key = 'duplicate_container_' + index;
+
+        if (!capacity) {
+            validationState[key] = true;
+            return;
+        }
+
+        if (seen[capacity]) {
+            showDuplicateError(qtyInput, "Duplicate container not allowed");
+            validationState[key] = false;
+        } else {
+            clearDuplicateError(qtyInput);
+            validationState[key] = true;
+            seen[capacity] = true;
+        }
+
+    });
+
+    updateSubmitButton();
+}
+
+function reindexContainerValidation() {
+    const newState = {};
+
+    $('.container_div_block').each(function (newIndex) {
+
+        if (validationState['container_' + newIndex] !== undefined) {
+            newState['container_' + newIndex] = validationState['container_' + newIndex];
+        }
+
+        if (validationState['duplicate_container_' + newIndex] !== undefined) {
+            newState['duplicate_container_' + newIndex] = validationState['duplicate_container_' + newIndex];
+        }
+
+    });
+
+    Object.keys(validationState).forEach(k => delete validationState[k]);
+    Object.assign(validationState, newState);
+
+    checkDuplicateContainers(); // refresh duplicates
+}
+
 </script>
 
 @endsection

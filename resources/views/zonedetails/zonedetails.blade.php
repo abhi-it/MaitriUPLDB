@@ -18,31 +18,30 @@
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
                 <th><span data-hi="Item" data-en="Item"></span></th>
                 <th><span data-hi="Quantity" data-en="Quantity"></span></th>
+                <th><span data-hi="Supply Date" data-en="Supply Date"></span></th>
             </tr>
         </thead>
         <tbody>
-            <?php //echo "<pre>"; print_r($finalStocks->toArray()); exit; ?>
-            @if(count($finalStocks) > 0)
-            @foreach ($finalStocks as  $stockAdmin)
+            <?php //echo "<pre>"; print_r($zoneStocks->toArray()); exit; ?>
+            @if(count($zoneStocks) > 0)
+            @foreach ($zoneStocks as  $stockAdmin)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
                     <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
-                        <b>{{ $stockAdmin['item_name'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
+                        <b>{{ $stockAdmin['item'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
                         <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
                         <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
                         <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
-                        <input type="hidden" id="{{$stockAdmin['item_type']}}_{{$stockAdmin['species_semen']}}_{{$stockAdmin['breed_type']}}_{{$stockAdmin['breed']}}_{{$stockAdmin['bull_id']}}" value="{{$stockAdmin['remaining_qty']}}">
                     <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
-                        {{ $stockAdmin['item_name'] }} - ({{ $stockAdmin['container_capacity'] }})
-                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}_{{$stockAdmin['container_capacity']}}" value="{{$stockAdmin['remaining_qty']}}">
+                        {{ $stockAdmin['item'] }} - ({{ $stockAdmin['container_capacity'] }})
                     <?php } else { ?>
-                        {{ $stockAdmin['item_name'] }}
-                        <input type="hidden" id="stock_{{$stockAdmin['item_type']}}" value="{{$stockAdmin['remaining_qty']}}">
+                        {{ $stockAdmin['item'] }}
                     <?php } ?>
                 </td>
 
-                <td>{{ $stockAdmin['remaining_qty'] }}</td>
+                <td>{{ $stockAdmin['quantity'] }}</td>
+                <td>{{ $stockAdmin['supply_date'] }}</td>
 
             </tr>
             @endforeach
