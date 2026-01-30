@@ -12,6 +12,7 @@ class Zonestock extends Model
         'zone_id',
         'district_id',
         'ai_center_id',
+        'maitri_id',
         'location',
         'dfs_station',
         'item_type',
@@ -47,4 +48,11 @@ class Zonestock extends Model
     {
         return $this->belongsTo(Latestaicenter::class, 'ai_center_id');
     }
+
+    public function maitri()
+    {
+        return $this->belongsTo(Manganurodhdata::class, 'maitri_id');
+    }
+
+    
 }

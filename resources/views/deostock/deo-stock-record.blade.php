@@ -8,122 +8,45 @@
     gap: 10px;
 }
 
-@media screen and (min-width: 1024px) {
-    .table-responsive {
-        display: block !important;
-    }
-}
 </style>
 <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center m-4 fw-bold"> <span data-hi="वितरित रिकॉर्ड" data-en="Distributed Record"></span> </h3>
 
-    <form method="GET" action="{{ route('deo-show-stock-record') }}" class="mb-4">
-        <div class="row">
-            <input type="hidden" name="district_id" id="district_id" value="{{ $getData->district_id }}">
-            <input type="hidden" name="division_id" id="division_id" value="{{ $getData->division_id }}">
-            <div class="col-md-6">
-                <label>AI Center:</label>
-                <select name="aicenter" id="select_aicenter" class="form-control">
-                    <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
-                    @foreach($aiCenters as $aiCenterName)
-                    <option value="{{ $aiCenterName['id'] }}">
-                        {{ $aiCenterName['aicenter'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="inputEmail4"> <span data-hi="मैत्री चुनें" data-en="Select Maitri"></span> </label>
-                <select name="select_maitri" id="select_maitri" class="form-control">
-                    <option value="" data-hi="मैत्री चुनें" data-en="Select Maitri"></option>
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <label>Breed:</label>
-                <select name="breed" class="form-control">
-                    <option value="">Select Breed</option>
-                    <option value="swadeshi" {{ request('breed') == 'swadeshi' ? 'selected' : '' }}>
-                        Swadeshi</option>
-                    <option value="hybrids-crossbred" {{ request('breed') == 'hybrids-crossbred' ? 'selected' : '' }}>
-                        Hybrids -
-                        Crossbred</option>
-                    <option value="videshi" {{ request('breed') == 'videshi' ? 'selected' : '' }}>Videshi</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label>Species:</label>
-                <select name="semen" class="form-control">
-                    <option value="">Select Species</option>
-                    <option value="cow" {{ request('semen') == 'cow' ? 'selected' : '' }}>
-                        Cow</option>
-                    <option value="buffalo" {{ request('semen') == 'buffalo' ? 'selected' : '' }}>Buffalo</option>
-                    <option value="goat" {{ request('semen') == 'goat' ? 'selected' : '' }}>Goat</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label>Semen Type:</label>
-                <select name="semen_type" class="form-control">
-                    <option value="">Select Semen</option>
-                    <option value="conventional" {{ request('semen_type') == 'conventional' ? 'selected' : '' }}>
-                        Conventional</option>
-                    <option value="sexed" {{ request('semen_type') == 'sexed' ? 'selected' : '' }}>Sexed</option>
-                </select>
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Filter</button>
-        <a href="{{ route('deo-show-stock-record') }}" class="btn btn-secondary">Reset</a>
-    </form>
-
-    <table id="my-new-table" class="table table-striped  table-responsive table-bordered">
+    <table id="my-new-table" class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
-                <th><span data-hi="मैत्री नाम" data-en="Maitri Name"></span></th>
-                <th><span data-hi="संख्या" data-en="Number"></span></th>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
-                <th> <span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
+                <th><span data-hi="Maitri" data-en="Maitri"></span></th>
+                <th><span data-hi="Item" data-en="Item"></span></th>
+                <th><span data-hi="Quantity" data-en="Quantity"></span></th>
+                <th><span data-hi="Supply Date" data-en="Supply Date"></span> </th>
+                <th><span data-hi="निर्माण तिथि" data-en="Creation Date"></span> </th>
             </tr>
         </thead>
         <tbody>
-
-            @php $i = 1; @endphp
-            @foreach ($deoStock as $key => $stockdeo)
+            @if(count($aiCenterDistributedRecord) > 0)
+            @foreach ($aiCenterDistributedRecord as $key => $stock)
             <tr>
-                <td>{{ $i }}</td>
-                <td>{{ $stockdeo->maitri_name }}</td>
-                <td>{{ $stockdeo->maitri_mobile_no }}</td>
-                <td>{{ $stockdeo->demand_section }}</td>
-                <td>{{ $stockdeo->semen }}</td>
-                <td>{{ $stockdeo->semen_straws }}</td>
-                <td>{{ $stockdeo->semen_type }}</td>
-                <td>{{ $stockdeo->banner }}</td>
-                <td>{{ $stockdeo->dangler }}</td>
-                <td>{{ $stockdeo->standee }}</td>
-                <td>{{ $stockdeo->pamphlet }}</td>
-                <td>{{ $stockdeo->ai_kit }}</td>
-                <td>{{ $stockdeo->container }}</td>
-                <td>{{ $stockdeo->container_capacity }}</td>
-                <td>{{ $stockdeo->scheme }}</td>
-                <td>{{ $stockdeo->bull_ids }}</td>
-                <td>{{ $stockdeo->created_at }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $stock->maitri->maitri_name }} ({{ $stock->maitri->maitri_mobile_no }})</td>
+                <td>
+                    <?php if ($stock->item_type == 'species_semen') { ?>
+                        <b>{{ $stock->item }} :</b> {{ $stock->species_semen }} <br>
+                        <b>Bread Type :</b> {{ $stock->breed_type }} <br>
+                        <b>Bread :</b> {{ $stock->breed }} <br>
+                        <b>Bull ID:</b> {{ $stock->bull_id }}
+                    <?php } else if ($stock->item_type == 'container') { ?>
+                        {{ $stock->item }} - ({{ $stock->container_capacity }})
+                    <?php } else { ?>
+                        {{ $stock->item }}
+                    <?php } ?>
+                </td>
+                <td>{{ $stock->quantity }}</td>
+                <td>{{ $stock->supply_date }}</td>
+                <td>{{ $stock->created_at }}</td>
             </tr>
-            @php $i++ @endphp
             @endforeach
-
-
+            @endif
         </tbody>
     </table>
 

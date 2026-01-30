@@ -23,28 +23,56 @@
         <span data-hi="उपलब्ध इन्वेंट्री" data-en="Available Inventory"></span>
     </h3>
     <input type="hidden" name="aiCenter_id" id="aiCenter_id">
-    <table class="table table-striped  table-responsive table-bordered">
+    <table id="my-new-table" class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
-                <th><span data-hi="तरल नाइट्रोजन" data-en="Liquid Nitrogen"></span></th>
-                <th><span data-hi="वीर्य" data-en="Semen"></span></th>
-                <th><span data-hi="वीर्य स्ट्रॉस" data-en="Semen Straws"></span></th>
-                <th><span data-hi="वीर्य का प्रकार" data-en="Semen Type"></span></th>
-                <th><span data-hi="बैनर" data-en="Banner"></span></th>
-                <th> <span data-hi="डैंगलर" data-en="Dangler"></span></th>
-                <th><span data-hi="स्टैन्डी" data-en="Standee"></span></th>
-                <th><span data-hi="पुस्तिका" data-en="Pamphlet"></span></th>
-                <th> <span data-hi="एआई किट" data-en="AI Kit"></span> </th>
-                <th> <span data-hi="पात्र" data-en="Container"></span> </th>
-                <th> <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span> </th>
-                <th> <span data-hi="कायोजनार्रवाई" data-en="Scheme"></span> </th>
-                <th> <span data-hi="बैल पहचान विवरण" data-en="Bull ID Details"></span> </th>
+                <th><span data-hi="S.No" data-en="S.No"></span></th>
+                <th><span data-hi="Item" data-en="Item"></span></th>
+                <th><span data-hi="Quantity" data-en="Quantity"></span></th>
             </tr>
         </thead>
-        <tbody id="avaiable_data">
+        <tbody>
+            <?php //echo "<pre>"; print_r($finalStocks->toArray()); exit; ?>
+            @if(count($finalStocks) > 0)
+            @foreach ($finalStocks as  $stockAdmin)
             <tr>
-                <td colspan="13" class="text-center" style="color:red;">Please select any AI Center</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>
+                    <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
+                        <b>{{ $stockAdmin['item_name'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
+                        <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
+                        <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
+                        <input type="hidden" 
+                            class="stock-item"
+                            data-type="species_semen"
+                            data-semen="{{ $stockAdmin['species_semen'] }}"
+                            data-breedtype="{{ $stockAdmin['breed_type'] }}"
+                            data-breed="{{ $stockAdmin['breed'] }}"
+                            data-bull="{{ $stockAdmin['bull_id'] }}"
+                            value="{{$stockAdmin['remaining_qty']}}">
+
+                    <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
+                        {{ $stockAdmin['item_name'] }} - ({{ $stockAdmin['container_capacity'] }})
+                        <input type="hidden" 
+                            class="stock-item"
+                            data-type="container"
+                            data-capacity="{{ $stockAdmin['container_capacity'] }}"
+                            value="{{$stockAdmin['remaining_qty']}}">
+                    <?php } else { ?>
+                        {{ $stockAdmin['item_name'] }}
+                        <input type="hidden"
+                            class="stock-item"
+                            data-type="{{ $stockAdmin['item_type'] }}"
+                            value="{{ $stockAdmin['remaining_qty'] }}">
+                    <?php } ?>
+                </td>
+
+                <td>{{ $stockAdmin['remaining_qty'] }}</td>
+
             </tr>
+            @endforeach
+            @endif
         </tbody>
     </table>
 
@@ -53,26 +81,26 @@
     </h3>
     <form method="post" action="{{ route('deo-save-stock-data') }}" class="form-comman">
         @csrf
+        <input type="hidden" name="zone_id" value="{{ $zone_id }}">
+        <input type="hidden" name="district_id" id="district_id" value="{{ $district_id }}">
+        <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
         <hr>
 
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="inputEmail4">
                     <span data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></span>
                 </label>
-                <input type="hidden" name="district_name" id="district_name" value="{{ $names['district'] }}">
-                <input type="hidden" name="division_name" id="division_name" value="{{ $names['division'] }}">
-                <input type="hidden" name="district_id" id="district_id" value="{{ $district_id }}">
-                <input type="hidden" name="division_id" id="division_id" value="{{ $division_id }}">
+                
 
                 <select name="select_aicenter" id="select_aicenter" class="form-control" required>
                     <option value="" data-hi="AI केंद्र का चयन करें" data-en="Select AI Center"></option>
-                    @foreach($ai_centerName as $aiCenterName)
+                    @foreach($ai_centers as $aiCenterName)
                     <option value="{{ $aiCenterName['id'] }}">{{ $aiCenterName['center_name'] }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="inputEmail4">
                     <span data-hi="मैत्री चुनें" data-en="Select Maitri"></span>
                 </label>
@@ -81,23 +109,33 @@
                     <option value="" data-hi="मैत्री चुनें" data-en="Select Maitri"></option>
                 </select>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">
+                    <span data-hi="आपूर्ति तिथि" data-en="Supply Date"></span>
+                </label>
+                <input name="supply_date" id="selectDate_supply" data-filed_type="selectDate_supply" type="date"
+                    class="form-control" autofocus>
+            </div>
+
+            <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span>
-                    <span id="errorDemand" class="errorclass"></span>
                 </label>
-                <input name="demand_section" id="demand_section" data-filed_type="demand_section" type="text"
+                <small id="liquid_nitrogen_msg" style="color:red"></small>
+                <input name="liquid_nitrogen" id="dist_liquid_nitrogen" data-filed_type="demand_section" type="text"
                     class="form-control" data-placeholder-hi="तरल नाइट्रोजन (लीटर में)"
-                    data-placeholder-en="Liquid Nitrogen (in Litre)" autofocus>
+                    data-placeholder-en="Liquid Nitrogen (in Litre)" onkeyup="validateSimpleStock(this, 'liquid_nitrogen')">
             </div>
-            <!-- New Functionlity Added -->
+            
+
+            <!-- Semen Functionlity with add more -->
             <div class="form-group col-md-12 pt-4 main_div_block" style="background: #eee;">
-                <div class="row">
+                <div class="row"> 
                     <div class="form-group col-md-4">
                         <label>
                             <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>
                         </label>
-                        <select name="semen[]" class="form-control semen-select">
+                        <select name="semen[]" class="form-control semen-select" required>
                             <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
                             <option value="cow" data-hi="गाय" data-en="Cow"></option>
                             <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
@@ -105,69 +143,20 @@
                         </select>
                     </div>
 
-                    <!-- Cattle Dropdown -->
-                    <div class="form-group col-md-4 catle-options d-none">
+                    <!-- Breed Type Dropdown -->
+                    <div class="form-group col-md-4 catle-options">
                         <label>
-                            <span data-hi="नस्ल" data-en="Breed"></span>
+                            <span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span>
                         </label>
-                        <select name="breed[]" class="form-control breed-select">
-                            <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                            <option value="swadeshi" data-hi="स्वदेशी" data-en="Swadeshi"></option>
-                            <option value="hybrids-crossbred" data-hi="संकर" data-en="Hybrids - Crossbred"></option>
-                            <option value="videshi" data-hi="विदेशी" data-en="Videshi"></option>
-                        </select>
+                        <select name="breedType[]" class="form-control breed-type-select"></select>
                     </div>
 
-                    <!-- Breed Types -->
-                    <div class="form-group col-md-4 breedType1-options d-none">
-                        <label><span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span></label>
-                        <select name="breedType1[]" class="form-control">
-                            <option value="">Select one</option>
-                            <option value="gangatiri">Gangatiri</option>
-                            <option value="sahiwal">Sahiwal</option>
-                            <option value="gir">Gir</option>
-                            <option value="tharparkar">Tharparkar</option>
-                            <option value="haryana">Haryana</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4 breedType2-options d-none">
-                        <label><span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span></label>
-                        <select name="breedType2[]" class="form-control">
-                            <option value="">Select one</option>
-                            <option value="jersey-cross">Jersey Cross</option>
-                            <option value="holstein-friesian-cross">Holstein Friesian Cross</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4 breedType3-options d-none">
-                        <label><span data-hi="नस्ल के प्रकार" data-en="Breed Type"></span></label>
-                        <select name="breedType3[]" class="form-control">
-                            <option value="">Select one</option>
-                            <option value="imported-jersey">Imported Jersey</option>
-                            <option value="imported-holstein-friesian">Imported Holstein Friesian</option>
-                        </select>
-                    </div>
-
-                    <!-- Buffalo Dropdown -->
-                    <div class="form-group col-md-4 buffalo-options d-none">
+                    <!-- Breed  -->
+                    <div class="form-group col-md-4 breedType1-options">
                         <label><span data-hi="नस्ल" data-en="Breed"></span></label>
-                        <select name="breedType4[]" class="form-control">
-                            <option value="">Select one</option>
-                            <option value="murrah">Murrah</option>
-                            <option value="bhadawari">Bhadawari</option>
-                        </select>
+                        <select name="breed[]" class="form-control breed-select"></select>
                     </div>
 
-                    <!-- Goat Dropdown -->
-                    <div class="form-group col-md-4 goat-options d-none">
-                        <label><span data-hi="नस्ल" data-en="Breed"></span></label>
-                        <select name="breedType5[]" class="form-control">
-                            <option value="">Select one</option>
-                            <option value="jamunapari">Jamunapari</option>
-                            <option value="barbari">Barbari</option>
-                        </select>
-                    </div>
 
                     <div class="form-group col-md-4">
                         <label><span data-hi="वीर्य प्रकार" data-en="Semen Type"></span></label>
@@ -188,107 +177,104 @@
                         <input name="semen_straws[]" type="number" min="1" class="form-control"
                             placeholder="Semen Straws Quantity">
                     </div>
-
-                    <div class="form-group col-md-12 text-center">
-                        <span class="add btn btn-primary btn-sm demand-request-add-btn">Add More</span>
-                    </div>
                 </div>
             </div>
-            <!-- New Functionlity End Code -->
+
+            <!-- add more here -->
+
+            <div class="form-group col-md-12 text-center">
+                <span class="add btn btn-primary btn-sm demand-request-add-btn">Add More</span>
+            </div>
+
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
-                    <span id="errorBanner" class="errorclass"></span>
                 </label>
-                <input name="banner" min="0" id="banner" type="number" data-filed_type="banner" class="form-control"
-                    data-placeholder-hi="बैनर" data-placeholder-en="Banner" autofocus>
+                <input name="banner" id="dist_banner" type="number" class="form-control" data-placeholder-hi="बैनर"
+                    data-placeholder-en="Banner" onkeyup="validateSimpleStock(this, 'banner')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span>
-                    <span id="errorDangler" class="errorclass"></span>
                 </label>
-                <input name="dangler" min="0" id="dangler" type="number" data-filed_type="dangler" class="form-control"
+                <input name="dangler" id="dist_dangler" type="number" class="form-control"
                     data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)"
-                    autofocus>
+                    onkeyup="validateSimpleStock(this, 'dangler_chart')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span>
-                    <span id="errorStandee" class="errorclass"></span>
                 </label>
-                <input name="standee" min="0" id="standee" type="number" data-filed_type="standee" class="form-control"
-                    data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" autofocus>
+                <input name="standee" id="dist_standee" type="number" class="form-control"
+                    data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" onkeyup="validateSimpleStock(this, 'standee')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span>
-                    <span id="errorPamphlet" class="errorclass"></span>
                 </label>
-                <input name="pamphlet" min="0" id="pamphlet" type="number" data-filed_type="pamphlet"
-                    class="form-control" data-placeholder-hi="पैम्फलेट (संख्या में)"
-                    data-placeholder-en="Pamphlet(In Numbers)" autofocus>
+                <small id="pamphlet_msg" style="color:red"></small>
+                <input name="pamphlet" id="dist_pamphlet" type="number" class="form-control"
+                    data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" onkeyup="validateSimpleStock(this, 'pamphlet')">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputEmail4">
                     <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
-                    <span id="errorAiKit" class="errorclass"></span>
                 </label>
-                <input name="ai_kit" min="0" id="ai_kit" type="number" data-filed_type="ai_kit" class="form-control"
-                    data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " autofocus>
+                <small id="ai_kit_msg" style="color:red"></small>
+                <input name="ai_kit" id="dist_ai_kit" type="number" class="form-control"
+                    data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " onkeyup="validateSimpleStock(this, 'ai_kit')">
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span>
-                    <span id="errorContainer" class="errorclass"></span>
-                </label>
-                <input name="container" min="0" id="container" data-filed_type="container" type="number"
-                    class="form-control" data-placeholder-hi="कंटेनर(संख्या में)"
-                    data-placeholder-en="Container(In Numbers)" autofocus>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span>
-                </label>
-                <select name="container_capacity" id="container_capacity" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
-                    <option value="BA-0.5" data-en="BA-0.5" data-hi="बीए-0.5"></option>
-                    <option value="BA-1.5" data-en="BA-1.5" data-hi="बीए-1.5"></option>
-                    <option value="BA-3" data-en="BA-3" data-hi="बीए-3"></option>
+            
+            <div class="form-group col-md-12 pt-4 container_div_block" style="background: #eee;">
+                <div class="row">
+                    
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">
+                            <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span>
+                        </label>
+                        <select name="container_capacity[]" class="form-control container-capacity" autofocus>
+                            <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
+                            <option value="BA-0.5" data-en="BA-0.5" data-hi="बीए-0.5"></option>
+                            <option value="BA-1.5" data-en="BA-1.5" data-hi="बीए-1.5"></option>
+                            <option value="BA-3" data-en="BA-3" data-hi="बीए-3"></option>
 
-                    <option value="BA-20" data-en="BA-20" data-hi="बीए-20"></option>
-                    <option value="BA-35" data-en="BA-35" data-hi="बीए-35"></option>
-                    <option value="J-12" data-en="J-12" data-hi="जे-12"></option>
-                    <option value="J-47" data-en="J-47" data-hi="जे-47"></option>
-                    <option value="TA-55" data-en="TA-55" data-hi="टीए-55"></option>
-                </select>
+                            <option value="BA-20" data-en="BA-20" data-hi="बीए-20"></option>
+                            <option value="BA-35" data-en="BA-35" data-hi="बीए-35"></option>
+                            <option value="J-12" data-en="J-12" data-hi="जे-12"></option>
+                            <option value="J-47" data-en="J-47" data-hi="जे-47"></option>
+                            <option value="TA-55" data-en="TA-55" data-hi="टीए-55"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">
+                            <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span>
+                        </label>
+                        <input name="container_qty[]" type="number" class="form-control container-qty"
+                            data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
+                    </div>
+
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="योजना" data-en="Scheme"></span>
-                </label>
-                <select name="scheme" id="scheme" class="form-control" autofocus>
-                    <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
-                    <option value="Livestock Insurance" data-en="Livestock Insurance" data-hi="पशुधन बीमा"></option>
-                    <option value="Sexed Semen" data-en="Sexed Semen" data-hi="वर्गीकृत वीर्य"></option>
-                    <option value="AI" data-en="AI" data-hi="ए आई"></option>
-                    <option value="Rashtriya Krishi Vikas Yojna" data-hi="राष्ट्रीय कृषि विकास योजना"
-                        data-en="Rashtriya Krishi Vikas Yojna"></option>
-                </select>
+
+            <!-- add more container here -->
+
+            <div class="form-group col-md-12 text-center">
+                <span class="add btn btn-primary btn-sm container-demand-add-btn">Add More</span>
             </div>
         </div>
         <!------Summary Page End---------------->
         <div class="row">
-            <div class="mb-4 mt-4 text-center">
+            <div class="mb-4 mt-4 text-centerx">
                 <button type="submit" id="data_submit" class="btn btn-primary submit buttonWizard">
                     <span data-en="Submit" data-hi="सबमिट"></span>
                 </button>
             </div>
         </div>
+    </form>
 </div>
 <script>
 $(document).ready(function() {
-
     $('#select_aicenter').change(function() {
         var aiCenterID = $(this).val();
         var district = $('#district_id').val();
@@ -308,8 +294,8 @@ $(document).ready(function() {
 
                 $('#avaiable_data').empty();
                 $('#select_maitri').empty();
-                if (result.success && result.type === 'maitri' && result.success != '') {
-                    $.each(result.success, function(index, maitri) {
+                if (result.res && result.type === 'maitri' && result.res != '') {
+                    $.each(result.res, function(index, maitri) {
                         $('#select_maitri').append(
                             $('<option></option>').val(maitri.id).text(
                                 'Name: ' + maitri.maitri_name + '(Num: ' +
@@ -324,45 +310,7 @@ $(document).ready(function() {
                             'disabled', true)
                     );
                 }
-                var html = '';
-                if (result.remainingStock && result.type === 'maitri' && Object.keys(result
-                        .remainingStock).length > 0) {
-                    $('input, select').prop('disabled', false);
-                    var remainingStock = result.remainingStock.zone_stock_details;
-
-                    $('#aiCenter_id').val(aiCenterID);
-
-                    html += '<tr>';
-                    html += '<td>' + (remainingStock.demand_section || '') + '</td>';
-                    html += '<td>' + (remainingStock.semen || '') + '</td>';
-                    html += '<td>' + (remainingStock.semen_straws || '') + '</td>';
-                    html += '<td>' + (remainingStock.semen_type || '') + '</td>';
-                    html += '<td>' + (remainingStock.banner || '') + '</td>';
-                    html += '<td>' + (remainingStock.dangler || '') + '</td>';
-                    html += '<td>' + (remainingStock.standee || '') + '</td>';
-                    html += '<td>' + (remainingStock.pamphlet || '') + '</td>';
-                    html += '<td>' + (remainingStock.ai_kit || '') + '</td>';
-                    html += '<td>' + (remainingStock.container || '') + '</td>';
-                    html += '<td>' + (remainingStock.container_capacity || '') + '</td>';
-                    html += '<td>' + (remainingStock.scheme || '') + '</td>';
-                    html += '<td>' + (remainingStock.bull_ids || '') + '</td>';
-                    html += '</tr>';
-
-                    $('#avaiable_data').append(html);
-                    $('#data_submit').prop('disabled', false);
-                } else {
-
-                    $('input').prop('disabled', true);
-                    $('select').not(':first').prop('disabled', true);
-                    html += '<tr>';
-                    html +=
-                        '<td colspan="13" class="text-center" style="color:red;">No data found</td>';
-                    html += '</tr>';
-                    $('#avaiable_data').append(html);
-                    $('#select_aicenter').prop('disabled', false);
-                    $('#data_submit').prop('disabled', true);
-                }
-
+                
 
             },
             error: function(xhr, status, error) {
@@ -370,180 +318,497 @@ $(document).ready(function() {
             }
         });
     })
-
-
-    //Validations Start
-    $('#demand_section').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var demand = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, demand);
-    });
-
-    $('#banner').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    $('#dangler').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    $('#standee').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    $('#pamphlet').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    $('#ai_kit').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    $('#container').keyup(function() {
-        var user_id = $('#aiCenter_id').val();
-        var banner = $(this).val();
-        var type = $(this).data('filed_type');
-        checkRemainingStock(user_id, type, banner);
-    })
-
-    function checkRemainingStock(user_id, type, field_value) {
-        $.ajax({
-            url: '/check-stock-limit',
-            method: 'GET',
-            dataType: 'JSON',
-            data: {
-                user_id: user_id,
-                type: type,
-                value: field_value,
-            },
-            success: function(response) {
-                $('.errorclass').html('');
-
-
-                if (type === 'demand_section' && response.demand) {
-                    $('#errorDemand').html('( ' + response.demand + ' )');
-                    $('.buttonWizard').prop('disabled', true); // Disable button if there's an error
-                } else if (type === 'banner' && response.banner) {
-                    $('#errorBanner').html('( ' + response.banner + ' )');
-                    $('.buttonWizard').prop('disabled', true); // Disable button if there's an error
-                } else if (type === 'dangler' && response.dangler) {
-                    $('#errorDangler').html('( ' + response.dangler + ' )');
-                    $('.buttonWizard').prop('disabled', true);
-                } else if (type === 'standee' && response.standee) {
-                    $('#errorStandee').html('( ' + response.standee + ' )');
-                    $('.buttonWizard').prop('disabled', true);
-                } else if (type === 'pamphlet' && response.pamphlet) {
-                    $('#errorPamphlet').html('( ' + response.pamphlet + ' )');
-                    $('.buttonWizard').prop('disabled', true);
-                } else if (type === 'ai_kit' && response.ai_kit) {
-                    $('#errorAiKit').html('( ' + response.ai_kit + ' )');
-                    $('.buttonWizard').prop('disabled', true);
-                } else if (type === 'container' && response.container) {
-                    $('#errorContainer').html('( ' + response.container + ' )');
-                    $('.buttonWizard').prop('disabled', true);
-                } else {
-                    $('.buttonWizard').prop('disabled', false);
-                }
-
-            },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-            }
-        });
-    }
-    //Validation End
 });
 </script>
+
 <script>
 $(document).ready(function() {
 
-    var maxFields = 6;
+    var maxFields = 10;
     var fieldCount = 1;
-    $('.demand-request-add-btn').click(function() {
-        if (fieldCount < maxFields) {
-            var clone = $('.main_div_block:first').clone();
+    $('.demand-request-add-btn').on('click', function () {
 
-            // Reset input/select values in cloned div
-            clone.find('input, select').val('');
-            clone.find(
-                '.catle-options, .buffalo-options, .goat-options, .breedType1-options, .breedType2-options, .breedType3-options'
-            ).addClass('d-none');
-
-            // Add remove button only for new cloned fields
-            clone.append(
-                '<div class="form-group col-md-12 text-center"><span class="demand-request-remove-btn btn btn-danger btn-sm">Remove</span></div>'
-            );
-
-            clone.find('.demand-request-add-btn').remove();
-            $('.main_div_block:last').after(clone);
-            fieldCount++;
-
-            if (fieldCount === maxFields) {
-                $('.demand-request-add-btn').hide(); // Hide "Add More" button when max reached
-            }
+        if (fieldCount >= maxFields) {
+            alert('You can add maximum ' + maxFields + ' entries.');
+            return;
         }
+
+        // check if last block is filled
+        var $lastBlock = $('.main_div_block:last');
+        var isValid = true;
+        $lastBlock.find('select, input').each(function () {
+            if ($(this).val() === '') {
+                isValid = false;
+                return false; // break loop
+            }
+        });
+
+        if (!isValid) {
+            alert('Please fill all fields in the last entry before adding a new one.');
+            return;
+        }
+
+        var $clone = $('.main_div_block:first').clone();
+
+        // Clear values
+        $clone.find('input').val('');
+        $clone.find('select').val('');
+        $clone.find('.breed-type-select').empty();
+        $clone.find('.breed-select').empty();
+
+        // Add remove button if not exists
+        if ($clone.find('.demand-request-remove-btn').length === 0) {
+            $clone.append(`
+                <div class="text-end mt-2">
+                    <span class="btn btn-danger btn-sm demand-request-remove-btn">
+                        Remove
+                    </span>
+                </div>
+            `);
+        }
+
+        // Append clone
+        $('.main_div_block:last').after($clone);
+
+        fieldCount++;
     });
 
-    $(document).on('click', '.demand-request-remove-btn', function() {
-        $(this).closest('.main_div_block').remove();
+    // REMOVE
+    $(document).on('click', '.demand-request-remove-btn', function () {
+
+        const $block = $(this).closest('.main_div_block');
+        const index = $('.main_div_block').index($block);
+
+        delete validationState['semen_' + index];
+        delete validationState['duplicate_' + index];
+
+        $block.remove();
         fieldCount--;
 
-        if (fieldCount < maxFields) {
-            $('.demand-request-add-btn').show(); // Show "Add More" button if less than max
-        }
+        reindexSemenValidation();
+        updateSubmitButton();
     });
 
-    $(document).on('change', '.semen-select', function() {
+    $(document).on('change', '.semen-select', function () {
+
+        var $block = $(this).closest('.main_div_block');
         var selectedValue = $(this).val();
-        var parentDiv = $(this).closest('.main_div_block');
 
-        parentDiv.find('.catle-options, .buffalo-options, .goat-options').addClass('d-none');
+        var $breedType = $block.find('.breed-type-select');
+        var $breed = $block.find('.breed-select');
 
-        if (selectedValue === 'cow') {
-            parentDiv.find('.catle-options').removeClass('d-none');
-        } else if (selectedValue === 'buffalo') {
-            parentDiv.find('.buffalo-options').removeClass('d-none');
-        } else if (selectedValue === 'goat') {
-            parentDiv.find('.goat-options').removeClass('d-none');
+        $breedType.empty();
+        $breed.empty();
+
+        if (selectedValue) {
+            $breedType.append(
+                '<option value="">Select one</option>' +
+                '<option value="swadeshi">Swadeshi</option>' +
+                '<option value="hybrids-crossbred">Hybrids - Crossbred</option>' +
+                '<option value="videshi">Videshi</option>'
+            );
         }
 
-        parentDiv.find('.breedType1-options, .breedType2-options, .breedType3-options').addClass(
-            'd-none');
+        switchLang($('.switchlang').val());
     });
 
-    $(document).on('change', '.breed-select', function() {
-        var selectedBreed = $(this).val();
-        var parentDiv = $(this).closest('.main_div_block');
+    $(document).on('change', '.breed-type-select', function () {
 
-        parentDiv.find('.breedType1-options, .breedType2-options, .breedType3-options').addClass(
-            'd-none');
+        var $block = $(this).closest('.main_div_block');
 
-        if (selectedBreed === 'swadeshi') {
-            parentDiv.find('.breedType1-options').removeClass('d-none');
-        } else if (selectedBreed === 'hybrids-crossbred') {
-            parentDiv.find('.breedType2-options').removeClass('d-none');
-        } else if (selectedBreed === 'videshi') {
-            parentDiv.find('.breedType3-options').removeClass('d-none');
+        var selectedValue = $(this).val();
+        var semenType = $block.find('.semen-select').val();
+        var $breed = $block.find('.breed-select');
+
+        $breed.empty();
+
+        // ===== COW =====
+        if (selectedValue === 'swadeshi' && semenType === 'cow') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="gangatiri">Gangatiri</option>' +
+                '<option value="sahiwal">Sahiwal</option>' +
+                '<option value="tharparkar">Tharparkar</option>' +
+                '<option value="haryana">Haryana</option>' +
+                '<option value="gir">Gir</option>'
+            );
         }
+
+        if (selectedValue === 'hybrids-crossbred' && semenType === 'cow') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="jersey-cross">Jersey Cross</option>' +
+                '<option value="holstein-friesian-cross">Holstein Friesian Cross</option>'
+            );
+        }
+
+        if (selectedValue === 'videshi' && semenType === 'cow') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="imported-jersey">Imported Jersey</option>' +
+                '<option value="imported-holstein-friesian">Imported Holstein Friesian</option>'
+            );
+        }
+
+        // ===== BUFFALO =====
+        if (selectedValue === 'swadeshi' && semenType === 'buffalo') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="murrah">Murrah</option>' +
+                '<option value="bhadawari">Bhadawari</option>'
+            );
+        }
+
+        if (selectedValue === 'hybrids-crossbred' && semenType === 'buffalo') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="mehsana">Mehsana</option>' +
+                '<option value="godavari">Godavari</option>' +
+                '<option value="banni">Banni</option>'
+            );
+        }
+
+        // ===== GOAT =====
+        if (selectedValue === 'swadeshi' && semenType === 'goat') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="jamunapari">Jamunapari</option>' +
+                '<option value="barbari">Barbari</option>'
+            );
+        }
+
+        if (selectedValue === 'hybrids-crossbred' && semenType === 'goat') {
+            $breed.append(
+                '<option value="">Select one</option>' +
+                '<option value="boer-goat">Boer Goat</option>' +
+                '<option value="saanen">Saanen</option>' +
+                '<option value="anglo-nubian">Anglo-Nubian</option>'
+            );
+        }
+
+        switchLang($('.switchlang').val());
     });
+
+    function reindexSemenValidation() {
+        const newState = {};
+
+        $('.main_div_block').each(function (newIndex) {
+
+            if (validationState['semen_' + newIndex] !== undefined) {
+                newState['semen_' + newIndex] = validationState['semen_' + newIndex];
+            }
+
+            if (validationState['duplicate_' + newIndex] !== undefined) {
+                newState['duplicate_' + newIndex] = validationState['duplicate_' + newIndex];
+            }
+
+        });
+
+        Object.keys(validationState).forEach(k => delete validationState[k]);
+        Object.assign(validationState, newState);
+
+        checkDuplicateSemenRows();
+    }
+
+
+    // ================= CONTAINER ADD MORE =================
+
+    var maxContainers = 10;
+    var containerCount = 1;
+
+    $('.container-demand-add-btn').on('click', function () {
+
+        if (containerCount >= maxContainers) {
+            alert('You can add maximum ' + maxContainers + ' containers.');
+            return;
+        }
+
+        // check if last block is filled
+        var $lastBlock = $('.container_div_block:last');
+        var isValid = true;
+        $lastBlock.find('select, input').each(function () {
+            if ($(this).val() === '') {
+                isValid = false;
+                return false; // break loop
+            }
+        });
+
+        if (!isValid) {
+            alert('Please fill all fields in the last container before adding a new one.');
+            return;
+        }
+
+        var $clone = $('.container_div_block:first').clone();
+
+        // clear values
+        $clone.find('input').val('');
+        $clone.find('select').val('');
+
+        // add remove button if not exists
+        if ($clone.find('.container-remove-btn').length === 0) {
+            $clone.append(`
+                <div class="text-end mt-2">
+                    <span class="btn btn-danger btn-sm container-remove-btn">
+                        Remove
+                    </span>
+                </div>
+            `);
+        }
+
+        $('.container_div_block:last').after($clone);
+        containerCount++;
+    });
+
+    // REMOVE container
+    $(document).on('click', '.container-remove-btn', function () {
+
+        const $block = $(this).closest('.container_div_block');
+        const index = $('.container_div_block').index($block);
+
+        // remove validation keys related to this row
+        delete validationState['container_' + index];
+        delete validationState['duplicate_container_' + index];
+
+        $block.remove();
+        containerCount--;
+
+        // re-run validation to refresh indexes
+        reindexContainerValidation();
+        updateSubmitButton();
+    });
+
+    //================ end ==========================
+    
 
 });
+
+
+const validationState = {};
+
+function validateSimpleStock(input, type) {
+
+    const qty = parseInt(input.value || 0);
+
+    const stock = parseInt(
+        document.querySelector(`.stock-item[data-type="${type}"]`)?.value || 0
+    );
+
+    const key = type;
+
+    if (qty > stock) {
+        showError(input, "Invalid Quantity");
+        validationState[key] = false;
+    } else {
+        clearError(input);
+        validationState[key] = true;
+    }
+
+    updateSubmitButton();
+}
+
+
+function showError(input, msg) {
+    let el = input.nextElementSibling;
+    if (!el || !el.classList.contains('errorclass')) {
+        el = document.createElement('div');
+        el.className = 'errorclass';
+        input.after(el);
+    }
+    el.innerText = msg;
+}
+
+function clearError(input) {
+    const el = input.nextElementSibling;
+    if (el && el.classList.contains('errorclass')) {
+        el.innerText = '';
+    }
+}
+
+function updateSubmitButton() {
+    const valid = Object.values(validationState).every(v => v === true);
+    document.querySelector('.buttonWizard').disabled = !valid;
+}
+
+// ================= SEMEN STOCK VALIDATION =================
+$(document).on('input change', '.main_div_block input[name="semen_straws[]"]', function () {
+
+    const $block = $(this).closest('.main_div_block');
+
+    const semen     = $block.find('.semen-select').val();
+    const breedType = $block.find('.breed-type-select').val();
+    const breed     = $block.find('.breed-select').val();
+    const bull      = $block.find('input[name="bull_id[]"]').val();
+    const qty       = parseInt(this.value || 0);
+
+    const key = 'semen_' + $('.main_div_block').index($block);
+
+    // find matching stock
+    const stockEl = document.querySelector(
+        `.stock-item[data-type="species_semen"][data-semen="${semen}"][data-breedtype="${breedType}"][data-breed="${breed}"][data-bull="${bull}"]`
+    );
+
+    if (!stockEl) {
+        showError(this, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+        if (qty > stock) {
+            showError(this, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(this);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+});
+
+// ================= CONTAINER STOCK VALIDATION =================
+$(document).on('input change', '.container-qty', function () {
+
+    const $block = $(this).closest('.container_div_block');
+    const capacity = $block.find('.container-capacity').val();
+    const qty = parseInt(this.value || 0);
+
+    const key = 'container_' + $('.container_div_block').index($block);
+
+    const stockEl = document.querySelector(
+        `.stock-item[data-type="container"][data-capacity="${capacity}"]`
+    );
+
+    if (!stockEl) {
+        showError(this, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+        if (qty > stock) {
+            showError(this, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(this);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+});
+
+// ================= DUPLICATE SEMEN COMBINATION CHECK =================
+
+$(document).on('change input', 
+    '.main_div_block .semen-select, .main_div_block .breed-type-select, .main_div_block .breed-select, .main_div_block input[name="bull_id[]"], .main_div_block input[name="semen_straws[]"]', 
+    function () {
+        checkDuplicateSemenRows();
+});
+function checkDuplicateSemenRows() {
+
+    const seen = {};
+
+    $('.main_div_block').each(function (index) {
+
+        const $block = $(this);
+        const semen     = $block.find('.semen-select').val();
+        const breedType = $block.find('.breed-type-select').val();
+        const breed     = $block.find('.breed-select').val();
+        const bull      = $block.find('input[name="bull_id[]"]').val();
+        const qtyInput  = $block.find('input[name="semen_straws[]"]')[0];
+
+        const key = 'duplicate_' + index;
+
+        if (!semen || !breedType || !breed || !bull) {
+            validationState[key] = true;
+            return;
+        }
+
+        const comboKey = `${semen}|${breedType}|${breed}|${bull}`;
+
+        if (seen[comboKey]) {
+            showDuplicateError(qtyInput, "Duplicate entry not allowed");
+            validationState[key] = false;
+        } else {
+            clearDuplicateError(qtyInput);
+            validationState[key] = true;
+            seen[comboKey] = true;
+        }
+
+    });
+
+    updateSubmitButton();
+}
+
+function showDuplicateError(input, msg) {
+    let el = input.parentNode.querySelector('.duplicate-error');
+    if (!el) {
+        el = document.createElement('div');
+        el.className = 'errorclass duplicate-error';
+        input.after(el);
+    }
+    el.innerText = msg;
+}
+
+function clearDuplicateError(input) {
+    const el = input.parentNode.querySelector('.duplicate-error');
+    if (el) el.remove();
+}
+
+
+// ================= DUPLICATE CONTAINER CHECK =================
+$(document).on('change input', '.container-capacity, .container-qty', function () {
+    checkDuplicateContainers();
+});
+function checkDuplicateContainers() {
+
+    const seen = {};
+
+    $('.container_div_block').each(function (index) {
+
+        const $block = $(this);
+        const capacity = $block.find('.container-capacity').val();
+        const qtyInput = $block.find('.container-qty')[0];
+
+        const key = 'duplicate_container_' + index;
+
+        if (!capacity) {
+            validationState[key] = true;
+            return;
+        }
+
+        if (seen[capacity]) {
+            showDuplicateError(qtyInput, "Duplicate container not allowed");
+            validationState[key] = false;
+        } else {
+            clearDuplicateError(qtyInput);
+            validationState[key] = true;
+            seen[capacity] = true;
+        }
+
+    });
+
+    updateSubmitButton();
+}
+
+function reindexContainerValidation() {
+    const newState = {};
+
+    $('.container_div_block').each(function (newIndex) {
+
+        if (validationState['container_' + newIndex] !== undefined) {
+            newState['container_' + newIndex] = validationState['container_' + newIndex];
+        }
+
+        if (validationState['duplicate_container_' + newIndex] !== undefined) {
+            newState['duplicate_container_' + newIndex] = validationState['duplicate_container_' + newIndex];
+        }
+
+    });
+
+    Object.keys(validationState).forEach(k => delete validationState[k]);
+    Object.assign(validationState, newState);
+
+    checkDuplicateContainers(); // refresh duplicates
+}
+
 </script>
 
 @endsection
