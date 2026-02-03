@@ -39,8 +39,9 @@
                 <td>
                     <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
                         <b>{{ $stockAdmin['item_name'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
-                        <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
-                        <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Breed Type :</b> {{ $stockAdmin['breed_type'] }} <br>
+                        <b>Breed :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Semen Type :</b> {{ $stockAdmin['semen_type'] }} <br>
                         <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
                         <input type="hidden" 
                             class="stock-item"
@@ -48,6 +49,7 @@
                             data-semen="{{ $stockAdmin['species_semen'] }}"
                             data-breedtype="{{ $stockAdmin['breed_type'] }}"
                             data-breed="{{ $stockAdmin['breed'] }}"
+                            data-sementype="{{ $stockAdmin['semen_type'] }}"
                             data-bull="{{ $stockAdmin['bull_id'] }}"
                             value="{{$stockAdmin['remaining_qty']}}">
 
@@ -291,6 +293,15 @@ $(document).ready(function() {
             return;
         }
 
+        //Stop if last row failed validation
+        const lastIndex = $('.main_div_block').length - 1;
+        const stockKey = 'semen_' + lastIndex;
+        const dupKey   = 'duplicate_' + lastIndex;
+        if (validationState[stockKey] === false || validationState[dupKey] === false) {
+            alert('Please correct errors in the current entry before adding a new one.');
+            return;
+        }
+
         var $clone = $('.main_div_block:first').clone();
 
         // Clear values
@@ -481,6 +492,16 @@ $(document).ready(function() {
             return;
         }
 
+        //Stop if last container row invalid
+        const lastIndex = $('.container_div_block').length - 1;
+        const stockKey = 'container_' + lastIndex;
+        const dupKey   = 'duplicate_container_' + lastIndex;
+
+        if (validationState[stockKey] === false || validationState[dupKey] === false) {
+            alert('Please correct errors in the current container entry before adding a new one.');
+            return;
+        }
+
         var $clone = $('.container_div_block:first').clone();
 
         // clear values
@@ -572,76 +593,21 @@ function updateSubmitButton() {
     document.querySelector('.buttonWizard').disabled = !valid;
 }
 
-// ================= SEMEN STOCK VALIDATION =================
-$(document).on('input change', '.main_div_block input[name="semen_straws[]"]', function () {
-
-    const $block = $(this).closest('.main_div_block');
-
-    const semen     = $block.find('.semen-select').val();
-    const breedType = $block.find('.breed-type-select').val();
-    const breed     = $block.find('.breed-select').val();
-    const bull      = $block.find('input[name="bull_id[]"]').val();
-    const qty       = parseInt(this.value || 0);
-
-    const key = 'semen_' + $('.main_div_block').index($block);
-
-    // find matching stock
-    const stockEl = document.querySelector(
-        `.stock-item[data-type="species_semen"][data-semen="${semen}"][data-breedtype="${breedType}"][data-breed="${breed}"][data-bull="${bull}"]`
-    );
-
-    if (!stockEl) {
-        showError(this, "Stock not found");
-        validationState[key] = false;
-    } else {
-        const stock = parseInt(stockEl.value || 0);
-        if (qty > stock) {
-            showError(this, "Exceeds available stock");
-            validationState[key] = false;
-        } else {
-            clearError(this);
-            validationState[key] = true;
-        }
-    }
-
-    updateSubmitButton();
-});
-
 // ================= CONTAINER STOCK VALIDATION =================
-$(document).on('input change', '.container-qty', function () {
 
-    const $block = $(this).closest('.container_div_block');
-    const capacity = $block.find('.container-capacity').val();
-    const qty = parseInt(this.value || 0);
-
-    const key = 'container_' + $('.container_div_block').index($block);
-
-    const stockEl = document.querySelector(
-        `.stock-item[data-type="container"][data-capacity="${capacity}"]`
-    );
-
-    if (!stockEl) {
-        showError(this, "Stock not found");
-        validationState[key] = false;
-    } else {
-        const stock = parseInt(stockEl.value || 0);
-        if (qty > stock) {
-            showError(this, "Exceeds available stock");
-            validationState[key] = false;
-        } else {
-            clearError(this);
-            validationState[key] = true;
-        }
-    }
-
-    updateSubmitButton();
+$(document).on('change input', '.container_div_block .container-capacity, .container_div_block .container-qty', function () {
+        const $block = $(this).closest('.container_div_block');
+        validateContainerRow($block);   // STOCK CHECK
+        checkDuplicateContainers();     // DUPLICATE CHECK
 });
 
 // ================= DUPLICATE SEMEN COMBINATION CHECK =================
 
 $(document).on('change input', 
-    '.main_div_block .semen-select, .main_div_block .breed-type-select, .main_div_block .breed-select, .main_div_block input[name="bull_id[]"], .main_div_block input[name="semen_straws[]"]', 
+    '.main_div_block .semen-select, .main_div_block .breed-type-select, .main_div_block .breed-select, .main_div_block select[name="semen_type[]"], .main_div_block input[name="bull_id[]"], .main_div_block input[name="semen_straws[]"]', 
     function () {
+        const $block = $(this).closest('.main_div_block');
+        validateSemenRow($block);   // STOCK VALIDATION
         checkDuplicateSemenRows();
 });
 function checkDuplicateSemenRows() {
@@ -654,6 +620,7 @@ function checkDuplicateSemenRows() {
         const semen     = $block.find('.semen-select').val();
         const breedType = $block.find('.breed-type-select').val();
         const breed     = $block.find('.breed-select').val();
+        const semenType = $block.find('select[name="semen_type[]"]').val();
         const bull      = $block.find('input[name="bull_id[]"]').val();
         const qtyInput  = $block.find('input[name="semen_straws[]"]')[0];
 
@@ -664,7 +631,8 @@ function checkDuplicateSemenRows() {
             return;
         }
 
-        const comboKey = `${semen}|${breedType}|${breed}|${bull}`;
+        //const comboKey = `${semen}|${breedType}|${breed}|${bull}`;
+        const comboKey = `${semen}|${breedType}|${breed}|${semenType}|${bull}`;
 
         if (seen[comboKey]) {
             showDuplicateError(qtyInput, "Duplicate entry not allowed");
@@ -679,6 +647,48 @@ function checkDuplicateSemenRows() {
 
     updateSubmitButton();
 }
+
+function validateSemenRow($block) {
+
+    const semen     = $block.find('.semen-select').val();
+    const breedType = $block.find('.breed-type-select').val();
+    const breed     = $block.find('.breed-select').val();
+    const semenType = $block.find('select[name="semen_type[]"]').val();
+    const bull      = $block.find('input[name="bull_id[]"]').val();
+    const qtyInput  = $block.find('input[name="semen_straws[]"]')[0];
+    const qty       = parseInt(qtyInput?.value || 0);
+
+    const key = 'semen_' + $('.main_div_block').index($block);
+
+    console.log(semen, breedType, breed, semenType, bull, qty);
+
+    // wait until all identity fields selected
+    if (!semen || !breedType || !breed || !semenType || !bull) {
+        validationState[key] = false;
+        return;
+    }
+
+    const stockEl = document.querySelector(
+    `.stock-item[data-type="species_semen"][data-semen="${semen}"][data-breedtype="${breedType}"][data-breed="${breed}"][data-sementype="${semenType}"][data-bull="${bull}"]`
+    );
+
+    if (!stockEl) {
+        showError(qtyInput, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+        if (qty > stock) {
+            showError(qtyInput, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(qtyInput);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+}
+
 
 function showDuplicateError(input, msg) {
     let el = input.parentNode.querySelector('.duplicate-error');
@@ -730,6 +740,44 @@ function checkDuplicateContainers() {
 
     updateSubmitButton();
 }
+
+function validateContainerRow($block) {
+
+    const capacity = $block.find('.container-capacity').val();
+    const qtyInput = $block.find('.container-qty')[0];
+    const qty      = parseInt(qtyInput?.value || 0);
+
+    const key = 'container_' + $('.container_div_block').index($block);
+
+    if (!capacity) {
+        clearError(qtyInput);
+        validationState[key] = false;
+        updateSubmitButton();
+        return;
+    }
+
+    const stockEl = document.querySelector(
+        `.stock-item[data-type="container"][data-capacity="${capacity}"]`
+    );
+
+    if (!stockEl) {
+        showError(qtyInput, "Stock not found");
+        validationState[key] = false;
+    } else {
+        const stock = parseInt(stockEl.value || 0);
+
+        if (qty > stock) {
+            showError(qtyInput, "Exceeds available stock");
+            validationState[key] = false;
+        } else {
+            clearError(qtyInput);
+            validationState[key] = true;
+        }
+    }
+
+    updateSubmitButton();
+}
+
 
 function reindexContainerValidation() {
     const newState = {};
