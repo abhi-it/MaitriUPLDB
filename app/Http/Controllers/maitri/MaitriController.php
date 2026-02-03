@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Animalbreeding;
+use App\Models\Manganurodhdata;
+use App\Models\Zonestock;
 use DB;
 
 class MaitriController extends Controller{
@@ -179,6 +181,16 @@ class MaitriController extends Controller{
         ->whereMonth('created_at', '=', $month)
         ->get();
         return view('web.maitri.monthly-report',['data'=>$data]);
+    }
+
+    public function maitriDistributionStockDetail(){
+        $user = Auth::user();
+        $manganurodhUser = Manganurodhdata::where('maitri_mobile_no', $user->MobileNumber)->first();
+        $manganurdh_id = $manganurodhUser['id'];
+        $maitriStocks = Zonestock::where(['location' => 'maitri', 'maitri_id' => $manganurdh_id])->get();
+        // echo "<pre>"; print_r($maitriStocks->toArray()); exit;
+
+        return view('web.maitri.distribution-stock-detail', compact('maitriStocks'));
     }
 
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Traininglist;
 use App\Models\Cliniclocation;
+use App\Models\Manganurodhdata;
 use DB;
 
 class UsersController extends Controller{
@@ -31,6 +32,26 @@ class UsersController extends Controller{
         $phone = $request->input('phone');
         $userfarmer = FarmerUser::where('MobileNumber', $phone)->first();
         $userMaitri = User::where('MobileNumber', $phone)->first();
+        // look for user in manganurodh table if not found in users table. Need to rewrite this logic later, once get latest maitri data.
+        if (!$userMaitri) {
+            $mangaurodhUser = Manganurodhdata::where('maitri_mobile_no', $phone)->first();
+            if ($mangaurodhUser) {
+                // create a new user in users table
+                $userMaitri = new User();
+                $userMaitri->name = $mangaurodhUser->maitri_name;
+                $userMaitri->FirstName = $mangaurodhUser->maitri_name;
+                $userMaitri->MobileNumber = $mangaurodhUser->maitri_mobile_no;
+                $userMaitri->block = $mangaurodhUser->block;
+                $userMaitri->tehsil = $mangaurodhUser->tehsil;
+                $userMaitri->bharat_id = $mangaurodhUser->any_bharat_id;
+                $userMaitri->role_id = 3; // role_id 3 is for Maitri
+                $userMaitri->role = 'Maitri';
+                $userMaitri->user_type = 'Maitri';
+                $userMaitri->password = Hash::make('defaultpassword');
+                $userMaitri->save();
+            }
+        }
+
         if ($userfarmer) {
             $otp = rand(10000, 99999);
             $userfarmer->otp_login = $otp;

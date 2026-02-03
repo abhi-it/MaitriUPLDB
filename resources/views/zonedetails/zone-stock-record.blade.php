@@ -31,8 +31,9 @@
                 <td>
                     <?php if ($stock->item_type == 'species_semen') { ?>
                         <b>{{ $stock->item }} :</b> {{ $stock->species_semen }} <br>
-                        <b>Bread Type :</b> {{ $stock->breed_type }} <br>
-                        <b>Bread :</b> {{ $stock->breed }} <br>
+                        <b>Breed Type :</b> {{ $stock->breed_type }} <br>
+                        <b>Breed :</b> {{ $stock->breed }} <br>
+                        <b>Semen Type :</b> {{ $stock->semen_type }} <br>
                         <b>Bull ID:</b> {{ $stock->bull_id }}
                     <?php } else if ($stock->item_type == 'container') { ?>
                         {{ $stock->item }} - ({{ $stock->container_capacity }})

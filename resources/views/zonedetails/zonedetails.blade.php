@@ -30,8 +30,9 @@
                 <td>
                     <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
                         <b>{{ $stockAdmin['item'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>
-                        <b>Bread Type :</b> {{ $stockAdmin['breed_type'] }} <br>
-                        <b>Bread :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Breed Type :</b> {{ $stockAdmin['breed_type'] }} <br>
+                        <b>Breed :</b> {{ $stockAdmin['breed'] }} <br>
+                        <b>Semen Type :</b> {{ $stockAdmin['semen_type'] }} <br>
                         <b>Bull ID:</b> {{ $stockAdmin['bull_id'] }}
                     <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
                         {{ $stockAdmin['item'] }} - ({{ $stockAdmin['container_capacity'] }})

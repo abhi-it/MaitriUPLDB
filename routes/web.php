@@ -296,6 +296,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("updateServiceRequest", [App\Http\Controllers\maitri\MaitriController::class, 'updateServiceRequest'])->name('updateServiceRequest');
     Route::get("monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'monthlyProgressReport'])->name('monthly-report');
     Route::post("filtered-monthly-report", [App\Http\Controllers\maitri\MaitriController::class, 'filteredMonthlyReport'])->name('filtered-monthly-report');
+    Route::get("maitri-distribution-stock-detail", [App\Http\Controllers\maitri\MaitriController::class, 'maitriDistributionStockDetail'])->name('maitri-distribution-stock-detail');
 
 
     // Update Maitri GEO Location

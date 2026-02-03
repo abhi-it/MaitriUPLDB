@@ -581,6 +581,7 @@ class CheckRole
                 'changeLang',
                 'monthly-report',
                 'filtered-monthly-report',
+                'maitri-distribution-stock-detail',
                 'maitri-details',
                 'get-all-block',
                 'get-all-tehsil',

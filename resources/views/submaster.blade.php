@@ -1094,6 +1094,10 @@
                                     <a class="nav-link" href="{{ url('/monthly-report') }}">मासिक प्रगति रिपोर्ट
                                         (एमपीआर) </a>
                                 </li>
+
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('/maitri-distribution-stock-detail') }}">वितरण स्टॉक विवरण </a>
+                                </li>
                                 
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/maitri-details') }}">प्रोफ़ाइल अद्यतन</a>
