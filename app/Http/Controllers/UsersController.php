@@ -59,7 +59,7 @@ class UsersController extends Controller{
             if($otp){
                 $this->sendMobileMessage($number, $otp);
                 $userfarmer->save();
-                return response()->json(['otp' => $otp, 'status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
+                return response()->json(['status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
             }
         } else if($userMaitri){
             $otp = rand(10000, 99999);
@@ -68,7 +68,7 @@ class UsersController extends Controller{
             if($otp){
                 $this->sendMobileMessage($number, $otp);
                 $userMaitri->save();
-                return response()->json(['otp' => $otp, 'status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
+                return response()->json(['status' => 'success', 'message' => 'OTP sent successfully to ' . $phone], 200);
             }
         }else {
             return response()->json(['status' => 'error', 'message' => 'मोबाइल नंबर ग़लत है'], 200);
