@@ -522,12 +522,12 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                                 <img src="{{ $post->image != '' ? asset('upload_documents/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
-                                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम, आई.ए.एस' }}"
+                                            <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस"
                                                 data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
-                                            <span data-hi="प्रमुख सचिव / पशुधन"
-                                                data-en="Principal Secretary/ Livestock"></span>
+                                            <span data-hi="अपर मुख्य सचिव,पशुधन /अध्यक्ष उ०प्र० पशुधन विकास परिषद्"
+                                                data-en="Additional Chief Secretary, A.H. & Chairman, U.P.L.D.B."></span>
                                         </small></p>
                                 </div>
                             </div>
@@ -643,12 +643,12 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                     <div class="col-xl-3 col-lg-6">
                         <div class="author-section">
                             <img class="w-100" src="{{ $post->image != '' ? asset('upload_documents/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
-                            <span data-hi="{{ $post->hindi_title ?? 'श्री मुकेश कुमार मेश्राम, आई.ए.एस' }}" data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
+                            <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस" data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-6">
                         <h3 class="fw-bold mb-3 logo-title">
-                            <span data-hi="प्रमुख सचिव / पशुधन" data-en="Principal Secretary/ Livestock"></span>
+                            <span data-hi="अपर मुख्य सचिव,पशुधन /अध्यक्ष उ०प्र० पशुधन विकास परिषद्" data-en="Additional Chief Secretary, A.H. & Chairman, U.P.L.D.B."></span>
                         </h3>
                         <p><i>
                                 <span
