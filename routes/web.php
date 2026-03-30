@@ -459,12 +459,23 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("create-event-news", [App\Http\Controllers\AdminInventoryController::class, 'createOrEdit'])->name('create-event-news');
     Route::get("event-news", [App\Http\Controllers\AdminInventoryController::class, 'eventAndNews'])->name('event-news');
     Route::get("check-zone-user", [App\Http\Controllers\AdminInventoryController::class, 'checkZoneUser'])->name('check-zone-user');
-    Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
     Route::get("daily-dashboard", [App\Http\Controllers\AdminInventoryController::class, 'adminDailyDashboard'])->name('daily-dashboard');
     Route::post("save-daily-dashboard", [App\Http\Controllers\AdminInventoryController::class, 'saveDaliDashboard'])->name('save-daily-dashboard');
     // Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
+    Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
     Route::get("admin-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'adminStockRecord'])->name('admin-inventory-record');
     Route::post("admin-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'adminStockDataSave'])->name('admin-stock-save-data');
+    Route::get("distributed-form", [App\Http\Controllers\InventoryController::class, 'distributedForm'])->name('distributed-form');
+    Route::post("saveDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDistributedFormData'])->name('saveDistributedFormData');
+    Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
+    
+    Route::get("dfs-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockForm'])->name('dfs-stock-form');
+    Route::get("dfs-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockRecord'])->name('dfs-inventory-record');
+    Route::post("dfs-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockDataSave'])->name('dfs-stock-save-data');
+    Route::get("dfs-distributed-form", [App\Http\Controllers\InventoryController::class, 'dfsDistributedForm'])->name('dfs-distributed-form');
+    Route::post("saveDfsDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDfsDistributedFormData'])->name('saveDfsDistributedFormData');
+    Route::get("dfs-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'dfsDistributedRecord'])->name('dfs-distributed-record');
+    
     
     
 
@@ -484,8 +495,6 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     
 
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
-    Route::get("distributed-form", [App\Http\Controllers\InventoryController::class, 'distributedForm'])->name('distributed-form');
-    Route::post("saveDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDistributedFormData'])->name('saveDistributedFormData');
 
     Route::get("check-stock-limit", [App\Http\Controllers\InventoryController::class, 'checkStockLimit'])->name('check-stock-limit');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
@@ -519,6 +528,10 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("create-zone", [CreateZoneController::class, 'index'])->name('create-zone');
     Route::get("get-zone-district", [ZoneStockDetailsController::class, 'getZoneDistrict'])->name('get-zone-district');
     Route::get("zone-stock-details", [ZoneStockDetailsController::class, 'zoneStockDetails'])->name('zone-stock-details');
+
+    Route::get("zone-simen-stock-form", [ZoneStockDetailsController::class, 'zoneSimenStockForm'])->name('zone-simen-stock-form');
+    Route::post("zone-simen-stock-save-data", [ZoneStockDetailsController::class, 'zoneSimenStockSaveData'])->name('zone-simen-stock-save-data');
+
     Route::get("division-stock-form", [ZoneStockDetailsController::class, 'zoneDivisionStockForm'])->name('division-stock-form');
     Route::get("show-zone-stock-record", [ZoneStockDetailsController::class, 'zoneShowStockRecord'])->name('show-zone-stock-record');
     Route::post("save-division-stock-data", [ZoneStockDetailsController::class, 'saveZoneDivisionStockForm'])->name('save-division-stock-data');
@@ -535,8 +548,6 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
 
     Route::get("get-blocks", [App\Http\Controllers\DeoUserController::class, 'getBlocks'])->name('get-blocks');
-    Route::get("admin-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'adminStockForm'])->name('admin-stock-form');
-
 
 
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/

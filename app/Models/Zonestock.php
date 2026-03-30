@@ -14,7 +14,7 @@ class Zonestock extends Model
         'ai_center_id',
         'maitri_id',
         'location',
-        'dfs_station',
+        'distributor',
         'item_type',
         'item',
         'species_semen',

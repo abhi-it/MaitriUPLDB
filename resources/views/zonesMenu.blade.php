@@ -928,10 +928,62 @@ header .navbar li.nav-item.active a.nav-link {
               <ul class="navbar-nav justify-content-center flex-grow-1">
                 @if (Route::has('login'))
                     @auth
+                        @if (auth()->user()->user_type == 'InventoryAdmin')
+                            <li class="nav-item  {{ request()->is('admin-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-stock-form') }}">
+                                    <span data-hi="इन्वेंटरी स्टॉक फॉर्म" data-en="Inventory Stock Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('admin-inventory-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-inventory-record') }}">
+                                    <span data-hi="इन्वेंटरी रिकॉर्ड" data-en="Inventory Record"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('distributed-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('distributed-form') }}">
+                                    <span data-hi="Distributed Form" data-en="Distributed Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('admin-distributed-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('admin-distributed-record') }}">
+                                    <span data-hi="Distributed Record" data-en="Distributed Record"></span></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('change-password') }}">
+                                    <span data-hi="Change Password" data-en="Change Password"></span> 
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->user_type == 'DFS')
+                            <li class="nav-item  {{ request()->is('dfs-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('dfs-stock-form') }}">
+                                    <span data-hi="इन्वेंटरी स्टॉक फॉर्म" data-en="Inventory Stock Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('dfs-inventory-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('dfs-inventory-record') }}">
+                                    <span data-hi="इन्वेंटरी रिकॉर्ड" data-en="Inventory Record"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('dfs-distributed-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('dfs-distributed-form') }}">
+                                    <span data-hi="Distributed Form" data-en="Distributed Form"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('dfs-distributed-record') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('dfs-distributed-record') }}">
+                                    <span data-hi="Distributed Record" data-en="Distributed Record"></span></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('change-password') }}">
+                                    <span data-hi="Change Password" data-en="Change Password"></span> 
+                                </a>
+                            </li>
+                        @endif
+
                         @if (auth()->user()->user_type == 'Zone')
                             <li class="nav-item  {{ request()->is('zone-stock-details') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('zone-stock-details') }}">
                                     <span data-hi="जोन स्टॉक विवरण" data-en="Zone Stock Details"></span></a>
+                            </li>
+                            <li class="nav-item  {{ request()->is('zone-simen-stock-form') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('zone-simen-stock-form') }}">
+                                    <span data-hi="Simen Stock Form" data-en="Simen Stock Form"></span></a>
                             </li>
                             <li class="nav-item  {{ request()->is('division-stock-form') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('division-stock-form') }}">

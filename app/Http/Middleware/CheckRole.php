@@ -56,14 +56,20 @@ class CheckRole
     {
         return [
             'DFS' => [
+                'dfs-stock-form',
+                'dfs-inventory-record',
+                'dfs-stock-save-data',
+                'dfs-distributed-form',
+                'saveDfsDistributedFormData',
+                'dfs-distributed-record'
+                /*
                 'dashboard',
                 // 'admin-stock-form',
-                'admin-inventory-record',
-                'admin-stock-save-data',
+                'dfs-inventory-record',
+                'dfs-stock-save-data',
                 'inventory',
                 'saveInentorrData',
-                'admin-distributed-record',
-                
+                'dfs-distributed-record',
                 'check-zone-user',
                 'changePasswordIndex',
                 'changePassword',
@@ -73,7 +79,7 @@ class CheckRole
                 'avedan',
                 'totalAvedan',
                 'approvedAvedan',
-                'rejectedAvedan',
+                'rejectedAvedan', */
             ],
             'broadcaster' => [
                 'host',
@@ -149,7 +155,6 @@ class CheckRole
             'zone' => [
                 'change-password',
                 'changePasswordPost',
-
                 'check-zone-user',
                 'get-zone-district',
                 'check-stock-limit',
@@ -157,7 +162,8 @@ class CheckRole
                 'save-division-stock-data',
                 'division-stock-form',
                 'zone-stock-details',
-
+                'zone-simen-stock-form',
+                'zone-simen-stock-save-data',
                 'zone-dashboard',
                 'zone-inventory',
                 'division-store-data',
@@ -612,6 +618,16 @@ class CheckRole
                 'addUpdateAnimalDetails',
                 'farmer-details',
             ],
+            'InventoryAdmin' => [
+                'admin-stock-form',
+                'admin-inventory-record',
+                'distributed-form',
+                'admin-distributed-record',
+                'change-password',
+                'changePassword',
+                'admin-stock-save-data',
+                'saveDistributedFormData'
+            ]
 
             /*
             'Superadmin' => [

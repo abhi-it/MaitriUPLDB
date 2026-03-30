@@ -31,7 +31,7 @@ class InventoryController extends Controller
 
         // Get raw stock
         $adminStocks = Zonestock::where('location', 'head_office')->get();
-        $zoneStocks = Zonestock::where('location', 'zone')->get();
+        $zoneStocks = Zonestock::where(['user_id' => $user_id, 'location' => 'zone'])->get();
         // Aggregated stocks
         $InventoryDistributionService = new InventoryDistributionService();
         $finalAdminStocks = $InventoryDistributionService->aggregateStocks($adminStocks);
@@ -46,9 +46,31 @@ class InventoryController extends Controller
         return view('inventory.zone-stock-form', compact('zones', 'user_id', 'finalStocks'));
     }
 
+    public function dfsDistributedForm()
+    {
+        $user_id = Auth::user()->id;
+        $zones   = Zone::all();
+
+        // Get raw stock
+        $adminStocks = Zonestock::where(['user_id' => $user_id, 'location' => 'dfs'])->get();
+        $zoneStocks = Zonestock::where(['user_id' => $user_id, 'location' => 'zone'])->get();
+        // Aggregated stocks
+        $InventoryDistributionService = new InventoryDistributionService();
+        $finalAdminStocks = $InventoryDistributionService->aggregateStocks($adminStocks);
+        $finalZoneStocks  = $InventoryDistributionService->aggregateStocks($zoneStocks);
+
+        //Remaining stock after zone distribution
+        $finalStocks = $InventoryDistributionService->subtractStocks($finalAdminStocks, $finalZoneStocks);
+
+        // Debug if needed
+        //echo "<pre>"; print_r($finalStocks->toArray()); exit;
+
+        return view('inventory.dfs-distributed-form', compact('zones', 'user_id', 'finalStocks'));
+    }
+
     public function saveDistributedFormData(Request $request)
     {
-        //echo '<pre>';print_r($request->all()); exit;
+        //echo '<pre>'; print_r($request->all()); exit;
         $user_id = Auth::user()->id;
 
         $liquid_nitrogen_qty    = $request->liquid_nitrogen;
@@ -75,11 +97,13 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
                 'item_type'    => 'liquid_nitrogen',
                 'item'         => 'Liquid Nitrogen',
                 'quantity'     => $liquid_nitrogen_qty,
             ];
+            //echo '<pre>'; print_r($inventoryData); exit;
             $inventory  = new Zonestock($inventoryData);
             $inventory->save();
         }
@@ -90,6 +114,7 @@ class InventoryController extends Controller
                     'user_id'     => $user_id,
                     'zone_id'     => $zone_id,
                     'location'    => 'zone',
+                    'distributor' => 'Head Office',
                     'supply_date' => $supply_date,
 
                     'item_type'              => 'species_semen',
@@ -113,6 +138,7 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
 
                 'item_type'   => 'banner',
@@ -130,6 +156,7 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
 
                 'item_type'   => 'dangler_chart',
@@ -146,6 +173,7 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
 
                 'item_type'   => 'standee',
@@ -162,6 +190,7 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
 
                 'item_type'   => 'pamphlet',
@@ -178,6 +207,7 @@ class InventoryController extends Controller
                 'user_id'     => $user_id,
                 'zone_id'     => $zone_id,
                 'location'    => 'zone',
+                'distributor' => 'Head Office',
                 'supply_date' => $supply_date,
 
                 'item_type'   => 'ai_kit',
@@ -195,6 +225,7 @@ class InventoryController extends Controller
                     'user_id'     => $user_id,
                     'zone_id'     => $zone_id,
                     'location'    => 'zone',
+                    'distributor' => 'Head Office',
                     'supply_date' => $supply_date,
 
                     'item_type'           => 'container',
@@ -202,6 +233,52 @@ class InventoryController extends Controller
                     'container_capacity'  => $capacity,
                     'quantity'            => $container_qty[$key],
                     'scheme'              => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+
+        return redirect()->back()->with('success','Stock data distributed successfully!');
+
+    }
+
+    
+    public function saveDfsDistributedFormData(Request $request)
+    {
+        //echo '<pre>'; print_r($request->all()); exit;
+        $user = Auth::user();
+
+        $semens                 = $request->semen; //[]
+        $breedType              = $request->breedType; //[]
+        $breed                  = $request->breed; //[]
+        $semen_type             = $request->semen_type; //[]
+        $bull_id                = $request->bull_id; //[]
+        $semen_straws           = $request->semen_straws; //[] quantity
+        
+        $scheme                 = $request->scheme;
+        $zone_id                = $request->select_zone;
+        $supply_date            = $request->supply_date;
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'     => $user->id,
+                    'zone_id'     => $zone_id,
+                    'location'    => 'zone',
+                    'distributor' => $user->name,
+                    'supply_date' => $supply_date,
+
+                    'item_type'              => 'species_semen',
+                    'item'                   => 'Species Semen',
+                    'species_semen'          => $semen,
+                    'breed_type'             => $breedType[$key],
+                    'breed'                  => $breed[$key],
+                    'semen_type'             => $semen_type[$key],
+                    'bull_id'                => $bull_id[$key],
+                    'quantity'               => $semen_straws[$key],
+                    'scheme'                 => $scheme,
                 ];
         
                 $inventory  = new Zonestock($inventoryData);

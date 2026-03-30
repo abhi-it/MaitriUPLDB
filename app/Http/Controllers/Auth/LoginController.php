@@ -84,7 +84,9 @@ class LoginController extends Controller
             }else if(Auth::user()->role_id==11){
                 return redirect("broadcaster-dashboard");
             }else if(Auth::user()->role_id==12){
-                return redirect("dashboard");
+                return redirect("dfs-stock-form");
+            }else if(Auth::user()->role_id==13){
+                return redirect("admin-stock-form");
             }else{
                 return redirect("dashboard");
             }

@@ -55,20 +55,7 @@
                             data-bull="{{ $stockAdmin['bull_id'] }}"
                             value="{{$stockAdmin['remaining_qty']}}">
 
-                    <?php } else if ($stockAdmin['item_type'] == 'container') { ?>
-                        {{ $stockAdmin['item_name'] }} - ({{ $stockAdmin['container_capacity'] }})
-                        <input type="hidden" 
-                            class="stock-item"
-                            data-type="container"
-                            data-capacity="{{ $stockAdmin['container_capacity'] }}"
-                            value="{{$stockAdmin['remaining_qty']}}">
-                    <?php } else { ?>
-                        {{ $stockAdmin['item_name'] }}
-                        <input type="hidden"
-                            class="stock-item"
-                            data-type="{{ $stockAdmin['item_type'] }}"
-                            value="{{ $stockAdmin['remaining_qty'] }}">
-                    <?php } ?>
+                    <?php }  ?>
                 </td>
 
                 <td>{{ $stockAdmin['remaining_qty'] }}</td>
@@ -83,7 +70,7 @@
     </h3>
 
     <input type="hidden" name="getUserId" id="getUser_id" value="{{ $user_id }}" />
-    <form method="post" action="{{ route('saveDistributedFormData') }}" class="form-comman">
+    <form method="post" action="{{ route('saveDfsDistributedFormData') }}" class="form-comman">
         @csrf
         <hr>
         <div class="row">
@@ -108,17 +95,6 @@
                     class="form-control" autofocus>
             </div>
 
-            <div class="form-group col-md-12">
-                <label for="inputEmail4">
-                    <span data-hi="तरल नाइट्रोजन (लीटर में)" data-en="Liquid Nitrogen (in Litre)"></span>
-                </label>
-                <small id="liquid_nitrogen_msg" style="color:red"></small>
-                <input name="liquid_nitrogen" id="dist_liquid_nitrogen" data-filed_type="demand_section" type="text"
-                    class="form-control" data-placeholder-hi="तरल नाइट्रोजन (लीटर में)"
-                    data-placeholder-en="Liquid Nitrogen (in Litre)" onkeyup="validateSimpleStock(this, 'liquid_nitrogen')">
-            </div>
-            
-            <?php /*
             <!-- Semen Functionlity with add more -->
             <div class="form-group col-md-12 pt-4 main_div_block" style="background: #eee;">
                 <div class="row"> 
@@ -172,87 +148,8 @@
             </div>
 
             <!-- add more here -->
-
             <div class="form-group col-md-12 text-center">
                 <span class="add btn btn-primary btn-sm demand-request-add-btn">Add More</span>
-            </div>
-            */ ?>
-
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="बैनर(संख्या में)" data-en="Banner(In Numbers)"></span>
-                </label>
-                <input name="banner" id="dist_banner" type="number" class="form-control" data-placeholder-hi="बैनर"
-                    data-placeholder-en="Banner" onkeyup="validateSimpleStock(this, 'banner')">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="डैंगलर चार्ट (संख्या में)" data-en="Dangler Chart(In Numbers)"></span>
-                </label>
-                <input name="dangler" id="dist_dangler" type="number" class="form-control"
-                    data-placeholder-hi="डैंगलर चार्ट (संख्या में)" data-placeholder-en="Dangler Chart(In Numbers)"
-                    onkeyup="validateSimpleStock(this, 'dangler_chart')">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="स्टैंडी (संख्या में)" data-en="Standee(In Numbers)"></span>
-                </label>
-                <input name="standee" id="dist_standee" type="number" class="form-control"
-                    data-placeholder-hi="स्टैंडी (संख्या में)" data-placeholder-en="Standee(In Numbers)" onkeyup="validateSimpleStock(this, 'standee')">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="पैम्फलेट (संख्या में)" data-en="Pamphlet(In Numbers)"></span>
-                </label>
-                <small id="pamphlet_msg" style="color:red"></small>
-                <input name="pamphlet" id="dist_pamphlet" type="number" class="form-control"
-                    data-placeholder-hi="पैम्फलेट (संख्या में)" data-placeholder-en="Pamphlet(In Numbers)" onkeyup="validateSimpleStock(this, 'pamphlet')">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">
-                    <span data-hi="एआई किट (संख्या में)" data-en="AI Kit(In Numbers) "></span>
-                </label>
-                <small id="ai_kit_msg" style="color:red"></small>
-                <input name="ai_kit" id="dist_ai_kit" type="number" class="form-control"
-                    data-placeholder-hi="एआई किट (संख्या में)" data-placeholder-en="AI Kit(In Numbers) " onkeyup="validateSimpleStock(this, 'ai_kit')">
-            </div>
-            
-            <div class="form-group col-md-12 pt-4 container_div_block" style="background: #eee;">
-                <div class="row">
-                    
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">
-                            <span data-hi="कंटेनर क्षमता" data-en="Container Capacity"></span>
-                        </label>
-                        <select name="container_capacity[]" class="form-control container-capacity" autofocus>
-                            <option value="" data-hi="एक का चयन करें" data-en="select one"> </option>
-                            <option value="BA-0.5" data-en="BA-0.5" data-hi="बीए-0.5"></option>
-                            <option value="BA-1.5" data-en="BA-1.5" data-hi="बीए-1.5"></option>
-                            <option value="BA-3" data-en="BA-3" data-hi="बीए-3"></option>
-
-                            <option value="BA-20" data-en="BA-20" data-hi="बीए-20"></option>
-                            <option value="BA-35" data-en="BA-35" data-hi="बीए-35"></option>
-                            <option value="J-12" data-en="J-12" data-hi="जे-12"></option>
-                            <option value="J-47" data-en="J-47" data-hi="जे-47"></option>
-                            <option value="TA-55" data-en="TA-55" data-hi="टीए-55"></option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">
-                            <span data-hi="कंटेनर(संख्या में)" data-en="Container(In Numbers)"></span>
-                        </label>
-                        <input name="container_qty[]" type="number" class="form-control container-qty"
-                            data-placeholder-hi="कंटेनर(संख्या में)" data-placeholder-en="Container(In Numbers)" autofocus>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- add more container here -->
-
-            <div class="form-group col-md-12 text-center">
-                <span class="add btn btn-primary btn-sm container-demand-add-btn">Add More</span>
             </div>
         </div>
         <!------Summary Page End---------------->

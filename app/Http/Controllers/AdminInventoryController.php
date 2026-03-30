@@ -129,6 +129,16 @@ class AdminInventoryController extends Controller
         return view('adminstockform.admin-stock-form');
     }
 
+    public function dfsStockForm(){
+        return view('adminstockform.dfs-stock-form');
+    }
+
+    public function dfsStockRecord(Request $request){
+        $user_id = Auth::user()->id;
+        $adminInventory = Zonestock::where(['user_id' =>$user_id,'location' => 'dfs'])->get();
+        return view('adminstockform.dfs-stock-record', compact('adminInventory'));
+    }
+
     public function inactiveMaitriAicenterData(Request $request){
         $districts = Districts::all();
         $tehsilData =[];
@@ -404,9 +414,7 @@ class AdminInventoryController extends Controller
     public function adminStockRecord(Request $request){
         $user_id = Auth::user()->id;
         $adminInventory = Zonestock::where(['location' => 'head_office'])->get();
-
         //echo "<pre>";print_r($adminInventory->toArray());exit;
-        
         return view('adminstockform.admin-stock-record', compact('adminInventory'));
     }
 
@@ -492,31 +500,6 @@ class AdminInventoryController extends Controller
         
     }
 
-    // public function adminDkistributedRecord(){
-    //     $user_id = Auth::user()->id;
-    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-
-    //     $zoneStock = [];
-    //     foreach($inventoryIds as $inventory){
-    //         $district_User_id = $inventory['user_id'];
-    //         $inventory_id = $inventory['inventory_id'];
-    //         $results = DB::table('inventory_map_user')
-    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-    //                     ->join('users', 'users.id', '=', 'inventory_map_user.user_id')
-    //                     ->join('zones', 'zones.id', '=', 'inventory_map_user.zone_id')
-    //                     ->select('zone_stock_details.*', 'deo_users.*', 'users.*', 'zones.*')
-    //                     ->where(['inventory_map_user.user_id' => $district_User_id, 'inventory_map_user.assign_user_id' => $user_id])
-    //                     ->get();
-
-    //         $zoneStock[] = $results;
-    //     }
-
-        
-
-    //     return view('adminstockform.admin-distributed-record', compact('zoneStock'));
-    // }
-
     public function adminDkistributedRecord(Request $request){
         $user = Auth::user();
         $zones = Zone::all();
@@ -526,6 +509,16 @@ class AdminInventoryController extends Controller
         //echo '<pre>';print_r($adminDistributedRecord);exit;
         
         return view('adminstockform.admin-distributed-record', compact('adminDistributedRecord','zones'));
+    }
+    
+    public function dfsDistributedRecord(Request $request){
+        $user = Auth::user();
+        $zones = Zone::all();
+        
+        $adminDistributedRecord = Zonestock::with('zone')->where(['user_id' => $user->id,'location' => 'zone'])->get();
+        //echo '<pre>';print_r($adminDistributedRecord);exit;
+        
+        return view('adminstockform.dfs-distributed-record', compact('adminDistributedRecord','zones'));
     }
 
     public function adminStockDataSave(Request $request){
@@ -553,7 +546,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'liquid_nitrogen',
                 'item'        => 'Liquid Nitrogen',
                 'quantity'    => $liquid_nitrogen_qty,
@@ -568,7 +560,6 @@ class AdminInventoryController extends Controller
                 $inventoryData = [
                     'user_id'    => $user_id,
                     'location' => 'head_office',
-                    'dfs_station'            => $request->dfs_station,
                     'item_type'              => 'species_semen',
                     'item'                   => 'Species Semen',
                     'species_semen'          => $semen,
@@ -589,7 +580,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'banner',
                 'item'        => 'Banner',
                 'quantity'    => $banner_qty,
@@ -604,7 +594,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'dangler_chart',
                 'item'        => 'Dangler Chart',
                 'quantity'    => $dangler_qty,
@@ -618,7 +607,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'standee',
                 'item'        => 'Standee',
                 'quantity'    => $standee_qty,
@@ -632,7 +620,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'pamphlet',
                 'item'        => 'Pamphlet',
                 'quantity'    => $pamphlet_qty,
@@ -646,7 +633,6 @@ class AdminInventoryController extends Controller
             $inventoryData = [
                 'user_id'    => $user_id,
                 'location' => 'head_office',
-                'dfs_station' => $request->dfs_station,
                 'item_type'   => 'ai_kit',
                 'item'        => 'AI Kit',
                 'quantity'    => $ai_kit_qty,
@@ -660,13 +646,46 @@ class AdminInventoryController extends Controller
             foreach($container_capacity as $key => $capacity){
                 $inventoryData = [
                     'user_id'             => $user_id,
-                    'location'       => 'head_office',
-                    'dfs_station'         => $request->dfs_station,
+                    'location'            => 'head_office',
                     'item_type'           => 'container',
                     'item'                => 'Container',
                     'container_capacity'  => $capacity,
                     'quantity'            => $container_qty[$key],
                     'scheme'              => $scheme,
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+        
+        return redirect()->back()->with('success','Stock data submitted successfully!');
+    }
+
+    public function dfsStockDataSave(Request $request){
+        $user = Auth::user();
+
+        $semens       = $request->semen; //[]
+        $breedType    = $request->breedType; //[]
+        $breed        = $request->breed; //[]
+        $semen_type   = $request->semen_type; //[]
+        $bull_id      = $request->bull_id; //[]
+        $semen_straws = $request->semen_straws; //[] quantity
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'        => $user->id,
+                    'location'       => 'dfs',
+                    //'dfs_station'    => $user->name,
+                    'item_type'      => 'species_semen',
+                    'item'           => 'Species Semen',
+                    'species_semen'  => $semen,
+                    'breed_type'     => $breedType[$key],
+                    'breed'          => $breed[$key],
+                    'semen_type'     => $semen_type[$key],
+                    'bull_id'        => $bull_id[$key],
+                    'quantity'       => $semen_straws[$key],
                 ];
         
                 $inventory  = new Zonestock($inventoryData);

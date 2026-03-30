@@ -16,6 +16,7 @@
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
+                <th><span data-hi="Distributor" data-en="Distributor"></span></th>
                 <th><span data-hi="Item" data-en="Item"></span></th>
                 <th><span data-hi="Quantity" data-en="Quantity"></span></th>
                 <th><span data-hi="Supply Date" data-en="Supply Date"></span></th>
@@ -27,6 +28,7 @@
             @foreach ($zoneStocks as  $stockAdmin)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $stockAdmin->distributor }}</td>
                 <td>
                     <?php if ($stockAdmin['item_type'] == 'species_semen') { ?>
                         <b>{{ $stockAdmin['item'] }} :</b> {{ $stockAdmin['species_semen'] }} <br>

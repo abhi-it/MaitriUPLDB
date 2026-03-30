@@ -1,4 +1,4 @@
-@extends('master')
+@extends('zonesMenu')
 @section('content')
 
 <style>
@@ -16,7 +16,6 @@
         <thead>
             <tr>
                 <th><span data-hi="S.No" data-en="S.No"></span></th>
-                <th><span data-hi="DFS Station" data-en="DFS Station"></span></th>
                 <th><span data-hi="Item" data-en="Item"></span></th>
                 <th><span data-hi="Quantity" data-en="Quantity"></span></th>
                 <th><span data-hi="Scheme" data-en="Scheme"></span></th>
@@ -28,7 +27,6 @@
             @foreach ($adminInventory as $key => $stockAdmin)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $stockAdmin->dfs_station }}</td>
                 <td>
                     <?php if ($stockAdmin->item_type == 'species_semen') { ?>
                         <b>{{ $stockAdmin->item }} :</b> {{ $stockAdmin->species_semen }} <br>
@@ -135,9 +133,6 @@ $(document).ready(function() {
         buttons: ['csv', 'excel'],
         columns: [{
                 title: "S.No"
-            },
-            {
-                title: "DFS Station"
             },
             {
                 title: "Item"

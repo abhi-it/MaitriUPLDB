@@ -1496,6 +1496,7 @@
                             <!-- Admin Stock Form Menu End -->
                             @if(auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director' ||
                             auth()->user()->user_type == 'DFS')
+                            <?php /*
                             <li
                                 class="nav-item dropdown {{ (request()->is('admin-stock-form') || request()->is('admin-inventory-record')) ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -1528,7 +1529,7 @@
                                         <span data-hi="एडमिन इन्वेंटरी रिकॉर्ड" data-en="Distributed Record"></span>
                                     </a>
                                 </div>
-                            </li>
+                            </li> */ ?>
                             <!-- Admin Stock Form Menu Start -->
                             @endif
 

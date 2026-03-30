@@ -80,44 +80,6 @@ class ZoneStockDetailsController extends Controller
         return response()->json(['district' => $district]);
     }
 
-
-    // public function zoneShowStockRecord(){
-    //     $user_id = Auth::user()->id;
-    //     $zone_id = Auth::user()->zone_id;
-    //     $divisionIds = Divisions::where('zone_id', $zone_id)->pluck('id');
-    //     $districts = Districts::whereIn('division_id', $divisionIds)->get();
-        
-    //     $inventoryIds = InventoryMap::where('assign_user_id', $user_id)->get();
-    //     $zoneStock = [];
-    //     foreach($inventoryIds as $inventory){
-    //         $district_User_id = $inventory['user_id'];
-    //         $inventory_id = $inventory['inventory_id'];
-
-
-    //         $results = DB::table('inventory_map_user')
-    //                     ->join('zone_stock_details', 'inventory_map_user.inventory_id', '=', 'zone_stock_details.id')
-    //                     ->join('deo_users', 'deo_users.id', '=', 'inventory_map_user.deo_id')
-    //                     ->select('zone_stock_details.*', 'deo_users.*')
-    //                     ->where(['inventory_map_user.assign_user_id' => $user_id])
-    //                     ->get();
-
-    //         foreach($results as $result){
-    //             $district_id = $result->district_id;
-    //             $user_id = $result->user_id;
-    //             $districtData = Districts::where('id', $district_id)->first();
-    //             $userData = User::where('id', $user_id)->first();
-    //             if ($districtData) {
-    //                 $result->user_name = $userData['FirstName'];
-    //                 $result->division_name_eng = $districtData['name_eng'];
-    //                 $result->division_name_hindi = $districtData['name_hindi'];
-    //                 $zoneStock[] = $result;
-    //             }
-    //         }
-    //     }
-
-    //     return view('zonedetails.zone-stock-record', compact('zoneStock', 'districts'));
-    // }
-
     public function zoneShowStockRecord(Request $request){
         $user = Auth::user();
         $zone_id = $user['zone_id'];
@@ -295,6 +257,49 @@ class ZoneStockDetailsController extends Controller
 
         return redirect()->back()->with('success','Stock data submitted successfully!');
 
+    }
+
+
+    
+    public function zoneSimenStockForm(){
+        //echo '<pre>';print_r($zoneDistributedRecord);exit;
+        return view('zonedetails.zone-simen-stock-form');
+    }
+
+    public function zoneSimenStockSaveData(Request $request){
+        $user = Auth::user();
+
+        $semens       = $request->semen; //[]
+        $breedType    = $request->breedType; //[]
+        $breed        = $request->breed; //[]
+        $semen_type   = $request->semen_type; //[]
+        $bull_id      = $request->bull_id; //[]
+        $semen_straws = $request->semen_straws; //[] quantity
+
+        if($semens){
+            foreach($semens as $key => $semen){
+                $inventoryData = [
+                    'user_id'        => $user->id,
+                    'location'       => 'zone',
+                    'zone_id'        => $user->zone_id,
+                    'distributor'    => $request->distributor,
+                    'item_type'      => 'species_semen',
+                    'item'           => 'Species Semen',
+                    'species_semen'  => $semen,
+                    'breed_type'     => $breedType[$key],
+                    'breed'          => $breed[$key],
+                    'semen_type'     => $semen_type[$key],
+                    'bull_id'        => $bull_id[$key],
+                    'quantity'       => $semen_straws[$key],
+                    'supply_date'    => date('Y-m-d')
+                ];
+        
+                $inventory  = new Zonestock($inventoryData);
+                $inventory->save();
+            }
+        }
+        
+        return redirect()->back()->with('success','Stock data submitted successfully!');
     }
 
 
