@@ -618,7 +618,7 @@
                             </tr>
 
                             <tr>
-                                <td> <span data-hi="इंटरमीडिएट (विज्ञान वर्ग)" data-en="Intermediate(Science Stream)"> </span> <span class="text-danger">*</span>   </td>
+                                <td> <span data-hi="इंटरमीडिएट (जीव विज्ञान)" data-en="Intermediate(Biology)"> </span> <span class="text-danger">*</span>   </td>
                                 <td>
                                 <input type="text" class="form-control"
                             name="inter_board_name" id="inter_board_name" placeholder="बोर्ड का नाम"
