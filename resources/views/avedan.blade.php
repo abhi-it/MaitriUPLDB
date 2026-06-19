@@ -574,6 +574,15 @@
                             2 MB)</small>
                     </div>
                 </h3>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="checkbox" name="edu_declaration" id="edu_declaration" value="1" {{ $result->edu_declaration == 1 ? 'checked' : '' }}> <span data-hi="मैं एतद्द्वारा घोषणा करता/करती हूँ कि मैंने जीव विज्ञान (Biology) विषय के साथ इंटरमीडिएट (12वीं) परीक्षा उत्तीर्ण की है।" data-en="I hereby declare that I have successfully passed the Intermediate (12th) examination with Biology as a subject."> </span> <span class="text-danger">*</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <div class="">
                     <table class="table  exam-data">
                         <thead>
@@ -618,7 +627,7 @@
                             </tr>
 
                             <tr>
-                                <td> <span data-hi="इंटरमीडिएट (जीव विज्ञान)" data-en="Intermediate(Biology)"> </span> <span class="text-danger">*</span>   </td>
+                                <td> <span data-hi="इंटरमीडिएट (विज्ञान वर्ग)" data-en="Intermediate(Science Stream)"> </span> <span class="text-danger">*</span>   </td>
                                 <td>
                                 <input type="text" class="form-control"
                             name="inter_board_name" id="inter_board_name" placeholder="बोर्ड का नाम"
@@ -1956,6 +1965,26 @@
 
             <?php } ?>
 
+            function toggleEduFields() {
+                var checked = $('#edu_declaration').is(':checked');
+                $('.exam-data input, .exam-data select, .exam-data textarea').each(function() {
+                    if ($(this).attr('readonly')) return;
+                    $(this).prop('disabled', !checked);
+                });
+                $('.exam-data').css('opacity', checked ? '1' : '0.4');
+                $('.exam-data').css('pointer-events', checked ? '' : 'none');
+            }
+
+            toggleEduFields();
+
+            $('#edu_declaration').on('change', function() {
+                toggleEduFields();
+                if (!$(this).is(':checked')) {
+                    $('.exam-data input:not([readonly])').val('');
+                    $('.exam-data select').val('');
+                }
+            });
+
             $("button#nextMe").click(function() {
 
                 $("input").each(function() {
@@ -1978,6 +2007,17 @@
                 });
 
 
+            });
+
+            $('#myForm').on('submit', function(e) {
+                if (!$('#edu_declaration').is(':checked')) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $('#finalSubmit').show();
+                    $('#loader').hide();
+                    alert('कृपया शैक्षिक घोषणा चेकबॉक्स को चेक करें। / Please check the educational declaration checkbox before submitting.');
+                    $('html, body').animate({ scrollTop: $('#edu_declaration').offset().top - 100 }, 500);
+                }
             });
         });
     </script>
