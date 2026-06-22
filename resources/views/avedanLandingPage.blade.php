@@ -352,7 +352,7 @@ $deadline = \Carbon\Carbon::parse($result->end_date)->endOfDay()->format('Y-m-d\
       <span class="glow-number" id="applicants-count">0</span> -->
         <span data-hi="न्यूनतम शैक्षिक योग्यता" data-en="Minimum educational qualification" class="subtitle"></span>
         <span data-hi="इंटरमीडिएट उत्तीर्ण" data-en="Passed Intermediate" class="title"></span>
-        <small data-hi="जीव विज्ञान के लिए वरीयता" data-en="Preference for Biology"></small>
+        <small data-hi="जीव विज्ञान अनिवार्य" data-en="Biology (Compulsory)"></small>
 
     </div>
 </div>

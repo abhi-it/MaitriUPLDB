@@ -1821,8 +1821,9 @@
                         <div>
                         <a href="https://play.google.com/store/apps/details?id=com.epashu.in"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
                                 width="80px" alt="" style="margin-right:10px;"></a>
+                        <?php /*        
                         <a href="https://play.google.com/store/apps/details?id=up.in.hiblcattle"><img src="{{ asset('assets/images/hbl.png') }}"
-                                width="80px" alt="" style="margin-right:10px;"></a>
+                                width="80px" alt="" style="margin-right:10px;"></a> */ ?>
                         <a href="https://play.google.com/store/apps/details?id=com.farmerpashudhan.production"><img src="{{ asset('assets/images/1962.png') }}"
                                 width="80px" alt="" style="margin-right:10px;"></a>
                         </div>
