@@ -532,6 +532,22 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img src="{{ asset('assets/images/state-minister.jpg')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्रीमती कृष्णा पासवान"
+                                                data-en="Smt Krishna Paswan"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="माननीय राज्य मंत्री" data-en="Honourable State Minister"></span>
+                                        </small></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
                                 <img src="{{ asset('assets/images/pramod-ceo.png')}}" />
