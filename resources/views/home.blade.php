@@ -542,8 +542,8 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                                                 data-en="Smt Krishna Paswan"></span>
                                         </b></p>
                                     <p class="m-0 text-center lh-1"><small>
-                                            <span data-hi="माननीय राज्य मंत्री" data-en="Honourable State Minister"></span>
-                                        </small></p>
+                                            <span data-hi="माननीय मंत्री, पशुपालन और दुग्ध विकास, उत्तर प्रदेश|" data-en="Hon`ble Minister, Animal Husbandry and Dairy Development, U.P."></span>
+                                        </small></p>   
                                 </div>
                             </div>
                         </div>
