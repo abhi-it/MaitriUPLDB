@@ -308,6 +308,8 @@ class AvedanController extends Controller
     public function store(Request $request)
     {
 		/*-------Start Validation here----------------------------*/
+
+        //echo '<pre>'; print_r($request->all()); exit;
         
         $request->validate([
             'applicant_name'            => 'required',
@@ -646,6 +648,7 @@ class AvedanController extends Controller
             'pfms' => $request->get('pfms'),
             'bharat_pshudhan_id' => $request->get('bharat_pshudhan_id'),
             'previous_avedan_number' => $request->get('previous_avedan_number'),
+            'pashu_sakhi' => $request->has('pashu_sakhi') ? $request->get('pashu_sakhi') : 0,
         ]);
         $data->save();
         

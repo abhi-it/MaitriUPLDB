@@ -151,6 +151,13 @@
                     <label for="inputEmail4">लिंग</label> : {{ $result->gender }}
                     <span class="form-control-span" id="gender1"></span>
                 </div>
+                
+                @if($result->gender == 'महिला')
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">पशु सखी/आजीविका सखी/ एनआरएलएम</label> : {{ $result->pashu_sakhi == '1' ? 'हाँ' : 'नहीं' }}
+                    <span class="form-control-span" id="pashu_sakhi1"></span>
+                </div>
+                @endif
 
                 <div class="form-group col-md-6">@php $district = Districts::find($result->district_id)@endphp
                     <label for="inputPassword4">जनपद </label> : {{ $district->name_hindi }}

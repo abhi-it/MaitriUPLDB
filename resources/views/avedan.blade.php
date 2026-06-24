@@ -314,6 +314,22 @@
                         </select>
                     </div>
 
+                    <div class="form-group col-md-6" id="pashu_sakhi_field" style="display:none;">
+                        <label for="inputEmail4"><span data-hi="पशु सखी/आजीविका सखी/ एनआरएलएम" data-en="पशु सखी/आजीविका सखी/ एनआरएलएम"> </span>  </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="pashu_sakhi" id="pashu_sakhi_yes" value="1" {{ $result->pashu_sakhi == '1' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="pashu_sakhi_yes">
+                                हाँ
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="pashu_sakhi" id="pashu_sakhi_no" value="0" {{ $result->pashu_sakhi == '0' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="pashu_sakhi_no">
+                                नहीं
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="form-group col-md-6">
                         <label for="inputEmail4"><span data-hi="जन्म तिथि (हाई स्कूल प्रमाण-पत्र के अनुसार)" data-en="Date of Birth (As per High School Certificate)"> </span>  </label> 
                         <span class="text-danger">* 
@@ -2008,6 +2024,17 @@
 
 
             });
+
+            function togglePashuSakhi() {
+                if ($('#gender').val() === 'महिला') {
+                    $('#pashu_sakhi_field').show();
+                } else {
+                    $('#pashu_sakhi_field').hide();
+                    $('input[name="pashu_sakhi"]').prop('checked', false);
+                }
+            }
+            togglePashuSakhi();
+            $('#gender').on('change', togglePashuSakhi);
 
             $('#myForm').on('submit', function(e) {
                 if (!$('#edu_declaration').is(':checked')) {
