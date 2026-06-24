@@ -315,7 +315,7 @@
                     </div>
 
                     <div class="form-group col-md-6" id="pashu_sakhi_field" style="display:none;">
-                        <label for="inputEmail4"><span data-hi="पशु सखी/आजीविका सखी/ एनआरएलएम" data-en="पशु सखी/आजीविका सखी/ एनआरएलएम"> </span>  </label>
+                        <label for="inputEmail4"><span data-hi="पशु सखी/आजीविका सखी (एनआरएलएम)" data-en="पशु सखी/आजीविका सखी (एनआरएलएम)"> </span>  </label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="pashu_sakhi" id="pashu_sakhi_yes" value="1" {{ $result->pashu_sakhi == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="pashu_sakhi_yes">

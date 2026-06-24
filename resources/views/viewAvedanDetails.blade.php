@@ -154,7 +154,7 @@
                 
                 @if($result->gender == 'महिला')
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">पशु सखी/आजीविका सखी/ एनआरएलएम</label> : {{ $result->pashu_sakhi == '1' ? 'हाँ' : 'नहीं' }}
+                    <label for="inputEmail4">पशु सखी/आजीविका सखी (एनआरएलएम)</label> : {{ $result->pashu_sakhi == '1' ? 'हाँ' : 'नहीं' }}
                     <span class="form-control-span" id="pashu_sakhi1"></span>
                 </div>
                 @endif
