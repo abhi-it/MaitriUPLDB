@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Models\Banks;
 use App\Models\MaitriSessionRecord;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination;
 
 class DashboardController extends Controller
 {
@@ -221,6 +223,14 @@ class DashboardController extends Controller
             $query->where(function ($q) use ($request) {
 
                 $q->where('district_id', '=', $request->input('district_id'));
+            });
+        }
+
+        if (!empty($request->input('pashu_sakhi'))) {
+            $status = $request->input('pashu_sakhi');
+            $status = ($status == 'yes') ? 1 : 0;
+            $query->where(function ($q) use ($status) {
+                $q->where('pashu_sakhi', '=', $status);
             });
         }
 
@@ -1500,6 +1510,56 @@ class DashboardController extends Controller
         
         //echo '<pre>';print_r($result);exit;
         return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
+    }
+
+    public function avedanFullDetailsPdf($id)
+    {
+        $result = Avedan::find($id);
+        $district = Districts::find($result->district_id);
+        $coments = Rejectcomment::where('application_id', '=', $result->id)->first();
+        $verificationcoments = Verificationcomment::where('application_id', '=', $result->id)->first();
+
+        $fontDir = base_path('vendor/mpdf/mpdf/ttfonts');
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 12,
+            'margin_right' => 12,
+            'margin_top' => 12,
+            'margin_bottom' => 12,
+            'fontDir' => array_merge($fontDirs, [$fontDir]),
+            'fontdata' => $fontData + [
+                'freeserif' => [
+                    'R' => 'FreeSerif.ttf',
+                    'B' => 'FreeSerifBold.ttf',
+                    'I' => 'FreeSerifItalic.ttf',
+                    'BI' => 'FreeSerifBoldItalic.ttf',
+                    'useOTL' => 0xFF,
+                    'useKashida' => 75,
+                ],
+            ],
+            'default_font' => 'freeserif',
+        ]);
+
+        $html = view('pdf.avedanDetails', compact('result', 'district', 'coments', 'verificationcoments'))->render();
+
+        $mpdf->WriteHTML($html);
+
+        $fileName = 'Avedan-' . ($result->applicationNumber ?: $result->id) . '.pdf';
+
+        return response(
+            $mpdf->Output($fileName, \Mpdf\Output\Destination::STRING_RETURN),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
     }
 
     public function waitingAvedanFullDetails($id)

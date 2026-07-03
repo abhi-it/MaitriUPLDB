@@ -15,7 +15,7 @@
             @if (auth()->user()->user_type == 'Admin' || auth()->user()->user_type == 'Director')
 
 
-            <div class="form-group col-md-5 col-xl-3">
+            <div class="form-group col-md-5 col-xl-2">
                 <label for="inputEmail4" class="fw-bold"> <span data-hi="सेलेक्ट जनपद"
                         data-en="Select Janpad"></span></label>
                 <select class="form-control" x-model="selectedDistrict" name="district_id" id="district_id"
@@ -32,7 +32,7 @@
             <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"> <span data-hi="अथवा"
                     data-en="Or"></span> </div>
             @endif
-            <div class="form-group col-md-5 col-xl-3">
+            <div class="form-group col-md-5 col-xl-2">
                 <label for="inputEmail4" class="fw-bold" data-hi="आवेदन नंबर" data-en="Application Number"></label>
                 <input type="text" value="{{ @$_GET['applicationNumber'] }}" class="form-control"
                     name="applicationNumber" id="applicationNumber" data-placeholder-hi="आवेदन  नंबर"
@@ -42,11 +42,23 @@
             <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"><span data-hi="अथवा"
                     data-en="Or"></span></div>
 
-            <div class="form-group col-md-5 col-xl-3">
+            <div class="form-group col-md-5 col-xl-2">
                 <label for="inputEmail4" class="fw-bold" data-hi="मोबाइल नंबर" data-en="Mobile Number"></label>
                 <input type="text" value="{{ @$_GET['mobile'] }}" class="form-control" name="mobile" id="mobile"
                     data-placeholder-hi="मोबाइल नंबर" data-placeholder-en="Mobile Number">
             </div>
+
+            <div class="form-group col-xl-1 col-md-2 fw-semibold my-auto text-center"><span data-hi="अथवा"
+                    data-en="Or"></span></div>
+
+            <div class="form-group col-md-5 col-xl-2">
+                <label for="inputEmail4" class="fw-bold" data-hi="पशु सखी स्थिति" data-en="Pashu Sakhi Status"></label>
+                <select class="form-control" name="pashu_sakhi" id="pashu_sakhi">
+                    <option value="" disabled selected data-hi="सेलेक्ट पशु सखी स्थिति" data-en="Select Pashu Sakhi Status"></option>
+                    <option value="yes" {{ @$_GET['pashu_sakhi'] == 'yes' ? 'selected' : '' }}> Yes </option>
+                    <option value="no" {{ @$_GET['pashu_sakhi'] == 'no' ? 'selected' : '' }}> No </option>
+                </select>            
+            </div>        
 
             <div class="form-group col-xl-3 mt-4 col-md-12">
                 <button type="submit" class="btn btn-primary"> <span data-hi="सर्च करें" data-en="Search">

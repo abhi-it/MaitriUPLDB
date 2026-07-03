@@ -202,6 +202,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     
     
     Route::get("view-Avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'avedanFullDetails'])->name('avedanFullDetails');
+    Route::get("view-Avedan-details-pdf/{id}", [App\Http\Controllers\DashboardController::class, 'avedanFullDetailsPdf'])->name('avedanFullDetailsPdf');
     Route::get("view-waiting-avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'waitingAvedanFullDetails'])->name('waitingAvedanFullDetails');
     Route::get("merit-Avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'meritAvedanDetails'])->name('meritAvedanDetails');
     Route::get("downloadFiles/{id}", [App\Http\Controllers\DashboardController::class, 'downloadFiles'])->name('downloadFiles');
