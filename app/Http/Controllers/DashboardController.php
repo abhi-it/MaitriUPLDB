@@ -1526,6 +1526,7 @@ class DashboardController extends Controller
         $fontData = $defaultFontConfig['fontdata'];
 
         $mpdf = new Mpdf([
+            'tempDir' => storage_path('app/mpdf'),
             'mode' => 'utf-8',
             'format' => 'A4',
             'margin_left' => 12,
