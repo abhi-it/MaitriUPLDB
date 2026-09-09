@@ -24,9 +24,12 @@ use DB;
 class UsersController extends Controller{
 
     public function index(){
-        $districts  = Districts::get();
         $divisions  = Divisions::get();
-        return view('farmer-register',['districts'=>$districts,'divisions'=>$divisions]);
+        $districts = collect();
+        if (old('division_id')) {
+            $districts = Districts::where('division_id', old('division_id'))->get();
+        }
+        return view('farmer-register', compact('districts', 'divisions'));
     }
 
     public function sendOtpToLogin(Request $request){
@@ -112,52 +115,78 @@ class UsersController extends Controller{
 
     public function farmerRegister(Request $request){
          $validator = Validator::make($request->all(),[
-            'first_name'  => ['bail', 'required', 'string', 'max:255'],
-            'MobileNumber' => ['required', 'unique:farmer_users,MobileNumber'],
+            'first_name'     => ['bail', 'required', 'string', 'max:255'],
+            'MobileNumber'   => ['required', 'unique:farmer_users,MobileNumber'],
+            'email'          => ['required', 'email', 'unique:farmer_users,email'],
+            'password'       => ['required', 'string', 'min:8', 'confirmed'],
+            'gender'         => ['required', 'string'],
+            'division_id'    => ['required'],
+            'district_id'    => ['required'],
+            'tehsil'         => ['required', 'string', 'max:255'],
+            'block'          => ['required', 'string', 'max:255'],
+            'post_office'    => ['required', 'string', 'max:255'],
+            'pincode'        => ['required', 'string', 'max:6'],
+            'gram_panchayat' => ['required', 'string', 'max:255'],
+            'animal_type'    => ['required', 'array'],
+            'breeds'         => ['required', 'array'],
+            'cattale_no'     => ['required', 'array'],
+            'milk_day'       => ['required', 'array'],
         ]);
         if($validator->fails()){
-            $errors = $validator->errors();
-            foreach($errors->all() as $key => $value){
-                 return redirect()->back()->with('error',ucfirst($value));
-            }
-        }else{
-            if($request->MobileNumber){
-                $district_id = Districts::where('name_hindi', 'LIKE', '%'.$request->district_id.'%')->first();
-
-                $user  = new FarmerUser([
-                    'name'              => $request->first_name,
-                    'FirstName'         => $request->first_name,
-                    'MobileNumber'      => $request->MobileNumber,
-                    'district_id'       => $district_id['id'],
-                    'division_id'       => $request->division_id,
-                    'role_id'           => '4',
-                    'gram_panchayat'    => $request->gram_panchayat,
-                    'post_office'       => $request->post_office,
-                    'block'             => $request->block,
-                    'tehsil'            => $request->tehsil,
-                    'role'              => 'Farmer',
-                    'user_type'         => 'Farmer',
-                ]);
-                $user->save();
-
-                $uid = $user->id;
-                $milk_days = $request->milk_day;
-                $animal_types = $request->animal_type;
-                $breeds = $request->breeds;
-                $cattale_numbers = $request->cattale_no;
-
-                foreach ($milk_days as $index => $milk_day) {
-                    DB::table('user_animal_information')->insert([
-                        'user_id'      => $uid,
-                        'milk_day'     => $milk_day,
-                        'animal_type'  => $animal_types[$index] ?? null,
-                        'breeds'       => $breeds[$index] ?? null,
-                        'cattale_no'   => $cattale_numbers[$index] ?? null,
-                    ]);
-                }
-            }
-            return redirect('/farmer-register')->with('success','Registration successfully!');
+            return redirect()->back()->withInput()->with('error', ucfirst($validator->errors()->first()));
         }
+
+        if (is_numeric($request->district_id)) {
+            $district = Districts::find($request->district_id);
+        } else {
+            $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+        }
+
+        if (!$district) {
+            return redirect()->back()->withInput()->with('error', 'Please select a valid district.');
+        }
+
+        $user = new FarmerUser([
+            'name'           => $request->first_name,
+            'FirstName'      => $request->first_name,
+            'LastName'       => $request->last_name,
+            'MobileNumber'   => $request->MobileNumber,
+            'email'          => $request->email,
+            'password'       => Hash::make($request->password),
+            'gender'         => $request->gender,
+            'district_id'    => $district->id,
+            'division_id'    => $request->division_id,
+            'role_id'        => '4',
+            'gram_panchayat' => $request->gram_panchayat,
+            'post_office'    => $request->post_office,
+            'pincode'        => $request->pincode,
+            'block'          => $request->block,
+            'tehsil'         => $request->tehsil,
+            'animal_type'    => $request->animal_type[0] ?? null,
+            'breeds'         => $request->breeds[0] ?? null,
+            'cattale_no'     => $request->cattale_no[0] ?? null,
+            'milk_day'       => $request->milk_day[0] ?? null,
+            'role'           => 'Farmer',
+            'user_type'      => 'Farmer',
+        ]);
+        $user->save();
+
+        $uid = $user->id;
+        foreach ($request->milk_day as $index => $milk_day) {
+            if (empty($request->animal_type[$index] ?? null)) {
+                continue;
+            }
+            DB::table('user_animal_information')->insert([
+                'user_id'      => $uid,
+                'milk_day'     => $milk_day,
+                'animal_type'  => $request->animal_type[$index] ?? null,
+                'breeds'       => $request->breeds[$index] ?? null,
+                'cattale_no'   => $request->cattale_no[$index] ?? null,
+            ]);
+        }
+
+        return redirect()->route('login', ['isMaitriFarmer' => true])
+            ->with('success', 'Registration successfully! Please login with your email and password.');
     }
 
     public function getAllDistrict(Request $request){

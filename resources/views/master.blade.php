@@ -1097,8 +1097,10 @@
                             @else
                                 <a href="{{ route('login') }}" class="text-black">
                                     <span data-hi="लॉग इन करें" data-en="Log In"></span> </a> |
-                                <a href="{{ route('farmer-login') }}" class="text-black">
-                                    <span data-hi="किसान लॉगिन" data-en="Farmer Login"></span> </a>
+                                <a href="{{ route('login', ['isMaitriFarmer' => true]) }}" class="text-black">
+                                    <span data-hi="किसान लॉगिन" data-en="Farmer Login"></span> </a> |
+                                <a href="{{ route('farmer-register') }}" class="text-black">
+                                    <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Signup"></span> </a>
                             @endif
 
                         </span>
@@ -1658,7 +1660,7 @@
 
                             <!-- Hide 01 Sep 2025 -->
                             <li class="nav-item {{ request()->is('farmer-register') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ url('farmer-register') }}">
+                                <a class="nav-link" href="{{ route('farmer-register') }}">
                                     <span data-hi="पशुपालक पंजीकरण" data-en="Farmer Registration"></span>
                                 </a>
                             </li>

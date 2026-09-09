@@ -47,7 +47,7 @@
         @endphp
 
         @if (session('success'))
-            <div class="alert alert-danger">
+            <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
@@ -153,6 +153,9 @@
                 <div class="row mb-4 mt-4">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                        <a href="{{ route('farmer-register') }}" class="btn btn-link">
+                            पशुपालक पंजीकरण / Farmer Signup
+                        </a>
                     </div>
                 </div>
             </form>
