@@ -125,6 +125,9 @@
             <div style="font-size:22px; font-weight:bold; letter-spacing:5px; color:#14213d; margin-top:5px;">MAITRI</div>
             <!-- Subtitle -->
             <div style="margin-top:5px; font-size:12px; letter-spacing:4px; color:#c9a227;">TRAINING PROGRAM</div>
+            <div style="margin-top:8px; font-size:15px; font-weight:600; color:#14213d;">
+                {{ $instituteName ?? ($maitri->center_name ?? 'Training Institute') }}
+            </div>
 
             <!-- Divider -->
             <div style="width:100px; height:2px; background:#c9a227; margin:15px auto 20px;"></div>
@@ -147,7 +150,8 @@
             <div style="max-width:150mm; margin:0 auto; font-size:16px; line-height:1.8; color:#444444;">
                 <p style="margin:0;">This certificate is proudly awarded in recognition of the successful completion of the</p>
                 <div style="margin:10px 0; font-size:20px; font-weight:bold; color:#14213d;">Maitri Training Program</div>
-                <p style="margin:0;">The recipient has successfully completed the required training and demonstrated dedication, commitment, and satisfactory performance throughout the program.</p>
+                <p style="margin:0;">conducted at <strong style="color:#14213d;">{{ $instituteName ?? ($maitri->center_name ?? 'Training Institute') }}</strong>.</p>
+                <p style="margin:8px 0 0;">The recipient has successfully completed the required training and demonstrated dedication, commitment, and satisfactory performance throughout the program.</p>
             </div>
 
             <!-- Award Date (dynamic) -->
@@ -167,8 +171,8 @@
                 <div style="width:32%; text-align:center;">
                     {{-- <div style="height:45px; font-family:cursive; font-size:24px; color:#bcbcbc;">Signature</div> --}}
                     <div style="border-top:1px solid #c9a227; padding-top:8px;">
-                        <strong style="color:#14213d; font-size:13px;">TRAINING AUTHORITY</strong><br>
-                        <span style="font-size:11px; color:#666666;">Authorized Signature</span>
+                        <strong style="color:#14213d; font-size:13px;">{{ $instituteName ?? 'TRAINING INSTITUTE' }}</strong><br>
+                        <span style="font-size:11px; color:#666666;">Training Authority</span>
                     </div>
                 </div>
 
@@ -192,7 +196,9 @@
             <!-- Footer Divider -->
             <div style="width:100px; height:2px; background:#14213d; margin:25px auto 10px;"></div>
             <!-- Footer -->
-            <div style="font-size:11px; letter-spacing:1px; color:#666666;">MAITRI TRAINING PROGRAM</div>
+            <div style="font-size:11px; letter-spacing:1px; color:#666666;">
+                {{ $instituteName ?? ($maitri->center_name ?? 'MAITRI TRAINING PROGRAM') }}
+            </div>
         </div>
     </div>
 

@@ -180,6 +180,7 @@ Route::group(['middleware' => ['auth:institute_auth,web']], function () {
 
     Route::post('/generate-maitri-certificate', [App\Http\Controllers\InstituteController::class, 'generateMaitriCertificate'])->name('generate-maitri-certificate');
     Route::get('/certificate-preview/{id}', [App\Http\Controllers\InstituteController::class, 'certificatePreview'])->name('certificate-preview');
+    Route::get('/id-card-preview/{id}', [App\Http\Controllers\InstituteController::class, 'idCardPreview'])->name('id-card-preview');
 });
 
 

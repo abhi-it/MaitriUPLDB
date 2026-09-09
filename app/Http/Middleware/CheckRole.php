@@ -598,6 +598,8 @@ class CheckRole
                 'check-stock-limit',
                 'assignInstitute',
                 'generate-maitri-certificate',
+                'certificate-preview',
+                'id-card-preview',
                 'edit-farmer-record',
                 'update-farmer-record',
             ],
@@ -658,7 +660,12 @@ class CheckRole
 
             'institute' => [
                 'institute-dashboard',
+                'avedan-list',
+                'avedan-details',
+                'institute-logout',
                 'generate-maitri-certificate',
+                'certificate-preview',
+                'id-card-preview',
             ],
 
             /*

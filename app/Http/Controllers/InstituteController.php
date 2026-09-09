@@ -355,6 +355,8 @@ class InstituteController extends Controller
             'gram_panchayat' => $application->gram_panchayat_name,
             'post_office' => $application->post_office,
             'tehsil' => $application->tehsil,
+            'block' => $application->vikas_khand ?? $application->block,
+            'janpad_name' => $application->janpad,
             'father_name' => $application->fname,
             'father_mobile_no' => $application->alternet_mobile,
             'gender' => $application->gender,
@@ -366,6 +368,7 @@ class InstituteController extends Controller
             'any_bharat_id' => $request->any_bharat_id,
             'certificate_no' => $request->certificate_no,
             'pincode' => $application->pincode,
+            'district_id' => $institute->district_id,
             'role_id' => 3,
             'role' => 'Maitri',
             'status' => 0,
@@ -376,7 +379,13 @@ class InstituteController extends Controller
         $application->maitri_id = $maitri->id;
         $application->save();
 
-        return response()->json(['success' => 'Certificate generated successfully', 'certificate_url' => route('certificate-preview', $maitri->id)], 200);
+        return response()->json([
+            'success' => 'Certificate and ID Card generated successfully',
+            'avedan_id' => $application->id,
+            'maitri_id' => $maitri->id,
+            'certificate_url' => route('certificate-preview', $maitri->id),
+            'id_card_url' => route('id-card-preview', $maitri->id),
+        ], 200);
 
     }
 
@@ -385,18 +394,65 @@ class InstituteController extends Controller
     {
         try {
             $maitri = Maitri::findOrFail($id);
+            $application = $maitri->avedan_id ? Avedan::find($maitri->avedan_id) : null;
+            $institute = null;
+
+            if ($application && $application->institute_id) {
+                $institute = Institute::find($application->institute_id);
+            }
+
+            if (!$institute && !empty($maitri->center_name)) {
+                $institute = Institute::where('name', $maitri->center_name)->first();
+            }
+
+            $instituteName = $institute->name ?? ($maitri->center_name ?: 'Training Institute');
 
             $data = [
-                'traineeName' => $maitri->name ?? 'Recipient Name',
-                'completionDate' => $maitri->completion_date ? $maitri->completion_date->format('d F Y') : now()->format('d F Y'),
+                'traineeName' => $maitri->maitri_name ?? 'Recipient Name',
+                'completionDate' => $maitri->pass_date ?: now()->format('d F Y'),
                 'certificateId' => $maitri->certificate_no ?? 'MAITRI-2026-0001',
-                'maitri' => $maitri
+                'instituteName' => $instituteName,
+                'institute' => $institute,
+                'application' => $application,
+                'maitri' => $maitri,
             ];
 
             return view('maitri.certificates', $data);
 
         } catch (\Exception $e) {
             abort(404, 'Certificate not found');
+        }
+    }
+
+    public function idCardPreview($id)
+    {
+        try {
+            $maitri = Maitri::findOrFail($id);
+            $application = $maitri->avedan_id ? Avedan::find($maitri->avedan_id) : null;
+            $institute = null;
+
+            if ($application && $application->institute_id) {
+                $institute = Institute::find($application->institute_id);
+            }
+
+            if (!$institute && !empty($maitri->center_name)) {
+                $institute = Institute::where('name', $maitri->center_name)->first();
+            }
+
+            $photo = null;
+            if ($application && !empty($application->applicant_photo)) {
+                $photo = asset('upload_documents/' . $application->applicant_photo);
+            }
+
+            return view('maitri.id-card', [
+                'maitri' => $maitri,
+                'application' => $application,
+                'institute' => $institute,
+                'instituteName' => $institute->name ?? ($maitri->center_name ?: 'Training Institute'),
+                'photo' => $photo,
+            ]);
+        } catch (\Exception $e) {
+            abort(404, 'ID Card not found');
         }
     }
 

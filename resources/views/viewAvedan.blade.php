@@ -161,6 +161,10 @@
                                                 class="btn btn-sm btn-primary" title="View Certificate">
                                                 <span data-hi="प्रदर्शन" data-en="View"> Certificate </span>
                                             </a>
+                                            <a target="_blank" href="{{ url('id-card-preview') }}/{{ $row->maitri_id }}"
+                                                class="btn btn-sm btn-info" title="View ID Card">
+                                                ID Card
+                                            </a>
                                         @else
                                             <button class="btn btn-primary assign-institute-btn"
                                                 data-id="{{ $row->id }}" data-institute-id="{{ $row->institute_id }}" data-hi="संशोधित करें" data-en="Update Institute">Update Institute</button>

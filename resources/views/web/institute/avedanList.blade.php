@@ -61,9 +61,13 @@
                                         <button class="btn btn-sm btn-primary generate-certificate-btn"
                                             data-id="{{ $row->id }}">Generate Certificate</button>
                                     @else
-                                        <a target="_blank" href="{{ url('certificate-preview') }}/{{ $row->maitri_id }}"
-                                            class="btn btn-sm btn-success" title="View Certificate">
-                                            <span data-hi="प्रदर्शन" data-en="View"> Certificate </span>
+                                        <a target="_blank" href="{{ route('certificate-preview', $row->maitri_id) }}"
+                                            class="btn btn-sm btn-success mb-1" title="View Certificate">
+                                            Certificate
+                                        </a>
+                                        <a target="_blank" href="{{ route('id-card-preview', $row->maitri_id) }}"
+                                            class="btn btn-sm btn-info mb-1" title="View ID Card">
+                                            ID Card
                                         </a>
                                     @endif
 
@@ -97,7 +101,7 @@
                         <div id="certificateErrorAlert" class="alert alert-danger d-none"></div>
                         <input type="hidden" name="id" id="generateCertificateId">
                         <span class="text-danger fw-bold text-start small">Important: </span>
-                        <span class="text-start small">During certificate generation, a Maitri account will be created for this user and a password will be generated so the user can log in as a Maitri.</span>
+                        <span class="text-start small">During certificate generation, a Maitri account is created and both Digital Certificate and ID Card are generated automatically. Institute only fills certificate details.</span>
 
                         <div class="row mt-2">
                             <div class="col-sm-6">
@@ -212,20 +216,21 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Success!',
-                            text: 'Certificate generated successfully.',
+                            text: 'Certificate and ID Card generated successfully.',
                             confirmButtonText: 'OK'
                         }).then(() => {
-                            // Insert "View Certificate" button in the list without loading
                             if (response.maitri_id && response.certificate_url && response.avedan_id) {
                                 const btnHtml = `
                                     <a target="_blank" href="${response.certificate_url}"
-                                        class="btn btn-sm btn-success" title="View Certificate">
-                                        <span data-hi="प्रदर्शन" data-en="View"> Certificate </span>
+                                        class="btn btn-sm btn-success mb-1" title="View Certificate">
+                                        Certificate
+                                    </a>
+                                    <a target="_blank" href="${response.id_card_url}"
+                                        class="btn btn-sm btn-info mb-1" title="View ID Card">
+                                        ID Card
                                     </a>
                                 `;
                                 var actionCol = $('#action-column-' + response.avedan_id);
-                                // Remove the Generate button and add view
-                                // Keep old "View Details" button (first child), only replace the second button
                                 if (actionCol.length) {
                                     var existingBtns = actionCol.children();
                                     if (existingBtns.length > 1) {
@@ -235,8 +240,10 @@
                                 }
                             }
 
-                            // Optionally open in new tab
                             window.open(response.certificate_url, '_blank');
+                            if (response.id_card_url) {
+                                window.open(response.id_card_url, '_blank');
+                            }
                         });
                     },
                     error: function (xhr) {
