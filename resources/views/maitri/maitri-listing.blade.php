@@ -2,6 +2,16 @@
 @section('content')
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center fw-bold m-4">मैत्री सूची</h3>
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+        @endif
+        @if(session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
+        @endif
         <div class="container text-center">
 
                 <form  action="{{ Request::url() }}" method="get" class="form-comman">
@@ -47,6 +57,7 @@
                         <th>Father's Name</th>
                         <th>Certificate No</th>
                         <th>Geo Location</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -65,6 +76,9 @@
                         <td>{{$val->certificate_no}}</td>
                         <td>
                             <button class="btn btn-primary edit-btn" data-id="{{ $val->id }}">Edit</button>
+                        </td>
+                        <td>
+                            <a href="{{ route('edit-maitri-data', $val->id) }}" class="btn btn-success">Update</a>
                         </td>
                     </tr>
                     @php $i++ @endphp

@@ -115,10 +115,10 @@
             </div>
 
             <!-- <div class="form-group col-md-6">
-                    <label for="inputEmail4"><span data-hi="ज़िला" data-en="Mandal"></span> </label> 
+                    <label for="inputEmail4"><span data-hi="ज़िला" data-en="Mandal"></span> </label>
                     <select class="form-control" name="division_id" id="divisionID">
                     <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
-                    
+
                         @foreach($divisions as $val)
                             <option value="{{$val->id}}" data-hi="{{$val->name_hindi}}" data-en="{{$val->name_eng}}"></option>
                         @endforeach
@@ -127,9 +127,9 @@
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">
                     <span data-hi="उप जिला" data-en="District"></span>
-                     </label> 
+                     </label>
                     <select class="form-control" name="district_id" id="districID" >
-                        
+
                     </select>
                 </div>  -->
 

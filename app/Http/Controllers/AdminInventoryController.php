@@ -11,16 +11,16 @@ use App\Models\DeoUser;
 use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\RequestData;
-use App\Models\InventoryMap; 
-use App\Models\EventModal;  
+use App\Models\InventoryMap;
+use App\Models\EventModal;
 use App\Models\Manganurodhdata;
 use App\Models\DailyDashboard;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Zonestock; 
-use App\Models\RemainingStock; 
+use App\Models\Zonestock;
+use App\Models\RemainingStock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -29,13 +29,15 @@ use DB;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\API\Servicerequest;
+use App\Models\FarmerUser;
+use App\Models\Animalinformation;
 
 class AdminInventoryController extends Controller
 {
     public function getFarmerRequest(Request $request)
     {
         $district = Districts::get();
-        $query = Servicerequest::with(['user', 'maitri', 'user.district']) ->orderBy('id', 'desc');; 
+        $query = Servicerequest::with(['user', 'maitri', 'user.district']) ->orderBy('id', 'desc');;
         if (!empty($request->input('district_id'))) {
             $districtId = $request->input('district_id');
             $query->whereHas('user', function ($q) use ($districtId) {
@@ -45,33 +47,148 @@ class AdminInventoryController extends Controller
         $data = $query->paginate(10);
 
         $getMaitri = User::where('role', 'Maitri')->get();
-        
+
         return view('farmardata.farmer-request-list', [
             'data' => $data,
             'district' => $district,
             'getMaitri' => $getMaitri
         ]);
     }
-    
+
 
     public function farmarsData(Request $request){
         $districts = Districts::get();
-        $farmarUserQuery = User::where('role', 'LIKE', 'Farmer')
-                            ->join('districts', 'users.district_id', '=', 'districts.id')
-                            ->orderBy('users.id', 'desc');
-        
+        // $farmarUserQuery = User::where('role', 'LIKE', 'Farmer')
+        //                     ->join('districts', 'users.district_id', '=', 'districts.id')
+        //                     ->orderBy('users.id', 'desc');
+
+        $farmarUserQuery = FarmerUser::where('role', 'LIKE', 'Farmer')
+        ->join('districts', 'farmer_users.district_id', '=', 'districts.id')
+        ->select('farmer_users.*', 'districts.name_hindi')
+        ->orderBy('farmer_users.id', 'desc');
+
         if ($request->has('district_id') && !empty($request->input('district_id'))) {
             $districtId = $request->input('district_id');
-            $farmarUserQuery->where('users.district_id', $districtId);
+            $farmarUserQuery->where('farmer_users.district_id', $districtId);
         }
 
         if ($request->has('mobile') && !empty($request->input('mobile'))) {
             $mobile = $request->input('mobile');
-            $farmarUserQuery->where('users.MobileNumber', $mobile);
+            $farmarUserQuery->where('farmer_users.MobileNumber', $mobile);
         }
-    
+
         $farmarUser = $farmarUserQuery->paginate(30);
         return view('farmardata.index', compact('farmarUser', 'districts'));
+    }
+
+    public function editFarmerRecord($id){
+        $farmer = FarmerUser::with(['district', 'getAnimalInformation'])->find($id);
+        if (!$farmer) {
+            return redirect()->route('farmers-data')->with('error', 'Farmer not found.');
+        }
+        $divisions = Divisions::get();
+        $districts = Districts::when($farmer->division_id, function ($query) use ($farmer) {
+            return $query->where('division_id', $farmer->division_id);
+        })->get();
+
+        return view('farmardata.edit', compact('farmer', 'divisions', 'districts'));
+    }
+
+    public function updateFarmerRecord(Request $request, $id){
+        $farmer = FarmerUser::find($id);
+        if (!$farmer) {
+            return redirect()->route('farmers-data')->with('error', 'Farmer not found.');
+        }
+
+        $request->merge([
+            'email' => $request->filled('email') ? $request->email : null,
+        ]);
+
+        $validator = Validator::make($request->all(), [
+            'first_name'     => ['required', 'string', 'max:255'],
+            'MobileNumber'   => ['required', 'unique:farmer_users,MobileNumber,' . $farmer->id],
+            'email'          => ['nullable', 'email', 'unique:farmer_users,email,' . $farmer->id],
+            'password'       => ['nullable', 'string', 'min:8', 'confirmed'],
+            'gender'         => ['nullable', 'string'],
+            'division_id'    => ['required'],
+            'district_id'    => ['required'],
+            'tehsil'         => ['nullable', 'string', 'max:255'],
+            'block'          => ['nullable', 'string', 'max:255'],
+            'post_office'    => ['nullable', 'string', 'max:255'],
+            'pincode'        => ['nullable', 'string', 'max:6'],
+            'gram_panchayat' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', ucfirst($validator->errors()->first()));
+        }
+
+        if (is_numeric($request->district_id)) {
+            $district = Districts::find($request->district_id);
+        } else {
+            $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+        }
+
+        $farmer->name           = $request->first_name;
+        $farmer->FirstName      = $request->first_name;
+        $farmer->LastName       = $request->last_name;
+        $farmer->MobileNumber   = $request->MobileNumber;
+        $farmer->email          = $request->email;
+        $farmer->gender         = $request->gender;
+        $farmer->district_id    = $district ? $district->id : $farmer->district_id;
+        $farmer->division_id    = $request->division_id;
+        $farmer->gram_panchayat = $request->gram_panchayat;
+        $farmer->post_office    = $request->post_office;
+        $farmer->pincode        = $request->pincode;
+        $farmer->block          = $request->block;
+        $farmer->tehsil         = $request->tehsil;
+
+        if ($request->filled('password')) {
+            $farmer->password = Hash::make($request->password);
+        }
+
+        if ($request->has('animal_type') && is_array($request->animal_type) && count($request->animal_type)) {
+            $farmer->animal_type = $request->animal_type[0] ?? $farmer->animal_type;
+            $farmer->breeds      = $request->breeds[0] ?? $farmer->breeds;
+            $farmer->cattale_no  = $request->cattale_no[0] ?? $farmer->cattale_no;
+            $farmer->milk_day    = $request->milk_day[0] ?? $farmer->milk_day;
+        }
+
+        $farmer->save();
+
+        if ($request->has('removeAnimal')) {
+            Animalinformation::whereIn('id', $request->removeAnimal)
+                ->where('user_id', $farmer->id)
+                ->delete();
+        }
+
+        if ($request->has('animal_type') && is_array($request->animal_type)) {
+            foreach ($request->animal_type as $index => $animalType) {
+                if (empty($animalType)) {
+                    continue;
+                }
+
+                $animalId = $request->animal_id[$index] ?? null;
+                $payload = [
+                    'animal_type' => $animalType,
+                    'breeds'      => $request->breeds[$index] ?? null,
+                    'cattale_no'  => $request->cattale_no[$index] ?? null,
+                    'milk_day'    => $request->milk_day[$index] ?? null,
+                ];
+
+                if (!empty($animalId)) {
+                    Animalinformation::where('id', $animalId)
+                        ->where('user_id', $farmer->id)
+                        ->update($payload);
+                } else {
+                    Animalinformation::create(array_merge($payload, [
+                        'user_id' => $farmer->id,
+                    ]));
+                }
+            }
+        }
+
+        return redirect()->route('farmers-data')->with('success', 'Farmer updated successfully.');
     }
 
     public function farmerDeleteRequest(Request $request){
@@ -92,18 +209,23 @@ class AdminInventoryController extends Controller
 
 
     public function exportFarmarList(Request $request){
-        $query = User::where('role', 'LIKE', 'Farmer')
-                ->join('districts', 'users.district_id', '=', 'districts.id')
-                ->orderBy('users.id', 'desc');
-               
+
+        // $query = User::where('role', 'LIKE', 'Farmer')
+        //         ->join('districts', 'users.district_id', '=', 'districts.id')
+        //         ->orderBy('users.id', 'desc');
+
+        $query = FarmerUser::where('role', 'LIKE', 'Farmer')
+        ->join('districts', 'farmer_users.district_id', '=', 'districts.id')
+        ->orderBy('farmer_users.id', 'desc');
+
         if($request->has('dis_id') && !empty($request->input('dis_id'))){
             $districtId = $request->input('dis_id');
-            $datas = $query->where('users.district_id', $districtId);
+            $datas = $query->where('farmer_users.district_id', $districtId);
         }
 
         if ($request->has('mobile') && !empty($request->input('mobile'))) {
             $mobile = $request->input('mobile');
-            $datas = $query->where('users.MobileNumber', $mobile);
+            $datas = $query->where('farmer_users.MobileNumber', $mobile);
         }
 
         $datas    = $query->get();
@@ -145,7 +267,7 @@ class AdminInventoryController extends Controller
         $blockData =[];
         $aiCenterData =[];
         $query = Manganurodhdata::query();
-       
+
         if (!empty($request->input('district_id'))) {
             $query->where('status', 1)->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
             $groupByTehsil = clone $query;
@@ -153,7 +275,7 @@ class AdminInventoryController extends Controller
                                     ->groupBy('tehsil')
                                     ->get();
         }
-       
+
         if (!empty($request->input('tehsil'))) {
             $query->where('status', 1)->where('tehsil', 'LIKE', $request->input('tehsil'));
             $groupByBlock = clone $query;
@@ -173,7 +295,7 @@ class AdminInventoryController extends Controller
         if (!empty($request->input('aicenter'))) {
             $query->where('status', 1)->where('center_name', 'LIKE', $request->input('aicenter'));
         }
-        
+
         $manganurodhdata = $query->where('status', 1)->paginate(50)->appends([
             'district_id'   => $request->input('district_id'),
             'tehsil'        => $request->input('tehsil'),
@@ -182,10 +304,10 @@ class AdminInventoryController extends Controller
         ]);
         return view('maitriaicenter.inactiveAicenterMaitri', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
     }
-    
+
     public function createMaitriAicenter(){
         $districts = Districts::all();
-        $divisions = Divisions::all(); 
+        $divisions = Divisions::all();
         return view('maitriaicenter.createMaitriAicenter', compact('districts', 'divisions'));
     }
 
@@ -233,7 +355,7 @@ class AdminInventoryController extends Controller
         $blockData =[];
         $aiCenterData =[];
         $query = Manganurodhdata::query();
-       
+
         if (!empty($request->input('district_id'))) {
             $query->where('janpad_name', 'LIKE', '%' . $request->input('district_id') . '%');
             $groupByTehsil = clone $query;
@@ -241,7 +363,7 @@ class AdminInventoryController extends Controller
                                     ->groupBy('tehsil')
                                     ->get();
         }
-       
+
         if (!empty($request->input('tehsil'))) {
             $query->where('tehsil', 'LIKE', $request->input('tehsil'));
             $groupByBlock = clone $query;
@@ -261,7 +383,7 @@ class AdminInventoryController extends Controller
         if (!empty($request->input('aicenter'))) {
             $query->where('center_name', 'LIKE', $request->input('aicenter'));
         }
-        
+
         $manganurodhdata = $query->whereNotNull('maitri_name')->orderByDesc('id')->paginate(50)->appends([
             'district_id' => $request->input('district_id'),
             'tehsil' => $request->input('tehsil'),
@@ -270,7 +392,7 @@ class AdminInventoryController extends Controller
         ]);
         return view('maitriaicenter.index', compact('manganurodhdata', 'districts', 'tehsilData', 'blockData', 'aiCenterData'));
     }
-    
+
     public function generatePDF($id)  {
         $maitriData = Manganurodhdata::where('id', $id)->first();
         $data = [
@@ -317,7 +439,7 @@ class AdminInventoryController extends Controller
             'block'       => $request->block,
             'aicenter'    => $request->center_name,
         ]);
-    
+
         return redirect($redirectUrl)->with('success', 'Data Updated Successfully');
     }
 
@@ -356,7 +478,7 @@ class AdminInventoryController extends Controller
         }else{
             $frontImages = $event['front_image'];
         }
-        
+
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -374,7 +496,7 @@ class AdminInventoryController extends Controller
             $getImages = $event['images'];
             $images = json_decode($getImages);
         }
-       
+
         $event->title = $validated['title'];
         $event->title_hindi = $validated['title_hindi'];
         $event->description = $validated['description'];
@@ -439,16 +561,16 @@ class AdminInventoryController extends Controller
 
     //     if ($users) {
     //         $inventoryQuery = InventoryMap::whereIn('assign_user_id', $users);
-            
+
     //         if ($request->filled('role')) {
     //             $selectedRoleUsers = User::where('role', $request->role)->pluck('id');
     //             $inventoryQuery->whereIn('assign_user_id', $selectedRoleUsers);
     //         }
     //         $inventoryIds = $inventoryQuery->pluck('inventory_id');
-    //     } 
+    //     }
 
     //     $query = Zonestock::whereIn('id', $inventoryIds);
-        
+
     //     if ($request->filled('bull_id')) {
     //         $query->where('bull_ids', 'LIKE', "%{$request->bull_id}%");
     //     }
@@ -461,13 +583,13 @@ class AdminInventoryController extends Controller
     //     if ($request->filled('semen_type')) {
     //         $query->where('semen_type', $request->semen_type);
     //     }
-    
+
     //     $adminInventory = $query->get();
-        
+
     //     return view('adminstockform.admin-stock-record', compact('adminInventory'));
     // }
-    
-    
+
+
 
     public function checkZoneUser(Request $request){
         if($request->user_id != '' && $request->zdd_id != '' && $request->type == 'zone'){
@@ -496,28 +618,28 @@ class AdminInventoryController extends Controller
             }else{
                 return response()->json(['type' => 'aiCenter', 'errormsg' => '']);
             }
-        } 
-        
+        }
+
     }
 
     public function adminDkistributedRecord(Request $request){
         $user = Auth::user();
         $zones = Zone::all();
-        
+
         $user_id = Auth::user()->id;
         $adminDistributedRecord = Zonestock::with('zone')->where(['location' => 'zone'])->get();
         //echo '<pre>';print_r($adminDistributedRecord);exit;
-        
+
         return view('adminstockform.admin-distributed-record', compact('adminDistributedRecord','zones'));
     }
-    
+
     public function dfsDistributedRecord(Request $request){
         $user = Auth::user();
         $zones = Zone::all();
-        
+
         $adminDistributedRecord = Zonestock::with('zone')->where(['user_id' => $user->id,'location' => 'zone'])->get();
         //echo '<pre>';print_r($adminDistributedRecord);exit;
-        
+
         return view('adminstockform.dfs-distributed-record', compact('adminDistributedRecord','zones'));
     }
 
@@ -570,7 +692,7 @@ class AdminInventoryController extends Controller
                     'quantity'               => $semen_straws[$key],
                     'scheme'                 => $scheme,
                 ];
-        
+
                 $inventory  = new Zonestock($inventoryData);
                 $inventory->save();
             }
@@ -653,12 +775,12 @@ class AdminInventoryController extends Controller
                     'quantity'            => $container_qty[$key],
                     'scheme'              => $scheme,
                 ];
-        
+
                 $inventory  = new Zonestock($inventoryData);
                 $inventory->save();
             }
         }
-        
+
         return redirect()->back()->with('success','Stock data submitted successfully!');
     }
 
@@ -687,23 +809,23 @@ class AdminInventoryController extends Controller
                     'bull_id'        => $bull_id[$key],
                     'quantity'       => $semen_straws[$key],
                 ];
-        
+
                 $inventory  = new Zonestock($inventoryData);
                 $inventory->save();
             }
         }
-        
+
         return redirect()->back()->with('success','Stock data submitted successfully!');
     }
 
     public function adminStockDataSave1(Request $request){
-           
+
         $breedType = [];
         $semens = $request->semen;
         $breeds = $request->breed;
         if($semens > 0){
             foreach($semens as $key => $semen){
-                
+
                 if( $semen == 'catle'){
                     if($breeds[$key] == 'swadeshi'){
                         $breedType = $request->breedType1;
@@ -746,7 +868,7 @@ class AdminInventoryController extends Controller
             'container'             => $request->container,
             'scheme'                => $request->scheme,
         ];
-        
+
         $inventory  = new Zonestock($inventoryData);
         $inventory->save();
 
@@ -804,5 +926,5 @@ class AdminInventoryController extends Controller
         return redirect()->back()->with('success','Stock data submitted successfully!');
     }
 
-    
+
 }

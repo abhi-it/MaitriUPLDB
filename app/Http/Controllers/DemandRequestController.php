@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Maitri;
 use App\Models\Janpad;
-use App\Models\Districts; 
+use App\Models\Districts;
 use App\Models\Manganurodhdata;
 use App\Models\Divisions;
 use App\Models\Institute;
@@ -30,7 +30,7 @@ class DemandRequestController extends Controller{
         $institute  = Institute::get();
         return view('demand-request',['division'=>$division,'institute'=>$institute]);
     }
-    
+
     public function getDistrictAll(Request $request){
         $mandal = $request->mandal;
         $getDistict =  Manganurodhdata::select('janpad_name')
@@ -80,10 +80,10 @@ class DemandRequestController extends Controller{
                         ->where('status', 0)
                         ->groupBy('tehsil')
                         ->get();
-        
+
         $postoffice = Postoffice::where(['dis_id'=> $janpad_id])->get();
-        
-        
+
+
         return \Response::json(['status'=>'success','message'=>'Get all tehsil successfully!','data'=>$getTeshil, 'gram_panchayat' => $postoffice],200);
     }
 
@@ -117,7 +117,7 @@ class DemandRequestController extends Controller{
                         ->get();
         return \Response::json(['status'=>'success','message'=>'Get all blocks successfully!','data'=>$getAIcenter],200);
     }
-    
+
     public function getAllrequestedBlocks(Request $request){
         $location          = $request->id;
         $blocks            = Districts::where(['id'=>$location])->distinct('name_hindi')->pluck('name_hindi')->toArray();
@@ -244,7 +244,7 @@ class DemandRequestController extends Controller{
                 'bull_id' => $item->bull_id,
                 'Sheath' => $item->Sheath,
                 'gloves' => $item->gloves,
-                'insurance_booklet' => $item->insurance_booklet, 
+                'insurance_booklet' => $item->insurance_booklet,
                 'animal_tag' => $item->animal_tag,
                 'mineral_mixture' => $item->mineral_mixture,
                 'dewormer' => $item->dewormer,

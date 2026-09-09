@@ -21,9 +21,36 @@ class FarmerUser extends Authenticatable implements JWTSubject
      */
     protected $table = 'farmer_users';
     protected $fillable = [
-        'name','email', 
-        'password','user_type','role','gender','pincode','gram_panchayat','post_office','block','tehsil','milk_day','animal_type','otp_login',
-        'role_id','FirstName','LastName','MobileNumber','district_id','division_id','zone_id','bharat_id','breeds','cattale_no','AternateMobile'
+        'CompanyEnterpriseName',
+        'FirstName',
+        'LastName',
+        'MobileNumber',
+        'name',
+        'gender',
+        'pincode',
+        'district_id',
+        'division_id',
+        'zone_id',
+        'email',
+        'role',
+        'role_id',
+        'user_type',
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'cattale_no',
+        'animal_type',
+        'breeds',
+        'bharat_id',
+        'gram_panchayat',
+        'post_office',
+        'block',
+        'tehsil',
+        'milk_day',
+        'ai_center',
+        'otp_login',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -70,5 +97,5 @@ class FarmerUser extends Authenticatable implements JWTSubject
         return [];
     }
 
-    
+
 }

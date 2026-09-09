@@ -46,6 +46,13 @@
         {{ session()->get('error') }}
     </div>
     @endif
+    @if(!empty($missingLocation))
+    <div class="alert alert-warning">
+        आपकी प्रोफ़ाइल में {{ implode(', ', $missingLocation) }} की जानकारी अधूरी है।
+        सही मैत्री देखने के लिए कृपया अपनी प्रोफ़ाइल अपडेट करें।
+        <a href="{{ route('farmer-details') }}" class="alert-link fw-bold">प्रोफ़ाइल अपडेट करें</a>
+    </div>
+    @endif
 
     <div class="row">
 
@@ -55,31 +62,51 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">सेवा</label>
-                        <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
                         <select class="form-control" name="services" id="services" required>
                             <option value="">एक का चयन करें</option>
-                            <option value="health_medical_checkip">स्वास्थ्य/चिकित्सा जांच</option>
-                            <option value="animal_insurance">पशु बीमा</option>
-                            <option value="vaccination">टीकाकरण</option>
-                            <option value="pregnancy_diagnosis">गर्भावस्था निदान</option>
-                            <option value="artificial_insemination">कृत्रिम गर्भाधान</option>
-                            <option value="livestock_insurance">पशुधन बीमा</option>
-                            <option value="calving">बछड़ा जनन</option>
+                            <option value="health_medical_checkip" {{ old('services') == 'health_medical_checkip' ? 'selected' : '' }}>स्वास्थ्य/चिकित्सा जांच</option>
+                            <option value="animal_insurance" {{ old('services') == 'animal_insurance' ? 'selected' : '' }}>पशु बीमा</option>
+                            <option value="vaccination" {{ old('services') == 'vaccination' ? 'selected' : '' }}>टीकाकरण</option>
+                            <option value="pregnancy_diagnosis" {{ old('services') == 'pregnancy_diagnosis' ? 'selected' : '' }}>गर्भावस्था निदान</option>
+                            <option value="artificial_insemination" {{ old('services') == 'artificial_insemination' ? 'selected' : '' }}>कृत्रिम गर्भाधान</option>
+                            <option value="livestock_insurance" {{ old('services') == 'livestock_insurance' ? 'selected' : '' }}>पशुधन बीमा</option>
+                            <option value="calving" {{ old('services') == 'calving' ? 'selected' : '' }}>बछड़ा जनन</option>
                         </select>
                     </div>
-                    <!-- <div class="form-group col-md-12" id="maiti-div">
-                        <label for="inputEmail4">मैत्री</label> 
-                        <select class="form-control" name="maitri_id" id="matries" required>
-                            @if(count($maitries)>0)
+                    <div class="form-group col-md-12" id="maiti-div">
+                        <label for="matries">मैत्री</label>
+                        <select class="form-control" name="maitri_id" id="matries" {{ empty($farmer->district_id) ? 'disabled' : 'required' }}>
                             <option value="">एक का चयन करें</option>
-                            @foreach($maitries as $val)
-                            <option value="{{$val->id}}"> {{ucfirst($val->FirstName)}} {{ucfirst($val->LastName)}}</option>
-                            @endforeach
+                            @if($maitries->count() > 0)
+                                @foreach($maitries->groupBy('block') as $blockName => $blockMaitries)
+                                    @php
+                                        $blockLabel = $blockName ?: 'अन्य';
+                                        if (!empty($farmer->block) && $blockName == $farmer->block) {
+                                            $blockLabel .= ' (आपका विकास खण्ड)';
+                                        }
+                                    @endphp
+                                    <optgroup label="विकास खण्ड: {{ $blockLabel }}">
+                                        @foreach($blockMaitries as $val)
+                                            <option value="{{ $val->id }}" {{ old('maitri_id') == $val->id ? 'selected' : '' }}>
+                                                {{ $val->maitri_name }}
+                                                @if($val->maitri_mobile_no)
+                                                    ({{ $val->maitri_mobile_no }})
+                                                @endif
+                                                @if($val->center_name)
+                                                    - {{ $val->center_name }}
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            @elseif(empty($farmer->district_id))
+                                <option value="" disabled>ज़िला अपडेट करने के बाद मैत्री सूची दिखेगी</option>
                             @else
-                            <option>Data not found</option>
+                                <option value="" disabled>इस ज़िले में मैत्री उपलब्ध नहीं है</option>
                             @endif
                         </select>
-                    </div> -->
+                        <small class="text-muted">मैत्री केवल आपके ज़िले की दिखाई गई है, विकास खण्ड के अनुसार क्रम में।</small>
+                    </div>
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">संदेश</label>
                         <textarea id="request_message" class="form-control" required name="request_message" rows="10"
@@ -88,7 +115,8 @@
                 </div>
                 <div style="overflow:auto;margin-bottom:20px;">
                     <div style="margin-top: 5px;">
-                        <button type="submit" class="submit btn btn-primary buttonWizard" id="submitForm">जमा
+                        <button type="submit" class="submit btn btn-primary buttonWizard" id="submitForm"
+                            {{ empty($farmer->district_id) ? 'disabled' : '' }}>जमा
                             करे</button>
                     </div>
                 </div>
@@ -97,8 +125,6 @@
     </div>
 </div>
 
-@endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{{ asset('') }}js/google_Jsapi.js" type="text/javascript"></script>
 <script type="text/javascript">
 google.load("elements", "1", {
@@ -122,3 +148,5 @@ function onLoad() {
 }
 google.setOnLoadCallback(onLoad);
 </script>
+@endsection
+

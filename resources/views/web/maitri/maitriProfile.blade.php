@@ -58,7 +58,7 @@
                             <span>नाम</span>
                         </label>
                         <input type="text" class="form-control" required name="first_name" id="first_name"
-                            value="{{ $data->FirstName ?? '' }}" placeholder="नाम" autocomplete="off">
+                            value="{{ $data->maitri_name ?? '' }}" placeholder="नाम" autocomplete="off">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -66,15 +66,7 @@
                             <span>मोबाइल नंबर</span>
                         </label>
                         <input type="number" class="form-control" required id="MobileNumber" name="MobileNumber"
-                            value="{{ $data->MobileNumber ?? '' }}" placeholder="मोबाइल नंबर" autocomplete="off">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="AlternateMobile">
-                            <span>वैकल्पिक मोबाइल नंबर</span>
-                        </label>
-                        <input type="number" class="form-control" required id="AlternateMobile" name="AlternateMobile"
-                            value="{{ $data->AlternateMobile ?? '' }}" placeholder="वैकल्पिक मोबाइल नंबर" autocomplete="off">
+                            value="{{ $data->maitri_mobile_no ?? '' }}" placeholder="मोबाइल नंबर" autocomplete="off">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -107,6 +99,12 @@
                     <div class="form-group col-md-6">
                         <label for="mandal"> <span>ज़िला</span></label>
                         <select name="district_id" id="mandal" required class="form-control">
+                            <option value="">ज़िला चुनें</option>
+                            @foreach($districts as $district)
+                            <option value="{{ $district->id }}"
+                                {{ isset($data->district_id) && $data->district_id == $district->id ? 'selected' : '' }}>
+                                {{ $district->name_hindi }}</option>
+                            @endforeach
 
                         </select>
                     </div>

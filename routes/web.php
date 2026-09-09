@@ -184,7 +184,7 @@ Route::group(['middleware' => ['auth:institute_auth,web']], function () {
 
 
 
-Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
+Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], function () {
 
 
 
@@ -283,6 +283,8 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     Route::get("maitri-listing", [MaitriController::class, 'maitriListing'])->name('maitri-listing');
     Route::get("getallmaitrifilterlist", [MaitriController::class, 'maitriListing'])->name('getallmaitrifilterlist');
+    Route::get("edit-maitri-data/{id}/edit", [MaitriController::class, 'editMaitriData'])->name('edit-maitri-data');
+    Route::post("edit-maitri-data/{id}/update", [MaitriController::class, 'updateMaitriData'])->name('update-maitri-data');
 
     Route::get('/matri-to-fetch-record/{id}', [MaitriController::class, 'fetchRecord'])->name('matri-to-fetch-record');
     Route::post('/matri-to-update-record', [MaitriController::class, 'updateRecord'])->name('matri-to-update-record');
@@ -497,6 +499,8 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
 
     Route::get("farmers-data", [App\Http\Controllers\AdminInventoryController::class, 'farmarsData'])->name('farmers-data');
+    Route::get("edit-farmer-record/{id}/edit", [App\Http\Controllers\AdminInventoryController::class, 'editFarmerRecord'])->name('edit-farmer-record');
+    Route::post("edit-farmer-record/{id}/update", [App\Http\Controllers\AdminInventoryController::class, 'updateFarmerRecord'])->name('update-farmer-record');
     Route::get("exportFarmarList", [App\Http\Controllers\AdminInventoryController::class, 'exportFarmarList'])->name('exportFarmarList');
 
     Route::get("inactive-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'inactiveMaitriAicenterData'])->name('inactive-maitri-aicenter');
@@ -570,11 +574,15 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     /*-------------------CVO, Director and Super Admin End-----------------------------------------------------------------------------------*/
 
     // google map routes
+
+    Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
+
 });
 
 
 
 Route::post('login-farmer-maitri', [App\Http\Controllers\UsersController::class, 'loginFarmerMaitri'])->name('login-farmer-maitri');
+Route::post('maitri-farmer-login', [App\Http\Controllers\UsersController::class, 'maitriFarmerLogin'])->name('maitri-farmer-login');
 Route::get('send-otp-faramer-maitri', [App\Http\Controllers\UsersController::class, 'sendOtpToLogin'])->name('send-otp-faramer-maitri');
 
 Route::get("farmer-register", [App\Http\Controllers\UsersController::class, 'index'])->name('farmer-register');
@@ -589,7 +597,6 @@ Route::post("maitri-add", [App\Http\Controllers\UsersController::class, 'maitriR
 
 Route::get("cattle-buffalo", [App\Http\Controllers\DemandRequestController::class, 'cattleBuffalo'])->name('cattle-buffalo');
 Route::get("hierarchy-chart", [App\Http\Controllers\DemandRequestController::class, 'hierarchyChart'])->name('hierarchy-chart');
-Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
 Route::get("get-all-district", [DemandRequestController::class, 'getDistrictAll'])->name('get-all-district');
 Route::get("get-all-tehsil", [DemandRequestController::class, 'getTehsilAll'])->name('get-all-tehsil');
 Route::get("get-all-tehsil-new", [DemandRequestController::class, 'getTehsilAllNew'])->name('get-all-tehsil-new');

@@ -9,7 +9,7 @@
                 <th>क्र. सं.</th>
                 <!-- <th>User Name</th> -->
                 <th>सेवा का नाम</th>
-                <!-- <th>Maitri Name</th> -->
+                <th>मैत्री</th>
                 <th>संदेश</th>
                 <th>स्थिति देखे</th>
                 <!-- <th>Action</th> -->
@@ -38,6 +38,7 @@
                 @else
                 <td>--</td>
                 @endif
+                <td>{{ $row->maitri->maitri_name ?? '--' }}</td>
                 <td>{{$row->request_message}}</td>
                 @if($row->status==1)
                 <td> <button class="btn btn-primary">नया है</button></td>

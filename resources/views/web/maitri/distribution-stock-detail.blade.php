@@ -5,7 +5,7 @@
     .table-responsive {
         display: inline-table;
         width: 100%;
-    
+
     }
 </style>
 <div class="container main-div">
@@ -48,4 +48,4 @@
         </tbody>
     </table>
 </div>
-@endsection 
+@endsection

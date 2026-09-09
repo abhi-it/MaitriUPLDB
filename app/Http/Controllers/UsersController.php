@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Traininglist;
 use App\Models\Cliniclocation;
+use App\Models\Maitri;
 use App\Models\Manganurodhdata;
 use DB;
 
@@ -119,10 +120,10 @@ class UsersController extends Controller{
             foreach($errors->all() as $key => $value){
                  return redirect()->back()->with('error',ucfirst($value));
             }
-        }else{ 
+        }else{
             if($request->MobileNumber){
                 $district_id = Districts::where('name_hindi', 'LIKE', '%'.$request->district_id.'%')->first();
-               
+
                 $user  = new FarmerUser([
                     'name'              => $request->first_name,
                     'FirstName'         => $request->first_name,
@@ -144,7 +145,7 @@ class UsersController extends Controller{
                 $animal_types = $request->animal_type;
                 $breeds = $request->breeds;
                 $cattale_numbers = $request->cattale_no;
-                
+
                 foreach ($milk_days as $index => $milk_day) {
                     DB::table('user_animal_information')->insert([
                         'user_id'      => $uid,
@@ -163,6 +164,34 @@ class UsersController extends Controller{
         $id         = $request->id;
         $districts  = Districts::where(['division_id' => $id])->get();
         return $districts;
+    }
+
+
+    public function maitriFarmerLogin(Request $request)
+    {
+
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $userFarmer = FarmerUser::where('email', $email)->first();
+        $userMaitri = Maitri::where('email', $email)->first();
+
+        if ($userFarmer && \Hash::check($password, $userFarmer->password)) {
+            Auth::guard('webFarmer')->login($userFarmer);
+            return redirect()->route('farmer-dashboard');
+        }
+
+        if ($userMaitri && \Hash::check($password, $userMaitri->password)) {
+            Auth::guard('webMaitri')->login($userMaitri);
+            return redirect()->route('maitri-dashboard');
+        }
+
+        return redirect()->route('login' , ['isMaitriFarmer' => true])->with('error', 'Invalid email or password');
     }
 
     public function maitriform(){

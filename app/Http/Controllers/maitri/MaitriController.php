@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Animalbreeding;
+use App\Models\Maitri;
 use App\Models\Manganurodhdata;
+use App\Models\Tehsil;
 use App\Models\Zonestock;
+use Complex\divideByTest;
 use DB;
 
 class MaitriController extends Controller{
@@ -41,7 +44,7 @@ class MaitriController extends Controller{
         $id = Auth::user()->id;
         $districts  = Districts::get();
         $divisions  = Divisions::get();
-        $data    =  User::where(['id'=>$id])->first();
+        $data    =  Maitri::where(['id'=>$id])->first();
         return view('web.maitri.maitriProfile',compact('data','id','districts','divisions'));
     }
 
@@ -69,7 +72,6 @@ class MaitriController extends Controller{
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'MobileNumber'    => 'required|string|max:15',
-            'AlternateMobile' => 'required|string|max:15',
             'district_id'     => 'required|string',
             'division_id'     => 'nullable|integer',
             'gram_panchayat'  => 'nullable|string|max:255',
@@ -79,22 +81,23 @@ class MaitriController extends Controller{
             'gender'          => 'required|string',
         ]);
         $user_id = $request->user_id;
-        $mairtiUser = User::findOrFail($user_id);
+        $mairtiUser = Maitri::findOrFail($user_id);
         $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')
                                ->orWhere('id', $request->district_id)->first();
- 
-        $mairtiUser->name           = $request->first_name;
-        $mairtiUser->FirstName      = $request->first_name;
-        $mairtiUser->MobileNumber   = $request->MobileNumber;
+
+        $division = Divisions::findOrFail($request->division_id);
+        $mairtiUser->maitri_name           = $request->first_name;
+        $mairtiUser->maitri_mobile_no   = $request->MobileNumber;
         $mairtiUser->gender         = $request->gender;
         $mairtiUser->district_id    = $district ? $district->id : null;
         $mairtiUser->division_id    = $request->division_id;
+        $mairtiUser->janpad_name   = $district->name_hindi;
+        $mairtiUser->mandal_name   = $division->name_hindi;
         $mairtiUser->gram_panchayat = $request->gram_panchayat;
         $mairtiUser->post_office    = $request->post_office;
         $mairtiUser->pincode        = $request->pincode;
         $mairtiUser->block          = $request->block;
         $mairtiUser->tehsil         = $request->tehsil;
-        $mairtiUser->AlternateMobile         = $request->AlternateMobile;
         $mairtiUser->save();
         return redirect('/maitri-details')->with('success', 'प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!');
     }
@@ -120,7 +123,7 @@ class MaitriController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
-            
+
             if($request->hasfile('animal_file')){
                 $file = $request->animal_file;
                 $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
@@ -128,14 +131,14 @@ class MaitriController extends Controller{
                     $file = $request->file('animal_file');
                     if ($file) {
                         $fileName = 'file_' . time() . '.' . $file->extension();
-                    
+
                         $destinationPath = public_path('assets/animals/');
                         if (!file_exists($destinationPath)) {
-                            mkdir($destinationPath, 0777, true); 
+                            mkdir($destinationPath, 0777, true);
                         }
-                    
+
                         $file->move($destinationPath, $fileName);
-                    
+
                         $data = [
                             'file'    => $fileName,
                             'file_path' => asset('assets/animals/' . $fileName),
@@ -150,7 +153,7 @@ class MaitriController extends Controller{
                     }
                 }
             }
-            
+
        }
 
     }
@@ -185,9 +188,13 @@ class MaitriController extends Controller{
 
     public function maitriDistributionStockDetail(){
         $user = Auth::user();
-        $manganurodhUser = Manganurodhdata::where('maitri_mobile_no', $user->MobileNumber)->first();
-        $manganurdh_id = $manganurodhUser['id'];
-        $maitriStocks = Zonestock::where(['location' => 'maitri', 'maitri_id' => $manganurdh_id])->get();
+        $manganurodhUser = Manganurodhdata::where('maitri_mobile_no', $user->maitri_mobile_no)->first();
+        $maitriStocks = [];
+        if($manganurodhUser){
+            $manganurdh_id = $manganurodhUser->id;
+            $maitriStocks = Zonestock::where(['location' => 'maitri', 'maitri_id' => $manganurdh_id])->get();
+        }
+
         // echo "<pre>"; print_r($maitriStocks->toArray()); exit;
 
         return view('web.maitri.distribution-stock-detail', compact('maitriStocks'));

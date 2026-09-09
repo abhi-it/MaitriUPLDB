@@ -1055,6 +1055,7 @@
                                 $user = Auth::user();
                                 $institute = Auth::guard('institute_auth')->user();
                                 $farmer = Auth::guard('webFarmer')->user();
+                                $maitri = Auth::guard('webMaitri')->user();
                             @endphp
 
                             @if($user)
@@ -1082,6 +1083,15 @@
                                     <span data-hi="लॉग आउट" data-en="Logout"></span>
                                     &nbsp;</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @elseif($maitri)
+                                Welcome,&nbsp;{{ $maitri->name }} |
+                                <a href="{{ route('maitri-logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('maitri-logout-form').submit();">
+                                    <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                    &nbsp;</a>
+                                <form id="maitri-logout-form" action="{{ route('maitri-logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             @else

@@ -11,6 +11,16 @@
     <h3 class="text-center fw-bold m-4">
         <span data-hi="किसान पंजीकरण डेटा" data-en="Farmer Registration Data"></span>
     </h3>
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    @if(session()->has('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+    @endif
 
     <div class="form-comman">
         <form method="get" action="{{ Request::url() }}">
@@ -83,6 +93,7 @@
                 <th><span data-hi="नस्ल" data-en="Breed"></span></th>
                 <th><span data-hi="कैटेल संख्या" data-en="Cattale Num"></span></th>
                 <th><span data-hi="दूध/प्रतिदिन/प्रति पशु" data-en="Milk/Day/Per Animal"></span></th>
+                <th><span data-hi="क्रिया" data-en="Action"></span></th>
             </tr>
         </thead>
         <tbody>
@@ -105,6 +116,7 @@
                 <td>{{ $data['breeds'] ?? 'N/A' }}</td>
                 <td>{{ $data['cattale_no'] ?? 'N/A' }}</td>
                 <td>{{ $data['milk_day'] ?? 'N/A' }}</td>
+                <td><a href="{{ route('edit-farmer-record', $data['id']) }}" class="btn btn-primary">Edit</a></td>
             </tr>
             @php $i++ @endphp
             @endforeach

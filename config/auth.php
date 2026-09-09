@@ -35,6 +35,11 @@ return [
             'provider' => 'institute_auth',
         ],
 
+        'webMaitri' => [
+            'driver' => 'session',
+            'provider' => 'maitri_users',
+        ],
+
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users'
@@ -75,6 +80,11 @@ return [
         'institute_auth' => [
             'driver' => 'eloquent',
             'model' => App\Models\Institute::class,
+        ],
+
+        'maitri_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Maitri::class,
         ],
 
         // 'users' => [

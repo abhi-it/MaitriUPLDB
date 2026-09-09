@@ -18,6 +18,8 @@ use App\Exports\MaitriListExport;
 use App\Exports\AIcenterExport;
 use App\Exports\AIAllCenterExport;
 use App\Exports\LocationExport;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use DB;
 
 class MaitriController extends Controller
@@ -37,16 +39,16 @@ class MaitriController extends Controller
 
    public function maitri_map() {
         $dist       =  Maitri::all()->unique('mandal_name')->toArray();
-        // $aicenter   = Cliniclocation::all()->unique('mandal_name')->toArray();//HospitalInstitute::all()->unique('address')->toArray(); 
+        // $aicenter   = Cliniclocation::all()->unique('mandal_name')->toArray();//HospitalInstitute::all()->unique('address')->toArray();
         $aicenter   = DB::table('divisions')
                     ->join('clinic_location', 'divisions.name_hindi', '=', 'clinic_location.mandal_name')
                     ->select('divisions.name_hindi', 'clinic_location.mandal_name', DB::raw('COUNT(*) as count'))
                     ->where('clinic_location.status', 0)
                     ->groupBy('divisions.name_hindi', 'clinic_location.mandal_name')
                     ->get();
-       
+
         $division   = Divisions::all()->unique('name_hindi')->toArray();
-        $placeid    = Janpad::select('place_id')->distinct('name')->get()->pluck('place_id');   
+        $placeid    = Janpad::select('place_id')->distinct('name')->get()->pluck('place_id');
         $agency     = DB::table('livestock_agencies')->where(['type'=>'lc_agency'])->count();
         $station    = DB::table('livestock_agencies')->where(['type'=>'semen_station'])->count();
         $ivf        = DB::table('livestock_agencies')->where(['type'=>'ett_ivf'])->count();
@@ -60,10 +62,10 @@ class MaitriController extends Controller
                     ->join('districts', 'district_map_data.district_hi', '=', 'districts.name_hindi')
                     ->select('district_map_data.*', 'districts.*')
                     ->get();
- 
-        $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get(); 
+
+        $pdlab       =  DB::table('pregnancy_diagnosis_laboratory')->orderBy('id','ASC')->get();
         $cvblocks    =  DB::table('cryo_vessel_blocks')->orderBy('id','ASC')->get();
-       
+
         return view('maitri.maitri-map',[
             'data'      =>  $dist,
             'aicenter'  =>  $aicenter,
@@ -84,7 +86,7 @@ class MaitriController extends Controller
     }
 
     public function addUpdateMaitri(Request $request){
-        
+
         $maitri=new Maitri();
         $maitri->mandal_name=$request->mandal_name;
         $maitri->janpad_name=$request->janpad_name;
@@ -107,12 +109,12 @@ class MaitriController extends Controller
         $maitri->equipment_received=$request->equipment_received;
         $maitri->longitude=str_replace('-','.',$request->longitude);
         $maitri->latitude=str_replace('-','.',$request->latitude);
-        $maitri->save();        
+        $maitri->save();
         return redirect('maitri-form')->with('success', 'Data Added successfully!');
 
 
     }
-    
+
     public function importMaitries(Request $request){
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',
@@ -127,7 +129,7 @@ class MaitriController extends Controller
         $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$location}%")->get();
         $data['janapad']    = Janpad::where(['name'=>$location])->first();
         // $data['janapad']    = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
-      
+
         $divisionData       = Divisions::where('name_hindi', 'LIKE', '%'.$location.'%')->first();
         // $data['result'] =   DB::table('districts')
         //         ->select(
@@ -157,8 +159,8 @@ class MaitriController extends Controller
 
     public function allMaitriesData(Request $request){
         $data               = [];
-        $janpad             = $request->id; 
-        $mandal             = $request->mandal_name; 
+        $janpad             = $request->id;
+        $mandal             = $request->mandal_name;
         // $data['code']       = Janpad::where(['name'=>$janpad])->first();
         $data['code']       = Districts::where('name_hindi', 'LIKE', '%'.$janpad.'%')->first();
         $data['maitri']     = Maitri::where('mandal_name', 'like', "%{$mandal}%")
@@ -177,9 +179,104 @@ class MaitriController extends Controller
         }
         $data = $query->orderBy('id', 'DESC')->paginate(50);
         $items = $data->appends(request()->except('page'));
-        
+
         return view('maitri.maitri-listing',['data'=>$data,'dist'=>$dist,'items'=>$items]);
 
+    }
+
+    public function editMaitriData($id)
+    {
+        $maitri = Maitri::find($id);
+        if (!$maitri) {
+            return redirect()->route('maitri-listing')->with('error', 'Maitri not found.');
+        }
+
+        $divisions = Divisions::get();
+        $districts = Districts::when($maitri->division_id, function ($query) use ($maitri) {
+            return $query->where('division_id', $maitri->division_id);
+        })->get();
+
+        return view('maitri.edit', compact('maitri', 'divisions', 'districts'));
+    }
+
+    public function updateMaitriData(Request $request, $id)
+    {
+        $maitri = Maitri::find($id);
+        if (!$maitri) {
+            return redirect()->route('maitri-listing')->with('error', 'Maitri not found.');
+        }
+
+        if ($request->exists('email') && !$request->filled('email')) {
+            $request->merge(['email' => null]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'maitri_name'       => ['required', 'string', 'max:255'],
+            'maitri_mobile_no'  => ['required', 'unique:maitries,maitri_mobile_no,' . $maitri->id],
+            'email'             => ['nullable', 'email', 'unique:maitries,email,' . $maitri->id],
+            'password'          => ['nullable', 'string', 'min:8', 'confirmed'],
+            'division_id'       => ['required'],
+            'district_id'       => ['required'],
+            'gender'            => ['nullable', 'string'],
+            'tehsil'            => ['nullable', 'string', 'max:255'],
+            'block'             => ['nullable', 'string', 'max:255'],
+            'gram_panchayat'    => ['nullable', 'string', 'max:255'],
+            'post_office'       => ['nullable', 'string', 'max:255'],
+            'pincode'           => ['nullable', 'string', 'max:6'],
+            'father_name'       => ['nullable', 'string', 'max:255'],
+            'father_mobile_no'  => ['nullable', 'string', 'max:15'],
+            'adhaar_card'       => ['nullable', 'string', 'max:20'],
+            'certificate_no'    => ['nullable', 'string', 'max:255'],
+            'center_name'       => ['nullable', 'string', 'max:255'],
+            'any_bharat_id'     => ['nullable', 'string', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', ucfirst($validator->errors()->first()));
+        }
+
+        if (is_numeric($request->district_id)) {
+            $district = Districts::find($request->district_id);
+        } else {
+            $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+        }
+
+        $division = Divisions::find($request->division_id);
+
+        $maitri->maitri_name       = $request->maitri_name;
+        $maitri->maitri_mobile_no  = $request->maitri_mobile_no;
+        $maitri->gender            = $request->gender;
+        $maitri->division_id       = $request->division_id;
+        $maitri->district_id       = $district ? $district->id : $maitri->district_id;
+        $maitri->mandal_name       = $division ? $division->name_hindi : $maitri->mandal_name;
+        $maitri->janpad_name       = $district ? $district->name_hindi : $maitri->janpad_name;
+        $maitri->tehsil            = $request->tehsil;
+        $maitri->block             = $request->block;
+        $maitri->gram_panchayat    = $request->gram_panchayat;
+        $maitri->post_office       = $request->post_office;
+        $maitri->pincode           = $request->pincode;
+        $maitri->father_name       = $request->father_name;
+        $maitri->father_mobile_no  = $request->father_mobile_no;
+        $maitri->adhaar_card       = $request->adhaar_card;
+        $maitri->certificate_no    = $request->certificate_no;
+        $maitri->center_name       = $request->center_name;
+        $maitri->any_bharat_id     = $request->any_bharat_id;
+        $maitri->pass_date         = $request->pass_date;
+        $maitri->expiry_date       = $request->expiry_date;
+        $maitri->latitude          = $request->filled('latitude') ? str_replace('-', '.', $request->latitude) : $maitri->latitude;
+        $maitri->longitude         = $request->filled('longitude') ? str_replace('-', '.', $request->longitude) : $maitri->longitude;
+
+        if ($request->exists('email')) {
+            $maitri->email = $request->filled('email') ? $request->email : null;
+        }
+
+        if ($request->filled('password')) {
+            $maitri->password = Hash::make($request->password);
+        }
+
+        $maitri->save();
+
+        return redirect()->route('maitri-listing')->with('success', 'Maitri updated successfully.');
     }
 
     public function exportMaitri(Request $request){
@@ -216,13 +313,13 @@ class MaitriController extends Controller
             $data['code']       = Districts::where(['name_hindi' => $request->district])->first();
             $districtName       = $request->district;
             $divisionName       = $request->mandal_name;
-            
+
             $query = DB::table('clinic_location')
                     ->where('mandal_name', 'LIKE', '%'.$divisionName.'%')
                     ->where('janpad_name', 'LIKE', '%'.$districtName.'%')
                     ->where('status', 0)
                     ->get();
-           
+
 
             $data['aicenter'] = $query;
             return $data;
@@ -246,10 +343,10 @@ class MaitriController extends Controller
                             ->groupBy('janpad_name')
                             ->get();
 
-       
+
         return $data;
     }
-   
+
     public function getAllDistrictData(Request $request){
         $data               = [];
         $name               = $request->id;
@@ -272,7 +369,7 @@ class MaitriController extends Controller
         $data     = $query->select('mandal_name','janpad_name', 'block','type', 'name', 'lattitute', 'longitute')->get();
         return \Excel::download(new AIAllCenterExport($data), 'AllAiCenter-list.xlsx');
     }
-    
+
 
     public function exportLocations(Request $request){
         $query      = Districts::orderBy('id', 'DESC');
@@ -286,6 +383,6 @@ class MaitriController extends Controller
     public function getallLiveStockData(Request $request){
         $data  =  DB::table('livestock_agencies')->where(['type'=>$request->id])->get();
         return $data;
-      
+
     }
 }

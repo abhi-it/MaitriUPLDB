@@ -215,6 +215,8 @@ class CheckRole
                 'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',
+                'edit-farmer-record',
+                'update-farmer-record',
                 'exportFarmarList',
                 'create-mairti-aicenter-data',
                 'create-maitri-aicenter',
@@ -314,6 +316,8 @@ class CheckRole
                 'demand-requests-list',
                 'deleteRequests',
                 'maitri-listing',
+                'edit-maitri-data',
+                'update-maitri-data',
                 'getallmaitrifilterlist',
                 'getallofficers',
                 'exportselectedmaitries',
@@ -373,6 +377,8 @@ class CheckRole
                 'daily-dashboard',
                 'save-daily-dashboard',
                 'assignInstitute',
+                'edit-farmer-record',
+                'update-farmer-record',
             ],
 
             'Superadmin' => [
@@ -414,6 +420,8 @@ class CheckRole
                 'get-farmer-request',
                 'generate-certificate',
                 'farmers-data',
+                'edit-farmer-record',
+                'update-farmer-record',
                 'exportFarmarList',
                 'create-mairti-aicenter-data',
                 'create-maitri-aicenter',
@@ -516,6 +524,8 @@ class CheckRole
                 'demand-requests-list',
                 'deleteRequests',
                 'maitri-listing',
+                'edit-maitri-data',
+                'update-maitri-data',
                 'getallmaitrifilterlist',
                 'getallofficers',
                 'exportselectedmaitries',
@@ -584,6 +594,8 @@ class CheckRole
                 'check-stock-limit',
                 'assignInstitute',
                 'generate-maitri-certificate',
+                'edit-farmer-record',
+                'update-farmer-record',
             ],
             'Maitri' => [
                 'check-breeding-details',
@@ -604,6 +616,7 @@ class CheckRole
                 'update-maitri-details',
                 'animal-breeding',
                 'save-animal-breeding',
+                'demandRequests',
             ],
             'Farmer' => [
                 'update-farmer-details',
@@ -611,6 +624,7 @@ class CheckRole
                 'get-all-block',
                 'get-all-tehsil',
                 'get-all-district',
+                'getDistrict',
 
                 'check.user.details',
                 'farmer-dashboard',
@@ -625,6 +639,7 @@ class CheckRole
                 'add-yielding-animal',
                 'addUpdateAnimalDetails',
                 'farmer-details',
+                'demandRequests',
             ],
             'InventoryAdmin' => [
                 'admin-stock-form',
