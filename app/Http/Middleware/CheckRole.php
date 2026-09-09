@@ -90,7 +90,7 @@ class CheckRole
                 'check-stock-limit',
                 'change-password',
                 'changePasswordPost',
-                
+
                 'search-maitri-data',
                 'create-deo-user-form',
                 'deo-inventory',
@@ -137,6 +137,7 @@ class CheckRole
                 'district-store-data-step2',
                 'district-store-user-data',
                 'get-blocks',
+                'assignInstitute',
             ],
             'division' => [
 
@@ -151,7 +152,8 @@ class CheckRole
                 'division-store-data-step2',
                 'district-user-data-store',
                 'get-districts',
-            ],    
+                'assignInstitute',
+            ],
             'zone' => [
                 'change-password',
                 'changePasswordPost',
@@ -171,6 +173,7 @@ class CheckRole
                 'division-user-step2',
                 'store-division-user-data',
                 'get-divisions',
+                'assignInstitute',
             ],
             'User' => [
                 'dashboard',
@@ -196,7 +199,7 @@ class CheckRole
                 'documents-destroy',
                 'all-cvo',
                 'admin-stock-form',
-                
+
                 'correctdata-get',
                 'correctdata-store',
                 'correctdata-update',
@@ -350,7 +353,7 @@ class CheckRole
                 'create-event-news',
                 'check-zone-user',
                 'admin-distributed-record',
-                
+
                 'deo-user-step1',
                 'deo-user-store-step1',
                 'deo-user-step2',
@@ -369,6 +372,7 @@ class CheckRole
                 'check-stock-limit',
                 'daily-dashboard',
                 'save-daily-dashboard',
+                'assignInstitute',
             ],
 
             'Superadmin' => [
@@ -545,7 +549,7 @@ class CheckRole
                 'deo-user-store-step2',
                 'deo-operator-store-step2',
 
-          
+
                 'get-zone-divisions',
                 'district-deo-user-step1',
                 'district-Operator-store-step1',
@@ -556,7 +560,7 @@ class CheckRole
                 'zone-store-data',
                 'zone-user-create-form',
                 'zone-user-store-data',
-                
+
                 'update-user',
                 'edit-user',
                 'user-delete',
@@ -578,7 +582,9 @@ class CheckRole
                 'admin-inventory-record',
                 'admin-stock-save-data',
                 'check-stock-limit',
-            ], 
+                'assignInstitute',
+                'generate-maitri-certificate',
+            ],
             'Maitri' => [
                 'check-breeding-details',
                 'maitri-dashboard',
@@ -605,7 +611,7 @@ class CheckRole
                 'get-all-block',
                 'get-all-tehsil',
                 'get-all-district',
-                
+
                 'check.user.details',
                 'farmer-dashboard',
                 'get-all-maitri',
@@ -629,7 +635,12 @@ class CheckRole
                 'changePassword',
                 'admin-stock-save-data',
                 'saveDistributedFormData'
-            ]
+            ],
+
+            'institute' => [
+                'institute-dashboard',
+                'generate-maitri-certificate',
+            ],
 
             /*
             'Superadmin' => [

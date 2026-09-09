@@ -10,6 +10,9 @@ use App\Models\Districts;
 use App\Models\Avedan;
 use Illuminate\Support\Facades\DB;
 use App\Exports\ExportAvedan;
+use App\Models\Maitri;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class InstituteController extends Controller
 {
@@ -45,12 +48,17 @@ class InstituteController extends Controller
     {
         $request->validate([
             'name'=>'required',
+            'email'=>'required|email|unique:institutes,email',
+            'mobile'=>'required|numeric|unique:institutes,mobile|digits:10',
+            'password'=>'required|min:8',
+            'address'=>'required',
         ]);
 
         $data = new Institute([
             'name' => $request->get('name'),
 			'mobile' => $request->get('mobile'),
 			'email' => $request->get('email'),
+			'password' => Hash::make($request->get('password')),
 			'address' => $request->get('address'),
         ]);
         $data->save();
@@ -91,8 +99,14 @@ class InstituteController extends Controller
     public function update(Request $request, Institute $institute)
     {
         $request->validate([
-            'name'=>'required',
+            'name'    => 'required',
+            'mobile'  => 'required|numeric|digits:10|unique:institutes,mobile,' . $institute->id,
+            'email'   => 'required|email|unique:institutes,email,' . $institute->id,
+            'address' => 'required',
+            'lattitude' => 'required',
+            'longitude' => 'required',
         ]);
+
 
 		$institute->name =  $request->get('name');
 		$institute->mobile =  $request->get('mobile');
@@ -269,5 +283,128 @@ class InstituteController extends Controller
 
 	}
 
+
+    public function dashboard()
+    {
+        // dd('dashboard');
+        $applications = Avedan::where('institute_id', Auth::guard('institute_auth')->user()->id)->get();
+        return view('web.institute.dashboard', compact('applications'));
+    }
+
+    public function avedanList()
+    {
+        $applications = Avedan::where('institute_id', Auth::guard('institute_auth')->user()->id)->orderBy('id', 'desc')->get();
+        return view('web.institute.avedanList', compact('applications'));
+    }
+
+    public function avedanDetails($id)
+    {
+        $result = Avedan::find($id);
+        $waitingButtonShow = false;
+
+        return view('web.institute.avedanDetails', compact('result', 'waitingButtonShow'));
+    }
+
+    public function generateMaitriCertificate(Request $request)
+    {
+        $request->validate([
+            'certificate_no' => 'required',
+            'pass_date' => 'required',
+            'expiry_date' => 'required',
+            'any_bharat_id' => 'required',
+            'password' => 'required',
+            'id' => 'required',
+        ]);
+
+        $application = Avedan::find($request->id);
+        if(!$application) {
+            return response()->json(['error' => 'Application not found'], 404);
+        }
+
+        if($application->maitri_id) {
+            return response()->json(['error' => 'Application already has a Maitri certificate'], 400);
+        }
+
+        if(!$application->email) {
+            return response()->json(['error' => 'Application email not found'], 400);
+        }
+        if(!$application->mobile) {
+            return response()->json(['error' => 'Application mobile not found'], 400);
+        }
+
+        if(Maitri::where('email', $application->email)->exists()) {
+            return response()->json(['error' => 'Maitri email already exists'], 400);
+        }
+
+        if(Maitri::where('maitri_mobile_no', $application->mobile)->exists()) {
+            return response()->json(['error' => 'Maitri mobile already exists'], 400);
+        }
+
+        if(Maitri::where('certificate_no', $request->certificate_no)->exists()) {
+            return response()->json(['error' => 'Certificate number already exists'], 400);
+        }
+
+        $institute = Institute::find($application->institute_id);
+        if(!$institute) {
+            return response()->json(['error' => 'Institute not found'], 400);
+        }
+
+        $maitri = Maitri::create([
+            'maitri_name' => $application->applicant_name,
+            'maitri_mobile_no' => $application->mobile,
+            'gram_panchayat' => $application->gram_panchayat_name,
+            'post_office' => $application->post_office,
+            'tehsil' => $application->tehsil,
+            'father_name' => $application->fname,
+            'father_mobile_no' => $application->alternet_mobile,
+            'gender' => $application->gender,
+            'email' => $application->email,
+            'password' => Hash::make($request->password),
+            'center_name' => $institute->name,
+            'pass_date' => $request->pass_date,
+            'expiry_date' => $request->expiry_date,
+            'any_bharat_id' => $request->any_bharat_id,
+            'certificate_no' => $request->certificate_no,
+            'pincode' => $application->pincode,
+            'role_id' => 3,
+            'role' => 'Maitri',
+            'status' => 0,
+            'newMaitri' => 1,
+            'avedan_id' => $application->id,
+        ]);
+
+        $application->maitri_id = $maitri->id;
+        $application->save();
+
+        return response()->json(['success' => 'Certificate generated successfully', 'certificate_url' => route('certificate-preview', $maitri->id)], 200);
+
+    }
+
+
+    public function certificatePreview($id)
+    {
+        try {
+            $maitri = Maitri::findOrFail($id);
+
+            $data = [
+                'traineeName' => $maitri->name ?? 'Recipient Name',
+                'completionDate' => $maitri->completion_date ? $maitri->completion_date->format('d F Y') : now()->format('d F Y'),
+                'certificateId' => $maitri->certificate_no ?? 'MAITRI-2026-0001',
+                'maitri' => $maitri
+            ];
+
+            return view('maitri.certificates', $data);
+
+        } catch (\Exception $e) {
+            abort(404, 'Certificate not found');
+        }
+    }
+
+
+    public function instituteLogout()
+    {
+        Auth::guard('institute_auth')->logout();
+        return redirect()->route('login')->with('success', 'You have been logged out successfully!');
+    }
 
 }

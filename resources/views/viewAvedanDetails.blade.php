@@ -152,7 +152,7 @@
                     <label for="inputEmail4">लिंग</label> : {{ $result->gender }}
                     <span class="form-control-span" id="gender1"></span>
                 </div>
-                
+
                 @if($result->gender == 'महिला')
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">पशु सखी/आजीविका सखी (एनआरएलएम)</label> : {{ $result->pashu_sakhi == '1' ? 'हाँ' : 'नहीं' }}
@@ -218,7 +218,7 @@
 
             <div class="row">
                 <h3 class="mb-3 fw-bold">शैक्षिक योग्यता व अन्य विवरण </h3>
-              
+
                 <div class="row">
                     <table class="table table-responsive">
                         <tr>
@@ -437,7 +437,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }}  
+                        <label for="inputEmail4">राष्ट्रीयता </label> : {{ $result->nationality }}
                     </div>
 
                     <div class="form-group col-md-6">
@@ -455,10 +455,10 @@
                         @endif
                     </div>
                 </div>
-                            
+
 
                 @php
-                    $today = now()->toDateString(); 
+                    $today = now()->toDateString();
                     $districtOfficerStartDate = '2025-09-19';
                 @endphp
 
@@ -476,9 +476,9 @@
                         @if($result->is_approved == 0 || $result->is_approved == 1 || $result->is_approved == 2 || $result->is_approved == 4)
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">
-                                प्रतीक्षा सूची बनायें 
+                                प्रतीक्षा सूची बनायें
                             </a>
-                        </div>   
+                        </div>
                         @endif
                     @endif
                     @if(auth()->user()->user_type == 'Director' || auth()->user()->user_type == 'Admin')
@@ -486,7 +486,7 @@
                         <div class="col-md-4">
                         <a href="javascript:void(0)" class="btn btn-danger  text-white w-100 exampleModalCenter"
                             data-toggle="modal" data-target="#exampleModalCenter">अस्वीकार  </a>
-                        </div>    
+                        </div>
                         @endif
                     @endif
                     </div>
@@ -498,13 +498,13 @@
                         <div class="col-md-4">
                             <a href="{{ url('avedanStatus') }}/{{ $result->id }}/3" class="btn btn-warning w-100">प्रतीक्षा सूची
                             बनायें </a>
-                        </div>   
+                        </div>
                         @endif
                         @if ($result->is_approved == 0 || $result->is_approved ==3 || $result->is_approved == 4))
                         <div class="col-md-4">
-                            <a href="javascript:void(0)" class="btn btn-danger text-white w-100 exampleModalCenter" 
+                            <a href="javascript:void(0)" class="btn btn-danger text-white w-100 exampleModalCenter"
                             data-toggle="modal" data-target="#exampleModalCenter"> अस्वीकार   </a>
-                        </div>  
+                        </div>
                         @endif
                     </div>
                     @endif
@@ -522,8 +522,8 @@
                 @endif
 
             </div>
-            
-          
+
+
 
 
             <!-- Modal -->
@@ -601,9 +601,9 @@
             </script>
 
             <!--------Comment Start here------------>
-           
+
             <!-- @php $coments = Rejectcomment::where('application_id', '=', $result->id)->first()@endphp -->
-         
+
             <!--------Comment End here------------>
 
         </div>

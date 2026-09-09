@@ -19,11 +19,11 @@
             <hr>
             <div class="row">
             <div class="form-group col-md-6">
-                    <label for="inputEmail4"> <span data-hi="पहला नाम" data-en="First Name"></span>  </label> 
+                    <label for="inputEmail4"> <span data-hi="पहला नाम" data-en="First Name"></span>  </label>
                     <input type="text" class="form-control" name="first_name" id="first_name" required data-placeholder-hi="पहला नाम " autocomplete="off" data-placeholder-en="First Name">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"> <span data-hi="उपनाम" data-en="Last Name"></span>  </label> 
+                    <label for="inputEmail4"> <span data-hi="उपनाम" data-en="Last Name"></span>  </label>
                     <input type="text" class="form-control" name="last_name" id="last_name"  required data-placeholder-hi="उपनाम" autocomplete="off" data-placeholder-en="Last Name">
                 </div>
 
@@ -33,22 +33,22 @@
                     <input type="text" class="form-control" name="email" id="email" required data-placeholder-hi="ईमेल" autocomplete="off" data-placeholder-en="Email">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="पासवर्ड" data-en="Password"></span> </label> 
+                    <label for="inputPassword4"><span data-hi="पासवर्ड" data-en="Password"></span> </label>
                     <input type="password" class="form-control" id="password" name="password"  required data-placeholder-hi="पासवर्ड" autocomplete="off" data-placeholder-en="Password">
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span> </label> 
+                    <label for="inputPassword4"><span data-hi="मोबाइल नंबर" data-en="Mobile Number"></span> </label>
                     <input type="number" class="form-control" id="MobileNumber" name="MobileNumber" required data-placeholder-hi="मोबाइल नंबर" autocomplete="off" data-placeholder-en="Mobile Number">
                 </div>
 
 
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="भारत पशुधन आईडी" data-en="Bharat Livestock ID"></span> </label> 
+                    <label for="inputPassword4"><span data-hi="भारत पशुधन आईडी" data-en="Bharat Livestock ID"></span> </label>
                     <input type="text" class="form-control" id="bharat_id" name="bharat_id" required data-placeholder-hi="भारत पशुधन आईडी" autocomplete="off" data-placeholder-en="Bharat Livestock ID">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"><span data-hi="एआई सेंटर" data-en="AI Center"></span> </label> 
+                    <label for="inputEmail4"><span data-hi="एआई सेंटर" data-en="AI Center"></span> </label>
                     <select class="form-control" name="ai_center" id="ai_center" required>
                         <option value="" data-hi="किसी एक को चुनें" data-en="select one"></option>
                         @foreach($aicenter as $val)
@@ -57,11 +57,11 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="प्रशिक्षण केंद्र" data-en="Training Center"></span> </label> 
+                    <label for="inputPassword4"><span data-hi="प्रशिक्षण केंद्र" data-en="Training Center"></span> </label>
                     <input type="text" class="form-control" id="traing_center" name="traing_center" required data-placeholder-hi="प्रशिक्षण केंद्र" autocomplete="off" data-placeholder-en="Training Center">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"><span data-hi="लिंग" data-en="Gender"></span></label> 
+                    <label for="inputEmail4"><span data-hi="लिंग" data-en="Gender"></span></label>
                     <select class="form-control" name="gender" id="gender" required>
                         <option value="" data-hi="किसी एक को चुनें" data-en="select one"></option>
                         <option value="male" data-hi="पुरुष" data-en="Male"></option>
@@ -70,7 +70,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"><span data-hi="मंडल का नाम" data-en="Mandal"></span> </label> 
+                    <label for="inputEmail4"><span data-hi="मंडल का नाम" data-en="Mandal"></span> </label>
                     <select class="form-control" name="division_id" id="divisionID">
                     <option value="" data-hi="किसी एक को चुनें" data-en="select one">किसी एक को चुनें</option>
                         @foreach($divisions as $val)
@@ -79,52 +79,52 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"> <span data-hi="जिला" data-en="District"></span> </label> 
+                    <label for="inputEmail4"> <span data-hi="जिला" data-en="District"></span> </label>
                     <select class="form-control" name="district_id" id="districID" >
-                        
+
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"> <span data-hi="ब्लॉक" data-en="Block"></span> </label> 
+                    <label for="inputEmail4"> <span data-hi="ब्लॉक" data-en="Block"></span> </label>
                     <select class="form-control" name="block" id="block" >
-                        
+
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span>   </label> 
+                    <label for="inputEmail4"> <span data-hi="तहसील" data-en="Tehsil"></span>   </label>
                     <select class="form-control" name="tehsil" id="tehsil" >
-                        
+
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"> <span data-hi="ग्राम पंचायत" data-en="Gram Panchayat"></span>  </label> 
+                    <label for="inputPassword4"> <span data-hi="ग्राम पंचायत" data-en="Gram Panchayat"></span>  </label>
                         <select class="form-control" name="gram_panchayat" id="gram_panchayat" >
-                        
+
                         </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="पोस्ट ऑफ़िस" data-en="Post Office"></span>  </label> 
+                    <label for="inputPassword4"><span data-hi="पोस्ट ऑफ़िस" data-en="Post Office"></span>  </label>
                         <select class="form-control" name="post_office" id="post_office" >
-                        
+
                         </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4"><span data-hi="ग्राम" data-en="Village"></span>  </label> 
+                    <label for="inputPassword4"><span data-hi="ग्राम" data-en="Village"></span>  </label>
                         <select class="form-control" name="village" id="village" >
-                        
+
                         </select>
                 </div>
 
                 <!-- <div class="form-group col-md-6">
-                    <label for="inputPassword4">पोस्ट ऑफ़िस</label> 
+                    <label for="inputPassword4">पोस्ट ऑफ़िस</label>
                     <input type="text" class="form-control" id="post_office" name="post_office" required placeholder="पोस्ट ऑफ़िस" autocomplete="off" >
                 </div> -->
                 <!-- <div class="form-group col-md-6">
-                    <label for="inputPassword4">ब्लॉक</label> 
+                    <label for="inputPassword4">ब्लॉक</label>
                     <input type="text" class="form-control" id="block" name="block" required placeholder="ब्लॉक" autocomplete="off" >
                 </div> -->
                 <!-- <div class="form-group col-md-6">
-                    <label for="inputPassword4">तहसील</label> 
+                    <label for="inputPassword4">तहसील</label>
                     <input type="text" class="form-control" id="tehsil" name="tehsil" required placeholder="तहसील" autocomplete="off" >
                 </div> -->
             </div>
@@ -132,12 +132,12 @@
             <div class="row">
                 <div class="mb-4 mt-4 text-center" >
                     <button type="submit" class="btn btn-primary submit buttonWizard">
-                        <span data-hi="सबमिट" data-en="Submit"></span>    
+                        <span data-hi="सबमिट" data-en="Submit"></span>
                     </button>
                 </div>
             </div>
 </div>
-@endsection 
+@endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{{ asset('') }}js/google_Jsapi.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -170,8 +170,8 @@
         $('#gram_panchayat').prop('disabled', true);
         $('#village').prop('disabled', true);
         $('#post_office').prop('disabled', true);
-        
-        
+
+
         $('#divisionID').change(function() {
             $('#districID').prop('disabled', true);
             $('#block').prop('disabled',true);

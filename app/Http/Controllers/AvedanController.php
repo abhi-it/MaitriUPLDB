@@ -26,7 +26,7 @@ class AvedanController extends Controller
     public function index()
     {
 		/*-----------Start Check Start Avedan----------------------*/
-        
+
 		date_default_timezone_set("Asia/Kolkata");
 		$result = Setting::find(2);
 		$start_date   = Carbon::parse($result->start_date);
@@ -41,27 +41,27 @@ class AvedanController extends Controller
         } else {
             return redirect('/avedan-karein');
         }
-		
+
 		/*-----------End Check Start Avedan----------------------*/
-		
-		
+
+
 		if(\Session::has('applicationNumber'))
 		{
 			$applicationNumber = \Session::get('applicationNumber');
 			$result = Avedantemps::where('applicationNumber', '=', $applicationNumber)->first();
 			//echo '<pre>';print_r($result);exit;
 		}else{
-			
+
 			$result = new Avedantemps();
 		}
-		
+
 		if(empty($result))
 		{
 			$result = new Avedantemps();
 		}
 
 		//echo '<pre>';print_r($result);exit;
-		
+
 		$setting = Setting::find(1);
 		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
 		//echo '<pre>';print_r($setting->start_date);exit;
@@ -73,46 +73,46 @@ class AvedanController extends Controller
     public function test()
     {
 		/*-----------Start Check Start Avedan----------------------*/
-        
+
 		date_default_timezone_set("Asia/Kolkata");
 		$result = Setting::find(2);
 		$start_date = \Carbon\Carbon::parse($result->start_date)->format('Y-m-d');
 		$end_date = \Carbon\Carbon::parse($result->end_date)->format('Y-m-d');
 		$current_date = \Carbon\Carbon::parse(now())->format('Y-m-d h:i:s'); ;
-		$expireTime = date('Y-m-d h:i:s', strtotime($end_date. ' + 18 hours')); 
+		$expireTime = date('Y-m-d h:i:s', strtotime($end_date. ' + 18 hours'));
 		$expireDateTime = strtotime($expireTime);
 		$currentDateTime = strtotime($current_date);
-		
+
         $avedanStart = 1;
 		// if($currentDateTime<=$expireDateTime)
 		// {
-			
+
 		// }
         // else{
-			
+
 		// 	return redirect('/avedan-karein');
 		// }
-		
+
 		/*-----------End Check Start Avedan----------------------*/
-		
-		
+
+
 		// if(\Session::has('applicationNumber'))
 		// {
 		// 	$applicationNumber = \Session::get('applicationNumber');
 		// 	$result = Avedantemps::where('applicationNumber', '=', $applicationNumber)->first();
 		// 	//echo '<pre>';print_r($result);exit;
 		// }else{
-			
+
 		// 	$result = new Avedantemps();
 		// }
-		
+
 		// if(empty($result))
 		// {
 		// 	$result = new Avedantemps();
 		// }
 
 		//echo '<pre>';print_r($result);exit;
-		
+
 		$setting = Setting::find(1);
 		$ageCalcultedFrom = \Carbon\Carbon::parse($setting->start_date)->format('d/m/Y');
 		//echo '<pre>';print_r($setting->start_date);exit;
@@ -128,7 +128,7 @@ class AvedanController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -137,7 +137,7 @@ class AvedanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	 
+
 	 public function getTempData(Request $request)
 	 {
         /*--- Start Generate Application Number-------------------*/
@@ -152,7 +152,7 @@ class AvedanController extends Controller
 		$applicationNumber = 'AVN' . $zeros . $autoID . date('dmY');
 		//echo $applicationNumber;exit;
 		/*--- End Generate Application Number-------------------*/
-		 
+
 	   $permanent_address_proof =  '';
 	   $training_certificate =  '';
 	   $id_upload =  '';
@@ -168,69 +168,69 @@ class AvedanController extends Controller
 	   $postgraduation_marksheet =  '';
 	   $postgraduation_certificate =  '';
 	   $health_certificate =  '';
-        
-	   
+
+
 	   /*--------------------Start Calculation for High School---------------*/
 	   $high_percentage = $request->get('high_percentage');
 	   $high_school_calculation = round(($high_percentage*8)/10);
 	   /*--------------------End Calculation for High School-----------------*/
-	   
+
 	   /*--------------------Start Calculation for Inter---------------*/
 	   $inter_percentage = $request->get('inter_percentage');
 	   $inter_calculation = round(($inter_percentage*2)/10);
 	   /*--------------------End Calculation for Inter-----------------*/
-	   
+
 	   /*--------------------Start Calculation for certification (Getting month and Days)-------------*/
 	   $training_certificate_period_in_month = $request->get('training_certificate_period_in_month');
 	   $training_certificate_period_in_days = $request->get('training_certificate_period_in_days');
-	   
+
 	   $training_certificate_period_in_month = ($training_certificate_period_in_month)?$training_certificate_period_in_month:0;
 	   $training_certificate_period_in_days = ($training_certificate_period_in_days)?$training_certificate_period_in_days:0;
-	   
+
 	   $total_number_of_training_days = ($training_certificate_period_in_month*30) + $training_certificate_period_in_days;
-	   
+
 	   if($total_number_of_training_days>=1 && $total_number_of_training_days<=30){ //upto 1 month
-		   
+
 		   $gettingAnk = 4;
-		   
+
 	   } else if($total_number_of_training_days>30 && $total_number_of_training_days<=60){ // 1-2 months
-		   
+
 		   $gettingAnk = 8;
-		   
+
 	   } else if($total_number_of_training_days>60 && $total_number_of_training_days<=90){ // 2-3 months
-		   
+
 		   $gettingAnk = 12;
-		   
+
 	   } else if($total_number_of_training_days>90 && $total_number_of_training_days<=120){ // 3-4 months
-		   
+
 		   $gettingAnk = 16;
-		   
+
 	   } else if($total_number_of_training_days>120){ // more than 4 months
-		   
+
 		   $gettingAnk = 20;
-		   
+
 	   }else{
-		   
+
 		   $gettingAnk = 0;
 	   }
 	   /*--------------------End Calculation for certification (Getting month and Days)-------------*/
-	   
-	   
+
+
 	   /*--------------Getting TOtal Numbers-------------------------*/
 	   $topper_number = $high_school_calculation + $inter_calculation + $gettingAnk;
-	   
+
 	   if($request->get('dob')!='')
 	   {
 		$dob = date('Y-m-d', strtotime($request->get('dob')));
 	   }else{
-		   
+
 		   $dob = date('Y-m-d');
 	   }
-	   
+
 		Avedantemps::updateOrCreate([
 		'applicationNumber'   => $applicationNumber,
 		],[
-			'applicationNumber' => $applicationNumber, 
+			'applicationNumber' => $applicationNumber,
 			't_and_c' => $request->get('tc'),
             'applicant_name' => $request->get('applicant_name'),
             'fname' => $request->get('fname'),
@@ -296,21 +296,21 @@ class AvedanController extends Controller
             'postgraduation_certificate' => $postgraduation_certificate,
             'health_certificate' => $health_certificate,
             'training_adopted' => $request->get('training_adopted'),
-            
+
 			]);
 
-		
+
 		\Session::put('applicationNumber', $applicationNumber);
 		echo $applicationNumber;
         //echo '<pre>';print_r($data);exit;
 	 }
-	 
+
     public function store(Request $request)
     {
 		/*-------Start Validation here----------------------------*/
 
         //echo '<pre>'; print_r($request->all()); exit;
-        
+
         $request->validate([
             'applicant_name'            => 'required',
             'fname'                     => 'required',
@@ -336,7 +336,7 @@ class AvedanController extends Controller
             'high_marksheet' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
             // 'high_certificate' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
 
-        
+
             // 'training_adopted' => 'required',
             //'training_certificate' => 'required',
             //'training_certificate_period_in_month' => 'required',
@@ -345,7 +345,7 @@ class AvedanController extends Controller
             //'AIkit' => 'required',
             //'id_upload' => 'required|mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:100000',
             //'caste_certificate' => 'required',
-           
+
             'nationality' => 'required',
             'graduation_marksheet' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
             'graduation_certificate' => 'mimes:png,jpg,jpeg,PNG,JPG,JPEG|max:2048',
@@ -379,9 +379,9 @@ class AvedanController extends Controller
                 //'id_upload.required' => 'जाति प्रमाण अपलोड कीजिए',
                 'nationality.required' => 'राष्ट्रीयता चुनें',
             ]);
-        
+
 		/*-------End Validation here----------------------------*/
-		
+
         /*--- Start Generate Application Number-------------------*/
 		$id = Avedan::max('id');
 		$autoID = $id + 1;
@@ -394,108 +394,108 @@ class AvedanController extends Controller
 		$applicationNumber = 'AVN' . $zeros . $autoID . date('dmY');
 		//echo $applicationNumber;exit;
 		/*--- End Generate Application Number-------------------*/
-		
-		
+
+
 		$current_time = \Carbon\Carbon::now()->timestamp;
-		
+
 		$timeStamp = $autoID . '_' . $current_time;
-		
-		
-		
-		
-		
+
+
+
+
+
 		$permanent_address_proof =  '';
         if($request->hasfile('permanent_address_proof'))
          {
 			$permanent_address_proof = 'address_proof'.$timeStamp.'.'.$request->file('permanent_address_proof')->extension();
 			$request->file('permanent_address_proof')->move(public_path('upload_documents'), $permanent_address_proof);
 	   }
-	   
+
 	   $training_certificate =  '';
         if($request->hasfile('training_certificate'))
          {
 			$training_certificate = 'training_certificate'.$timeStamp.'.'.$request->file('training_certificate')->extension();
 			$request->file('training_certificate')->move(public_path('upload_documents'), $training_certificate);
 	   }
-	   
+
 	   $id_upload =  '';
         if($request->hasfile('id_upload'))
          {
 			$id_upload = 'id_upload'.$timeStamp.'.'.$request->file('id_upload')->extension();
 			$request->file('id_upload')->move(public_path('upload_documents'), $id_upload);
 	   }
-	   
+
 	   $caste_certificate =  '';
         if($request->hasfile('caste_certificate'))
          {
 			$caste_certificate = 'caste_certificate'.$timeStamp.'.'.$request->file('caste_certificate')->extension();
 			$request->file('caste_certificate')->move(public_path('upload_documents'), $caste_certificate);
 	   }
-	   
+
 	   $applicant_photo =  '';
         if($request->hasfile('applicant_photo'))
          {
 			$applicant_photo = 'applicant_photo'.$timeStamp.'.'.$request->file('applicant_photo')->extension();
 			$request->file('applicant_photo')->move(public_path('upload_documents'), $applicant_photo);
 	   }
-	   
+
 	   $signature =  '';
         if($request->hasfile('signature'))
          {
 			$signature = 'signature'.$timeStamp.'.'.$request->file('signature')->extension();
 			$request->file('signature')->move(public_path('upload_documents'), $signature);
 	   }
-	   
+
 	   $high_marksheet =  '';
         if($request->hasfile('high_marksheet'))
          {
 			$high_marksheet = 'high_marksheet'.$timeStamp.'.'.$request->file('high_marksheet')->extension();
 			$request->file('high_marksheet')->move(public_path('upload_documents'), $high_marksheet);
 	   }
-	   
+
 	   $high_certificate =  '';
         if($request->hasfile('high_certificate'))
          {
 			$high_certificate = 'high_certificate'.$timeStamp.'.'.$request->file('high_certificate')->extension();
 			$request->file('high_certificate')->move(public_path('upload_documents'), $high_certificate);
 	   }
-	   
+
 	   $inter_marksheet =  '';
         if($request->hasfile('inter_marksheet'))
          {
 			$inter_marksheet = 'inter_marksheet'.$timeStamp.'.'.$request->file('inter_marksheet')->extension();
 			$request->file('inter_marksheet')->move(public_path('upload_documents'), $inter_marksheet);
 	   }
-	   
+
 	   $inter_certificate =  '';
         if($request->hasfile('inter_certificate'))
          {
 			$inter_certificate = 'inter_certificate'.$timeStamp.'.'.$request->file('inter_certificate')->extension();
 			$request->file('inter_certificate')->move(public_path('upload_documents'), $inter_certificate);
 	   }
-	   
+
 	   $graduation_marksheet =  '';
         if($request->hasfile('graduation_marksheet'))
          {
 			$graduation_marksheet = 'graduation_marksheet'.$timeStamp.'.'.$request->file('graduation_marksheet')->extension();
 			$request->file('graduation_marksheet')->move(public_path('upload_documents'), $graduation_marksheet);
 	   }
-	   
+
 	   $graduation_certificate =  '';
         if($request->hasfile('graduation_certificate'))
          {
 			$graduation_certificate = 'graduation_certificate'.$timeStamp.'.'.$request->file('graduation_certificate')->extension();
 			$request->file('graduation_certificate')->move(public_path('upload_documents'), $inter_certificate);
 	   }
-	   
-	   
+
+
 	   $postgraduation_marksheet =  '';
         if($request->hasfile('postgraduation_marksheet'))
          {
 			$postgraduation_marksheet = 'postgraduation_marksheet'.$timeStamp.'.'.$request->file('postgraduation_marksheet')->extension();
 			$request->file('postgraduation_marksheet')->move(public_path('upload_documents'), $postgraduation_marksheet);
 	   }
-	   
+
 	   $postgraduation_certificate =  '';
         if($request->hasfile('postgraduation_certificate'))
          {
@@ -509,57 +509,57 @@ class AvedanController extends Controller
 			$health_certificate = 'health_certificate'.$timeStamp.'.'.$request->file('health_certificate')->extension();
 			$request->file('health_certificate')->move(public_path('upload_documents'), $health_certificate);
 	   }
-	   
+
 	   /*--------------------Start Calculation for High School---------------*/
 	   $high_percentage = $request->get('high_percentage');
 	   $high_school_calculation = round(($high_percentage*8)/10);
 	   /*--------------------End Calculation for High School-----------------*/
-	   
+
 	   /*--------------------Start Calculation for Inter---------------*/
 	   $inter_percentage = $request->get('inter_percentage');
 	   $inter_calculation = round(($inter_percentage*2)/10);
 	   /*--------------------End Calculation for Inter-----------------*/
-	   
+
 	   /*--------------------Start Calculation for certification (Getting month and Days)-------------*/
 	   $training_certificate_period_in_month = $request->get('training_certificate_period_in_month');
 	   $training_certificate_period_in_days = $request->get('training_certificate_period_in_days');
-	   
+
 	   $training_certificate_period_in_month = ($training_certificate_period_in_month)?$training_certificate_period_in_month:0;
 	   $training_certificate_period_in_days = ($training_certificate_period_in_days)?$training_certificate_period_in_days:0;
-	   
+
 	   $total_number_of_training_days = ($training_certificate_period_in_month*30) + $training_certificate_period_in_days;
-	   
+
 	   if($total_number_of_training_days>=1 && $total_number_of_training_days<=30){ //upto 1 month
-		   
+
 		   $gettingAnk = 4;
-		   
+
 	   } else if($total_number_of_training_days>30 && $total_number_of_training_days<=60){ // 1-2 months
-		   
+
 		   $gettingAnk = 8;
-		   
+
 	   } else if($total_number_of_training_days>60 && $total_number_of_training_days<=90){ // 2-3 months
-		   
+
 		   $gettingAnk = 12;
-		   
+
 	   } else if($total_number_of_training_days>90 && $total_number_of_training_days<=120){ // 3-4 months
-		   
+
 		   $gettingAnk = 16;
-		   
+
 	   } else if($total_number_of_training_days>120){ // more than 4 months
-		   
+
 		   $gettingAnk = 20;
-		   
+
 	   }else{
-		   
+
 		   $gettingAnk = 0;
 	   }
 	   /*--------------------End Calculation for certification (Getting month and Days)-------------*/
-	   
-	   
+
+
 	   /*--------------Getting Total Numbers-------------------------*/
 	   $topper_number = $high_school_calculation + $inter_calculation + $gettingAnk;
-	   
-	   
+
+
 	   /*-------------Start check AI किट--------------*/
         if($request->get('AIkit')=='हाँ')
         {
@@ -568,10 +568,10 @@ class AvedanController extends Controller
 		{
 			$is_approved = 0;
 		}
-		
-		
+
+
         /*-------------Start check AI किट--------------*/
-		
+
         $data = new Avedan([
             'applicationNumber' => $applicationNumber,
             'applicant_name' => $request->get('applicant_name'),
@@ -651,11 +651,11 @@ class AvedanController extends Controller
             'pashu_sakhi' => $request->has('pashu_sakhi') ? $request->get('pashu_sakhi') : 0,
         ]);
         $data->save();
-        
+
         //echo '<pre>';print_r($data);exit;
-        
+
         /*-------------Start check AI किट Yes then application will be rejected--------------*/
-        
+
         if($request->get('AIkit')=='हाँ')
         {
 			$user = User::where('district_id', '=', $request->get('janpad'))->first();
@@ -667,7 +667,7 @@ class AvedanController extends Controller
 			$comments->save();
 		}
         /*-------------End check AI किट Yes then application will be rejected--------------*/
-        
+
         \Session::put('districtID', $request->get('janpad'));
         $heading = 'आवेदन पंजीकरण की पुष्टि';
         $confirmationMesage1 = 'आपका आवेदन पंजीकरण सफलतापूर्वक सुरक्षित कर लिया गया है।';
@@ -675,7 +675,7 @@ class AvedanController extends Controller
         \Session::put('heading', $heading);
         \Session::put('confirmationMesage1', $confirmationMesage1);
         \Session::put('confirmationMesage2', $confirmationMesage2);
-		
+
 		$applicationNumberTemp = \Session::get('applicationNumber');
 		\Session::put('application_id', $data->id);
 		DB::table('avedantemps')
@@ -729,7 +729,7 @@ class AvedanController extends Controller
     {
         //
     }
-    
+
     public function getAllBlocks(Request $request){
         $id = $request->id;
         $text = $request->text;

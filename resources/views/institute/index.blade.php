@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="container main-div" >
-<h3 class="text-center m-4 fw-bold">संस्थान सूची 
+<h3 class="text-center m-4 fw-bold">संस्थान सूची
 <div class="pull-right mb-4">
 			<a href="{{ route('institute.create')}}" class="btn btn-info">नया संस्थान जोड़े</a>
 		</div>
@@ -42,4 +42,4 @@
     </tbody>
 </table>
 </div>
-@endsection 
+@endsection

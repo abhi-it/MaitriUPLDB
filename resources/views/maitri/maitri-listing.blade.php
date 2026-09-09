@@ -3,7 +3,7 @@
     <div x-data="" class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center fw-bold m-4">मैत्री सूची</h3>
         <div class="container text-center">
-          
+
                 <form  action="{{ Request::url() }}" method="get" class="form-comman">
                 <div class="row">
                     <div class="col-md-4 mt-4 mb-4">
@@ -22,11 +22,11 @@
                     <div class="col-md-1 mt-4 mb-4">
                         <a href="{{ Request::url() }}" class="btn btn-danger text-white">रीसेट करें</a>
                     </div>
-                    </div>    
+                    </div>
                 </form>
-            
+
             <div class="row">
-            <form method="get" action="{{ route('exportselectedmaitries') }}"> 
+            <form method="get" action="{{ route('exportselectedmaitries') }}">
                     <div class="col-md-1 mb-4">
                         <input type="hidden" id="dis_id" name="id" value="{{ request('id') ?: '' }}">
                         <button class="btn btn-primary" type="submit" id="maitriExport" >Export</button>
@@ -60,7 +60,7 @@
                         <td>{{$val->maitri_name}}</td>
                         <td>{{$val->maitri_mobile_no}}</td>
                         <td>{{$val->gram_panchayat}}  {{$val->post_office}}  {{$val->block}} {{$val->tehsil}}</td>
-                        <td>{{$val->adhaar_card}}</td> 
+                        <td>{{$val->adhaar_card}}</td>
                         <td> {{$val->father_name}} </td>
                         <td>{{$val->certificate_no}}</td>
                         <td>
@@ -79,7 +79,7 @@
             <div class="row">
             {{ $items->appends(request()->except('page'))->links() }}
             </div>
-      
+
     </div>
 
 
@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

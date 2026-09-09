@@ -22,7 +22,7 @@ use App\Http\Controllers\DeoStockUserController;
 use App\Http\Controllers\ImportAIcenterController;
 use App\Http\Controllers\ZoneDistrictController;
 use App\Http\Controllers\GeoLocationUpdateController;
-use App\Http\Controllers\BroadcastController; 
+use App\Http\Controllers\BroadcastController;
 use App\Http\Controllers\WebinarController;
 use App\Http\Controllers\DfsController;
 use App\Http\Controllers\VideoGalleryController;
@@ -170,6 +170,20 @@ Route::post('/update-video-gallery/{id}', [VideoGalleryController::class, 'updat
 Route::post('/delete-video-gallery/{id}', [VideoGalleryController::class, 'delete'])->name('delete-video-gallery');
 
 
+Route::post('/institute-login', [App\Http\Controllers\Auth\LoginController::class, 'instituteLogin'])->name('institute.login');
+
+Route::group(['middleware' => ['auth:institute_auth,web']], function () {
+    Route::get('/institute-dashboard', [App\Http\Controllers\InstituteController::class, 'dashboard'])->name('institute-dashboard');
+    Route::get('/avedan-list', [App\Http\Controllers\InstituteController::class, 'avedanList'])->name('avedan-list');
+    Route::get('/avedan-details/{id}', [App\Http\Controllers\InstituteController::class, 'avedanDetails'])->name('avedan-details');
+    Route::post('/institute-logout', [App\Http\Controllers\InstituteController::class, 'instituteLogout'])->name('institute-logout');
+
+    Route::post('/generate-maitri-certificate', [App\Http\Controllers\InstituteController::class, 'generateMaitriCertificate'])->name('generate-maitri-certificate');
+    Route::get('/certificate-preview/{id}', [App\Http\Controllers\InstituteController::class, 'certificatePreview'])->name('certificate-preview');
+});
+
+
+
 Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
 
@@ -197,10 +211,12 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("total-avedan/{year?}/{export?}", [App\Http\Controllers\DashboardController::class, 'totalAvedan'])->name('totalAvedan');
     Route::get("rejected-avedan/{year?}", [App\Http\Controllers\DashboardController::class, 'rejectedAvedan'])->name('rejectedAvedan');
     Route::get("approved-avedan/{year?}", [App\Http\Controllers\DashboardController::class, 'approvedAvedan'])->name('approvedAvedan');
-    
+
+    Route::post("assignInstitute", [App\Http\Controllers\DashboardController::class, 'assignInstitute'])->name('assignInstitute');
+
     Route::get("placed-candidates", [App\Http\Controllers\DashboardController::class, 'placedCandidates'])->name('placed-candidates');
-    
-    
+
+
     Route::get("view-Avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'avedanFullDetails'])->name('avedanFullDetails');
     Route::get("view-Avedan-details-pdf/{id}", [App\Http\Controllers\DashboardController::class, 'avedanFullDetailsPdf'])->name('avedanFullDetailsPdf');
     Route::get("view-waiting-avedan-details/{id}", [App\Http\Controllers\DashboardController::class, 'waitingAvedanFullDetails'])->name('waitingAvedanFullDetails');
@@ -242,7 +258,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("importMaitries", [MaitriController::class, 'importMaitries'])->name('importMaitries');
 
 
-    
+
 
     Route::get("zone-district-mapping", [ZoneDistrictController::class, 'index'])->name('zone-district-mapping');
     Route::get('/districts/{zone_id}', [ZoneDistrictController::class, 'getDistricts'])->name('getAll-District');
@@ -257,10 +273,10 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("officers-import", [CVOOfficerController::class, 'officerImportForm'])->name('officers-import');
     Route::get("view-imported-data-by", [CVOOfficerController::class, 'viewImportedBy'])->name('view-imported-data-by');
     Route::post("importofficers", [CVOOfficerController::class, 'importOfficers'])->name('importofficers');
-    
+
     Route::get("import-aicenter", [ImportAIcenterController::class, 'aicenterImportForm'])->name('import-aicenter');
     Route::post("importAiCenter", [ImportAIcenterController::class, 'importAiCenter'])->name('importAiCenter');
-    
+
 
     Route::get("demand-requests-list", [DemandRequestController::class, 'demandRequestsListing'])->name('demand-requests-list');
     Route::post("deleteRequests", [DemandRequestController::class, 'deleteDemandRequests'])->name('deleteRequests');
@@ -303,18 +319,18 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     // Update Maitri GEO Location
     Route::get("inactive-maitri-geo-location", [GeoLocationUpdateController::class, 'inactiveMaitriGEO'])->name('inactive-maitri-geo-location');
     Route::get("inactive-aicenter-geo-location", [GeoLocationUpdateController::class, 'inactiveAiCneterGEO'])->name('inactive-aicenter-geo-location');
-    
+
     Route::get("all-maitri-geo-location", [GeoLocationUpdateController::class, 'index'])->name('all-maitri-geo-location');
     Route::get("edit-geo-maitri/{id}/edit", [GeoLocationUpdateController::class, 'editGeoLocation'])->name('edit-geo-maitri');
     Route::post("update-geo-location", [GeoLocationUpdateController::class, 'updateGeoLocation'])->name('update-geo-location');
-    
+
     Route::get("all-aicenter-geo-location", [GeoLocationUpdateController::class, 'aicenterindex'])->name('all-aicenter-geo-location');
     Route::get("edit-geo-aicenter/{id}/edit", [GeoLocationUpdateController::class, 'editGeoAicenter'])->name('edit-geo-aicenter');
     Route::post("update-aicenter-data", [GeoLocationUpdateController::class, 'updateAicenterLocation'])->name('update-aicenter-data');
 
     // zone dashboard
     Route::get("change-password", [CreateZoneController::class, 'changePassword'])->name('change-password');
-    
+
     Route::get("zone-dashboard", [ZoneDashBoardController::class, 'dashboard'])->name('zone-dashboard');
     Route::get("zone-inventory", [ZoneDashBoardController::class, 'zoneInventory'])->name('zone-inventory');
     Route::get("create-division-user", [ZoneDashBoardController::class, 'createDivisionUser'])->name('create-division-user');
@@ -322,19 +338,19 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("division-store-data", [ZoneDashBoardController::class, 'divisionStoreData'])->name('division-store-data');
     Route::post("store-division-user-data", [ZoneDashBoardController::class, 'storeDivisionData'])->name('store-division-user-data');
 
-    // division dashboard  
+    // division dashboard
     Route::get("division-stock-details", [DivisionUserController::class, 'divisionStockRecord'])->name('division-stock-details');
     Route::get("division-inventory", [DivisionUserController::class, 'divisionInventory'])->name('division-inventory');
     Route::get("divison-show-stock-record", [DivisionUserController::class, 'divisionStockDetails'])->name('divison-show-stock-record');
     Route::get("show-division-stock-form", [DivisionUserController::class, 'divisionStockForm'])->name('show-division-stock-form');
     Route::post("division-save-stock-data", [DivisionUserController::class, 'divisionSaveStockData'])->name('division-save-stock-data');
-    
+
     Route::get("create-disctrict-user-form", [DivisionUserController::class, 'createDistrictUser'])->name('create-disctrict-user-form');
     Route::get("division-store-data-step2", [DivisionUserController::class, 'divisionUserStep2'])->name('division-store-data-step2');
     Route::post("district-store-data", [DivisionUserController::class, 'districtStoreData'])->name('district-store-data');
     Route::post("district-user-data-store", [DivisionUserController::class, 'districtUserStoreData'])->name('district-user-data-store');
 
-    // district dashboard 
+    // district dashboard
     Route::get("ai-center-get", [DistrictUserController::class, 'aiCenterGet'])->name('ai-center-get');
     Route::get("district-request-data", [DistrictUserController::class, 'districtRequestForm'])->name('district-request-data');
     Route::get("district-show-stock-record", [DistrictUserController::class, 'districtShowRecord'])->name('district-show-stock-record');
@@ -342,7 +358,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("district-stock-details", [DistrictUserController::class, 'districtStockDetails'])->name('district-stock-details');
     Route::get("show-district-stock-form", [DistrictUserController::class, 'districtStockForm'])->name('show-district-stock-form');
     Route::post("district-save-stock-data", [DistrictUserController::class, 'districtSaveStockData'])->name('district-save-stock-data');
-    
+
     Route::get("create-block-user-form", [DistrictUserController::class, 'createBlocktUser'])->name('create-block-user-form');
     Route::get("district-store-data-step2", [DistrictUserController::class, 'districtStoreStep2'])->name('district-store-data-step2');
     Route::post("store-district-user-data", [DistrictUserController::class, 'storeDistrictData'])->name('store-district-user-data');
@@ -351,10 +367,10 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
      /*  Boardcaster Login Access Route Start  */
      Route::get('/host',[WebinarController::class, 'host'])->name('host');
-     Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');  
+     Route::get("broadcaster-dashboard", [BroadcastController::class, 'dashboard'])->name('broadcaster-dashboard');
      /*  Boardcaster Login Access Route End  */
 
-    // block dashboard  
+    // block dashboard
     Route::get("block-request-data", [BlockUserController::class, 'blockRequestData'])->name('block-request-data');
     Route::get("block-request-record-data", [BlockUserController::class, 'blockRequestRecord'])->name('block-request-record-data');
     Route::post("block-request-save-form-data", [BlockUserController::class, 'blockRequestDataSave'])->name('block-request-save-form-data');
@@ -367,8 +383,8 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::post("block-save-stock-data", [BlockUserController::class, 'blockStockSaveData'])->name('block-save-stock-data');
     Route::post("store-deo-user-data", [BlockUserController::class, 'storeDeoUserData'])->name('store-deo-user-data');
     Route::post("deo-store-user-data", [BlockUserController::class, 'deoUserDataStore'])->name('deo-store-user-data');
-    
-    // deo dashboard 
+
+    // deo dashboard
     Route::get("search-maitri-data", [DeoStockUserController::class, 'searchMaitriData'])->name('search-maitri-data');
     Route::get("deo-inventory", [DeoStockUserController::class, 'deoInventory'])->name('deo-inventory');
     Route::get("deo-show-stock-record", [DeoStockUserController::class, 'deoStockRecord'])->name('deo-show-stock-record');
@@ -386,14 +402,14 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get('/dfs/{id}/edit', [DfsController::class, 'edit'])->name('dfs-edit');
     Route::post('/dfs/{id}', [DfsController::class, 'update'])->name('dfs-update');
     Route::delete('/dfs/{id}', [DfsController::class, 'destroy'])->name('dfs-destroy');
-    
+
     // <-------- DFS ----------->
-    
-    
+
+
 
     //farmer dashbaord
     // Route::post('/submit-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'submitUserDetails'])->name('submit.user.details');
-    // routes/web.php 
+    // routes/web.php
     Route::get('/check-user-details', [App\Http\Controllers\farmer\FarmerController::class, 'checkUserDetails'])->name('check.user.details');
     Route::get('/check-maitri-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkMaitriDetails'])->name('check-maitri-details');
     Route::get('/check-breeding-details', [App\Http\Controllers\maitri\MaitriController::class, 'checkBreedingDetails'])->name('check-breeding-details');
@@ -401,7 +417,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
 
     Route::get("animal-breeding", [App\Http\Controllers\maitri\MaitriController::class, 'animalBreeding'])->name('animal-breeding');
     Route::post("save-animal-breeding", [App\Http\Controllers\AnimalBreedingController::class, 'store'])->name('save-animal-breeding');
-    
+
     Route::get("maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'maitri_details'])->name('maitri-details');
     Route::post("update-maitri-details", [App\Http\Controllers\maitri\MaitriController::class, 'updateMaitriDateils'])->name('update-maitri-details');
 
@@ -428,13 +444,13 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("getallLiveStockData", [MaitriController::class, 'getallLiveStockData'])->name('getallLiveStockData');
 
 
-    // inventory 
+    // inventory
     Route::post('admin-update-status', [App\Http\Controllers\AdminInventoryController::class, 'updateStatus'])->name('admin-update-status');
     Route::post('admin-delete-request', [App\Http\Controllers\AdminInventoryController::class, 'farmerDeleteRequest'])->name('admin-delete-request');
     Route::get('get-farmer-request', [App\Http\Controllers\AdminInventoryController::class, 'getFarmerRequest'])->name('get-farmer-request');
-    
+
     //Correct data for avedan form "district, teshil, block"
-   
+
     Route::get('/correctdata', [App\Http\Controllers\CorrectDataController::class, 'index'])->name('correctdata-get');
     Route::post('/correctdata', [App\Http\Controllers\CorrectDataController::class, 'store'])->name('correctdata-store');
     Route::put('/correctdata/{id}', [App\Http\Controllers\CorrectDataController::class, 'update'])->name('correctdata-update');
@@ -444,7 +460,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get('/get-tehsil-names', [App\Http\Controllers\CorrectDataController::class, 'getTehsilNames'])->name('correctdata-getTehsilNames');
     Route::post('/store-new-block', [App\Http\Controllers\CorrectDataController::class, 'storeNewBlock'])->name('correctdata-storeNewBlock');
     Route::post('/store-new-tehsil', [App\Http\Controllers\CorrectDataController::class, 'storeNewTehsil'])->name('correctdata-storeNewTehsil');
-    
+
     // Download Document Url
     Route::get('/download-document', [App\Http\Controllers\DownloadDocumentController::class, 'index'])->name('download-document');
     Route::post('/documents/store', [App\Http\Controllers\DownloadDocumentController::class, 'store'])->name('documents-store');
@@ -469,38 +485,38 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("distributed-form", [App\Http\Controllers\InventoryController::class, 'distributedForm'])->name('distributed-form');
     Route::post("saveDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDistributedFormData'])->name('saveDistributedFormData');
     Route::get("admin-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'adminDkistributedRecord'])->name('admin-distributed-record');
-    
+
     Route::get("dfs-stock-form", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockForm'])->name('dfs-stock-form');
     Route::get("dfs-inventory-record", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockRecord'])->name('dfs-inventory-record');
     Route::post("dfs-stock-save-data", [App\Http\Controllers\AdminInventoryController::class, 'dfsStockDataSave'])->name('dfs-stock-save-data');
     Route::get("dfs-distributed-form", [App\Http\Controllers\InventoryController::class, 'dfsDistributedForm'])->name('dfs-distributed-form');
     Route::post("saveDfsDistributedFormData", [App\Http\Controllers\InventoryController::class, 'saveDfsDistributedFormData'])->name('saveDfsDistributedFormData');
     Route::get("dfs-distributed-record", [App\Http\Controllers\AdminInventoryController::class, 'dfsDistributedRecord'])->name('dfs-distributed-record');
-    
-    
-    
+
+
+
 
     Route::get("farmers-data", [App\Http\Controllers\AdminInventoryController::class, 'farmarsData'])->name('farmers-data');
     Route::get("exportFarmarList", [App\Http\Controllers\AdminInventoryController::class, 'exportFarmarList'])->name('exportFarmarList');
-    
+
     Route::get("inactive-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'inactiveMaitriAicenterData'])->name('inactive-maitri-aicenter');
     Route::get("create-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenter'])->name('create-maitri-aicenter');
     Route::post("create-mairti-aicenter-data", [App\Http\Controllers\AdminInventoryController::class, 'createMaitriAicenterData'])->name('create-mairti-aicenter-data');
-    
+
     Route::get('/generate-pdf/{id}', [App\Http\Controllers\AdminInventoryController::class, 'generatePDF'])->name('generate-certificate');
 
     Route::get("view-update-maitri-aicenter", [App\Http\Controllers\AdminInventoryController::class, 'viewMaitriData'])->name('view-update-maitri-aicenter');
     Route::get("edit-maitri-record/{id}/edit", [App\Http\Controllers\AdminInventoryController::class, 'editMaitriAicenter'])->name('edit-maitri-record');
     Route::post("update-mairti-aicenter-data", [App\Http\Controllers\AdminInventoryController::class, 'updateMaitriData'])->name('update-mairti-aicenter-data');
-    
-    
+
+
 
     Route::get("inventory", [App\Http\Controllers\InventoryController::class, 'index'])->name('inventory');
 
     Route::get("check-stock-limit", [App\Http\Controllers\InventoryController::class, 'checkStockLimit'])->name('check-stock-limit');
     Route::post("saveInentorrData", [App\Http\Controllers\InventoryController::class, 'zoneStoreData'])->name('saveInentorrData');
-    
-    
+
+
     Route::get("get-all-zone-aicenter", [App\Http\Controllers\DeoUserController::class, 'getAllZoneAICenter'])->name('get-all-zone-aicenter');
     Route::get("get-all-zone-district", [App\Http\Controllers\DeoUserController::class, 'getAllZoneDistrict'])->name('get-all-zone-district');
     Route::get("operator-id", [App\Http\Controllers\OperatorIdController::class, 'index'])->name('operator-id');
@@ -511,12 +527,12 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     //All CVO's Details
     Route::get("all-cvo", [App\Http\Controllers\OperatorIdController::class, 'allCvo'])->name('all-cvo');
 
-    
+
     Route::get("deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'create'])->name('deo-user-step1');
     Route::get("deo-user-step2", [App\Http\Controllers\DeoUserController::class, 'createStep2'])->name('deo-user-step2');
     Route::post("deo-user-store-step1", [App\Http\Controllers\DeoUserController::class, 'createStep1'])->name('deo-user-store-step1');
     Route::post("deo-user-store-step2", [App\Http\Controllers\DeoUserController::class, 'createStoreStep2'])->name('deo-user-store-step2');
-    
+
     // District Operator
     Route::get("district-deo-user-step1", [App\Http\Controllers\DeoUserController::class, 'districtsDeoCreate'])->name('district-deo-user-step1');
     Route::get("deo-district-user-step2", [App\Http\Controllers\DeoUserController::class, 'createDistrictStep2'])->name('deo-district-user-step2');
@@ -536,7 +552,7 @@ Route::group(['middleware' => ['auth:webFarmer,web', 'roles',]], function () {
     Route::get("division-stock-form", [ZoneStockDetailsController::class, 'zoneDivisionStockForm'])->name('division-stock-form');
     Route::get("show-zone-stock-record", [ZoneStockDetailsController::class, 'zoneShowStockRecord'])->name('show-zone-stock-record');
     Route::post("save-division-stock-data", [ZoneStockDetailsController::class, 'saveZoneDivisionStockForm'])->name('save-division-stock-data');
-    
+
     Route::post("zone-store-data", [CreateZoneController::class, 'zoneStoreData'])->name('zone-store-data');
     Route::get("zone-user-create-form", [CreateZoneController::class, 'zoneUserCreateForm'])->name('zone-user-create-form');
     Route::post("zone-user-store-data", [CreateZoneController::class, 'zoneUserCreateData'])->name('zone-user-store-data');

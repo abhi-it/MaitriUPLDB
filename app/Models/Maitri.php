@@ -34,5 +34,12 @@ class Maitri extends Model
         'latitude',
         'status',
         'newMaitri',
+        'role_id',
+        'role',
+        'email',
+        'password',
+        'gender',
+        'avedan_id',
+
     ];
 }

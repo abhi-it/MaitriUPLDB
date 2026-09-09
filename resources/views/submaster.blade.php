@@ -1006,7 +1006,7 @@
 
 
                     </div>
-                   
+
                     <div class="tp-right" style="float: right;">
                       <select class="switchlang">
                             <option value="hi"> Hindi </option>
@@ -1098,7 +1098,7 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/maitri-distribution-stock-detail') }}">वितरण स्टॉक विवरण </a>
                                 </li>
-                                
+
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/maitri-details') }}">प्रोफ़ाइल अद्यतन</a>
                                 </li>
@@ -1106,6 +1106,11 @@
                                 {{--<li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/animal-breeding') }}">पशु प्रजनन</a>
                                 </li>--}}
+
+                                @elseif(Auth::user()->is_institute)
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ url('/institute-dashboard') }}">डैशबोर्ड </a>
+                                    </li>
                                 @else
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/farmer-dashboard') }}">डैशबोर्ड </a>
@@ -1262,7 +1267,7 @@
                         <!-- <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.08297384528!2d80.935781475438!3d26.86910477667314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd9c9604bea9%3A0x88634ee93200bb69!2sVETERINARY%20POLYCLINIC%20BADSHAH%20BAGH%2C%20LUCKNOW!5e0!3m2!1sen!2sin!4v1705036303907!5m2!1sen!2sin"
                             width="250" height="200"></iframe> -->
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.0885983390654!2d80.93599577531283!3d26.868926061971163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd36b87d1a0b%3A0x2be99e0e859771c4!2sU.%20P.%20Livestock%20Development%20Board%20Hqs%20Lucknow!5e0!3m2!1sen!2sin!4v1758611527686!5m2!1sen!2sin" 
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.0885983390654!2d80.93599577531283!3d26.868926061971163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd36b87d1a0b%3A0x2be99e0e859771c4!2sU.%20P.%20Livestock%20Development%20Board%20Hqs%20Lucknow!5e0!3m2!1sen!2sin!4v1758611527686!5m2!1sen!2sin"
                             width="100%" height="200"></iframe>
                     </ul>
                 </div>
@@ -1284,7 +1289,7 @@
     <button class="common_top_scroll__cuiN4 top-btn">
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
     </button>
-   
+
 <script>
         let topBtn = document.querySelector(".top-btn");
 
@@ -1423,7 +1428,7 @@
             </div>
         </div>
     </div>
-    
+
     @stack('body-scripts')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
@@ -1433,7 +1438,7 @@
         localStorage.removeItem('farmer');
     });
 
-    
+
     </script>
     <script type="text/javascript">
         var url = "{{ route('changeLang') }}";

@@ -134,7 +134,7 @@ class DashboardController extends Controller
         // $maitriDistricts = MaitriDistrictLatLong::with('maitriPortal')->get();
         // $upldbCenters = UpLdbCenter::all();
 
-        $sessionYear = $this->sessionYear; 
+        $sessionYear = $this->sessionYear;
         if (!$sessionYear || !is_numeric($sessionYear)) {
             throw new \Exception('Session year is not set or invalid');
         }
@@ -376,7 +376,7 @@ class DashboardController extends Controller
                     'topper_number' => $topper_number,
                 ];
             });
-             
+
             return \Excel::download(new ExportAvedan($data), 'districtwise-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->orderBy('category', 'DESC')->paginate(50);
@@ -415,6 +415,8 @@ class DashboardController extends Controller
         }
 
         $districts = Districts::where('status', '=', 1)->orderBy('name_eng', 'ASC')->get();
+
+        $institutes = Institute::where('status', '=', 1)->get();
 
         $heading = 'कुल आवेदन मैत्री';
         $statusButtonApprovedRejectedShow = 0;
@@ -455,8 +457,18 @@ class DashboardController extends Controller
             return \Excel::download(new ExportAvedan($data), 'total-avedan.xlsx');
         } else {
             $results = $query->whereYear('created_at', $this->sessionYear)->paginate(50);
-            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts'))->with('route', 'totalAvedan')->with('year', $this->sessionYear);
+            return view('viewAvedan', compact('results', 'heading', 'statusButtonApprovedRejectedShow', 'districts', 'institutes'))->with('route', 'totalAvedan')->with('year', $this->sessionYear);
         }
+    }
+
+    public function assignInstitute(Request $request)
+    {
+        $application_id = $request->application_id;
+        $institute_id = $request->institute_id;
+        $application = Avedan::find($application_id);
+        $application->institute_id = $institute_id;
+        $application->save();
+        return response()->json(['success' => true, 'message' => 'Institute assigned successfully']);
     }
     /*-----End Display only for Director and Super Admin--------------*/
 
@@ -605,12 +617,12 @@ class DashboardController extends Controller
         $heading = 'स्वीकार आवेदन';
 
         if (!empty($request->input('export'))) {
-           
+
             $datas = $query->with('district')->whereYear('avedans.created_at', 'LIKE', '%' . $this->sessionYear. '%')
                 ->orderBy('avedans.category', 'DESC')
                 ->get();
 
-            // $datas = Avedan::with('district') 
+            // $datas = Avedan::with('district')
             //         ->where('is_approved', 1)
             //         ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
             //         ->orderBy('avedans.category', 'DESC')
@@ -664,7 +676,7 @@ class DashboardController extends Controller
         $districtID = auth()->user()->district_id;
 
         if ($user_type == 'Director') { //Director
-            
+
             $query = Avedan::where('is_approved', '=', 2)->orderBy('avedans.id', 'DESC');
         } else if ($user_type == 'Admin') { //Super Admin
 
@@ -695,25 +707,25 @@ class DashboardController extends Controller
             $data = $query->leftJoin('districts', 'avedans.district_id', '=', 'districts.id')
                     ->leftJoin('rejectcomments', 'avedans.id', '=', 'rejectcomments.application_id')
                     ->select(
-                        'avedans.applicationNumber', 
-                        'avedans.applicant_name', 
-                        'avedans.fname', 
-                        'avedans.mother', 
-                        'avedans.gender', 
-                        'avedans.mobile', 
-                        'avedans.email', 
-                        'avedans.category', 
+                        'avedans.applicationNumber',
+                        'avedans.applicant_name',
+                        'avedans.fname',
+                        'avedans.mother',
+                        'avedans.gender',
+                        'avedans.mobile',
+                        'avedans.email',
+                        'avedans.category',
                         'districts.name_hindi',
-                        'avedans.tehsil', 
-                        'avedans.post_office', 
-                        'avedans.gram_panchayat_name', 
-                        'avedans.vikas_khand', 
-                        'avedans.permanent_address', 
-                        'avedans.high_marks', 
-                        'avedans.high_total_marks', 
-                        'avedans.high_percentage', 
-                        'avedans.inter_marks', 
-                        'avedans.inter_total_marks', 
+                        'avedans.tehsil',
+                        'avedans.post_office',
+                        'avedans.gram_panchayat_name',
+                        'avedans.vikas_khand',
+                        'avedans.permanent_address',
+                        'avedans.high_marks',
+                        'avedans.high_total_marks',
+                        'avedans.high_percentage',
+                        'avedans.inter_marks',
+                        'avedans.inter_total_marks',
                         'avedans.inter_percentage',
                         'rejectcomments.comments'
                     )
@@ -762,7 +774,7 @@ class DashboardController extends Controller
                 ->where('district_id', '=', $districtID)
                 ->orderBy('topper_number', 'DESC');
 
-          
+
 
         }
 
@@ -848,7 +860,7 @@ class DashboardController extends Controller
                     ->where('avedans.is_approved', 4)
                     ->orderBy('avedans.category', 'DESC')
                     ->get();
-                    
+
             // }
 
             $data = $datas->map(function ($item) {
@@ -1199,7 +1211,7 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-        
+
             $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                     ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
                     ->where('avedans.is_approved', 4)
@@ -1313,14 +1325,14 @@ class DashboardController extends Controller
 
         if (!empty($request->input('export'))) {
             // $data = $query->select('applicationNumber', 'applicant_name', 'fname', 'mother', 'gender', 'mobile', 'email', 'high_percentage', 'inter_percentage', 'category', 'letter_address')->whereYear('created_at', $this->sessionYear)->get();
-            
+
             $datas = $query->join('districts', 'avedans.district_id', '=', 'districts.id') // Perform the join
                     ->where('avedans.created_at', 'LIKE', '%' . $this->sessionYear . '%')
                     ->where('avedans.is_approved', 4)
                     ->where('avedans.category', 'LIKE', '%एस टी%')
                     ->orderBy('avedans.category', 'DESC')
                     ->get();
-            
+
 
             // $datas = Avedan::with('district') // Eager load the Districts model
             //         ->where('is_approved', 4)
@@ -1415,7 +1427,7 @@ class DashboardController extends Controller
         //     $heading = 'अनुसूचित जनजाति अभ्यर्थियों की प्रतीक्षा सूची';
         // }
 
-       
+
         $sessionYear = $this->sessionYear;
         if ($export !== null) {
             $data = $results->map(function ($item) {
@@ -1507,7 +1519,7 @@ class DashboardController extends Controller
 
         //     $waitingButtonShow = true;
         // }
-        
+
         //echo '<pre>';print_r($result);exit;
         return view('viewAvedanDetails', compact('result', 'waitingButtonShow'));
     }
@@ -1596,7 +1608,7 @@ class DashboardController extends Controller
             $totalSelectedCandidates = $selectedCandidates->count();
             $targetCandidates = ($target)?$target->sc_st_target:'';
         }
-       
+
         /*------End Getting total SC and ST selected candidates-----------------*/
 
         //echo 'targetCandidates=' . $targetCandidates . ' and selected candidates=' . $totalSelectedCandidates;exit;
@@ -1716,7 +1728,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = ($target)? $target->sc_target:''; 
+            $targetCandidates = ($target)? $target->sc_target:'';
         }
         /*------End Getting total SC selected candidates-----------------*/
 
@@ -1728,7 +1740,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', $this->sessionYear)
                 ->get();
             $totalSelectedCandidates = $selectedCandidates->count();
-            $targetCandidates = ($target)? $target->st_target:''; 
+            $targetCandidates = ($target)? $target->st_target:'';
         }
         /*------End Getting total ST selected candidates-----------------*/
 
@@ -1872,7 +1884,7 @@ class DashboardController extends Controller
         // switch ($result->category) {
         //     case 'जनरल':
         //         $selectedCandidates = Avedan::where('is_approved', '=', 4)
-        //             // ->whereIn('category', ["जनरल"]) 
+        //             // ->whereIn('category', ["जनरल"])
         //             ->where('district_id', '=', $districtID)
         //             ->whereYear('created_at', $this->sessionYear)
         //             ->get();
@@ -1881,7 +1893,7 @@ class DashboardController extends Controller
         //         break;
         //     case 'ओ बी सी':
         //         $selectedCandidates = Avedan::where('is_approved', '=', 4)
-        //             // ->whereIn('category', [ "ओ बी सी"]) 
+        //             // ->whereIn('category', [ "ओ बी सी"])
         //             ->where('district_id', '=', $districtID)
         //             ->whereYear('created_at', $this->sessionYear)
         //             ->get();
@@ -1890,7 +1902,7 @@ class DashboardController extends Controller
         //         break;
         //     case 'एस सी':
         //         $selectedCandidates = Avedan::where('is_approved', '=', 4)
-        //             // ->whereIn('category', ["एस सी"])  
+        //             // ->whereIn('category', ["एस सी"])
         //             ->where('district_id', '=', $districtID)
         //             ->whereYear('created_at', $this->sessionYear)
         //             ->get();
@@ -1899,7 +1911,7 @@ class DashboardController extends Controller
         //         break;
         //     case 'एस टी':
         //         $selectedCandidates = Avedan::where('is_approved', '=', 4)
-        //             // ->whereIn('category', ["एस टी"])  
+        //             // ->whereIn('category', ["एस टी"])
         //             ->where('district_id', '=', $districtID)
         //             ->whereYear('created_at', $this->sessionYear)
         //             ->get();
@@ -1949,7 +1961,7 @@ class DashboardController extends Controller
                 # code...
                 break;
         }
-     
+
         if ($totalSelectedCandidates >= $targetCandidates) {
 
             return back()->withErrors(['status' => 'सीटें पहले ही भर चुकी हैं']);

@@ -163,7 +163,7 @@
 
         /* The visible pill */
         .glow-badge__pill {
-        
+
         background-color: #18191f;
         color: #fff;
         /* box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
@@ -201,12 +201,12 @@
         }
        .social-sidebar {
         position: fixed;
-        top: 50%; 
-        left: 0;   
-        transform: translateY(-50%); 
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
         display: flex;
         flex-direction: column;
-        z-index: 999; 
+        z-index: 999;
         }
 
         .social-sidebar a {
@@ -219,14 +219,14 @@
         width: 50px;
         }
 
-       
+
         .facebook { background: #3b5998; }
         .twitter { background: #313131; }
         .whatsapp { background:#25d366; }
          .youtube { background: #A80600; }
-       
+
         .social-sidebar a:hover {
-        width: 70px; 
+        width: 70px;
         padding-left: 30px;
         }
         .site-footer {
@@ -431,7 +431,7 @@
                 var day = $("#training_certificate_period_in_days")[0].selectedIndex;
                 var name = $('#caste_certificate').val().split('\\').pop();
                 caste_certificate_name = name.split('.')[0];
-            
+
                 if (caste_certificate_name == '' && (category == 3 || category == 4)) {
                     return false;
                 } else {
@@ -1051,27 +1051,52 @@
                         <span class="middle-line">|</span>
                         @if (Route::has('login'))
                         <span>
-                            @auth
-                            Welcome,&nbsp;{{ Auth::user()->name }} |
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <span data-hi="लॉग आउट" data-en="Logout"></span>
-                                &nbsp;</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+                            @php
+                                $user = Auth::user();
+                                $institute = Auth::guard('institute_auth')->user();
+                                $farmer = Auth::guard('webFarmer')->user();
+                            @endphp
+
+                            @if($user)
+                                Welcome,&nbsp;{{ $user->name }} |
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                    &nbsp;</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @elseif($institute)
+                                Welcome,&nbsp;{{ $institute->name }} |
+                                <a href="{{ route('institute-logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('institute-logout-form').submit();">
+                                    <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                    &nbsp;</a>
+                                <form id="institute-logout-form" action="{{ route('institute-logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @elseif($farmer)
+                                Welcome,&nbsp;{{ $farmer->name }} |
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <span data-hi="लॉग आउट" data-en="Logout"></span>
+                                    &nbsp;</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             @else
-                            <a href="{{ route('login') }}" class="text-black">
-                                <span data-hi="लॉग इन करें" data-en="Log In"></span> </a> |
-                            <a href="{{ route('farmer-login') }}" class="text-black">
-                                <span data-hi="किसान लॉगिन" data-en="Farmer Login"></span> </a>
-                            @endauth
+                                <a href="{{ route('login') }}" class="text-black">
+                                    <span data-hi="लॉग इन करें" data-en="Log In"></span> </a> |
+                                <a href="{{ route('farmer-login') }}" class="text-black">
+                                    <span data-hi="किसान लॉगिन" data-en="Farmer Login"></span> </a>
+                            @endif
+
                         </span>
                         @endif
                 </div>
             </div>
         </div>
-       
+
         <div class="logo-header">
             <div class="container py-3">
                 <div class="row g-3 align-items-center">
@@ -1102,11 +1127,11 @@
                                     </h6>
                                 </div>
                             </div>
-                            
+
                             {{--<div class="kumbhlogo">
                                 <img src="{{ asset('assets/images/PK25.png')}}" height="100" />
                             </div>--}}
-                           
+
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
@@ -1451,7 +1476,7 @@
                                     <a class="dropdown-item" href="{{ url('download-document') }}">
                                         <span data-hi="दस्तावेज़ डाउनलोड" data-en="Download Document"></span>
                                     </a>
-                                  
+
                                     <a class="dropdown-item" href="{{ url('view-dfs') }}">
                                         <span data-hi="डीएफएस बनाएं" data-en="Create DFS"></span>
                                     </a>
@@ -1459,7 +1484,7 @@
                                     <a class="dropdown-item" href="{{ url('posts') }}">
                                         <span data-hi="फोटो बदलें" data-en="Chnage Photo"></span>
                                     </a>
-                          
+
                                     <!-- <a class="dropdown-item" href="{{ url('import-aicenter') }}">
                                         <span data-hi="AI केंद्र आयात करें" data-en="Import AI Center"></span>
                                     </a> -->
@@ -1582,13 +1607,13 @@
                                         data-en="Know the status of your application"></span>
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item {{ request()->is('downloads') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('downloads') }}">
                                     <span data-hi="डाउनलोड" data-en="Downlaod"></span>
                                 </a>
                             </li>
-                           
+
                             <!-- Hide 01 Sep 2025 -->
                             <li class="nav-item {{ request()->is('lakshya') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('lakshya') }}">
@@ -1782,7 +1807,7 @@
                         <span data-hi="मैत्री सेल" data-en=" MAITRI Cell"></span>
                         - upldbte@gmail.com
                     </p>
-                  
+
                     <p class="mb-0">
                         <span data-hi="बीमा" data-en="Insurance"></span>
                         - upldb.rmli@gmail.com
@@ -1821,7 +1846,7 @@
                         <div>
                         <a href="https://play.google.com/store/apps/details?id=com.epashu.in"><img src="https://upldb.vercel.app/assets/images/site/pashudhan_app1.png"
                                 width="80px" alt="" style="margin-right:10px;"></a>
-                        <?php /*        
+                        <?php /*
                         <a href="https://play.google.com/store/apps/details?id=up.in.hiblcattle"><img src="{{ asset('assets/images/hbl.png') }}"
                                 width="80px" alt="" style="margin-right:10px;"></a> */ ?>
                         <a href="https://play.google.com/store/apps/details?id=com.farmerpashudhan.production"><img src="{{ asset('assets/images/1962.png') }}"
@@ -1831,7 +1856,7 @@
                 </div>
             </div>
 
-          
+
 
             <div class="row align-items-top gap-5 px-2 mx-0 pt-4 pb-3 footer_footer__O">
                 <div class="col-lg-3 align-items-top text-center">
@@ -1930,7 +1955,7 @@
                         <!-- <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.08297384528!2d80.935781475438!3d26.86910477667314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd9c9604bea9%3A0x88634ee93200bb69!2sVETERINARY%20POLYCLINIC%20BADSHAH%20BAGH%2C%20LUCKNOW!5e0!3m2!1sen!2sin!4v1705036303907!5m2!1sen!2sin"
                             width="100%" height="200"></iframe> -->
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.0885983390654!2d80.93599577531283!3d26.868926061971163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd36b87d1a0b%3A0x2be99e0e859771c4!2sU.%20P.%20Livestock%20Development%20Board%20Hqs%20Lucknow!5e0!3m2!1sen!2sin!4v1758611527686!5m2!1sen!2sin" 
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.0885983390654!2d80.93599577531283!3d26.868926061971163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd36b87d1a0b%3A0x2be99e0e859771c4!2sU.%20P.%20Livestock%20Development%20Board%20Hqs%20Lucknow!5e0!3m2!1sen!2sin!4v1758611527686!5m2!1sen!2sin"
                         width="100%" height="200"></iframe>
                     </ul>
                 </div>

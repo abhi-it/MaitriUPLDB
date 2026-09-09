@@ -24,10 +24,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        
+
         'webFarmer' => [
             'driver' => 'session',
             'provider' => 'farmer_users',
+        ],
+
+        'institute_auth' => [
+            'driver' => 'session',
+            'provider' => 'institute_auth',
         ],
 
         'api' => [
@@ -65,6 +70,11 @@ return [
         'farmer_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\FarmerUser::class,
+        ],
+
+        'institute_auth' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Institute::class,
         ],
 
         // 'users' => [

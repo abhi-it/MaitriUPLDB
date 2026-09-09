@@ -33,63 +33,72 @@
     }
     google.setOnLoadCallback(onLoad);
     </script>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div><br />
-    @endif
+
     <form method="post" action="{{ route('institute.update', $data->id) }}">
         @method('PATCH')
         @csrf
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="inputEmail4">संस्थान का नाम </label>
-                <input type="text" class="form-control" value="{{ $data->name }}" name="name" id="name"
+                <label for="name">संस्थान का नाम <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" value="{{ old('name', $data->name) }}" name="name" id="name"
                     placeholder="संस्थान का नाम" autocomplete="off">
+                @if($errors->has('name'))
+                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputEmail4">मोबाइल </label>
-                <input type="text" maxlength="10" class="form-control" value="{{ $data->mobile }}" name="mobile"
+                <label for="mobile">मोबाइल <span style="color: red;">*</span></label>
+                <input type="text" maxlength="10" class="form-control" value="{{ old('mobile', $data->mobile) }}" name="mobile"
                     id="mobile" placeholder="मोबाइल नंबर दर्ज करें" autocomplete="off">
+                @if($errors->has('mobile'))
+                    <small class="text-danger">{{ $errors->first('mobile') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputEmail4">ईमेल </label>
-                <input type="text" class="form-control" value="{{ $data->email }}" name="email" id="email"
+                <label for="email">ईमेल <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" value="{{ old('email', $data->email) }}" name="email" id="email"
                     placeholder="ईमेल पता दर्ज करें" autocomplete="off">
+                @if($errors->has('email'))
+                    <small class="text-danger">{{ $errors->first('email') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputEmail4">पता </label>
-                <input type="text" class="form-control" value="{{ $data->address }}" name="address" id="address"
+                <label for="address">पता <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" value="{{ old('address', $data->address) }}" name="address" id="address"
                     placeholder="पता दर्ज करें" autocomplete="off">
+                @if($errors->has('address'))
+                    <small class="text-danger">{{ $errors->first('address') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputEmail4">अक्षांश </label>
-                <input type="text" class="form-control" value="{{ $data->lattitute }}" name="lattitude" id="lattitude"
+                <label for="lattitude">अक्षांश <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" value="{{ old('lattitude', $data->lattitute) }}" name="lattitude" id="lattitude"
                     placeholder="अक्षांश दर्ज करें" autocomplete="off">
+                @if($errors->has('lattitude'))
+                    <small class="text-danger">{{ $errors->first('lattitude') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputEmail4">देशान्तर </label>
-                <input type="text" class="form-control" value="{{ $data->longitute }}" name="longitude" id="longitude"
+                <label for="longitude">देशान्तर <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" value="{{ old('longitude', $data->longitute) }}" name="longitude" id="longitude"
                     placeholder="देशांतर दर्ज करें" autocomplete="off">
+                @if($errors->has('longitude'))
+                    <small class="text-danger">{{ $errors->first('longitude') }}</small>
+                @endif
             </div>
 
             <div class="form-group col-md-12" style="overflow:auto;margin-bottom:20px;">
                 <button type="submit" class="submit btn btn-primary">Update</button>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"
                     id="loader"> </span>
-
             </div>
-
         </div>
+
     </form>
 
 </div>
