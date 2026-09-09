@@ -25,12 +25,18 @@ use DB;
 class MaitriController extends Controller
 {
     public function maitri_home() {
-        $count=Maitri::count();
-        return view('maitri.home',compact('count'));
+        $count = Maitri::count();
+        $refresherCount = Maitri::where('refresher_training', 1)->count();
+        return view('maitri.home', compact('count', 'refresherCount'));
     }
 
     public function maitri_form() {
-        return view('maitri.maitri-form');
+        $divisions = Divisions::get();
+        $districts = collect();
+        if (old('division_id')) {
+            $districts = Districts::where('division_id', old('division_id'))->get();
+        }
+        return view('maitri.maitri-form', compact('divisions', 'districts'));
     }
 
     public function maitri_import() {
@@ -86,33 +92,73 @@ class MaitriController extends Controller
     }
 
     public function addUpdateMaitri(Request $request){
+        $validator = Validator::make($request->all(), [
+            'maitri_name'       => ['required', 'string', 'max:255'],
+            'maitri_mobile_no'  => ['required', 'unique:maitries,maitri_mobile_no'],
+            'email'             => ['required', 'email', 'unique:maitries,email'],
+            'password'          => ['required', 'string', 'min:8', 'confirmed'],
+            'division_id'       => ['required'],
+            'district_id'       => ['required'],
+            'gender'            => ['nullable', 'string'],
+            'tehsil'            => ['nullable', 'string', 'max:255'],
+            'block'             => ['nullable', 'string', 'max:255'],
+            'gram_panchayat'    => ['nullable', 'string', 'max:255'],
+            'post_office'       => ['nullable', 'string', 'max:255'],
+            'pincode'           => ['nullable', 'string', 'max:6'],
+            'father_name'       => ['nullable', 'string', 'max:255'],
+            'father_mobile_no'  => ['nullable', 'string', 'max:15'],
+            'adhaar_card'       => ['nullable', 'string', 'max:20'],
+            'certificate_no'    => ['nullable', 'string', 'max:255'],
+            'center_name'       => ['nullable', 'string', 'max:255'],
+            'any_bharat_id'     => ['nullable', 'string', 'max:255'],
+            'equipment_received'=> ['nullable', 'string', 'max:255'],
+        ]);
 
-        $maitri=new Maitri();
-        $maitri->mandal_name=$request->mandal_name;
-        $maitri->janpad_name=$request->janpad_name;
-        $maitri->maitri_name=$request->maitri_name;
-        $maitri->maitri_mobile_no=$request->maitri_mobile_no;
-        $maitri->gram_panchayat=$request->gram_panchayat;
-        $maitri->post_office=$request->post_office;
-        $maitri->block=$request->block;
-        $maitri->tehsil=$request->tehsil;
-        $maitri->adhaar_card=$request->adhaar_card;
-        $maitri->father_name=$request->father_name;
-        $maitri->father_mobile_no=$request->father_mobile_no;
-        $maitri->certificate_no=$request->certificate_no;
-        $maitri->center_name=$request->center_name;
-        $maitri->pass_date=$request->pass_date;
-        $maitri->expiry_date=$request->expiry_date;
-        $maitri->any_bharat_id=$request->any_bharat_id;
-        $maitri->equipment_received=$request->equipment_received;
-        $maitri->any_bharat_id=$request->any_bharat_id;
-        $maitri->equipment_received=$request->equipment_received;
-        $maitri->longitude=str_replace('-','.',$request->longitude);
-        $maitri->latitude=str_replace('-','.',$request->latitude);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', ucfirst($validator->errors()->first()));
+        }
+
+        if (is_numeric($request->district_id)) {
+            $district = Districts::find($request->district_id);
+        } else {
+            $district = Districts::where('name_hindi', 'LIKE', '%' . $request->district_id . '%')->first();
+        }
+
+        $division = Divisions::find($request->division_id);
+
+        $maitri = new Maitri();
+        $maitri->maitri_name        = $request->maitri_name;
+        $maitri->maitri_mobile_no   = $request->maitri_mobile_no;
+        $maitri->email              = $request->email;
+        $maitri->password           = Hash::make($request->password);
+        $maitri->gender             = $request->gender;
+        $maitri->division_id        = $request->division_id;
+        $maitri->district_id        = $district ? $district->id : null;
+        $maitri->mandal_name        = $division ? $division->name_hindi : $request->mandal_name;
+        $maitri->janpad_name        = $district ? $district->name_hindi : $request->janpad_name;
+        $maitri->tehsil             = $request->tehsil;
+        $maitri->block              = $request->block;
+        $maitri->gram_panchayat     = $request->gram_panchayat;
+        $maitri->post_office        = $request->post_office;
+        $maitri->pincode            = $request->pincode;
+        $maitri->father_name        = $request->father_name;
+        $maitri->father_mobile_no   = $request->father_mobile_no;
+        $maitri->adhaar_card        = $request->adhaar_card;
+        $maitri->certificate_no     = $request->certificate_no;
+        $maitri->center_name        = $request->center_name;
+        $maitri->any_bharat_id      = $request->any_bharat_id;
+        $maitri->equipment_received = $request->equipment_received;
+        $maitri->pass_date          = $request->pass_date;
+        $maitri->expiry_date        = $request->expiry_date;
+        $maitri->longitude          = str_replace('-', '.', $request->longitude);
+        $maitri->latitude           = str_replace('-', '.', $request->latitude);
+        $maitri->role_id            = 3;
+        $maitri->role               = 'Maitri';
+        $maitri->status             = 0;
+        $maitri->newMaitri          = 1;
         $maitri->save();
+
         return redirect('maitri-form')->with('success', 'Data Added successfully!');
-
-
     }
 
     public function importMaitries(Request $request){
@@ -182,6 +228,43 @@ class MaitriController extends Controller
 
         return view('maitri.maitri-listing',['data'=>$data,'dist'=>$dist,'items'=>$items]);
 
+    }
+
+    public function addToRefresherTraining($id)
+    {
+        $maitri = Maitri::find($id);
+        if (!$maitri) {
+            return redirect()->back()->with('error', 'Maitri not found.');
+        }
+
+        if (!$maitri->needsRefresherTraining()) {
+            return redirect()->back()->with('error', 'This Maitri is not eligible for refresher training yet.');
+        }
+
+        if ($maitri->refresher_training) {
+            return redirect()->route('maitri-refresher-list')->with('success', 'Maitri is already in the refresher training list.');
+        }
+
+        $maitri->refresher_training = 1;
+        $maitri->refresher_training_at = now();
+        $maitri->save();
+
+        return redirect()->route('maitri-refresher-list')->with('success', 'Maitri added to refresher training list.');
+    }
+
+    public function refresherTrainingList(Request $request)
+    {
+        $dist = Divisions::get();
+        $query = Maitri::where('refresher_training', 1)->orderBy('refresher_training_at', 'DESC');
+
+        if (!empty($request->input('id'))) {
+            $query->where('mandal_name', 'like', $request->input('id'));
+        }
+
+        $data = $query->paginate(50);
+        $items = $data->appends(request()->except('page'));
+
+        return view('maitri.refresher-list', compact('data', 'dist', 'items'));
     }
 
     public function editMaitriData($id)

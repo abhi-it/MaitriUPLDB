@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-4 mt-4 mb-4">
                         <select name="id" id="id" class="form-control">
-                            <option>-select one-</option>
+                            <option value="">-select one-</option>
                             @foreach($dist as $val)
                                 @if($val!='' ||$val != null)
                                 <option value="{{$val['name_hindi']}}" {{ $val['name_hindi'] == request('id') ? 'selected' : '' }}>{{$val['name_hindi']}}</option>
@@ -31,6 +31,9 @@
                     </div>
                     <div class="col-md-1 mt-4 mb-4">
                         <a href="{{ Request::url() }}" class="btn btn-danger text-white">रीसेट करें</a>
+                    </div>
+                    <div class="col-md-2 mt-4 mb-4">
+                        <a href="{{ route('maitri-refresher-list') }}" class="btn btn-warning">Refresher List</a>
                     </div>
                     </div>
                 </form>
@@ -52,6 +55,7 @@
                         <th>Janpad </th>
                         <th>Name </th>
                         <th> Mobile No</th>
+                        <th>Pass Out Date</th>
                         <th>Address</th>
                         <th>Adhar Card </th>
                         <th>Father's Name</th>
@@ -62,7 +66,7 @@
                 </thead>
                 <tbody >
                 @if(count($data)>0)
-                    @php $i = 1 @endphp
+                    @php $i = ($data->currentPage() - 1) * $data->perPage() + 1; @endphp
                     @foreach($data as $val)
                     <tr>
                         <td>{{ $i }}</td>
@@ -70,6 +74,7 @@
                         <td>{{$val->janpad_name}}</td>
                         <td>{{$val->maitri_name}}</td>
                         <td>{{$val->maitri_mobile_no}}</td>
+                        <td>{{ $val->pass_date ?: 'N/A' }}</td>
                         <td>{{$val->gram_panchayat}}  {{$val->post_office}}  {{$val->block}} {{$val->tehsil}}</td>
                         <td>{{$val->adhaar_card}}</td>
                         <td> {{$val->father_name}} </td>
@@ -78,14 +83,27 @@
                             <button class="btn btn-primary edit-btn" data-id="{{ $val->id }}">Edit</button>
                         </td>
                         <td>
-                            <a href="{{ route('edit-maitri-data', $val->id) }}" class="btn btn-success">Update</a>
+                            <a href="{{ route('edit-maitri-data', $val->id) }}" class="btn btn-success btn-sm mb-1">Update</a>
+                            @if($val->needsRefresherTraining())
+                                @if($val->refresher_training)
+                                    <span class="badge bg-info text-dark">In Refresher List</span>
+                                @else
+                                    <form method="POST" action="{{ route('add-maitri-refresher', $val->id) }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-warning btn-sm"
+                                            onclick="return confirm('Add this Maitri to Refresher Training List?')">
+                                            Refresher Training
+                                        </button>
+                                    </form>
+                                @endif
+                            @endif
                         </td>
                     </tr>
                     @php $i++ @endphp
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" style="color:red;">No record found..</td>
+                        <td colspan="12" style="color:red;">No record found..</td>
                     </tr>
                 @endif
                 </tbody>
@@ -212,4 +230,3 @@ $(document).ready(function () {
 });
 </script>
 @endsection
-

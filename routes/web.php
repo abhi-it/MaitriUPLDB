@@ -285,6 +285,8 @@ Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], funct
     Route::get("getallmaitrifilterlist", [MaitriController::class, 'maitriListing'])->name('getallmaitrifilterlist');
     Route::get("edit-maitri-data/{id}/edit", [MaitriController::class, 'editMaitriData'])->name('edit-maitri-data');
     Route::post("edit-maitri-data/{id}/update", [MaitriController::class, 'updateMaitriData'])->name('update-maitri-data');
+    Route::post("add-maitri-refresher/{id}", [MaitriController::class, 'addToRefresherTraining'])->name('add-maitri-refresher');
+    Route::get("maitri-refresher-list", [MaitriController::class, 'refresherTrainingList'])->name('maitri-refresher-list');
 
     Route::get('/matri-to-fetch-record/{id}', [MaitriController::class, 'fetchRecord'])->name('matri-to-fetch-record');
     Route::post('/matri-to-update-record', [MaitriController::class, 'updateRecord'])->name('matri-to-update-record');

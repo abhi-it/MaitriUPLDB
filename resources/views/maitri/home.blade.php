@@ -55,6 +55,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-3 mt-3 mb-3 mt-md-5 mt-md-5">
+                <div class="card text-center">
+                    <div class="card-header">रिफ्रेशर ट्रेनिंग सूची</div>
+                    <div class="card-body" style="padding:10px">
+                        <h5 class="card-title">
+                            <a href="{{ route('maitri-refresher-list') }}" class="btn btn-warning">
+                                View {{ $refresherCount ?? 0 }}
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

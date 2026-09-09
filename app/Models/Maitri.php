@@ -44,6 +44,13 @@ class Maitri extends Authenticatable implements JWTSubject
         'gender',
         'pincode',
         'avedan_id',
+        'refresher_training',
+        'refresher_training_at',
+    ];
+
+    protected $casts = [
+        'refresher_training' => 'boolean',
+        'refresher_training_at' => 'datetime',
     ];
 
     public function getJWTIdentifier()
@@ -54,6 +61,47 @@ class Maitri extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * True when pass-out is older than 3 years.
+     * Supports formats like 2022-23, 2022, or Y-m-d dates.
+     */
+    public function needsRefresherTraining(): bool
+    {
+        $passYear = $this->getPassOutYear();
+        if (!$passYear) {
+            return false;
+        }
+
+        return (now()->year - $passYear) >= 3;
+    }
+
+    public function getPassOutYear(): ?int
+    {
+        $passDate = trim((string) $this->pass_date);
+        if ($passDate === '') {
+            return null;
+        }
+
+        if (preg_match('/^(\d{4})\s*[-–\/]\s*(\d{2}|\d{4})$/', $passDate, $matches)) {
+            return (int) $matches[1];
+        }
+
+        if (preg_match('/^(\d{4})$/', $passDate, $matches)) {
+            return (int) $matches[1];
+        }
+
+        if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $passDate, $matches)) {
+            return (int) $matches[1];
+        }
+
+        $timestamp = strtotime($passDate);
+        if ($timestamp) {
+            return (int) date('Y', $timestamp);
+        }
+
+        return null;
     }
 
 }
