@@ -44,15 +44,15 @@
             {{ session()->get('error') }}
         </div>
         @endif
-      
+
     <div class="row">
-        
+
         <div class="col-sm-8 contain-form card">
             <form action="{{route('addUpdateAnimalDetails')}}"   enctype="multipart/form-data" method="post">
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">जानवर</label> 
+                        <label for="inputEmail4">जानवर</label>
                         <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
                         <select class="form-control" name="type" id="type" required>
                             <option value="">एक का चयन करें</option>
@@ -63,11 +63,11 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                    <label for="inputEmail4">पशु फोटो</label> 
+                    <label for="inputEmail4">पशु फोटो</label>
                         <input type="file" name="file"  class="form-control" requires>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="inputEmail4">विवरण</label> 
+                        <label for="inputEmail4">विवरण</label>
                         <textarea id="request_message" class="form-control"  name="details" rows="4" cols="50"></textarea>
                     </div>
                 </div>

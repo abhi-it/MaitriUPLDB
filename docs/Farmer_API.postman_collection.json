@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-farmerapi0001",
+    "name": "MaitriUPLDB Farmer API",
+    "description": "Farmer signup, login, dashboard, profile, and service-request APIs.\n\n## How to use\n1. Set `base_url` (example: `http://127.0.0.1:8000`).\n2. Run **Farmer Signup** or **Farmer Login**.\n3. Token is saved automatically into `farmer_token`.\n4. Use authenticated APIs with Bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "farmer_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Master Lists (Public)",
+      "description": "Dropdown master APIs used before farmer signup/profile update.",
+      "item": [
+        {
+          "name": "Mandal List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/mandal_list",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "mandal_list"]
+            },
+            "description": "Returns all mandals/divisions for the signup and profile forms."
+          },
+          "response": []
+        },
+        {
+          "name": "District List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/district_list?division_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "district_list"],
+              "query": [
+                {
+                  "key": "division_id",
+                  "value": "1",
+                  "description": "Selected mandal/division id"
+                }
+              ]
+            },
+            "description": "Returns districts for the selected division_id."
+          },
+          "response": []
+        },
+        {
+          "name": "Tehsil List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/tehsil_list?district_name=लखनऊ",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "tehsil_list"],
+              "query": [
+                {
+                  "key": "district_name",
+                  "value": "लखनऊ",
+                  "description": "District Hindi name (name_hindi)"
+                }
+              ]
+            },
+            "description": "Returns tehsil list for selected district name."
+          },
+          "response": []
+        },
+        {
+          "name": "Block List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/getAllBlock?tehsil=सदर",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "getAllBlock"],
+              "query": [
+                {
+                  "key": "tehsil",
+                  "value": "सदर",
+                  "description": "Selected tehsil name"
+                }
+              ]
+            },
+            "description": "Returns vikas khand/block list for selected tehsil."
+          },
+          "response": []
+        },
+        {
+          "name": "Animal Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/animal_types",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "animal_types"]
+            },
+            "description": "Returns animal type options: cow, buffalo, goat."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Auth (Public)",
+      "description": "Farmer signup and login. Token is auto-saved to collection variable farmer_token.",
+      "item": [
+        {
+          "name": "Farmer Signup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json && json.data && json.data.token) {",
+                  "        pm.collectionVariables.set('farmer_token', json.data.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "Ramesh",
+                  "description": "Farmer first name (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "Kumar",
+                  "description": "Farmer last name (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "MobileNumber",
+                  "value": "9876543210",
+                  "description": "Unique mobile number (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "farmer.test@example.com",
+                  "description": "Unique email (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password123",
+                  "description": "Password min 8 chars (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "password123",
+                  "description": "Must match password (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "description": "male | female | others (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "division_id",
+                  "value": "1",
+                  "description": "Mandal/division id (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "district_id",
+                  "value": "1",
+                  "description": "District id preferred (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "tehsil",
+                  "value": "सदर",
+                  "description": "Tehsil name (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "block",
+                  "value": "ब्लाक 1",
+                  "description": "Vikas khand/block (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "post_office",
+                  "value": "Main Post Office",
+                  "description": "Post office (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "pincode",
+                  "value": "226001",
+                  "description": "Pincode max 6 (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "gram_panchayat",
+                  "value": "Gram Panchayat 1",
+                  "description": "Gram panchayat (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "animal_type[]",
+                  "value": "cow",
+                  "description": "Animal type: cow/buffalo/goat (required array)",
+                  "type": "text"
+                },
+                {
+                  "key": "breeds[]",
+                  "value": "Gir",
+                  "description": "Breed name (required array)",
+                  "type": "text"
+                },
+                {
+                  "key": "cattale_no[]",
+                  "value": "2",
+                  "description": "Cattle count (required array)",
+                  "type": "text"
+                },
+                {
+                  "key": "milk_day[]",
+                  "value": "8",
+                  "description": "Milk/day/animal (required array)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/farmer-signup",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "farmer-signup"]
+            },
+            "description": "Registers a new farmer with email/password, location and animal details.\nReturns JWT token in `data.token`.\n\nAligned with web route `POST /farmer-add`."
+          },
+          "response": []
+        },
+        {
+          "name": "Farmer Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json && json.data && json.data.token) {",
+                  "        pm.collectionVariables.set('farmer_token', json.data.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "farmer.test@example.com",
+                  "description": "Registered farmer email (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password123",
+                  "description": "Account password (required)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/farmer-login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "farmer-login"]
+            },
+            "description": "Login farmer using email + password.\nReturns JWT token and profile status flags."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Authenticated Farmer",
+      "description": "Protected farmer APIs. Requires Authorization: Bearer {{farmer_token}}.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{farmer_token}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/dashboard?per_page=10&page=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "dashboard"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Records per page (optional, default 10)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (optional)"
+                }
+              ]
+            },
+            "description": "Farmer dashboard API.\nReturns farmer profile and paginated service requests.\n\nMatches web route `GET /farmer-dashboard`."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service Request Form",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/service-request",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "service-request"]
+            },
+            "description": "Returns form data for creating service request:\n- services list\n- maitri list (by farmer district)\n- missing_location / can_submit flags\n\nMatches web route `GET /service-request`."
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Service Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "services",
+                  "value": "frozen_semen_ai",
+                  "description": "Service value from services list (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "maitri_id",
+                  "value": "1",
+                  "description": "Selected maitri id from form API (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "request_message",
+                  "value": "Please visit my village for AI service.",
+                  "description": "Request message max 1500 chars (required)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/service-request",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "service-request"]
+            },
+            "description": "Creates farmer service request for selected maitri.\n\nMatches web route `POST /farmer-request`."
+          },
+          "response": []
+        },
+        {
+          "name": "Farmer Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/farmer-details",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "farmer-details"]
+            },
+            "description": "Returns logged-in farmer profile, animal information, divisions and districts.\n\nMatches web route `GET /farmer-details`."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Farmer Details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "Ramesh",
+                  "description": "First name (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "Kumar",
+                  "description": "Last name (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "MobileNumber",
+                  "value": "9876543210",
+                  "description": "Mobile number unique except current user (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "farmer.test@example.com",
+                  "description": "Email unique except current user (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "",
+                  "description": "Optional new password (min 8). Leave blank to keep old.",
+                  "type": "text"
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "",
+                  "description": "Required only if password is sent",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "description": "Gender (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "division_id",
+                  "value": "1",
+                  "description": "Mandal id (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "district_id",
+                  "value": "1",
+                  "description": "District id (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "tehsil",
+                  "value": "सदर",
+                  "description": "Tehsil (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "block",
+                  "value": "ब्लाक 1",
+                  "description": "Block (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "post_office",
+                  "value": "Main Post Office",
+                  "description": "Post office (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "pincode",
+                  "value": "226001",
+                  "description": "Pincode (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "gram_panchayat",
+                  "value": "Gram Panchayat 1",
+                  "description": "Gram panchayat (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "animal_type[]",
+                  "value": "cow",
+                  "description": "Animal type array (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "breeds[]",
+                  "value": "Gir",
+                  "description": "Breed array (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "cattale_no[]",
+                  "value": "2",
+                  "description": "Cattle count array (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "milk_day[]",
+                  "value": "8",
+                  "description": "Milk/day array (optional)",
+                  "type": "text"
+                },
+                {
+                  "key": "animal_id[]",
+                  "value": "",
+                  "description": "Existing animal row id for update (optional). Leave empty to create new.",
+                  "type": "text"
+                },
+                {
+                  "key": "removeAnimal[]",
+                  "value": "",
+                  "description": "Animal ids to delete (optional)",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/update-farmer-details",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "update-farmer-details"]
+            },
+            "description": "Updates farmer profile and animal information.\nPassword is optional.\n\nMatches web route `POST /update-farmer-details`."
+          },
+          "response": []
+        },
+        {
+          "name": "High Yielding Animal List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/high-yielding-animal",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "high-yielding-animal"]
+            },
+            "description": "Returns farmer high yielding animal records with file_url.\n\nMatches web route `GET /high-yielding-animal`."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Yielding Animal Form",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/add-yielding-animal",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "add-yielding-animal"]
+            },
+            "description": "Returns animal type options for add form.\n\nMatches web route `GET /add-yielding-animal`."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Update Animal Details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "type",
+                  "value": "cow",
+                  "description": "buffalo | cow | goat | horse (required)",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "description": "Animal photo image file max 2MB (required)",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "details",
+                  "value": "High milk yielding animal details",
+                  "description": "Optional description",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/add-update-animal-details",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "add-update-animal-details"]
+            },
+            "description": "Uploads animal photo and creates high yielding animal record.\nUse multipart/form-data.\nReturns first validation error only.\n\nMatches web route `POST /addUpdateAnimalDetails`."
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/v1/farmer/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "v1", "farmer", "logout"]
+            },
+            "description": "Invalidates current farmer JWT token."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

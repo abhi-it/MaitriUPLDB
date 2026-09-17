@@ -31,6 +31,10 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('otp-verify', [AuthController::class, 'otpVerify'])->name('otp-verify');
 
+    // Farmer email/password signup + login
+    Route::post('farmer-signup', [RegistrationController::class, 'farmerSignup'])->name('api.farmer-signup');
+    Route::post('farmer-login', [AuthController::class, 'farmerLogin'])->name('api.farmer-login');
+
     Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
     //Registration
     Route::get('getAllBlock', [RegistrationController::class, 'getAllBlock'])->name('getAllBlock');
@@ -41,13 +45,25 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [RegistrationController::class, 'register'])->name('register');
 });
 
+// Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
+Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], function () {
+    Route::get('logout', [AuthController::class, 'logout'])->name('api.farmer-logout');
+
+    Route::get('dashboard', [FarmerController::class, 'dashboard'])->name('api.farmer-dashboard');
+    Route::get('service-request', [FarmerController::class, 'serviceRequestForm'])->name('api.farmer-service-request-form');
+    Route::post('service-request', [FarmerController::class, 'submitServiceRequest'])->name('api.farmer-service-request-submit');
+    Route::get('farmer-details', [FarmerController::class, 'farmerDetails'])->name('api.farmer-details');
+    Route::post('update-farmer-details', [FarmerController::class, 'updateFarmerDetails'])->name('api.update-farmer-details');
+
+    // High yielding animal (matches web high-yielding-animal / add-yielding-animal)
+    Route::get('high-yielding-animal', [FarmerController::class, 'highYieldingAnimalList'])->name('api.high-yielding-animal');
+    Route::get('add-yielding-animal', [FarmerController::class, 'addYieldingAnimalForm'])->name('api.add-yielding-animal');
+    Route::post('add-update-animal-details', [FarmerController::class, 'addUpdateAnimalDetails'])->name('api.add-update-animal-details');
+});
+
 Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], function() {
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
-    
-
-
 
     Route::get('getProfile',  [FarmerController::class, 'getProfile']);
     Route::get('view-service-request', [FarmerController::class, 'getServiceRequest'])->name('view-service-request');
@@ -61,11 +77,11 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
     Route::post('delete-animal', [FarmerController::class, 'delete_animal']);
     Route::post('upload-image', [FarmerController::class, 'uploadImage']);
     Route::post('update-profile', [FarmerController::class, 'update_profile']);
-    
+
     Route::post('save-animal-info', [FarmerController::class, 'saveAnimalInfo']);
     Route::post('delete-animal-info', [FarmerController::class, 'deleteAnimalInfo']);
     Route::get('all-animal-info', [FarmerController::class, 'allAnimalInfo']);
-    
+
 
     //Maitri
     Route::get('maitri/get-maitri-details', [MaitriController::class, 'getMaitriDetails']);
@@ -77,9 +93,9 @@ Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], 
     Route::post('maitri/update-status', [MaitriController::class, 'update_service_status']);
     Route::post('maitri/add-animal-service', [MaitriController::class, 'add_animal_service_request']);
 
-    //Status  
+    //Status
     Route::get('get-status', [FarmerController::class, 'getStatus']);
-    
+
 });
 
 Route::get('show-stages', [IVSBroadCastController::class, 'showStages'])->name('showStages');

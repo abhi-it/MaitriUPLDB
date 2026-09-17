@@ -31,7 +31,7 @@ class AuthController extends Controller
                 $otp = rand(10000, 99999);
                 $farmer->otp_login = $otp;
                 $number = $request->mobileNumber;
-            
+
                 if($otp){
                     $this->sendMobileMessage($number, $otp);
                     $farmer->save();
@@ -41,7 +41,7 @@ class AuthController extends Controller
                 $otp = rand(10000, 99999);
                 $maitri->otp_login = $otp;
                 $number = $request->mobileNumber;
-            
+
                 if($otp){
                     $this->sendMobileMessage($number, $otp);
                     $maitri->save();
@@ -79,7 +79,7 @@ class AuthController extends Controller
 
     public function otpVerify(Request $request){
         try {
-        
+
             $request->validate([
                 'mobileNumber' => 'required',
                 'otp' => 'required|numeric|digits:5',
@@ -119,7 +119,7 @@ class AuthController extends Controller
         }
     }
 
-  
+
     public function sendMobileMessage($number, $otp){
         $curl = curl_init();
 
@@ -136,6 +136,53 @@ class AuthController extends Controller
         $response = curl_exec($curl);
         curl_close($curl);
         return $response;
+    }
+
+    /**
+     * Farmer login with email + password (matches web maitriFarmerLogin for farmers).
+     */
+    public function farmerLogin(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+            }
+
+            $farmer = FarmerUser::where('email', $request->email)->first();
+
+            if (!$farmer || !Hash::check($request->password, $farmer->password)) {
+                return $this->errorResponse('Invalid email or password', 401);
+            }
+
+            Auth::shouldUse('farmer_api');
+            $token = JWTAuth::fromUser($farmer);
+
+            $isFilled = !empty($farmer->name)
+                && !empty($farmer->gender)
+                && !empty($farmer->pincode)
+                && !empty($farmer->MobileNumber)
+                && !empty($farmer->post_office)
+                && !empty($farmer->block)
+                && !empty($farmer->tehsil);
+
+            $checkAnimal = Animalinformation::where('user_id', $farmer->id)->count();
+            $farmer->load(['district', 'getAnimalInformation']);
+            $farmer['profileDone'] = $isFilled ? 'completed' : 'not_completed';
+            $farmer['checkAnimal'] = $checkAnimal > 0 ? 'completed' : 'not_completed';
+
+            return $this->successResponse('Farmer login successful', 200, [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'user' => $farmer,
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
     }
 
     public function logout()
@@ -243,7 +290,7 @@ class AuthController extends Controller
                         'title' => 'पोंवार',
                         'image' => 'https://maitriupldb.in/cattleBuffalo/8.avif'
                     ],
-                    
+
                 ],
                 'buffalo' => [
                     [
@@ -255,8 +302,8 @@ class AuthController extends Controller
                         'image' => 'https://maitriupldb.in/cattleBuffalo/b2.avif'
                     ],
                 ]
-                
-                
+
+
             ]
         ];
         return $this->successResponse('get Tutorials',200, $data);

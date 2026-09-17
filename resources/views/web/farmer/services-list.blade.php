@@ -51,7 +51,7 @@
                 @endif
 
                 <!-- <td>
-				<a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> | 
+				<a href="{{url('maitri-details')}}/{{$row->id}}" >Edit</a> |
                 <button type="button" class="btn custom-btn btn-danger deleteUser"  data-id="{{$row->id}}"><i class="fa fa-trash">Delete</i></button>
 
 			</td> -->
