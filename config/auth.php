@@ -48,6 +48,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'farmer_users',
         ],
+        'maitri_api' => [
+            'driver' => 'jwt',
+            'provider' => 'maitri_users',
+        ],
     ],
 
     /*

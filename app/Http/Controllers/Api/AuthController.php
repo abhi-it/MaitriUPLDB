@@ -12,6 +12,7 @@ use TokenInvalidException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\FarmerUser;
+use App\Models\Maitri;
 use App\Models\API\Servicerequest;
 use App\Traits\FormatResponseTrait;
 use App\Models\Animalinformation;
@@ -179,6 +180,49 @@ class AuthController extends Controller
                 'token' => $token,
                 'token_type' => 'bearer',
                 'user' => $farmer,
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Maitri login with email + password from maitries table.
+     */
+    public function maitriLogin(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+            }
+
+            $maitri = Maitri::where('email', $request->email)->first();
+
+            if (!$maitri || empty($maitri->password) || !Hash::check($request->password, $maitri->password)) {
+                return $this->errorResponse('Invalid email or password', 401);
+            }
+
+            Auth::shouldUse('maitri_api');
+            $token = JWTAuth::fromUser($maitri);
+
+            $isFilled = !empty($maitri->maitri_name)
+                && !empty($maitri->gender)
+                && !empty($maitri->maitri_mobile_no)
+                && !empty($maitri->district_id)
+                && !empty($maitri->block)
+                && !empty($maitri->tehsil);
+
+            $maitri['profileDone'] = $isFilled ? 'completed' : 'not_completed';
+
+            return $this->successResponse('Maitri login successful', 200, [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'user' => $maitri,
             ]);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);

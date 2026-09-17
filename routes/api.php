@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function () {
     // Farmer email/password signup + login
     Route::post('farmer-signup', [RegistrationController::class, 'farmerSignup'])->name('api.farmer-signup');
     Route::post('farmer-login', [AuthController::class, 'farmerLogin'])->name('api.farmer-login');
+    Route::post('maitri-login', [AuthController::class, 'maitriLogin'])->name('api.maitri-login');
 
     Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
     //Registration
@@ -59,6 +60,20 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
     Route::get('high-yielding-animal', [FarmerController::class, 'highYieldingAnimalList'])->name('api.high-yielding-animal');
     Route::get('add-yielding-animal', [FarmerController::class, 'addYieldingAnimalForm'])->name('api.add-yielding-animal');
     Route::post('add-update-animal-details', [FarmerController::class, 'addUpdateAnimalDetails'])->name('api.add-update-animal-details');
+});
+
+// Maitri-only authenticated APIs (JWT + MaitriApiAuth middleware)
+Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], function () {
+    Route::get('logout', [AuthController::class, 'logout'])->name('api.maitri-logout');
+
+    Route::get('dashboard', [MaitriController::class, 'dashboard'])->name('api.maitri-dashboard');
+    Route::post('dashboard-data', [MaitriController::class, 'maitriDashData'])->name('api.maitri-dashdata');
+
+    Route::get('request-list', [MaitriController::class, 'requestList'])->name('api.maitri-request-list');
+    Route::post('update-service-request', [MaitriController::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
+
+    Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
+    Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
 });
 
 Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], function() {

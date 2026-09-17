@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roles' => \App\Http\Middleware\CheckRole::class,
         'farmer.api' => \App\Http\Middleware\FarmerApiAuth::class,
+        'maitri.api' => \App\Http\Middleware\MaitriApiAuth::class,
     ];
 }
