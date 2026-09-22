@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\Maitri\MaitriDashboardResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Maitri;
@@ -233,10 +234,22 @@ class MaitriController extends Controller
 
             $data = $query->paginate($perPage);
 
-            return $this->successResponse('Maitri dashboard fetched successfully', 200, [
-                'maitri' => $maitri,
+            $resource = new MaitriDashboardResource([
+                'maitri'           => $maitri,
                 'service_requests' => $data->items(),
-            ], $data);
+            ]);
+
+            return $this->successResponse(
+                'Maitri dashboard fetched successfully',
+                200,
+                $resource,
+                $data
+            );
+
+            // return $this->successResponse('Maitri dashboard fetched successfully', 200, [
+            //     'maitri' => $maitri,
+            //     'service_requests' => $data->items(),
+            // ], $data);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }

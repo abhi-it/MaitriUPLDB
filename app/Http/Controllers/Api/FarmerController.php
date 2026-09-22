@@ -922,7 +922,7 @@ class FarmerController extends Controller
                 ['value' => 'horse', 'label' => 'घोड़ा'],
             ];
 
-            return $this->successResponse('Add high yielding animal form data fetched successfully', 200,
+            return $this->successResponse('Get High yielding animal form data successfully', 200,
                 $types,
             );
         } catch (\Exception $e) {

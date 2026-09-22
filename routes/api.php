@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\RegistrationController;
@@ -44,6 +45,14 @@ Route::prefix('v1')->group(function () {
     Route::get('tehsil_list', [RegistrationController::class, 'tehsil_list'])->name('tehsil_list');
     Route::get('animal_types', [RegistrationController::class, 'animal_types'])->name('animal_types');
     Route::post('register', [RegistrationController::class, 'register'])->name('register');
+});
+
+Route::prefix('auth/v1')->group(function () {
+    Route::get("get-mandal", [CommonController::class, 'getMandal']);
+    Route::get("get-district", [CommonController::class, 'getDistrict']);
+    Route::get("get-tehsil", [CommonController::class, 'getTehsilAll']);
+    Route::get("get-block", [CommonController::class, 'getBlockAll']);
+    Route::get("get-aicenter", [CommonController::class, 'getAiCenterAll']);
 });
 
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
