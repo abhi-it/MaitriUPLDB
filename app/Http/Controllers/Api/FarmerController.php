@@ -877,6 +877,38 @@ class FarmerController extends Controller
         }
     }
 
+    public function getMaitriList() {
+        try {
+            $farmer = auth()->user();
+            $missingLocation = [];
+            if (empty($farmer->district_id)) {
+                $missingLocation[] = 'ज़िला';
+            }
+            if (empty($farmer->tehsil)) {
+                $missingLocation[] = 'तहसील';
+            }
+            if (empty($farmer->block)) {
+                $missingLocation[] = 'विकास खण्ड';
+            }
+
+            $maitries = collect();
+            if (!empty($farmer->district_id)) {
+                $maitries = Maitri::where(function ($q) {
+                        $q->where('status', 0)->orWhereNull('status');
+                    })
+                    ->where('district_id', $farmer->district_id)
+                    ->orderByRaw("CASE WHEN block = ? THEN 0 ELSE 1 END", [$farmer->block ?? ''])
+                    ->orderBy('block', 'asc')
+                    ->orderBy('maitri_name', 'asc')
+                    ->get();
+            }
+
+            return $this->successResponse('Get Maitri list successfully', 200, $maitries);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
     /**
      * GET high-yielding-animal list (matches web high-yielding-animal).
      */

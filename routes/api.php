@@ -64,6 +64,8 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
     Route::post('service-request', [FarmerController::class, 'submitServiceRequest'])->name('api.farmer-service-request-submit');
     Route::get('farmer-details', [FarmerController::class, 'farmerDetails'])->name('api.farmer-details');
     Route::post('update-farmer-details', [FarmerController::class, 'updateFarmerDetails'])->name('api.update-farmer-details');
+    
+    Route::get('get-maitri-list', [FarmerController::class, 'getMaitriList'])->name('api.update-farmer-details');
 
     // High yielding animal (matches web high-yielding-animal / add-yielding-animal)
     Route::get('high-yielding-animal', [FarmerController::class, 'highYieldingAnimalList'])->name('api.high-yielding-animal');
