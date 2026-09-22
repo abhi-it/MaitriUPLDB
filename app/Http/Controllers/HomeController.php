@@ -42,6 +42,8 @@ class HomeController extends Controller
 	
 	public function index()
 	{
+		$result = Setting::find(2);
+		$end_date = \Carbon\Carbon::parse($result->end_date, 'Asia/Kolkata')->endOfDay();
 		return view('home', compact('end_date'));
 	}
 

@@ -959,15 +959,24 @@ class FarmerController extends Controller
             }
             $file->move($destinationPath, $fileName);
 
-            $id = DB::table('farmer_high_yielding_animal')->insertGetId([
-                'user_id' => $user->id,
-                'type' => $request->type,
-                'file' => $fileName,
-                'details' => $request->details,
-            ]);
+            // $id = DB::table('farmer_high_yielding_animal')->insertGetId([
+            //     'user_id' => $user->id,
+            //     'type' => $request->type,
+            //     'file' => $fileName,
+            //     'details' => $request->details,
+            // ]);
 
-            $data = FarmerHighYielingAnimal::find($id);
-            if ($data) {
+            // $data = FarmerHighYielingAnimal::find($id);
+            // if ($data) {
+            //     $data->file_url = asset('assets/animals/' . $data->file);
+            // }
+
+            $data = new FarmerHighYielingAnimal();
+            $data->user_id = $user->id;
+            $data->type = $request->type;
+            $data->file = $fileName;
+            $data->details = $request->details;
+            if($data->save()) {
                 $data->file_url = asset('assets/animals/' . $data->file);
             }
 
