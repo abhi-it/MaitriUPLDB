@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Maitri\MaitriDashboardResource;
+use App\Http\Resources\Api\Maitri\ServiceRequestResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Maitri;
@@ -227,23 +228,24 @@ class MaitriController extends Controller
                 return $this->errorResponse('Maitri not authenticated', 401);
             }
 
-            $perPage = (int) $request->input('per_page', 10);
-            $query = Servicerequest::with(['user'])
-                ->where('maitri_id', $maitri->id)
-                ->orderBy('id', 'desc');
+            // $perPage = (int) $request->input('per_page', 10);
+            // $query = Servicerequest::with(['user'])
+            //     ->where('maitri_id', $maitri->id)
+            //     ->orderBy('id', 'desc');
 
-            $data = $query->paginate($perPage);
+            // $data = $query->paginate($perPage);
 
-            $resource = new MaitriDashboardResource([
-                'maitri'           => $maitri,
-                'service_requests' => $data->items(),
-            ]);
+            // $resource = new MaitriDashboardResource([
+            //     'maitri'           => $maitri,
+            //     'service_requests' => $data->items(),
+            // ]);
+
+            $data = Servicerequest::where('maitri_id', $maitri->id)->count();
 
             return $this->successResponse(
                 'Maitri dashboard fetched successfully',
                 200,
-                $resource,
-                $data
+                ['service_requests' => $data]
             );
 
             // return $this->successResponse('Maitri dashboard fetched successfully', 200, [
@@ -304,33 +306,47 @@ class MaitriController extends Controller
     /**
      * GET service request list for maitri (matches web request-list).
      */
-    public function requestList(Request $request)
-    {
+    // public function requestList(Request $request)
+    // {
+    //     try {
+    //         $maitri = auth()->user();
+    //         if (!$maitri instanceof Maitri) {
+    //             return $this->errorResponse('Maitri not authenticated', 401);
+    //         }
+
+    //         $perPage = (int) $request->input('per_page', 10);
+    //         $status = $request->input('status');
+
+    //         $query = Servicerequest::with(['user'])
+    //             ->where('maitri_id', $maitri->id)
+    //             ->orderBy('id', 'desc');
+
+    //         if ($request->filled('status')) {
+    //             $query->where('status', $status);
+    //         }
+
+    //         $data = $query->paginate($perPage);
+
+    //         return $this->successResponse('Service request list fetched successfully', 200, $data->items(), $data);
+    //     } catch (\Exception $e) {
+    //         return $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
+    public function requestList(Request $request) {
         try {
             $maitri = auth()->user();
             if (!$maitri instanceof Maitri) {
                 return $this->errorResponse('Maitri not authenticated', 401);
             }
-
             $perPage = (int) $request->input('per_page', 10);
-            $status = $request->input('status');
-
-            $query = Servicerequest::with(['user'])
-                ->where('maitri_id', $maitri->id)
-                ->orderBy('id', 'desc');
-
-            if ($request->filled('status')) {
-                $query->where('status', $status);
-            }
+            $query = Servicerequest::with(['user'])->where('maitri_id', $maitri->id)->orderBy('id', 'desc');
 
             $data = $query->paginate($perPage);
-
-            return $this->successResponse('Service request list fetched successfully', 200, $data->items(), $data);
+            return $this->successResponse("Service request list fetched successfully",200,ServiceRequestResource::collection($data),$data);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }
     }
-
     /**
      * POST update service request status (matches web updateServiceRequest).
      * Body: id, status (or val like web)

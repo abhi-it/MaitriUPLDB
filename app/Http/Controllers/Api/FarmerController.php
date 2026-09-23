@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Farmer\FarmerHighYielingAnimalResource;
 use App\Http\Resources\Api\Farmer\FarmerServiceRequestResource;
+use App\Http\Resources\Api\Maitri\ServiceRequestResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\FarmerUser;
@@ -604,17 +605,18 @@ class FarmerController extends Controller
             }
 
             $perPage = (int) $request->input('per_page', 10);
-            $query = Servicerequest::with(['maitri'])
+            $data = Servicerequest::with(['maitri'])
                 ->where('user_id', $user->id)
-                ->orderBy('id', 'desc');
+                ->orderBy('id', 'desc')->count();
 
-            $data = $query->paginate($perPage);
+            // $data = $query->paginate($perPage);
             $farmer = FarmerUser::with(['district', 'getAnimalInformation'])->find($user->id);
 
             return $this->successResponse('Farmer dashboard fetched successfully', 200, [
                 'farmer' => $farmer,
-                'service_requests' => $data->items(),
-            ], $data);
+                // 'service_requests' => $data->items(),
+                'service_requests' => $data,
+            ]);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }

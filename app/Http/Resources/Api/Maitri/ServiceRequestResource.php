@@ -18,6 +18,7 @@ class ServiceRequestResource extends JsonResource
             'maitri_id'       => $this->maitri_id,
             'request_message' => $this->request_message,
             'status'          => $this->status,
+            'formatted_status' => getServiceStatusLabel($this->status, $lang),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
             'user'            => $this->whenLoaded('user', function () {
