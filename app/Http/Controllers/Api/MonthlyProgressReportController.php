@@ -8,8 +8,6 @@ use App\Models\API\Servicerequest;
 use App\Models\Maitri;
 use App\Traits\FormatResponseTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-
 class MonthlyProgressReportController extends Controller
 {
     use FormatResponseTrait;
