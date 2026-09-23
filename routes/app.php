@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\DemandRequestController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
+use App\Http\Controllers\Api\MonthlyProgressReportController;
 
 Route::prefix('auth/v1')->group(function () {
     Route::get("get-mandal", [CommonController::class, 'getMandal']);
@@ -48,6 +49,8 @@ Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], fun
 
     Route::post('add-demand-request', [DemandRequestController::class, 'addDemandRequest']);
     Route::get('get-demand-request',  [DemandRequestController::class, 'getDemandRequest']);
+
+    Route::get('monthly-progress-report', [MonthlyProgressReportController::class, 'monthlyProgressReport']);
 
     Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
     Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
