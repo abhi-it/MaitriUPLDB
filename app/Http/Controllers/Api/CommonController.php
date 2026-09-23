@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Districts;
 use App\Models\Divisions;
+use App\Models\Institute;
 use App\Models\Manganurodhdata;
 use App\Traits\FormatResponseTrait;
 use Illuminate\Http\Request;
@@ -69,5 +70,19 @@ class CommonController extends Controller
                         ->groupBy('center_name')
                         ->get();
         return $this->successResponse('Get all ai center successfully!', 200, $getAIcenter);
+    }
+
+    public function getInsitute(Request $request){ 
+        $institute  = Institute::select('id','name','name_en')->get();
+        return $this->successResponse('Get institute list successfully!', 200, $institute);
+    }
+
+    public function getSemenData(Request $request){
+        return $this->successResponse('Get semen data successfully!', 200, [
+            'species_semen' => getSpeciesSemen(),
+            'semen_type' => getSemenType(),
+            'semen_source' => getSemenSource(),
+            'complaints' => getAnyComplaint(),
+        ]);
     }
 }

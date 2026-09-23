@@ -9,7 +9,7 @@ class DemandRequest extends Model
     use HasFactory;
     protected $table = 'demand_requests';
     protected $fillable = [
-
+        'maitrie_id',
         'name' ,
         'date_of_birth' ,
         'gender' ,
@@ -51,5 +51,18 @@ class DemandRequest extends Model
     ];
     public function district(){
         return $this->belongsTo(Districts::class,'district','id');
+    }
+
+    public function districtName(){
+        return $this->belongsTo(Districts::class,'district','id');
+    }
+
+    public function Institute(){
+        return $this->belongsTo(Institute::class,'training_center_id','id');
+    }
+
+    public function maitri()
+    {
+        return $this->belongsTo(Maitri::class, 'maitrie_id');
     }
 }

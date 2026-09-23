@@ -120,3 +120,78 @@ if (! function_exists('getYeildingAnimal')) {
         return $data[$value] ?? null;
     }
 }
+
+if (! function_exists('getSpeciesSemen')) {
+    function getSpeciesSemen($value = null)
+    {
+        $data = [
+            'cow'     => 'गाय',
+            'buffalo' => 'भैंस',
+            'goat'    => 'बकरी',
+        ];
+
+        if ($value === null) {
+            return $data;
+        }
+
+        return $data[$value] ?? null;
+    }
+}
+
+if (! function_exists('getSemenType')) {
+    function getSemenType($value = null)
+    {
+        $data = [
+            'conventional' => 'सामान्य',
+            'sexed'        => 'वर्गीकृत',
+        ];
+
+        if ($value === null) {
+            return $data;
+        }
+
+        return $data[$value] ?? null;
+    }
+}
+
+if (! function_exists('getSemenSource')) {
+    function getSemenSource($value = null)
+    {
+        $data = [
+            'UPLDB'           => 'यूपीएलडीबी',
+            'BAIF'            => 'बीएआईएफ़',
+            'ABC Salon'       => 'एबीसी सैलून',
+            'Amul'            => 'अमूल',
+            'Haryana'         => 'हरियाणा',
+            'Hissar Bovine'   => 'हिसार गोजातीय',
+            'Morna Breeding'  => 'मोरना प्रजनन',
+            'others'          => 'अन्य',
+        ];
+
+        if ($value === null) {
+            return $data;
+        }
+
+        return $data[$value] ?? null;
+    }
+}
+
+if (! function_exists('getAnyComplaint')) {
+    function getAnyComplaint($value = null)
+    {
+        $data = [
+            'स्ट्रॉ से संबंधित'                 => 'Related to Straws',
+            'तरल नाइट्रोजन से संबंधित'         => 'Related to Liquid Nitrogen',
+            'कंटेनर से संबंधित'                => 'Related to Container',
+            'भारत पशुधन आईडी से संबंधित'       => 'Related to Bharat Pashudhan ID',
+            'प्रोत्साहन राशि से संबंधित'       => 'Related to Incentive amount',
+            'बीमा से संबंधित'                  => 'Related to Insurance',
+        ];
+
+        if ($value === null) {
+            return $data;
+        }
+
+        return $data[$value] ?? null;
+    }
+}

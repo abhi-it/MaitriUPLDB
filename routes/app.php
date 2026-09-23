@@ -3,6 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CommonController;
+use App\Http\Controllers\Api\DemandRequestController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
 
@@ -12,6 +13,8 @@ Route::prefix('auth/v1')->group(function () {
     Route::get("get-tehsil", [CommonController::class, 'getTehsilAll']);
     Route::get("get-block", [CommonController::class, 'getBlockAll']);
     Route::get("get-aicenter", [CommonController::class, 'getAiCenterAll']);
+    Route::get("get-insitute", [CommonController::class, 'getInsitute']);
+    Route::get("get-semen-data", [CommonController::class, 'getSemenData']);
 });
 
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
@@ -42,6 +45,9 @@ Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], fun
 
     Route::get('request-list', [MaitriController::class, 'requestList'])->name('api.maitri-request-list');
     Route::post('update-service-request', [MaitriController::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
+
+    Route::post('add-demand-request', [DemandRequestController::class, 'addDemandRequest']);
+    Route::get('get-demand-request',  [DemandRequestController::class, 'getDemandRequest']);
 
     Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
     Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
