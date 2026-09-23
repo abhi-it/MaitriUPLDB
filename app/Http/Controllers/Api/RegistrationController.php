@@ -18,7 +18,7 @@ use App\Models\Tehsil;
 use App\Models\Manganurodhdata;
 use App\Models\API\Servicerequest;
 use App\Traits\FormatResponseTrait;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
@@ -187,7 +187,7 @@ class RegistrationController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return $this->errorResponse('Validation failed', 422, $validator->errors());
+                return $this->errorResponse($validator->errors()->first(), 422, $validator->errors());
             }
 
             if (is_numeric($request->district_id)) {

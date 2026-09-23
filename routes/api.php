@@ -47,46 +47,6 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [RegistrationController::class, 'register'])->name('register');
 });
 
-Route::prefix('auth/v1')->group(function () {
-    Route::get("get-mandal", [CommonController::class, 'getMandal']);
-    Route::get("get-district", [CommonController::class, 'getDistrict']);
-    Route::get("get-tehsil", [CommonController::class, 'getTehsilAll']);
-    Route::get("get-block", [CommonController::class, 'getBlockAll']);
-    Route::get("get-aicenter", [CommonController::class, 'getAiCenterAll']);
-});
-
-// Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
-Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('api.farmer-logout');
-
-    Route::get('dashboard', [FarmerController::class, 'dashboard'])->name('api.farmer-dashboard');
-    Route::get('service-request', [FarmerController::class, 'serviceRequestForm'])->name('api.farmer-service-request-form');
-    Route::post('service-request', [FarmerController::class, 'submitServiceRequest'])->name('api.farmer-service-request-submit');
-    Route::get('farmer-details', [FarmerController::class, 'farmerDetails'])->name('api.farmer-details');
-    Route::post('update-farmer-details', [FarmerController::class, 'updateFarmerDetails'])->name('api.update-farmer-details');
-    
-    Route::get('get-maitri-list', [FarmerController::class, 'getMaitriList'])->name('api.update-farmer-details');
-
-    // High yielding animal (matches web high-yielding-animal / add-yielding-animal)
-    Route::get('high-yielding-animal', [FarmerController::class, 'highYieldingAnimalList'])->name('api.high-yielding-animal');
-    Route::get('get-yielding-animal', [FarmerController::class, 'addYieldingAnimalForm'])->name('api.get-yielding-animal');
-    Route::post('add-update-animal-details', [FarmerController::class, 'addUpdateAnimalDetails'])->name('api.add-update-animal-details');
-});
-
-// Maitri-only authenticated APIs (JWT + MaitriApiAuth middleware)
-Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('api.maitri-logout');
-
-    Route::get('dashboard', [MaitriController::class, 'dashboard'])->name('api.maitri-dashboard');
-    Route::post('dashboard-data', [MaitriController::class, 'maitriDashData'])->name('api.maitri-dashdata');
-
-    Route::get('request-list', [MaitriController::class, 'requestList'])->name('api.maitri-request-list');
-    Route::post('update-service-request', [MaitriController::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
-
-    Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
-    Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
-});
-
 Route::group(['prefix' => 'auth/v1', 'middleware' => ['auth:api,farmer_api'] ], function() {
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

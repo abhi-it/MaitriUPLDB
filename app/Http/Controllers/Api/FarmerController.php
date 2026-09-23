@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\Farmer\FarmerHighYielingAnimalResource;
+use App\Http\Resources\Api\Farmer\FarmerServiceRequestResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\FarmerUser;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FormatResponseTrait;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -139,27 +141,53 @@ class FarmerController extends Controller
     }
 
     public function getProfile(){
-        $user = JWTAuth::user();
-        if (!$user) {
-            return response()->json([
-                'message' => 'User not authenticated',
-            ], 401);
-        }
-        if ($user) {
+        try {
+            $user = JWTAuth::user();
+
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not authenticated',
+                ], 401);
+            }
+
             $userData = FarmerUser::where('id', $user->id)->first();
-            $isFilled = !empty($userData->name) && !empty($userData->gender) && !empty($userData->pincode) && !empty($userData->MobileNumber) && !empty($user->post_office) && !empty($user->block) && !empty($user->tehsil);
-            $check_profile = $isFilled ? 'completed' : 'not_completed';
 
-            $checkAnimal = Animalinformation::where('user_id', $user->id)->get();
-            $status = ($checkAnimal->count() > 0) ? 'completed' : 'not_completed';
+            if (!$userData) {
+                return response()->json([
+                    'message' => 'User not found',
+                ], 404);
+            }
 
-            // dd($status);
+            $isFilled =
+                !empty($userData->name) &&
+                !empty($userData->gender) &&
+                !empty($userData->pincode) &&
+                !empty($userData->MobileNumber) &&
+                !empty($userData->post_office) &&
+                !empty($userData->block) &&
+                !empty($userData->tehsil);
 
-            $user['profileDone'] = $check_profile;
+            $checkProfile = $isFilled ? 'completed' : 'not_completed';
+
+            $checkAnimal = Animalinformation::where('user_id', $user->id)->exists();
+
+            $status = $checkAnimal ? 'completed' : 'not_completed';
+
+            $user['profileDone'] = $checkProfile;
             $user['checkAnimal'] = $status;
-            return $this->successResponse('Get User Profile Successfully',200,$user);
-        }else{
-            return $this->errorResponse($e->getMessage(), 500);
+
+            return $this->successResponse(
+                'Get User Profile Successfully',
+                200,
+                $user
+            );
+
+        } catch (\Exception $e) {
+
+            return $this->errorResponse(
+                $e->getMessage(),
+                500
+            );
         }
     }
 
@@ -243,7 +271,7 @@ class FarmerController extends Controller
             ['value' => 'pregnancy_diagnosis', 'label' => 'Pregnancy Diagnosis'],
         ];
 
-        return $this->successResponse('Services displayed successfully.',200, $animals);
+        return $this->successResponse('Services displayed successfully.',200, $services);
     }
 
     public function highYieldingAnimal(Request $request)
@@ -595,7 +623,7 @@ class FarmerController extends Controller
     /**
      * GET service-request form data (maitri list by farmer district).
      */
-    public function serviceRequestForm(Request $request)
+    public function serviceRequestFormData(Request $request)
     {
         try {
             $farmer = auth()->user();
@@ -635,24 +663,27 @@ class FarmerController extends Controller
                     ]);
             }
 
-            $services = [
-                ['value' => 'health_medical_checkip', 'label' => 'स्वास्थ्य/चिकित्सा जांच'],
-                ['value' => 'animal_insurance', 'label' => 'पशु बीमा'],
-                ['value' => 'vaccination', 'label' => 'टीकाकरण'],
-                ['value' => 'pregnancy_diagnosis', 'label' => 'गर्भावस्था निदान'],
-                ['value' => 'artificial_insemination', 'label' => 'कृत्रिम गर्भाधान'],
-                ['value' => 'livestock_insurance', 'label' => 'पशुधन बीमा'],
-                ['value' => 'calving', 'label' => 'बछड़ा जनन'],
-            ];
-
-
-            return $this->successResponse('Service request form data fetched successfully', 200, [
-                'farmer' => $farmer,
+            return $this->successResponse('Service requests data fetched successfully', 200, [
                 'missing_location' => $missingLocation,
-                'can_submit' => empty($missingLocation),
-                'services' => $services,
+                'services' => getServiceList(),
                 'maitries' => $maitries,
             ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function serviceRequestList(Request $request) {
+        try {
+            $user = auth()->user();
+            if (!$user instanceof FarmerUser) {
+                return $this->errorResponse('Farmer not authenticated', 401);
+            }
+
+            $perPage = (int) $request->input('per_page', 10);
+            $data = Servicerequest::with(['maitri'])->where('user_id', $user->id)->orderBy('id', 'desc')->paginate($perPage);
+            
+            return $this->successResponse("Farmer service request list",200,FarmerServiceRequestResource::collection($data),$data);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }
@@ -880,16 +911,6 @@ class FarmerController extends Controller
     public function getMaitriList() {
         try {
             $farmer = auth()->user();
-            $missingLocation = [];
-            if (empty($farmer->district_id)) {
-                $missingLocation[] = 'ज़िला';
-            }
-            if (empty($farmer->tehsil)) {
-                $missingLocation[] = 'तहसील';
-            }
-            if (empty($farmer->block)) {
-                $missingLocation[] = 'विकास खण्ड';
-            }
 
             $maitries = collect();
             if (!empty($farmer->district_id)) {
@@ -900,7 +921,16 @@ class FarmerController extends Controller
                     ->orderByRaw("CASE WHEN block = ? THEN 0 ELSE 1 END", [$farmer->block ?? ''])
                     ->orderBy('block', 'asc')
                     ->orderBy('maitri_name', 'asc')
-                    ->get();
+                    ->get([
+                        'id',
+                        'maitri_name',
+                        'maitri_mobile_no',
+                        'email',
+                        'district_id',
+                        'block',
+                        'tehsil',
+                        'center_name',
+                    ]);
             }
 
             return $this->successResponse('Get Maitri list successfully', 200, $maitries);
@@ -920,17 +950,10 @@ class FarmerController extends Controller
                 return $this->errorResponse('Farmer not authenticated', 401);
             }
 
-            $data = FarmerHighYielingAnimal::where('user_id', $user->id)
-                ->orderBy('id', 'desc')
-                ->get()
-                ->map(function ($item) {
-                    $item->file_url = $item->file
-                        ? asset('assets/animals/' . $item->file)
-                        : null;
-                    return $item;
-                });
-
-            return $this->successResponse('High yielding animal list fetched successfully', 200, $data);
+            $perPage = (int) $request->input('per_page', 10);
+            $data = FarmerHighYielingAnimal::where('user_id', $user->id)->orderBy('id', 'desc')->paginate($perPage);
+            
+            return $this->successResponse("High yielding animal list fetched successfully",200,FarmerHighYielingAnimalResource::collection($data),$data);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }
@@ -939,7 +962,7 @@ class FarmerController extends Controller
     /**
      * GET add form metadata (matches web add-yielding-animal).
      */
-    public function addYieldingAnimalForm(Request $request)
+    public function getYieldingAnimalForm(Request $request)
     {
         try {
             $user = auth()->user();
@@ -947,15 +970,8 @@ class FarmerController extends Controller
                 return $this->errorResponse('Farmer not authenticated', 401);
             }
 
-            $types = [
-                ['value' => 'buffalo', 'label' => 'भैंस'],
-                ['value' => 'cow', 'label' => 'गाय'],
-                ['value' => 'goat', 'label' => 'बकरी'],
-                ['value' => 'horse', 'label' => 'घोड़ा'],
-            ];
-
             return $this->successResponse('Get High yielding animal form data successfully', 200,
-                $types,
+                getYeildingAnimal(),
             );
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
@@ -990,18 +1006,6 @@ class FarmerController extends Controller
                 mkdir($destinationPath, 0777, true);
             }
             $file->move($destinationPath, $fileName);
-
-            // $id = DB::table('farmer_high_yielding_animal')->insertGetId([
-            //     'user_id' => $user->id,
-            //     'type' => $request->type,
-            //     'file' => $fileName,
-            //     'details' => $request->details,
-            // ]);
-
-            // $data = FarmerHighYielingAnimal::find($id);
-            // if ($data) {
-            //     $data->file_url = asset('assets/animals/' . $data->file);
-            // }
 
             $data = new FarmerHighYielingAnimal();
             $data->user_id = $user->id;
