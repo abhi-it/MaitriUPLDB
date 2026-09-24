@@ -21,6 +21,7 @@ Route::prefix('auth/v1')->group(function () {
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
 Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('api.farmer-logout');
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
 
     Route::get('dashboard', [FarmerController::class, 'dashboard'])->name('api.farmer-dashboard');
     Route::get('service-request-list', [FarmerController::class, 'serviceRequestList']);
@@ -54,4 +55,6 @@ Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], fun
 
     Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
     Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
+    
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
 });

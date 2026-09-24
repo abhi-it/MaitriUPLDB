@@ -352,4 +352,96 @@ class AuthController extends Controller
         ];
         return $this->successResponse('get Tutorials',200, $data);
     }
+
+    // public function changePassword(Request $request)
+    // {
+    //     try {
+    //         $user = auth()->user();
+
+    //         if(!$user) {
+    //             return $this->errorResponse('User not authenticated', 401);
+    //         }
+
+    //         if($user->role == 'Farmer' && $user->role_id ==4) {
+    //             $user = FarmerUser::find($user->id);
+    //         } else if($user->role == 'Maitri' && $user->role_id ==3) {
+    //             $user = Maitri::find($user->id);
+    //         } else {
+    //             return $this->errorResponse('User not found', 401);
+    //         }
+
+    //         $validator = Validator::make($request->all(), [
+    //             'current_password'      => 'required|string',
+    //             'new_password'          => 'required|string|min:8|confirmed',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return $this->errorResponse($validator->errors()->first(),422, $validator->errors());
+    //         }
+
+    //         if (! Hash::check($request->input('current_password'), $user->password)) {
+    //             return $this->errorResponse(
+    //                 'Your current password does not match with our record.',
+    //                 400
+    //             );
+    //         }
+
+    //         if (Hash::check($request->input('new_password'), $user->password)) {
+    //             return $this->errorResponse(
+    //                 'New password cannot be same as your current password.',
+    //                 400
+    //             );
+    //         }
+
+    //         $user->password = Hash::make($request->input('new_password'));
+    //         $user->save();
+
+    //         return $this->successResponse('Password successfully changed!', 200, null);
+
+    //     } catch (\Exception $e) {
+    //         return $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
+
+    public function changePassword(Request $request)
+    {
+        try {
+            $user = auth()->user();
+
+            if (!$user) {
+                return $this->errorResponse('User not authenticated', 401);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'current_password' => 'required|string',
+                'new_password'     => 'required|string|min:8|confirmed',
+            ]);
+
+            if($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(),422,$validator->errors());
+            }
+
+            $allowed = ($user->role === 'Farmer' && (int) $user->role_id === 4) || ($user->role === 'Maitri' && (int) $user->role_id === 3);
+
+            if (!$allowed) {
+                return $this->errorResponse('User role not permitted', 403);
+            }
+
+            if (!Hash::check($request->input('current_password'), $user->password)) {
+                return $this->errorResponse('Your current password does not match with our record.',400);
+            }
+
+            if (Hash::check($request->input('new_password'), $user->password)) {
+                return $this->errorResponse('New password cannot be same as your current password.', 400);
+            }
+
+            $user->password = Hash::make($request->input('new_password'));
+            $user->save();
+
+            return $this->successResponse('Password changed successfully!', 200, null);
+
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
 }
