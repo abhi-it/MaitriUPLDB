@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Maitri;
 
+use App\Helpers\ServiceHelper;
 use App\Http\Resources\Api\Maitri\FarmerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class ServiceRequestResource extends JsonResource
             'maitri_id'       => $this->maitri_id,
             'request_message' => $this->request_message,
             'status'          => $this->status,
-            'formatted_status' => getServiceStatusLabel($this->status, $lang),
+            'formatted_status' => ServiceHelper::getServiceStatusLabel($this->status, $lang),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
             'user'            => $this->whenLoaded('user', function () {
@@ -38,6 +39,6 @@ class ServiceRequestResource extends JsonResource
 
     protected function getFormattedServiceName($serviceName,$lang)
     {
-        return getServiceLabel($serviceName, $lang);
+        return ServiceHelper::getServiceLabel($serviceName, $lang);
     }
 }

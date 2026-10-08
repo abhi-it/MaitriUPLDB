@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ServiceHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Districts;
 use App\Models\Divisions;
@@ -79,10 +80,10 @@ class CommonController extends Controller
 
     public function getSemenData(Request $request){
         return $this->successResponse('Get semen data successfully!', 200, [
-            'species_semen' => getSpeciesSemen(),
-            'semen_type' => getSemenType(),
-            'semen_source' => getSemenSource(),
-            'complaints' => getAnyComplaint(),
+            'species_semen' => ServiceHelper::getSpeciesSemen(),
+            'semen_type' => ServiceHelper::getSemenType(),
+            'semen_source' => ServiceHelper::getSemenSource(),
+            'complaints' => ServiceHelper::getAnyComplaint(),
         ]);
     }
 }

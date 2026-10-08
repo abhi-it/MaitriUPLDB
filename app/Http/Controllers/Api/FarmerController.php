@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ServiceHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Farmer\FarmerHighYielingAnimalResource;
 use App\Http\Resources\Api\Farmer\FarmerServiceRequestResource;
@@ -667,7 +668,7 @@ class FarmerController extends Controller
 
             return $this->successResponse('Service requests data fetched successfully', 200, [
                 'missing_location' => $missingLocation,
-                'services' => getServiceList(),
+                'services' => ServiceHelper::getServiceList(),
                 'maitries' => $maitries,
             ]);
         } catch (\Exception $e) {
@@ -973,7 +974,7 @@ class FarmerController extends Controller
             }
 
             return $this->successResponse('Get High yielding animal form data successfully', 200,
-                getYeildingAnimal(),
+                ServiceHelper::getYeildingAnimal(),
             );
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);

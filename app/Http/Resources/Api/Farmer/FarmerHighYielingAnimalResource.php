@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Farmer;
 
+use App\Helpers\ServiceHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FarmerHighYielingAnimalResource extends JsonResource
@@ -12,7 +13,7 @@ class FarmerHighYielingAnimalResource extends JsonResource
             'id'         => $this->id,
             'user_id'    => $this->user_id,
             'type'       => $this->type,
-            'label_type' => getYeildingAnimal($this->type),
+            'label_type' => ServiceHelper::getYeildingAnimal($this->type),
             'file'       => $this->file,
             'file_url'   => $this->file ? asset('assets/animals/' . $this->file) : null,
             'details'    => $this->details,

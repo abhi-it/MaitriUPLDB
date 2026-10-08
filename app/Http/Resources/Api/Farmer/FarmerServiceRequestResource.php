@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Api\Farmer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Helpers\ServiceHelper;
 class FarmerServiceRequestResource extends JsonResource
 {
     public function toArray($request)
@@ -17,7 +17,7 @@ class FarmerServiceRequestResource extends JsonResource
             'maitri_id'       => $this->maitri_id,
             'request_message' => $this->request_message,
             'status'          => $this->status,
-            'formatted_status' => getServiceStatusLabel($this->status, $lang),
+            'formatted_status' => ServiceHelper::getServiceStatusLabel($this->status, $lang),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
             'maitri'            => $this->whenLoaded('maitri', function () {
@@ -37,6 +37,6 @@ class FarmerServiceRequestResource extends JsonResource
 
     protected function getFormattedServiceName($serviceName,$lang)
     {
-        return getServiceLabel($serviceName, $lang);
+        return ServiceHelper::getServiceLabel($serviceName, $lang);
     }
 }
