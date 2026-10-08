@@ -206,12 +206,13 @@ class FarmerController extends Controller
 
             $request->validate([
                 'services'      => 'required|string',
+                'maitri_id'     => 'nullable|exists:maitries,id',
                 'request_message'   => 'required|string',
             ]);
             $data = [
                 'user_id'           => $user->id,
                 'service_name'      => $request->services,
-                // 'maitri_id'         => $request->maitri_id,
+                'maitri_id'         => $request->maitri_id,
                 'request_message'   => $request->request_message,
                 'status'            => 1,
             ];
@@ -318,6 +319,12 @@ class FarmerController extends Controller
                 'message' => 'User not authenticated',
             ], 401);
         }
+
+        $request->validate([
+            'file'      => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type'      => 'required|string',
+            'details'   => 'nullable|string',
+        ]);
 
         $file = $request->file;
         $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
