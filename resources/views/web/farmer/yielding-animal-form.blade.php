@@ -35,9 +35,19 @@
 }
 </style>
 <div class="container main-div">
-    <div class="row mb-5">
+    {{-- <div class="row mb-5">
         <a href="{{route('add-yielding-animal')}}" class="btn btn-primary">नया पशु जोड़ें</a>
         <h3 class="text-center fw-bold m-4">उच्च उपज देने वाला पशु</h3>
+    </div> --}}
+    <div class="row mb-5">
+        <div class="col-auto">
+            <a href="{{route('add-yielding-animal')}}" class="btn btn-primary" style="height: 40px; display: inline-flex; align-items: center;">
+                नया पशु जोड़ें
+            </a>
+        </div>
+        <div class="col">
+            <h3 class="text-center fw-bold m-4">उच्च उपज देने वाला पशु</h3>
+        </div>
     </div>
 
     @if(session()->has('success'))
@@ -67,9 +77,9 @@
                 @if(count($data))
                 @foreach($data as $key => $row)
                 <tr>
-                    <td><span data-hi>{{$key+1}}</span></td>
+                    <td><span>{{$key+1}}</span></td>
                     <!-- <td>{{Auth::user()->FirstName}}</td> -->
-                    <td><span data-hi>{{$row->type}}</span></td>
+                    <td><span>{{$row->type}}</span></td>
                     <td>
                         @if(!empty($row->file) && file_exists(public_path('assets/animals/' . $row->file)))
                         <img src="{{ asset('assets/animals/' . $row->file) }}" alt="" width="50" height="50">

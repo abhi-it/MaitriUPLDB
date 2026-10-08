@@ -1,0 +1,25 @@
+Need to add columns in the live Database:
+
+1. maitries:
+
+ALTER TABLE `maitries`
+ADD COLUMN `role_id` BIGINT UNSIGNED NULL AFTER `id`,
+ADD COLUMN `role` VARCHAR(255) NULL AFTER `role_id`,
+ADD COLUMN `email` VARCHAR(255) NULL AFTER `role`,
+ADD COLUMN `password` VARCHAR(255) NULL AFTER `email`,
+ADD COLUMN `gender` VARCHAR(50) NULL AFTER `password`,
+ADD COLUMN `pincode` VARCHAR(10) NULL AFTER `gender`,
+ADD COLUMN `avedan_id` VARCHAR(255) NULL AFTER `pincode`,
+ADD COLUMN `refresher_training` TINYINT(1) NOT NULL DEFAULT 0 AFTER `avedan_id`,
+ADD COLUMN `refresher_training_at` TIMESTAMP NULL AFTER `refresher_training`;
+
+2. demand_requests
+
+ALTER TABLE `demand_requests`
+ADD COLUMN `maitrie_id` BIGINT NULL AFTER `id`;
+
+3. avedans
+
+ALTER TABLE `avedans`
+ADD COLUMN `maitri_id` NULL AFTER `pashu_sakhi`,
+ADD COLUMN `institute_id` NULL AFTER `maitri_id`;
