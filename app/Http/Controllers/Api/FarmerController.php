@@ -1032,5 +1032,249 @@ class FarmerController extends Controller
         }
     }
 
+    public function addAnimal(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'animal_type' => ['required', 'array', 'min:1'],
+                'breeds'      => ['required', 'array', 'min:1'],
+                'cattale_no'  => ['required', 'array', 'min:1'],
+                'milk_day'    => ['required', 'array', 'min:1'],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(), 422, $validator->errors());
+            }
+
+            $duplicateError = $this->checkDuplicateAnimals(
+                $request->animal_type,
+                $request->breeds
+            );
+            if ($duplicateError) {
+                return $this->errorResponse($duplicateError, 422);
+            }
+
+            $counts = [
+                count($request->animal_type),
+                count($request->breeds),
+                count($request->cattale_no),
+                count($request->milk_day),
+            ];
+            if (count(array_unique($counts)) > 1) {
+                return $this->errorResponse(
+                    'animal_type, breeds, cattale_no, and milk_day arrays must have equal length.',
+                    422
+                );
+            }
+
+            $user = Auth::guard('farmer_api')->user();
+            if (!$user) {
+                return $this->errorResponse('Unauthenticated farmer.', 401);
+            }
+
+            $existing = DB::table('user_animal_information')
+                ->where('user_id', $user->id)
+                ->get()
+                ->map(function ($row) {
+                    return strtolower(trim($row->animal_type)) . '|' . strtolower(trim($row->breeds));
+                })
+                ->toArray();
+
+            foreach ($request->animal_type as $index => $animalType) {
+                $breed = $request->breeds[$index] ?? null;
+                if (empty($animalType) || empty($breed)) continue;
+
+                $key = strtolower(trim($animalType)) . '|' . strtolower(trim($breed));
+                if (in_array($key, $existing)) {
+                    return $this->errorResponse(
+                        "Animal type '{$animalType}' with breed '{$breed}' already exists for this farmer.",
+                        422
+                    );
+                }
+            }
+
+            $this->insertAnimalInformation($user->id, $request);
+
+            $user->load(['district', 'getAnimalInformation']);
+
+            return $this->successResponse('Animals added successfully', 200, $user);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    private function checkDuplicateAnimals(array $animalTypes, array $breeds): ?string
+    {
+        $combinations = [];
+
+        foreach ($animalTypes as $index => $animalType) {
+            $breed = $breeds[$index] ?? null;
+
+            if (empty($animalType) || empty($breed)) {
+                continue;
+            }
+
+            $key = strtolower(trim($animalType)) . '|' . strtolower(trim($breed));
+
+            if (in_array($key, $combinations)) {
+                return "Duplicate entry: Animal type '{$animalType}' with breed '{$breed}' is added more than once.";
+            }
+
+            $combinations[] = $key;
+        }
+
+        return null;
+    }
+
+
+    private function insertAnimalInformation(int $userId, Request $request): void
+    {
+        $rows = [];
+
+        foreach ($request->milk_day as $index => $milkDay) {
+            $animalType = $request->animal_type[$index] ?? null;
+            if (empty($animalType)) {
+                continue;
+            }
+
+            $rows[] = [
+                'user_id'     => $userId,
+                'milk_day'    => $milkDay,
+                'animal_type' => $animalType,
+                'breeds'      => $request->breeds[$index] ?? null,
+                'cattale_no'  => $request->cattale_no[$index] ?? null,
+            ];
+        }
+
+        if (!empty($rows)) {
+            DB::table('user_animal_information')->insert($rows);
+        }
+    }
+
+    public function getAllAnimal(Request $request)
+    {
+        try {
+            $user = Auth::guard('farmer_api')->user();
+            if (!$user) {
+                return $this->errorResponse('Unauthenticated farmer.', 401);
+            }
+
+            $animals = DB::table('user_animal_information')
+                ->where('user_id', $user->id)
+                ->orderBy('id', 'desc')
+                ->get();
+
+            return $this->successResponse('Animals fetched successfully', 200, [
+                'total'   => $animals->count(),
+                'animals' => $animals,
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function updateAnimal(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id'          => ['required', 'integer', 'exists:user_animal_information,id'],
+                'animal_type' => ['required', 'string', 'max:255'],
+                'breeds'      => ['required', 'string', 'max:255'],
+                'cattale_no'  => ['required'],
+                'milk_day'    => ['required'],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(), 422, $validator->errors());
+            }
+
+            $user = Auth::guard('farmer_api')->user();
+            if (!$user) {
+                return $this->errorResponse('Unauthenticated farmer.', 401);
+            }
+
+            $animal = DB::table('user_animal_information')
+                ->where('id', $request->id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if (!$animal) {
+                return $this->errorResponse('Animal not found or does not belong to you.', 404);
+            }
+
+            $duplicateKey = strtolower(trim($request->animal_type)) . '|' . strtolower(trim($request->breeds));
+
+            $existing = DB::table('user_animal_information')
+                ->where('user_id', $user->id)
+                ->where('id', '!=', $request->id)
+                ->get()
+                ->map(function ($row) {
+                    return strtolower(trim($row->animal_type)) . '|' . strtolower(trim($row->breeds));
+                })
+                ->toArray();
+
+            if (in_array($duplicateKey, $existing)) {
+                return $this->errorResponse(
+                    "Duplicate entry: Animal type '{$request->animal_type}' with breed '{$request->breeds}' already exists for this farmer.",
+                    422
+                );
+            }
+
+            // Update
+            DB::table('user_animal_information')
+                ->where('id', $request->id)
+                ->where('user_id', $user->id)
+                ->update([
+                    'animal_type' => $request->animal_type,
+                    'breeds'      => $request->breeds,
+                    'cattale_no'  => $request->cattale_no,
+                    'milk_day'    => $request->milk_day,
+                    'updated_at'  => now(),
+                ]);
+
+            $updated = DB::table('user_animal_information')->where('id', $request->id)->first();
+
+            return $this->successResponse('Animal updated successfully', 200, $updated);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function deleteAnimal(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => ['required', 'integer', 'exists:user_animal_information,id'],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse($validator->errors()->first(), 422, $validator->errors());
+            }
+
+            $user = Auth::guard('farmer_api')->user();
+            if (!$user) {
+                return $this->errorResponse('Unauthenticated farmer.', 401);
+            }
+
+            $animal = DB::table('user_animal_information')
+                ->where('id', $request->id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if (!$animal) {
+                return $this->errorResponse('Animal not found or does not belong to you.', 404);
+            }
+
+            DB::table('user_animal_information')
+                ->where('id', $request->id)
+                ->where('user_id', $user->id)
+                ->delete();
+
+            return $this->successResponse('Animal deleted successfully', 200, null);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
 
 }

@@ -36,6 +36,11 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
     Route::get('get-high-yielding-animal-list', [FarmerController::class, 'highYieldingAnimalList'])->name('api.high-yielding-animal');
     Route::get('get-yielding-animal', [FarmerController::class, 'getYieldingAnimalForm'])->name('api.get-yielding-animal');
     Route::post('add-update-animal-details', [FarmerController::class, 'addUpdateAnimalDetails'])->name('api.add-update-animal-details');
+
+    Route::post('add-animal',       [FarmerController::class, 'addAnimal'])->name('api.add-animal');
+    Route::get('get-all-animal',     [FarmerController::class, 'getAllAnimal'])->name('api.get-all-animal');
+    Route::post('update-animal',     [FarmerController::class, 'updateAnimal'])->name('api.update-animal');
+    Route::post('delete-animal',     [FarmerController::class, 'deleteAnimal'])->name('api.delete-animal');
 });
 
 // Maitri-only authenticated APIs (JWT + MaitriApiAuth middleware)
