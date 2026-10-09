@@ -1097,7 +1097,7 @@ class FarmerController extends Controller
 
             $user->load(['district', 'getAnimalInformation']);
 
-            return $this->successResponse('Animals added successfully', 200, $user);
+            return $this->successResponse('Animals added successfully', 200, $user->getAnimalInformation);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
         }
