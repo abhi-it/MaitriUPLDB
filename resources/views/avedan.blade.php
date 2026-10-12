@@ -211,8 +211,9 @@
                              
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
+    // const url = "{{ asset('documents/terms_n_condition_12_oct_old.pdf') }}";
     const url = "{{ asset('documents/terms_n_condition.pdf') }}";
 
     const loadingTask = pdfjsLib.getDocument(url);
@@ -236,6 +237,52 @@
 
             // ✅ Adjust container height so PDF fits neatly
             document.getElementById('pdf-container').style.height = (viewport.height + 40) + "px"; 
+        });
+    });
+</script> --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    const url = "{{ asset('documents/terms_n_condition.pdf') }}";
+    // const url = "{{ asset('terms_n_condition_12_oct_old.pdf') }}";
+
+    const TARGET_WIDTH = 1000;
+
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+            const originalViewport = page.getViewport({ scale: 1 });
+
+            const scale = TARGET_WIDTH / originalViewport.width;
+            const viewport = page.getViewport({ scale: scale });
+
+            const outputScale = window.devicePixelRatio || 1;
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = Math.floor(viewport.width * outputScale);
+            canvas.height = Math.floor(viewport.height * outputScale);
+
+            canvas.style.width = Math.floor(viewport.width) + "px";
+            canvas.style.height = Math.floor(viewport.height) + "px";
+
+            document.getElementById('pdf-viewer').appendChild(canvas);
+
+            const transform = outputScale !== 1
+                ? [outputScale, 0, 0, outputScale, 0, 0]
+                : null;
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+                transform: transform
+            };
+
+            page.render(renderContext);
+
+            document.getElementById('pdf-container').style.height =
+                (viewport.height + 40) + "px";
         });
     });
 </script>
