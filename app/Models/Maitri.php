@@ -82,6 +82,11 @@ class Maitri extends Authenticatable implements JWTSubject
         return (now()->year - $passYear) >= 3;
     }
 
+    public function district()
+    {
+        return $this->belongsTo(Districts::class, 'district_id', 'id');
+    }
+
     public function getPassOutYear(): ?int
     {
         $passDate = trim((string) $this->pass_date);

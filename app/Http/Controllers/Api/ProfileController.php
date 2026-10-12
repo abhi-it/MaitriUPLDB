@@ -161,7 +161,7 @@ class ProfileController extends Controller
 
             $user->save();
 
-            // $user->load(['district', 'getAnimalInformation']);
+            $user->load(['district']);
 
             return $this->successResponse('Farmer profile updated successfully', 200, $user);
         } catch (\Exception $e) {
@@ -180,7 +180,6 @@ class ProfileController extends Controller
 
             $maitri = Maitri::findOrFail($authUser->id);
 
-            // Maitri-specific keys only
             if ($request->filled('first_name')) {
                 $maitri->maitri_name = $request->first_name;
             }
@@ -234,6 +233,15 @@ class ProfileController extends Controller
             }
 
             $maitri->save();
+
+            $maitri->FirstName = $maitri->maitri_name;
+            $maitri->LastName = '';
+            $maitri->MobileNumber = $maitri->maitri_mobile_no;
+
+            unset($maitri->maitri_name);
+            unset($maitri->maitri_mobile_no);
+
+            $maitri->load(['district']);
 
             return $this->successResponse('Maitri profile updated successfully', 200, $maitri);
         } catch (\Exception $e) {
