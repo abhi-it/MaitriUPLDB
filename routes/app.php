@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DemandRequestController;
 use App\Http\Controllers\Api\FarmerController;
 use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\MonthlyProgressReportController;
+use App\Http\Controllers\Api\ProfileController;
 
 Route::prefix('auth/v1')->group(function () {
     Route::get("get-mandal", [CommonController::class, 'getMandal']);
@@ -22,6 +23,7 @@ Route::group(['prefix'     => 'auth/v1/', 'middleware' => ['jwt.verify'],], func
     Route::get('logout',          [AuthController::class, 'logout']);
     Route::post('change-password',[AuthController::class, 'changePassword']);
     Route::get('dashboard',       [AuthController::class, 'dashboard']);
+    Route::post('update-profile', [ProfileController::class, 'updateProfile']);
 });
 
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)

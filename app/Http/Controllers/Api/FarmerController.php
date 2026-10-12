@@ -792,7 +792,7 @@ class FarmerController extends Controller
                 'last_name'      => 'sometimes|nullable|string|max:255',
                 'MobileNumber'   => 'sometimes|nullable|string|max:15|unique:farmer_users,MobileNumber,' . $user->id,
                 'email'          => 'sometimes|nullable|email|unique:farmer_users,email,' . $user->id,
-                'password'       => 'sometimes|nullable|string|min:8|confirmed',
+                // 'password'       => 'sometimes|nullable|string|min:8|confirmed',
                 'district_id'    => 'sometimes|nullable',
                 'division_id'    => 'sometimes|nullable',
                 'animal_type'    => 'sometimes|nullable|array',
@@ -869,46 +869,46 @@ class FarmerController extends Controller
                 $user->password = Hash::make($request->password);
             }
 
-            if ($request->has('animal_type') && is_array($request->animal_type) && count($request->animal_type)) {
-                $user->animal_type = $request->animal_type[0] ?? $user->animal_type;
-                $user->breeds      = $request->breeds[0] ?? $user->breeds;
-                $user->cattale_no  = $request->cattale_no[0] ?? $user->cattale_no;
-                $user->milk_day    = $request->milk_day[0] ?? $user->milk_day;
-            }
+            // if ($request->has('animal_type') && is_array($request->animal_type) && count($request->animal_type)) {
+            //     $user->animal_type = $request->animal_type[0] ?? $user->animal_type;
+            //     $user->breeds      = $request->breeds[0] ?? $user->breeds;
+            //     $user->cattale_no  = $request->cattale_no[0] ?? $user->cattale_no;
+            //     $user->milk_day    = $request->milk_day[0] ?? $user->milk_day;
+            // }
 
-            $user->save();
+            // $user->save();
 
-            if ($request->has('removeAnimal') && is_array($request->removeAnimal)) {
-                Animalinformation::whereIn('id', $request->removeAnimal)
-                    ->where('user_id', $user->id)
-                    ->delete();
-            }
+            // if ($request->has('removeAnimal') && is_array($request->removeAnimal)) {
+            //     Animalinformation::whereIn('id', $request->removeAnimal)
+            //         ->where('user_id', $user->id)
+            //         ->delete();
+            // }
 
-            if ($request->has('animal_type') && is_array($request->animal_type)) {
-                foreach ($request->animal_type as $index => $animalType) {
-                    if (empty($animalType)) {
-                        continue;
-                    }
+            // if ($request->has('animal_type') && is_array($request->animal_type)) {
+            //     foreach ($request->animal_type as $index => $animalType) {
+            //         if (empty($animalType)) {
+            //             continue;
+            //         }
 
-                    $animalId = $request->animal_id[$index] ?? null;
-                    $payload = [
-                        'animal_type' => $animalType,
-                        'breeds'      => $request->breeds[$index] ?? null,
-                        'cattale_no'  => $request->cattale_no[$index] ?? null,
-                        'milk_day'    => $request->milk_day[$index] ?? null,
-                    ];
+            //         $animalId = $request->animal_id[$index] ?? null;
+            //         $payload = [
+            //             'animal_type' => $animalType,
+            //             'breeds'      => $request->breeds[$index] ?? null,
+            //             'cattale_no'  => $request->cattale_no[$index] ?? null,
+            //             'milk_day'    => $request->milk_day[$index] ?? null,
+            //         ];
 
-                    if (!empty($animalId)) {
-                        Animalinformation::where('id', $animalId)
-                            ->where('user_id', $user->id)
-                            ->update($payload);
-                    } else {
-                        Animalinformation::create(array_merge($payload, [
-                            'user_id' => $user->id,
-                        ]));
-                    }
-                }
-            }
+            //         if (!empty($animalId)) {
+            //             Animalinformation::where('id', $animalId)
+            //                 ->where('user_id', $user->id)
+            //                 ->update($payload);
+            //         } else {
+            //             Animalinformation::create(array_merge($payload, [
+            //                 'user_id' => $user->id,
+            //             ]));
+            //         }
+            //     }
+            // }
 
             $user->load(['district', 'getAnimalInformation']);
 
