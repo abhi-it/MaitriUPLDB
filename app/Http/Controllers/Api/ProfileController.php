@@ -257,4 +257,53 @@ class ProfileController extends Controller
 
         return Districts::where('name_hindi', 'LIKE', '%' . $districtInput . '%')->first();
     }
+
+    public function getProfileDetails(Request $request)
+    {
+        try {
+            $authUser = auth()->user();
+
+            if (!$authUser) {
+                return $this->errorResponse('User not authenticated', 401);
+            }
+
+            if ($authUser instanceof FarmerUser) {
+                return $this->getFarmerDetails($authUser);
+            }
+
+            if ($authUser instanceof Maitri) {
+                return $this->getMaitriDetails($authUser);
+            }
+
+            return $this->errorResponse('Unsupported user type', 403);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    private function getFarmerDetails(FarmerUser $authUser)
+    {
+        $user = FarmerUser::with(['district'])
+            ->findOrFail($authUser->id);
+
+        $user->FirstName    = $user->FirstName ?? $user->name;
+        $user->MobileNumber = $user->MobileNumber;
+        $user->LastName     = $user->LastName ?? '';
+
+        return $this->successResponse('Farmer profile fetched successfully', 200, $user);
+    }
+
+    private function getMaitriDetails(Maitri $authUser)
+    {
+        $maitri = Maitri::with(['district'])->findOrFail($authUser->id);
+
+        $maitri->FirstName    = $maitri->maitri_name;
+        $maitri->LastName     = '';
+        $maitri->MobileNumber = $maitri->maitri_mobile_no;
+
+        unset($maitri->maitri_name);
+        unset($maitri->maitri_mobile_no);
+
+        return $this->successResponse('Maitri profile fetched successfully', 200, $maitri);
+    }
 }

@@ -24,6 +24,7 @@ Route::group(['prefix'     => 'auth/v1/', 'middleware' => ['jwt.verify'],], func
     Route::post('change-password',[AuthController::class, 'changePassword']);
     Route::get('dashboard',       [AuthController::class, 'dashboard']);
     Route::post('update-profile', [ProfileController::class, 'updateProfile']);
+    Route::get('get-profile-details', [ProfileController::class, 'getProfileDetails']);
 });
 
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
