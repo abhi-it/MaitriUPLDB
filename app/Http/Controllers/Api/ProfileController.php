@@ -283,7 +283,7 @@ class ProfileController extends Controller
 
     private function getFarmerDetails(FarmerUser $authUser)
     {
-        $user = FarmerUser::with(['district'])
+        $user = FarmerUser::with(['district', 'division'])
             ->findOrFail($authUser->id);
 
         $user->FirstName    = $user->FirstName ?? $user->name;
@@ -295,7 +295,7 @@ class ProfileController extends Controller
 
     private function getMaitriDetails(Maitri $authUser)
     {
-        $maitri = Maitri::with(['district'])->findOrFail($authUser->id);
+        $maitri = Maitri::with(['district', 'division'])->findOrFail($authUser->id);
 
         $maitri->FirstName    = $maitri->maitri_name;
         $maitri->LastName     = '';

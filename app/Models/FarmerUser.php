@@ -77,6 +77,11 @@ class FarmerUser extends Authenticatable implements JWTSubject
         return $this->belongsTo(Districts::class, 'district_id', 'id');
     }
 
+    public function division()
+    {
+        return $this->belongsTo(Divisions::class, 'division_id');
+    }
+    
     public function getDeoUser()
     {
         return $this->hasOne(DeoUser::class, 'user_id');
