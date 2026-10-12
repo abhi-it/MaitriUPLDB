@@ -35,12 +35,13 @@ class DemandRequestResource extends JsonResource
             'demand_section'            => $this->demand_section,
 
             // Arrays on output for convenience
-            'semen'                     => $this->csvToArray($this->semen),
-            'breed'                     => $this->csvToArray($this->breed),
-            'bull_id'                   => $this->csvToArray($this->bull_id),
-            'Sheath'                    => $this->csvToArray($this->Sheath),
-            'semen_type'                => $this->csvToArray($this->semen_type),
-            'semen_source'              => $this->csvToArray($this->semen_source),
+            // 'semen'                     => $this->csvToArray($this->semen),
+            // 'breed'                     => $this->csvToArray($this->breed),
+            // 'bull_id'                   => $this->csvToArray($this->bull_id),
+            // 'Sheath'                    => $this->csvToArray($this->Sheath),
+            // 'semen_type'                => $this->csvToArray($this->semen_type),
+            // 'semen_source'              => $this->csvToArray($this->semen_source),
+            'semen_data'                => $this->buildSemenData(),
 
             'gloves'                    => $this->gloves,
             'animal_tag'                => $this->animal_tag,
@@ -63,6 +64,43 @@ class DemandRequestResource extends JsonResource
             'created_at'                => $this->created_at?->toDateTimeString(),
             'updated_at'                => $this->updated_at?->toDateTimeString(),
         ];
+    }
+
+    private function buildSemenData(): array
+    {
+        $semenArr       = $this->csvToArray($this->semen);
+        $breedArr       = $this->csvToArray($this->breed);
+        $bullIdArr      = $this->csvToArray($this->bull_id);
+        $sheathArr      = $this->csvToArray($this->Sheath);
+        $semenTypeArr   = $this->csvToArray($this->semen_type);
+        $semenSourceArr = $this->csvToArray($this->semen_source);
+
+        $maxCount = max(
+            count($semenArr),
+            count($breedArr),
+            count($bullIdArr),
+            count($sheathArr),
+            count($semenTypeArr),
+            count($semenSourceArr)
+        );
+
+        if ($maxCount === 0) {
+            return [];
+        }
+
+        $result = [];
+        for ($i = 0; $i < $maxCount; $i++) {
+            $result[] = [
+                'semen'          => $semenArr[$i]       ?? null,
+                'breed'          => $breedArr[$i]       ?? null,
+                'bull_id'        => $bullIdArr[$i]      ?? null,
+                'Sheath'         => $sheathArr[$i]      ?? null,
+                'semen_type'     => $semenTypeArr[$i]   ?? null,
+                'semen_source'   => $semenSourceArr[$i] ?? null,
+            ];
+        }
+
+        return $result;
     }
 
     private function csvToArray($value): array

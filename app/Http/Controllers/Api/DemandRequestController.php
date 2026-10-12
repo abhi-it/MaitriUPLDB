@@ -174,4 +174,155 @@ class DemandRequestController extends Controller
         }
         return $value !== null && $value !== '' ? (string) $value : null;
     }
+
+    public function addDemandRequestLatest(Request $request)
+    {
+        try {
+            $maitri = auth()->user();
+            if (!$maitri instanceof Maitri) {
+                return $this->errorResponse('Maitri not authenticated', 401);
+            }
+
+            $alreadyExists = DemandRequest::where('maitrie_id', $maitri->id)->exists();
+            if ($alreadyExists) {
+                return $this->errorResponse('You have already added a demand request', 422);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'name'                      => 'required|string|max:255',
+                'date_of_birth'             => 'required|date',
+                'gender'                    => 'required|in:male,female,other',
+                'bharat_pashudhan_id'       => 'required|string|max:255',
+                'training_center_id'        => 'nullable',
+                'smart_mobile_no'           => 'nullable|string|max:15',
+                'district'                  => 'nullable',
+                'mandal'                    => 'nullable',
+                'tehsil'                    => 'nullable|string|max:255',
+                'block'                     => 'nullable|string|max:255',
+                'vikas_khand'               => 'nullable|string|max:255',
+                'vh_ai_center'              => 'nullable|string|max:255',
+                'pincode'                   => 'nullable|string|max:6',
+                'villages_coevring'         => 'nullable|string',
+                'demand_section'            => 'nullable|string',
+
+                'semen_data'                => 'nullable|array',
+                'semen_data.*.semen'        => 'nullable|string',
+                'semen_data.*.breed'        => 'nullable|string',
+                'semen_data.*.bull_id'      => 'nullable|string',
+                'semen_data.*.Sheath'       => 'nullable|string',
+                'semen_data.*.semen_type'   => 'nullable|string',
+                'semen_data.*.semen_source' => 'nullable|string',
+
+                'gloves'                    => 'nullable',
+                'animal_tag'                => 'nullable',
+                'mineral_mixture'           => 'nullable',
+                'dewormer'                  => 'nullable',
+                'insurance_booklet'         => 'nullable',
+                'pregnancy_feed'            => 'nullable',
+                'calf_starter'              => 'nullable',
+                'any_other_item'            => 'nullable|string',
+                'any_suggestion'            => 'nullable|string',
+                'any_complaint'             => 'nullable|string',
+                'post_office'               => 'nullable|string|max:255',
+                'training_year'             => 'nullable',
+                'month'                     => 'nullable',
+                'question'                  => 'nullable|string',
+                'registered_cow_calves'     => 'nullable|integer',
+                'registered_buffalo_calves' => 'nullable|integer',
+                'registered_sexed_calves'   => 'nullable|integer',
+                'registered_farmers'        => 'nullable|integer',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+            }
+
+            $districtId  = null;
+            $janpadName  = null;
+            if ($request->filled('district')) {
+                $district = is_numeric($request->district)
+                    ? Districts::find($request->district)
+                    : Districts::where('name_hindi', 'LIKE', '%' . $request->district . '%')->first();
+
+                if ($district) {
+                    $districtId = $district->id;
+                    $janpadName = $district->name_hindi;
+                }
+            }
+
+            $semenData = $request->input('semen_data', []);
+
+            $semenArr         = [];
+            $breedArr         = [];
+            $bullIdArr        = [];
+            $sheathArr        = [];
+            $semenTypeArr     = [];
+            $semenSourceArr   = [];
+            $semenQuantityArr = [];
+
+            if (is_array($semenData)) {
+                foreach ($semenData as $row) {
+                    if (!empty($row['semen']))          $semenArr[]         = $row['semen'];
+                    if (!empty($row['breed']))          $breedArr[]         = $row['breed'];
+                    if (!empty($row['bull_id']))        $bullIdArr[]        = $row['bull_id'];
+                    if (!empty($row['Sheath']))         $sheathArr[]        = $row['Sheath'];
+                    if (!empty($row['semen_type']))     $semenTypeArr[]     = $row['semen_type'];
+                    if (!empty($row['semen_source']))   $semenSourceArr[]   = $row['semen_source'];
+                }
+            }
+
+            $demandRequest = new DemandRequest();
+            $demandRequest->maitrie_id              = $maitri->id;
+            $demandRequest->name                    = $request->name;
+            $demandRequest->date_of_birth           = $request->date_of_birth;
+            $demandRequest->gender                  = $request->gender;
+            $demandRequest->training_center_id      = $request->training_center_id;
+            $demandRequest->bharat_pashudhan_id     = $request->bharat_pashudhan_id;
+            $demandRequest->smart_mobile_no         = $request->smart_mobile_no;
+            $demandRequest->district                = $districtId;
+            $demandRequest->mandal                  = $request->mandal ?? $janpadName;
+            $demandRequest->tehsil                  = $request->tehsil;
+            $demandRequest->block                   = $request->block;
+            $demandRequest->vikas_khand             = $request->vikas_khand;
+            $demandRequest->vh_ai_center            = $request->vh_ai_center;
+            $demandRequest->pincode                 = $request->pincode;
+            $demandRequest->villages_coevring       = $request->villages_coevring;
+            $demandRequest->demand_section          = $request->demand_section;
+
+            $demandRequest->semen                   = $this->toCsv($semenArr);
+            $demandRequest->breed                   = $this->toCsv($breedArr);
+            $demandRequest->bull_id                 = $this->toCsv($bullIdArr);
+            $demandRequest->Sheath                  = $this->toCsv($sheathArr);
+            $demandRequest->semen_type              = $this->toCsv($semenTypeArr);
+            $demandRequest->semen_source            = $this->toCsv($semenSourceArr);
+
+            $demandRequest->gloves                  = $request->gloves;
+            $demandRequest->animal_tag              = $request->animal_tag;
+            $demandRequest->mineral_mixture         = $request->mineral_mixture;
+            $demandRequest->dewormer                = $request->dewormer;
+            $demandRequest->insurance_booklet       = $request->insurance_booklet;
+            $demandRequest->pregnancy_feed          = $request->pregnancy_feed;
+            $demandRequest->calf_starter            = $request->calf_starter;
+            $demandRequest->any_other_item          = $request->any_other_item;
+            $demandRequest->any_suggestion          = $request->any_suggestion;
+            $demandRequest->any_complaint           = $request->any_complaint;
+            $demandRequest->post_office             = $request->post_office;
+            $demandRequest->training_year           = $request->training_year;
+            $demandRequest->month                   = $request->month;
+            $demandRequest->question                = $request->question;
+            $demandRequest->registered_cow_calves   = $request->registered_cow_calves;
+            $demandRequest->registered_buffalo_calves = $request->registered_buffalo_calves;
+            $demandRequest->registered_sexed_calves = $request->registered_sexed_calves;
+            $demandRequest->registered_farmers      = $request->registered_farmers;
+            $demandRequest->save();
+
+            return $this->successResponse(
+                'Demand request submitted successfully',
+                200,
+                new DemandRequestResource($demandRequest)
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
 }

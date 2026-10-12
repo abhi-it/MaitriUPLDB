@@ -54,6 +54,7 @@ Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], fun
     Route::post('update-service-request', [MaitriController::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
 
     Route::post('add-demand-request', [DemandRequestController::class, 'addDemandRequest']);
+    Route::post('add-demand-request-latest', [DemandRequestController::class, 'addDemandRequestLatest']);
     Route::get('get-demand-request',  [DemandRequestController::class, 'getDemandRequest']);
 
     Route::get('monthly-progress-report', [MonthlyProgressReportController::class, 'monthlyProgressReport']);
