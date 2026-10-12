@@ -161,7 +161,7 @@ class ProfileController extends Controller
 
             $user->save();
 
-            $user->load(['district']);
+            $user->load(['district', 'division']);
 
             return $this->successResponse('Farmer profile updated successfully', 200, $user);
         } catch (\Exception $e) {
@@ -241,7 +241,7 @@ class ProfileController extends Controller
             unset($maitri->maitri_name);
             unset($maitri->maitri_mobile_no);
 
-            $maitri->load(['district']);
+            $maitri->load(['district','division']);
 
             return $this->successResponse('Maitri profile updated successfully', 200, $maitri);
         } catch (\Exception $e) {
