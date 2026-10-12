@@ -91,7 +91,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="generateCertificateModalLabel">Generate Certificate</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -150,7 +150,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeModal()">Cancel</button>
                         <button type="submit" class="btn btn-primary">Generate Certificate</button>
                     </div>
                 </form>
@@ -164,6 +164,28 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+
+        function closeModal() {
+            const modalEl = document.getElementById('generateCertificateModal');
+            if (!modalEl) return;
+
+            if (window.bootstrap && bootstrap.Modal) {
+                const instance = bootstrap.Modal.getInstance(modalEl);
+                if (instance) {
+                    instance.hide();
+                } else {
+                    new bootstrap.Modal(modalEl).hide();
+                }
+            } else if (window.jQuery && typeof jQuery(modalEl).modal === 'function') {
+                jQuery(modalEl).modal('hide');
+            } else {
+                modalEl.style.display = 'none';
+                modalEl.classList.remove('show');
+                document.body.classList.remove('modal-open');
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            }
+        }
+
         $(document).ready(function () {
             // Helper: clear individual field errors
             function clearFieldErrors() {
