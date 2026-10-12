@@ -160,8 +160,9 @@ class AuthController extends Controller
                 return $this->errorResponse('Invalid email or password', 401);
             }
 
-            Auth::shouldUse('farmer_api');
-            $token = JWTAuth::fromUser($farmer);
+            // Auth::shouldUse('farmer_api');
+            // $token = JWTAuth::fromUser($farmer);
+            $token = Auth::guard('farmer_api')->claims(['guard' => 'farmer_api'])->fromUser($farmer);
 
             $isFilled = !empty($farmer->name)
                 && !empty($farmer->gender)
@@ -207,8 +208,9 @@ class AuthController extends Controller
                 return $this->errorResponse('Invalid email or password', 401);
             }
 
-            Auth::shouldUse('maitri_api');
-            $token = JWTAuth::fromUser($maitri);
+            // Auth::shouldUse('maitri_api');
+            // $token = JWTAuth::fromUser($maitri);
+            $token = Auth::guard('maitri_api')->claims(['guard' => 'maitri_api'])->fromUser($maitri);
 
             $isFilled = !empty($maitri->maitri_name)
                 && !empty($maitri->gender)
@@ -442,6 +444,64 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function dashboard(Request $request) {
+        try {
+            $guard = $request->attributes->get('auth_guard');
+            $user  = auth()->user();
+            if (! $user) {
+                return $this->errorResponse('Unauthenticated', 401);
+            }
+
+            // ---------------- FARMER ----------------
+            if ($guard === 'farmer_api') {
+                if (! $user instanceof FarmerUser) {
+                    return $this->errorResponse('Farmer not authenticated', 401);
+                }
+
+                $perPage = (int) $request->input('per_page', 10);
+
+                $serviceRequestsCount = Servicerequest::where('user_id', $user->id)
+                    ->orderBy('id', 'desc')
+                    ->count();
+
+                $farmer = FarmerUser::with(['district', 'getAnimalInformation'])
+                    ->find($user->id);
+
+                return $this->successResponse(
+                    'Farmer dashboard fetched successfully',
+                    200,
+                    [
+                        // 'role'             => 'farmer',
+                        // 'farmer'           => $farmer,
+                        'service_requests' => $serviceRequestsCount,
+                    ]
+                );
+            }
+
+            // ---------------- MAITRI ----------------
+            if ($guard === 'maitri_api') {
+                if (! $user instanceof Maitri) {
+                    return $this->errorResponse('Maitri not authenticated', 401);
+                }
+
+                $serviceRequestsCount = Servicerequest::where('maitri_id', $user->id)
+                    ->count();
+
+                return $this->successResponse(
+                    'Maitri dashboard fetched successfully',
+                    200,
+                    [
+                        // 'role'             => 'maitri',
+                        // 'maitri'           => $user,
+                        'service_requests' => $serviceRequestsCount,
+                    ]
+                );
+            }
+        } catch(\Exception $e) {
+            return $this->errorResponse($e->getMessage(),500);
         }
     }
 }

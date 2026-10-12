@@ -18,16 +18,22 @@ Route::prefix('auth/v1')->group(function () {
     Route::get("get-semen-data", [CommonController::class, 'getSemenData']);
 });
 
+Route::group(['prefix'     => 'auth/v1/', 'middleware' => ['jwt.verify'],], function () {
+    Route::get('logout',          [AuthController::class, 'logout']);
+    Route::post('change-password',[AuthController::class, 'changePassword']);
+    Route::get('dashboard',       [AuthController::class, 'dashboard']);
+});
+
 // Farmer-only authenticated APIs (JWT + FarmerApiAuth middleware)
 Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('api.farmer-logout');
-    Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
+    // Route::get('logout', [AuthController::class, 'logout'])->name('api.farmer-logout');
+    // Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
 
-    Route::get('dashboard', [FarmerController::class, 'dashboard'])->name('api.farmer-dashboard');
+    // Route::get('dashboard', [FarmerController::class, 'dashboard'])->name('api.farmer-dashboard');
     Route::get('service-request-list', [FarmerController::class, 'serviceRequestList']);
     Route::get('service-request-formdata', [FarmerController::class, 'serviceRequestFormData']);
     Route::post('service-request', [FarmerController::class, 'submitServiceRequest'])->name('api.farmer-service-request-submit');
-    Route::get('farmer-details', [FarmerController::class, 'farmerDetails'])->name('api.farmer-details');
+    Route::get('get-farmer-details', [FarmerController::class, 'farmerDetails'])->name('api.get-farmer-details');
     Route::post('update-farmer-details', [FarmerController::class, 'updateFarmerDetails'])->name('api.update-farmer-details');
     
     Route::get('get-maitri-list', [FarmerController::class, 'getMaitriList'])->name('api.update-farmer-details');
@@ -45,9 +51,9 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
 
 // Maitri-only authenticated APIs (JWT + MaitriApiAuth middleware)
 Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('api.maitri-logout');
+    // Route::get('logout', [AuthController::class, 'logout'])->name('api.maitri-logout');
 
-    Route::get('dashboard', [MaitriController::class, 'dashboard'])->name('api.maitri-dashboard');
+    // Route::get('dashboard', [MaitriController::class, 'dashboard'])->name('api.maitri-dashboard');
     Route::post('dashboard-data', [MaitriController::class, 'maitriDashData'])->name('api.maitri-dashdata');
 
     Route::get('request-list', [MaitriController::class, 'requestList'])->name('api.maitri-request-list');
@@ -62,5 +68,5 @@ Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], fun
     Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
     Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
     
-    Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
+    // Route::post('change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
 });

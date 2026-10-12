@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'roles' => \App\Http\Middleware\CheckRole::class,
         'farmer.api' => \App\Http\Middleware\FarmerApiAuth::class,
         'maitri.api' => \App\Http\Middleware\MaitriApiAuth::class,
+        'jwt.verify' => \App\Http\Middleware\JWTMiddleware::class,
     ];
 }

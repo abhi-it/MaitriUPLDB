@@ -621,7 +621,7 @@ class FarmerController extends Controller
             $farmer = FarmerUser::with(['district', 'getAnimalInformation'])->find($user->id);
 
             return $this->successResponse('Farmer dashboard fetched successfully', 200, [
-                'farmer' => $farmer,
+                // 'farmer' => $farmer,
                 // 'service_requests' => $data->items(),
                 'service_requests' => $data,
             ]);
