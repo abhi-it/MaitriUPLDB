@@ -38,19 +38,19 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
     max-width: 190px; 
 }
 
-.user-detail img.leader-minister1 {
+.user-detail img.leader-1 {
     max-width: 175px;
 }
 
-.user-detail img.leader-officer1 {
-    max-width: 158px; 
+.user-detail img.leader-2 {
+    max-width: 180px; 
 }
 
-.user-detail img.leader-minister2 {
-    max-width: 155px;
+.user-detail img.leader-3 {
+    max-width: 138px;
 }
 
-.user-detail img.leader-officer2 {
+.user-detail img.leader-4 {
     max-width: 120px; 
 }
 
@@ -616,7 +616,7 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img class="leader-minister1" src="{{ asset('assets/images/sm.jpeg')}}" />
+                                <img class="leader-1" src="{{ asset('assets/images/sm.jpeg')}}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
                                             <span data-hi="श्री धर्मपाल सिंह" data-en="Shri Dharampal Singh"></span>
@@ -631,7 +631,23 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img class="leader-officer1" src="{{ $post->image != '' ? asset('upload_documents/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
+                                <img class="leader-2" src="{{ asset('assets/images/state-minister.jpg')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्रीमती कृष्णा पासवान"
+                                                data-en="Smt Krishna Paswan"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="माननीय मंत्री, पशुपालन और दुग्ध विकास, उत्तर प्रदेश|" data-en="Hon`ble Minister, Animal Husbandry and Dairy Development, U.P."></span>
+                                        </small></p>   
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-3" src="{{ $post->image != '' ? asset('upload_documents/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
                                             <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस"
@@ -647,22 +663,7 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
 
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
                             <div class="user-detail">
-                                <img class="leader-minister2" src="{{ asset('assets/images/state-minister.jpg')}}" />
-                                <div>
-                                    <p class="m-0 text-center"><b>
-                                            <span data-hi="श्रीमती कृष्णा पासवान"
-                                                data-en="Smt Krishna Paswan"></span>
-                                        </b></p>
-                                    <p class="m-0 text-center lh-1"><small>
-                                            <span data-hi="माननीय मंत्री, पशुपालन और दुग्ध विकास, उत्तर प्रदेश|" data-en="Hon`ble Minister, Animal Husbandry and Dairy Development, U.P."></span>
-                                        </small></p>   
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
-                            <div class="user-detail">
-                                <img class="leader-officer2" src="{{ asset('assets/images/pramod-ceo.png')}}" />
+                                <img class="leader-4" src="{{ asset('assets/images/pramod-ceo.png')}}" />
                                 <div>
                                     <p class="m-0 text-center"><b>
                                             <span data-hi="डॉ. प्रमोद कुमार सिंह"
