@@ -26,6 +26,34 @@ $events = App\Models\EventModal::orderBy('id', 'desc')->get();
 --glow: #ea7328; /* Neon green */
 }
 
+.user-detail img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 5px;
+}
+.user-detail img.leader-cm {
+    max-width: 190px; 
+}
+
+.user-detail img.leader-minister1 {
+    max-width: 175px;
+}
+
+.user-detail img.leader-officer1 {
+    max-width: 158px; 
+}
+
+.user-detail img.leader-minister2 {
+    max-width: 155px;
+}
+
+.user-detail img.leader-officer2 {
+    max-width: 120px; 
+}
+
 .swiper-container {
     width: 100%;
     overflow: hidden;
@@ -483,7 +511,7 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                     </marquee>
                 </div>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="user-list-section">
                     <h3 class="text-center mb-4 fw-bold">
                         <span data-hi="हमारा नेतृत्व" data-en="Our Leadership"></span>
@@ -562,6 +590,91 @@ setApplicants(window.MAITRI_APPLICANTS_COUNT);
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="user-list-section">
+                    <h3 class="text-center mb-4 fw-bold">
+                        <span data-hi="हमारा नेतृत्व" data-en="Our Leadership"></span>
+                    </h3>
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-cm" src="{{ asset('assets/images/adityanathyogi.jpg')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्री योगी आदित्यनाथ" data-en="Shri Yogi Adityanath"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="माननीय मुख्यमंत्री, उत्तर प्रदेश।"
+                                                data-en="Hon'ble Chief Minister, U.P."></span>
+                                        </small></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-minister1" src="{{ asset('assets/images/sm.jpeg')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्री धर्मपाल सिंह" data-en="Shri Dharampal Singh"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="माननीय मंत्री डेयरी विकास विभाग, पशुपालन, उत्तर प्रदेश।"
+                                                data-en="Hon`ble Minister Dairy Development Dept., Animal Husbandry,U.P."></span>
+                                        </small></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-officer1" src="{{ $post->image != '' ? asset('upload_documents/'.$post->image) : asset('assets/images/Mukesh_Kumar.jpg') }}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्री मुकेश कुमार मेश्राम, आई.ए.एस"
+                                                data-en="{{ $post->eng_title ?? 'Shri Mukesh Kumar Meshram, I.A.S' }}"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="अपर मुख्य सचिव,पशुधन /अध्यक्ष उ०प्र० पशुधन विकास परिषद्"
+                                                data-en="Additional Chief Secretary, A.H. & Chairman, U.P.L.D.B."></span>
+                                        </small></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-minister2" src="{{ asset('assets/images/state-minister.jpg')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="श्रीमती कृष्णा पासवान"
+                                                data-en="Smt Krishna Paswan"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="माननीय मंत्री, पशुपालन और दुग्ध विकास, उत्तर प्रदेश|" data-en="Hon`ble Minister, Animal Husbandry and Dairy Development, U.P."></span>
+                                        </small></p>   
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                            <div class="user-detail">
+                                <img class="leader-officer2" src="{{ asset('assets/images/pramod-ceo.png')}}" />
+                                <div>
+                                    <p class="m-0 text-center"><b>
+                                            <span data-hi="डॉ. प्रमोद कुमार सिंह"
+                                                data-en="Dr. Pramod Kumar Singh"></span>
+                                        </b></p>
+                                    <p class="m-0 text-center lh-1"><small>
+                                            <span data-hi="सीईओ यूपीएलडीबी, उ.प्र." data-en="C.E.O UPLDB, U.P."></span>
+                                        </small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
