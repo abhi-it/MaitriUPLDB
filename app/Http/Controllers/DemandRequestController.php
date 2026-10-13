@@ -157,7 +157,9 @@ class DemandRequestController extends Controller{
                  return redirect()->back()->with('error',ucfirst($value));
             }
         }else{
+            $user = Auth::user();
             $request  = new DemandRequest([
+                'maitrie_id'                => $user->id,
                 'name'                      => $request->name,
                 'date_of_birth'             => $request->date_of_birth,
                 'gender'                    => $request->gender,

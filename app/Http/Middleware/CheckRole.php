@@ -624,7 +624,8 @@ class CheckRole
                 'save-animal-breeding',
                 'demandRequests',
                 'demand-request-list',
-                'view-demand-request'
+                'view-demand-request',
+                'addDemandRequests'
             ],
             'Farmer' => [
                 'update-farmer-details',

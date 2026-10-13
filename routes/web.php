@@ -581,6 +581,7 @@ Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], funct
     Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
     Route::get("demand-request-list", [DemandRequestController::class, 'demandRequestList'])->name('demand-request-list');
     Route::get("view-demand-request/{id}", [DemandRequestController::class, 'viewDemandRequest'])->name('view-demand-request');
+    Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');
 
 });
 
@@ -613,7 +614,7 @@ Route::get("getDistrict", [DemandRequestController::class, 'getDistrict'])->name
 
 
 Route::get("getAllrequestedBlocks", [DemandRequestController::class, 'getAllrequestedBlocks'])->name('getAllrequestedBlocks');
-Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');
+// Route::post("addDemandRequests", [DemandRequestController::class, 'addDemandRequests'])->name('addDemandRequests');
 Route::get("exportDemandRequest", [DemandRequestController::class, 'exportDemandRequest'])->name('exportDemandRequest');
 Route::get("view-request-details/{id}", [DemandRequestController::class, 'viewRequestDetails'])->name('view-request-details');
 

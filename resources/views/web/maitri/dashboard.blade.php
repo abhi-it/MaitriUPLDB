@@ -35,7 +35,6 @@
 }
 </style>
 <div class="container main-div">
-    <h3 class="text-center fw-bold m-4">सेवा अनुरोध प्रपत्र</h3>
     @if(session()->has('success'))
     <div class="alert alert-success">
         {{ session()->get('success') }}
@@ -50,13 +49,24 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-center">
-                <div class="card-header">अनुरोध सूची</div>
+                <div class="card-header">कुल सेवा अनुरोध</div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ count($data) }}</h5>
+                    <h5 class="card-title">{{ $data }}</h5>
                     <a href="{{route('request-list')}}" class="btn btn-primary">देखना</a>
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-header">कुल डिमांड अनुरोध</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $totalDemand }}</h5>
+                    <a href="{{route('demand-request-list')}}" class="btn btn-primary">देखना</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

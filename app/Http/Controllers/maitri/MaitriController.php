@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Animalbreeding;
+use App\Models\DemandRequest;
 use App\Models\Maitri;
 use App\Models\Manganurodhdata;
 use App\Models\Tehsil;
@@ -26,10 +27,9 @@ class MaitriController extends Controller{
 
     public function index(){
         $user_id = Auth::user()->id;
-        $data    =  Servicerequest::where(['maitri_id'=>$user_id])->get();
-        return view('web.maitri.dashboard',[
-            'data'=>$data,
-        ]);
+        $data    =  Servicerequest::where(['maitri_id'=>$user_id])->count();
+        $totalDemand    =  DemandRequest::where('maitrie_id',$user_id)->count();
+        return view('web.maitri.dashboard',[ 'data'=>$data, 'totalDemand'=>$totalDemand,]);
     }
 
     public function animalBreeding(){
