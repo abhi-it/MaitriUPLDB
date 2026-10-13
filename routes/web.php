@@ -579,6 +579,8 @@ Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], funct
     // google map routes
 
     Route::get("demandRequests", [DemandRequestController::class, 'index'])->name('demandRequests');
+    Route::get("demand-request-list", [DemandRequestController::class, 'demandRequestList'])->name('demand-request-list');
+    Route::get("view-demand-request/{id}", [DemandRequestController::class, 'viewDemandRequest'])->name('view-demand-request');
 
 });
 

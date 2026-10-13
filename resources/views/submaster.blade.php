@@ -1085,10 +1085,15 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/request-list') }}">सेवा अनुरोध सूची </a>
                                 </li>
+                                {{-- <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('demandRequests') }}">
+                                        मांग अनुरोध
+                                    </a>
+                                </li> --}}
                                 <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('demandRequests') }}">
-                                    मांग अनुरोध
-                                </a>
+                                    <a class="nav-link" href="{{ url('demand-request-list') }}">
+                                        मांग अनुरोध सूची
+                                    </a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('/monthly-report') }}">मासिक प्रगति रिपोर्ट

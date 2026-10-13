@@ -26,7 +26,6 @@ class JWTMiddleware
             return $this->error('Token not found', 401);
         }
 
-        // 1. Decode payload (signature verify) — global secret
         try {
             $payload = JWTAuth::setToken($token)->getPayload();
         } catch (TokenExpiredException $e) {
@@ -37,15 +36,12 @@ class JWTMiddleware
             return $this->error('Token not found', 401);
         }
 
-        // 2. Read guard claim
         $guard = $payload->get('guard');
 
         if (! $guard || ! isset($this->allowedGuards[$guard])) {
             return $this->error('Invalid token: missing guard claim', 401);
         }
 
-        // 3. Authenticate using the SPECIFIC guard (not JWTAuth facade)
-        //    This forces the guard's provider (farmer_users / maitri_users).
         try {
             $user = Auth::guard($guard)->setToken($token)->authenticate();
         } catch (Exception $e) {
@@ -66,7 +62,6 @@ class JWTMiddleware
             return $this->error('User not found or has been deleted.', 403);
         }
 
-        // 4. Bind user to guards for the rest of the request
         Auth::guard($guard)->setUser($user);
         Auth::shouldUse($guard);
         Auth::setUser($user);

@@ -17,18 +17,30 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-
 class DemandRequestController extends Controller{
 
     public function index(Request $request)
     {
         $user = Auth::user();
-       if (!$user) {
+        if (!$user) {
             return redirect()->route('login', ['hideAdmin' => true]);
         }
         $division   = Divisions::get();
         $institute  = Institute::get();
         return view('demand-request',['division'=>$division,'institute'=>$institute]);
+    }
+
+    public function demandRequestList() {
+    
+        $user = Auth::user();
+        $data = DemandRequest::with('districtName')->where('maitrie_id', $user->id)->latest('id')->get();
+        return view('maitri-role.demand-request-list',compact('data'));
+    }
+
+    public function viewDemandRequest(Request $request) { 
+        $user = Auth::user();
+        $data = DemandRequest::with('districtName')->where(['id'=>$request->id, 'maitrie_id'=> $user->id])->first();
+        return view('maitri-role.view-demand-request',compact('data'));
     }
 
     public function getDistrictAll(Request $request){

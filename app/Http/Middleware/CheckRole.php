@@ -623,6 +623,8 @@ class CheckRole
                 'animal-breeding',
                 'save-animal-breeding',
                 'demandRequests',
+                'demand-request-list',
+                'view-demand-request'
             ],
             'Farmer' => [
                 'update-farmer-details',
