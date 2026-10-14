@@ -209,4 +209,20 @@ class ServiceHelper
 
         return $data[$value] ?? null;
     }
+
+    public static function getStatus($value = null)
+    {
+        $data = [
+            'Accepted' => '0',
+            'New' => '1',
+            'Waiting' => '2',
+            'Rejected' => '3',
+        ];
+
+        if ($value === null) {
+            return $data;
+        }
+
+        return $data[$value] ?? null;
+    }
 }
