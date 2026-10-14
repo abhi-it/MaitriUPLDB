@@ -23,10 +23,10 @@ class CommonController extends Controller
     public function getDistrict(Request $request)
     {
         $mandal_name = $request->mandal_name;
-        $getAllDistrict =  Manganurodhdata::select('id','janpad_name')
+        $getAllDistrict =  Manganurodhdata::select('janpad_name')
                         ->where('mandal_name', 'LIKE', $mandal_name)
                         ->where('status', 0)
-                        ->groupBy('id','janpad_name')
+                        ->groupBy('janpad_name')
                         ->get();
         return $this->successResponse('Get all district successfully!',200,$getAllDistrict);
     }
@@ -34,11 +34,11 @@ class CommonController extends Controller
     public function getTehsilAll(Request $request){
         $mandal_name = $request->mandal_name;
         $janpad_name = $request->janpad_name;
-        $getTeshil =  Manganurodhdata::select('id','tehsil')
+        $getTeshil =  Manganurodhdata::select('tehsil')
                         ->where('mandal_name', 'LIKE', $mandal_name)
                         ->where('janpad_name', 'LIKE', $janpad_name)
                         ->where('status', 0)
-                        ->groupBy('id','tehsil')
+                        ->groupBy('tehsil')
                         ->get();
         return $this->successResponse('Get all tehsil successfully!',200,$getTeshil);
     }
@@ -47,12 +47,12 @@ class CommonController extends Controller
         $tehsil = $request->tehsil;
         $mandal_name = $request->mandal_name;
         $janpad_name = $request->janpad_name;
-        $getBlock =  Manganurodhdata::select('id','block')
+        $getBlock =  Manganurodhdata::select('block')
                         ->where('mandal_name', 'LIKE', $mandal_name)
                         ->where('janpad_name', 'LIKE', $janpad_name)
                         ->where('tehsil', 'LIKE', $tehsil)
                         ->where('status', 0)
-                        ->groupBy('id','block')
+                        ->groupBy('block')
                         ->get();
         return $this->successResponse('Get all blocks successfully!',200,$getBlock);
     }
@@ -62,13 +62,13 @@ class CommonController extends Controller
         $tehsil = $request->tehsil;
         $mandal = $request->mandal;
         $janpad = $request->janpad;
-        $getAIcenter =  Manganurodhdata::select('id', 'center_name')
+        $getAIcenter =  Manganurodhdata::select('center_name')
                         ->where('mandal_name', 'LIKE', $mandal)
                         ->where('janpad_name', 'LIKE', $janpad)
                         ->where('tehsil', 'LIKE', $tehsil)
                         ->where('block', 'LIKE', $block)
                         ->where('status', 0)
-                        ->groupBy('id', 'center_name')
+                        ->groupBy('center_name')
                         ->get();
         return $this->successResponse('Get all ai center successfully!', 200, $getAIcenter);
     }
