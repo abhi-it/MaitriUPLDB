@@ -8,14 +8,14 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\FarmerUser;
 use App\Models\Maitri;
-use App\Traits\FormatResponseTrait;
+use App\Traits\V2\FormatResponseTraitV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    use FormatResponseTrait;
+    use FormatResponseTraitV2;
 
     public function updateProfile(Request $request)
     {
@@ -23,7 +23,7 @@ class ProfileController extends Controller
             $authUser = auth()->user();
 
             if (!$authUser) {
-                return $this->errorResponse('User not authenticated', 401);
+                return $this->errorResponse('User not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             if ($request->exists('email') && !$request->filled('email')) {
@@ -41,7 +41,7 @@ class ProfileController extends Controller
                 $emailRule = 'unique:maitries,email,' . $authUser->id;
                 $mobileRule = null;
             } else {
-                return $this->errorResponse('Unsupported user type', 403);
+                return $this->errorResponse('Unsupported user type', 'UNAUTHENTICATED', 403);
             }
 
             $rules = [
@@ -61,24 +61,14 @@ class ProfileController extends Controller
                 'first_name'     => 'required|string|max:255',
                 'last_name'      => 'sometimes|nullable|string|max:255',
                 'MobileNumber'   => $mobileRule
-                            ? 'sometimes|nullable|digits:10|' . $mobileRule   // ✅ 10 digits + unique
-                            : 'sometimes|nullable|digits:10',    
-                // 'animal_type'    => 'sometimes|nullable|array',
-                // 'breeds'         => 'sometimes|nullable|array',
-                // 'cattale_no'     => 'sometimes|nullable|array',
-                // 'milk_day'       => 'sometimes|nullable|array',
-                // 'animal_id'      => 'sometimes|nullable|array',
-                // 'removeAnimal'   => 'sometimes|nullable|array',
-
-                // Maitri-specificv
-                // 'maitri_name'      => 'sometimes|nullable|string|max:255',
-                // 'maitri_mobile_no' => 'sometimes|nullable|string|max:15',
+                            ? 'sometimes|nullable|digits:10|' . $mobileRule
+                            : 'sometimes|nullable|digits:10',
             ];
 
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
-                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 'VALIDATION_ERROR', 422);
             }
 
             if ($authUser instanceof FarmerUser) {
@@ -87,7 +77,7 @@ class ProfileController extends Controller
 
             return $this->updateMaitriDetails($request, $authUser);
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
@@ -97,12 +87,11 @@ class ProfileController extends Controller
             $authUser = $authUser ?? auth()->user();
 
             if (!$authUser instanceof FarmerUser) {
-                return $this->errorResponse('Farmer not authenticated', 401);
+                return $this->errorResponse('Farmer not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             $user = FarmerUser::findOrFail($authUser->id);
 
-            // Basic fields
             if ($request->filled('first_name')) {
                 $user->name      = $request->first_name;
                 $user->FirstName = $request->first_name;
@@ -165,7 +154,7 @@ class ProfileController extends Controller
 
             return $this->successResponse('Farmer profile updated successfully', 200, $user);
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
@@ -175,7 +164,7 @@ class ProfileController extends Controller
             $authUser = $authUser ?? auth()->user();
 
             if (!$authUser instanceof Maitri) {
-                return $this->errorResponse('Maitri not authenticated', 401);
+                return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             $maitri = Maitri::findOrFail($authUser->id);
@@ -245,7 +234,7 @@ class ProfileController extends Controller
 
             return $this->successResponse('Maitri profile updated successfully', 200, $maitri);
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
@@ -264,7 +253,7 @@ class ProfileController extends Controller
             $authUser = auth()->user();
 
             if (!$authUser) {
-                return $this->errorResponse('User not authenticated', 401);
+                return $this->errorResponse('User not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             if ($authUser instanceof FarmerUser) {
@@ -275,16 +264,15 @@ class ProfileController extends Controller
                 return $this->getMaitriDetails($authUser);
             }
 
-            return $this->errorResponse('Unsupported user type', 403);
+            return $this->errorResponse('Unsupported user type', 'DATA_NOT_FOUND', 403);
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
     private function getFarmerDetails(FarmerUser $authUser)
     {
-        $user = FarmerUser::with(['district', 'division'])
-            ->findOrFail($authUser->id);
+        $user = FarmerUser::with(['district', 'division'])->findOrFail($authUser->id);
 
         $user->FirstName    = $user->FirstName ?? $user->name;
         $user->MobileNumber = $user->MobileNumber;

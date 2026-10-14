@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\IVSBroadCastController;
 use App\Http\Controllers\Api\LatencyController;
+use App\Http\Controllers\Api\V2\AuthControllerV2;
 use App\Http\Controllers\WebinarController;
 
 /*
@@ -32,10 +33,15 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('otp-verify', [AuthController::class, 'otpVerify'])->name('otp-verify');
 
-    // Farmer email/password signup + login
-    Route::post('farmer-signup', [RegistrationController::class, 'farmerSignup'])->name('api.farmer-signup');
-    Route::post('farmer-login', [AuthController::class, 'farmerLogin'])->name('api.farmer-login');
-    Route::post('maitri-login', [AuthController::class, 'maitriLogin'])->name('api.maitri-login');
+    // Farmer email/password signup + login OLD 14/10/2026
+    // Route::post('farmer-signup', [RegistrationController::class, 'farmerSignup'])->name('api.farmer-signup');
+    // Route::post('farmer-login', [AuthController::class, 'farmerLogin'])->name('api.farmer-login');
+    // Route::post('maitri-login', [AuthController::class, 'maitriLogin'])->name('api.maitri-login');
+    
+    //New code 14/10/2026
+    Route::post('farmer-signup', [AuthControllerV2::class, 'farmerSignup'])->name('api.farmer-signup');
+    Route::post('farmer-login', [AuthControllerV2::class, 'farmerLogin'])->name('api.farmer-login');
+    Route::post('maitri-login', [AuthControllerV2::class, 'maitriLogin'])->name('api.maitri-login');
 
     Route::get('tutorials', [AuthController::class, 'tutorials'])->name('tutorials');
     //Registration

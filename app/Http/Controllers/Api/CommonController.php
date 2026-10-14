@@ -8,12 +8,12 @@ use App\Models\Districts;
 use App\Models\Divisions;
 use App\Models\Institute;
 use App\Models\Manganurodhdata;
-use App\Traits\FormatResponseTrait;
+use App\Traits\V2\FormatResponseTraitV2;
 use Illuminate\Http\Request;
 
 class CommonController extends Controller
 {
-    use FormatResponseTrait;
+    use FormatResponseTraitV2;
 
     public function getMandal(Request $request) {
         $getMandal  = Divisions::get();
