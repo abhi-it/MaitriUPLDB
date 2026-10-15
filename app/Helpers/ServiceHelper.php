@@ -225,4 +225,41 @@ class ServiceHelper
 
         return $data[$value] ?? null;
     }
+
+    private static function toOptions(array $data): array
+    {
+        $options = [];
+        foreach ($data as $value => $label) {
+            $options[] = [
+                'value' => (string) $value,
+                'label' => $label,
+            ];
+        }
+        return $options;
+    }
+
+    public static function getSpeciesSemenOptions(): array
+    {
+        return self::toOptions(self::getSpeciesSemen());
+    }
+
+    public static function getSemenTypeOptions(): array
+    {
+        return self::toOptions(self::getSemenType());
+    }
+
+    public static function getSemenSourceOptions(): array
+    {
+        return self::toOptions(self::getSemenSource());
+    }
+
+    public static function getAnyComplaintOptions(): array
+    {
+        return self::toOptions(self::getAnyComplaint());
+    }
+
+    public static function getStatusOptions(): array
+    {
+        return self::toOptions(self::getStatus());
+    }
 }

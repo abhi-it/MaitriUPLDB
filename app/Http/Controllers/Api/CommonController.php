@@ -85,11 +85,11 @@ class CommonController extends Controller
 
     public function getSemenData(Request $request){
         return $this->successResponse('Get semen data successfully!', 200, [
-            'species_semen' => ServiceHelper::getSpeciesSemen(),
-            'semen_type' => ServiceHelper::getSemenType(),
-            'semen_source' => ServiceHelper::getSemenSource(),
-            'complaints' => ServiceHelper::getAnyComplaint(),
-            'service_status' => ServiceHelper::getStatus(),
+            'species_semen'  => ServiceHelper::getSpeciesSemenOptions(),
+            'semen_type'     => ServiceHelper::getSemenTypeOptions(),
+            'semen_source'   => ServiceHelper::getSemenSourceOptions(),
+            'complaints'     => ServiceHelper::getAnyComplaintOptions(),
+            'service_status' => ServiceHelper::getStatusOptions(),
         ]);
     }
 }
