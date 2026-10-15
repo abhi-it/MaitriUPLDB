@@ -15,6 +15,10 @@ class ZoneStockController extends Controller{
     }
 
     public function zoneStoreData(Request $request){
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->back()->with('error', 'कृपया पहले लॉगिन करें।');
+        }
         $validator = Validator::make($request->all(),[
             'demand_section'  => [ 'required'],
             'semen' => [ 'required'],
@@ -60,6 +64,7 @@ class ZoneStockController extends Controller{
                 $breedType = $request->breedType5;
             }
             $request  = new Zonestock([
+                'user_id'        => $user->id,
                 'demand_section' => $request->demand_section,
                 'breed'          => $request->breed,
                 'breed_type'     => $breedType,
