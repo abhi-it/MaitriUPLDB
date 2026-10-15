@@ -118,10 +118,10 @@ class ServiceHelper
     public static function getYeildingAnimal($value = null)
     {
         $data = [
-            'buffalo' => 'भैंस',
-            'cow'     => 'गाय',
-            'goat'    => 'बकरी',
-            'horse'   => 'घोड़ा',
+            'buffalo' => ['en' => 'buffalo', 'hi' => 'भैंस'],
+            'cow'     => ['en' => 'cow',     'hi' => 'गाय'],
+            'goat'    => ['en' => 'goat',    'hi' => 'बकरी'],
+            'horse'   => ['en' => 'horse',   'hi' => 'घोड़ा'],
         ];
 
         if ($value === null) {
@@ -137,9 +137,9 @@ class ServiceHelper
     public static function getSpeciesSemen($value = null)
     {
         $data = [
-            'cow'     => 'गाय',
-            'buffalo' => 'भैंस',
-            'goat'    => 'बकरी',
+            'cow'     => ['en' => 'cow',     'hi' => 'गाय'],
+            'buffalo' => ['en' => 'buffalo', 'hi' => 'भैंस'],
+            'goat'    => ['en' => 'goat',    'hi' => 'बकरी'],
         ];
 
         if ($value === null) {
@@ -155,8 +155,8 @@ class ServiceHelper
     public static function getSemenType($value = null)
     {
         $data = [
-            'conventional' => 'सामान्य',
-            'sexed'        => 'वर्गीकृत',
+            'conventional' => ['en' => 'conventional', 'hi' => 'सामान्य'],
+            'sexed'        => ['en' => 'sexed',        'hi' => 'वर्गीकृत'],
         ];
 
         if ($value === null) {
@@ -172,14 +172,14 @@ class ServiceHelper
     public static function getSemenSource($value = null)
     {
         $data = [
-            'UPLDB'          => 'यूपीएलडीबी',
-            'BAIF'           => 'बीएआईएफ़',
-            'ABC Salon'      => 'एबीसी सैलून',
-            'Amul'           => 'अमूल',
-            'Haryana'        => 'हरियाणा',
-            'Hissar Bovine'  => 'हिसार गोजातीय',
-            'Morna Breeding' => 'मोरना प्रजनन',
-            'others'         => 'अन्य',
+            'UPLDB'          => ['en' => 'UPLDB',          'hi' => 'यूपीएलडीबी'],
+            'BAIF'           => ['en' => 'BAIF',           'hi' => 'बीएआईएफ़'],
+            'ABC Salon'      => ['en' => 'ABC Salon',      'hi' => 'एबीसी सैलून'],
+            'Amul'           => ['en' => 'Amul',           'hi' => 'अमूल'],
+            'Haryana'        => ['en' => 'Haryana',        'hi' => 'हरियाणा'],
+            'Hissar Bovine'  => ['en' => 'Hissar Bovine',  'hi' => 'हिसार गोजातीय'],
+            'Morna Breeding' => ['en' => 'Morna Breeding', 'hi' => 'मोरना प्रजनन'],
+            'others'         => ['en' => 'others',         'hi' => 'अन्य'],
         ];
 
         if ($value === null) {
@@ -195,12 +195,12 @@ class ServiceHelper
     public static function getAnyComplaint($value = null)
     {
         $data = [
-            'स्ट्रॉ से संबंधित'           => 'Related to Straws',
-            'तरल नाइट्रोजन से संबंधित'   => 'Related to Liquid Nitrogen',
-            'कंटेनर से संबंधित'          => 'Related to Container',
-            'भारत पशुधन आईडी से संबंधित' => 'Related to Bharat Pashudhan ID',
-            'प्रोत्साहन राशि से संबंधित' => 'Related to Incentive amount',
-            'बीमा से संबंधित'            => 'Related to Insurance',
+            'straws'    => ['en' => 'Related to Straws',             'hi' => 'स्ट्रॉ से संबंधित'],
+            'nitrogen'  => ['en' => 'Related to Liquid Nitrogen',    'hi' => 'तरल नाइट्रोजन से संबंधित'],
+            'container' => ['en' => 'Related to Container',          'hi' => 'कंटेनर से संबंधित'],
+            'bharat_id' => ['en' => 'Related to Bharat Pashudhan ID','hi' => 'भारत पशुधन आईडी से संबंधित'],
+            'incentive' => ['en' => 'Related to Incentive amount',   'hi' => 'प्रोत्साहन राशि से संबंधित'],
+            'insurance' => ['en' => 'Related to Insurance',          'hi' => 'बीमा से संबंधित'],
         ];
 
         if ($value === null) {
@@ -210,32 +210,32 @@ class ServiceHelper
         return $data[$value] ?? null;
     }
 
-    public static function getStatus($value = null)
-    {
-        $data = [
-            'Accepted' => '0',
-            'New' => '1',
-            'Waiting' => '2',
-            'Rejected' => '3',
-        ];
-
-        if ($value === null) {
-            return $data;
-        }
-
-        return $data[$value] ?? null;
-    }
-
+    /**
+     * Convert a [key => ['en' => ..., 'hi' => ...]] map into
+     * a list of ['eng' => ..., 'hi' => ...] objects.
+     */
     private static function toOptions(array $data): array
     {
         $options = [];
-        foreach ($data as $value => $label) {
-            $options[] = [
-                'value' => (string) $value,
-                'label' => $label,
-            ];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $options[] = [
+                    'eng' => $value['en'] ?? (string) $key,
+                    'hi'  => $value['hi'] ?? '',
+                ];
+            } else {
+                $options[] = [
+                    'eng' => (string) $key,
+                    'hi'  => (string) $value,
+                ];
+            }
         }
         return $options;
+    }
+
+    public static function getYeildingAnimalOptions(): array
+    {
+        return self::toOptions(self::getYeildingAnimal());
     }
 
     public static function getSpeciesSemenOptions(): array
@@ -260,6 +260,14 @@ class ServiceHelper
 
     public static function getStatusOptions(): array
     {
-        return self::toOptions(self::getStatus());
+        $options = [];
+        foreach (self::getServiceStatus() as $id => $labels) {
+            $options[] = [
+                'id'  => (string) $id,
+                'eng' => $labels['en'] ?? '',
+                'hi'  => $labels['hi'] ?? '',
+            ];
+        }
+        return $options;
     }
 }
