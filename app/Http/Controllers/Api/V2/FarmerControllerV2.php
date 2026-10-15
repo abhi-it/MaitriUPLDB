@@ -257,19 +257,19 @@ class FarmerControllerV2 extends Controller
         }
     }
 
-    public function getMaitriList() {
+    public function getMaitriList(Request $request) {
         try {
             $farmer = auth()->user();
+            $districtID  = $request->district_id ?? $farmer->district_id;
 
             $maitries = collect();
-            if (!empty($farmer->district_id)) {
+            if (!empty($districtID)) {
                 $maitries = Maitri::where(function ($q) {
                         $q->where('status', 0)->orWhereNull('status');
                     })
-                    ->where('district_id', $farmer->district_id)
+                    ->where('district_id', $districtID)
                     ->orderByRaw("CASE WHEN block = ? THEN 0 ELSE 1 END", [$farmer->block ?? ''])
                     ->orderBy('block', 'asc')
-                    ->orderBy('maitri_name', 'asc')
                     ->get([
                         'id',
                         'maitri_name',
@@ -287,6 +287,61 @@ class FarmerControllerV2 extends Controller
             return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
+    
+    // public function getMaitriList()
+    // {
+    //     try {
+    //         $farmer = auth()->user();
+
+    //         if (empty($farmer->district_id)) {
+    //             return $this->successResponse(
+    //                 'Please update your district to view the Maitri list',
+    //                 200,
+    //                 []
+    //             );
+    //         }
+
+    //         $maitries = Maitri::where(function ($q) {
+    //                 $q->where('status', 0)
+    //                 ->orWhereNull('status');
+    //             })
+    //             ->where('district_id', $farmer->district_id)
+
+    //             ->orderByRaw(
+    //                 "CASE WHEN block = ? THEN 0 ELSE 1 END",
+    //                 [$farmer->block ?? '']
+    //             )
+    //             ->orderBy('block', 'asc')
+    //             ->orderBy('maitri_name', 'asc')
+
+    //             ->get([
+    //                 'id',
+    //                 'maitri_name',
+    //                 'maitri_mobile_no',
+    //                 'email',
+    //                 'district_id',
+    //                 'block',
+    //                 'tehsil',
+    //                 'center_name',
+    //             ]);
+
+    //         return $this->successResponse(
+    //             $maitries->isNotEmpty()
+    //                 ? 'Get Maitri list successfully'
+    //                 : 'No Maitri available in this district',
+    //             200,
+    //             $maitries
+    //         );
+
+    //     } catch (\Exception $e) {
+    //         return $this->errorResponse(
+    //             $e->getMessage(),
+    //             'INTERNAL_SERVER_ERROR',
+    //             500
+    //         );
+    //     }
+    // }
+
 
     public function highYieldingAnimalList(Request $request)
     {

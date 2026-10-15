@@ -23,11 +23,16 @@ class CommonController extends Controller
     public function getDistrict(Request $request)
     {
         $mandal_name = $request->mandal_name;
-        $getAllDistrict =  Manganurodhdata::select('janpad_name')
-                        ->where('mandal_name', 'LIKE', $mandal_name)
-                        ->where('status', 0)
-                        ->groupBy('janpad_name')
-                        ->get();
+        if($mandal_name) {
+            $mandalId = Divisions::where('name_hindi', 'LIKE', $mandal_name)->first();
+            if($mandalId['id']) {
+                $getAllDistrict = Districts::select('id','name_hindi as janpad_name')->where('division_id', $mandalId['id'])->get();
+            } else {
+                $getAllDistrict = Districts::select('id','name_hindi as janpad_name')->get();
+            }
+        } else {
+            $getAllDistrict = Districts::select('id','name_hindi as janpad_name')->get();
+        }
         return $this->successResponse('Get all district successfully!',200,$getAllDistrict);
     }
 
