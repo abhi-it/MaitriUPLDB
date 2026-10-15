@@ -47,9 +47,9 @@ form#loginForm p span {
     @endif
     <form method="POST" action="{{ route('addDemandRequests') }}" id="loginForm" name="loginForm"
         enctype="multipart/form-data" class="form-comman">
-        <p class="text-danger text-center ml-2 fs-6 fw-bold">
+        {{-- <p class="text-danger text-center ml-2 fs-6 fw-bold">
             <span data-hi="कृपया यह फॉर्म केवल एक बार भरें" data-en="Please fill up this form only once"></span>
-        </p>
+        </p> --}}
         @csrf
         <div class="row">
 

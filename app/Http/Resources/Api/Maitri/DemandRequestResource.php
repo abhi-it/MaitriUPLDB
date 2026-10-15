@@ -21,8 +21,7 @@ class DemandRequestResource extends JsonResource
             'bharat_pashudhan_id'       => $this->bharat_pashudhan_id,
             'smart_mobile_no'           => $this->smart_mobile_no,
 
-            'district_id'               => $this->district,
-            'district_name'             => $this->whenLoaded('districtName', fn() => $this->districtName?->name_hindi),
+            'district'                  => $this->district,
 
             'mandal'                    => $this->mandal,
             'tehsil'                    => $this->tehsil,
@@ -33,14 +32,6 @@ class DemandRequestResource extends JsonResource
             'post_office'               => $this->post_office,
             'villages_coevring'         => $this->villages_coevring,
             'demand_section'            => $this->demand_section,
-
-            // Arrays on output for convenience
-            // 'semen'                     => $this->csvToArray($this->semen),
-            // 'breed'                     => $this->csvToArray($this->breed),
-            // 'bull_id'                   => $this->csvToArray($this->bull_id),
-            // 'Sheath'                    => $this->csvToArray($this->Sheath),
-            // 'semen_type'                => $this->csvToArray($this->semen_type),
-            // 'semen_source'              => $this->csvToArray($this->semen_source),
             'semen_data'                => $this->buildSemenData(),
 
             'gloves'                    => $this->gloves,

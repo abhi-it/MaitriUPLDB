@@ -23,11 +23,6 @@ class DemandRequestController extends Controller
                 return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
-            $alreadyExists = DemandRequest::where('maitrie_id', $maitri->id)->exists();
-            if ($alreadyExists) {
-                return $this->errorResponse('You have already added a demand request', 'ALREADY_EXIST', 422);
-            }
-
             $validator = Validator::make($request->all(), [
                 'name'                      => 'required|string|max:255',
                 'date_of_birth'             => 'required|date',
@@ -74,19 +69,6 @@ class DemandRequestController extends Controller
                 return $this->errorResponse(ucfirst($validator->errors()->first()), 'VALIDATION_ERROR', 422,$validator->errors());
             }
 
-            $districtId  = null;
-            $janpadName  = null;
-            if ($request->filled('district')) {
-                $district = is_numeric($request->district)
-                    ? Districts::find($request->district)
-                    : Districts::where('name_hindi', 'LIKE', '%' . $request->district . '%')->first();
-
-                if ($district) {
-                    $districtId = $district->id;
-                    $janpadName = $district->name_hindi;
-                }
-            }
-
             $demandRequest = new DemandRequest();
             $demandRequest->maitrie_id              = $maitri->id;
             $demandRequest->name                    = $request->name;
@@ -95,8 +77,8 @@ class DemandRequestController extends Controller
             $demandRequest->training_center_id      = $request->training_center_id;
             $demandRequest->bharat_pashudhan_id     = $request->bharat_pashudhan_id;
             $demandRequest->smart_mobile_no         = $request->smart_mobile_no;
-            $demandRequest->district                = $districtId;
-            $demandRequest->mandal                  = $request->mandal ?? $janpadName;
+            $demandRequest->district                = $request->district;
+            $demandRequest->mandal                  = $request->mandal ?? $request->district;
             $demandRequest->tehsil                  = $request->tehsil;
             $demandRequest->block                   = $request->block;
             $demandRequest->vikas_khand             = $request->vikas_khand;
@@ -147,11 +129,8 @@ class DemandRequestController extends Controller
             if (!$maitri instanceof Maitri) {
                 return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
-
-            $demandRequest = DemandRequest::with('districtName','Institute')
-                ->where('maitrie_id', $maitri->id)
-                ->latest('id')
-                ->first();
+            $perPage = $request->per_page ?? 10;
+            $demandRequest = DemandRequest::with('districtName','Institute')->where('maitrie_id', $maitri->id)->paginate($perPage);
 
             if (!$demandRequest) {
                 return $this->successResponse('No demand request found', 200);
@@ -160,7 +139,7 @@ class DemandRequestController extends Controller
             return $this->successResponse(
                 'Demand request fetched successfully',
                 200,
-                new DemandRequestResource($demandRequest)
+                DemandRequestResource::collection($demandRequest),$demandRequest
             );
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
@@ -237,19 +216,6 @@ class DemandRequestController extends Controller
                 return $this->errorResponse(ucfirst($validator->errors()->first()), 'VALIDATION_ERROR', 422);
             }
 
-            $districtId  = null;
-            $janpadName  = null;
-            if ($request->filled('district')) {
-                $district = is_numeric($request->district)
-                    ? Districts::find($request->district)
-                    : Districts::where('name_hindi', 'LIKE', '%' . $request->district . '%')->first();
-
-                if ($district) {
-                    $districtId = $district->id;
-                    $janpadName = $district->name_hindi;
-                }
-            }
-
             $semenData = $request->input('semen_data', []);
 
             $semenArr         = [];
@@ -278,8 +244,8 @@ class DemandRequestController extends Controller
             $demandRequest->training_center_id      = $request->training_center_id;
             $demandRequest->bharat_pashudhan_id     = $request->bharat_pashudhan_id;
             $demandRequest->smart_mobile_no         = $request->smart_mobile_no;
-            $demandRequest->district                = $districtId;
-            $demandRequest->mandal                  = $request->mandal ?? $janpadName;
+            $demandRequest->district                = $request->district;
+            $demandRequest->mandal                  = $request->mandal ?? $request->district;
             $demandRequest->tehsil                  = $request->tehsil;
             $demandRequest->block                   = $request->block;
             $demandRequest->vikas_khand             = $request->vikas_khand;

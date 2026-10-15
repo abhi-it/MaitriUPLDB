@@ -189,9 +189,6 @@ class ServiceHelper
         return $data[$value] ?? null;
     }
 
-    /**
-     * Get complaint data.
-     */
     public static function getAnyComplaint($value = null)
     {
         $data = [
@@ -210,10 +207,6 @@ class ServiceHelper
         return $data[$value] ?? null;
     }
 
-    /**
-     * Convert a [key => ['en' => ..., 'hi' => ...]] map into
-     * a list of ['eng' => ..., 'hi' => ...] objects.
-     */
     private static function toOptions(array $data): array
     {
         $options = [];
