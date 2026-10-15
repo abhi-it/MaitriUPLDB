@@ -118,8 +118,7 @@
                                 <tr>
                                     <td>{{ $row->applicationNumber }}</td>
                                     <td>{{ $row->applicant_name }}</td>
-                                    <td><a href="javascript:void(0)"
-                                            onClick="viewCalculation({{ $row->id }});">{{ $topper_number }}</a>
+                                    <td><span class="total-users" onClick="viewCalculation({{ $row->id }});">{{ $topper_number }}</span>
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y') }}</td>
                                     <td>

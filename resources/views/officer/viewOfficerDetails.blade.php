@@ -5,9 +5,9 @@
         <h3 class="text-center m-5 fw-bolder">
             <span data-hi="चयनित आवेदक का विवरण" data-en="Details of Selected Applicants"></span>    
             <div class=" pull-right">
-                <a href="javascript:history.back()" class="btn btn-info">
+                <button onclick="history.back()" class="btn btn-info">
                 <span data-hi="पीछे" data-en="Back"></span>    
-                </a>
+                </button>
             </div>
         </h3>
         @if (session()->get('success'))

@@ -29,19 +29,19 @@
             <tr>
                 <td>{{$row->applicationNumber}}</td>
                 <td>{{$row->applicant_name}}</td>
-                <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$row->topper_number}}</a>
+                <td><span class="total-users" onClick="viewCalculation({{$row->id}});">{{$row->topper_number}}</span>
                 </td>
                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y')}}</td>
                 <td><a href="{{url('editUploadAvedan')}}/{{$row->id}}">अपलोड डॉक्युमेंट्स</a></td>
                 <td>
                     @if($row->is_approved==0)
-                    <a href="javascript:void(0)" class="btn btn-secondary">लंबित</a>
+                    <button type="button" class="btn btn-secondary total-users">लंबित</button>
                     @elseif($row->is_approved==1)
-                    <a href="javascript:void(0)" class="btn btn-success">स्वीकृत</a>
+                    <button type="button" class="btn btn-success total-users">स्वीकृत</button>
                     @elseif($row->is_approved==3)
-                    <a href="javascript:void(0)" class="btn btn-info active">प्रतीक्षा सूची</a>
+                    <button type="button" class="btn btn-info active total-users">प्रतीक्षा सूची</button>
                     @else
-                    <a href="javascript:void(0)" class="btn btn-danger">अस्वीकार</a>
+                    <button type="button" class="btn btn-danger total-users">अस्वीकार</button>
                     @endif
                 </td>
             </tr>

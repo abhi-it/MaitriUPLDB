@@ -12,7 +12,7 @@
 
         <h3 class="text-center fw-bold m-4">आवेदन - पत्र
             <div class=" pull-right">
-                <a href="javascript:history.back()" class="btn btn-info">Back</a>
+                <button onclick="history.back();" class="btn btn-info" style="color: #ea7327">Back</button>
                 <a href="{{ route('avedanFullDetailsPdf', $result->id) }}" class="btn btn-info">Download PDF</a>
             </div>
         </h1>

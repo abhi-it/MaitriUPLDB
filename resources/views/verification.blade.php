@@ -23,6 +23,11 @@ function setDateTimeModel() {
     {{ session()->get('success') }}
 </div>
 @endif
+@if (session()->get('error'))
+    <div class="alert alert-danger">
+        {{ session()->get('error') }}
+    </div>
+@endif
 <form method="post" action="{{ url('saveDocumnetVerification') }}" id="verification" enctype="multipart/form-data">
     @csrf
     <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
@@ -52,8 +57,8 @@ function setDateTimeModel() {
                             class="checkBoxClass"></td>
                     <td>{{ $row->applicationNumber }}</td>
                     <td>{{ $row->applicant_name }}</td>
-                    <td><a href="javascript:void(0)"
-                            onClick="viewCalculation({{ $row->id }});">{{ $row->topper_number }}</a></td>
+                    <td><span class="total-users"
+                            onClick="viewCalculation({{ $row->id }});">{{ $row->topper_number }}</span></td>
                     <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y') }}</td>
                     <td>
                         <a href="{{ url('view-Avedan-details') }}/{{ $row->id }}">विवरण देखें</a>
@@ -64,15 +69,15 @@ function setDateTimeModel() {
                     </td>
                     <td>
                         @if ($row->is_approved == 0)
-                        <a href="javascript:void(0)" class="btn btn-secondary">लंबित</a>
+                        <button href="javascript:void(0)" type="submit" class="btn btn-secondary total-users">लंबित</button>
                         @elseif($row->is_approved == 1)
-                        <a href="javascript:void(0)" class="btn btn-success">स्वीकृत</a>
+                        <button href="javascript:void(0)" type="submit" class="btn btn-success total-users">स्वीकृत</button>
                         @elseif($row->is_approved == 2)
-                        <a href="javascript:void(0)" class="btn btn-success">अस्वीकार</a>
+                        <button href="javascript:void(0)" type="submit" class="btn btn-success total-users">अस्वीकार</button>
                         @elseif($row->is_approved == 3)
-                        <a href="javascript:void(0)" class="btn btn-info active">प्रतीक्षा सूची में है..</a>
+                        <button href="javascript:void(0)" type="submit" class="btn btn-info active total-users">प्रतीक्षा सूची में है..</button>
                         @elseif($row->is_approved == 4)
-                        <a href="javascript:void(0)" class="btn btn-info active">चयनित</a>
+                        <button href="javascript:void(0)" type="submit" class="btn btn-info active total-users">चयनित</button>
                         @endif
                     </td>
                 </tr>
@@ -96,7 +101,7 @@ function setDateTimeModel() {
 
     .modal-content {
         /* 80% of window height */
-        height: 60%;
+        /* height: 60%; */
         background-color: #BBD6EC;
     }
 

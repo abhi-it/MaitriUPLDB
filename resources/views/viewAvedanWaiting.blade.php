@@ -40,7 +40,7 @@ $show = false;
         <tr>
             <td>{{$row->applicationNumber}}</td>
             <td>{{$row->applicant_name}}</td>
-            <td><a href="javascript:void(0)" onClick="viewCalculation({{$row->id}});">{{$topper_number}}</a></td>
+            <td><span class="total-users" onClick="viewCalculation({{$row->id}});">{{$topper_number}}</span></td>
             <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d/m/Y')}}</td>
             <td>
 				<a href="{{url('view-waiting-avedan-details')}}/{{$row->id}}" >विवरण देखें</a>
@@ -49,17 +49,17 @@ $show = false;
 				@endif
 			</td>
             <td>
-			@if($row->is_approved==0)
-				<a href="javascript:void(0)" class="btn btn-secondary">लंबित</a>
-			@elseif($row->is_approved==1)
-				<a href="javascript:void(0)" class="btn btn-success">स्वीकृत</a>
-			@elseif($row->is_approved==2)
-				<a href="javascript:void(0)" class="btn btn-success">अस्वीकार</a>
-			@elseif($row->is_approved==3)
-				<a href="javascript:void(0)" class="btn btn-info active">प्रतीक्षा सूची में है..</a>
-			@elseif($row->is_approved==4)
-				<a href="javascript:void(0)" class="btn btn-info active">चयनित</a>
-			@endif
+                @if($row->is_approved==0)
+                    <button href="javascript:void(0)" class="btn btn-secondary total-users">लंबित</button>
+                @elseif($row->is_approved==1)
+                    <button href="javascript:void(0)" class="btn btn-success total-users">स्वीकृत</button>
+                @elseif($row->is_approved==2)
+                    <button href="javascript:void(0)" class="btn btn-success total-users">अस्वीकार</button>
+                @elseif($row->is_approved==3)
+                    <button href="javascript:void(0)" class="btn btn-info active total-users">प्रतीक्षा सूची में है..</button>
+                @elseif($row->is_approved==4)
+                    <button href="javascript:void(0)" class="btn btn-info active total-users">चयनित</button>
+                @endif
 			</td>
         </tr>
         @endforeach

@@ -263,6 +263,14 @@
     color: red;            /* Color you like */
     /* animation: blink 1s infinite; Blinking animation */
 }
+.modal-dialog {
+    max-width: 685px !important;
+}
+
+.total-users {
+    color: var(--primary) !important;
+    cursor: pointer;
+}
 
 /* Blinking keyframes */
 /* @keyframes blink {

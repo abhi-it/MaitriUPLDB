@@ -2359,6 +2359,9 @@ class DashboardController extends Controller
 
     public function saveDocumnetVerification(Request $request)
     {
+        if (!$request->has('application_id') || empty($request->input('application_id'))) {
+            return redirect()->back()->with('error', 'कृपया कम से कम एक चेकबॉक्स चुनें');
+        }
         $comments = "डॉक्यूमेंट वेरिफिकेशन के लिए सभी ज़रूरी डॉक्युमेंट के साथ आपको " . $_POST['date'] . " को " . $_POST['hour'] . ":" . $_POST['minute'] . " " . $_POST['ampm'] . " पर आना है |";
 
         $time = "" . $_POST['hour'] . ":" . $_POST['minute'] . " " . $_POST['ampm'] . "";
