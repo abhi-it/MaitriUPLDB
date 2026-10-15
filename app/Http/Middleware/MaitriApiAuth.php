@@ -23,31 +23,35 @@ class MaitriApiAuth
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json([
                     'message' => 'Token is invalid',
+                    'error_type' => 'INVALID_TOKEN',
                     'status' => 'error',
-                    'data' => [],
+                    'data' => null,
                 ], 401);
             }
 
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
                 return response()->json([
                     'message' => 'Token is expired',
+                    'error_type' => 'EXPIRED_TOKEN',
                     'status' => 'error',
-                    'data' => [],
+                    'data' => null,
                 ], 401);
             }
 
             return response()->json([
                 'message' => 'Token not found',
+                'error_type' => 'TOKEN_NOT_FOUND',
                 'status' => 'error',
-                'data' => [],
+                'data' => null,
             ], 401);
         }
 
         if (!$user instanceof Maitri) {
             return response()->json([
                 'message' => 'Maitri access only.',
+                'error_type' => 'PERMISSION_DENIED',
                 'status' => 'error',
-                'data' => [],
+                'data' => null,
             ], 403);
         }
 

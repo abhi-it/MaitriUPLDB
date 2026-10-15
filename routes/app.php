@@ -3,11 +3,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\DemandRequestController;
-use App\Http\Controllers\Api\MaitriController;
 use App\Http\Controllers\Api\MonthlyProgressReportController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\V2\AuthControllerV2;
 use App\Http\Controllers\Api\V2\FarmerControllerV2;
+use App\Http\Controllers\Api\V2\MaitriControllerV2;
 
 Route::prefix('auth/v1')->group(function () {
     Route::get("get-mandal", [CommonController::class, 'getMandal']);
@@ -52,13 +52,14 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
 // Maitri-only authenticated APIs
 Route::group(['prefix' => 'auth/v1/maitri', 'middleware' => ['maitri.api']], function () {
 
-    Route::post('dashboard-data', [MaitriController::class, 'maitriDashData'])->name('api.maitri-dashdata');
-    Route::get('request-list', [MaitriController::class, 'requestList'])->name('api.maitri-request-list');
-    Route::post('update-service-request', [MaitriController::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
+    Route::post('dashboard-data', [MaitriControllerV2::class, 'maitriDashData'])->name('api.maitri-dashdata');
+    Route::get('request-list', [MaitriControllerV2::class, 'requestList'])->name('api.maitri-request-list');
+    Route::post('update-service-request', [MaitriControllerV2::class, 'updateServiceRequestStatus'])->name('api.maitri-update-service-request');
+    Route::get('maitri-details', [MaitriControllerV2::class, 'maitriProfileDetails'])->name('api.maitri-details');
+    Route::post('update-maitri-detail', [MaitriControllerV2::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
+
     Route::post('add-demand-request', [DemandRequestController::class, 'addDemandRequest']);
     Route::post('add-demand-request-latest', [DemandRequestController::class, 'addDemandRequestLatest']);
     Route::get('get-demand-request',  [DemandRequestController::class, 'getDemandRequest']);
     Route::get('monthly-progress-report', [MonthlyProgressReportController::class, 'monthlyProgressReport']);
-    Route::get('maitri-details', [MaitriController::class, 'maitriProfileDetails'])->name('api.maitri-details');
-    Route::post('update-maitri-detail', [MaitriController::class, 'updateMaitriProfile'])->name('api.update-maitri-detail');
 });

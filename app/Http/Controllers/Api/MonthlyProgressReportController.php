@@ -6,23 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Maitri\ServiceRequestResource;
 use App\Models\API\Servicerequest;
 use App\Models\Maitri;
-use App\Traits\FormatResponseTrait;
+use App\Traits\V2\FormatResponseTraitV2;
 use Illuminate\Http\Request;
 class MonthlyProgressReportController extends Controller
 {
-    use FormatResponseTrait;
+    use FormatResponseTraitV2;
 
     public function monthlyProgressReport(Request $request)
     {
         try {
             $maitri = auth()->user();
             if (!$maitri instanceof Maitri) {
-                return $this->errorResponse('Maitri not authenticated', 401);
+                return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
-            $query = Servicerequest::with(['user', 'maitri'])
-                ->where('maitri_id', $maitri->id)
-                ->orderBy('id', 'desc');
+            $query = Servicerequest::with(['farmer', 'maitri'])
+                ->where('maitri_id', $maitri->id)->orderBy('id', 'desc');
 
             if ($request->filled('month')) {
                 $query->whereMonth('created_at', $request->month);
@@ -41,7 +40,7 @@ class MonthlyProgressReportController extends Controller
                 ServiceRequestResource::collection($data),$data
             );
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 }

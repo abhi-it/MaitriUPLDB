@@ -22,16 +22,16 @@ class ServiceRequestResource extends JsonResource
             'formatted_status' => ServiceHelper::getServiceStatusLabel($this->status, $lang),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
-            'user'            => $this->whenLoaded('user', function () {
+            'farmer'            => $this->whenLoaded('farmer', function () {
                 return [
-                    'id'                   => $this->user->id,
-                    'FirstName'            => $this->user->FirstName,
-                    'LastName'             => $this->user->LastName,
-                    'MobileNumber'         => $this->user->MobileNumber,
-                    'name'                 => $this->user->name,
-                    'gender'               => $this->user->gender,
-                    'pincode'              => $this->user->pincode,
-                    'email'                => $this->user->email
+                    'id'                   => $this->farmer->id,
+                    'FirstName'            => $this->farmer->FirstName,
+                    'LastName'             => $this->farmer->LastName,
+                    'MobileNumber'         => $this->farmer->MobileNumber,
+                    'name'                 => $this->farmer->name,
+                    'gender'               => $this->farmer->gender,
+                    'pincode'              => $this->farmer->pincode,
+                    'email'                => $this->farmer->email
                 ];
             }),
         ];

@@ -21,6 +21,10 @@ class Servicerequest extends Model
         return $this->belongsTo(FarmerUser::class,'user_id');
     }
 
+    public function farmer(){
+        return $this->belongsTo(FarmerUser::class,'user_id');
+    }
+
     public function maitri(){
         return $this->belongsTo(Maitri::class,'maitri_id');
     }

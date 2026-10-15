@@ -7,25 +7,25 @@ use App\Http\Resources\Api\Maitri\DemandRequestResource;
 use App\Models\DemandRequest;
 use App\Models\Districts;
 use App\Models\Maitri;
-use App\Traits\FormatResponseTrait;
+use App\Traits\V2\FormatResponseTraitV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class DemandRequestController extends Controller
 {
-    use FormatResponseTrait;
+    use FormatResponseTraitV2;
 
     public function addDemandRequest(Request $request)
     {
         try {
             $maitri = auth()->user();
             if (!$maitri instanceof Maitri) {
-                return $this->errorResponse('Maitri not authenticated', 401);
+                return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             $alreadyExists = DemandRequest::where('maitrie_id', $maitri->id)->exists();
             if ($alreadyExists) {
-                return $this->errorResponse('You have already added a demand request', 422);
+                return $this->errorResponse('You have already added a demand request', 'ALREADY_EXIST', 422);
             }
 
             $validator = Validator::make($request->all(), [
@@ -71,7 +71,7 @@ class DemandRequestController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 'VALIDATION_ERROR', 422,$validator->errors());
             }
 
             $districtId  = null;
@@ -136,7 +136,7 @@ class DemandRequestController extends Controller
                 new DemandRequestResource($demandRequest)
             );
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
@@ -145,7 +145,7 @@ class DemandRequestController extends Controller
         try {
             $maitri = auth()->user();
             if (!$maitri instanceof Maitri) {
-                return $this->errorResponse('Maitri not authenticated', 401);
+                return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             $demandRequest = DemandRequest::with('districtName','Institute')
@@ -163,7 +163,7 @@ class DemandRequestController extends Controller
                 new DemandRequestResource($demandRequest)
             );
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 
@@ -180,12 +180,12 @@ class DemandRequestController extends Controller
         try {
             $maitri = auth()->user();
             if (!$maitri instanceof Maitri) {
-                return $this->errorResponse('Maitri not authenticated', 401);
+                return $this->errorResponse('Maitri not authenticated', 'UNAUTHENTICATED', 401);
             }
 
             $alreadyExists = DemandRequest::where('maitrie_id', $maitri->id)->exists();
             if ($alreadyExists) {
-                return $this->errorResponse('You have already added a demand request', 422);
+                return $this->errorResponse('You have already added a demand request', 'ALREADY_EXIST', 422);
             }
 
             $validator = Validator::make($request->all(), [
@@ -234,7 +234,7 @@ class DemandRequestController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return $this->errorResponse(ucfirst($validator->errors()->first()), 422);
+                return $this->errorResponse(ucfirst($validator->errors()->first()), 'VALIDATION_ERROR', 422);
             }
 
             $districtId  = null;
@@ -258,7 +258,6 @@ class DemandRequestController extends Controller
             $sheathArr        = [];
             $semenTypeArr     = [];
             $semenSourceArr   = [];
-            $semenQuantityArr = [];
 
             if (is_array($semenData)) {
                 foreach ($semenData as $row) {
@@ -322,7 +321,7 @@ class DemandRequestController extends Controller
                 new DemandRequestResource($demandRequest)
             );
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }
     }
 }
