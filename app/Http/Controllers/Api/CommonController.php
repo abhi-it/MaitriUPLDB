@@ -92,4 +92,16 @@ class CommonController extends Controller
             'service_status' => ServiceHelper::getStatusOptions(),
         ]);
     }
+
+    public function getAboutUs()
+    {
+        return $this->successResponse('About Us data fetched successfully!', 200, ["about_us" => ServiceHelper::getAboutUsContent()]);
+    }
+
+    public function getTermsAndConditions()
+    {
+        return $this->successResponse('Terms and Conditions fetched successfully!', 200, [
+            'terms_and_conditions' => ServiceHelper::getTermsAndConditions(),
+        ]);
+    }
 }
