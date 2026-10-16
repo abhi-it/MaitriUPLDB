@@ -290,40 +290,70 @@ class ServiceHelper
     public static function getTermsAndConditions($value = null)
     {
         $hindiContent = <<<'HTML'
-            राष्ट्रीय गोकुल मिशन अन्तगर्त कृत्रिम गर्भाधान आच्छादन बढाने हेतु मैत्री की स्थापना
+    <p>राष्ट्रीय गोकुल मिशन अन्तगर्त कृत्रिम गर्भाधान आच्छादन बढाने हेतु मैत्री की स्थापना</p>
 
-            नियम-शर्ते निम्न प्रकार है-
+    <p><strong>नियम-शर्ते निम्न प्रकार है-</strong></p>
 
-            1. योग्यताः
+    <p><strong>1. योग्यताः</strong></p>
 
-            (क) शैक्षिक योग्यता: अनिवार्य न्यूनतम अर्हता हाईस्कूल (जीव विज्ञान) उत्तीर्ण हो। इण्टर (जीव विज्ञान) वरीयता दी जायेगी।
+    <p>(क) शैक्षिक योग्यता: अनिवार्य न्यूनतम अर्हता हाईस्कूल (जीव विज्ञान) उत्तीर्ण हो। इण्टर (जीव विज्ञान) वरीयता दी जायेगी।</p>
 
-            (ख) आवेदक चयनित क्षेत्र की ग्राम पंचायत का निवासी हो।
+    <p>(ख) आवेदक चयनित क्षेत्र की ग्राम पंचायत का निवासी हो।</p>
 
-            (ग) पूर्णतः स्वस्थ एवं कार्य करने के योग्य हो। पशुपालक के द्वार पर पहुॅच कर सेवा कर सके। राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वस्थ्य प्रमाण पत्र संलग्न करना अनिवार्य है।
+    <p>(ग) पूर्णतः स्वस्थ एवं कार्य करने के योग्य हो। पशुपालक के द्वार पर पहुॅच कर सेवा कर सके। राजकीय चिकित्साधिकारी द्वारा प्रदत्त स्वस्थ्य प्रमाण पत्र संलग्न करना अनिवार्य है।</p>
 
-            (घ) वोटर आई.डी. कार्ड/आधार कार्ड/पैन कार्ड की स्वप्रमाणित छाया प्रति संलग्न करना अनिवार्य है।
+    <p>(घ) वोटर आई.डी. कार्ड/आधार कार्ड/पैन कार्ड की स्वप्रमाणित छाया प्रति संलग्न करना अनिवार्य है।</p>
 
-            (ड) Migrant Workers(प्रवासी श्रमिकों)/पशु सखि/प्रशिक्षित पैरावेट को वरीयता दी जायेगी।
+    <p>(ड) Migrant Workers(प्रवासी श्रमिकों)/पशु सखि/प्रशिक्षित पैरावेट को वरीयता दी जायेगी।</p>
 
-            2. आवेदक की आयु दिनांक 01.12.2020 को 18 वर्ष से 40 वर्ष के मध्य हो।
+    <p><strong>2.</strong> आवेदक की आयु दिनांक 01.12.2020 को 18 वर्ष से 40 वर्ष के मध्य हो।</p>
 
-            3. आवेदक पत्र जमा करने की अन्तिम तिथि:- 31.12.2020
+    <p><strong>3.</strong> आवेदक पत्र जमा करने की अन्तिम तिथि:- 31.12.2020</p>
 
-            4. यह योजना पूर्णतः स्वरोजगार सृजन की अवधारणा पर आधारित है। आवेदक को किसी भी स्थिति में शासकीय सेवा में संविलयन का कोई अधिकार नही होगा। चयनित अभ्यर्थी को 35 दिनों का सैद्धान्तिक प्रशिक्षण एवं 55 दिनों का व्यावहारिक प्रशिक्षण कराया जायेगा। चयनित अभ्यर्थी को सफलतापूर्णक प्रशिक्षण पूर्ण करने के उपरान्त मैत्री (मल्टी परपज ए0आई0 टेक्निशियन इन रुरल इण्डिया) के रुप में कार्य करने हेतु प्रमाण-पत्र, बायोलॉजिकल कण्टेनर्स तथा ए0आई0किट आदि उपलब्ध कराये जायेगें।
+    <p><strong>4.</strong> यह योजना पूर्णतः स्वरोजगार सृजन की अवधारणा पर आधारित है। आवेदक को किसी भी स्थिति में शासकीय सेवा में संविलयन का कोई अधिकार नही होगा। चयनित अभ्यर्थी को 35 दिनों का सैद्धान्तिक प्रशिक्षण एवं 55 दिनों का व्यावहारिक प्रशिक्षण कराया जायेगा। चयनित अभ्यर्थी को सफलतापूर्णक प्रशिक्षण पूर्ण करने के उपरान्त मैत्री (मल्टी परपज ए0आई0 टेक्निशियन इन रुरल इण्डिया) के रुप में कार्य करने हेतु प्रमाण-पत्र, बायोलॉजिकल कण्टेनर्स तथा ए0आई0किट आदि उपलब्ध कराये जायेगें।</p>
 
-            5. निर्धारित प्रारुप पर आवेदन-पत्र एवं उसके साथ शैक्षिक एवं निर्धारित अर्हताओं से सम्बन्धित प्रमाण-पत्र की स्वप्रमाणित छाया प्रतियाँ, आवेदन पत्र के साथ अपना पता लिखा एक लिफाफा (रु0 27 का डाक टिकट सहित), अनुसूचित जाति/ अनुसूचित जाति श्रेणी हेतु सक्षम स्तर द्वारा जारी जाति प्रमाण-पत्र की स्वप्रमाणित छाया प्रति संलग्न कर सम्बन्धित पशुचिकित्साधिकारी/उप मुख्य पशुचिकित्साधिकारी के कार्यालय में दिनांक 31.12.2020 सांय 5.00 बजे तक व्यक्तिगत रुप से जमा कर सकते है। संबधित पशुचिकित्साधिकारी/ उप मुख्य पशुचिकित्साधिकारी द्वारा आवेदन-पत्रों को भरने में सहायता की जायेगी।
+    <p><strong>5.</strong> निर्धारित प्रारुप पर आवेदन-पत्र एवं उसके साथ शैक्षिक एवं निर्धारित अर्हताओं से सम्बन्धित प्रमाण-पत्र की स्वप्रमाणित छाया प्रतियाँ, आवेदन पत्र के साथ अपना पता लिखा एक लिफाफा (रु0 27 का डाक टिकट सहित), अनुसूचित जाति/ अनुसूचित जाति श्रेणी हेतु सक्षम स्तर द्वारा जारी जाति प्रमाण-पत्र की स्वप्रमाणित छाया प्रति संलग्न कर सम्बन्धित पशुचिकित्साधिकारी/उप मुख्य पशुचिकित्साधिकारी के कार्यालय में दिनांक 31.12.2020 सांय 5.00 बजे तक व्यक्तिगत रुप से जमा कर सकते है। संबधित पशुचिकित्साधिकारी/ उप मुख्य पशुचिकित्साधिकारी द्वारा आवेदन-पत्रों को भरने में सहायता की जायेगी।</p>
 
-            6. चयनित अभ्यर्थियों को चयनोपरान्त इस आशय का शपथ-पत्र देना होगा कि वे एक स्वरोजगारी के रुप में कार्य करेगें। सरकारी सेवा में किसी भी स्थिति में सविलियन का कोई अधिकार नही होगा तथा इसके लिए कभी दावा नही करेगें।
+    <p><strong>6.</strong> चयनित अभ्यर्थियों को चयनोपरान्त इस आशय का शपथ-पत्र देना होगा कि वे एक स्वरोजगारी के रुप में कार्य करेगें। सरकारी सेवा में किसी भी स्थिति में सविलियन का कोई अधिकार नही होगा तथा इसके लिए कभी दावा नही करेगें।</p>
 
-            नोट:- उ0प्र0 पशुधन विकास परिषद द्वारा जनपदवार चयन किये जाने स्वरोजगारी मैत्री (मल्टी परपज ए0आई0 टेक्निशियन इन रुरल इण्डिया) की संख्या संलग्न है।
-        HTML;
+    <p><strong>नोट:-</strong> उ0प्र0 पशुधन विकास परिषद द्वारा जनपदवार चयन किये जाने स्वरोजगारी मैत्री (मल्टी परपज ए0आई0 टेक्निशियन इन रुरल इण्डिया) की संख्या संलग्न है।</p>
+    HTML;
 
-        $hindiContent = str_replace("\r", "", $hindiContent);
-        $hindiContent = trim($hindiContent);
+        $en = <<<'HTML'
+    <p>Establishment of 'MAITRI' (Multipurpose Artificial Insemination Technicians in Rural India) under the Rashtriya Gokul Mission to increase artificial insemination coverage.</p>
+
+    <p><strong>The terms and conditions are as follows:</strong></p>
+
+    <p><strong>1. Eligibility:</strong></p>
+
+    <p>(a) Educational Qualification: The minimum mandatory qualification is passing High School (with Biology). Preference will be given to those who have passed Intermediate (with Biology).</p>
+
+    <p>(b) The applicant must be a resident of the Gram Panchayat in the selected area.</p>
+
+    <p>(c) The applicant must be in good health and capable of performing the work, including traveling to the doorsteps of livestock owners to provide services. A health certificate issued by a government medical officer must be attached.</p>
+
+    <p>(d) Self-attested photocopies of a Voter ID card, Aadhaar card, or PAN card must be attached.</p>
+
+    <p>(e) Preference will be given to migrant workers, 'Pashu Sakhis' (community animal resource persons), and trained paravets.</p>
+
+    <p><strong>2.</strong> The applicant's age must be between 18 and 40 years as of 01.12.2020.</p>
+
+    <p><strong>3.</strong> Last date for submission of applications: 31.12.2020.</p>
+
+    <p><strong>4.</strong> This scheme is based entirely on the concept of self-employment generation. Under no circumstances shall the applicant have any right to be absorbed into government service. Selected candidates will undergo 35 days of theoretical training and 55 days of practical training. Upon successful completion of the training, the selected candidate will be provided with a certificate, biological containers, an AI kit, etc., to enable them to work as a 'MAITRI' (Multipurpose AI Technician in Rural India).</p>
+
+    <p><strong>5.</strong> Applications must be submitted in the prescribed format, accompanied by self-attested photocopies of certificates related to educational and other required qualifications. Additionally, applicants must include a self-addressed envelope (affixed with a postage stamp of Rs. 27). Candidates belonging to Scheduled Caste (SC) or Scheduled Tribe (ST) categories must also attach a self-attested photocopy of their caste certificate, issued by a competent authority. The application, along with these documents, may be submitted in person at the office of the concerned Veterinary Officer/Deputy Chief Veterinary Officer by 5:00 PM on December 31, 2020. The concerned Veterinary Officer/Deputy Chief Veterinary Officer will provide assistance in filling out the application forms.</p>
+
+    <p><strong>6.</strong> Upon selection, candidates will be required to submit an affidavit stating that they will work in a self-employed capacity. They shall have no right to, nor shall they ever claim, absorption into government service under any circumstances.</p>
+
+    <p><strong>Note:</strong> The district-wise number of 'MAITRI' (Multipurpose AI Technician in Rural India) personnel to be selected by the U.P. Livestock Development Board is provided in the attachment.</p>
+    HTML;
+
+        $hindiContent = trim(str_replace("\r", "", $hindiContent));
+        $en           = trim(str_replace("\r", "", $en));
 
         $data = [
-            'en' => null,
+            'en' => $en,
             'hi' => $hindiContent,
         ];
 
