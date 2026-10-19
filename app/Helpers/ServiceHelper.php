@@ -71,16 +71,32 @@ class ServiceHelper
     /**
      * Get the service list.
      */
+    // public static function getServiceList(): array
+    // {
+    //     return [
+    //         ['value' => 'health_medical_checkip', 'label' => 'स्वास्थ्य/चिकित्सा जांच'],
+    //         ['value' => 'animal_insurance', 'label' => 'पशु बीमा'],
+    //         ['value' => 'vaccination', 'label' => 'टीकाकरण'],
+    //         ['value' => 'pregnancy_diagnosis', 'label' => 'गर्भावस्था निदान'],
+    //         ['value' => 'artificial_insemination', 'label' => 'कृत्रिम गर्भाधान'],
+    //         ['value' => 'livestock_insurance', 'label' => 'पशुधन बीमा'],
+    //         ['value' => 'calving', 'label' => 'बछड़ा जनन'],
+    //     ];
+    // }
+
     public static function getServiceList(): array
     {
         return [
-            ['value' => 'health_medical_checkip', 'label' => 'स्वास्थ्य/चिकित्सा जांच'],
-            ['value' => 'animal_insurance', 'label' => 'पशु बीमा'],
-            ['value' => 'vaccination', 'label' => 'टीकाकरण'],
-            ['value' => 'pregnancy_diagnosis', 'label' => 'गर्भावस्था निदान'],
-            ['value' => 'artificial_insemination', 'label' => 'कृत्रिम गर्भाधान'],
-            ['value' => 'livestock_insurance', 'label' => 'पशुधन बीमा'],
-            ['value' => 'calving', 'label' => 'बछड़ा जनन'],
+            ['value' => 'frozen_semen_ai', 'hi' => 'फ्रोज़न सीमेन कृत्रिम गर्भाधान','eng'=> 'Frozen Semen AI'],
+            ['value' => 'sex_semen_ai', 'hi' => 'सेक्स सॉर्टेड सीमेन कृत्रिम गर्भाधान','eng'=> 'Sex Sorted Semen AI'],
+            ['value' => 'ivf_embryo', 'hi' => 'आई.वी.एफ. भ्रूण','eng'=> 'IVF Embryo'],
+            ['value' => 'health_medical_checkip', 'hi' => 'स्वास्थ्य/चिकित्सा जांच','eng'=> 'Helath/Medical Checkup'],
+            ['value' => 'animal_insurance', 'hi' => 'पशु बीमा','eng'=> 'Animal Insurance'],
+            ['value' => 'vaccination', 'hi' => 'टीकाकरण','eng'=> 'Vaccination'],
+            ['value' => 'pregnancy_diagnosis', 'hi' => 'गर्भावस्था निदान','eng'=> 'Pregnancy Diagnosis'],
+            ['value' => 'artificial_insemination', 'hi' => 'कृत्रिम गर्भाधान','eng'=> 'Artificial Insemination'],
+            ['value' => 'livestock_insurance', 'hi' => 'पशुधन बीमा','eng'=> 'Livestock Insurance'],
+            ['value' => 'calving', 'hi' => 'बछड़ा जनन','eng'=> 'Calving'],
         ];
     }
 
