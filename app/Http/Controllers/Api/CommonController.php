@@ -208,6 +208,140 @@ class CommonController extends Controller
                         'image' => 'https://maitriupldb.in/cattleBuffalo/b2.avif'
                     ],
                 ]
+            ]
+        ];
+        return $this->successResponse('get Tutorials',200, $data);
+    }
+
+    public function tutorialsV2(){
+        $data = [
+            'livestock' => [
+                [
+                    'eng' => 'Breedable Indigenous Cattle',
+                    'hi' => 'प्रजनन योग्य स्वदेशी मवेशी',
+                    'number' => '5,870,793',
+                ],
+                [
+                    'eng' => 'Breedable Exotic and Crossbred Cattle',
+                    'hi' => 'प्रजनन योग्य विदेशी और संकर नस्ल के मवेशी',
+                    'number' => '3,065,354',
+                ],
+                [
+                    'eng' => 'Total Cattle',
+                    'hi' => 'कुल मवेशी',
+                    'number' => '8,936,147',
+                ],
+                [
+                    'eng' => 'Breedable Buffalo',
+                    'hi' => 'प्रजनन योग्य भैंस',
+                    'number' => '15,311,970',
+                ],
+                [
+                    'eng' => 'Total Breedable Bovine Population',
+                    'hi' => 'कुल प्रजनन योग्य बोवाइन आबादी',
+                    'number' => '24,248,117',
+                ],
+
+            ],
+            'edgeFarming'   => [
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/bull-1.jpg',
+                    'hi'         => 'राष्ट्रीय गोजातीय प्रजनन परियोजना',
+                    'eng'         => 'NATIONAL PROJECT FOR BOVINE BREEDING',
+                    'discription_hi'   => 'राज्य के सभी प्रजनन योग्य मवेशियों को कृत्रिम गर्भाधान कार्यक्रम के माध्यम से कवर करने के इरादे से, जमे हुए सीमेन का उपयोग करते हुए, भारत सरकार राष्ट्रीय गोजातीय प्रजनन परियोजना को प्रायोजित कर रही है।',
+                    'discription_eng' => 'Intending to cover the entire breedable cattle of the state through the AI program, using frozen semen, the Government of India is Sponsoring the National Project for Bovine Breeding.'
+                ],
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/goat.jpg',
+                    'hi'         => 'बकरी प्रजनन केंद्र',
+                    'eng'         => 'GOAT BREEDING CENTRE',
+                    'discription_hi'   => 'उत्तर प्रदेश में बकरियों की आबादी का बड़ा हिस्सा जमुनापारी नस्ल का है और यह राज्य की कृषि-जलवायु परिस्थितियों के अनुकूल है। विविधीकरण कार्यक्रम के एक भाग के रूप में, बोर्ड...',
+                    'discription_eng' => 'The major proportion of the goat population in Uttar Pradesh belongs to the Jamunapari breed and is well adapted to the agro-climatic conditions of the State. As a part of the diversification program, the Board...'
+                ],
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/foodder.jpg',
+                    'hi'         => 'आहार विकास कार्यक्रम',
+                    'eng'         => 'FODDER DEVELOPMENT PROGRAMME',
+                    'discription_hi'   => 'आर्थिक रूप से किफायती डेयरी फार्मिंग में उचित आहार के महत्व पर अधिक जोर देने की आवश्यकता नहीं है। बोर्ड ने शुरू से ही चारा विकास को सबसे महत्वपूर्ण गतिविधियों में से एक के रूप में लिया था।',
+                    'discription_eng' => 'The importance of proper feeding in economic dairy farming need not be overemphasized. The Board had taken up fodder development as one of the most important activities right from the very beginning.'
+                ],
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/frozensemen.jpg',
+                    'hi'         => 'हिमीकृत सीमेन प्रबंधन',
+                    'eng'         => 'FROZEN SEMEN MANAGEMENT',
+                    'discription_hi'   => 'राज्य ने गाय प्रजनन के लिए इनपुट प्रदान करने के लिए तीन स्तरीय कृत्रिम गर्भाधान (ए.आई.) प्रबंधन प्रणाली विकसित की है, जिसमें बैल स्टेशन, क्षेत्रीय सीमेन बैंक (आरएसबी) और कृत्रिम गर्भाधान केंद्र शामिल हैं।',
+                    'discription_eng' => 'The State has evolved a three-tier Artificial Insemination (A.I.) management system to provide the inputs for cattle breeding namely Bull Stations, Regional Semen Banks (RSB), and Artificial Insemination Centres.'
+                ],
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/cow.jpg',
+                    'hi'         => 'सायर चयन कार्यक्रम',
+                    'eng'         => 'SIRE SELECTION PROGRAMME',
+                    'discription_hi'   => 'अगली पीढ़ी के लिए सबसे उपयुक्त सांडों की पहचान करने के लिए, यूपीएलडीबी ने क्षेत्र संतान-परीक्षण कार्यक्रम शुरू किया, जिसमें दो बुनियादी कार्य शामिल थे।',
+                    'discription_eng' => 'To identify the most suitable bulls as the sires for the next generation, the UPLDB ventured into the field progeny-testing program involving the two basic tasks viz.'
+                ],
+                [
+                    'image'         => 'https://maitriupldb.in/assets/images/embryo.jpg',
+                    'hi'         => 'भ्रूण स्थानांतरण कार्यक्रम',
+                    'eng'         => 'EMBRYO TRANSFER PROGRAMME',
+                    'discription_hi'   => 'बेहतर नस्ल के सांडों के उत्पादन के लिए मल्टीपल ओवुलेशन एम्ब्रियो ट्रांसफर (एमओईटी) की शुरुआत की गई। इस तकनीक के तहत, बेहतरीन गायों की आनुवंशिक गुणवत्ता का उपयोग अगली पीढ़ी के सांडों के उत्पादन के लिए किया जाता है।',
+                    'discription_eng'   => 'Multiple Ovulation Embryo Transfer (MOET) was introduced for the production of superior sires. Under this technology, the genetic quality of the elite cows is utilized for the production of next-generation bulls.'
+                ]
+            ],
+            'cattleBuffalo' => [
+                'cattle' => [
+                    [
+                        'hi' => 'स्वदेशी',
+                        'eng' => 'Sahiwal',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/1.avif'
+                    ],
+                    [
+                        'hi' => 'गंगातिरी',
+                        'eng' => 'Gangatiri',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/2.avif'
+                    ],
+                    [
+                        'hi' => 'गिर',
+                        'eng' => 'Gir',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/3.avif'
+                    ],
+                    [
+                        'hi' => 'थारपारकर',
+                        'eng' => 'Tharparkar',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/4.avif'
+                    ],
+                    [
+                        'hi' => 'केनकाथा',
+                        'eng' => 'Kenkatha',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/5.avif'
+                    ],
+                    [
+                        'hi' => 'केरीगढ़',
+                        'eng' => 'Kerigarh',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/6.avif'
+                    ],
+                    [
+                        'hi' => 'मेवाती',
+                        'eng' => 'Mewati',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/7.avif'
+                    ],
+                    [
+                        'hi' => 'पोंवार',
+                        'eng' => 'Ponwar',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/8.avif'
+                    ],
+                ],
+                'buffalo' => [
+                    [
+                        'hi' => 'भदावारी',
+                        'eng' => 'Bhadawari',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/b1.avif'
+                    ],
+                    [
+                        'hi' => 'मुर्राह',
+                        'eng' => 'Murrah',
+                        'image' => 'https://maitriupldb.in/cattleBuffalo/b2.avif'
+                    ],
+                ]
 
 
             ]
