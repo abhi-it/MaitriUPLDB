@@ -19,6 +19,7 @@ Route::prefix('auth/v1')->group(function () {
     Route::get("get-semen-data", [CommonController::class, 'getSemenData']);
     Route::get("about-us", [CommonController::class, 'getAboutUs']);
     Route::get("terms-condition", [CommonController::class, 'getTermsAndConditions']);
+    Route::get('tutorials', [CommonController::class, 'tutorials'])->name('tutorials');
 });
 
 Route::group(['prefix'     => 'auth/v1/', 'middleware' => ['jwt.verify'],], function () {
