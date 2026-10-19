@@ -1145,6 +1145,11 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
+                                <a class="nav-link" href="{{ url('service-requests-list') }}">
+                                    <span data-hi="सेवा अनुरोध सूची" data-en="Service Request List"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
                                     <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
                                 </a>

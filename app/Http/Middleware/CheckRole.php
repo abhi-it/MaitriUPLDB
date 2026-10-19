@@ -514,6 +514,7 @@ class CheckRole
                 'export',
                 'maitri-home',
                 'maitri-form',
+                'service-requests-list',
                 'maitri-import',
                 'maitri-map',
                 'addUpdateMaitri',

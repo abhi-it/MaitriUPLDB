@@ -1420,6 +1420,12 @@
                                     <span data-hi="मैत्री(पशु मित्र)" data-en="Maitri (Animal Friend)"></span>
                                 </a>
                             </li>
+
+                            <li class="nav-item {{ request()->is('service-requests-list') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('service-requests-list') }}">
+                                    <span data-hi="सेवा अनुरोध सूची" data-en="Service Request List"></span>
+                                </a>
+                            </li>
                             <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('cvo-officer') }}">
                                     <span data-hi="सीवीओ/वीओ अधिकारी" data-en="CVO/VO Officer"></span>
