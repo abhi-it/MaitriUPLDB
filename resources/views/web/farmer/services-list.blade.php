@@ -1,5 +1,6 @@
 @extends('submaster')
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
@@ -113,7 +114,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">रद्द करें</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelFeedbackBtn">रद्द करें</button>
                     <button type="submit" class="btn btn-primary" id="submitFeedbackBtn">भेजें</button>
                 </div>
             </form>
@@ -121,7 +122,7 @@
     </div>
 </div>
 @endsection
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 {{-- ================= Styles ================= --}}
 <style>
 .star-rating {
@@ -155,7 +156,41 @@ $(document).ready(function () {
 
     let selectedRating = 0;
 
-    // ---- Star rating interaction ----
+    $('#cancelFeedbackBtn').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeFeedbackModal();
+    });
+
+    function closeFeedbackModal() {
+        let modalEl = document.getElementById('feedbackModal');
+
+        if (window.bootstrap && bootstrap.Modal) {
+            try {
+                bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                return;
+            } catch (err) {
+                console.warn('Bootstrap 5 hide failed:', err);
+            }
+        }
+
+        if (window.jQuery && $.fn.modal) {
+            try {
+                $('#feedbackModal').modal('hide');
+                return;
+            } catch (err) {
+                console.warn('Bootstrap 4 hide failed:', err);
+            }
+        }
+
+        modalEl.classList.remove('show');
+        modalEl.style.display = 'none';
+        modalEl.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    }
     function paintStars(rating) {
         $('#starRating .star').each(function () {
             $(this).toggleClass('selected', $(this).data('value') <= rating);
