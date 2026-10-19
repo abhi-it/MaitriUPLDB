@@ -99,7 +99,7 @@
                             Calving
                             @break
                         @default
-                            -
+                            {{ $row->service_name }}
                     @endswitch
                 </td>
 
