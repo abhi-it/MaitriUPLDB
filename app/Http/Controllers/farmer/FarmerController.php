@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\ServiceRequestFeedback;
 use Illuminate\Support\Facades\DB;
 
 class FarmerController extends Controller{
@@ -314,5 +315,74 @@ class FarmerController extends Controller{
             return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
        }
 
+    }
+
+    public function submitFeedback(Request $request)
+    {
+        try {
+            $farmer = Auth::user();
+            if (!$farmer) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Please login first.',
+                ], 401);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'service_id'  => ['required', 'exists:services_request,id'],
+                'rating'      => ['required', 'integer', 'min:1', 'max:5'],
+                'description' => ['required', 'string', 'max:1500'],
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $validator->errors()->first(),
+                    'errors'  => $validator->errors(),
+                ], 422);
+            }
+
+            $serviceRequest = Servicerequest::where('id', $request->service_id)->where('user_id', $farmer->id)->first();
+
+            if (!$serviceRequest) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Service request not found.',
+                ], 404);
+            }
+
+            if ($serviceRequest->status != 0) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Feedback can only be submitted for accepted service requests.',
+                ], 422);
+            }
+
+            if ($serviceRequest->feedback()->exists()) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'You have already submitted feedback for this service request.',
+                ], 422);
+            }
+
+            ServiceRequestFeedback::create([
+                'service_request_id' => $serviceRequest->id,
+                'farmer_id'          => $farmer->id,
+                'maitri_id'          => $serviceRequest->maitri_id,
+                'rating'             => $request->rating,
+                'description'        => $request->description,
+            ]);
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Feedback submitted successfully.',
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

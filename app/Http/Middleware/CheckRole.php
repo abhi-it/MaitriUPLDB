@@ -649,6 +649,8 @@ class CheckRole
                 'addUpdateAnimalDetails',
                 'farmer-details',
                 'demandRequests',
+                'farmer-submit-feedback',
+                'farmer-check-feedback',
             ],
             'InventoryAdmin' => [
                 'admin-stock-form',

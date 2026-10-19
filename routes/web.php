@@ -436,6 +436,9 @@ Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], funct
     Route::get("farmer-requests", [App\Http\Controllers\farmer\FarmerController::class, 'getAllServiceRequest'])->name('farmer-requests');
     Route::post('delete-request', [App\Http\Controllers\farmer\FarmerController::class, 'deleteRequest'])->name('delete-request');
     Route::post("farmer-dashdata", [App\Http\Controllers\farmer\FarmerController::class, 'farmerDashRequest'])->name('farmer-dashdata');
+    
+    Route::post('submit-feedback', [App\Http\Controllers\farmer\FarmerController::class, 'submitFeedback'])->name('farmer-submit-feedback');
+    Route::get('check-feedback/{serviceId}', [App\Http\Controllers\farmer\FarmerController::class, 'checkFeedback'])->name('farmer-check-feedback');
 
     Route::get("high-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'highYieldingAnimal'])->name('high-yielding-animal');
     Route::get("add-yielding-animal", [App\Http\Controllers\farmer\FarmerController::class, 'addAnimaldetailsform'])->name('add-yielding-animal');
