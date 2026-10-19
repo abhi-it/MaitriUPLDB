@@ -9,7 +9,7 @@
                 <th>क्र. सं.</th>
                 <th>उपयोगकर्ता नाम</th>
                 <th>सेवा का नाम </th>
-                <th>Message</th>
+                <th>संदेश</th>
                 <th>स्थिति</th>
                 <!-- <th>Action</th> -->
             </tr>
@@ -40,6 +40,8 @@
                 <td>Livestock Insurance</td>
                 @elseif($row->service_name=='calving')
                 <td>Calving</td>
+                @else 
+                    <td>{{ $row->service_name }}</td>
                 @endif
 
                 <td>{{ $row->request_message ? $row->request_message : '--' }}</td>
