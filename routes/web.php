@@ -255,7 +255,7 @@ Route::group(['middleware' => ['auth:webFarmer,webMaitri,web', 'roles',]], funct
     Route::get("maitri-import", [MaitriController::class, 'maitri_import'])->name('maitri-import');
     Route::get("maitri-map", [MaitriController::class, 'maitri_map'])->name('maitri-map');
 
-    Route::get('service-requests-list', [App\Http\Controllers\admin\AdminServiceRequestController::class, 'index'])->name('service-requests-list');
+    Route::get('service-requests-list', [App\Http\Controllers\Admin\AdminServiceRequestController::class, 'index'])->name('service-requests-list');
 
     Route::post("addUpdateMaitri", [MaitriController::class, 'addUpdateMaitri'])->name('addUpdateMaitri');
     Route::post("importMaitries", [MaitriController::class, 'importMaitries'])->name('importMaitries');
