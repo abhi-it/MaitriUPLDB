@@ -82,7 +82,7 @@ class FarmerControllerV2 extends Controller
             }
 
             $perPage = (int) $request->input('per_page', 10);
-            $data = Servicerequest::with(['maitri'])->where('user_id', $user->id)->orderBy('id', 'desc')->paginate($perPage);
+            $data = Servicerequest::with(['maitri','feedback'])->where('user_id', $user->id)->orderBy('id', 'desc')->paginate($perPage);
             
             return $this->successResponse("Farmer service request list",200,FarmerServiceRequestResource::collection($data),$data);
         } catch (\Exception $e) {

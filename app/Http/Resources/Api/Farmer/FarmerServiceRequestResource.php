@@ -18,6 +18,7 @@ class FarmerServiceRequestResource extends JsonResource
             'request_message' => $this->request_message,
             'status'          => $this->status,
             'formatted_status' => ServiceHelper::getServiceStatusLabel($this->status, $lang),
+            'feedback_submitted'      => $this->relationLoaded('feedback') ? !is_null($this->feedback) : $this->feedback()->exists(),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
             'maitri'            => $this->whenLoaded('maitri', function () {
