@@ -173,7 +173,8 @@ class MaitriController extends Controller{
     }
 
     public function monthlyProgressReport(Request $request){
-        $data   =  Servicerequest::with('user','maitri')->get();
+        $user = Auth::user();
+        $data   =  Servicerequest::with('user','maitri')->where('maitri_id',$user->id)->get();
         return view('web.maitri.monthly-report',['data'=>$data]);
     }
 

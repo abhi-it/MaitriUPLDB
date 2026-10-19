@@ -76,6 +76,9 @@
                         @case('health_medical_checkup') 
                             Health/Medical Checkup
                             @break
+                        @case('health_medical_checkip') 
+                            Health/Medical Checkup
+                            @break
                         @case('animal_insurance')
                             Animal Insurance
                             @break
@@ -84,6 +87,16 @@
                             @break
                         @case('pregnancy_diagnosis')
                             Pregnancy Diagnosis
+                            @break
+
+                        @case('artificial_insemination')
+                            Artificial Insemination
+                            @break
+                        @case('livestock_insurance')
+                            Livestock Insurance
+                            @break
+                        @case('calving')
+                            Calving
                             @break
                         @default
                             -

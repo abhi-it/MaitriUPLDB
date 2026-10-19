@@ -34,6 +34,12 @@
                 <td>Vaccination</td>
                 @elseif($row->service_name=='pregnancy_diagnosis')
                 <td>Pregnancy Diagnosis</td>
+                @elseif($row->service_name=='artificial_insemination')
+                <td>Artificial Insemination</td>
+                @elseif($row->service_name=='livestock_insurance')
+                <td>Livestock Insurance</td>
+                @elseif($row->service_name=='calving')
+                <td>Calving</td>
                 @endif
 
                 <td>{{ $row->request_message ? $row->request_message : '--' }}</td>
