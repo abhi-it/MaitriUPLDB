@@ -55,6 +55,9 @@ Route::group(['prefix' => 'auth/v1/farmer', 'middleware' => ['farmer.api']], fun
     Route::get('get-all-animal',     [FarmerControllerV2::class, 'getAllAnimal'])->name('api.get-all-animal');
     Route::post('update-animal',     [FarmerControllerV2::class, 'updateAnimal'])->name('api.update-animal');
     Route::post('delete-animal',     [FarmerControllerV2::class, 'deleteAnimal'])->name('api.delete-animal');
+
+    Route::post('service-request-feedback', [FarmerControllerV2::class, 'submitServiceRequestFeedback']);
+    Route::get('get-feedback', [FarmerControllerV2::class, 'getFarmerFeedbacks']);
 });
 
 // Maitri-only authenticated APIs

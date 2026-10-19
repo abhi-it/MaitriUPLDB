@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Models\ServiceRequestFeedback;
 
 class FarmerControllerV2 extends Controller
 {
@@ -652,6 +653,98 @@ class FarmerControllerV2 extends Controller
                 ->delete();
 
             return $this->successResponse('Animal deleted successfully', 200, null);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
+        }
+    }
+
+    public function submitServiceRequestFeedback(Request $request)
+    {
+        try {
+            $farmer = auth()->user();
+            if (!$farmer instanceof FarmerUser) {
+                return $this->errorResponse('Farmer not authenticated', 'UNAUTHENTICATED', 401);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'service_id'  => ['required', 'exists:services_request,id'],
+                'rating'      => ['required', 'integer', 'min:1', 'max:5'],
+                'description' => ['nullable', 'string', 'max:1500'],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->errorResponse(
+                    ucfirst($validator->errors()->first()),
+                    'VALIDATION_ERROR',
+                    422,
+                    $validator->errors()
+                );
+            }
+
+            $serviceRequest = Servicerequest::where('id', $request->service_id)->where('user_id', $farmer->id)->first();
+
+            if (!$serviceRequest) {
+                return $this->errorResponse('Service request not found', 'DATA_NOT_FOUND', 404);
+            }
+
+            if ($serviceRequest->status != 0) {
+                return $this->errorResponse(
+                    'Feedback can only be submitted for accepted service requests.',
+                    'VALIDATION_ERROR',
+                    422
+                );
+            }
+
+            if ($serviceRequest->feedback()->exists()) {
+                return $this->errorResponse(
+                    'Feedback already submitted for this service request.',
+                    'VALIDATION_ERROR',
+                    422
+                );
+            }
+
+            $feedback = ServiceRequestFeedback::create([
+                'service_request_id' => $serviceRequest->id,
+                'farmer_id'          => $farmer->id,
+                'maitri_id'          => $serviceRequest->maitri_id,
+                'rating'             => $request->rating,
+                'description'        => $request->description,
+            ]);
+
+            // $feedback->load(['maitri', 'serviceRequest']);
+
+            return $this->successResponse('Feedback submitted successfully', 200, $feedback);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
+        }
+    }
+    
+    public function getFarmerFeedbacks(Request $request)
+    {
+        try {
+            $farmer = auth()->user();
+            if (!$farmer instanceof FarmerUser) {
+                return $this->errorResponse('Farmer not authenticated', 'UNAUTHENTICATED', 401);
+            }
+
+            $query = ServiceRequestFeedback::with([
+                    'serviceRequest:id,service_name,status,maitri_id,user_id,created_at',
+                    'maitri:id,maitri_name,maitri_mobile_no',
+                ])->where('farmer_id', $farmer->id);
+
+            if ($request->filled('service_id')) {
+                $query->where('service_request_id', $request->service_id);
+            }
+
+            if ($request->filled('rating')) {
+                $query->where('rating', $request->rating);
+            }
+
+            $perPage = $request->input('per_page', 10);
+            $feedbacks = $query->orderByDesc('created_at')->paginate($perPage);
+
+            return $this->successResponse('Feedbacks fetched successfully', 200, $feedbacks->items(), $feedbacks);
+
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 'INTERNAL_SERVER_ERROR', 500);
         }

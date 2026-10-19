@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Districts;
 use App\Models\Maitri;
 use App\Models\FarmerUser;
+use App\Models\ServiceRequestFeedback;
+
 class Servicerequest extends Model
 {
     use HasFactory;
@@ -31,6 +33,11 @@ class Servicerequest extends Model
 
     public function district(){
         return $this->user->district();
+    }
+
+    public function feedback()
+    {
+        return $this->hasOne(ServiceRequestFeedback::class, 'service_request_id', 'id');
     }
 
 }
