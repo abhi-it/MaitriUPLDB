@@ -143,7 +143,7 @@ class CommonController extends Controller
                 ],
                 [
                     'image'         => 'https://maitriupldb.in/assets/images/foodder.jpg',
-                    'title'         => 'NATIONAL PROJECT FOR BOVINE BREEDING',
+                    'title'         => 'आहार विकास कार्यक्रम',
                     'discription'   => 'आर्थिक रूप से किफायती डेयरी फार्मिंग में उचित आहार के महत्व पर अधिक जोर देने की आवश्यकता नहीं है। बोर्ड ने शुरू से ही चारा विकास को सबसे महत्वपूर्ण गतिविधियों में से एक के रूप में लिया था।'
                 ],
                 [
