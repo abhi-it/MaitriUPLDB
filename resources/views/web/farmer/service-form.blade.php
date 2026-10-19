@@ -64,7 +64,10 @@
                         <label for="inputEmail4">सेवा</label>
                         <select class="form-control" name="services" id="services" required>
                             <option value="">एक का चयन करें</option>
-                            <option value="health_medical_checkip" {{ old('services') == 'health_medical_checkip' ? 'selected' : '' }}>स्वास्थ्य/चिकित्सा जांच</option>
+                            <option value="frozen_semen_ai" {{ old('services') == 'frozen_semen_ai' ? 'selected' : '' }}>फ्रोज़न सीमेन कृत्रिम गर्भाधान</option>
+                            <option value="sex_semen_ai" {{ old('services') == 'sex_semen_ai' ? 'selected' : '' }}>सेक्स सॉर्टेड सीमेन कृत्रिम गर्भाधान</option>
+                            <option value="ivf_embryo" {{ old('services') == 'ivf_embryo' ? 'selected' : '' }}>स्वास्थ्य/चिकित्सा जांच</option>
+                            <option value="health_medical_checkip" {{ old('services') == 'health_medical_checkip' ? 'selected' : '' }}>आई.वी.एफ. भ्रूण</option>
                             <option value="animal_insurance" {{ old('services') == 'animal_insurance' ? 'selected' : '' }}>पशु बीमा</option>
                             <option value="vaccination" {{ old('services') == 'vaccination' ? 'selected' : '' }}>टीकाकरण</option>
                             <option value="pregnancy_diagnosis" {{ old('services') == 'pregnancy_diagnosis' ? 'selected' : '' }}>गर्भावस्था निदान</option>

@@ -1,7 +1,6 @@
 @extends('submaster')
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
+<div class="container main-div">
     <h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
     <table class="table table-bordered">
@@ -21,6 +20,9 @@
                 <td>{{$key+1}}</td>
                 @php
                     $serviceLabels = [
+                        'frozen_semen_ai' => 'फ्रोज़न सीमेन कृत्रिम गर्भाधान',
+                        'sex_semen_ai' => 'सेक्स सॉर्टेड सीमेन कृत्रिम गर्भाधान',
+                        'ivf_embryo' => 'आई.वी.एफ. भ्रूण',
                         'health_medical_checkip' => 'स्वास्थ्य/चिकित्सा जांच',
                         'animal_insurance'       => 'पशु बीमा',
                         'vaccination'            => 'टीकाकरण',
