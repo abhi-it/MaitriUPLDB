@@ -90,13 +90,12 @@
                 <td>{{ date('j F, Y', strtotime($val->date_of_birth))}}</td>
                 <td>{{$val->gender}}</td>
                 <td>{{$val->training_center_id}}</td>
-                <!-- <td>{{($val->district)?$dis_name:'N/A'}} </td> -->
                 <td>{{($val->district) ? $val->district:'N/A'}} </td>
                 <td>{{($val->tehsil)?$val->tehsil:'N/A'}} </td>
                 <td>{{($val->post_office)?$val->post_office:'N/A'}} </td>
                 <td>{{$val->smart_mobile_no}}</td>
-                <td> <a href="javascript:void(0)"
-                        class="btn btn-secondary">{{date('d/m/Y', strtotime($val->created_at))}}</a> </td>
+                <td> <button
+                        class="btn btn-secondary total-users">{{date('d/m/Y', strtotime($val->created_at))}}</button> </td>
                 <td>
                     <a href="{{ url('view-request-details') }}/{{ $val->id }}" class="btn btn-secondary">
                         <i class="fa fa-eye" aria-hidden="true"></i>

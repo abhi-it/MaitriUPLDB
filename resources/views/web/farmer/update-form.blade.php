@@ -185,7 +185,7 @@
 
                 <div class="form-group col-md-12">
                     <label for="animal">
-                        <span>पशु की जानकारी</span>
+                        <span style="font-weight: bold;">पशु की जानकारी</span>
                     </label>
 
                     <div class="optionBox">

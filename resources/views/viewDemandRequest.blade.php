@@ -11,9 +11,9 @@ $distric = App\Models\Districts::where([])->select('name_hindi')->pluck('name_hi
     <h3 class="text-center m-5 fw-bolder">
         <span data-hi="मांग अनुरोध सूची विवरण" data-en="Demand Request List details"></span>
         <div class=" pull-right">
-            <a href="javascript:history.back()" class="btn btn-info">
+            <button onclick="history.back()" class="btn btn-info total-users">
                 <span data-hi="पीछे" data-en="Back"></span>
-            </a>
+            </button>
         </div>
     </h3>
     @if (session()->get('success'))
