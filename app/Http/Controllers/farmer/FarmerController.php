@@ -326,14 +326,14 @@ class FarmerController extends Controller{
             'file' => [
                 'required',
                 'file',
-                'max:5120',
+                'max:2048',
                 'mimes:jpg,jpeg,png,gif,svg,webp',
                 'mimetypes:image/jpeg,image/png,image/gif,image/svg+xml,image/webp',
             ],
         ], [
             'file.required'   => 'Please select a file to upload.',
             'file.file'       => 'The uploaded file is invalid.',
-            'file.max'        => 'The file size must not exceed 5 MB.',
+            'file.max'        => 'The file size must not exceed 2 MB.',
             'file.mimes'      => 'Only JPG, JPEG, PNG, GIF, SVG, WEBP files are allowed.',
             'file.mimetypes'  => 'The file type is not allowed.',
         ]);
@@ -354,12 +354,12 @@ class FarmerController extends Controller{
             return redirect()->back()->with('error', 'File upload failed. Please try again.');
         }
 
-        if ($file->getSize() > 5 * 1024 * 1024) {
-            return redirect()->back()->with('error', 'The file size must not exceed 5 MB.');
+        if ($file->getSize() > 2 * 1024 * 1024) {
+            return redirect()->back()->with('error', 'The file size must not exceed 2 MB.');
         }
 
         $extension = strtolower($file->getClientOriginalExtension());
-        $allowed   = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'webp', 'pdf'];
+        $allowed   = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'webp'];
 
         if (!in_array($extension, $allowed, true)) {
             return redirect()->back()->with('error', 'Invalid file extension.');
