@@ -5,6 +5,18 @@
         margin-top: -87px !important;
         margin-left: 50% !important;
     }
+    .tooltip-inner {
+        max-width: 400px;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .msg-cell {
+        vertical-align: top;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
 </style>
 <div class="container main-div">
 <h3 class="text-center fw-bold m-4">मासिक प्रगति रिपोर्ट (एमपीआर) </h3>
@@ -58,6 +70,12 @@
       <tbody>
     @if(count($data))
         @foreach($data as $key => $row)
+            @php
+                $message   = $row->request_message ?? '';
+                $wordCount = str_word_count(strip_tags($message));
+                $isLong    = $wordCount > 10;
+                $shortMsg  = $isLong ? \Illuminate\Support\Str::words($message, 10, '...') : $message;
+            @endphp
             <tr>
                 <td>{{ $key+1 }}</td>
                 <td>{{ $row->user->name }}</td>
@@ -103,7 +121,18 @@
                     @endswitch
                 </td>
 
-                <td>{{ $row->request_message }}</td>
+                {{-- <td>{{ $row->request_message }}</td> --}}
+                <td class="msg-cell"
+                    @if($isLong)
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-html="true"
+                        title="{{ e($message) }}"
+                        style="cursor:pointer;"
+                    @endif
+                >
+                    {{ $shortMsg ?: '--' }}
+                </td>
                 <td>
                     @php
                         $statusMap = [
@@ -129,54 +158,14 @@
     </table>
 </div>
 
-
-
 </div>
-@endsection 
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-     $(document).ready(function() {
-            $('.deleteUser').click(function() {
-            var id = $(this).attr("data-id");
-            if (id) {
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#206b4c",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "delete-request",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "id": id
-                            },
-                            cache: false,
-                            success: function(data) {
-                                if (data.status == 'Success') {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: "Your record has been deleted.",
-                                        icon: "success"
-                                    });
-                                    location.reload();
-                                }
-                            }
-                        });
-                    }
-                });
-            }
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip({
+            trigger: 'hover focus',
+            container: 'body',
+            html: true,
         });
-
     });
-</script> -->
+</script>
+@endsection 

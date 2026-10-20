@@ -1,5 +1,36 @@
 @extends('submaster')
 @section('content')
+<style>
+    .tooltip-inner {
+        max-width: 400px;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .msg-cell {
+        vertical-align: top;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+    .star-rating {
+        display: inline-flex;
+        gap: 6px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    .star-rating .star {
+        color: #ccc;
+        transition: color 0.15s ease-in-out, transform 0.15s;
+    }
+    .star-rating .star.hover,
+    .star-rating .star.selected {
+        color: #f5b301;
+    }
+    .star-rating .star:hover {
+        transform: scale(1.1);
+    }
+</style>
 <div class="container main-div">
     <h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
@@ -16,6 +47,13 @@
         <tbody>
             @if(count($data))
             @foreach($data as $key=> $row)
+                @php
+                    $message = $row->request_message ?? '';
+                    $wordCount = str_word_count(strip_tags($message));
+                    $shortMessage = $wordCount > 25
+                        ? \Illuminate\Support\Str::words($message, 25, '...')
+                        : $message;
+                @endphp
             <tr>
                 <td>{{$key+1}}</td>
                 @php
@@ -34,7 +72,18 @@
                 @endphp
                 <td>{{ $serviceLabels[$row->service_name] ?? '--' }}</td>
                 <td>{{ $row->maitri->maitri_name ?? '--' }}</td>
-                <td>{{ $row->request_message }}</td>
+                {{-- <td>{{ $row->request_message }}</td> --}}
+                <td class="msg-cell"
+                    @if($wordCount > 25)
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-html="true"
+                        title="{{ e($message) }}"
+                        style="cursor: pointer;"
+                    @endif
+                >
+                    {{ $shortMessage ?: '--' }}
+                </td>
 
                 @if($row->status == 1)
                     <td><button class="btn btn-primary">नया है</button></td>
@@ -126,26 +175,6 @@
 @endsection
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 {{-- ================= Styles ================= --}}
-<style>
-.star-rating {
-    display: inline-flex;
-    gap: 6px;
-    font-size: 30px;
-    cursor: pointer;
-}
-.star-rating .star {
-    color: #ccc;
-    transition: color 0.15s ease-in-out, transform 0.15s;
-}
-.star-rating .star.hover,
-.star-rating .star.selected {
-    color: #f5b301; /* yellow */
-}
-.star-rating .star:hover {
-    transform: scale(1.1);
-}
-</style>
-
 @push('scripts')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 @endpush
@@ -154,154 +183,161 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-$(document).ready(function () {
-
-    let selectedRating = 0;
-
-    $('#cancelFeedbackBtn').on('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeFeedbackModal();
-    });
-
-    function closeFeedbackModal() {
-        let modalEl = document.getElementById('feedbackModal');
-
-        if (window.bootstrap && bootstrap.Modal) {
-            try {
-                bootstrap.Modal.getOrCreateInstance(modalEl).hide();
-                return;
-            } catch (err) {
-                console.warn('Bootstrap 5 hide failed:', err);
-            }
-        }
-
-        if (window.jQuery && $.fn.modal) {
-            try {
-                $('#feedbackModal').modal('hide');
-                return;
-            } catch (err) {
-                console.warn('Bootstrap 4 hide failed:', err);
-            }
-        }
-
-        modalEl.classList.remove('show');
-        modalEl.style.display = 'none';
-        modalEl.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    }
-    function paintStars(rating) {
-        $('#starRating .star').each(function () {
-            $(this).toggleClass('selected', $(this).data('value') <= rating);
-        });
-    }
-
-    $('#starRating .star').on('mouseenter', function () {
-        paintStars($(this).data('value'));
-    });
-
-    $('#starRating .star').on('mouseleave', function () {
-        paintStars(selectedRating);
-    });
-
-    $('#starRating .star').on('click', function () {
-        selectedRating = $(this).data('value');
-        $('#feedback_rating').val(selectedRating);
-        paintStars(selectedRating);
-        $('#ratingError').addClass('d-none');
-    });
-
-    // ---- Open modal ----
-    $('.feedback-btn').on('click', function () {
-        // reset
-        selectedRating = 0;
-        $('#feedbackForm')[0].reset();
-        $('#feedback_rating').val('');
-        $('#feedback_service_id').val($(this).data('id'));
-        paintStars(0);
-        $('#ratingError, #descError').addClass('d-none');
-
-        $('#feedbackModal').modal('show');
-    });
-
-    // ---- Already submitted button ----
-    $('.feedback-done').on('click', function () {
-        Swal.fire({
-            icon: 'info',
-            title: 'पहले ही जमा किया जा चुका है',
-            text: 'आप इस सेवा अनुरोध के लिए पहले ही प्रतिक्रिया दे चुके हैं।',
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip({
+            trigger: 'hover focus',
+            container: 'body',
+            html: true,
         });
     });
+    $(document).ready(function () {
 
-    // ---- Submit ----
-    $('#feedbackForm').on('submit', function (e) {
-        e.preventDefault();
+        let selectedRating = 0;
 
-        let isValid = true;
+        $('#cancelFeedbackBtn').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeFeedbackModal();
+        });
 
-        // Rating required
-        if (!selectedRating) {
-            $('#ratingError').removeClass('d-none');
-            isValid = false;
-        } else {
+        function closeFeedbackModal() {
+            let modalEl = document.getElementById('feedbackModal');
+
+            if (window.bootstrap && bootstrap.Modal) {
+                try {
+                    bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                    return;
+                } catch (err) {
+                    console.warn('Bootstrap 5 hide failed:', err);
+                }
+            }
+
+            if (window.jQuery && $.fn.modal) {
+                try {
+                    $('#feedbackModal').modal('hide');
+                    return;
+                } catch (err) {
+                    console.warn('Bootstrap 4 hide failed:', err);
+                }
+            }
+
+            modalEl.classList.remove('show');
+            modalEl.style.display = 'none';
+            modalEl.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        }
+        function paintStars(rating) {
+            $('#starRating .star').each(function () {
+                $(this).toggleClass('selected', $(this).data('value') <= rating);
+            });
+        }
+
+        $('#starRating .star').on('mouseenter', function () {
+            paintStars($(this).data('value'));
+        });
+
+        $('#starRating .star').on('mouseleave', function () {
+            paintStars(selectedRating);
+        });
+
+        $('#starRating .star').on('click', function () {
+            selectedRating = $(this).data('value');
+            $('#feedback_rating').val(selectedRating);
+            paintStars(selectedRating);
             $('#ratingError').addClass('d-none');
-        }
-
-        // Description required
-        if ($.trim($('#feedback_description').val()) === '') {
-            $('#descError').removeClass('d-none');
-            isValid = false;
-        } else {
-            $('#descError').addClass('d-none');
-        }
-
-        if (!isValid) return;
-
-        let $btn = $('#submitFeedbackBtn');
-        $btn.prop('disabled', true).text('भेज रहे हैं...');
-
-        $.ajax({
-            url: "{{ route('farmer-submit-feedback') }}",
-            type: "POST",
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-            data: {
-                _token: '{{ csrf_token() }}',
-                service_id: $('#feedback_service_id').val(),
-                rating: $('#feedback_rating').val(),
-                description: $('#feedback_description').val(),
-            },
-            success: function (res) {
-                if (res.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'धन्यवाद!',
-                        text: res.message,
-                        timer: 1500,
-                        showConfirmButton: false,
-                    }).then(() => location.reload());
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: res.message || 'Something went wrong.',
-                    });
-                }
-            },
-            error: function (xhr) {
-                let msg = 'Something went wrong.';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    msg = xhr.responseJSON.message;
-                }
-                Swal.fire({ icon: 'error', title: 'Error', text: msg });
-            },
-            complete: function () {
-                $btn.prop('disabled', false).text('भेजें');
-            },
         });
-    });
 
-});
+        // ---- Open modal ----
+        $('.feedback-btn').on('click', function () {
+            // reset
+            selectedRating = 0;
+            $('#feedbackForm')[0].reset();
+            $('#feedback_rating').val('');
+            $('#feedback_service_id').val($(this).data('id'));
+            paintStars(0);
+            $('#ratingError, #descError').addClass('d-none');
+
+            $('#feedbackModal').modal('show');
+        });
+
+        // ---- Already submitted button ----
+        $('.feedback-done').on('click', function () {
+            Swal.fire({
+                icon: 'info',
+                title: 'पहले ही जमा किया जा चुका है',
+                text: 'आप इस सेवा अनुरोध के लिए पहले ही प्रतिक्रिया दे चुके हैं।',
+            });
+        });
+
+        // ---- Submit ----
+        $('#feedbackForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            // Rating required
+            if (!selectedRating) {
+                $('#ratingError').removeClass('d-none');
+                isValid = false;
+            } else {
+                $('#ratingError').addClass('d-none');
+            }
+
+            // Description required
+            if ($.trim($('#feedback_description').val()) === '') {
+                $('#descError').removeClass('d-none');
+                isValid = false;
+            } else {
+                $('#descError').addClass('d-none');
+            }
+
+            if (!isValid) return;
+
+            let $btn = $('#submitFeedbackBtn');
+            $btn.prop('disabled', true).text('भेज रहे हैं...');
+
+            $.ajax({
+                url: "{{ route('farmer-submit-feedback') }}",
+                type: "POST",
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    service_id: $('#feedback_service_id').val(),
+                    rating: $('#feedback_rating').val(),
+                    description: $('#feedback_description').val(),
+                },
+                success: function (res) {
+                    if (res.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'धन्यवाद!',
+                            text: res.message,
+                            timer: 1500,
+                            showConfirmButton: false,
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message || 'Something went wrong.',
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    let msg = 'Something went wrong.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        msg = xhr.responseJSON.message;
+                    }
+                    Swal.fire({ icon: 'error', title: 'Error', text: msg });
+                },
+                complete: function () {
+                    $btn.prop('disabled', false).text('भेजें');
+                },
+            });
+        });
+
+    });
 </script>

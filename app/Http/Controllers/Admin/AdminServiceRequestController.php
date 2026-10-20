@@ -69,7 +69,6 @@ class AdminServiceRequestController extends Controller
             'ivf_embryo'         => 'आई.वी.एफ. भ्रूण',
         ];
 
-        // Status list
         $statuses = [
             0 => 'स्वीकार',
             1 => 'नया',

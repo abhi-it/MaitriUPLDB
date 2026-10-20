@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceRequestFeedback;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 class FarmerController extends Controller{
 
     public function index(){
@@ -267,54 +267,122 @@ class FarmerController extends Controller{
         return view('web.farmer.add-yielding-animal-form');
     }
 
-    public function addUpdateAnimalDetails(Request $request){
-        $user  =  Auth::user()->id;
-        $validator = Validator::make($request->all(),[
-            'type'  => [ 'required'],
-            'file' => ['required', 'file', 'max:2048'],
+    // public function addUpdateAnimalDetails(Request $request){
+    //     $user  =  Auth::user()->id;
+    //     $validator = Validator::make($request->all(),[
+    //         'type'  => [ 'required'],
+    //         'file' => ['required', 'file', 'max:2048'],
+    //     ]);
+
+    //     if($validator->fails()){
+    //         $errors = $validator->errors();
+    //         foreach($errors->all() as $key => $value){
+    //              return redirect()->back()->with('error',ucfirst($value));
+    //         }
+    //     }else{
+    //         if($request->hasfile('file')){
+    //             // $name  = 'file'.$request->file('file')->extension();
+    //             $file = $request->file;
+    //             $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
+    //             if ($file) {
+    //                 $file = $request->file('file');
+    //                 if ($file) {
+    //                     $fileName = 'file_' . time() . '.' . $file->extension();
+
+    //                     $destinationPath = public_path('assets/animals/');
+    //                     if (!file_exists($destinationPath)) {
+    //                         mkdir($destinationPath, 0777, true);
+    //                     }
+
+    //                     $file->move($destinationPath, $fileName);
+
+    //                     $data = [
+    //                         'file'    => $fileName,
+    //                         'file_path' => asset('assets/animals/' . $fileName),
+    //                     ];
+
+
+    //                     // $request->file('file')->move(public_path('animals'), $name);
+    //                     DB::table('farmer_high_yielding_animal')->insert([
+    //                             'user_id'   =>  $user,
+    //                             'type'      =>  $request->type,
+    //                             'file'      =>  $fileName,
+    //                             'details'   =>  $request->details,
+    //                     ]);
+    //                 }
+    //             }
+    //         }
+    //         return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
+    //    }
+
+    // }
+
+    public function addUpdateAnimalDetails(Request $request)
+    {
+        $user = Auth::id();
+
+        $validator = Validator::make($request->all(), [
+            'type' => ['required'],
+            'file' => [
+                'required',
+                'file',
+                'max:5120',
+                'mimes:jpg,jpeg,png,gif,svg,webp',
+                'mimetypes:image/jpeg,image/png,image/gif,image/svg+xml,image/webp',
+            ],
+        ], [
+            'file.required'   => 'Please select a file to upload.',
+            'file.file'       => 'The uploaded file is invalid.',
+            'file.max'        => 'The file size must not exceed 5 MB.',
+            'file.mimes'      => 'Only JPG, JPEG, PNG, GIF, SVG, WEBP files are allowed.',
+            'file.mimetypes'  => 'The file type is not allowed.',
         ]);
 
-        if($validator->fails()){
-            $errors = $validator->errors();
-            foreach($errors->all() as $key => $value){
-                 return redirect()->back()->with('error',ucfirst($value));
-            }
-        }else{
-            if($request->hasfile('file')){
-                // $name  = 'file'.$request->file('file')->extension();
-                $file = $request->file;
-                $image_ext = array('gif','jpeg', 'jpg', 'png', 'svg',);
-                if ($file) {
-                    $file = $request->file('file');
-                    if ($file) {
-                        $fileName = 'file_' . time() . '.' . $file->extension();
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-                        $destinationPath = public_path('assets/animals/');
-                        if (!file_exists($destinationPath)) {
-                            mkdir($destinationPath, 0777, true);
-                        }
+        if (!$request->hasFile('file')) {
+            return redirect()->back()->with('error', 'No file was uploaded.');
+        }
 
-                        $file->move($destinationPath, $fileName);
+        $file = $request->file('file');
 
-                        $data = [
-                            'file'    => $fileName,
-                            'file_path' => asset('assets/animals/' . $fileName),
-                        ];
+        if (!$file->isValid()) {
+            return redirect()->back()->with('error', 'File upload failed. Please try again.');
+        }
 
+        if ($file->getSize() > 5 * 1024 * 1024) {
+            return redirect()->back()->with('error', 'The file size must not exceed 5 MB.');
+        }
 
-                        // $request->file('file')->move(public_path('animals'), $name);
-                        DB::table('farmer_high_yielding_animal')->insert([
-                                'user_id'   =>  $user,
-                                'type'      =>  $request->type,
-                                'file'      =>  $fileName,
-                                'details'   =>  $request->details,
-                        ]);
-                    }
-                }
-            }
-            return redirect('high-yielding-animal')->with('success','अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
-       }
+        $extension = strtolower($file->getClientOriginalExtension());
+        $allowed   = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'webp', 'pdf'];
 
+        if (!in_array($extension, $allowed, true)) {
+            return redirect()->back()->with('error', 'Invalid file extension.');
+        }
+
+        $fileName = 'file_' . time() . '_' . Str::random(8) . '.' . $extension;
+
+        $destinationPath = public_path('assets/animals/');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        $file->move($destinationPath, $fileName);
+
+        DB::table('farmer_high_yielding_animal')->insert([
+            'user_id' => $user,
+            'type'    => $request->type,
+            'file'    => $fileName,
+            'details' => $request->details,
+        ]);
+
+        return redirect('high-yielding-animal')
+            ->with('success', 'अनुरोध सफलतापूर्वक प्रस्तुत किया गया!');
     }
 
     public function submitFeedback(Request $request)

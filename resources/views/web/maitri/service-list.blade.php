@@ -1,5 +1,19 @@
 @extends('submaster')
 @section('content')
+<style>
+    .tooltip-inner {
+        max-width: 400px;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .msg-cell {
+        vertical-align: top;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+</style>
 <div class="container main-div" style="background-color:white; height: 100%;min-height:380px;">
     <h3 class="text-center fw-bold m-4">सेवा अनुरोध सूची</h3>
 
@@ -17,6 +31,13 @@
         <tbody>
             @if(count($data))
             @foreach($data as$key=> $row)
+            @php
+                $message = $row->request_message ?? '';
+                $wordCount = str_word_count(strip_tags($message));
+                $shortMessage = $wordCount > 25
+                    ? \Illuminate\Support\Str::words($message, 25, '...')
+                    : $message;
+            @endphp
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$row->user->name}}</td>
@@ -44,7 +65,21 @@
                     <td>{{ $row->service_name }}</td>
                 @endif
 
-                <td>{{ $row->request_message ? $row->request_message : '--' }}</td>
+                {{-- <td>{{ $row->request_message ? $row->request_message : '--' }}</td> --}}
+                {{-- <td title="{{ $row->request_message }}">
+                    {{ $row->request_message ? \Illuminate\Support\Str::words($row->request_message, 25, '...') : '--' }}
+                </td> --}}
+                <td class="msg-cell"
+                    @if($wordCount > 25)
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-html="true"
+                        title="{{ e($message) }}"
+                        style="cursor: pointer;"
+                    @endif
+                >
+                    {{ $shortMessage ?: '--' }}
+                </td>
                 <td>
                     @php
                     $color = '';
@@ -97,91 +132,98 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-$(document).ready(function() {
-    $('.deleteUser').click(function() {
-        var id = $(this).attr("data-id");
-        if (id) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#206b4c",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: "delete-request",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": id
-                        },
-                        cache: false,
-                        success: function(data) {
-                            if (data.status == 'Success') {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: "Your record has been deleted.",
-                                    icon: "success"
-                                });
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            });
-        }
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip({
+            trigger: 'hover focus',
+            container: 'body',
+            html: true,
+        });
     });
-
-    $('.status').change(function() {
-        var val = $(this).val();
-        var id = $(this).attr('id');
-        console.log('id', id, 'value', val);
-        if (val && id) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#206b4c",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Update it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: "updateServiceRequest",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": id,
-                            "val": val,
-                        },
-                        cache: false,
-                        success: function(data) {
-                            if (data.status == 'success') {
-                                Swal.fire({
-                                    title: "Updated!",
-                                    text: "This request has been updated.",
-                                    icon: "success"
-                                });
-                                location.reload();
+    $(document).ready(function() {
+        $('.deleteUser').click(function() {
+            var id = $(this).attr("data-id");
+            if (id) {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#206b4c",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "delete-request",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "id": id
+                            },
+                            cache: false,
+                            success: function(data) {
+                                if (data.status == 'Success') {
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Your record has been deleted.",
+                                        icon: "success"
+                                    });
+                                    location.reload();
+                                }
                             }
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            }
+        });
 
-        }
+        $('.status').change(function() {
+            var val = $(this).val();
+            var id = $(this).attr('id');
+            console.log('id', id, 'value', val);
+            if (val && id) {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#206b4c",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Update it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "updateServiceRequest",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "id": id,
+                                "val": val,
+                            },
+                            cache: false,
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire({
+                                        title: "Updated!",
+                                        text: "This request has been updated.",
+                                        icon: "success"
+                                    });
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                });
+
+            }
+
+        });
 
     });
-
-});
 </script>

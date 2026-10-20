@@ -1,6 +1,18 @@
 @extends('submaster')
 @section('content')
 <style>
+    .tooltip-inner {
+        max-width: 400px;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .msg-cell {
+        vertical-align: top;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
 .card {
     position: relative;
     display: -ms-flexbox;
@@ -76,6 +88,13 @@
 
                 @if(count($data))
                 @foreach($data as $key => $row)
+                @php
+                    $message = $row->details ?? '';
+                    $wordCount = str_word_count(strip_tags($message));
+                    $shortMessage = $wordCount > 25
+                        ? \Illuminate\Support\Str::words($message, 25, '...')
+                        : $message;
+                @endphp
                 <tr>
                     <td><span>{{$key+1}}</span></td>
                     <!-- <td>{{Auth::user()->FirstName}}</td> -->
@@ -88,7 +107,18 @@
                         @endif
                     </td>
                     </td>
-                    <td><span lang="hi">{{$row->details}}</span></td>
+                    {{-- <td><span lang="hi">{{$row->details}}</span></td> --}}
+                    <td class="msg-cell"
+                        @if($wordCount > 25)
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-html="true"
+                            title="{{ e($message) }}"
+                            style="cursor: pointer;"
+                        @endif
+                    >
+                        {{ $shortMessage ?: '--' }}
+                    </td>
                     <!-- <td>
                             <button type="button" class="btn custom-btn btn-danger deleteUser" data-id="}"><i class="fa fa-trash">Delete</i></button>
                         </td> -->
@@ -111,12 +141,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-$(window).on('load', function() {
-    var modelShown = localStorage.getItem('farmer');
-    console.log('localStorage', localStorage, modelShown)
-    if (modelShown != 'YES') {
-        $('#exampleModal').modal('show');
-        localStorage.setItem('farmer', 'YES');
-    }
-});
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip({
+            trigger: 'hover focus',
+            container: 'body',
+            html: true,
+        });
+    });
+    $(window).on('load', function() {
+        var modelShown = localStorage.getItem('farmer');
+        console.log('localStorage', localStorage, modelShown)
+        if (modelShown != 'YES') {
+            $('#exampleModal').modal('show');
+            localStorage.setItem('farmer', 'YES');
+        }
+    });
 </script>

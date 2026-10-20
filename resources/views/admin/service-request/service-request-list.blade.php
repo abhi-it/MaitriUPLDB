@@ -1,6 +1,19 @@
 @extends('master')
 @section('content')
+<style>
+    .tooltip-inner {
+        max-width: 400px;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
 
+    .msg-cell {
+        vertical-align: top;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+</style>
 <div class="container main-div">
     <div class="row">
         <div class="col-md-12">
@@ -120,6 +133,12 @@
                 <tbody>
                     @if($results->count())
                         @foreach($results as $key => $row)
+                            @php
+                                $message   = $row->request_message ?? '';
+                                $wordCount = str_word_count(strip_tags($message));
+                                $isLong    = $wordCount > 10;
+                                $shortMsg  = $isLong ? \Illuminate\Support\Str::words($message, 10, '...') : $message;
+                            @endphp
                             <tr>
                                 <td>{{ $results->firstItem() + $key }}</td>
 
@@ -141,7 +160,18 @@
                                     </small>
                                 </td>
 
-                                <td>{{ Str::limit($row->request_message, 60) }}</td>
+                                {{-- <td>{{ Str::limit($row->request_message, 60) }}</td> --}}
+                                <td class="msg-cell"
+                                    @if($isLong)
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-html="true"
+                                        title="{{ e($message) }}"
+                                        style="cursor:pointer;"
+                                    @endif
+                                >
+                                    {{ $shortMsg ?: '--' }}
+                                </td>
 
                                 <td>
                                     @if($row->status == 1)
@@ -200,5 +230,13 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip({
+            trigger: 'hover focus',
+            container: 'body',
+            html: true,
+        });
+    });
+</script>
 @endsection
