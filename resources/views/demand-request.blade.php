@@ -211,7 +211,7 @@ form#loginForm p span {
                             <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    {{-- <div class="form-group col-md-4">
                         <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>
                         </label>
                         <select name="semen_source[]" id="semen_source" required class="form-control" autofocus>
@@ -231,6 +231,26 @@ form#loginForm p span {
                         <label for="inputEmail4"> <span data-hi="कृपया वीर्य का स्रोत भरें"
                                 data-en="Please enter source of semen"></span> </label>
                         <input type="text" name="semen_source[]" required class="form-control" id="semen_source_added"
+                            data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
+                    </div> --}}
+                    <div class="form-group col-md-4">
+                        <label><span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span></label>
+                        <select name="semen_source[]" class="form-control semen-source-select" required>
+                            <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                            <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>
+                            <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
+                            <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>
+                            <option value="Amul" data-hi="अमूल" data-en="Amul"></option>
+                            <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>
+                            <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>
+                            <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>
+                            <option value="others" data-hi="अन्य" data-en="Others"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4 semen-source-other" style="display:none;">
+                        <label><span data-hi="कृपया वीर्य का स्रोत भरें" data-en="Please enter source of semen"></span></label>
+                        <input type="text" name="semen_source_other[]" class="form-control semen-source-other-input"
                             data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
                     </div>
                     <div class="form-group col-md-4">
@@ -386,298 +406,422 @@ form#loginForm p span {
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    // loginForm
-    $('#loginForm').on('submit', function(event) {
+    // $(document).ready(function() {
+    //     // loginForm
+    //     $('#loginForm').on('submit', function(event) {
 
-        let pincode = $('#pincode').val();
-        let isValid = /^[0-9]{6}$/.test(pincode);
+    //         let pincode = $('#pincode').val();
+    //         let isValid = /^[0-9]{6}$/.test(pincode);
 
-        if (!isValid) {
-            event.preventDefault();
-            $('#error-message').show();
-            $('#pincode')[0].scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
+    //         if (!isValid) {
+    //             event.preventDefault();
+    //             $('#error-message').show();
+    //             $('#pincode')[0].scrollIntoView({
+    //                 behavior: 'smooth',
+    //                 block: 'center'
+    //             });
+    //             $('#pincode').focus();
+    //         } else {
+    //             $('#error-message').hide();
+    //         }
+    //     });
+
+    //     $('#pincode').on('input', function() {
+    //         this.value = this.value.replace(/[^0-9]/g, '');
+    //     });
+    // });
+
+    // $('.added_vh_ai_center').hide();
+    // $('.semen_source_added').hide();
+
+    // var maxFields = 6;
+    // var fieldCount = 0;
+    // $('.demand-request-add-btn').click(function() {
+    //     if (fieldCount < maxFields) {
+    //         var newField = '<div class="form-group col-md-12 pt-4 sub_block_' + fieldCount + '" style="background: #eee;">\
+    //             <div class="row">\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4">\
+    //                         <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>\
+    //                     </label>\
+    //                     <select name="semen[]" id="semen" required class="form-control" autofocus>\
+    //                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+    //                         <option value="cow" data-hi="गाय" data-en="Cattle"></option>\
+    //                         <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>\
+    //                         <option value="goat" data-hi="बकरी" data-en="Goat"></option>\
+    //                     </select>\
+    //                 </div>\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>\
+    //                     <select name="semen_type[]" required id="semen_type" class="form-control" autofocus>\
+    //                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+    //                         <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>\
+    //                         <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>\
+    //                     </select>\
+    //                 </div>\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>\
+    //                     </label>\
+    //                     <select name="semen_source[]" required id="semen_source" class="form-control" autofocus>\
+    //                         <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
+    //                         <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>\
+    //                         <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>\
+    //                         <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>\
+    //                         <option value="Amul" data-hi="अमूल" data-en="Amul"></option>\
+    //                         <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>\
+    //                         <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>\
+    //                         <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>\
+    //                         <option value="others" data-hi="अन्य" data-en="Others"></option>\
+    //                     </select>\
+    //                 </div>\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>\
+    //                     <input name="breed[]" required id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"\
+    //                         data-placeholder-en="Breed" autofocus>\
+    //                 </div>\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>\
+    //                     <input name="bull_id[]" required id="bull_id" type="text" class="form-control"\
+    //                         data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>\
+    //                 </div>\
+    //                 <div class="form-group col-md-4">\
+    //                     <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>\
+    //                     </label>\
+    //                     <input name="Sheath[]" required id="Sheath" type="text" class="form-control"\
+    //                         data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>\
+    //                 </div>\
+    //                 <div class="form-group col-md-12 text-center">\
+    //                     <span class="demand-request-remove-btn btn btn-danger btn-sm" data-index="' + fieldCount + '">Remove</span>\
+    //                 </div>\
+    //             </div>\
+    //         </div>';
+
+    //         $('.main_div_block:last').after(newField);
+    //         fieldCount++;
+
+    //         var lang = $(".switchlang option:selected").val();
+    //         localStorage.setItem("selectedProject", lang);
+    //         switchLang(lang)
+
+    //         if (fieldCount === maxFields) {
+    //             $('.demand-request-add-btn').hide();
+    //         }
+    //     }
+
+    // });
+
+    // $(document).on('click', '.demand-request-remove-btn', function() {
+    //     var index = $(this).data('index');
+    //     $(this).closest('.sub_block_' + index).remove();
+    //     fieldCount--;
+    //     $('.demand-request-add-btn').show();
+    // });
+
+
+    var allData = {};
+    $('#district').change(function() {
+        $('#mandal').prop('disabled', false);
+        $('#mandal').empty();
+        $('#vikas_khand').prop('disabled', false);
+        $('#vikas_khand').empty();
+        $('#ai_center').prop('disabled', false);
+        $('#ai_center').empty();
+        $('#tehsil').prop('disabled', false);
+        $('#tehsil').empty();
+
+        var val = $("#district option:selected").val();
+        var text = $("#district option:selected").text();
+        if (val) {
+            $.ajax({
+                type: "GET",
+                url: "get-all-district",
+                data: {
+                    "id": val,
+                    "mandal": text,
+                },
+                cache: false,
+                success: function(data) {
+                    var getMandal = data.district;
+                    if (getMandal && getMandal.length > 0) {
+                        $('#mandal').append(`<option value="">Select District</option>`);
+                        getMandal.forEach(item => {
+                            if (item.name_hindi && item.name_hindi.trim() !== '') {
+                                $('#mandal').append(
+                                    `<option value="${item.name_hindi}">${item.name_hindi}</option>`
+                                );
+                            }
+                        });
+                    } else {
+                        $('#mandal').append('<option value="">-Data not found.-</option>');
+                    }
+                }
             });
-            $('#pincode').focus();
-        } else {
-            $('#error-message').hide();
         }
     });
 
-    $('#pincode').on('input', function() {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-});
+    $('#mandal').change(function() {
+        $('#vikas_khand').prop('disabled', false);
+        $('#vikas_khand').empty();
+        $('#ai_center').prop('disabled', false);
+        $('#ai_center').empty();
+        $('#tehsil').prop('disabled', false);
+        $('#tehsil').empty();
 
-$('.added_vh_ai_center').hide();
-$('.semen_source_added').hide();
-
-var maxFields = 6;
-var fieldCount = 0;
-$('.demand-request-add-btn').click(function() {
-    if (fieldCount < maxFields) {
-        var newField = '<div class="form-group col-md-12 pt-4 sub_block_' + fieldCount + '" style="background: #eee;">\
-            <div class="row">\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4">\
-                        <span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span>\
-                    </label>\
-                    <select name="semen[]" id="semen" required class="form-control" autofocus>\
-                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
-                        <option value="cow" data-hi="गाय" data-en="Cattle"></option>\
-                        <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>\
-                        <option value="goat" data-hi="बकरी" data-en="Goat"></option>\
-                    </select>\
-                </div>\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4"> <span data-hi="वीर्य प्रकार" data-en="Semen Type"></span> </label>\
-                    <select name="semen_type[]" required id="semen_type" class="form-control" autofocus>\
-                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
-                        <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>\
-                        <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>\
-                    </select>\
-                </div>\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4"> <span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span>\
-                    </label>\
-                    <select name="semen_source[]" required id="semen_source" class="form-control" autofocus>\
-                        <option value="" data-hi="एक का चयन करें" data-en="select one"></option>\
-                        <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>\
-                        <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>\
-                        <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>\
-                        <option value="Amul" data-hi="अमूल" data-en="Amul"></option>\
-                        <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>\
-                        <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>\
-                        <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>\
-                        <option value="others" data-hi="अन्य" data-en="Others"></option>\
-                    </select>\
-                </div>\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4"> <span data-hi="नस्ल" data-en="Breed"></span> </label>\
-                    <input name="breed[]" required id="breed" type="text" class="form-control" data-placeholder-hi="नस्ल"\
-                        data-placeholder-en="Breed" autofocus>\
-                </div>\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4"> <span data-hi="बुल आई.डी." data-en="Bull ID"></span> </label>\
-                    <input name="bull_id[]" required id="bull_id" type="text" class="form-control"\
-                        data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID" autofocus>\
-                </div>\
-                <div class="form-group col-md-4">\
-                    <label for="inputEmail4"> <span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span>\
-                    </label>\
-                    <input name="Sheath[]" required id="Sheath" type="text" class="form-control"\
-                        data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity" autofocus>\
-                </div>\
-                <div class="form-group col-md-12 text-center">\
-                    <span class="demand-request-remove-btn btn btn-danger btn-sm" data-index="' + fieldCount + '">Remove</span>\
-                </div>\
-            </div>\
-        </div>';
-
-        $('.main_div_block:last').after(newField);
-        fieldCount++;
-
-        var lang = $(".switchlang option:selected").val();
-        localStorage.setItem("selectedProject", lang);
-        switchLang(lang)
-
-        if (fieldCount === maxFields) {
-            $('.demand-request-add-btn').hide();
-        }
-    }
-
-});
-
-$(document).on('click', '.demand-request-remove-btn', function() {
-    var index = $(this).data('index');
-    $(this).closest('.sub_block_' + index).remove();
-    fieldCount--;
-    $('.demand-request-add-btn').show();
-});
-
-
-var allData = {};
-$('#district').change(function() {
-    $('#mandal').prop('disabled', false);
-    $('#mandal').empty();
-    $('#vikas_khand').prop('disabled', false);
-    $('#vikas_khand').empty();
-    $('#ai_center').prop('disabled', false);
-    $('#ai_center').empty();
-    $('#tehsil').prop('disabled', false);
-    $('#tehsil').empty();
-
-    var val = $("#district option:selected").val();
-    var text = $("#district option:selected").text();
-    if (val) {
+        var mandal = $("#district option:selected").text();
+        var janpad = $("#mandal option:selected").val();
         $.ajax({
             type: "GET",
-            url: "get-all-district",
+            url: "get-all-tehsil",
             data: {
-                "id": val,
-                "mandal": text,
+                "mandal": mandal,
+                "janpad": janpad,
             },
             cache: false,
             success: function(data) {
-                var getMandal = data.district;
-                if (getMandal && getMandal.length > 0) {
-                    $('#mandal').append(`<option value="">Select District</option>`);
-                    getMandal.forEach(item => {
-                        if (item.name_hindi && item.name_hindi.trim() !== '') {
-                            $('#mandal').append(
-                                `<option value="${item.name_hindi}">${item.name_hindi}</option>`
+                var getTehsil = data.data;
+                if (getTehsil && getTehsil.length > 0) {
+                    $('#tehsil').append(`<option value="">Select Tehsil</option>`);
+                    getTehsil.forEach(item => {
+                        if (item.tehsil && item.tehsil.trim() !== '') {
+                            $('#tehsil').append(
+                                `<option value="${item.tehsil}">${item.tehsil}</option>`);
+                        }
+                    });
+                } else {
+                    $('#tehsil').append('<option value="">-Data not found.-</option>');
+                }
+            }
+        });
+    });
+
+    $('#tehsil').change(function() {
+        $('#vikas_khand').prop('disabled', false);
+        $('#vikas_khand').empty();
+        $('#ai_center').prop('disabled', false);
+        $('#ai_center').empty();
+        var tehsil = $(this).val();
+        var mandal = $("#district option:selected").text();
+        var janpad = $("#mandal option:selected").val();
+        $.ajax({
+            type: "GET",
+            url: "get-all-block",
+            data: {
+                "tehsil": tehsil,
+                "mandal": mandal,
+                "janpad": janpad,
+            },
+            cache: false,
+            success: function(data) {
+                var getBlock = data.data;
+                if (getBlock && getBlock.length > 0) {
+                    $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
+                    getBlock.forEach(item => {
+                        if (item.block && item.block.trim() !== '') {
+                            $('#vikas_khand').append(
+                                `<option value="${item.block}">${item.block}</option>`);
+                        }
+                    });
+                } else {
+                    $('#vikas_khand').append('<option value="">-Data not found.-</option>');
+                }
+            }
+        });
+    });
+
+    $('#vikas_khand').change(function() {
+        $('#ai_center').prop('disabled', false);
+        var block = $(this).val();
+        var tehsil = $('#tehsil').val();
+        var mandal = $("#district option:selected").text();
+        var janpad = $("#mandal option:selected").val();
+        $('#ai_center').empty();
+        $.ajax({
+            type: "GET",
+            url: "get-all-aicenter",
+            data: {
+                "block": block,
+                "tehsil": tehsil,
+                "mandal": mandal,
+                "janpad": janpad,
+            },
+            cache: false,
+            success: function(data) {
+                var getAiCenter = data.data;
+                if (getAiCenter && getAiCenter.length > 0) {
+                    $('#ai_center').append(`<option value="">Select AI Center</option>`);
+                    getAiCenter.forEach(item => {
+                        if (item.center_name && item.center_name.trim() !== '') {
+                            $('#ai_center').append(
+                                `<option value="${item.center_name}">${item.center_name}</option>`
                             );
                         }
                     });
                 } else {
-                    $('#mandal').append('<option value="">-Data not found.-</option>');
+                    $('#ai_center').append('<option value="">-Data not found.-</option>');
                 }
             }
         });
-    }
-});
-
-$('#mandal').change(function() {
-    $('#vikas_khand').prop('disabled', false);
-    $('#vikas_khand').empty();
-    $('#ai_center').prop('disabled', false);
-    $('#ai_center').empty();
-    $('#tehsil').prop('disabled', false);
-    $('#tehsil').empty();
-
-    var mandal = $("#district option:selected").text();
-    var janpad = $("#mandal option:selected").val();
-    $.ajax({
-        type: "GET",
-        url: "get-all-tehsil",
-        data: {
-            "mandal": mandal,
-            "janpad": janpad,
-        },
-        cache: false,
-        success: function(data) {
-            var getTehsil = data.data;
-            if (getTehsil && getTehsil.length > 0) {
-                $('#tehsil').append(`<option value="">Select Tehsil</option>`);
-                getTehsil.forEach(item => {
-                    if (item.tehsil && item.tehsil.trim() !== '') {
-                        $('#tehsil').append(
-                            `<option value="${item.tehsil}">${item.tehsil}</option>`);
-                    }
-                });
-            } else {
-                $('#tehsil').append('<option value="">-Data not found.-</option>');
-            }
-        }
     });
-});
 
-$('#tehsil').change(function() {
-    $('#vikas_khand').prop('disabled', false);
-    $('#vikas_khand').empty();
-    $('#ai_center').prop('disabled', false);
-    $('#ai_center').empty();
-    var tehsil = $(this).val();
-    var mandal = $("#district option:selected").text();
-    var janpad = $("#mandal option:selected").val();
-    $.ajax({
-        type: "GET",
-        url: "get-all-block",
-        data: {
-            "tehsil": tehsil,
-            "mandal": mandal,
-            "janpad": janpad,
-        },
-        cache: false,
-        success: function(data) {
-            var getBlock = data.data;
-            if (getBlock && getBlock.length > 0) {
-                $('#vikas_khand').append(`<option value="">Select Vikas Khand</option>`);
-                getBlock.forEach(item => {
-                    if (item.block && item.block.trim() !== '') {
-                        $('#vikas_khand').append(
-                            `<option value="${item.block}">${item.block}</option>`);
-                    }
-                });
-            } else {
-                $('#vikas_khand').append('<option value="">-Data not found.-</option>');
-            }
+    $('#training_center_id').change(function() {
+        $('.added_vh_ai_center').hide()
+        var val = $("#training_center_id option:selected").val();
+        $('#training_center_added').val(val);
+        if (val == 'other') {
+            $('#training_center_added').val();
+            $('.added_vh_ai_center').show()
         }
-    });
-});
+    })
 
-$('#vikas_khand').change(function() {
-    $('#ai_center').prop('disabled', false);
-    var block = $(this).val();
-    var tehsil = $('#tehsil').val();
-    var mandal = $("#district option:selected").text();
-    var janpad = $("#mandal option:selected").val();
-    $('#ai_center').empty();
-    $.ajax({
-        type: "GET",
-        url: "get-all-aicenter",
-        data: {
-            "block": block,
-            "tehsil": tehsil,
-            "mandal": mandal,
-            "janpad": janpad,
-        },
-        cache: false,
-        success: function(data) {
-            var getAiCenter = data.data;
-            if (getAiCenter && getAiCenter.length > 0) {
-                $('#ai_center').append(`<option value="">Select AI Center</option>`);
-                getAiCenter.forEach(item => {
-                    if (item.center_name && item.center_name.trim() !== '') {
-                        $('#ai_center').append(
-                            `<option value="${item.center_name}">${item.center_name}</option>`
-                        );
-                    }
-                });
+
+    // $('#semen_source').change(function() {
+    //     $('.semen_source_added').hide()
+    //     var val = $("#semen_source option:selected").val();
+    //     $('#semen_source_added').val(val)
+    //     if (val == 'others') {
+    //         $('#semen_source_added').val()
+    //         $('.semen_source_added').show()
+    //     }
+    // })
+
+    $(document).ready(function () {
+
+        $('#loginForm').on('submit', function (event) {
+            let pincode = $('#pincode').val();
+            let isValid = /^[0-9]{6}$/.test(pincode);
+            if (!isValid) {
+                event.preventDefault();
+                $('#error-message').show();
+                $('#pincode')[0].scrollIntoView({behavior: 'smooth', block: 'center'});
+                $('#pincode').focus();
             } else {
-                $('#ai_center').append('<option value="">-Data not found.-</option>');
+                $('#error-message').hide();
             }
-        }
+        });
+
+        $('#pincode').on('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        $('.added_vh_ai_center').hide();
+        $('.semen_source_added').hide();
+
+        // ============ ADD MORE ============
+        var maxFields   = 6;
+        var fieldCount  = 0;
+
+        $('.demand-request-add-btn').click(function () {
+            if (fieldCount >= maxFields) return;
+
+            var idx = fieldCount;
+            var newField = `
+            <div class="form-group col-md-12 pt-4 sub_block_${idx}" style="background:#eee;">
+            <div class="row">
+                <div class="form-group col-md-4">
+                <label><span data-hi="प्रजाति वीर्य" data-en="Species Semen"></span></label>
+                <select name="semen[]" required class="form-control">
+                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                    <option value="cow" data-hi="गाय" data-en="Cattle"></option>
+                    <option value="buffalo" data-hi="भैंस" data-en="Buffalo"></option>
+                    <option value="goat" data-hi="बकरी" data-en="Goat"></option>
+                </select>
+                </div>
+                <div class="form-group col-md-4">
+                <label><span data-hi="वीर्य प्रकार" data-en="Semen Type"></span></label>
+                <select name="semen_type[]" required class="form-control">
+                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                    <option value="conventional" data-hi="सामान्य" data-en="Conventional"></option>
+                    <option value="sexed" data-hi="वर्गीकृत" data-en="Sexed"></option>
+                </select>
+                </div>
+                <div class="form-group col-md-4">
+                <label><span data-hi="वीर्य का स्रोत" data-en="Source of Semen"></span></label>
+                <select name="semen_source[]" class="form-control semen-source-select" required>
+                    <option value="" data-hi="एक का चयन करें" data-en="select one"></option>
+                    <option value="UPLDB" data-hi="यूपीएलडीबी" data-en="UPLDB"></option>
+                    <option value="BAIF" data-hi="बीएआईएफ़" data-en="BAIF"></option>
+                    <option value="ABC Salon" data-hi="एबीसी सैलून" data-en="ABC Salon"></option>
+                    <option value="Amul" data-hi="अमूल" data-en="Amul"></option>
+                    <option value="Haryana" data-hi="हरियाणा" data-en="Haryana"></option>
+                    <option value="Hissar Bovine" data-hi="हिसार गोजातीय" data-en="Hissar Bovine"></option>
+                    <option value="Morna Breeding" data-hi="मोरना प्रजनन" data-en="Morna Breeding"></option>
+                    <option value="others" data-hi="अन्य" data-en="Others"></option>
+                </select>
+                </div>
+
+                <!-- NEW: other source text field for each added block -->
+                <div class="form-group col-md-4 semen-source-other" style="display:none;">
+                <label><span data-hi="कृपया वीर्य का स्रोत भरें" data-en="Please enter source of semen"></span></label>
+                <input type="text" name="semen_source_other[]" class="form-control semen-source-other-input"
+                        data-placeholder-hi="वीर्य का स्रोत" data-placeholder-en="Source of Semen">
+                </div>
+
+                <div class="form-group col-md-4">
+                <label><span data-hi="नस्ल" data-en="Breed"></span></label>
+                <input name="breed[]" required type="text" class="form-control"
+                        data-placeholder-hi="नस्ल" data-placeholder-en="Breed">
+                </div>
+                <div class="form-group col-md-4">
+                <label><span data-hi="बुल आई.डी." data-en="Bull ID"></span></label>
+                <input name="bull_id[]" required type="text" class="form-control"
+                        data-placeholder-hi="बुल आई.डी." data-placeholder-en="Bull ID">
+                </div>
+                <div class="form-group col-md-4">
+                <label><span data-hi="एआई शीथ की मात्रा" data-en="AI Sheath Quantity"></span></label>
+                <input name="Sheath[]" required type="text" class="form-control"
+                        data-placeholder-hi="शीत क्वांटिटी" data-placeholder-en="AI Sheath Quantity">
+                </div>
+                <div class="form-group col-md-12 text-center">
+                <span class="demand-request-remove-btn btn btn-danger btn-sm" data-index="${idx}">Remove</span>
+                </div>
+            </div>
+            </div>`;
+
+            $('.main_div_block:last').after(newField);
+            fieldCount++;
+
+            var lang = $(".switchlang option:selected").val();
+            localStorage.setItem("selectedProject", lang);
+            if (typeof switchLang === 'function') switchLang(lang);
+
+            if (fieldCount === maxFields) {
+                $('.demand-request-add-btn').hide();
+            }
+        });
+
+        $(document).on('click', '.demand-request-remove-btn', function () {
+            var index = $(this).data('index');
+            $(this).closest('.sub_block_' + index).remove();
+            fieldCount--;
+            $('.demand-request-add-btn').show();
+        });
+
+        // ============ SEMEN SOURCE (delegated — works for all blocks) ============
+        $(document).on('change', '.semen-source-select', function () {
+            var $row   = $(this).closest('.row');
+            var $other = $row.find('.semen-source-other');
+            var $input = $row.find('.semen-source-other-input');
+
+            if ($(this).val() === 'others') {
+                $other.show();
+                $input.prop('required', true).focus();
+            } else {
+                $other.hide();
+                $input.prop('required', false).val('');
+            }
+        });
+
+        // ============ TRAINING CENTER (delegated for safety) ============
+        $(document).on('change', '#training_center_id', function () {
+            var val = $(this).val();
+            $('.added_vh_ai_center').hide();
+            $('#training_center_added').val(val);
+
+            if (val === 'other') {
+                $('#training_center_added').val('');
+                $('.added_vh_ai_center').show();
+            }
+        });
     });
-});
-
-// function populateDropdown(selector, data, valueField, defaultText) {
-//     $(selector).empty();
-//     $(selector).append(`<option value="">${defaultText}</option>`);
-
-//     if (data && data.length > 0) {
-//         data.forEach(item => {
-//             $(selector).append(`<option value="${item[valueField]}">${item[valueField]}</option>`);
-//         });
-//     } else {
-//         $(selector).append('<option value="">-Data not found.-</option>');
-//     }
-// }
-
-
-
-
-$('#training_center_id').change(function() {
-    $('.added_vh_ai_center').hide()
-    var val = $("#training_center_id option:selected").val();
-    $('#training_center_added').val(val);
-    if (val == 'other') {
-        $('#training_center_added').val();
-        $('.added_vh_ai_center').show()
-    }
-})
-
-
-$('#semen_source').change(function() {
-    $('.semen_source_added').hide()
-    var val = $("#semen_source option:selected").val();
-    $('#semen_source_added').val(val)
-    if (val == 'others') {
-        $('#semen_source_added').val()
-        $('.semen_source_added').show()
-    }
-})
 </script>
 @endsection
