@@ -250,6 +250,7 @@ class DashboardController extends Controller
                 $topper_number = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -354,6 +355,7 @@ class DashboardController extends Controller
                 $topper_number      = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -431,6 +433,7 @@ class DashboardController extends Controller
                 $topper_number      = $high_school_calculation + $inter_calculation;
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -637,6 +640,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -708,6 +712,7 @@ class DashboardController extends Controller
                     ->leftJoin('rejectcomments', 'avedans.id', '=', 'rejectcomments.application_id')
                     ->select(
                         'avedans.applicationNumber',
+                        \DB::raw("DATE_FORMAT(avedans.created_at, '%d/%m/%Y') as avedan_date"),
                         'avedans.applicant_name',
                         'avedans.fname',
                         'avedans.mother',
@@ -872,6 +877,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -996,6 +1002,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -1120,6 +1127,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -1236,6 +1244,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -1349,6 +1358,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,
@@ -1439,6 +1449,7 @@ class DashboardController extends Controller
 
                 return [
                     'applicationNumber' => $item->applicationNumber,
+                    'avedan_date' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y'),
                     'applicant_name' => $item->applicant_name,
                     'fname' => $item->fname,
                     'mother' => $item->mother,

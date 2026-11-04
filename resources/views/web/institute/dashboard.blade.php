@@ -35,7 +35,7 @@
 }
 </style>
 <div class="container main-div">
-    <h3 class="text-center fw-bold m-4">सेवा अनुरोध प्रपत्र</h3>
+    <h3 class="text-center fw-bold m-4">आवेदन अनुरोध प्रपत्र</h3>
     @if(session()->has('success'))
     <div class="alert alert-success">
         {{ session()->get('success') }}

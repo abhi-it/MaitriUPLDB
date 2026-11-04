@@ -76,6 +76,7 @@ class ExportAvedan implements FromCollection, WithHeadings
     {
         return [
         'applicationNumber',
+        'आवेदन तिथि',
         'आवेदक का नाम',
         'पिता / पति का नाम',
         'माता का नाम',
