@@ -1423,7 +1423,7 @@
 
                             <li class="nav-item {{ request()->is('service-requests-list') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('service-requests-list') }}">
-                                    <span data-hi="किसान सेवा अनुरोध सूची" data-en="Service Request List"></span>
+                                    <span data-hi="किसान सेवा अनुरोध सूची" data-en="Farmer Service Request List"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
