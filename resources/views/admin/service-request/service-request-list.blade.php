@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3 class="text-center fw-bold m-4">
-                सेवा अनुरोध सूची ( कुल : {{ $results->total() }})
+                किसान सेवा अनुरोध सूची ( कुल : {{ $results->total() }})
             </h3>
         </div>
     </div>

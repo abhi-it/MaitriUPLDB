@@ -24,6 +24,7 @@
                 <th>उपयोगकर्ता नाम</th>
                 <th>सेवा का नाम </th>
                 <th>संदेश</th>
+                <th>प्रतिक्रिया</th>
                 <th>स्थिति</th>
                 <!-- <th>Action</th> -->
             </tr>
@@ -80,6 +81,21 @@
                 >
                     {{ $shortMessage ?: '--' }}
                 </td>
+                <td style="min-width:130px;">
+                    @if($row->feedback)
+                        <div class="mb-1" style="font-size:16px;">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= (int) $row->feedback->rating)
+                                    <i class="fa fa-star" style="color:#ffc107;"></i>
+                                @else
+                                    <i class="fa fa-star" style="color:#ced4da;"></i>
+                                @endif
+                            @endfor
+                        </div>
+                    @else
+                        <span class="badge bg-secondary">-</span>
+                    @endif
+                </td>
                 <td>
                     @php
                     $color = '';
@@ -120,7 +136,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="5" style="color:red;">कोई रिकॉर्ड नहीं..</td>
+                <td colspan="6" style="color:red;">कोई रिकॉर्ड नहीं..</td>
             </tr>
             @endif
         </tbody>

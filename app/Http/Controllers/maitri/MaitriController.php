@@ -104,7 +104,7 @@ class MaitriController extends Controller{
 
     public function getAllServiceRequest(Request $request){
         $user_id = Auth::user()->id;
-        $data    =  Servicerequest::where(['maitri_id'=>$user_id])->get();
+        $data    =  Servicerequest::with(['feedback'])->where(['maitri_id'=>$user_id])->get();
         return view('web.maitri.service-list',[
             'data'=>$data,
         ]);

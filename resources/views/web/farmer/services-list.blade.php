@@ -93,8 +93,7 @@
                     <td><button class="btn btn-danger">अस्वीकार किया गया है</button></td>
                 @elseif($row->status == 0)
                     <td>
-                        
-                        <button class="btn btn-success">स्वीकार कर लिया है</button>
+                        <button class="btn btn-success mb-1">स्वीकार कर लिया है</button>
                         @if($row->status == 0)
                             @if($row->feedback()->exists())
                                 <button class="btn btn-secondary feedback-done"

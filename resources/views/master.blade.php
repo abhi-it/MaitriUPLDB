@@ -1423,7 +1423,7 @@
 
                             <li class="nav-item {{ request()->is('service-requests-list') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('service-requests-list') }}">
-                                    <span data-hi="सेवा अनुरोध सूची" data-en="Service Request List"></span>
+                                    <span data-hi="किसान सेवा अनुरोध सूची" data-en="Service Request List"></span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('cvo-officer') ? 'active' : '' }}">
@@ -1500,9 +1500,9 @@
                                     <a class="dropdown-item" href="{{ url('placed-candidates') }}">
                                         <span data-hi="नियुक्त उम्मीदवार" data-en="Placed Candidates"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
+                                    {{-- <a class="dropdown-item" href="{{ url('get-farmer-request') }}">
                                         <span data-hi="किसान अनुरोध" data-en="Farmer Request"></span>
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item" href="{{ url('correctdata') }}">
                                         <span data-hi="सही डेटा" data-en="Correct Data"></span>
                                     </a>
