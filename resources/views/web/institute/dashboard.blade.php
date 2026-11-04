@@ -50,7 +50,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-center">
-                <div class="card-header">अनुरोध सूची</div>
+                <div class="card-header">आवेदन अनुरोध सूची</div>
                 <div class="card-body">
                     <h5 class="card-title">{{ $applications->count() }}</h5>
                     <a href="{{route('avedan-list')}}" class="btn btn-primary">देखना</a>
